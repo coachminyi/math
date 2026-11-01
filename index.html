@@ -1,0 +1,1897 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Maths Hub">
+<meta name="theme-color" content="#f7f5ef">
+<title>Coach Minyi's Maths Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5ef; --card:#ffffff; --ink:#1c1c1e; --muted:#6b6b70; --line:#dedad0;
+  --grid:rgba(60,90,160,.09); --grid2:#cfd6e6;
+  --blue:#2459c6; --blue-fill:#dbe6fb;
+  --amber:#b86e00; --amber-fill:#fde9c4;
+  --red:#c62f45; --red-fill:#fbd9de;
+  --green:#1d7a4c;
+  --accent:#2459c6; --accent-ink:#fff;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16171a; --card:#212226; --ink:#ececee; --muted:#a0a0a8; --line:#34353b;
+    --grid:rgba(140,170,255,.08); --grid2:#3a4256;
+    --blue:#7ea6ff; --blue-fill:#22345c;
+    --amber:#f0b04a; --amber-fill:#4a3712;
+    --red:#ff7b8e; --red-fill:#4d2129;
+    --green:#5fd39a;
+    --accent:#7ea6ff; --accent-ink:#0f1320;
+    --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px; line-height:1.45;
+  -webkit-text-size-adjust:100%;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+button{font:inherit;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:10px;min-height:56px}
+.back{display:none;align-items:center;justify-content:center;min-width:44px;height:44px;border:0;background:transparent;border-radius:10px;font-size:26px;cursor:pointer}
+.back:hover{background:var(--line)}
+.bar h1{font-size:19px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .crumb{color:var(--muted);font-weight:400}
+.share{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:10px;height:40px;padding:0 14px;cursor:pointer;font-size:15px;white-space:nowrap}
+.share[hidden]{display:none}
+
+/* ---------- home ---------- */
+.hero{padding:28px 0 8px}
+.hero h2{font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
+.hero p{margin:0;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 6px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 16px;min-height:44px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.level{margin:22px 0 30px}
+.level h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);cursor:pointer;text-decoration:none;color:inherit;min-height:150px}
+.card:hover{border-color:var(--accent)}
+.card .thumb{height:64px;margin-bottom:4px}
+.card b{font-size:18px}
+.card span{color:var(--muted);font-size:15px}
+.card .tags{display:flex;gap:6px;margin-top:auto}
+.tag{font-size:12px;border-radius:6px;padding:2px 8px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+
+/* ---------- topic ---------- */
+.tabs{display:flex;gap:6px;padding:12px 0}
+.tab{border:1px solid var(--line);background:var(--card);border-radius:10px;min-height:44px;padding:0 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.play{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,1fr);gap:18px;padding-bottom:24px;align-items:start}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:10px;position:sticky;top:68px}
+.stage svg text{paint-order:stroke;stroke:var(--card);stroke-width:1.2px;stroke-linejoin:round}
+.stage svg{display:block;width:100%;height:auto;max-height:calc(100vh - 110px);touch-action:none}
+.panel{display:flex;flex-direction:column;gap:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.stepnum{font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.dots{display:flex;gap:5px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent)}
+.steptext{font-size:20px;margin:8px 0 0;min-height:3.2em}
+.steptext .m{white-space:nowrap}
+.nav{display:flex;gap:10px}
+.btn{flex:1;min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;font-weight:700}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:disabled{opacity:.35;cursor:default}
+.ctrl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin:6px 0}
+.ctrl label{font-weight:700;font-size:20px;font-style:italic;min-width:1.2em}
+.ctrl output{font-variant-numeric:tabular-nums;min-width:3.6em;text-align:right;font-size:18px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:var(--line)}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--line)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:var(--accent);margin-top:-12px;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--accent);border:3px solid var(--card)}
+.readout{font-size:18px;line-height:1.7;font-variant-numeric:tabular-nums}
+.readout .row{display:block}
+.k-blue{color:var(--blue);font-weight:700}
+.k-amber{color:var(--amber);font-weight:700}
+.k-red{color:var(--red);font-weight:700}
+.k-green{color:var(--green);font-weight:700}
+.mini{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:17px;margin-top:6px}
+.mini th,.mini td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
+.mini th{color:var(--muted);font-weight:400;font-size:14px}
+.mini td:first-child,.mini th:first-child{text-align:left}
+.mini tr.live td{background:var(--blue-fill)}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:0 14px;min-height:44px;background:var(--card);cursor:pointer;font-weight:700}
+.hint{color:var(--muted);font-size:15px;margin:0}
+
+.nw{white-space:nowrap}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 8px}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
+.lim{display:inline-flex;flex-direction:column;font-size:.68em;line-height:1.05;vertical-align:middle;margin-left:1px}
+.lim sub,.lim sup{vertical-align:baseline;font-size:1em}
+/* math bits */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
+.frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+.frac>span:last-child{padding:0 3px}
+s.cancel{text-decoration-color:var(--red);text-decoration-thickness:2px}
+i.v{font-style:italic;font-family:"Times New Roman",Georgia,serif;font-size:1.08em}
+
+/* ---------- cheatsheet ---------- */
+.sheet{columns:2 420px;column-gap:18px;padding-bottom:30px}
+.panelc{break-inside:avoid;display:inline-block;width:100%;position:relative;isolation:isolate;padding:0 16px 14px;margin:0 0 18px}
+.panelc::before{content:"";position:absolute;inset:14px 0 0 0;z-index:-1;border:1.5px solid var(--ink);border-radius:12px;background-color:var(--card);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:18px 18px}
+.panelc>h4{display:inline-block;margin:0 0 10px -2px;background:var(--amber-fill);color:var(--ink);border:1.5px solid var(--ink);border-radius:8px;padding:2px 12px;font-size:16px}
+.panelc table{width:100%;border-collapse:collapse;font-size:16.5px;background:var(--card)}
+.panelc th,.panelc td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:middle}
+.panelc th{font-size:15px;color:var(--muted);font-weight:700}
+.big{font-size:21px;font-weight:700;text-align:center;margin:4px 0 8px}
+.note{border-left:4px solid var(--red);background:var(--red-fill);border-radius:6px;padding:8px 12px;margin:10px 0 0;font-size:16px}
+.note b{color:var(--red)}
+.anno{color:var(--blue);font-size:15px}
+.wrongright{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.wrongright div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:16.5px}
+.wrongright .x{color:var(--red)} .wrongright .ok{color:var(--green)}
+.steps{margin:6px 0 0;padding:0;list-style:none;font-size:17px}
+.steps li{padding:3px 0}
+.steps li .tagop{color:var(--blue);font-size:14px;float:right;white-space:nowrap;margin-left:10px}
+.badge{display:inline-block;font-size:12px;font-weight:700;background:var(--red-fill);color:var(--red);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+.cmini{width:96px;min-width:84px;height:auto;display:block}
+.miniq{width:72px;height:auto;display:block}
+.panelc td.anno{font-size:14px;white-space:nowrap}
+.sheetfoot{color:var(--muted);font-size:14px;padding:0 0 30px}
+
+footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
+
+/* ---------- phone / portrait ---------- */
+@media (max-width:860px), (orientation:portrait) and (max-width:1100px){
+  .play{grid-template-columns:1fr}
+  .stage{position:sticky;top:56px;z-index:3;padding:6px}
+  .stage svg{max-height:46vh}
+  .steptext{font-size:18px;min-height:0}
+}
+@media (max-width:520px){
+  .panelc td.anno{white-space:normal}
+  .cmini{width:84px;min-width:84px}
+  .panelc td:first-child:has(.cmini){width:88px;padding:4px}
+  .bar .crumb{display:none}
+  .panelc table{font-size:15px}
+  .panelc th,.panelc td{padding:6px 5px}
+  body{font-size:16px}
+  .hero h2{font-size:25px}
+  .bar h1{font-size:17px}
+  .share{padding:0 10px}
+  .wrongright{grid-template-columns:1fr}
+  .stage svg{max-height:40vh}
+}
+@media print{
+  .bar,.tabs,footer{display:none}
+  body{background:#fff}
+  .panelc::before{border-color:#000}
+}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <button class="back" id="back" aria-label="Back">‹</button>
+  <h1 id="title">Coach Minyi's Maths Hub</h1>
+  <button class="share" id="share" hidden>Copy link</button>
+</div></header>
+
+<main class="wrap" id="app"></main>
+<footer>Coach Minyi's Maths Hub · drag the sliders, press Next, play around</footer>
+
+<script>
+/* =====================================================================
+   DATA — add a topic here. level = which section it shows under.
+   ===================================================================== */
+const LEVELS = [
+  {id:"sec1", name:"Sec 1"},
+  {id:"sec2", name:"Sec 2"},
+  {id:"emath", name:"E-Math (Sec 3–4)"},
+  {id:"amath", name:"A-Math (Sec 3–4)"}
+];
+
+const TOPICS = [
+  {id:"a-plus-b-squared", levels:["sec2"], chapter:"Expansion & Factorisation",
+   title:"Why (a + b)² = a² + 2ab + b²", blurb:"Cut a square into 4 pieces and see where the 2ab comes from.", play:"squareAB", sheet:"expansion"},
+  {id:"complete-square", levels:["emath","amath"], chapter:"Quadratic Functions",
+   title:"Completing the square, with areas", blurb:"Cut, move and fill in the missing corner.", play:"complSq", sheet:"complSq", sheetTitle:"Completing the square"},
+  {id:"quad-forms", levels:["emath","amath"], chapter:"Quadratic Functions",
+   title:"Quadratic graphs: 3 forms", blurb:"Drag the turning point. See all three forms change together.", play:"quadForms", sheet:"quadGraphs", sheetTitle:"Quadratic graphs"},
+  {id:"discriminant", levels:["amath"], chapter:"Equations & Inequalities",
+   title:"Line meets curve: b² − 4ac", blurb:"Slide a line: cuts, touches or misses?", play:"discrim", sheet:"discrim", sheetTitle:"b² − 4ac (discriminant)"},
+  {id:"unit-circle", levels:["amath","emath"], chapter:"Trigonometry",
+   title:"Unit circle & ASTC", blurb:"Why sin 150° = sin 30°, and where the signs come from.", play:"unitCircle", sheet:"trigAngles", sheetTitle:"Trig ratios of any angle"},
+  {id:"trig-graphs", levels:["amath"], chapter:"Trigonometry",
+   title:"Trig graphs: what a, b, c do", blurb:"Stretch, squeeze and shift sin, cos and tan.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
+  {id:"r-formula", levels:["amath"], chapter:"Trigonometry",
+   title:"R-formula: two waves make one", blurb:"Where R and α come from, and why max = R.", play:"rFormula", sheet:"rFormula", sheetTitle:"R-formula"},
+  {id:"circle-props", levels:["emath","amath"], chapter:"Properties of Circles",
+   title:"Circle angle properties", blurb:"Drag points and watch the angles stay true. 7 properties.", play:"circleProps", sheet:"circles", sheetTitle:"Circle properties"},
+  {id:"diff-x-squared", levels:["amath"], chapter:"Differentiation",
+   title:"Why x² differentiates to 2x", blurb:"Grow a square by h, then shrink h to 0.", play:"diffSquare", sheet:"diffBasics"},
+  {id:"tangent-gradient", levels:["amath"], chapter:"Differentiation",
+   title:"Tangents, gradient & stationary points", blurb:"Slide the tangent. Uphill, downhill, flat.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Differentiation: rules & uses"},
+  {id:"area-under", levels:["amath"], chapter:"Integration",
+   title:"Area under a curve", blurb:"Rectangles become an integral, and the below-axis trap.", play:"areaAid", sheet:"integration", sheetTitle:"Integration & area"}
+];
+
+/* =====================================================================
+   helpers
+   ===================================================================== */
+const $ = (s,el=document)=>el.querySelector(s);
+const h = (tag,attrs={},html="")=>{const e=document.createElement(tag);for(const k in attrs)e.setAttribute(k,attrs[k]);e.innerHTML=html;return e};
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs={},text){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+const fmt=(n,d=2)=>{const s=(+n).toFixed(d);return s.replace(/\.?0+$/,"")||"0"};
+const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const V=s=>`<i class="v">${s}</i>`;
+
+/* =====================================================================
+   PLAY 1 — (a+b)^2 area model
+   ===================================================================== */
+const squareAB = {
+  steps:[
+    {t:()=>`Here is a square. Each side is ${V("a")} + ${V("b")}.<br>So its area is (${V("a")} + ${V("b")})².`, show:{split:false}},
+    {t:()=>`Cut each side into ${V("a")} and ${V("b")}. The square breaks into <b>4 pieces</b>.`, show:{split:true}},
+    {t:()=>`Top-left piece: ${V("a")} × ${V("a")} = <span class="k-blue">${V("a")}²</span>`, show:{split:true,hi:"aa"}},
+    {t:()=>`Two rectangles: ${V("a")} × ${V("b")} each.<br>Together = <span class="k-amber">2${V("ab")}</span>`, show:{split:true,hi:"ab"}},
+    {t:()=>`Bottom-right piece: ${V("b")} × ${V("b")} = <span class="k-red">${V("b")}²</span>`, show:{split:true,hi:"bb"}},
+    {t:()=>`Add all 4 pieces:<br><b>(${V("a")} + ${V("b")})² = <span class="k-blue">${V("a")}²</span> + <span class="k-amber">2${V("ab")}</span> + <span class="k-red">${V("b")}²</span></b>`, show:{split:true,hi:"all"}},
+    {t:()=>`<span class="k-red">Common mistake:</span> (${V("a")} + ${V("b")})² = ${V("a")}² + ${V("b")}² ✗<br>That forgets the <span class="k-amber">2 rectangles</span>!`, show:{split:true,hi:"mistake"}}
+  ],
+  mount(stage,panel){
+    const st={a:5,b:3,step:0};
+    const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side a plus b split into four pieces"});
+    stage.append(svg);
+    panel.innerHTML=`
+      <div class="box">${stepHeader(this.steps.length)}<p class="steptext"></p></div>
+      <div class="nav"><button class="btn" data-prev>‹ Back</button><button class="btn primary" data-next>Next ›</button></div>
+      <div class="box">
+        <div class="ctrl"><label for="sa">a</label><input id="sa" type="range" min="1" max="8" step="1" value="5"><output></output></div>
+        <div class="ctrl"><label for="sb">b</label><input id="sb" type="range" min="1" max="6" step="1" value="3"><output></output></div>
+        <div class="readout" id="ro"></div>
+      </div>
+      <p class="hint">Drag the sliders. The rule works for any a and b.</p>`;
+    const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
+    const draw=()=>{
+      const {a,b,step}=st, S=this.steps[step].show;
+      sa.nextElementSibling.textContent=a; sb.nextElementSibling.textContent=b;
+      svg.innerHTML="";
+      const sc=92/(a+b), x0=26, y0=12, A=a*sc, B=b*sc, T=A+B;
+      const fade=k=>{ if(!S.split) return 1; if(!S.hi||S.hi==="all") return 1;
+        if(S.hi==="mistake") return k==="ab"?1:.45; return S.hi===k?1:.25; };
+      if(!S.split){
+        svg.append(svgEl("rect",{x:x0,y:y0,width:T,height:T,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.8}));
+        svg.append(svgEl("text",{x:x0+T/2,y:y0+T/2+2.5,"text-anchor":"middle","font-size":7,fill:"var(--ink)","font-style":"italic"},"(a + b)²"));
+        // side labels whole
+        svg.append(svgEl("text",{x:x0+T/2,y:y0-3.5,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic"},"a + b"));
+        svg.append(svgEl("text",{x:x0-3.5,y:y0+T/2+2,"text-anchor":"end","font-size":6,fill:"var(--ink)","font-style":"italic"},"a + b"));
+      } else {
+        const piece=(x,y,w,hh,fill,lab,col,k)=>{
+          const g=svgEl("g",{opacity:fade(k)});
+          g.append(svgEl("rect",{x,y,width:w,height:hh,fill,stroke:"var(--ink)","stroke-width":.8}));
+          const fs=Math.max(3.4,Math.min(7,Math.min(w,hh)*.42));
+          g.append(svgEl("text",{x:x+w/2,y:y+hh/2+fs*.35,"text-anchor":"middle","font-size":fs,fill:col,"font-weight":700,"font-style":"italic"},lab));
+          if(S.hi==="mistake"&&k==="ab"){
+            g.append(svgEl("rect",{x:x+1,y:y+1,width:w-2,height:hh-2,fill:"none",stroke:"var(--red)","stroke-width":1.2,"stroke-dasharray":"2.5 1.5"}));
+          }
+          svg.append(g);
+        };
+        piece(x0,y0,A,A,"var(--blue-fill)","a²","var(--blue)","aa");
+        piece(x0+A,y0,B,A,"var(--amber-fill)","ab","var(--amber)","ab");
+        piece(x0,y0+A,A,B,"var(--amber-fill)","ab","var(--amber)","ab");
+        piece(x0+A,y0+A,B,B,"var(--red-fill)","b²","var(--red)","bb");
+        // side labels split with ticks
+        const lab=(x,y,t,anchor="middle")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:"var(--ink)","font-style":"italic"},t));
+        lab(x0+A/2,y0-3.5,"a"); lab(x0+A+B/2,y0-3.5,"b");
+        lab(x0-3.5,y0+A/2+2,"a","end"); lab(x0-3.5,y0+A+B/2+2,"b","end");
+        [[x0,y0-1.5,x0,y0-6],[x0+A,y0-1.5,x0+A,y0-6],[x0+T,y0-1.5,x0+T,y0-6],
+         [x0-1.5,y0,x0-6,y0],[x0-1.5,y0+A,x0-6,y0+A],[x0-1.5,y0+T,x0-6,y0+T]]
+         .forEach(([x1,y1,x2,y2])=>svg.append(svgEl("line",{x1,y1,x2,y2,stroke:"var(--muted)","stroke-width":.5})));
+      }
+      // readout (numbers check)
+      const tot=(a+b)**2;
+      svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
+        S.split?`${a*a} + ${2*a*b} + ${b*b} = ${tot}  =  (${a} + ${b})²`:`(${a} + ${b})² = ${tot}`));
+      ro.innerHTML=`<div class="row">Check with numbers:</div>
+        <div class="row">(${a} + ${b})² = ${a+b}² = <b>${tot}</b></div>
+        <div class="row"><span class="k-blue">${a}²</span> + <span class="k-amber">2(${a})(${b})</span> + <span class="k-red">${b}²</span> = <span class="k-blue">${a*a}</span> + <span class="k-amber">${2*a*b}</span> + <span class="k-red">${b*b}</span> = <b>${tot}</b> ✓</div>
+        ${S.hi==="mistake"?`<div class="row"><span class="k-red">${a*a} + ${b*b} = ${a*a+b*b} ✗ (short by ${2*a*b})</span></div>`:""}`;
+      setStep(panel,this.steps,step);
+    };
+    sa.oninput=()=>{st.a=+sa.value;draw()}; sb.oninput=()=>{st.b=+sb.value;draw()};
+    wireNav(panel,this.steps,st,draw);
+    draw();
+  }
+};
+
+/* =====================================================================
+   PLAY 2 — differentiation: grow square x by h, h -> 0
+   ===================================================================== */
+const diffSquare = {
+  steps:[
+    {t:()=>`A square with side ${V("x")}.<br>Area = <span class="k-blue">${V("x")}²</span>.<br><span class="hint">Not tested in exams. This just shows why ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}.</span>`, show:{grow:false}},
+    {t:()=>`Make each side longer by an amount ${V("h")} (we'll shrink it later).<br>New side = ${V("x")} + ${V("h")}.`, show:{grow:true}},
+    {t:()=>`Extra area = <span class="k-amber">2 strips</span> (${V("x")} × ${V("h")} each) + <span class="k-red">tiny corner</span> (${V("h")} × ${V("h")})<br>= <span class="k-amber">2${V("xh")}</span> + <span class="k-red">${V("h")}²</span>`, show:{grow:true,hi:"extra"}},
+    {t:()=>`Rate of change of area = extra area ÷ extra length:<br>
+       <span class="m">${frac(`2${V("xh")} + ${V("h")}²`,V("h"))} = ${frac(`<s class="cancel">${V("h")}</s>(2${V("x")} + ${V("h")})`,`<s class="cancel">${V("h")}</s>`)} = 2${V("x")} + ${V("h")}</span>
+       <br><span class="hint">Divide numerator and denominator by ${V("h")}.</span>`, show:{grow:true,hi:"extra"}},
+    {t:()=>`Now make ${V("h")} smaller and smaller. Press <b>▶ Shrink h</b>.<br>Watch the rate get closer to 2${V("x")}.`, show:{grow:true,hi:"extra",shrink:true}},
+    {t:()=>`As ${V("h")} → 0, the <span class="k-red">corner</span> disappears and only the <span class="k-amber">2 strips</span> are left.<br>Rate → <b>2${V("x")}</b>. That's why ${frac("d","d"+V("x"))}(${V("x")}²) = <b>2${V("x")}</b>.`, show:{grow:true,hi:"extra",shrink:true}}
+  ],
+  mount(stage,panel){
+    const st={x:3,h:1.5,step:0,anim:null};
+    const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side x grown by h"});
+    stage.append(svg);
+    panel.innerHTML=`
+      <div class="box">${stepHeader(this.steps.length)}<p class="steptext"></p></div>
+      <div class="nav"><button class="btn" data-prev>‹ Back</button><button class="btn primary" data-next>Next ›</button></div>
+      <div class="box">
+        <div class="ctrl"><label for="sx">x</label><input id="sx" type="range" min="1" max="6" step="0.5" value="3"><output></output></div>
+        <div class="ctrl"><label for="sh">h</label><input id="sh" type="range" min="0" max="1000" step="1" value="0"><output></output></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px" id="shrinkrow">
+          <button class="pill" id="shrink">▶ Shrink h</button>
+          <button class="pill" id="reset">↺ h = 1.5</button>
+        </div>
+        <div class="readout" id="ro"></div>
+      </div>`;
+    const sx=$("#sx",panel), sh=$("#sh",panel), ro=$("#ro",panel);
+    // h slider is logarithmic so tiny h is reachable: 0..1000 -> 0.001..3
+    const hFromS=v=>0.001*Math.pow(3000,v/1000);
+    const sFromH=hv=>Math.round(1000*Math.log(hv/0.001)/Math.log(3000));
+    const hFmt=hv=> hv>=1?fmt(hv,2): hv>=0.1?fmt(hv,2): hv>=0.01?fmt(hv,3): fmt(hv,4);
+    sh.value=sFromH(st.h);
+    const draw=()=>{
+      const {x,step}=st, hh=st.h, S=this.steps[step].show;
+      sx.nextElementSibling.textContent=fmt(x,1); sh.nextElementSibling.textContent=hFmt(hh);
+      $("#shrinkrow",panel).style.display=S.grow?"flex":"none";
+      sh.disabled=!S.grow;
+      svg.innerHTML="";
+      const sc=92/(x+3), x0=26, y0=12, X=x*sc, H=S.grow?hh*sc:0;
+      const strong=S.hi==="extra";
+      svg.append(svgEl("rect",{x:x0,y:y0,width:X,height:X,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.8}));
+      svg.append(svgEl("text",{x:x0+X/2,y:y0+X/2+3,"text-anchor":"middle","font-size":Math.max(5,Math.min(9,X*.25)),fill:"var(--blue)","font-weight":700,"font-style":"italic"},"x²"));
+      if(S.grow && H>0){
+        const sw=H<1.2?.3:.8;
+        svg.append(svgEl("rect",{x:x0+X,y:y0,width:H,height:X,fill:"var(--amber-fill)",stroke:"var(--amber)","stroke-width":sw,opacity:strong?1:.85}));
+        svg.append(svgEl("rect",{x:x0,y:y0+X,width:X,height:H,fill:"var(--amber-fill)",stroke:"var(--amber)","stroke-width":sw,opacity:strong?1:.85}));
+        svg.append(svgEl("rect",{x:x0+X,y:y0+X,width:H,height:H,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":sw}));
+        if(H>=5){
+          const fs=Math.min(6,H*.45);
+          svg.append(svgEl("text",{x:x0+X+H/2,y:y0+X/2+fs*.35,"text-anchor":"middle","font-size":fs,fill:"var(--amber)","font-weight":700,"font-style":"italic"},"xh"));
+          svg.append(svgEl("text",{x:x0+X/2,y:y0+X+H/2+fs*.35,"text-anchor":"middle","font-size":fs,fill:"var(--amber)","font-weight":700,"font-style":"italic"},"xh"));
+          svg.append(svgEl("text",{x:x0+X+H/2,y:y0+X+H/2+fs*.35,"text-anchor":"middle","font-size":fs*.85,fill:"var(--red)","font-weight":700,"font-style":"italic"},"h²"));
+        }
+      }
+      // side labels
+      const L=(x,y,t,anchor="middle",col="var(--ink)")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:col,"font-style":"italic"},t));
+      L(x0+X/2,y0-3.5,"x");
+      L(x0-3.5,y0+X/2+2,"x","end");
+      if(S.grow){
+        if(H>=4){ L(x0+X+H/2,y0-3.5,"h","middle","var(--amber)"); L(x0-3.5,y0+X+H/2+2,"h","end","var(--amber)"); }
+        else { L(x0+X+H+2,y0-3.5,"h","start","var(--amber)"); }
+      }
+      // readout
+      const ex=2*x*hh+hh*hh, rate=ex/hh;
+      svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
+        !S.grow?`area = ${fmt(x*x,2)}`:step>=3?`h = ${hFmt(hh)}  ·  rate = ${fmt(rate,4)}  ·  2x = ${fmt(2*x,2)}`:`extra area = ${fmt(ex,4)}`));
+      if(!S.grow){
+        ro.innerHTML=`<div class="row">Area = ${fmt(x,1)}² = <b class="k-blue">${fmt(x*x,2)}</b></div>`;
+      } else {
+        const rows=[1,0.1,0.01,0.001].map(v=>`<tr${Math.abs(Math.log10(hh)-Math.log10(v))<.15?' class="live"':""}><td>${v}</td><td>${fmt(2*x*v+v*v,6)}</td><td>${fmt(2*x+v,6)}</td></tr>`).join("");
+        ro.innerHTML=`
+          <div class="row">Extra area = <span class="k-amber">2(${fmt(x,1)})(${hFmt(hh)})</span> + <span class="k-red">${hFmt(hh)}²</span> = <b>${fmt(ex,5)}</b></div>
+          ${step>=3?`<div class="row">Rate = ${fmt(ex,5)} ÷ ${hFmt(hh)} = <b>${fmt(rate,4)}</b></div>
+          <div class="row">Target 2${V("x")} = <b class="k-green">${fmt(2*x,2)}</b></div>`:""}
+          ${step>=3?`<table class="mini"><tr><th>h</th><th>extra area</th><th>rate = 2x + h</th></tr>${rows}</table>`:""}`;
+      }
+      setStep(panel,this.steps,step);
+    };
+    const stopAnim=()=>{ if(st.anim){cancelAnimationFrame(st.anim);st.anim=null;} };
+    sx.oninput=()=>{st.x=+sx.value;draw()};
+    sh.oninput=()=>{stopAnim();st.h=hFromS(+sh.value);draw()};
+    $("#reset",panel).onclick=()=>{stopAnim();st.h=1.5;sh.value=sFromH(1.5);draw()};
+    $("#shrink",panel).onclick=()=>{
+      stopAnim();
+      const start=performance.now(), h0=Math.max(st.h,0.002), dur=4000;
+      const tick=now=>{
+        const p=Math.min(1,(now-start)/dur);
+        st.h=h0*Math.pow(0.001/h0,p);  // smooth exponential shrink to 0.001
+        sh.value=sFromH(st.h); draw();
+        if(p<1) st.anim=requestAnimationFrame(tick); else st.anim=null;
+      };
+      st.anim=requestAnimationFrame(tick);
+    };
+    wireNav(panel,this.steps,st,()=>{stopAnim();draw()});
+    draw();
+  }
+};
+
+/* =====================================================================
+   SHARED ENGINE (Tier 1 aids)
+   ===================================================================== */
+const N=(v,d=2)=>{let s=fmt(v,d); if(s==="-0")s="0"; return s.replace("-","−")};
+const PI=Math.PI, rad=d=>d*PI/180, deg=r=>r*180/PI, norm=a=>((a%360)+360)%360;
+const X2=V("x")+"²", X1=V("x");
+function toFrac(v){
+  if(Math.abs(v-Math.round(v))<1e-9) return N(Math.round(v));
+  for(let d=2;d<=96;d++){const n=v*d; if(Math.abs(n-Math.round(n))<1e-7) return (n<0?"−":"")+frac(Math.abs(Math.round(n)),d);}
+  return N(v,3);
+}
+function fracTxt(v){ // plain-text fraction for inside SVG
+  if(Math.abs(v-Math.round(v))<1e-9) return N(Math.round(v));
+  for(let d=2;d<=8;d++){const n=v*d; if(Math.abs(n-Math.round(n))<1e-7) return (n<0?"−":"")+Math.abs(Math.round(n))+"/"+d;}
+  return N(v);
+}
+function poly(cs){ // [[coef, varHTML], ...] -> "2x² − 4x + 1"
+  let out="";
+  cs.forEach(([c,v])=>{ if(Math.abs(c)<1e-12) return; const neg=c<0, ac=Math.abs(c);
+    const body=(v&&Math.abs(ac-1)<1e-12)?v:N(ac)+v;
+    out+=out?(neg?" − ":" + ")+body:(neg?"−":"")+body; });
+  return out||"0";
+}
+const br=(h,v=X1)=>Math.abs(h)<1e-12?v:`(${v} ${h>0?"−":"+"} ${N(Math.abs(h))})`;
+const coefStr=a=>a===1?"":a===-1?"−":N(a);
+const sf3=v=>N(+(+v).toPrecision(3),4);
+const piFrac=dg=>{const v=dg/180; if(Math.abs(v)<1e-9) return "0"; for(let q=1;q<=12;q++){const p=v*q; if(Math.abs(p-Math.round(p))<1e-9){const P=Math.round(p); return (P===1?"":P===-1?"−":P)+"π"+(q>1?"/"+q:"");}} return N(v*Math.PI,3);};
+const AL='<span class="k-red">α</span>';
+const kStr=k=>Math.abs(k)<1e-12?"":(k>0?" + ":" − ")+N(Math.abs(k));
+
+function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
+function dragger(svg,cb){
+  let id=null;
+  svg.addEventListener("pointerdown",e=>{const t=e.target.closest("[data-drag]"); if(!t) return;
+    id=t.getAttribute("data-drag"); try{svg.setPointerCapture(e.pointerId)}catch(_){}; e.preventDefault(); cb(id,svgPt(svg,e));});
+  svg.addEventListener("pointermove",e=>{ if(id){ e.preventDefault(); cb(id,svgPt(svg,e)); } });
+  ["pointerup","pointercancel"].forEach(k=>svg.addEventListener(k,()=>{id=null}));
+}
+function handle(svg,x,y,id,col="var(--accent)"){
+  svg.append(svgEl("circle",{cx:x,cy:y,r:7,fill:"transparent","data-drag":id,style:"cursor:grab"}));
+  svg.append(svgEl("circle",{cx:x,cy:y,r:2.6,fill:col,stroke:"var(--card)","stroke-width":.9,"pointer-events":"none"}));
+}
+function ringHandle(svg,x,y,id,tag=true){
+  svg.append(svgEl("circle",{cx:x,cy:y,r:7,fill:"transparent","data-drag":id,style:"cursor:grab"}));
+  svg.append(svgEl("circle",{cx:x,cy:y,r:2.6,fill:"var(--card)",stroke:"var(--muted)","stroke-width":1,"pointer-events":"none"}));
+  if(tag) svg.append(svgEl("text",{x:x-4,y:y+1.3,"text-anchor":"end","font-size":3.6,fill:"var(--muted)","pointer-events":"none"},"drag"));
+}
+const S_=(svg,tag,a,t)=>{const e=svgEl(tag,a,t); svg.append(e); return e};
+const seg=(svg,P,Q,a={})=>S_(svg,"line",Object.assign({x1:P[0],y1:P[1],x2:Q[0],y2:Q[1],stroke:"var(--ink)","stroke-width":.7},a));
+const lab=(svg,P,t,a={})=>S_(svg,"text",Object.assign({x:P[0],y:P[1],"font-size":4.6,fill:"var(--ink)","text-anchor":"middle"},a),t);
+const dirTo=(P,Q)=>deg(Math.atan2(-(Q[1]-P[1]),Q[0]-P[0]));
+function arcMark(svg,c,r,a0,sw,col,label,lr=4.6){
+  let d=""; const n=Math.max(6,Math.ceil(Math.abs(sw)/4));
+  for(let i=0;i<=n;i++){const a=rad(a0+sw*i/n); d+=(i?"L":"M")+(c[0]+r*Math.cos(a)).toFixed(2)+" "+(c[1]-r*Math.sin(a)).toFixed(2);}
+  S_(svg,"path",{d,fill:"none",stroke:col,"stroke-width":.9});
+  if(label!=null){const a=rad(a0+sw/2),R=r+lr; S_(svg,"text",{x:c[0]+R*Math.cos(a),y:c[1]-R*Math.sin(a)+1.6,"text-anchor":"middle","font-size":4.2,fill:col,"font-weight":700},label);}
+}
+function angAt(svg,V,A,B,col,r=7,showLabel=true){ // inner angle at V between VA and VB (<180)
+  let a=dirTo(V,A), b=dirTo(V,B), s=norm(b-a), st=a; if(s>180){st=b;s=360-s;}
+  arcMark(svg,V,r,st,s,col,showLabel?N(Math.round(s*10)/10,1)+"°":null);
+  return s;
+}
+function rightMark(svg,V,A,B,sz=3.6,col="var(--ink)"){
+  const u=(P)=>{const dx=P[0]-V[0],dy=P[1]-V[1],L=Math.hypot(dx,dy)||1;return[dx/L,dy/L]};
+  const a=u(A),b=u(B), p1=[V[0]+a[0]*sz,V[1]+a[1]*sz], p3=[V[0]+b[0]*sz,V[1]+b[1]*sz], p2=[p1[0]+b[0]*sz,p1[1]+b[1]*sz];
+  S_(svg,"path",{d:`M${p1}L${p2}L${p3}`,fill:"none",stroke:col,"stroke-width":.7});
+}
+
+/* graph engine: o = {l,t,w,h,x0,x1,y0,y1,xs,ys,xl,yl,xf} */
+function ginv(o,p){return [o.x0+(p.x-o.l)/o.w*(o.x1-o.x0), o.y1-(p.y-o.t)/o.h*(o.y1-o.y0)]}
+function graph(svg,o){
+  const X=x=>o.l+(x-o.x0)/(o.x1-o.x0)*o.w, Y=y=>o.t+(o.y1-y)/(o.y1-o.y0)*o.h;
+  const add=(tag,a,t)=>S_(svg,tag,a,t);
+  const cid="clip"+(++graph.n);
+  const defs=add("defs"), cp=svgEl("clipPath",{id:cid}); cp.append(svgEl("rect",{x:o.l,y:o.t,width:o.w,height:o.h})); defs.append(cp);
+  const xs=o.xs||1, ys=o.ys||1, xl=o.xl||xs*2, yl=o.yl||ys*2, xf=o.xf||(v=>N(v));
+  const on=(v,s)=>Math.abs(v/s-Math.round(v/s))<1e-6;
+  for(let i=Math.ceil(o.x0/xs-1e-9);i*xs<=o.x1+1e-9;i++){const x=i*xs; add("line",{x1:X(x),x2:X(x),y1:o.t,y2:o.t+o.h,stroke:"var(--grid2)","stroke-width":on(x,xl)?.35:.18});}
+  for(let i=Math.ceil(o.y0/ys-1e-9);i*ys<=o.y1+1e-9;i++){const y=i*ys; add("line",{y1:Y(y),y2:Y(y),x1:o.l,x2:o.l+o.w,stroke:"var(--grid2)","stroke-width":on(y,yl)?.35:.18});}
+  const ax=Math.min(Math.max(0,o.y0),o.y1), ay=Math.min(Math.max(0,o.x0),o.x1);
+  add("line",{x1:o.l,x2:o.l+o.w,y1:Y(ax),y2:Y(ax),stroke:"var(--ink)","stroke-width":.55});
+  add("line",{x1:X(ay),x2:X(ay),y1:o.t,y2:o.t+o.h,stroke:"var(--ink)","stroke-width":.55});
+  for(let i=Math.ceil(o.x0/xl-1e-9);i*xl<=o.x1+1e-9;i++){const x=i*xl; if(Math.abs(x)<1e-9) continue;
+    add("text",{x:X(x),y:Y(ax)+4.6,"text-anchor":X(x)>o.l+o.w-3?"end":"middle","font-size":3.7,fill:"var(--muted)"},xf(x));}
+  for(let i=Math.ceil(o.y0/yl-1e-9);i*yl<=o.y1+1e-9;i++){const y=i*yl; if(Math.abs(y)<1e-9||Math.abs(Y(y)-o.t)<4) continue;
+    add("text",{x:X(ay)-1.4,y:Y(y)+1.3,"text-anchor":"end","font-size":3.7,fill:"var(--muted)"},N(y));}
+  add("text",{x:o.l+o.w-1,y:Y(ax)-3,"text-anchor":"end","font-size":4.4,"font-style":"italic",fill:"var(--ink)"},o.xn||"x");
+  add("text",{x:X(ay)+1.6,y:o.t+4,"font-size":4.4,"font-style":"italic",fill:"var(--ink)"},o.yn||"y");
+  const g={X,Y,add,cid};
+  g.plot=(f,a={},xa=o.x0,xb=o.x1,n=360)=>{let d="",pen=false,py=null; const R=o.y1-o.y0;
+    for(let i=0;i<=n;i++){const x=xa+(xb-xa)*i/n, y=f(x);
+      if(!isFinite(y)||y>o.y1+R||y<o.y0-R||(py!==null&&Math.abs(y-py)>R)){pen=false;py=isFinite(y)?y:null;continue;}
+      d+=(pen?"L":"M")+X(x).toFixed(2)+" "+Y(y).toFixed(2); pen=true; py=y;}
+    return add("path",Object.assign({d,fill:"none","clip-path":`url(#${cid})`,"stroke-width":1.1,stroke:"var(--blue)","stroke-linejoin":"round"},a));};
+  g.line=(x1,y1,x2,y2,a={})=>add("line",Object.assign({x1:X(x1),y1:Y(y1),x2:X(x2),y2:Y(y2),"clip-path":`url(#${cid})`,stroke:"var(--ink)","stroke-width":.6},a));
+  g.dot=(x,y,col="var(--ink)",r=1.5)=>add("circle",{cx:X(x),cy:Y(y),r,fill:col});
+  g.text=(x,y,s,a={})=>add("text",Object.assign({x:X(x),y:Y(y),"font-size":4.3,fill:"var(--ink)"},a),s);
+  g.poly=(pts,a={})=>add("polygon",Object.assign({points:pts.map(([x,y])=>X(x).toFixed(2)+","+Y(y).toFixed(2)).join(" "),"clip-path":`url(#${cid})`},a));
+  return g;
+}
+graph.n=0;
+
+/* generic aid framework: steps (t, set, name), sliders, pills, buttons, draw, readout, drag */
+function aid(def){return {steps:def.steps, mount(stage,panel){
+  const st=Object.assign({step:0},JSON.parse(JSON.stringify(def.init)));
+  const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
+  stage.append(svg);
+  const jump=def.jump?`<div class="pillrow">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
+  panel.innerHTML=`${jump}<div class="box">${stepHeader(def.steps.length)}<p class="steptext"></p></div>
+    <div class="nav"><button class="btn" data-prev>‹ Back</button><button class="btn primary" data-next>Next ›</button></div>
+    <div class="box">
+      ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
+      ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${s.k}"><output></output></div>`).join("")}
+      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
+      <div class="readout"></div>
+    </div>
+    ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
+  const ro=$(".readout",panel);
+  const draw=()=>{
+    const S=def.steps[st.step];
+    (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,panel), inp=$("input",row);
+      inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
+    (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,panel).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
+    panel.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
+    (def.buttons||[]).forEach((b,i)=>{$(`[data-b="${i}"]`,panel).style.display=(b.show&&!b.show(st))?"none":"";});
+    svg.innerHTML=""; def.draw(svg,st); bumpText(svg);
+    ro.innerHTML=def.readout?def.readout(st):"";
+    setStep(panel,def.steps,st.step,st);
+  };
+  const go=i=>{st.step=i; const S=def.steps[i]; if(S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); draw();};
+  (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,panel).addEventListener("input",e=>{st[s.k]=+e.target.value; s.on&&s.on(st); draw();}));
+  (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,panel).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
+    const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); draw();}));
+  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,panel).addEventListener("click",()=>{b.fn(st); draw();}));
+  panel.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>go(+b.dataset.j));
+  $("[data-prev]",panel).onclick=()=>{if(st.step>0) go(st.step-1)};
+  $("[data-next]",panel).onclick=()=>{if(st.step<def.steps.length-1) go(st.step+1)};
+  if(def.drag) dragger(svg,(id,p)=>{def.drag(id,p,st); draw();});
+  go(0);
+}}}
+function bumpText(svg){ // keep diagram text >= ~12px on small screens
+  const w=svg.getBoundingClientRect().width, vb=svg.viewBox.baseVal; if(!w||!vb) return;
+  const ppu=w/vb.width, min=12/ppu; if(ppu>=3.2) return;
+  svg.querySelectorAll("text").forEach(t=>{const fs=parseFloat(t.getAttribute("font-size")); if(fs&&fs<min) t.setAttribute("font-size",min.toFixed(2));});
+}
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const snap=(v,s)=>Math.round(v/s)*s;
+const signWord=(m)=>Math.abs(m)<1e-9?`<span class="k-amber">= 0</span>`:m>0?`<span class="k-green">&gt; 0</span>`:`<span class="k-red">&lt; 0</span>`;
+
+/* =====================================================================
+   1. QUADRATIC FORMS
+   ===================================================================== */
+const QBOX={l:12,t:4,w:124,h:112,x0:-6,x1:6,y0:-8,y1:8,xs:1,xl:2,ys:1,yl:2};
+function quadInfo(s){
+  const b=-2*s.a*s.h, c=s.a*s.h*s.h+s.k, q=-s.k/s.a;
+  let roots=[]; if(q>1e-12){const d=Math.sqrt(q); roots=[s.h-d,s.h+d];} else if(Math.abs(q)<1e-12) roots=[s.h];
+  const S=q>1e-12?surd(q):null, exact=!S||S.r===1;
+  const rats=roots.map(r=>ratOf(r,4)), nice=roots.length>0&&rats.every(Boolean);
+  return {b,c,q,roots,S,exact,rats,nice};
+}
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+function ratOf(v,maxD=48){for(let d=1;d<=maxD;d++){const n=v*d; if(Math.abs(n-Math.round(n))<1e-7) return [Math.round(n),d];} return null;}
+function surd(q){const f=ratOf(q); if(!f) return null; const [n,m]=f; let r=n*m,k=1; for(let i=2;i*i<=r;i++) while(r%(i*i)===0){r/=i*i;k*=i;} const g=gcd(k,m); return {k:k/g,m:m/g,r};}
+const rootsTxt=(s,I)=>{
+  if(I.exact) return `${X1} = <span class="nw">${I.roots.map(toFrac).join(" or ")}</span>`;
+  const S=I.S, sd=`${S.k>1?S.k:""}√${S.r}${S.m>1?"/"+S.m:""}`;
+  return `<span class="nw">${X1} = ${Math.abs(s.h)<1e-12?"":N(s.h)+" "}± ${sd}</span> ≈ <span class="nw">${sf3(I.roots[0])} or ${sf3(I.roots[1])} (3 s.f.)</span>`;};
+function quadFact(s,I){
+  if(!I.nice) return null;
+  const brk=([n,d])=>n===0?(d===1?X1:d+X1):`(${d===1?"":d}${X1} ${n>0?"−":"+"} ${Math.abs(n)})`;
+  const D=I.rats.length===2?I.rats[0][1]*I.rats[1][1]:I.rats[0][1]**2, C=s.a/D;
+  const cs=Math.abs(C-1)<1e-12?"":Math.abs(C+1)<1e-12?"−":toFrac(C);
+  return I.rats.length===2?`${cs}${brk(I.rats[0])}${brk(I.rats[1])}`:`${cs}${brk(I.rats[0])}²`;
+}
+const quadForms=aid({
+  init:{a:1,h:2,k:-3}, label:"Parabola with a draggable turning point",
+  sliders:[{k:"a",label:"a",min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"h",label:"h",min:-4,max:4,step:.5},{k:"k",label:"k",min:-6,max:6,step:.5}],
+  steps:[
+    {set:{a:1,h:2,k:-3}, t:()=>`${V("y")} = (${X1} − ${V("h")})² + ${V("k")} has its <b>turning point at (${V("h")}, ${V("k")})</b>.<br>Drag the dot on the graph.`},
+    {set:{a:1,h:2,k:-3}, t:()=>`Watch the sign! <b>(${X1} − 2)²</b> moves the graph <b>right</b> 2.<br><b>(${X1} + 2)²</b> moves it <b>left</b> 2. Try the ${V("h")} slider.`},
+    {set:{a:-1,h:2,k:3}, t:()=>`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}:<br>${V("a")} &gt; 0: smile ∪ → <b>minimum</b> point.<br>${V("a")} &lt; 0: frown ∩ → <b>maximum</b> point. Bigger ${V("a")} (ignoring sign) → narrower.`},
+    {set:{a:1,h:1,k:-4}, t:s=>{const I=quadInfo(s); return `Expand the bracket → ${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])}.<br>The number on its own, <b>${N(I.c)}</b>, is where the curve cuts the ${V("y")}-axis.`}},
+    {t:s=>{const I=quadInfo(s);
+      if(I.roots.length===2) return I.nice?`It cuts the ${X1}-axis where ${V("y")} = 0:<br>${V("y")} = ${quadFact(s,I)} → ${rootsTxt(s,I)}.`:`It cuts the ${X1}-axis where ${V("y")} = 0:<br>${rootsTxt(s,I)}.${I.exact?"":" It doesn't factorise nicely."}`;
+      if(I.roots.length===1) return `It just <b>touches</b> the ${X1}-axis at ${X1} = ${toFrac(I.roots[0])} (one repeated root).`;
+      return `It never reaches the ${X1}-axis → <b>no real roots</b>.`;}},
+    {t:()=>`Line of symmetry: ${X1} = ${V("h")}. It is exactly halfway between the two roots.`},
+    {set:{a:1,h:1,k:2}, t:s=>{const I=quadInfo(s); return `${s.a>0?"Minimum":"Maximum"} value of ${V("y")} = ${V("k")} = <b>${N(s.k)}</b>, when ${X1} = ${N(s.h)}.<br>${I.roots.length===0?`The curve never cuts the ${X1}-axis, so ${poly([[s.a,X2],[I.b,X1],[I.c,""]])} = 0 has <b>no real roots</b>.`:"Drag the turning point to see when there are no real roots."}`}}
+  ],
+  draw(svg,s){
+    const g=graph(svg,QBOX), f=x=>s.a*(x-s.h)**2+s.k, I=quadInfo(s);
+    if(s.step>=5) g.line(s.h,-8,s.h,8,{stroke:"var(--green)","stroke-dasharray":"2 1.5","stroke-width":.7});
+    g.plot(f);
+    if(s.step>=3){g.dot(0,I.c,"var(--amber)",1.6); g.text(0,I.c,`(0, ${N(I.c)})`,{dx:2.5,dy:I.c>6?5:-2,fill:"var(--amber)","font-size":3.8});}
+    if(s.step>=4) I.roots.forEach(r=>{g.dot(r,0,"var(--red)",1.6);});
+    if(s.step>=5) g.text(s.h,-7.4,`x = ${N(s.h)}`,{dx:1.5,fill:"var(--green)","font-size":3.8});
+    const lx=g.X(s.h), ly=g.Y(s.k);
+    lab(svg,[lx+(s.step>=5?11:0),ly+(s.a>0?7:-4.5)],`(${N(s.h)}, ${N(s.k)})`,{"font-size":4.2,"font-weight":700,fill:"var(--accent)"});
+    handle(svg,lx,ly,"v");
+  },
+  drag(id,p,s){const [x,y]=ginv(QBOX,p); s.h=clamp(snap(x,.5),-4,4); s.k=clamp(snap(y,.5),-6,6);},
+  readout(s){const I=quadInfo(s), fct=quadFact(s,I);
+    return `<div class="row">Turning point (${N(s.h)}, ${N(s.k)}) → <b>${s.a>0?"minimum":"maximum"}</b></div>
+      <div class="row"><b>Completed square:</b> ${V("y")} = ${coefStr(s.a)}${br(s.h)}²${kStr(s.k)}</div>
+      <div class="row"><b>Expanded:</b> ${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])}</div>
+      <div class="row"><b>Factorised:</b> ${fct?`${V("y")} = ${fct}`:I.roots.length?`doesn't factorise nicely. Roots: ${rootsTxt(s,I)}`:`<span class="k-red">can't factorise (no real roots)</span>`}</div>
+      ${fct?`<div class="row hint">All three are the same curve, written 3 ways.</div>`:""}`;}
+});
+
+/* =====================================================================
+   2. DISCRIMINANT — line meets curve
+   ===================================================================== */
+const DBOX={l:12,t:4,w:124,h:112,x0:-2,x1:6,y0:-4,y1:12,xs:1,xl:2,ys:1,yl:2};
+const dInfo=s=>{const B=-(4+s.m), C=5-s.c, D=B*B-4*C; const n=Math.abs(D)<1e-9?1:D>0?2:0; return {B,C,D,n}};
+const discrim=aid({
+  init:{m:1,c:3}, label:"Curve and a movable straight line",
+  sliders:[{k:"m",label:"m",min:-4,max:4,step:.25},{k:"c",label:"c",min:-6,max:10,step:.25}],
+  buttons:[{label:"Make it a tangent",fn:s=>{s.c=5-(4+s.m)**2/4;}}],
+  steps:[
+    {set:{m:1,c:3}, t:()=>`A curve ${V("y")} = ${X2} − 4${X1} + 5 and a straight line ${V("y")} = ${V("m")}${X1} + ${V("c")}.<br>Drag the grey ring to move the line.`},
+    {t:()=>`Where do they meet? Make the two ${V("y")}'s equal:<br>${X2} − 4${X1} + 5 = ${V("m")}${X1} + ${V("c")}`},
+    {t:()=>`Bring everything to one side → a quadratic = 0.<br>Its <b>${V("b")}² − 4${V("ac")}</b> tells us how many meeting points.`},
+    {set:{m:1,c:3}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-green">&gt; 0</span> → <b>2 meeting points</b>. The line cuts the curve.`},
+    {set:{m:0,c:1}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-amber">= 0</span> → <b>1 meeting point</b>. The line is a <b>tangent</b>: it just touches.<br>Try "Make it a tangent" for any ${V("m")}.`},
+    {set:{m:0,c:-1}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-red">&lt; 0</span> → <b>no meeting points</b>. The line misses the curve.`},
+    {t:()=>`Exam words:<br>"is a tangent" → <b>= 0</b> · "cuts at 2 points" → <b>&gt; 0</b><br>"meets / intersects" → <b>≥ 0</b> · "does not meet" → <b>&lt; 0</b>`}
+  ],
+  draw(svg,s){
+    const g=graph(svg,DBOX), I=dInfo(s), col=I.n===2?"var(--green)":I.n===1?"var(--amber)":"var(--red)";
+    g.plot(x=>x*x-4*x+5);
+    g.text(3.4,11.2,"y = x² − 4x + 5",{fill:"var(--blue)","font-size":3.9,"font-style":"italic"});
+    g.line(-2,s.c-2*s.m,6,s.c+6*s.m,{stroke:col,"stroke-width":1.1});
+    let xs=[]; if(I.n>0){const sq=Math.sqrt(Math.max(I.D,0)); xs=[(-I.B-sq)/2,(-I.B+sq)/2].slice(0,I.n); xs.forEach(x=>g.dot(x,s.m*x+s.c,col,1.8));}
+    if(s.c>=-4&&s.c<=12) ringHandle(svg,g.X(0),g.Y(s.c),"c",!xs.some(x=>Math.hypot(x,s.m*x)<1));
+  },
+  drag(id,p,s){const [,y]=ginv(DBOX,p); s.c=clamp(snap(y,.25),-4,12);},
+  readout(s){const I=dInfo(s);
+    const res=I.n===2?`<span class="k-green">&gt; 0 → 2 points (cuts)</span>`:I.n===1?`<span class="k-amber">= 0 → 1 point (tangent)</span>`:`<span class="k-red">&lt; 0 → no points (misses)</span>`;
+    return `<div class="row">${X2} − 4${X1} + 5 = ${poly([[s.m,X1],[s.c,""]])}</div>
+      <div class="row">${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0</div>
+      <div class="row hint">Here ${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)} come from this equation, not from the line.</div>
+      <div class="row">${V("b")}² − 4${V("ac")} = (${N(I.B)})² − 4(1)(${N(I.C)}) = <b>${N(I.D,3)}</b></div>
+      <div class="row">${res}</div>`;}
+});
+
+/* =====================================================================
+   3. TRIG GRAPHS
+   ===================================================================== */
+const TBOX={l:12,t:4,w:124,h:112,x0:0,x1:360,y0:-6,y1:6,xs:30,xl:90,ys:1,yl:1,xf:v=>v+"°"};
+const angTxt=(s,dg)=>s.u==="rad"?piFrac(dg):N(dg)+"°";
+const TF={sin:Math.sin,cos:Math.cos,tan:Math.tan};
+const trigEq=s=>`${V("y")} = ${s.a===1?"":s.a===-1?"−":N(s.a)+" "}${s.fn} ${s.b===1?"":s.b}${X1}${s.fn==="tan"?"":kStr(s.c)}`;
+const trigGraphs=aid({
+  init:{fn:"sin",a:1,b:1,c:0,u:"deg"}, label:"Trig graph with a, b, c sliders",
+  pills:[{k:"fn",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",opts:[["deg","degrees"],["rad","radians"]]}],
+  sliders:[{k:"a",label:"a",min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"b",label:"b",min:1,max:4,step:1},{k:"c",label:"c",min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
+  steps:[
+    {set:{fn:"sin",a:1,b:1,c:0}, t:()=>`${V("y")} = sin ${X1}: <b>1 full wave</b> from 0° to 360°.<br>Max 1, min −1.`},
+    {set:{fn:"sin",a:2,b:1,c:0}, t:()=>`${V("a")} stretches it up and down.<br><b>Amplitude = ${V("a")}</b> (ignore the sign). Here ${V("a")} = 2.`},
+    {set:{fn:"sin",a:-2,b:1,c:0}, t:()=>`A <b>negative</b> ${V("a")} flips the graph upside down.`},
+    {set:{fn:"sin",a:2,b:2,c:0}, t:()=>`${V("b")} squeezes it sideways: <b>${V("b")} full waves</b> in 360°.<br>Period = 360° ÷ ${V("b")}.`},
+    {set:{fn:"sin",a:2,b:2,c:1}, t:()=>`${V("c")} moves the whole graph up or down. Middle line ${V("y")} = ${V("c")}.<br>Max = ${V("c")} + amplitude, min = ${V("c")} − amplitude.`},
+    {set:{fn:"cos",a:2,b:2,c:1}, t:()=>`cos works the same way. It just starts at its max instead of the middle (when ${V("a")} &gt; 0; a negative ${V("a")} makes it start at its min).`},
+    {set:{fn:"tan",a:1,b:1,c:0}, t:()=>`tan: no max or min, so no amplitude.<br>Period = 180° ÷ ${V("b")}. Dashed lines = asymptotes: the graph never touches them.`}
+  ],
+  draw(svg,s){
+    const g=graph(svg,Object.assign({},TBOX,{xf:v=>angTxt(s,v)})), F=TF[s.fn], amp=Math.abs(s.a);
+    g.plot(x=>F(rad(x)),{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.6});
+    if(s.fn==="tan"){
+      for(let k=0;;k++){const x=(90+180*k)/s.b; if(x>360) break; g.line(x,-6,x,6,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6});}
+    } else {
+      g.line(0,s.c,360,s.c,{stroke:"var(--green)","stroke-dasharray":"2 1.5","stroke-width":.6});
+      [s.c+amp,s.c-amp].forEach(y=>g.line(0,y,360,y,{stroke:"var(--amber)","stroke-dasharray":"1 1.5","stroke-width":.5}));
+    }
+    g.plot(x=>s.a*F(rad(s.b*x))+(s.fn==="tan"?0:s.c),{stroke:"var(--blue)","stroke-width":1.3},0,360,720);
+    lab(svg,[16,10],trigEq(s).replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.6,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+  },
+  readout(s){const amp=Math.abs(s.a);
+    if(s.fn==="tan"){const as=[];for(let k=0;;k++){const x=(90+180*k)/s.b;if(x>360)break;as.push(angTxt(s,x));}
+      return `<div class="row"><b>${trigEq(s)}</b></div><div class="row">Period = ${angTxt(s,180)} ÷ ${s.b} = <b>${angTxt(s,180/s.b)}</b></div>
+        <div class="row">No amplitude, no max or min</div><div class="row">Asymptotes at ${X1} = ${as.join(", ")}</div>`;}
+    return `<div class="row"><b>${trigEq(s)}</b></div>
+      <div class="row">Amplitude = <b>${N(amp)}</b> · Period = ${angTxt(s,360)} ÷ ${s.b} = <b>${angTxt(s,360/s.b)}</b></div>
+      <div class="row">Max = ${N(s.c)} + ${N(amp)} = <b class="k-amber">${N(s.c+amp)}</b> · Min = ${N(s.c)} − ${N(amp)} = <b class="k-amber">${N(s.c-amp)}</b></div>
+      <div class="row">Middle line <span class="k-green">${V("y")} = ${N(s.c)}</span> · ${s.b} full wave${s.b>1?"s":""} from 0 to ${angTxt(s,360)}</div>`;},
+  hint:"Grey dotted curve = the basic graph, for comparison."
+});
+
+/* =====================================================================
+   4. UNIT CIRCLE / ASTC
+   ===================================================================== */
+const UO=[70,60], UR=42;
+const EX={0:["0","1","0"],30:["½","√3/2","1/√3"],45:["√2/2","√2/2","1"],60:["√3/2","½","√3"],90:["1","0","undefined"]};
+function ucInfo(th){
+  const q=th%90===0?0:Math.floor(th/90)+1;
+  const al=q===1?th:q===2?180-th:q===3?th-180:q===4?360-th:null;
+  const z=v=>Math.abs(v)<1e-12?0:v;
+  return {q,al,s:z(Math.sin(rad(th))),c:z(Math.cos(rad(th))),t:th%180===90?null:z(Math.tan(rad(th)))};
+}
+const unitCircle=aid({
+  init:{th:30,ghost:false,solve:false,astc:false}, label:"Unit circle with draggable point P",
+  sliders:[{k:"th",label:"θ",min:0,max:360,step:1,f:v=>v+"°"}],
+  steps:[
+    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`A circle with radius 1. Point P is at angle θ, measured <b>anticlockwise</b> from the positive ${X1}-axis.<br>Drag P.`},
+    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`<span class="k-blue">Height of P = sin θ</span>. <span class="k-amber">Across = cos θ</span>.<br>sin 30° = ½: the blue side is half the radius.`},
+    {set:{th:150,ghost:true,solve:false,astc:false}, t:()=>`Reflect into Quadrant 2: θ = 150°.<br>Height is still ½ → <b>sin 150° = sin 30° = ½</b>.<br>But P is now on the left → <b>cos 150° = −cos 30°</b>.`},
+    {set:{th:210,ghost:true,solve:false,astc:false}, t:()=>`Quadrant 3 (θ = 210°): P is left <b>and</b> below → sin and cos are both negative.<br>tan = sin ÷ cos → negative ÷ negative = <b>positive</b>.`},
+    {set:{th:330,ghost:true,solve:false,astc:false}, t:()=>`Quadrant 4 (θ = 330°): P is right but below → only <b>cos</b> is positive.`},
+    {set:{ghost:false,solve:false,astc:true}, t:()=>`<b>ASTC</b> = which ratios are positive in each quadrant:<br><b>A</b>ll · <b>S</b>in · <b>T</b>an · <b>C</b>os (anticlockwise from Quadrant 1).`},
+    {set:{th:30,ghost:false,solve:true,astc:false}, t:()=>`Solve sin θ = ½ for 0° ≤ θ ≤ 360°.<br>Basic angle α = 30°. sin is + in Quadrants 1, 2 (A, S)<br>→ θ = 30° or 180° − 30° = <b>150°</b>.`}
+  ],
+  draw(svg,s){
+    const [ox,oy]=UO, P=d=>[ox+UR*Math.cos(rad(d)),oy-UR*Math.sin(rad(d))], I=ucInfo(s.th);
+    const quadPos={1:[124,14],2:[16,14],3:[16,110],4:[124,110]}, letters={1:"A",2:"S",3:"T",4:"C"}, sub={1:"all +",2:"sin +",3:"tan +",4:"cos +"};
+    for(const q of [1,2,3,4]){const on=s.astc||I.q===q; const [x,y]=quadPos[q];
+      lab(svg,[x,y],letters[q],{"font-size":10,"font-weight":700,fill:on?"var(--accent)":"var(--line)"});
+      lab(svg,[x,y+5.5],sub[q],{"font-size":3.6,fill:on?"var(--accent)":"var(--muted)"});}
+    seg(svg,[8,oy],[132,oy],{stroke:"var(--muted)","stroke-width":.5}); seg(svg,[ox,6],[ox,116],{stroke:"var(--muted)","stroke-width":.5});
+    S_(svg,"circle",{cx:ox,cy:oy,r:UR,fill:"none",stroke:"var(--ink)","stroke-width":.8});
+    lab(svg,[ox+UR+3,oy+5],"1",{"font-size":3.6,fill:"var(--muted)"}); lab(svg,[ox-UR-3,oy+5],"−1",{"font-size":3.6,fill:"var(--muted)"});
+    if(s.ghost){const G=P(30); S_(svg,"path",{d:`M${ox},${oy}L${G[0]},${oy}L${G}Z`,fill:"none",stroke:"var(--muted)","stroke-dasharray":"1.5 1.2","stroke-width":.6}); lab(svg,[G[0]+3,G[1]-1],"30°",{"font-size":3.4,fill:"var(--muted)"});}
+    if(s.solve){const y=oy-UR*.5; seg(svg,[18,y],[122,y],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,[20,y-2],"sin θ = ½",{"text-anchor":"start","font-size":3.8,fill:"var(--red)","font-weight":700});
+      [30,150].forEach(d=>{const Q=P(d); S_(svg,"circle",{cx:Q[0],cy:Q[1],r:1.8,fill:"var(--red)"}); lab(svg,[Q[0]+(d<90?5:-5),Q[1]+6],d+"°",{"font-size":3.8,fill:"var(--red)","font-weight":700});});}
+    const Pp=P(s.th), F=[Pp[0],oy];
+    arcMark(svg,UO,6,0,s.th,"var(--muted)",s.th>14?"θ":null,3.4);
+    if(I.q&&I.q!==1){const base=(I.q===1||I.q===4)?0:180, sw=(I.q===1||I.q===3)?I.al:-I.al;
+      arcMark(svg,UO,11,I.q===3?180:base,I.q===3?I.al:sw,"var(--red)",I.al>12?"α":null,3.6);}
+    seg(svg,UO,F,{stroke:"var(--amber)","stroke-width":1.6});
+    seg(svg,F,Pp,{stroke:"var(--blue)","stroke-width":1.6});
+    seg(svg,UO,Pp,{"stroke-width":.9});
+    if(Math.abs(I.s)>.12) lab(svg,[F[0]+(I.c>=0?2:-2),(oy+Pp[1])/2+1.5],"sin θ",{"text-anchor":I.c>=0?"start":"end","font-size":3.8,fill:"var(--blue)","font-weight":700});
+    if(Math.abs(I.c)>.2) lab(svg,[(ox+F[0])/2,oy+(I.s>=0?5:-2.5)],"cos θ",{"font-size":3.8,fill:"var(--amber)","font-weight":700});
+    lab(svg,[Pp[0]+(I.c>=0?4:-4),Pp[1]+(I.s>=0?-2:5)],"P",{"font-size":4.6,"font-weight":700});
+    handle(svg,Pp[0],Pp[1],"p");
+  },
+  drag(id,p,s){let a=Math.round(norm(dirTo(UO,[p.x,p.y]))); for(const sp of [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330,360]) if(Math.abs(a-sp)<=2) a=sp; s.th=a===360?360:a;},
+  readout(s){const I=ucInfo(s.th), th=s.th;
+    if(!I.q) return `<div class="row">θ = ${th}° lies on an axis (no quadrant).</div>
+      <div class="row">sin ${th}° = <b>${N(I.s,3)}</b> · cos ${th}° = <b>${N(I.c,3)}</b> · tan ${th}° = <b>${I.t===null?"undefined":N(I.t,3)}</b></div>`;
+    const sg=v=>v>0?"+":"−", ex=EX[I.al];
+    const row=(fn,v,i)=>`<div class="row">${fn} ${th}° = <b>${sg(v)}</b>${fn} ${I.al}° = <b>${N(v,3)}</b>${ex?` <span class="hint nw">(exact: ${v<0?"−":""}${ex[i]})</span>`:""}</div>`;
+    return `<div class="row">θ = ${th}°${th%15===0?` (= ${piFrac(th)} rad)`:""} → <b>Quadrant ${I.q}</b>, basic angle ${AL} = <b class="k-red">${I.al}°</b></div>
+      ${row("sin",I.s,0)}${row("cos",I.c,1)}${row("tan",I.t,2)}
+      ${s.solve?`<div class="row"><b class="k-red">Solutions: θ = 30°, 150°</b></div>`:""}`;},
+  hint:"E-Math: sin and cos only, 0° to 180°. A-Math: all quadrants, all ratios."
+});
+
+/* =====================================================================
+   5. R-FORMULA
+   ===================================================================== */
+const RBOX={l:12,t:50,w:124,h:86,x0:0,x1:360,y0:-9,y1:9,xs:30,xl:90,ys:1,yl:3,xf:v=>v+"°",xn:"θ"};
+function rInfo(s){
+  const R2=s.a*s.a+s.b*s.b, R=Math.sqrt(R2), al=deg(Math.atan(s.b/s.a));
+  const Rs=Math.abs(R-Math.round(R))<1e-9?N(R):`√${N(R2)} = ${N(R,3)}`;
+  const mx=s.mode==="cos"?al:norm(90-al);
+  let sols; const k=R/2;
+  if(s.mode==="cos") sols=[norm(al+60),norm(al-60)]; else sols=[norm(30-al),norm(150-al)];
+  sols.sort((x,y)=>x-y);
+  return {R,R2,al,Rs,mx,mn:norm(mx+180),k,sols};
+}
+const cs2=v=>v===1?"":N(v)+" ";
+const rLeft=s=>s.mode==="cos"?`${cs2(s.a)}cos θ + ${cs2(s.b)}sin θ`:`${cs2(s.a)}sin θ + ${cs2(s.b)}cos θ`;
+const rRight=(s,I)=>s.mode==="cos"?`${I.Rs.split(" = ")[0]} cos(θ − ${N(I.al)}°)`:`${I.Rs.split(" = ")[0]} sin(θ + ${N(I.al)}°)`;
+const rFormula=aid({
+  init:{mode:"cos",a:3,b:4}, vb:"0 0 140 140", label:"R-formula triangle and waves",
+  pills:[{k:"mode",opts:[["cos","a cos θ + b sin θ"],["sin","a sin θ + b cos θ"]]}],
+  sliders:[{k:"a",label:"a",min:1,max:6,step:.5},{k:"b",label:"b",min:1,max:6,step:.5}],
+  steps:[
+    {set:{mode:"cos",a:3,b:4}, t:s=>`Two waves: <span class="k-amber">${s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`}</span> and <span class="k-green">${s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`}</span>.`},
+    {t:()=>`Add them, point by point → the <span class="k-blue">blue</span> wave.<br>It is just <b>ONE wave</b>: taller, and shifted sideways.`},
+    {t:()=>`How tall? Draw a right-angled triangle with sides ${V("a")} and ${V("b")}.<br>Hypotenuse <b>${V("R")} = √(${V("a")}² + ${V("b")}²)</b>.`},
+    {t:()=>`How far shifted? <b>tan ${AL} = ${frac(V("b"),V("a"))}</b>, with ${AL} acute.<br>${AL} (alpha) is the <b>angle</b>, not the side ${V("a")}.`},
+    {t:s=>{const I=rInfo(s); return `So <b>${rLeft(s)} = ${rRight(s,I)}</b>.<br>Max = ${V("R")} at θ = ${N(I.mx,1)}°. Min = −${V("R")} at θ = ${N(I.mn,1)}°.`}},
+    {t:s=>{const I=rInfo(s), al=N(I.al), cosm=s.mode==="cos";
+      const fn=cosm?`cos(θ − ${al}°)`:`sin(θ + ${al}°)`;
+      const vals=cosm?[60,300,-60].filter(v=>v>=-I.al-1e-9&&v<=360-I.al+1e-9):[30,150,390,510].filter(v=>v>=I.al-1e-9&&v<=360+I.al+1e-9);
+      const rng=cosm?`θ − ${al}° must lie between −${al}° and ${N(360-I.al)}°`:`θ + ${al}° must lie between ${al}° and ${N(360+I.al)}°`;
+      return `Solving: ${rLeft(s)} = ${N(I.k,3)}<br>→ ${N(I.R,3)} ${fn} = ${N(I.k,3)} → ${fn} = ½<br>→ ${cosm?`θ − ${al}°`:`θ + ${al}°`} = ${vals.map(v=>v+"°").join(" or ")} <span class="hint">(${rng})</span><br>→ θ = <b>${I.sols.map(x=>N(x,1)+"°").join(" or ")}</b> (1 d.p., red dots)`;}}
+  ],
+  draw(svg,s){
+    const I=rInfo(s), sc=5.2, O=[14,44], A=[O[0]+s.a*sc,O[1]], B=[A[0],O[1]-s.b*sc];
+    if(s.step>=2){
+      S_(svg,"path",{d:`M${O}L${A}L${B}Z`,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.7});
+      rightMark(svg,A,O,B,2.6);
+      lab(svg,[(O[0]+A[0])/2,O[1]+4.5],`a = ${N(s.a)}`,{"font-size":3.8,fill:"var(--amber)","font-weight":700});
+      lab(svg,[A[0]+2,(A[1]+B[1])/2+1.3],`b = ${N(s.b)}`,{"font-size":3.8,fill:"var(--green)","font-weight":700,"text-anchor":"start"});
+      lab(svg,[(O[0]+B[0])/2-2,(O[1]+B[1])/2-1.5],`R = ${N(I.R)}`,{"font-size":3.8,fill:"var(--blue)","font-weight":700,"text-anchor":"end"});
+      if(s.step>=3) arcMark(svg,O,7,0,I.al,"var(--red)","α",3.4);
+    }
+    const lx=s.step>=2?Math.max(B[0]+20,62):14;
+    lab(svg,[lx,12],(s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`),{"text-anchor":"start","font-size":4.2,fill:"var(--amber)","font-weight":700});
+    lab(svg,[lx,19],(s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`),{"text-anchor":"start","font-size":4.2,fill:"var(--green)","font-weight":700});
+    if(s.step>=1) lab(svg,[lx,26],"sum (one wave)",{"text-anchor":"start","font-size":4.2,fill:"var(--blue)","font-weight":700});
+    if(s.step>=4) lab(svg,[lx,33],`= ${rRight(s,I)}`,{"text-anchor":"start","font-size":4.2,fill:"var(--blue)"});
+    const g=graph(svg,RBOX), c1=x=>s.mode==="cos"?s.a*Math.cos(rad(x)):s.a*Math.sin(rad(x)), c2=x=>s.mode==="cos"?s.b*Math.sin(rad(x)):s.b*Math.cos(rad(x));
+    g.plot(c1,{stroke:"var(--amber)","stroke-width":.8,"stroke-dasharray":s.step>=1?"2 1.2":"none"});
+    g.plot(c2,{stroke:"var(--green)","stroke-width":.8,"stroke-dasharray":s.step>=1?"2 1.2":"none"});
+    if(s.step>=1) g.plot(x=>c1(x)+c2(x),{stroke:"var(--blue)","stroke-width":1.4});
+    if(s.step>=4){g.dot(I.mx,I.R,"var(--blue)",1.7); g.text(I.mx,I.R,`max ${N(I.R)}`,{dx:2,dy:-1.5,"font-size":3.6,fill:"var(--blue)"});}
+    if(s.step>=5){g.line(0,I.k,360,I.k,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6}); I.sols.forEach(x=>g.dot(x,I.k,"var(--red)",1.7));}
+  },
+  readout(s){const I=rInfo(s);
+    return `<div class="row"><b>${rLeft(s)} = ${rRight(s,I)}</b></div>
+      <div class="row">${V("R")} = √(${N(s.a)}² + ${N(s.b)}²) = ${I.Rs}</div>
+      <div class="row">tan ${AL} = ${frac(N(s.b),N(s.a))} → ${AL} = ${N(I.al)}°</div>
+      <div class="row"><span class="nw">Max = ${N(I.R)} at θ = ${N(I.mx,1)}°</span> · <span class="nw">Min = −${N(I.R)} at θ = ${N(I.mn,1)}°</span></div>`;},
+  hint:"Minus signs: a cos θ − b sin θ = R cos(θ + α) and a sin θ − b cos θ = R sin(θ − α). Same R and α."
+});
+
+/* =====================================================================
+   6. CIRCLE ANGLE PROPERTIES
+   ===================================================================== */
+const CO=[70,58], CR=40;
+const CP=d=>[CO[0]+CR*Math.cos(rad(d)),CO[1]-CR*Math.sin(rad(d))];
+const ptLab=(svg,d,t)=>lab(svg,[CO[0]+(CR+5.5)*Math.cos(rad(d)),CO[1]-(CR+5.5)*Math.sin(rad(d))+1.6],t,{"font-size":4.6,"font-weight":700});
+const onArc=(P,A,B)=>norm(P-A)<norm(B-A); // P on arc going anticlockwise from A to B
+const reason=t=>`<span class="k-blue">(${t})</span>`;
+const n1=v=>N(Math.round(v*10)/10,1);
+const circleProps=aid({
+  init:{A:210,B:330,P:90,Q:130,C:300,D:40,Tx:126,Ty:22}, jump:true, label:"Circle with draggable points",
+  steps:[
+    {name:"Centre",set:{A:210,B:330,P:96}, t:()=>`Angle at the centre = 2 × angle at the circumference (both standing on arc AB).<br>Drag A, B or P.`},
+    {name:"Same segment",set:{A:210,B:330,P:70,Q:130}, t:()=>`Angles in the same segment are equal: ∠APB = ∠AQB.<br>Drag P or Q to the other side of AB: what happens?`},
+    {name:"Semicircle",set:{A:180,B:0,P:60}, t:()=>`AB is a diameter. The angle in a semicircle is always <b>90°</b>.<br>Drag P anywhere.`},
+    {name:"Cyclic quad",set:{A:140,B:210,C:300,D:40}, t:()=>`Cyclic quadrilateral: all 4 corners on the circle.<br>Opposite angles add up to <b>180°</b>.`},
+    {name:"Tangent ⊥ radius",set:{P:50}, t:()=>`A tangent touches the circle at one point P.<br>Tangent ⊥ radius: they meet at <b>90°</b>. Drag P.`},
+    {name:"2 tangents",set:{Tx:126,Ty:22}, t:()=>`Two tangents from the same outside point T are <b>equal</b>: TA = TB.<br>Drag T.`},
+    {name:"Alt. segment",set:{B:40,C:150}, t:()=>`Alternate segment theorem: angle between tangent and chord = angle in the <b>alternate</b> (opposite) segment.<br>Drag B or C.`}
+  ],
+  draw(svg,s){
+    S_(svg,"circle",{cx:CO[0],cy:CO[1],r:CR,fill:"none",stroke:"var(--ink)","stroke-width":.8});
+    const m=s.step, dot=(P,id,col="var(--accent)")=>handle(svg,P[0],P[1],id,col);
+    S_(svg,"circle",{cx:CO[0],cy:CO[1],r:.9,fill:"var(--ink)"});
+    const Oname=()=>lab(svg,[CO[0]+2.5,CO[1]+4.5],"O",{"font-size":4,fill:"var(--muted)"});
+    if(m===0){const A=CP(s.A),B=CP(s.B),P=CP(s.P); lab(svg,[CO[0]+6*Math.cos(rad(s.P)),CO[1]-6*Math.sin(rad(s.P))+1.4],"O",{"font-size":4,fill:"var(--muted)"});
+      seg(svg,CO,A,{stroke:"var(--amber)"}); seg(svg,CO,B,{stroke:"var(--amber)"}); seg(svg,P,A); seg(svg,P,B);
+      const mAB=norm(s.B-s.A), pOn=onArc(s.P,s.A,s.B); const st=pOn?s.B:s.A, sw=pOn?360-mAB:mAB;
+      arcMark(svg,CO,7,st,sw,"var(--amber)",n1(sw)+"°"); angAt(svg,P,A,B,"var(--blue)",8);
+      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); dot(A,"A"); dot(B,"B"); dot(P,"P");}
+    if(m===1){const A=CP(s.A),B=CP(s.B),P=CP(s.P),Q=CP(s.Q);
+      seg(svg,P,A); seg(svg,P,B); seg(svg,Q,A,{stroke:"var(--green)"}); seg(svg,Q,B,{stroke:"var(--green)"}); seg(svg,A,B,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2"});
+      angAt(svg,P,A,B,"var(--blue)",7); angAt(svg,Q,A,B,"var(--green)",7);
+      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); ptLab(svg,s.Q,"Q"); dot(A,"A"); dot(B,"B"); dot(P,"P"); dot(Q,"Q","var(--green)");}
+    if(m===2){const A=CP(s.A),B=CP(s.B),P=CP(s.P); Oname();
+      seg(svg,A,B,{stroke:"var(--amber)"}); seg(svg,P,A); seg(svg,P,B); rightMark(svg,P,A,B,3.6,"var(--blue)");
+      lab(svg,[P[0]+(P[0]>CO[0]?-9:9),P[1]+(P[1]<CO[1]?9:-6)],"90°",{"font-size":4,fill:"var(--blue)","font-weight":700});
+      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); dot(A,"A"); dot(P,"P");}
+    if(m===3){const K=["A","B","C","D"], Pt=K.map(k=>CP(s[k])), cols=["var(--blue)","var(--green)","var(--blue)","var(--green)"];
+      S_(svg,"polygon",{points:Pt.map(p=>p.join(",")).join(" "),fill:"var(--blue-fill)","fill-opacity":.5,stroke:"var(--ink)","stroke-width":.7});
+      K.forEach((k,i)=>{angAt(svg,Pt[i],Pt[(i+3)%4],Pt[(i+1)%4],cols[i],6.5); ptLab(svg,s[k],k); dot(Pt[i],k,cols[i]);});}
+    if(m===4){const P=CP(s.P), u=[Math.cos(rad(s.P)),-Math.sin(rad(s.P))], t=[-u[1],u[0]], L=38; Oname();
+      const T1=[P[0]+t[0]*L,P[1]+t[1]*L], T2=[P[0]-t[0]*L,P[1]-t[1]*L];
+      seg(svg,T1,T2,{stroke:"var(--green)","stroke-width":1}); seg(svg,CO,P,{stroke:"var(--amber)","stroke-width":1});
+      rightMark(svg,P,CO,T1,3.6,"var(--blue)"); ptLab(svg,s.P,"P"); lab(svg,[T1[0]+t[0]*4,T1[1]+t[1]*4+1.5],"T",{"font-size":4.6,"font-weight":700}); dot(P,"P");
+      lab(svg,[(CO[0]+P[0])/2-u[1]*7,(CO[1]+P[1])/2+u[0]*7],"radius",{"font-size":3.6,fill:"var(--amber)"});}
+    if(m===5){const T=[s.Tx,s.Ty], d=Math.hypot(T[0]-CO[0],T[1]-CO[1]), be=dirTo(CO,T), ph=deg(Math.acos(CR/d)), A=CP(be+ph), B=CP(be-ph); Oname();
+      seg(svg,T,A,{stroke:"var(--green)","stroke-width":1}); seg(svg,T,B,{stroke:"var(--green)","stroke-width":1});
+      seg(svg,CO,A,{stroke:"var(--amber)"}); seg(svg,CO,B,{stroke:"var(--amber)"}); seg(svg,CO,T,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2"});
+      rightMark(svg,A,CO,T,3); rightMark(svg,B,CO,T,3);
+      ptLab(svg,be+ph,"A"); ptLab(svg,be-ph,"B"); lab(svg,[T[0],T[1]-4],"T",{"font-size":4.6,"font-weight":700}); dot(T,"T");}
+    if(m===6){const A=CP(270),B=CP(s.B),C=CP(s.C);
+      const arcNotC=onArc(s.C,270,s.B)?[s.B,norm(270-s.B)]:[270,norm(s.B-270)], Mdeg=arcNotC[0]+arcNotC[1]/2, M=CP(Mdeg);
+      const dir=(M[0]-A[0])>=0?1:-1, Tend=[A[0]+dir*45,A[1]], Tother=[A[0]-dir*45,A[1]];
+      seg(svg,Tother,Tend,{stroke:"var(--green)","stroke-width":1}); seg(svg,A,B,{stroke:"var(--ink)","stroke-width":.9}); seg(svg,C,A); seg(svg,C,B);
+      angAt(svg,A,[A[0]+dir*10,A[1]],B,"var(--red)",8); angAt(svg,C,A,B,"var(--red)",7);
+      lab(svg,[Tend[0],Tend[1]+5],"T",{"font-size":4.4,"font-weight":700}); lab(svg,[A[0],A[1]+6],"A",{"font-size":4.6,"font-weight":700});
+      ptLab(svg,s.B,"B"); ptLab(svg,s.C,"C"); dot(B,"B"); dot(C,"C","var(--red)");}
+  },
+  drag(id,p,s){
+    if(id==="T"){let x=clamp(p.x,6,134), y=clamp(p.y,6,114), d=Math.hypot(x-CO[0],y-CO[1]); if(d<CR+5){const k=(CR+5)/(d||1); x=CO[0]+(x-CO[0])*k; y=CO[1]+(y-CO[1])*k;} s.Tx=x; s.Ty=y; return;}
+    const a=norm(snap(dirTo(CO,[p.x,p.y]),2)), m=s.step;
+    if(m===2&&id==="A"){s.A=a; s.B=norm(a+180); return;}
+    if(m===2&&id==="P"){ if(Math.abs(norm(a-s.A))<4||Math.abs(norm(a-s.B))<4) return; }
+    if(m===3){const K=["A","B","C","D"], i=K.indexOf(id), prev=s[K[(i+3)%4]], next=s[K[(i+1)%4]];
+      if(!(norm(a-prev)>4&&norm(a-prev)<norm(next-prev)-4)) return;}
+    if(m===6&&id==="B"&&(norm(a-270)<8||norm(270-a)<8)) return;
+    const others=["A","B","P","Q","C"].filter(k=>k!==id&&!(m===6&&k==="A"));
+    if(m!==3&&m!==6&&others.some(k=>s[k]!=null&&Math.abs(((a-s[k]+540)%360)-180)<4)) return;
+    if(m===6&&(Math.abs(((a-270+540)%360)-180)<4||Math.abs(((a-s[id==="B"?"C":"B"]+540)%360)-180)<4)) return;
+    s[id]=a;
+  },
+  readout(s){const m=s.step;
+    if(m===0){const mAB=norm(s.B-s.A), c=onArc(s.P,s.A,s.B)?360-mAB:mAB, i=c/2;
+      return `<div class="row">${c>180?"Reflex ":""}∠AOB = <b class="k-amber">${n1(c)}°</b> · ∠APB = <b class="k-blue">${n1(i)}°</b></div>
+        <div class="row">${n1(c)}° = 2 × ${n1(i)}° ✓ ${reason("∠ at centre = 2∠ at circ.")}</div>`;}
+    if(m===1){const same=onArc(s.P,s.A,s.B)===onArc(s.Q,s.A,s.B);
+      const mAB=norm(s.B-s.A), aP=(onArc(s.P,s.A,s.B)?mAB:360-mAB)/2, aQ=(onArc(s.Q,s.A,s.B)?mAB:360-mAB)/2;
+      const angP=180-aP, angQ=180-aQ;
+      return same?`<div class="row">∠APB = <b class="k-blue">${n1(angP)}°</b> · ∠AQB = <b class="k-green">${n1(angQ)}°</b> → equal ✓</div><div class="row">${reason("∠s in same seg.")}</div>`
+        :`<div class="row">∠APB + ∠AQB = ${n1(angP)}° + ${n1(angQ)}° = <b>180°</b></div><div class="row">P and Q are in <b>different</b> segments now. APBQ is a cyclic quad ${reason("∠s in opp. seg.")}</div>`;}
+    if(m===2) return `<div class="row">∠APB = <b class="k-blue">90°</b> for every P</div><div class="row">${reason("rt. ∠ in semicircle")}</div>`;
+    if(m===3){const ang=k=>{const K=["A","B","C","D"],i=K.indexOf(k),p=s[K[(i+3)%4]],n=s[K[(i+1)%4]]; return norm(p-n)/2;};
+      const a=ang("A"),b=ang("B"),c=ang("C"),d=ang("D");
+      return `<div class="row"><span class="k-blue">∠A + ∠C</span> = ${n1(a)}° + ${n1(c)}° = <b>180°</b></div>
+        <div class="row"><span class="k-green">∠B + ∠D</span> = ${n1(b)}° + ${n1(d)}° = <b>180°</b></div><div class="row">${reason("∠s in opp. seg.")}</div>`;}
+    if(m===4) return `<div class="row">∠OPT = <b class="k-blue">90°</b> wherever P is</div><div class="row">${reason("tan ⊥ rad")}</div>`;
+    if(m===5){const d=Math.hypot(s.Tx-CO[0],s.Ty-CO[1]), L=Math.sqrt(d*d-CR*CR)*5/CR, ang=deg(Math.asin(CR/d));
+      return `<div class="row">If the radius is 5 cm: TA = TB = <b class="k-green">${sf3(L)} cm</b></div>
+        <div class="row">∠OTA = ∠OTB = ${n1(ang)}° (OT cuts ∠ATB in half)</div><div class="row">${reason("tangents from ext. pt.")}</div>`;}
+    if(m===6){const arc=onArc(s.C,270,s.B)?norm(270-s.B):norm(s.B-270), v=arc/2;
+      return `<div class="row">∠ between tangent AT and chord AB = <b class="k-red">${n1(v)}°</b></div>
+        <div class="row">∠ACB = <b class="k-red">${n1(v)}°</b> → equal ✓ ${reason("∠s in alt. seg.")}</div>`;}
+    return "";}
+});
+
+/* =====================================================================
+   7. TANGENT & GRADIENT
+   ===================================================================== */
+const GBOX={l:12,t:4,w:124,h:112,x0:-3,x1:3,y0:-6,y1:6,xs:.5,xl:1,ys:1,yl:2};
+const TC={
+  cubic:{f:x=>x**3-3*x+1,d:x=>3*x*x-3,d2:x=>6*x,fs:`${V("x")}³ − 3${X1} + 1`,ds:`3${X2} − 3`,d2s:`6${X1}`,dat:x=>`3(${N(x)})² − 3`,d2at:x=>`6(${N(x)})`,st:[-1,1]},
+  quad:{f:x=>x*x-2*x-3,d:x=>2*x-2,d2:()=>2,fs:`${X2} − 2${X1} − 3`,ds:`2${X1} − 2`,d2s:"2",dat:x=>`2(${N(x)}) − 2`,d2at:()=>"2",st:[1]},
+  cube:{f:x=>x**3,d:x=>3*x*x,d2:x=>6*x,fs:`${V("x")}³`,ds:`3${X2}`,d2s:`6${X1}`,dat:x=>`3(${N(x)})²`,d2at:x=>`6(${N(x)})`,st:[0]}
+};
+const DY=frac("d"+V("y"),"d"+V("x")), D2Y=frac("d²"+V("y"),"d"+V("x")+"²");
+const tangentAid=aid({
+  init:{cv:"cubic",x:-2}, label:"Curve with a tangent you can slide",
+  pills:[{k:"cv",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x=-2}}],
+  sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.05}],
+  buttons:[{label:"Jump to a stationary point",fn:s=>{const L=TC[s.cv].st; const nx=L.find(v=>v>s.x+1e-9); s.x=nx!==undefined?nx:L[0];}}],
+  steps:[
+    {set:{cv:"cubic",x:-2}, t:()=>`The <b>tangent</b> at P has the same steepness (gradient) as the curve at P.<br>Drag P along the curve.`},
+    {set:{x:-1.5}, t:s=>`Gradient of the tangent at P = ${DY} at that ${X1}.<br>Here ${DY} = ${TC[s.cv].ds}.`},
+    {set:{x:0}, t:()=>`${DY} <span class="k-red">&lt; 0</span> → tangent slopes down → ${V("y")} is <b>decreasing</b>.<br>${DY} <span class="k-green">&gt; 0</span> → slopes up → <b>increasing</b>.`},
+    {set:{x:1}, t:()=>`${DY} <span class="k-amber">= 0</span> → flat tangent → <b>stationary point</b>.`},
+    {set:{x:1}, t:()=>`Max or min? Use ${D2Y}:<br><b>&gt; 0 → minimum</b> · <b>&lt; 0 → maximum</b>.<br>Press "Jump" to compare the two stationary points.`},
+    {set:{cv:"cube",x:0}, t:()=>`${V("y")} = ${V("x")}³ at ${X1} = 0: ${DY} = 0 and ${D2Y} = 0 too → can't tell yet.<br>Check ${DY} on both sides: <b>+ 0 +</b> → no turn → <b>point of inflexion</b>.`}
+  ],
+  draw(svg,s){
+    const g=graph(svg,GBOX), C=TC[s.cv], y0=C.f(s.x), m=C.d(s.x), col=Math.abs(m)<1e-9?"var(--amber)":m>0?"var(--green)":"var(--red)";
+    g.plot(C.f);
+    if(s.step>=3) C.st.forEach(x=>g.add("circle",{cx:g.X(x),cy:g.Y(C.f(x)),r:1.6,fill:"none",stroke:"var(--amber)","stroke-width":.7}));
+    g.line(-3,y0+m*(-3-s.x),3,y0+m*(3-s.x),{stroke:col,"stroke-width":1.1});
+    lab(svg,[16,10],"y = "+C.fs.replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    if(y0>=-6&&y0<=6){ lab(svg,[g.X(s.x)+3,g.Y(y0)-3],"P",{"font-size":4.6,"font-weight":700,"text-anchor":"start"}); handle(svg,g.X(s.x),g.Y(y0),"p",col);}
+  },
+  drag(id,p,s){let [x]=ginv(GBOX,p); x=clamp(snap(x,.05),-2.5,2.5); TC[s.cv].st.forEach(v=>{if(Math.abs(x-v)<.1)x=v}); s.x=x;},
+  readout(s){const C=TC[s.cv], x=s.x, m=C.d(x), z=Math.abs(m)<1e-9;
+    let out=`<div class="row">${V("y")} = ${C.fs} · ${DY} = ${C.ds}</div>
+      <div class="row">At ${X1} = ${N(x)}: ${DY} = ${C.dat(x)} = <b>${N(m,3)}</b> <span class="nw">${z?`→ <b class="k-amber">stationary point</b>`:m>0?`<span class="k-green">&gt; 0</span> → <b class="k-green">increasing ↗</b>`:`<span class="k-red">&lt; 0</span> → <b class="k-red">decreasing ↘</b>`}</span></div>`;
+    if(z&&s.step>=4){const d2=C.d2(x), sg=v=>Math.abs(v)<1e-9?"0":v>0?"+":"−", L=sg(C.d(x-.1)), R=sg(C.d(x+.1));
+      const kind=L==="+"&&R==="−"?"maximum":L==="−"&&R==="+"?"minimum":"point of inflexion";
+      out+=`<div class="row">${D2Y} = ${C.d2at(x)} = <b>${N(d2)}</b> → ${Math.abs(d2)<1e-9?"can't tell, check both sides":d2>0?"<b>minimum</b>":"<b>maximum</b>"}</div>
+        <div class="row">Sign of ${DY} just left · at · just right: <span class="nw"><b>${L} &nbsp;0&nbsp; ${R}</b> → <b>${kind}</b></span></div>`;}
+    return out;}
+});
+
+/* =====================================================================
+   8. AREA UNDER A CURVE
+   ===================================================================== */
+const AC={
+  A:{f:x=>.5*x*x+1,F:x=>x**3/6+x,fs:`½${X2} + 1`,Fs:`${frac(V("x")+"³","6")} + ${X1}`,box:{l:12,t:4,w:124,h:112,x0:-1,x1:5,y0:-2,y1:14,xs:.5,xl:1,ys:1,yl:2},roots:[]},
+  B:{f:x=>x*x-4*x+3,F:x=>x**3/3-2*x*x+3*x,fs:`${X2} − 4${X1} + 3`,Fs:`${frac(V("x")+"³","3")} − 2${X2} + 3${X1}`,box:{l:12,t:4,w:124,h:112,x0:-1,x1:5,y0:-2,y1:9,xs:.5,xl:1,ys:1,yl:1},roots:[1,3]}
+};
+const INT=(a,b)=>`∫<span class="lim"><sup>${N(b)}</sup><sub>${N(a)}</sub></span>`;
+const areaAid=aid({
+  init:{cv:"A",a:1,b:3,n:4}, label:"Area under a curve with rectangles",
+  pills:[{k:"cv",opts:[["A","½x² + 1"],["B","x² − 4x + 3"]]}],
+  sliders:[{k:"a",label:"a",min:-1,max:4.5,step:.5,on:s=>{if(s.a>=s.b)s.a=s.b-.5}},{k:"b",label:"b",min:-.5,max:5,step:.5,on:s=>{if(s.b<=s.a)s.b=s.a+.5}},
+           {k:"n",label:"n",min:1,max:40,step:1,f:v=>String(v),show:s=>s.step===1||s.step===2}],
+  steps:[
+    {set:{cv:"A",a:1,b:3,n:4}, t:s=>`Shaded: the area under ${V("y")} = ${AC[s.cv].fs}, above the ${X1}-axis, from ${X1} = ${V("a")} to ${X1} = ${V("b")}.`},
+    {set:{n:4}, t:()=>`Estimate it with rectangles. Area of each = width × height.<br>Height = ${V("y")} at the <b>middle</b> of each strip (so each top crosses the curve). Add them up.`},
+    {t:()=>`Drag ${V("n")} up. More, thinner rectangles → closer to the exact area.`},
+    {t:s=>`Exact area = ${INT(s.a,s.b)} ${V("y")} d${X1} = [ ${AC[s.cv].Fs} ] → upper limit minus lower limit.`},
+    {set:{cv:"B",a:1,b:3}, t:()=>`Below the ${X1}-axis, the heights are negative → the integral comes out <b class="k-red">negative</b>.<br>The area is the positive value.`},
+    {set:{cv:"B",a:0,b:3}, t:()=>`<b class="k-red">Trap!</b> Here the curve crosses the ${X1}-axis. One integral lets the parts cancel out.<br>Split at the crossing point, then add the positive values.`}
+  ],
+  draw(svg,s){
+    const C=AC[s.cv], g=graph(svg,C.box), f=C.f;
+    if(s.step===1||s.step===2){const w=(s.b-s.a)/s.n;
+      for(let i=0;i<s.n;i++){const x=s.a+i*w, h=f(x+w/2), y1=g.Y(Math.max(h,0)), y2=g.Y(Math.min(h,0));
+        g.add("rect",{x:g.X(x),y:y1,width:g.X(x+w)-g.X(x),height:y2-y1,fill:h>=0?"var(--blue-fill)":"var(--red-fill)",stroke:h>=0?"var(--blue)":"var(--red)","stroke-width":.3});}
+    } else {
+      const pts=[],neg=[]; for(let i=0;i<=200;i++){const x=s.a+(s.b-s.a)*i/200,y=f(x); pts.push([x,Math.max(y,0)]); neg.push([x,Math.min(y,0)]);}
+      g.poly([[s.a,0],...pts,[s.b,0]],{fill:"var(--blue-fill)"}); g.poly([[s.a,0],...neg,[s.b,0]],{fill:"var(--red-fill)"});
+    }
+    g.plot(f);
+    [["a",s.a],["b",s.b]].forEach(([t,x])=>{g.line(x,C.box.y0,x,C.box.y1,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2","stroke-width":.5}); g.text(x,C.box.y0,t,{dy:-1.5,dx:1.2,"font-style":"italic","font-weight":700,fill:"var(--muted)"});});
+    lab(svg,[g.X(0)+3,20],"y = "+C.fs.replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+  },
+  readout(s){const C=AC[s.cv], ex=C.F(s.b)-C.F(s.a);
+    let out="";
+    if(s.step===1||s.step===2){const w=(s.b-s.a)/s.n; let t=0; for(let i=0;i<s.n;i++) t+=w*C.f(s.a+(i+.5)*w);
+      out+=`<div class="row">${s.n} rectangle${s.n>1?"s":""}: total = <b>${N(t,4)}</b></div>`;
+      if(s.step===2) out+=`<div class="row">Exact = ${N(ex,4)} · gap = ${N(Math.abs(t-ex),4)}</div>`;
+      return out;}
+    out+=`<div class="row">${INT(s.a,s.b)} (${C.fs}) d${X1} = [ ${C.Fs} ]<span class="lim"><sup>${N(s.b)}</sup><sub>${N(s.a)}</sub></span></div>
+      <div class="row">= ${toFrac(C.F(s.b))} − ${C.F(s.a)<0?`(${toFrac(C.F(s.a))})`:toFrac(C.F(s.a))} = <b>${toFrac(ex)}</b>${Math.abs(ex-Math.round(ex))>1e-9?` ≈ ${sf3(ex)}`:""}</div>`;
+    const cuts=C.roots.filter(r=>r>s.a+1e-9&&r<s.b-1e-9);
+    if(cuts.length){const pts=[s.a,...cuts,s.b]; const parts=[]; for(let i=0;i<pts.length-1;i++) parts.push(C.F(pts[i+1])-C.F(pts[i]));
+      const area=parts.reduce((t,v)=>t+Math.abs(v),0);
+      out+=`<div class="row k-red">Curve crosses the ${X1}-axis at ${X1} = ${cuts.map(N).join(", ")} → don't trust one integral!</div>
+        <div class="row">Area = ${parts.map(v=>`|${toFrac(v)}|`).join(" + ")} = <b>${toFrac(area)}</b> units²</div>`;
+    } else if(ex<0) out+=`<div class="row">Negative → region is below the ${X1}-axis. Area = <b>${toFrac(-ex)}</b> units²</div>`;
+    else out+=`<div class="row">Area = <b>${toFrac(ex)}</b> units²</div>`;
+    return out;}
+});
+
+/* =====================================================================
+   9. COMPLETING THE SQUARE (area model)
+   ===================================================================== */
+const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toFrac(A/2),q:toFrac(A*A/4)};};
+const complSq=aid({
+  init:{b:6,c:0}, vb:"0 0 130 102", label:"Completing the square with areas",
+  sliders:[{k:"b",label:"b",min:-8,max:8,step:1,on:s=>{if(s.b===0)s.b=1}},{k:"c",label:"c",min:-10,max:10,step:1,show:s=>s.step===6}],
+  steps:[
+    {t:s=>{const I=csI(s); return `${X2} ${I.sg} ${I.A}${X1} as areas: a square ${X1} × ${X1}, plus a rectangle ${X1} × ${I.A}.${I.B<0?`<br><span class="hint">Minus sign? Same picture. The sign comes back at the end.</span>`:""}`}},
+    {t:s=>`Cut the rectangle into 2 equal strips: ${X1} × ${csI(s).h} each.`},
+    {t:()=>`Move one strip under the square. It's <i>almost</i> a bigger square…`},
+    {t:s=>{const I=csI(s); return `…but a small corner is missing: ${I.h} × ${I.h} = <b class="k-red">${I.q}</b>.`}},
+    {t:s=>{const I=csI(s); return `Add the corner → a complete square.<br><b>${X2} ${I.sg} ${I.A}${X1} + ${I.q} = (${X1} ${I.sg} ${I.h})²</b>`}},
+    {t:s=>{const I=csI(s); return `We added ${I.q}, so take it away again:<br><b>${X2} ${I.sg} ${I.A}${X1} = (${X1} ${I.sg} ${I.h})² − ${I.q}</b><br><span class="hint">The sign in the bracket follows ${V("b")}. The (${frac(V("b"),"2")})² is always taken away.</span>`}},
+    {set:{c:5}, t:()=>`With a number on the end: ${X2} + ${V("b")}${X1} + ${V("c")} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}.<br>Drag ${V("c")}. The turning point is shown in the box below.`}
+  ],
+  draw(svg,s){
+    const I=csI(s), sc=108/14, x0=16, y0=10, X=6*sc, H=I.A/2*sc, Bw=I.A*sc, m=s.step;
+    const Rr=(x,y,w,h,fill,stroke,t,col,extra={})=>{S_(svg,"rect",Object.assign({x,y,width:w,height:h,fill,stroke,"stroke-width":.8},extra));
+      if(t){const fs=Math.max(3.4,Math.min(6.5,Math.min(w,h)*.38)); lab(svg,[x+w/2,y+h/2+fs*.35],t,{"font-size":fs,fill:col,"font-weight":700,"font-style":"italic"});}};
+    const L=(x,y,t,anchor="middle")=>lab(svg,[x,y],t,{"font-size":5,"font-style":"italic","text-anchor":anchor});
+    const hb=fracTxt(I.A/2);
+    Rr(x0,y0,X,X,"var(--blue-fill)","var(--ink)","x²","var(--blue)");
+    L(x0+X/2,y0-3,"x"); L(x0-3,y0+X/2+2,"x","end");
+    if(m===0){Rr(x0+X,y0,Bw,X,"var(--amber-fill)","var(--ink)",I.A+"x","var(--amber)"); L(x0+X+Bw/2,y0-3,String(I.A));}
+    else if(m===1){Rr(x0+X,y0,H,X,"var(--amber-fill)","var(--ink)",hb+"x","var(--amber)"); Rr(x0+X+H,y0,H,X,"var(--amber-fill)","var(--ink)",hb+"x","var(--amber)");
+      L(x0+X+H/2,y0-3,hb); L(x0+X+1.5*H,y0-3,hb);}
+    else {Rr(x0+X,y0,H,X,"var(--amber-fill)","var(--ink)",hb+"x","var(--amber)"); Rr(x0,y0+X,X,H,"var(--amber-fill)","var(--ink)",hb+"x","var(--amber)");
+      L(x0+X+H/2,y0-3,hb); L(x0-3,y0+X+H/2+2,hb,"end");
+      if(m===2) S_(svg,"rect",{x:x0+X,y:y0+X,width:H,height:H,fill:"none",stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5});
+      if(m===3) Rr(x0+X,y0+X,H,H,"var(--card)","var(--red)","?","var(--red)",{"stroke-dasharray":"2 1.2","stroke-width":1});
+      if(m>=4){Rr(x0+X,y0+X,H,H,"var(--red-fill)","var(--ink)",fracTxt(I.A*I.A/4),"var(--red)");
+        S_(svg,"rect",{x:x0,y:y0,width:X+H,height:X+H,fill:"none",stroke:"var(--green)","stroke-width":1.4});
+        lab(svg,[x0+(X+H)/2,y0+X+H+7],`side = x ${I.sg} ${hb}`,{"font-size":4.6,fill:"var(--green)","font-weight":700});}}
+  },
+  readout(s){const I=csI(s), m=s.step;
+    if(m<=2) return `<div class="row">${X2} ${I.sg} ${I.A}${X1}${I.B<0?` <span class="hint">(picture shows the size ${I.A})</span>`:""}</div>`;
+    if(m===3) return `<div class="row">Missing corner = (${frac(N(I.B),"2")})² = ${I.q}</div>`;
+    if(m===4) return `<div class="row">${X2} ${I.sg} ${I.A}${X1} + ${I.q} = (${X1} ${I.sg} ${I.h})²</div>`;
+    if(m===5) return `<div class="row"><b>${X2} ${I.sg} ${I.A}${X1} = (${X1} ${I.sg} ${I.h})² − ${I.q}</b></div>`;
+    const k=s.c-I.A*I.A/4, br2=`(${X1} ${I.sg} ${I.h})²`;
+    return `<div class="row">${poly([[1,X2],[I.B,X1],[s.c,""]])} = ${br2} − ${I.q}${s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""}</div>
+      ${s.c?`<div class="row">= <b>${br2}${k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k))}</b></div>`:""}
+      <div class="row">Turning point (${toFrac(-I.B/2)}, ${toFrac(k)}) · minimum value ${toFrac(k)}</div>`;},
+  hint:"If x² has a number in front, take it out first: 2x² + 12x = 2(x² + 6x) = 2[(x + 3)² − 9]. (E-Math only tests x² + px + q.)"
+});
+
+/* shared step UI */
+function stepHeader(n){return `<div class="stepnum"><span data-sn></span><span class="dots">${"<i></i>".repeat(n)}</span></div>`}
+function setStep(panel,steps,i,st){
+  $("[data-sn]",panel).textContent=`Step ${i+1} of ${steps.length}`;
+  [...panel.querySelectorAll(".dots i")].forEach((d,k)=>d.classList.toggle("on",k<=i));
+  $(".steptext",panel).innerHTML=steps[i].t(st);
+  $("[data-prev]",panel).disabled=i===0;
+  const nx=$("[data-next]",panel); nx.disabled=i===steps.length-1;
+}
+function wireNav(panel,steps,st,draw){
+  $("[data-prev]",panel).onclick=()=>{if(st.step>0){st.step--;draw()}};
+  $("[data-next]",panel).onclick=()=>{if(st.step<steps.length-1){st.step++;draw()}};
+}
+const PLAYS={squareAB,diffSquare,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,areaAid};
+
+/* =====================================================================
+   CHEATSHEETS
+   ===================================================================== */
+
+function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
+  return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-8.5}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+8.5}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
+function cmini(o){
+  const cx=34,cy=32,r=21,P={O:[cx,cy]},rd=d=>d*Math.PI/180,f=v=>v.toFixed(1);
+  for(const k in o.p) P[k]=[cx+r*Math.cos(rd(o.p[k])),cy-r*Math.sin(rd(o.p[k]))];
+  let s=`<svg viewBox="0 0 80 64" class="cmini"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1"/>`;
+  const L=(a,b,c)=>{s+=`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="${c}" stroke-width="1.2"/>`};
+  const T=(pt,t,dx=0,dy=0)=>{s+=`<text x="${f(pt[0]+dx)}" y="${f(pt[1]+dy)}" font-size="8" font-weight="700" text-anchor="middle" fill="var(--ink)">${t}</text>`};
+  const RT=(V,A,B)=>{const u=q=>{const dx=q[0]-V[0],dy=q[1]-V[1],l=Math.hypot(dx,dy);return[dx/l,dy/l]},a=u(A),b=u(B),z=4;
+    s+=`<path d="M${f(V[0]+a[0]*z)} ${f(V[1]+a[1]*z)} L${f(V[0]+a[0]*z+b[0]*z)} ${f(V[1]+a[1]*z+b[1]*z)} L${f(V[0]+b[0]*z)} ${f(V[1]+b[1]*z)}" fill="none" stroke="var(--red)" stroke-width="1"/>`};
+  const ARC=(V,A,B,c,dbl)=>{const ang=q=>Math.atan2(-(q[1]-V[1]),q[0]-V[0]); let a1=ang(A),a2=ang(B),sw=a2-a1; while(sw<0) sw+=2*Math.PI; if(sw>Math.PI){[a1,a2]=[a2,a1];sw=2*Math.PI-sw;}
+    (dbl?[6.5,9]:[7]).forEach(rr=>{const p1=[V[0]+rr*Math.cos(a1),V[1]-rr*Math.sin(a1)],p2=[V[0]+rr*Math.cos(a1+sw),V[1]-rr*Math.sin(a1+sw)];
+      s+=`<path d="M${f(p1[0])} ${f(p1[1])} A${rr} ${rr} 0 0 0 ${f(p2[0])} ${f(p2[1])}" fill="none" stroke="${c}" stroke-width="1.5"/>`;});};
+  if(o.mid) P.M=[(P.A[0]+P.B[0])/2,(P.A[1]+P.B[1])/2];
+  (o.perp||[]).forEach(pr=>{const M=[(P[pr[0]][0]+P[pr[1]][0])/2,(P[pr[0]][1]+P[pr[1]][1])/2]; s+=`<line x1="${cx}" y1="${cy}" x2="${f(M[0])}" y2="${f(M[1])}" stroke="var(--red)" stroke-width="1.1" stroke-dasharray="2 1.5"/>`;});
+  let tEnd=null;
+  if(o.tan){const d=rd(o.p[o.tan]),t=[Math.sin(d),Math.cos(d)],V=P[o.tan]; tEnd=[V[0]+t[0]*24,V[1]+t[1]*24]; L([V[0]-t[0]*24,V[1]-t[1]*24],tEnd,"var(--green)");}
+  if(o.ext){const Tp=[74,9],d=Math.hypot(Tp[0]-cx,Tp[1]-cy),be=Math.atan2(-(Tp[1]-cy),Tp[0]-cx),ph=Math.acos(r/d);
+    const A=[cx+r*Math.cos(be+ph),cy-r*Math.sin(be+ph)],B=[cx+r*Math.cos(be-ph),cy-r*Math.sin(be-ph)];
+    L(Tp,A,"var(--green)");L(Tp,B,"var(--green)");L(P.O,A,"var(--amber)");L(P.O,B,"var(--amber)");
+    s+=`<line x1="${cx}" y1="${cy}" x2="${Tp[0]}" y2="${Tp[1]}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 1.5"/>`;
+    const D=8,u=[(cx-Tp[0])/d,(cy-Tp[1])/d]; ARC(Tp,A,[Tp[0]+u[0]*D,Tp[1]+u[1]*D],"var(--red)"); ARC(Tp,[Tp[0]+u[0]*D,Tp[1]+u[1]*D],B,"var(--red)");
+    T(Tp,"T",0,-1.5);T(A,"A",-3,-2);T(B,"B",2,7);}
+  (o.l||[]).forEach(pr=>L(P[pr[0]],P[pr[1]],pr.includes("O")?"var(--amber)":"var(--blue)"));
+  if(o.rt){const V=P[o.rt]; if(o.tan===o.rt) RT(V,P.O,tEnd); else RT(V,P.A,P.B);}
+  if(o.mid) RT(P.M,P.O,P.A);
+  (o.arcs||[]).forEach(([v,a,b,c,dbl])=>ARC(P[v],a==="T"?tEnd:P[a],b==="T"?tEnd:P[b],c,dbl));
+  if(o.o){s+=`<circle cx="${cx}" cy="${cy}" r="1.4" fill="var(--ink)"/>`; T([cx,cy],"O",-5,-3);}
+  for(const k in o.p){const a=rd(o.p[k]); T([cx+(r+6)*Math.cos(a),cy-(r+6)*Math.sin(a)+3],k);}
+  if(o.tan&&o.tan!==o.rt) T(tEnd,"T",2,-2);
+  if(o.tan&&o.tan===o.rt) T(tEnd,"T",3,0);
+  return s+"</svg>";
+}
+const SHEETS = {
+expansion:`
+<div class="sheet">
+  <div class="panelc"><h4>3 special products</h4>
+    <table>
+      <tr><th>Rule</th><th>Example</th></tr>
+      <tr><td>(${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</td><td>(3${V("x")} + 2)² = 9${V("x")}² + 12${V("x")} + 4</td></tr>
+      <tr><td>(${V("a")} − ${V("b")})² = ${V("a")}² − 2${V("ab")} + ${V("b")}²</td><td>(${V("x")} − 5)² = ${V("x")}² − 10${V("x")} + 25</td></tr>
+      <tr><td>(${V("a")} + ${V("b")})(${V("a")} − ${V("b")}) = ${V("a")}² − ${V("b")}²</td><td>(${V("x")} + 4)(${V("x")} − 4) = ${V("x")}² − 16</td></tr>
+    </table>
+    <p class="anno">* middle term = 2 × first × last, e.g. 2 × 3${V("x")} × 2 = 12${V("x")}</p>
+  </div>
+
+  <div class="panelc"><h4>Picture it</h4>
+    <svg viewBox="20 -8 230 122" style="width:100%;max-width:360px;display:block;margin:0 auto">
+      <rect x="40" y="10" width="60" height="60" fill="var(--blue-fill)" stroke="var(--ink)"/>
+      <rect x="100" y="10" width="36" height="60" fill="var(--amber-fill)" stroke="var(--ink)"/>
+      <rect x="40" y="70" width="60" height="36" fill="var(--amber-fill)" stroke="var(--ink)"/>
+      <rect x="100" y="70" width="36" height="36" fill="var(--red-fill)" stroke="var(--ink)"/>
+      <g font-style="italic" font-weight="700" text-anchor="middle" font-size="15">
+        <text x="70" y="45" fill="var(--blue)">a²</text><text x="118" y="45" fill="var(--amber)">ab</text>
+        <text x="70" y="93" fill="var(--amber)">ab</text><text x="118" y="93" fill="var(--red)">b²</text>
+      </g>
+      <g font-style="italic" font-size="13" fill="var(--ink)" text-anchor="middle">
+        <text x="70" y="7">a</text><text x="118" y="7">b</text><text x="32" y="44">a</text><text x="32" y="93">b</text>
+      </g>
+      <text x="150" y="58" font-size="13" fill="var(--blue)">2 rectangles</text>
+      <text x="150" y="74" font-size="13" fill="var(--blue)">= 2ab</text>
+    </svg>
+    <p class="anno" style="text-align:center">Try it: <a href="#a-plus-b-squared">open the Play tab</a></p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ (${V("a")} + ${V("b")})² = ${V("a")}² + ${V("b")}²</div>
+      <div class="ok">✓ (${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</div>
+      <div class="x">✗ (${V("x")} − 3)² = ${V("x")}² − 9</div>
+      <div class="ok">✓ (${V("x")} − 3)² = ${V("x")}² − 6${V("x")} + 9</div>
+    </div>
+    <div class="note"><b>Note!</b> Squaring a bracket ≠ squaring each term. Don't forget the middle term.</div>
+  </div>
+
+  <div class="panelc"><h4>Use it for mental sums</h4>
+    <ul class="steps">
+      <li>51² = (50 + 1)² = 2500 + 100 + 1 = <b>2601</b></li>
+      <li>99² = (100 − 1)² = 10 000 − 200 + 1 = <b>9801</b></li>
+      <li>101 × 99 = (100 + 1)(100 − 1) = 10 000 − 1 = <b>9999</b></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Work backwards = factorise</h4>
+    <table>
+      <tr><th>Spot the pattern</th><th>Factorised</th></tr>
+      <tr><td>${V("x")}² + 10${V("x")} + 25</td><td>(${V("x")} + 5)²</td></tr>
+      <tr><td>${V("x")}² − 8${V("x")} + 16</td><td>(${V("x")} − 4)²</td></tr>
+      <tr><td>4${V("x")}² − 9</td><td>(2${V("x")} + 3)(2${V("x")} − 3)</td></tr>
+    </table>
+    <p class="anno">* use it when: first and last terms are perfect squares</p>
+  </div>
+</div>`,
+
+diffBasics:`
+<div class="sheet">
+  <div class="panelc"><h4>Power rule</h4>
+    <p class="big">${frac("d","d"+V("x"))}(${V("x")}<sup>${V("n")}</sup>) = ${V("n")}${V("x")}<sup>${V("n")} − 1</sup></p>
+    <p class="anno" style="text-align:center">bring the power down in front, then power − 1</p>
+    <table>
+      <tr><th>${V("y")}</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
+      <tr><td>${V("x")}²</td><td>2${V("x")}</td></tr>
+      <tr><td>${V("x")}³</td><td>3${V("x")}²</td></tr>
+      <tr><td>5${V("x")}⁴</td><td>20${V("x")}³</td></tr>
+      <tr><td>${V("x")} </td><td>1</td></tr>
+      <tr><td>7 <span class="anno">(constant)</span></td><td>0</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Rewrite first, then differentiate</h4>
+    <table>
+      <tr><th>${V("y")}</th><th>Rewrite</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
+      <tr><td>${frac("1",V("x"))}</td><td>${V("x")}<sup>−1</sup></td><td>−${V("x")}<sup>−2</sup> = −${frac("1",V("x")+"²")}</td></tr>
+      <tr><td>${frac("1",V("x")+"²")}</td><td>${V("x")}<sup>−2</sup></td><td>−2${V("x")}<sup>−3</sup> = −${frac("2",V("x")+"³")}</td></tr>
+      <tr><td>√${V("x")}</td><td>${V("x")}<sup>½</sup></td><td>½${V("x")}<sup>−½</sup> = ${frac("1","2√"+V("x"))}</td></tr>
+    </table>
+    <div class="wrongright">
+      <div class="x">✗ ${frac("d","d"+V("x"))}(${frac("1",V("x")+"²")}) = ${frac("1","2"+V("x"))}</div>
+      <div class="ok">✓ ${V("x")}<sup>−2</sup> → −2${V("x")}<sup>−3</sup> = −${frac("2",V("x")+"³")}</div>
+    </div>
+    <div class="note"><b>Note!</b> Never differentiate the denominator on its own. Change to a negative power first.</div>
+  </div>
+
+  <div class="panelc"><h4>Term by term</h4>
+    <ul class="steps">
+      <li>${V("y")} = 4${V("x")}³ − 6${V("x")}² + 5${V("x")} − 9</li>
+      <li>${frac("d"+V("y"),"d"+V("x"))} = 12${V("x")}² − 12${V("x")} + 5 <span class="tagop">the −9 becomes 0</span></li>
+    </ul>
+    <p class="anno">* a number in front stays in front: ${frac("d","d"+V("x"))}(${V("k")}·f) = ${V("k")}·f ′</p>
+  </div>
+
+  <div class="panelc"><h4>What ${frac("d"+V("y"),"d"+V("x"))} means</h4>
+    <ul class="steps">
+      <li>① gradient of the tangent at a point</li>
+      <li>② rate of change of ${V("y")} as ${V("x")} changes</li>
+    </ul>
+    <p class="anno">* gradient at ${V("x")} = 3 for ${V("y")} = ${V("x")}²: ${frac("d"+V("y"),"d"+V("x"))} = 2(3) = 6</p>
+  </div>
+
+  <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
+    <ul class="steps">
+      <li>Grow a square of side ${V("x")} by ${V("h")}.</li>
+      <li>Extra area = 2${V("xh")} + ${V("h")}²</li>
+      <li>Rate = ${frac("2"+V("xh")+" + "+V("h")+"²",V("h"))} = 2${V("x")} + ${V("h")} <span class="tagop">÷ ${V("h")}</span></li>
+      <li>As ${V("h")} → 0, rate → <b>2${V("x")}</b></li>
+    </ul>
+    <p class="anno">You won't need to write this in the exam. It shows why the power rule works. <a href="#diff-x-squared">Open the Play tab</a></p>
+  </div>
+</div>`,
+complSq:`
+<div class="sheet">
+  <div class="panelc"><h4>3 steps: x² + bx + c</h4>
+    <ul class="steps">
+      <li>① Halve ${V("b")}: ${frac(V("b"),"2")}</li>
+      <li>② Add <b>and</b> take away (${frac(V("b"),"2")})²</li>
+      <li>③ The first 3 terms make a perfect square</li>
+    </ul>
+    <p class="big">${X2} + ${V("b")}${X1} + ${V("c")} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}</p>
+    <table>
+      <tr><th>Example</th><th>Working</th></tr>
+      <tr><td>${X2} + 8${X1} + 5</td><td>= ${X2} + 8${X1} + 16 − 16 + 5<br>= <b>(${X1} + 4)² − 11</b></td></tr>
+      <tr><td>${X2} − 5${X1} + 2</td><td>= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + 2<br>= <b>(${X1} − ${frac("5","2")})² − ${frac("17","4")}</b></td></tr>
+    </table>
+    <p class="anno">* the sign in the bracket follows ${V("b")}; the (${frac(V("b"),"2")})² is always taken away</p>
+  </div>
+
+  <div class="panelc"><h4>Picture it</h4>
+    <svg viewBox="0 -10 220 114" style="width:100%;max-width:340px;display:block;margin:0 auto">
+      <g font-size="12" font-style="italic" text-anchor="middle" fill="var(--ink)"><text x="58" y="3">x</text><text x="98" y="3">4</text><text x="22" y="40">x</text><text x="22" y="80">4</text></g>
+      <rect x="30" y="8" width="56" height="56" fill="var(--blue-fill)" stroke="var(--ink)"/>
+      <rect x="86" y="8" width="24" height="56" fill="var(--amber-fill)" stroke="var(--ink)"/>
+      <rect x="30" y="64" width="56" height="24" fill="var(--amber-fill)" stroke="var(--ink)"/>
+      <rect x="86" y="64" width="24" height="24" fill="var(--red-fill)" stroke="var(--red)" stroke-dasharray="4 2"/>
+      <g font-style="italic" font-weight="700" text-anchor="middle" font-size="13">
+        <text x="58" y="41" fill="var(--blue)">x²</text><text x="98" y="41" fill="var(--amber)">4x</text>
+        <text x="58" y="81" fill="var(--amber)">4x</text><text x="98" y="81" fill="var(--red)">16</text></g>
+      <text x="124" y="72" font-size="12" fill="var(--red)">← missing</text>
+      <text x="124" y="87" font-size="12" fill="var(--red)">(8 ÷ 2)² = 16</text>
+      <text x="124" y="30" font-size="12" fill="var(--blue)">x² + 8x + 16</text>
+      <text x="124" y="45" font-size="12" fill="var(--blue)">= (x + 4)²</text>
+    </svg>
+    <p class="anno" style="text-align:center">Try it: <a href="#complete-square">open the Play tab</a></p>
+  </div>
+
+  <div class="panelc"><h4>Number in front of x² <span class="badge">A-Math</span></h4>
+    <ul class="steps">
+      <li>2${X2} − 12${X1} + 7</li>
+      <li>= 2(${X2} − 6${X1}) + 7 <span class="tagop">take 2 out of the ${X2} and ${X1} terms only</span></li>
+      <li>= 2[(${X1} − 3)² − 9] + 7</li>
+      <li>= 2(${X1} − 3)² − 18 + 7 <span class="tagop">× 2 into the [ ]</span></li>
+      <li>= <b>2(${X1} − 3)² − 11</b></li>
+    </ul>
+    <div class="wrongright">
+      <div class="x">✗ 2(${X1} − 3)² − 9 + 7</div>
+      <div class="ok">✓ 2(${X1} − 3)² − 18 + 7</div>
+    </div>
+    <div class="note"><b>Note!</b> When you open the square bracket, the −9 gets multiplied by 2 too.</div>
+    <p class="anno">* E-Math only tests ${X2} + ${V("p")}${X1} + ${V("q")} (no number in front of ${X2}).</p>
+  </div>
+
+  <div class="panelc"><h4>What you can read off</h4>
+    <table>
+      <tr><th>${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}</th><th>${V("a")} &gt; 0</th><th>${V("a")} &lt; 0</th></tr>
+      <tr><td>Turning point</td><td colspan="2">(${V("h")}, ${V("k")})</td></tr>
+      <tr><td>Type</td><td>minimum ∪</td><td>maximum ∩</td></tr>
+      <tr><td>Min / max value of ${V("y")}</td><td>${V("k")}, when ${X1} = ${V("h")}</td><td>${V("k")}, when ${X1} = ${V("h")}</td></tr>
+    </table>
+    <p class="anno">* 2(${X1} − 3)² − 11 → minimum point (3, −11)</p>
+  </div>
+
+  <div class="panelc"><h4>Use it to prove "always positive" <span class="badge">A-Math</span></h4>
+    <ul class="steps">
+      <li>${X2} − 4${X1} + 7 = (${X1} − 2)² + 3</li>
+      <li>(${X1} − 2)² ≥ 0 for all ${X1} <span class="tagop">a square is never negative</span></li>
+      <li>so (${X1} − 2)² + 3 ≥ 3 &gt; 0 → <b>always positive</b></li>
+    </ul>
+  </div>
+</div>`,
+
+quadGraphs:`
+<div class="sheet">
+  <div class="panelc"><h4>3 forms, 3 different facts</h4>
+    <table>
+      <tr><th>Form</th><th>Example</th><th>Read off</th></tr>
+      <tr><td>${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}</td><td>${V("y")} = (${X1} − 1)² − 4</td><td>turning point (1, −4)</td></tr>
+      <tr><td>${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})</td><td>${V("y")} = (${X1} + 1)(${X1} − 3)</td><td>cuts ${X1}-axis at −1 and 3</td></tr>
+      <tr><td>${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}</td><td>${V("y")} = ${X2} − 2${X1} − 3</td><td>cuts ${V("y")}-axis at −3</td></tr>
+    </table>
+    <p class="anno">* all three are the same curve</p>
+  </div>
+
+  <div class="panelc"><h4>Shape from a</h4>
+    <svg viewBox="0 0 240 80" style="width:100%;max-width:340px;display:block;margin:0 auto">
+      <path d="M15 8 Q55 120 95 8" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+      <circle cx="55" cy="64" r="3.5" fill="var(--red)"/><text x="55" y="78" text-anchor="middle" font-size="12" fill="var(--ink)">min point</text>
+      <text x="55" y="20" text-anchor="middle" font-size="13" font-style="italic" fill="var(--ink)">a &gt; 0  ∪</text>
+      <path d="M140 72 Q180 -40 220 72" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
+      <circle cx="180" cy="16" r="3.5" fill="var(--red)"/><text x="180" y="8" text-anchor="middle" font-size="12" fill="var(--ink)">max point</text>
+      <text x="180" y="66" text-anchor="middle" font-size="13" font-style="italic" fill="var(--ink)">a &lt; 0  ∩</text>
+    </svg>
+    <p class="anno">* bigger number in front of ${X2} (ignoring sign) → narrower curve</p>
+  </div>
+
+  <div class="panelc"><h4>Sketch checklist</h4>
+    <ul class="steps">
+      <li>① Shape: sign of ${V("a")}</li>
+      <li>② ${V("y")}-intercept: put ${X1} = 0</li>
+      <li>③ ${X1}-intercepts: put ${V("y")} = 0 and solve</li>
+      <li>④ Turning point: complete the square</li>
+      <li>⑤ Label every point with its coordinates</li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Line of symmetry</h4>
+    <p class="big">${X1} = ${V("h")} (from the completed square)</p>
+    <p class="anno">* also halfway between the roots, if there are roots</p>
+    <ul class="steps">
+      <li>${V("y")} = (${X1} + 1)(${X1} − 3): ${X1} = ${frac("−1 + 3","2")} = 1</li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${V("y")} = (${X1} − 2)² + 1 → turning point (−2, 1)</div>
+      <div class="ok">✓ turning point (2, 1)</div>
+      <div class="x">✗ ${V("y")} = (${X1} + 1)(${X1} − 3) cuts at ${X1} = 1, −3</div>
+      <div class="ok">✓ cuts at ${X1} = −1, 3</div>
+    </div>
+    <div class="note"><b>Note!</b> The sign inside the bracket flips: (${X1} − 2) → 2, (${X1} + 1) → −1.</div>
+  </div>
+</div>`,
+
+discrim:`
+<div class="sheet">
+  <div class="panelc"><h4>b² − 4ac and the roots of ax² + bx + c = 0</h4>
+    <table>
+      <tr><th>${V("b")}² − 4${V("ac")}</th><th>Roots</th><th>Graph</th></tr>
+      <tr><td>&gt; 0</td><td>2 real, different roots</td><td>${miniQ(2)}</td></tr>
+      <tr><td>= 0</td><td>2 real, equal roots</td><td>${miniQ(1)}</td></tr>
+      <tr><td>&lt; 0</td><td>no real roots</td><td>${miniQ(0)}</td></tr>
+    </table>
+    <p class="anno">* "real roots" (any, equal or not) → ${V("b")}² − 4${V("ac")} ≥ 0</p>
+  </div>
+
+  <div class="panelc"><h4>Line and curve</h4>
+    <ul class="steps">
+      <li>① Substitute the line into the curve</li>
+      <li>② Rearrange to (quadratic) = 0</li>
+      <li>③ Use ${V("b")}² − 4${V("ac")} of <b>that</b> quadratic</li>
+    </ul>
+    <table>
+      <tr><th>The question says</th><th>Use</th></tr>
+      <tr><td>cuts / intersects at 2 points</td><td>${V("b")}² − 4${V("ac")} &gt; 0</td></tr>
+      <tr><td>is a tangent / touches</td><td>${V("b")}² − 4${V("ac")} = 0</td></tr>
+      <tr><td>meets / intersects</td><td>${V("b")}² − 4${V("ac")} ≥ 0</td></tr>
+      <tr><td>does not meet</td><td>${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Example: tangent</h4>
+    <p>${V("y")} = ${X1} + ${V("k")} is a tangent to ${V("y")} = ${X2} − 3${X1} + 5. Find ${V("k")}.</p>
+    <ul class="steps">
+      <li>${X2} − 3${X1} + 5 = ${X1} + ${V("k")}</li>
+      <li>${X2} − 4${X1} + (5 − ${V("k")}) = 0 <span class="tagop">a = 1, b = −4, c = 5 − k</span></li>
+      <li>(−4)² − 4(1)(5 − ${V("k")}) = 0 <span class="tagop">tangent → = 0</span></li>
+      <li>16 − 20 + 4${V("k")} = 0 → <b>${V("k")} = 1</b></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Always positive / always negative <span class="badge">A-Math</span></h4>
+    <table>
+      <tr><th>${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} is…</th><th>Conditions</th></tr>
+      <tr><td>always positive (for all ${X1})</td><td>${V("a")} &gt; 0 <b>and</b> ${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
+      <tr><td>always negative (for all ${X1})</td><td>${V("a")} &lt; 0 <b>and</b> ${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ using the line's ${V("c")} in ${V("b")}² − 4${V("ac")}</div>
+      <div class="ok">✓ rearrange to … = 0 first, then read ${V("a")}, ${V("b")}, ${V("c")}</div>
+    </div>
+    <div class="note"><b>Note!</b> In the example above, ${V("c")} = 5 − ${V("k")}, not ${V("k")} and not 5.</div>
+    <div class="note"><b>Note!</b> If ${V("k")} is in front of ${X2}, you also need ${V("a")} ≠ 0 for it to be a quadratic (and ${V("a")} &gt; 0 or ${V("a")} &lt; 0 for always positive / negative).</div>
+  </div>
+</div>`,
+
+trigAngles:`
+<div class="sheet">
+  <div class="panelc"><h4>ASTC: which ratios are positive</h4>
+    <svg viewBox="0 0 220 150" style="width:100%;max-width:300px;display:block;margin:0 auto">
+      <line x1="10" y1="75" x2="210" y2="75" stroke="var(--ink)"/><line x1="110" y1="5" x2="110" y2="145" stroke="var(--ink)"/>
+      <circle cx="110" cy="75" r="58" fill="none" stroke="var(--muted)"/>
+      <g font-weight="700" font-size="22" text-anchor="middle" fill="var(--accent)">
+        <text x="186" y="26">A</text><text x="34" y="26">S</text><text x="34" y="124">T</text><text x="186" y="124">C</text></g>
+      <g font-size="11" text-anchor="middle" fill="var(--muted)">
+        <text x="186" y="39">all +</text><text x="34" y="39">sin +</text><text x="34" y="137">tan +</text><text x="186" y="137">cos +</text></g>
+      <g font-size="11" fill="var(--ink)"><text x="196" y="70">0°</text><text x="114" y="14">90°</text><text x="12" y="70">180°</text><text x="114" y="144">270°</text></g>
+    </svg>
+    <p class="anno" style="text-align:center">* anticlockwise from Quadrant 1: All, Sin, Tan, Cos</p>
+  </div>
+
+  <div class="panelc"><h4>Basic angle α (always acute)</h4>
+    <table>
+      <tr><th>Quadrant</th><th>θ in degrees</th><th>θ in radians</th></tr>
+      <tr><td>1</td><td>α</td><td>α</td></tr>
+      <tr><td>2</td><td>180° − α</td><td>π − α</td></tr>
+      <tr><td>3</td><td>180° + α</td><td>π + α</td></tr>
+      <tr><td>4</td><td>360° − α</td><td>2π − α</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Exact values <span class="badge">memorise</span></h4>
+    <table>
+      <tr><th>θ</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr>
+      <tr><td class="anno">rad</td><td>0</td><td>${frac("π","6")}</td><td>${frac("π","4")}</td><td>${frac("π","3")}</td><td>${frac("π","2")}</td></tr>
+      <tr><td>sin</td><td>0</td><td>${frac("1","2")}</td><td>${frac("√2","2")}</td><td>${frac("√3","2")}</td><td>1</td></tr>
+      <tr><td>cos</td><td>1</td><td>${frac("√3","2")}</td><td>${frac("√2","2")}</td><td>${frac("1","2")}</td><td>0</td></tr>
+      <tr><td>tan</td><td>0</td><td>${frac("1","√3")}</td><td>1</td><td>√3</td><td>undefined</td></tr>
+    </table>
+    <p class="anno">* ${frac("√2","2")} = ${frac("1","√2")} and ${frac("1","√3")} = ${frac("√3","3")}</p>
+  </div>
+
+  <div class="panelc"><h4>6 ratios &amp; principal values <span class="badge">A-Math</span></h4>
+    <table>
+      <tr><td>cosec θ = ${frac("1","sin θ")}</td><td>sec θ = ${frac("1","cos θ")}</td><td>cot θ = ${frac("1","tan θ")}</td></tr>
+    </table>
+    <p class="anno">* each has the same sign as its partner: use ASTC on sin, cos, tan</p>
+    <table>
+      <tr><th>Calculator gives (principal value)</th><th>Range</th></tr>
+      <tr><td>sin⁻¹ and tan⁻¹</td><td>−90° to 90°</td></tr>
+      <tr><td>cos⁻¹</td><td>0° to 180°</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Solve: 3 steps</h4>
+    <p>cos θ = −0.5, for 0° ≤ θ ≤ 360°</p>
+    <ul class="steps">
+      <li>① Basic angle from the <b>positive</b> value: α = cos⁻¹ 0.5 = 60°</li>
+      <li>② Sign: cos is <b>negative</b> → Quadrants 2, 3</li>
+      <li>③ θ = 180° − 60° = <b>120°</b> or θ = 180° + 60° = <b>240°</b></li>
+    </ul>
+    <p class="anno">* multiple angles: sin 2${X1} = ${V("k")} for 0° ≤ ${X1} ≤ 360° → solve for 2${X1} in 0° ≤ 2${X1} ≤ 720° (double the range first), then halve</p>
+  </div>
+
+  <div class="panelc"><h4>E-Math: obtuse angles</h4>
+    <ul class="steps">
+      <li>sin(180° − θ) = sin θ → sin 150° = sin 30° = ${frac("1","2")}</li>
+      <li>cos(180° − θ) = −cos θ → cos 120° = −cos 60° = −${frac("1","2")}</li>
+    </ul>
+    <p class="anno">* use it when: a triangle has an obtuse angle (sine rule, cosine rule, ½ab sin C)</p>
+    <p class="anno">* sine rule finding an angle: sin⁻¹ gives only the acute answer. If the angle could be obtuse, the other answer is 180° − that angle.</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ α = sin⁻¹(−0.5) = −30°</div>
+      <div class="ok">✓ α = sin⁻¹ 0.5 = 30°, then use ASTC for the sign</div>
+    </div>
+    <div class="note"><b>Note!</b> The calculator gives only one angle. Always check the range for the other answer(s).</div>
+  </div>
+</div>`,
+
+trigGraphs:`
+<div class="sheet">
+  <div class="panelc"><h4>Read the graph off the equation</h4>
+    <table>
+      <tr><th>Graph</th><th>Amplitude</th><th>Period</th><th>Max</th><th>Min</th></tr>
+      <tr><td>${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
+      <tr><td>${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
+      <tr><td>${V("y")} = ${V("a")} tan ${V("b")}${X1}</td><td>none</td><td>${frac("180°",V("b"))}</td><td>none</td><td>none</td></tr>
+    </table>
+    <p class="anno">* radians: period ${frac("2π",V("b"))} for sin, cos; ${frac("π",V("b"))} for tan</p>
+    <p class="anno">* ${V("y")} = ${V("a")} sin ${frac(X1,V("b"))} + ${V("c")}: period = 360° × ${V("b")} (the graph is stretched)</p>
+  </div>
+
+  <div class="panelc"><h4>Where each one starts (a &gt; 0)</h4>
+    <svg viewBox="0 0 240 82" style="width:100%;max-width:360px;display:block;margin:0 auto">
+      <g stroke="var(--muted)"><line x1="5" y1="32" x2="75" y2="32"/><line x1="85" y1="32" x2="155" y2="32"/><line x1="165" y1="32" x2="235" y2="32"/></g>
+      <path d="M5.0 32.0 L6.2 29.9 L7.3 27.8 L8.5 25.8 L9.7 23.9 L10.8 22.0 L12.0 20.2 L13.2 18.6 L14.3 17.1 L15.5 15.8 L16.7 14.7 L17.8 13.7 L19.0 13.0 L20.2 12.4 L21.3 12.1 L22.5 12.0 L23.7 12.1 L24.8 12.4 L26.0 13.0 L27.2 13.7 L28.3 14.7 L29.5 15.8 L30.7 17.1 L31.8 18.6 L33.0 20.2 L34.2 22.0 L35.3 23.9 L36.5 25.8 L37.7 27.8 L38.8 29.9 L40.0 32.0 L41.2 34.1 L42.3 36.2 L43.5 38.2 L44.7 40.1 L45.8 42.0 L47.0 43.8 L48.2 45.4 L49.3 46.9 L50.5 48.2 L51.7 49.3 L52.8 50.3 L54.0 51.0 L55.2 51.6 L56.3 51.9 L57.5 52.0 L58.7 51.9 L59.8 51.6 L61.0 51.0 L62.2 50.3 L63.3 49.3 L64.5 48.2 L65.7 46.9 L66.8 45.4 L68.0 43.8 L69.2 42.0 L70.3 40.1 L71.5 38.2 L72.7 36.2 L73.8 34.1 L75.0 32.0" fill="none" stroke="var(--blue)" stroke-width="2.2"/>
+      <path d="M85.0 12.0 L86.2 12.1 L87.3 12.4 L88.5 13.0 L89.7 13.7 L90.8 14.7 L92.0 15.8 L93.2 17.1 L94.3 18.6 L95.5 20.2 L96.7 22.0 L97.8 23.9 L99.0 25.8 L100.2 27.8 L101.3 29.9 L102.5 32.0 L103.7 34.1 L104.8 36.2 L106.0 38.2 L107.2 40.1 L108.3 42.0 L109.5 43.8 L110.7 45.4 L111.8 46.9 L113.0 48.2 L114.2 49.3 L115.3 50.3 L116.5 51.0 L117.7 51.6 L118.8 51.9 L120.0 52.0 L121.2 51.9 L122.3 51.6 L123.5 51.0 L124.7 50.3 L125.8 49.3 L127.0 48.2 L128.2 46.9 L129.3 45.4 L130.5 43.8 L131.7 42.0 L132.8 40.1 L134.0 38.2 L135.2 36.2 L136.3 34.1 L137.5 32.0 L138.7 29.9 L139.8 27.8 L141.0 25.8 L142.2 23.9 L143.3 22.0 L144.5 20.2 L145.7 18.6 L146.8 17.1 L148.0 15.8 L149.2 14.7 L150.3 13.7 L151.5 13.0 L152.7 12.4 L153.8 12.1 L155.0 12.0" fill="none" stroke="var(--blue)" stroke-width="2.2"/>
+      <path d="M172.1 60.2 L172.8 56.6 L173.5 53.7 L174.3 51.4 L175.0 49.5 L175.7 47.9 L176.4 46.6 L177.1 45.4 L177.8 44.3 L178.6 43.4 L179.3 42.6 L180.0 41.8 L180.7 41.2 L181.4 40.6 L182.1 40.0 L182.8 39.5 L183.6 39.0 L184.3 38.5 L185.0 38.1 L185.7 37.7 L186.4 37.3 L187.1 36.9 L187.8 36.6 L188.6 36.2 L189.3 35.9 L190.0 35.6 L190.7 35.3 L191.4 35.0 L192.1 34.8 L192.8 34.5 L193.6 34.2 L194.3 34.0 L195.0 33.7 L195.7 33.4 L196.4 33.2 L197.1 33.0 L197.9 32.7 L198.6 32.5 L199.3 32.2 L200.0 32.0 L200.7 31.8 L201.4 31.5 L202.1 31.3 L202.9 31.0 L203.6 30.8 L204.3 30.6 L205.0 30.3 L205.7 30.0 L206.4 29.8 L207.2 29.5 L207.9 29.2 L208.6 29.0 L209.3 28.7 L210.0 28.4 L210.7 28.1 L211.4 27.8 L212.2 27.4 L212.9 27.1 L213.6 26.7 L214.3 26.3 L215.0 25.9 L215.7 25.5 L216.4 25.0 L217.2 24.5 L217.9 24.0 L218.6 23.4 L219.3 22.8 L220.0 22.2 L220.7 21.4 L221.4 20.6 L222.2 19.7 L222.9 18.6 L223.6 17.4 L224.3 16.1 L225.0 14.5 L225.7 12.6 L226.5 10.3 L227.2 7.4 L227.9 3.8" fill="none" stroke="var(--blue)" stroke-width="2.2"/>
+      <line x1="167" y1="0" x2="167" y2="64" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="233" y1="0" x2="233" y2="64" stroke="var(--red)" stroke-dasharray="3 2"/>
+      <g font-size="10" text-anchor="middle" fill="var(--ink)"><text x="40" y="78">sin: middle, up</text><text x="120" y="78">cos: at max</text><text x="200" y="78">tan: through O</text></g>
+    </svg>
+    <p class="anno">* a negative ${V("a")} flips the graph: sin goes down first, cos starts at its min</p>
+  </div>
+
+  <div class="panelc"><h4>Sketch in 5 steps</h4>
+    <ul class="steps">
+      <li>① Draw the middle line ${V("y")} = ${V("c")}</li>
+      <li>② Draw the max and min lines</li>
+      <li>③ Mark one period along the ${X1}-axis</li>
+      <li>④ Split each period into 4 equal parts.<br>sin: middle, max, middle, min · cos: max, middle, min, middle<br><span class="anno">(negative a: swap max and min)</span></li>
+      <li>⑤ Join with a smooth curve; label max, min and end points</li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Example</h4>
+    <p>${V("y")} = 2 sin 3${X1} + 1, for 0° ≤ ${X1} ≤ 180°</p>
+    <ul class="steps">
+      <li>amplitude 2 · period 360° ÷ 3 = <b>120°</b></li>
+      <li>max = 1 + 2 = <b>3</b> · min = 1 − 2 = <b>−1</b></li>
+      <li>quarter points every 30°: 0°, 30°, 60°, 90°, 120°…</li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ period of sin 3${X1} = 3 × 360°</div>
+      <div class="ok">✓ 360° ÷ 3 = 120°</div>
+      <div class="x">✗ tan has amplitude 1</div>
+      <div class="ok">✓ tan has no amplitude</div>
+    </div>
+    <div class="note"><b>Note!</b> tan has asymptotes (dashed lines it never touches) at ${X1} = ${frac("90°",V("b"))}, ${frac("270°",V("b"))}, …</div>
+  </div>
+</div>`,
+
+rFormula:`
+<div class="sheet">
+  <div class="panelc"><h4>The 4 forms <span class="badge">memorise: not on the formula sheet</span></h4>
+    <table>
+      <tr><th>Expression</th><th>R-form</th></tr>
+      <tr><td>${V("a")} sin θ + ${V("b")} cos θ</td><td>${V("R")} sin(θ + α)</td></tr>
+      <tr><td>${V("a")} sin θ − ${V("b")} cos θ</td><td>${V("R")} sin(θ − α)</td></tr>
+      <tr><td>${V("a")} cos θ + ${V("b")} sin θ</td><td>${V("R")} cos(θ − α)</td></tr>
+      <tr><td>${V("a")} cos θ − ${V("b")} sin θ</td><td>${V("R")} cos(θ + α)</td></tr>
+    </table>
+    <p class="big">${V("R")} = √(${V("a")}² + ${V("b")}²) &nbsp;·&nbsp; tan ${AL} = ${frac(V("b"),V("a"))}</p>
+    <p class="anno">* ${V("a")}, ${V("b")} &gt; 0 and ${AL} acute. ${V("a")} = the number in front of the ratio named in the R-form.</p>
+  </div>
+
+  <div class="panelc"><h4>Where R and α come from</h4>
+    <svg viewBox="0 0 220 98" style="width:100%;max-width:300px;display:block;margin:0 auto">
+      <path d="M20 78 L110 78 L110 18 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>
+      <path d="M102 78 L102 70 L110 70" fill="none" stroke="var(--ink)"/>
+      <path d="M44 78 A24 24 0 0 0 40 65" fill="none" stroke="var(--red)" stroke-width="1.5"/>
+      <text x="50" y="72" font-size="13" fill="var(--red)" font-weight="700">α</text>
+      <text x="65" y="92" font-size="13" text-anchor="middle" fill="var(--amber)" font-weight="700">a</text>
+      <text x="116" y="52" font-size="13" fill="var(--green)" font-weight="700">b</text>
+      <text x="56" y="40" font-size="13" fill="var(--blue)" font-weight="700">R</text>
+      <text x="135" y="40" font-size="12" fill="var(--ink)">R = √(a² + b²)</text>
+      <text x="135" y="60" font-size="12" fill="var(--ink)">tan α = b ÷ a</text>
+    </svg>
+  </div>
+
+  <div class="panelc"><h4>Max and min</h4>
+    <ul class="steps">
+      <li>3 cos θ + 4 sin θ = 5 cos(θ − 53.13°)</li>
+      <li>Max = <b>5</b> when θ − 53.13° = 0° → θ = 53.1°</li>
+      <li>Min = <b>−5</b> when θ − 53.13° = 180° → θ = 233.1°</li>
+    </ul>
+    <p class="anno">* max = ${V("R")}, min = −${V("R")}, because sin and cos are always between −1 and 1</p>
+  </div>
+
+  <div class="panelc"><h4>Solve, step by step</h4>
+    <p>3 cos θ + 4 sin θ = 2.5, for 0° ≤ θ ≤ 360°</p>
+    <ul class="steps">
+      <li>① 5 cos(θ − 53.13°) = 2.5</li>
+      <li>② cos(θ − 53.13°) = 0.5 <span class="tagop">÷ 5</span></li>
+      <li>③ Range: −53.13° ≤ θ − 53.13° ≤ 306.87° <span class="tagop">− 53.13° all round</span></li>
+      <li>④ θ − 53.13° = 60° or 300° <span class="anno">(−60° is outside the range, so reject it)</span></li>
+      <li>⑤ θ = <b>113.1°</b> or <b>353.1°</b></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ tan α = ${frac(V("a"),V("b"))}</div>
+      <div class="ok">✓ tan α = ${frac(V("b"),V("a"))}</div>
+    </div>
+    <div class="note"><b>Note!</b> Keep α to 2 d.p. while working; give final angles to 1 d.p. Always shift the range in step ③ before solving.</div>
+  </div>
+</div>`,
+
+circles:`
+<div class="sheet">
+  <div class="panelc"><h4>Angle properties</h4>
+    <table>
+      <tr><th>Picture</th><th>Property</th><th>Reason</th></tr>
+      <tr><td>${cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]})}</td><td>Angle at centre = 2 × angle at circumference</td><td class="anno">(∠ at centre = 2∠ at circ.)</td></tr>
+      <tr><td>${cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]})}</td><td>Angles in the same segment are equal</td><td class="anno">(∠s in same seg.)</td></tr>
+      <tr><td>${cmini({p:{A:180,B:0,P:60},l:["AB","AP","BP"],o:1,rt:"P"})}</td><td>Angle in a semicircle = 90°</td><td class="anno">(rt. ∠ in semicircle)</td></tr>
+      <tr><td>${cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]})}</td><td>Cyclic quad: opposite angles add to 180°: ∠A + ∠C = 180° (they are not equal)</td><td class="anno">(∠s in opp. seg.)</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Tangents and chords</h4>
+    <table>
+      <tr><th>Picture</th><th>Property</th><th>Reason</th></tr>
+      <tr><td>${cmini({p:{P:60},l:["OP"],o:1,tan:"P",rt:"P"})}</td><td>Tangent ⊥ radius</td><td class="anno">(tan ⊥ rad)</td></tr>
+      <tr><td>${cmini({p:{},o:1,ext:1})}</td><td>2 tangents from an outside point are equal: TA = TB, and OT bisects ∠ATB</td><td class="anno">(tangents from ext. pt.)</td></tr>
+      <tr><td>${cmini({p:{A:200,B:340},l:["AB","OM"],o:1,mid:1})}</td><td>Line from centre ⊥ chord cuts the chord in half</td><td class="anno">(⊥ from centre bisects chord)</td></tr>
+      <tr><td>${cmini({p:{A:150,B:30,C:210,D:330},l:["AB","CD"],o:1,perp:["AB","CD"]})}</td><td>Equal chords are the same distance from the centre</td><td class="anno">(equal chords equidistant from centre)</td></tr>
+      <tr><td>${cmini({p:{A:200,B:340},l:["OA","OB","AB"],o:1,arcs:[["A","O","B","var(--red)"],["B","O","A","var(--red)"]]})}</td><td>OA = OB (radii) → isosceles △, base angles equal</td><td class="anno">(base ∠s of isos. △)</td></tr>
+      <tr><td>${cmini({p:{A:270,B:40,C:150},l:["AB","AC","BC"],tan:"A",arcs:[["A","T","C","var(--red)"],["B","A","C","var(--red)"]]})}</td><td>Angle between tangent and chord = angle in alternate segment: ∠TAC = ∠ABC <span class="badge">A-Math</span></td><td class="anno">(∠s in alt. seg.)</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>How to write it</h4>
+    <ul class="steps">
+      <li>∠AOB = 2 × ∠APB</li>
+      <li style="padding-left:3.2em">= 2 × 35° (∠ at centre = 2∠ at circ.)</li>
+      <li style="padding-left:3.2em">= 70°</li>
+    </ul>
+    <p class="anno">* reason on the same line as the working; the answer on the next line</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ ∠APB = ∠AQB when P and Q are on opposite sides of AB</div>
+      <div class="ok">✓ opposite sides → ∠APB + ∠AQB = 180°</div>
+    </div>
+    <div class="note"><b>Note!</b> "Angle at centre" only works when both angles stand on the <b>same</b> arc. If P is on the minor arc, use the <b>reflex</b> angle at O.</div>
+  </div>
+</div>`,
+
+diffApps:`
+<div class="sheet">
+  <div class="panelc"><h4>Rules <span class="badge">memorise: not on the formula sheet</span></h4>
+    <table>
+      <tr><th>${V("y")}</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
+      <tr><td>${V("x")}<sup>${V("n")}</sup></td><td>${V("n")}${V("x")}<sup>${V("n")} − 1</sup></td></tr>
+      <tr><td>sin ${X1}</td><td>cos ${X1}</td></tr>
+      <tr><td>cos ${X1}</td><td>−sin ${X1}</td></tr>
+      <tr><td>tan ${X1}</td><td>sec² ${X1}</td></tr>
+      <tr><td>e<sup>${X1}</sup></td><td>e<sup>${X1}</sup></td></tr>
+      <tr><td>ln ${X1}</td><td>${frac("1",X1)}</td></tr>
+      <tr><td>Chain rule: <span class="nw">(2${X1} + 1)⁵</span></td><td><span class="nw">5(2${X1} + 1)⁴ × 2</span> = <span class="nw">10(2${X1} + 1)⁴</span></td></tr>
+      <tr><td><span class="nw">sin(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw">${V("a")} cos(${V("a")}${X1} + ${V("b")})</span></td></tr>
+      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td>${V("a")}e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
+      <tr><td><span class="nw">ln(${V("a")}${X1} + ${V("b")})</span></td><td>${frac(V("a"),V("a")+X1+" + "+V("b"))}</td></tr>
+      <tr><td>Product: ${V("uv")}</td><td>${V("u")}${frac("d"+V("v"),"d"+V("x"))} + ${V("v")}${frac("d"+V("u"),"d"+V("x"))}</td></tr>
+      <tr><td>Quotient: ${frac(V("u"),V("v"))}</td><td>${frac(V("v")+frac("d"+V("u"),"d"+V("x"))+" − "+V("u")+frac("d"+V("v"),"d"+V("x")),V("v")+"²")}</td></tr>
+    </table>
+    <p class="anno">* quotient: differentiate top, copy bottom, minus differentiate bottom, copy top, over bottom squared</p>
+    <p class="anno">* trig rules need ${X1} in radians</p>
+  </div>
+
+  <div class="panelc"><h4>Tangent and normal</h4>
+    <svg viewBox="0 0 200 80" style="width:100%;max-width:260px;display:block;margin:0 auto">
+      <path d="M20 75 Q70 -10 180 20" fill="none" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="19.3" y1="61.2" x2="91.5" y2="7.5" stroke="var(--green)" stroke-width="1.6"/>
+      <line x1="34.5" y1="6.3" x2="76.3" y2="62.5" stroke="var(--amber)" stroke-width="1.6"/>
+      <circle cx="55.4" cy="34.4" r="3" fill="var(--ink)"/>
+      <text x="94" y="12" font-size="12" fill="var(--green)">tangent</text><text x="80" y="66" font-size="12" fill="var(--amber)">normal</text>
+    </svg>
+    <ul class="steps">
+      <li>Gradient of tangent ${V("m")} = ${frac("d"+V("y"),"d"+V("x"))} at that point</li>
+      <li>Gradient of normal = −${frac("1",V("m"))} <span class="tagop">normal ⊥ tangent</span></li>
+      <li>Equation: <span class="nw">${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)</span></li>
+    </ul>
+    <p class="anno">* if ${V("m")} = 0: tangent is ${V("y")} = ${V("y")}₁, normal is the vertical line ${X1} = ${X1}₁</p>
+    <p class="anno">* ${V("y")} = ${X2} at (1, 1): ${V("m")} = 2 → tangent ${V("y")} = 2${X1} − 1; normal ${V("y")} = −${frac("1","2")}${X1} + ${frac("3","2")}</p>
+  </div>
+
+  <div class="panelc"><h4>Increasing, decreasing, stationary</h4>
+    <table>
+      <tr><th>${frac("d"+V("y"),"d"+V("x"))}</th><th>Meaning</th></tr>
+      <tr><td>&gt; 0</td><td>increasing ↗</td></tr>
+      <tr><td>&lt; 0</td><td>decreasing ↘</td></tr>
+      <tr><td>= 0</td><td>stationary point (find both ${X1} and ${V("y")})</td></tr>
+    </table>
+    <p class="anno">* "show increasing for all ${X1}": ${V("y")} = ${V("x")}³ + 3${X1} → ${frac("d"+V("y"),"d"+V("x"))} = 3${X2} + 3 &gt; 0, since ${X2} ≥ 0</p>
+  </div>
+
+  <div class="panelc"><h4>Max, min or inflexion?</h4>
+    <table>
+      <tr><th>Test</th><th>Maximum</th><th>Minimum</th><th>Inflexion</th></tr>
+      <tr><td>${frac("d²"+V("y"),"d"+V("x")+"²")}</td><td>&lt; 0</td><td>&gt; 0</td><td>—</td></tr>
+      <tr><td>Sign of ${frac("d"+V("y"),"d"+V("x"))} (before → at → after)</td><td><span class="nw">+ → 0 → −</span></td><td><span class="nw">− → 0 → +</span></td><td><span class="nw">+ → 0 → +</span> or <span class="nw">− → 0 → −</span></td></tr>
+    </table>
+    <p class="anno">* ${frac("d²"+V("y"),"d"+V("x")+"²")} = 0 → this test can't tell. Use the sign test (it could be max, min or inflexion).</p>
+    <ul class="steps">
+      <li>${V("y")} = ${V("x")}³ − 3${X1} + 1 → ${frac("d"+V("y"),"d"+V("x"))} = 3${X2} − 3 = 0 <span class="nw">→ ${X1} = ±1</span></li>
+      <li>${frac("d²"+V("y"),"d"+V("x")+"²")} = 6${X1}: at ${X1} = 1, 6 &gt; 0 → <b>min (1, −1)</b>; at ${X1} = −1, −6 &lt; 0 → <b>max (−1, 3)</b></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Connected rates</h4>
+    <p class="big">${frac("d"+V("A"),"d"+V("t"))} = ${frac("d"+V("A"),"d"+V("r"))} × ${frac("d"+V("r"),"d"+V("t"))}</p>
+    <p class="anno">* circle: ${V("A")} = π${V("r")}² → ${frac("d"+V("A"),"d"+V("r"))} = 2π${V("r")}. If ${frac("d"+V("r"),"d"+V("t"))} = 0.5 cm/s and ${V("r")} = 4: ${frac("d"+V("A"),"d"+V("t"))} = 2π(4) × 0.5 = 4π cm²/s</p>
+  </div>
+
+  <div class="panelc"><h4>Max / min word problems</h4>
+    <ul class="steps">
+      <li>① Write the quantity in <b>one</b> variable</li>
+      <li>② Differentiate, put = 0, solve</li>
+      <li>③ Check max or min with ${frac("d²"+V("y"),"d"+V("x")+"²")}</li>
+      <li>④ Answer the question asked (often the max value, not ${X1})</li>
+    </ul>
+    <div class="note"><b>Note!</b> ${frac("d²"+V("y"),"d"+V("x")+"²")} = 0 does <b>not</b> mean inflexion. Check the sign of ${frac("d"+V("y"),"d"+V("x"))} on both sides.</div>
+  </div>
+</div>`,
+
+integration:`
+<div class="sheet">
+  <div class="panelc"><h4>Rules <span class="badge">memorise: not on the formula sheet</span></h4>
+    <table>
+      <tr><th>∫ … d${X1}</th><th>Answer (+ ${V("c")})</th></tr>
+      <tr><td>${X1}<sup>${V("n")}</sup> (${V("n")} ≠ −1)</td><td>${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")}</td></tr>
+      <tr><td>(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup> (${V("n")} ≠ −1)</td><td>${frac("("+V("a")+X1+" + "+V("b")+")<sup>"+V("n")+" + 1</sup>",V("a")+"("+V("n")+" + 1)")}</td></tr>
+      <tr><td>sin ${X1}</td><td>−cos ${X1}</td></tr>
+      <tr><td>cos ${X1}</td><td>sin ${X1}</td></tr>
+      <tr><td>sec² ${X1}</td><td>tan ${X1}</td></tr>
+      <tr><td>sin(${V("a")}${X1} + ${V("b")})</td><td>−${frac("1",V("a"))} cos(${V("a")}${X1} + ${V("b")})</td></tr>
+      <tr><td>cos(${V("a")}${X1} + ${V("b")})</td><td>${frac("1",V("a"))} sin(${V("a")}${X1} + ${V("b")})</td></tr>
+      <tr><td>e<sup>${X1}</sup></td><td>e<sup>${X1}</sup></td></tr>
+      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td>${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
+    </table>
+    <p class="anno">* add 1 to the power, divide by the new power (and by ${V("a")}, the number in front of ${X1})</p>
+  </div>
+
+  <div class="panelc"><h4>Definite integral</h4>
+    <p class="big">∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})</p>
+    <ul class="steps">
+      <li>∫<span class="lim"><sup>3</sup><sub>1</sub></span> (½${X2} + 1) d${X1} = [${frac(V("x")+"³","6")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span></li>
+      <li>= (${frac("27","6")} + 3) − (${frac("1","6")} + 1) <span class="tagop">upper − lower</span></li>
+      <li>= ${frac("15","2")} − ${frac("7","6")} = <b>${frac("19","3")}</b></li>
+    </ul>
+    <p class="anno">* no + ${V("c")} for a definite integral</p>
+  </div>
+
+  <div class="panelc"><h4>Area: 3 cases</h4>
+    <table>
+      <tr><th>Region</th><th>Integral comes out</th><th>Area</th></tr>
+      <tr><td>above the ${X1}-axis</td><td>positive</td><td>= the integral</td></tr>
+      <tr><td>below the ${X1}-axis</td><td>negative</td><td>= its positive value</td></tr>
+      <tr><td>crosses the ${X1}-axis</td><td>parts cancel</td><td>split at the crossing, add positive values</td></tr>
+    </table>
+    <svg viewBox="0 0 220 60" style="width:100%;max-width:300px;display:block;margin:6px auto 0">
+      <path d="M20.0,40.0 20.0,13.0 21.5,14.2 23.0,15.4 24.5,16.5 26.0,17.6 27.5,18.8 29.0,19.8 30.5,20.9 32.0,22.0 33.5,23.0 35.0,24.0 36.5,25.0 38.0,26.0 39.5,26.9 41.0,27.8 42.5,28.8 44.0,29.6 45.5,30.5 47.0,31.4 48.5,32.2 50.0,33.0 51.5,33.8 53.0,34.6 54.5,35.3 56.0,36.0 57.5,36.8 59.0,37.4 60.5,38.1 62.0,38.8 63.5,39.4 65.0,40.0 65.0,40.0Z" fill="var(--blue-fill)"/><path d="M65.0,40.0 65.0,40.0 68.0,41.2 71.0,42.2 74.0,43.2 77.0,44.2 80.0,45.0 83.0,45.8 86.0,46.4 89.0,47.0 92.0,47.6 95.0,48.0 98.0,48.4 101.0,48.6 104.0,48.8 107.0,49.0 110.0,49.0 113.0,49.0 116.0,48.8 119.0,48.6 122.0,48.4 125.0,48.0 128.0,47.6 131.0,47.0 134.0,46.4 137.0,45.8 140.0,45.0 143.0,44.2 146.0,43.2 149.0,42.2 152.0,41.2 155.0,40.0 155.0,40.0Z" fill="var(--red-fill)"/>
+      <line x1="10" y1="40" x2="200" y2="40" stroke="var(--ink)"/>
+      <path d="M20.0,13.0 24.1,16.2 28.1,19.2 32.1,22.1 36.2,24.8 40.2,27.4 44.3,29.8 48.4,32.1 52.4,34.3 56.4,36.3 60.5,38.1 64.5,39.8 68.6,41.4 72.7,42.8 76.7,44.1 80.8,45.2 84.8,46.2 88.8,47.0 92.9,47.7 97.0,48.2 101.0,48.6 105.1,48.9 109.1,49.0 113.1,49.0 117.2,48.8 121.2,48.4 125.3,48.0 129.4,47.3 133.4,46.6 137.5,45.7 141.5,44.6 145.6,43.4 149.6,42.0 153.6,40.5 157.7,38.9 161.8,37.1 165.8,35.2 169.9,33.1 173.9,30.9 178.0,28.5 182.0,26.0" fill="none" stroke="var(--blue)" stroke-width="2"/>
+      <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--red)" font-weight="700">−</text>
+      <g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="65" y="54">1</text><text x="155" y="54">3</text><text x="20" y="54">0</text></g>
+    </svg>
+    <p class="anno">* ${V("y")} = ${X2} − 4${X1} + 3 from 0 to 3: ∫ = 0, but area = ${frac("4","3")} + ${frac("4","3")} = ${frac("8","3")}</p>
+  </div>
+
+  <div class="panelc"><h4>Curve and a straight line</h4>
+    <ul class="steps">
+      <li>Area between them = ∫ (upper − lower) d${X1}</li>
+      <li>or: area of a triangle / trapezium ± area under the curve</li>
+    </ul>
+    <p class="anno">* find where they meet first; those ${X1}-values are the limits</p>
+  </div>
+
+  <div class="panelc"><h4>Reverse of differentiation</h4>
+    <ul class="steps">
+      <li>If ${frac("d","d"+X1)}[F(${X1})] = f(${X1}), then ∫ f(${X1}) d${X1} = F(${X1}) + ${V("c")}</li>
+    </ul>
+    <p class="anno">* "Hence find ∫…": use the derivative from the part before, and adjust for any number in front</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ ∫ (2${X1} + 1)³ d${X1} = ${frac("(2"+X1+" + 1)⁴","4")} + ${V("c")}</div>
+      <div class="ok">✓ ${frac("(2"+X1+" + 1)⁴","4 × 2")} + ${V("c")} = ${frac("(2"+X1+" + 1)⁴","8")} + ${V("c")}</div>
+      <div class="x">✗ ∫ sin ${X1} d${X1} = cos ${X1} + ${V("c")}</div>
+      <div class="ok">✓ −cos ${X1} + ${V("c")}</div>
+    </div>
+    <div class="note"><b>Note!</b> Indefinite integral → always + ${V("c")}. Trig integrals need ${X1} in radians.</div>
+  </div>
+</div>`
+
+};
+
+/* =====================================================================
+   ROUTER  —  #            home
+              #<topic>     topic, Play tab
+              #<topic>/sheet   topic, Cheatsheet tab
+   ===================================================================== */
+const app=$("#app"), titleEl=$("#title"), backBtn=$("#back"), shareBtn=$("#share");
+let homeFilter="all";
+try{ homeFilter=localStorage.getItem("hubFilter")||"all" }catch(e){}
+
+function thumbFor(t){
+  if(t.play==="squareAB") return `<svg class="thumb" viewBox="0 0 120 64"><rect x="2" y="2" width="36" height="36" fill="var(--blue-fill)" stroke="var(--ink)"/><rect x="38" y="2" width="22" height="36" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="2" y="38" width="36" height="22" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="38" y="38" width="22" height="22" fill="var(--red-fill)" stroke="var(--ink)"/></svg>`;
+  if(t.play==="diffSquare") return `<svg class="thumb" viewBox="0 0 120 64"><rect x="2" y="2" width="44" height="44" fill="var(--blue-fill)" stroke="var(--ink)"/><rect x="46" y="2" width="12" height="44" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="2" y="46" width="44" height="12" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="46" y="46" width="12" height="12" fill="var(--red-fill)" stroke="var(--red)"/><text x="68" y="36" font-size="15" fill="var(--muted)">h → 0</text></svg>`;
+  const T={
+   complSq:`<rect x="2" y="2" width="38" height="38" fill="var(--blue-fill)" stroke="var(--ink)"/><rect x="40" y="2" width="14" height="38" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="2" y="40" width="38" height="14" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="40" y="40" width="14" height="14" fill="var(--red-fill)" stroke="var(--red)" stroke-dasharray="3 2"/>`,
+   quadForms:`<path d="M10 4 Q40 110 70 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="40" cy="57" r="4" fill="var(--accent)"/><line x1="0" y1="40" x2="110" y2="40" stroke="var(--muted)"/>`,
+   discrim:`<path d="M10 4 Q45 100 80 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="0" y1="52" x2="110" y2="52" stroke="var(--amber)" stroke-width="2"/><line x1="0" y1="60" x2="110" y2="20" stroke="var(--green)" stroke-width="2"/>`,
+   unitCircle:`<circle cx="32" cy="32" r="28" fill="none" stroke="var(--ink)" stroke-width="1.5"/><line x1="32" y1="32" x2="56" y2="18" stroke="var(--ink)" stroke-width="1.5"/><line x1="56" y1="18" x2="56" y2="32" stroke="var(--blue)" stroke-width="3"/><line x1="32" y1="32" x2="56" y2="32" stroke="var(--amber)" stroke-width="3"/><text x="72" y="26" font-size="16" font-weight="700" fill="var(--accent)">S A</text><text x="72" y="50" font-size="16" font-weight="700" fill="var(--accent)">T C</text>`,
+   trigGraphs:`<path d="M0 32 C12 0 24 0 30 32 S48 64 60 32 S84 0 90 32 S108 64 116 40" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="0" y1="32" x2="120" y2="32" stroke="var(--muted)"/>`,
+   rFormula:`<path d="M0 32 C10 10 20 10 30 32 S50 54 60 32 S80 10 90 32" fill="none" stroke="var(--amber)" stroke-dasharray="3 2"/><path d="M0 20 C12 -6 26 -6 36 30 S60 70 72 30 S96 -6 110 24" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
+   circleProps:`<circle cx="32" cy="32" r="28" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M8 46 L32 32 L56 46 M8 46 L32 4 L56 46" fill="none" stroke="var(--blue)" stroke-width="1.5"/><text x="70" y="38" font-size="13" fill="var(--muted)">2× rule</text>`,
+   tangentAid:`<path d="M4 60 C30 -20 60 90 100 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="20" y1="22" x2="80" y2="22" stroke="var(--amber)" stroke-width="2"/>`,
+   areaAid:`<path d="M4 58 L24 58 L24 40 L44 40 L44 28 L64 28 L64 12 L84 12 L84 58 Z" fill="var(--blue-fill)" stroke="var(--blue)"/><path d="M4 50 Q50 40 100 0" fill="none" stroke="var(--ink)" stroke-width="2"/>`};
+  return T[t.play]?`<svg class="thumb" viewBox="0 0 120 64">${T[t.play]}</svg>`:"";
+}
+
+function renderHome(){
+  document.title="Coach Minyi's Maths Hub";
+  titleEl.textContent="Coach Minyi's Maths Hub";
+  backBtn.style.display="none"; shareBtn.hidden=true;
+  const used=LEVELS.filter(l=>TOPICS.some(t=>t.levels.includes(l.id)));
+  if(!used.some(l=>l.id===homeFilter)) homeFilter="all";
+  app.innerHTML=`<section class="hero"><h2>Play with the maths.</h2><p>Drag, press Next, and see <i>why</i> the rules work. Each topic has a cheatsheet too.</p></section>`;
+  const chips=h("div",{class:"chips",role:"group","aria-label":"Choose level"});
+  [{id:"all",name:"All"},...used].forEach(l=>{
+    const c=h("button",{class:"chip","aria-pressed":String(homeFilter===l.id)},l.name);
+    c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome()};
+    chips.append(c);
+  });
+  app.append(chips);
+  used.filter(l=>homeFilter==="all"||homeFilter===l.id).forEach(l=>{
+    const sec=h("section",{class:"level"},`<h3>${l.name}</h3>`);
+    const grid=h("div",{class:"cards"});
+    TOPICS.filter(t=>t.levels.includes(l.id)).forEach(t=>{
+      const a=h("a",{class:"card",href:"#"+t.id},
+        `${thumbFor(t)}<b>${t.title}</b><span>${t.blurb}</span><div class="tags"><span class="tag">${t.chapter}</span>${t.play?'<span class="tag">Play</span>':""}${t.sheet?'<span class="tag">Cheatsheet</span>':""}</div>`);
+      grid.append(a);
+    });
+    sec.append(grid); app.append(sec);
+  });
+  window.scrollTo(0,0);
+}
+
+function renderTopic(t,tab){
+  if(tab==="sheet"&&!t.sheet) tab="play";
+  if(tab==="play"&&!t.play) tab="sheet";
+  const lvl=LEVELS.find(l=>l.id===(t.levels.includes(homeFilter)?homeFilter:t.levels[0]));
+  document.title=t.title+" · Maths Hub";
+  titleEl.innerHTML=`<span class="crumb">${lvl.name} ·</span> ${t.chapter}`;
+  backBtn.style.display="inline-flex"; shareBtn.hidden=false;
+  app.innerHTML="";
+  const tabs=h("div",{class:"tabs",role:"tablist"});
+  [["play","Play",t.play],["sheet","Cheatsheet",t.sheet]].forEach(([k,name,has])=>{
+    if(!has) return;
+    const b=h("button",{class:"tab",role:"tab","aria-selected":String(tab===k)},name);
+    b.onclick=()=>{location.hash=t.id+(k==="sheet"?"/sheet":"")};
+    tabs.append(b);
+  });
+  if(t.play&&t.sheet) app.append(tabs); else app.append(h("div",{style:"height:12px"}));
+  if(tab==="play"){
+    const wrap=h("div",{class:"play"}), stage=h("div",{class:"stage"}), panel=h("div",{class:"panel"});
+    wrap.append(stage,panel); app.append(wrap);
+    PLAYS[t.play].mount(stage,panel);
+  } else {
+    app.insertAdjacentHTML("beforeend",`<h2 style="margin:6px 0 22px;font-size:24px">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]);
+  }
+  window.scrollTo(0,0);
+}
+
+function route(){
+  const raw=decodeURIComponent(location.hash.replace(/^#\/?/,""));
+  const [id,tab]=raw.split("/");
+  const t=TOPICS.find(x=>x.id===id);
+  if(t) renderTopic(t,tab==="sheet"?"sheet":"play"); else renderHome();
+}
+backBtn.onclick=()=>{ location.hash=""; };
+shareBtn.onclick=async()=>{
+  const url=location.href;
+  try{
+    if(navigator.share){ await navigator.share({title:document.title,url}); return; }
+    await navigator.clipboard.writeText(url);
+    shareBtn.textContent="Copied ✓"; setTimeout(()=>shareBtn.textContent="Copy link",1500);
+  }catch(e){}
+};
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
