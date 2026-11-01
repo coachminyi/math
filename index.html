@@ -112,6 +112,15 @@ button{font:inherit;color:inherit}
 .ctrl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin:6px 0}
 .ctrl label{font-weight:700;font-size:20px;font-style:italic;min-width:1.2em}
 .ctrl output{font-variant-numeric:tabular-nums;min-width:3.6em;text-align:right;font-size:18px}
+.ctrl:has(.numbox) output{display:none}
+.numwrap{display:flex;align-items:center;gap:4px}
+.numbox{width:4.6em;min-height:44px;font-size:18px;font-variant-numeric:tabular-nums;text-align:center;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:0 4px;-moz-appearance:textfield;appearance:textfield}
+.numbox::-webkit-inner-spin-button,.numbox::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.numbox:focus{outline:none;border-color:var(--accent)}
+.numbox.bad{border-color:var(--red)}
+.numbox:disabled{opacity:.35}
+.numwrap .unit{font-size:16px;color:var(--muted)}
+.numwrap .unit:empty{display:none}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;cursor:pointer}
 input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:var(--line)}
 input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:var(--line)}
@@ -192,13 +201,14 @@ i.v{font-style:italic;font-family:"Times New Roman",Georgia,serif;font-size:1.08
 footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 
 /* ---------- phone / portrait ---------- */
-@media (max-width:860px), (orientation:portrait) and (max-width:1100px){
+@media (max-width:899px){
   .play{grid-template-columns:1fr}
   .stage{position:sticky;top:56px;z-index:3;padding:6px}
-  .stage svg{max-height:46vh}
+  .stage svg,.stage:has(.keybox:not(:empty)) svg{max-height:34vh}
+  .panel>.box:has(.ctrl){order:-1}
   .steptext{font-size:18px;min-height:0}
   .keybox{font-size:15px;padding:6px 4px 2px}
-  .stage:has(.forms) svg{max-height:32vh}
+  .stage:has(.forms) svg{max-height:24vh}
   .formbox .eq{font-size:18px}
   .forms.tight .eq{font-size:16px}
   .forms.tight .hd{font-size:10.5px}
@@ -218,7 +228,8 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .bar h1{font-size:17px}
   .share{padding:0 10px}
   .wrongright{grid-template-columns:1fr}
-  .stage svg{max-height:40vh}
+  .stage svg,.stage:has(.keybox:not(:empty)) svg{max-height:30vh}
+  .stage:has(.forms) svg{max-height:22vh}
 }
 @media print{
   .bar,.tabs,footer{display:none}
@@ -309,7 +320,7 @@ const squareAB = {
         <div class="ctrl"><label for="sb">b</label><input id="sb" type="range" min="1" max="6" step="1" value="3"><output></output></div>
         <div class="readout" id="ro"></div>
       </div>
-      <p class="hint">Drag the sliders. The rule works for any a and b.</p>`;
+      <p class="hint">Drag the sliders or type a number. The rule works for any a and b.</p>`;
     const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
     const draw=()=>{
       const {a,b,step}=st, S=this.steps[step].show;
@@ -1964,6 +1975,53 @@ paintThemeBtn();
 
 window.addEventListener("hashchange",route);
 route();
+
+/* type-in number box beside every slider (student feedback, 1 Nov) */
+const numOf=t=>parseFloat(String(t).replace(/−/g,"-").replace(/[^0-9.\-]/g,""));
+function addNumBox(row){
+  const r=$("input[type=range]",row), out=$("output",row); if(!r||!out||row._sync) return;
+  const w=document.createElement("span"); w.className="numwrap";
+  const b=document.createElement("input"); b.type="number"; b.className="numbox"; b.step="any";
+  if(+r.min>=0) b.inputMode="decimal";
+  b.setAttribute("aria-label",(r.getAttribute("aria-label")||$("label",row)?.textContent||"value")+" — type a number");
+  const u=document.createElement("span"); u.className="unit";
+  w.append(b,u); out.after(w);
+  const shown=()=>numOf(out.textContent);
+  row._sync=()=>{
+    if(document.activeElement!==b){const v=shown(); const t=isNaN(v)?"":String(v); if(b.value!==t) b.value=t;}
+    const un=((out.textContent.match(/([a-z°]+)\s*$/i)||[])[1])||""; if(u.textContent!==un) u.textContent=un;
+    if(b.disabled!==r.disabled) b.disabled=r.disabled;
+  };
+  const set=v=>{r.value=v; r.dispatchEvent(new Event("input",{bubbles:true}));};
+  const apply=()=>{
+    const want=numOf(b.value); if(isNaN(want)){row._sync();return;}
+    const lo=+r.min, hi=+r.max, st=+r.step||1;
+    set(want);
+    if(Math.abs(shown()-(+r.value))>1e-6){ // slider isn't 1:1 with the number (e.g. log h): search for the closest
+      set(lo); const a=shown(); set(hi); const up=shown()>=a; let L=lo,H=hi;
+      for(let i=0;i<40&&H-L>st;i++){const m=L+Math.max(1,Math.round((H-L)/2/st))*st; set(m); if((shown()<want)===up) L=m; else H=m;}
+      set(L); const dL=Math.abs(shown()-want); set(H); if(dL<=Math.abs(shown()-want)) set(L);
+    }
+    const got=shown(); b.blur(); row._sync();
+    if(Math.abs(got-want)>Math.max(st,1e-9)){b.classList.add("bad"); setTimeout(()=>b.classList.remove("bad"),900);}
+  };
+  b.addEventListener("focus",()=>b.select());
+  b.addEventListener("change",apply);
+  b.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); b.blur();}});
+  row._sync();
+}
+new MutationObserver(()=>document.querySelectorAll(".ctrl").forEach(row=>{addNumBox(row); row._sync&&row._sync();}))
+  .observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["disabled"]});
+
+/* side-by-side screens (laptop, iPad landscape, 12.9" iPad upright): shrink the diagram so diagram + key boxes fit on screen */
+let fitQ=0;
+function fitStage(){fitQ=0; const st=document.querySelector(".stage"), svg=st&&st.querySelector(":scope>svg"); if(!svg) return;
+  if(innerWidth<900){svg.style.maxHeight=""; return;}
+  const top=st.parentElement.getBoundingClientRect().top+scrollY, other=st.getBoundingClientRect().height-svg.getBoundingClientRect().height;
+  const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px") svg.style.maxHeight=m+"px";}
+const fitSoon=()=>{if(!fitQ) fitQ=requestAnimationFrame(fitStage)};
+addEventListener("resize",fitSoon);
+new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
 </script>
 </body>
 </html>
