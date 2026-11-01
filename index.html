@@ -118,6 +118,11 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .hint{color:var(--muted);font-size:15px;margin:0}
 
 .nw{white-space:nowrap}
+.keybox{font-size:16px;line-height:1.55;padding:8px 8px 4px;margin-top:6px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.keybox:empty{display:none}
+.keybox .row{display:block}
+.card .chap{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tag.lvl{color:var(--accent);border-color:var(--accent)}
 .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 8px}
 .pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
@@ -163,6 +168,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .stage{position:sticky;top:56px;z-index:3;padding:6px}
   .stage svg{max-height:46vh}
   .steptext{font-size:18px;min-height:0}
+  .keybox{font-size:15px;padding:6px 4px 2px}
 }
 @media (max-width:520px){
   .panelc td.anno{white-space:normal}
@@ -208,28 +214,28 @@ const LEVELS = [
 ];
 
 const TOPICS = [
-  {id:"a-plus-b-squared", levels:["sec2"], chapter:"Expansion & Factorisation",
+  {id:"a-plus-b-squared", strand:"alg", levels:["sec2"], chapter:"Expansion & Factorisation",
    title:"Why (a + b)² = a² + 2ab + b²", blurb:"Cut a square into 4 pieces and see where the 2ab comes from.", play:"squareAB", sheet:"expansion"},
-  {id:"complete-square", levels:["emath","amath"], chapter:"Quadratic Functions",
+  {id:"complete-square", strand:"alg", levels:["emath","amath"], chapter:"Quadratic Functions",
    title:"Completing the square, with areas", blurb:"Cut, move and fill in the missing corner.", play:"complSq", sheet:"complSq", sheetTitle:"Completing the square"},
-  {id:"quad-forms", levels:["emath","amath"], chapter:"Quadratic Functions",
+  {id:"quad-forms", strand:"alg", levels:["emath","amath"], chapter:"Quadratic Functions",
    title:"Quadratic graphs: 3 forms", blurb:"Drag the turning point. See all three forms change together.", play:"quadForms", sheet:"quadGraphs", sheetTitle:"Quadratic graphs"},
-  {id:"discriminant", levels:["amath"], chapter:"Equations & Inequalities",
+  {id:"discriminant", strand:"alg", levels:["amath"], chapter:"Equations & Inequalities",
    title:"Line meets curve: b² − 4ac", blurb:"Slide a line: cuts, touches or misses?", play:"discrim", sheet:"discrim", sheetTitle:"b² − 4ac (discriminant)"},
-  {id:"unit-circle", levels:["amath","emath"], chapter:"Trigonometry",
+  {id:"unit-circle", strand:"trig", levels:["emath","amath"], chapter:"Trigonometry",
    title:"Unit circle & ASTC", blurb:"Why sin 150° = sin 30°, and where the signs come from.", play:"unitCircle", sheet:"trigAngles", sheetTitle:"Trig ratios of any angle"},
-  {id:"trig-graphs", levels:["amath"], chapter:"Trigonometry",
+  {id:"trig-graphs", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"Trig graphs: what a, b, c do", blurb:"Stretch, squeeze and shift sin, cos and tan.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
-  {id:"r-formula", levels:["amath"], chapter:"Trigonometry",
+  {id:"r-formula", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"R-formula: two waves make one", blurb:"Where R and α come from, and why max = R.", play:"rFormula", sheet:"rFormula", sheetTitle:"R-formula"},
-  {id:"circle-props", levels:["emath","amath"], chapter:"Properties of Circles",
+  {id:"circle-props", strand:"geo", levels:["emath","amath"], chapter:"Properties of Circles",
    title:"Circle angle properties", blurb:"Drag points and watch the angles stay true. 7 properties.", play:"circleProps", sheet:"circles", sheetTitle:"Circle properties"},
-  {id:"diff-x-squared", levels:["amath"], chapter:"Differentiation",
+  {id:"diff-x-squared", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Why x² differentiates to 2x", blurb:"Grow a square by h, then shrink h to 0.", play:"diffSquare", sheet:"diffBasics"},
-  {id:"tangent-gradient", levels:["amath"], chapter:"Differentiation",
+  {id:"tangent-gradient", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Tangents, gradient & stationary points", blurb:"Slide the tangent. Uphill, downhill, flat.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Differentiation: rules & uses"},
-  {id:"area-under", levels:["amath"], chapter:"Integration",
-   title:"Area under a curve", blurb:"Rectangles become an integral, and the below-axis trap.", play:"areaAid", sheet:"integration", sheetTitle:"Integration & area"}
+  {id:"area-under", strand:"calc", levels:["emath","amath"], chapter:"Integration",
+   title:"Area under a graph = distance", blurb:"Speed–time area is distance. Differentiate and integrate between them.", play:"areaAid", sheet:"integration", sheetTitle:"Integration & area"}
 ];
 
 /* =====================================================================
@@ -281,27 +287,28 @@ const squareAB = {
         svg.append(svgEl("rect",{x:x0,y:y0,width:T,height:T,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.8}));
         svg.append(svgEl("text",{x:x0+T/2,y:y0+T/2+2.5,"text-anchor":"middle","font-size":7,fill:"var(--ink)","font-style":"italic"},"(a + b)²"));
         // side labels whole
-        svg.append(svgEl("text",{x:x0+T/2,y:y0-3.5,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic"},"a + b"));
-        svg.append(svgEl("text",{x:x0-3.5,y:y0+T/2+2,"text-anchor":"end","font-size":6,fill:"var(--ink)","font-style":"italic"},"a + b"));
+        svg.append(svgEl("text",{x:x0+T/2,y:y0-3.5,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic"},`a + b = ${a+b}`));
+        svg.append(svgEl("text",{x:x0-4,y:y0+T/2,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic",transform:`rotate(-90 ${x0-4} ${y0+T/2})`},`a + b = ${a+b}`));
       } else {
-        const piece=(x,y,w,hh,fill,lab,col,k)=>{
+        const piece=(x,y,w,hh,fill,lab,col,k,val)=>{
           const g=svgEl("g",{opacity:fade(k)});
           g.append(svgEl("rect",{x,y,width:w,height:hh,fill,stroke:"var(--ink)","stroke-width":.8}));
           const fs=Math.max(3.4,Math.min(7,Math.min(w,hh)*.42));
-          g.append(svgEl("text",{x:x+w/2,y:y+hh/2+fs*.35,"text-anchor":"middle","font-size":fs,fill:col,"font-weight":700,"font-style":"italic"},lab));
+          g.append(svgEl("text",{x:x+w/2,y:y+hh/2+(val!=null?-fs*.1:fs*.35),"text-anchor":"middle","font-size":fs,fill:col,"font-weight":700,"font-style":"italic"},lab));
+          if(val!=null){const f2=Math.max(3.2,fs*.72); g.append(svgEl("text",{x:x+w/2,y:y+hh/2+fs*.1+f2,"text-anchor":"middle","font-size":f2,fill:col,"font-weight":700},"= "+val));}
           if(S.hi==="mistake"&&k==="ab"){
             g.append(svgEl("rect",{x:x+1,y:y+1,width:w-2,height:hh-2,fill:"none",stroke:"var(--red)","stroke-width":1.2,"stroke-dasharray":"2.5 1.5"}));
           }
           svg.append(g);
         };
-        piece(x0,y0,A,A,"var(--blue-fill)","a²","var(--blue)","aa");
-        piece(x0+A,y0,B,A,"var(--amber-fill)","ab","var(--amber)","ab");
-        piece(x0,y0+A,A,B,"var(--amber-fill)","ab","var(--amber)","ab");
-        piece(x0+A,y0+A,B,B,"var(--red-fill)","b²","var(--red)","bb");
+        piece(x0,y0,A,A,"var(--blue-fill)","a²","var(--blue)","aa",a*a);
+        piece(x0+A,y0,B,A,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
+        piece(x0,y0+A,A,B,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
+        piece(x0+A,y0+A,B,B,"var(--red-fill)","b²","var(--red)","bb",b*b);
         // side labels split with ticks
         const lab=(x,y,t,anchor="middle")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:"var(--ink)","font-style":"italic"},t));
-        lab(x0+A/2,y0-3.5,"a"); lab(x0+A+B/2,y0-3.5,"b");
-        lab(x0-3.5,y0+A/2+2,"a","end"); lab(x0-3.5,y0+A+B/2+2,"b","end");
+        lab(x0+A/2,y0-3.5,`a = ${a}`); lab(x0+A+B/2,y0-3.5,`b = ${b}`);
+        lab(x0-3.5,y0+A/2+2,`a = ${a}`,"end"); lab(x0-3.5,y0+A+B/2+2,`b = ${b}`,"end");
         [[x0,y0-1.5,x0,y0-6],[x0+A,y0-1.5,x0+A,y0-6],[x0+T,y0-1.5,x0+T,y0-6],
          [x0-1.5,y0,x0-6,y0],[x0-1.5,y0+A,x0-6,y0+A],[x0-1.5,y0+T,x0-6,y0+T]]
          .forEach(([x1,y1,x2,y2])=>svg.append(svgEl("line",{x1,y1,x2,y2,stroke:"var(--muted)","stroke-width":.5})));
@@ -330,7 +337,7 @@ const diffSquare = {
     {t:()=>`A square with side ${V("x")}.<br>Area = <span class="k-blue">${V("x")}²</span>.<br><span class="hint">Not tested in exams. This just shows why ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}.</span>`, show:{grow:false}},
     {t:()=>`Make each side longer by an amount ${V("h")} (we'll shrink it later).<br>New side = ${V("x")} + ${V("h")}.`, show:{grow:true}},
     {t:()=>`Extra area = <span class="k-amber">2 strips</span> (${V("x")} × ${V("h")} each) + <span class="k-red">tiny corner</span> (${V("h")} × ${V("h")})<br>= <span class="k-amber">2${V("xh")}</span> + <span class="k-red">${V("h")}²</span>`, show:{grow:true,hi:"extra"}},
-    {t:()=>`Rate of change of area = extra area ÷ extra length:<br>
+    {t:()=>`Extra area = <span class="k-amber">2${V("xh")}</span> + <span class="k-red">${V("h")}²</span><br>Average rate of change = extra area ÷ extra length ${V("h")} = 
        <span class="m">${frac(`2${V("xh")} + ${V("h")}²`,V("h"))} = ${frac(`<s class="cancel">${V("h")}</s>(2${V("x")} + ${V("h")})`,`<s class="cancel">${V("h")}</s>`)} = 2${V("x")} + ${V("h")}</span>
        <br><span class="hint">Divide numerator and denominator by ${V("h")}.</span>`, show:{grow:true,hi:"extra"}},
     {t:()=>`Now make ${V("h")} smaller and smaller. Press <b>▶ Shrink h</b>.<br>Watch the rate get closer to 2${V("x")}.`, show:{grow:true,hi:"extra",shrink:true}},
@@ -531,6 +538,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel){
   const st=Object.assign({step:0},JSON.parse(JSON.stringify(def.init)));
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
+  const kb=def.key?h("div",{class:"keybox"}):null; if(kb) stage.append(kb);
   const jump=def.jump?`<div class="pillrow">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
   panel.innerHTML=`${jump}<div class="box">${stepHeader(def.steps.length)}<p class="steptext"></p></div>
     <div class="nav"><button class="btn" data-prev>‹ Back</button><button class="btn primary" data-next>Next ›</button></div>
@@ -549,7 +557,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel){
     (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,panel).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
     panel.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
     (def.buttons||[]).forEach((b,i)=>{$(`[data-b="${i}"]`,panel).style.display=(b.show&&!b.show(st))?"none":"";});
-    svg.innerHTML=""; def.draw(svg,st); bumpText(svg);
+    svg.innerHTML=""; def.draw(svg,st); bumpText(svg); if(kb) kb.innerHTML=def.key(st);
     ro.innerHTML=def.readout?def.readout(st):"";
     setStep(panel,def.steps,st.step,st);
   };
@@ -617,20 +625,20 @@ const quadForms=aid({
     const g=graph(svg,QBOX), f=x=>s.a*(x-s.h)**2+s.k, I=quadInfo(s);
     if(s.step>=5) g.line(s.h,-8,s.h,8,{stroke:"var(--green)","stroke-dasharray":"2 1.5","stroke-width":.7});
     g.plot(f);
-    if(s.step>=3){g.dot(0,I.c,"var(--amber)",1.6); g.text(0,I.c,`(0, ${N(I.c)})`,{dx:2.5,dy:I.c>6?5:-2,fill:"var(--amber)","font-size":3.8});}
-    if(s.step>=4) I.roots.forEach(r=>{g.dot(r,0,"var(--red)",1.6);});
+    {g.dot(0,I.c,"var(--amber)",1.6); const near=I.roots.some(r=>Math.abs(r)<1.2); g.text(0,I.c,`(0, ${N(I.c)})`,{dx:near?-2.5:2.5,dy:I.c>6?5:-2,"text-anchor":near?"end":"start",fill:"var(--amber)","font-size":3.8});}
+    I.roots.forEach(r=>{g.dot(r,0,"var(--red)",1.8);});
     if(s.step>=5) g.text(s.h,-7.4,`x = ${N(s.h)}`,{dx:1.5,fill:"var(--green)","font-size":3.8});
     const lx=g.X(s.h), ly=g.Y(s.k);
     lab(svg,[lx+(s.step>=5?11:0),ly+(s.a>0?7:-4.5)],`(${N(s.h)}, ${N(s.k)})`,{"font-size":4.2,"font-weight":700,fill:"var(--accent)"});
     handle(svg,lx,ly,"v");
   },
   drag(id,p,s){const [x,y]=ginv(QBOX,p); s.h=clamp(snap(x,.5),-4,4); s.k=clamp(snap(y,.5),-6,6);},
-  readout(s){const I=quadInfo(s), fct=quadFact(s,I);
-    return `<div class="row">Turning point (${N(s.h)}, ${N(s.k)}) → <b>${s.a>0?"minimum":"maximum"}</b></div>
-      <div class="row"><b>Completed square:</b> ${V("y")} = ${coefStr(s.a)}${br(s.h)}²${kStr(s.k)}</div>
-      <div class="row"><b>Expanded:</b> ${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])}</div>
-      <div class="row"><b>Factorised:</b> ${fct?`${V("y")} = ${fct}`:I.roots.length?`doesn't factorise nicely. Roots: ${rootsTxt(s,I)}`:`<span class="k-red">can't factorise (no real roots)</span>`}</div>
-      ${fct?`<div class="row hint">All three are the same curve, written 3 ways.</div>`:""}`;}
+  key(s){const I=quadInfo(s), fct=quadFact(s,I);
+    return `<div class="row"><span class="k-blue">●</span> ${V("y")} = ${coefStr(s.a)}${br(s.h)}²${kStr(s.k)} <span class="hint nw">→ turning point (${N(s.h)}, ${N(s.k)})</span></div>
+      <div class="row"><span class="k-red">●</span> ${fct?`${V("y")} = ${fct} <span class="hint nw">→ cuts ${X1}-axis at ${I.roots.map(toFrac).join(", ")}</span>`:I.roots.length?`roots: ${rootsTxt(s,I)} <span class="hint">(doesn't factorise nicely)</span>`:`no real roots: can't factorise`}</div>
+      <div class="row"><span class="k-amber">●</span> ${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])} <span class="hint nw">→ cuts ${V("y")}-axis at ${N(I.c)}</span></div>`;},
+  readout(s){const I=quadInfo(s), f=quadFact(s,I);
+    return `<div class="row">Turning point (${N(s.h)}, ${N(s.k)}) is a <b>${s.a>0?"minimum":"maximum"}</b>.</div><div class="row hint">${f?"The 3 lines in the box are the same curve, written 3 ways.":`The curve can be written 2 ways (blue, amber). The red line shows ${I.roots.length?"where it cuts":"that it never cuts"} the ${X1}-axis.`}</div>`;}
 });
 
 /* =====================================================================
@@ -654,12 +662,15 @@ const discrim=aid({
   draw(svg,s){
     const g=graph(svg,DBOX), I=dInfo(s), col=I.n===2?"var(--green)":I.n===1?"var(--amber)":"var(--red)";
     g.plot(x=>x*x-4*x+5);
-    g.text(3.4,11.2,"y = x² − 4x + 5",{fill:"var(--blue)","font-size":3.9,"font-style":"italic"});
+    g.text(2.2,-3.2,"y = x² − 4x + 5",{fill:"var(--blue)","font-size":3.9,"font-style":"italic"});
     g.line(-2,s.c-2*s.m,6,s.c+6*s.m,{stroke:col,"stroke-width":1.1});
     let xs=[]; if(I.n>0){const sq=Math.sqrt(Math.max(I.D,0)); xs=[(-I.B-sq)/2,(-I.B+sq)/2].slice(0,I.n); xs.forEach(x=>g.dot(x,s.m*x+s.c,col,1.8));}
     if(s.c>=-4&&s.c<=12) ringHandle(svg,g.X(0),g.Y(s.c),"c",!xs.some(x=>Math.hypot(x,s.m*x)<1));
   },
   drag(id,p,s){const [,y]=ginv(DBOX,p); s.c=clamp(snap(y,.25),-4,12);},
+  key(s){const I=dInfo(s);
+    const res=I.n===2?`<span class="k-green nw">&gt; 0 → 2 points (cuts)</span>`:I.n===1?`<span class="k-amber nw">→ 1 point (tangent)</span>`:`<span class="k-red nw">&lt; 0 → no points (misses)</span>`;
+    return `<div class="row">${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0</div><div class="row">${V("b")}² − 4${V("ac")} = <b>${N(I.D,3)}</b> ${res}</div>`;},
   readout(s){const I=dInfo(s);
     const res=I.n===2?`<span class="k-green">&gt; 0 → 2 points (cuts)</span>`:I.n===1?`<span class="k-amber">= 0 → 1 point (tangent)</span>`:`<span class="k-red">&lt; 0 → no points (misses)</span>`;
     return `<div class="row">${X2} − 4${X1} + 5 = ${poly([[s.m,X1],[s.c,""]])}</div>
@@ -716,19 +727,22 @@ const trigGraphs=aid({
    4. UNIT CIRCLE / ASTC
    ===================================================================== */
 const UO=[70,60], UR=42;
-const EX={0:["0","1","0"],30:["½","√3/2","1/√3"],45:["√2/2","√2/2","1"],60:["√3/2","½","√3"],90:["1","0","undefined"]};
+const EX={0:["0","1","0"],30:["½","√3/2","√3/3"],45:["√2/2","√2/2","1"],60:["√3/2","½","√3"],90:["1","0","undefined"]};
 function ucInfo(th){
   const q=th%90===0?0:Math.floor(th/90)+1;
   const al=q===1?th:q===2?180-th:q===3?th-180:q===4?360-th:null;
   const z=v=>Math.abs(v)<1e-12?0:v;
   return {q,al,s:z(Math.sin(rad(th))),c:z(Math.cos(rad(th))),t:th%180===90?null:z(Math.tan(rad(th)))};
 }
+const CPS=[0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330];
+function ucEx(th){th=norm(th); const AX={0:["0","1","0"],90:["1","0","undefined"],180:["0","−1","0"],270:["−1","0","undefined"]};
+  if(AX[th]) return AX[th]; const I=ucInfo(th), e=EX[I.al], sg=(v,t)=>(v<0?"−":"")+t; return [sg(I.s,e[0]),sg(I.c,e[1]),sg(I.t,e[2])];}
 const unitCircle=aid({
   init:{th:30,ghost:false,solve:false,astc:false}, label:"Unit circle with draggable point P",
-  sliders:[{k:"th",label:"θ",min:0,max:360,step:1,f:v=>v+"°"}],
+  buttons:[{label:"◀ Previous angle",fn:s=>{s.th=CPS[(CPS.indexOf(s.th)+15)%16]}},{label:"Next angle ▶",fn:s=>{s.th=CPS[(CPS.indexOf(s.th)+1)%16]}}],
   steps:[
-    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`A circle with radius 1. Point P is at angle θ, measured <b>anticlockwise</b> from the positive ${X1}-axis.<br>Drag P.`},
-    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`<span class="k-blue">Height of P = sin θ</span>. <span class="k-amber">Across = cos θ</span>.<br>sin 30° = ½: the blue side is half the radius.`},
+    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`A circle with radius 1. Point P is at angle θ, measured <b>anticlockwise</b> from the positive ${X1}-axis.<br>Drag P, or tap "Previous angle" / "Next angle" to jump between the special angles.`},
+    {set:{th:30,ghost:false,solve:false,astc:false}, t:()=>`Radius = 1, so the hypotenuse is 1.<br><span class="k-blue">sin θ = opp ÷ hyp = height ÷ 1 = <b>height</b></span><br><span class="k-amber">cos θ = adj ÷ hyp = base ÷ 1 = <b>base</b></span><br>sin 30° = ½: the height is half the radius.<br><span class="hint">In other quadrants use where P is: sin θ = its ${V("y")}-coordinate, cos θ = its ${X1}-coordinate (they can be negative).</span>`},
     {set:{th:150,ghost:true,solve:false,astc:false}, t:()=>`Reflect into Quadrant 2: θ = 150°.<br>Height is still ½ → <b>sin 150° = sin 30° = ½</b>.<br>But P is now on the left → <b>cos 150° = −cos 30°</b>.`},
     {set:{th:210,ghost:true,solve:false,astc:false}, t:()=>`Quadrant 3 (θ = 210°): P is left <b>and</b> below → sin and cos are both negative.<br>tan = sin ÷ cos → negative ÷ negative = <b>positive</b>.`},
     {set:{th:330,ghost:true,solve:false,astc:false}, t:()=>`Quadrant 4 (θ = 330°): P is right but below → only <b>cos</b> is positive.`},
@@ -754,20 +768,20 @@ const unitCircle=aid({
     seg(svg,UO,F,{stroke:"var(--amber)","stroke-width":1.6});
     seg(svg,F,Pp,{stroke:"var(--blue)","stroke-width":1.6});
     seg(svg,UO,Pp,{"stroke-width":.9});
-    if(Math.abs(I.s)>.12) lab(svg,[F[0]+(I.c>=0?2:-2),(oy+Pp[1])/2+1.5],"sin θ",{"text-anchor":I.c>=0?"start":"end","font-size":3.8,fill:"var(--blue)","font-weight":700});
-    if(Math.abs(I.c)>.2) lab(svg,[(ox+F[0])/2,oy+(I.s>=0?5:-2.5)],"cos θ",{"font-size":3.8,fill:"var(--amber)","font-weight":700});
+    if(Math.abs(I.s)>.12) lab(svg,[F[0]+(I.c>=0?2:-2),(oy+Pp[1])/2+1.5],"sin θ = "+ucEx(s.th)[0],{"text-anchor":I.c>=0?"start":"end","font-size":3.8,fill:"var(--blue)","font-weight":700});
+    if(Math.abs(I.c)>.2) lab(svg,[ox+(F[0]-ox)*.7,oy+(I.s>=0?5:-2.5)],"cos θ = "+ucEx(s.th)[1],{"font-size":3.8,fill:"var(--amber)","font-weight":700});
     lab(svg,[Pp[0]+(I.c>=0?4:-4),Pp[1]+(I.s>=0?-2:5)],"P",{"font-size":4.6,"font-weight":700});
     handle(svg,Pp[0],Pp[1],"p");
   },
-  drag(id,p,s){let a=Math.round(norm(dirTo(UO,[p.x,p.y]))); for(const sp of [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330,360]) if(Math.abs(a-sp)<=2) a=sp; s.th=a===360?360:a;},
-  readout(s){const I=ucInfo(s.th), th=s.th;
-    if(!I.q) return `<div class="row">θ = ${th}° lies on an axis (no quadrant).</div>
-      <div class="row">sin ${th}° = <b>${N(I.s,3)}</b> · cos ${th}° = <b>${N(I.c,3)}</b> · tan ${th}° = <b>${I.t===null?"undefined":N(I.t,3)}</b></div>`;
-    const sg=v=>v>0?"+":"−", ex=EX[I.al];
-    const row=(fn,v,i)=>`<div class="row">${fn} ${th}° = <b>${sg(v)}</b>${fn} ${I.al}° = <b>${N(v,3)}</b>${ex?` <span class="hint nw">(exact: ${v<0?"−":""}${ex[i]})</span>`:""}</div>`;
-    return `<div class="row">θ = ${th}°${th%15===0?` (= ${piFrac(th)} rad)`:""} → <b>Quadrant ${I.q}</b>, basic angle ${AL} = <b class="k-red">${I.al}°</b></div>
-      ${row("sin",I.s,0)}${row("cos",I.c,1)}${row("tan",I.t,2)}
-      ${s.solve?`<div class="row"><b class="k-red">Solutions: θ = 30°, 150°</b></div>`:""}`;},
+  drag(id,p,s){const a=norm(dirTo(UO,[p.x,p.y])), d=x=>Math.min(Math.abs(x-a),360-Math.abs(x-a)); s.th=CPS.reduce((b,c)=>d(c)<d(b)?c:b,0);},
+  key(s){const I=ucInfo(s.th),E=ucEx(s.th);
+    return `<div class="row">θ = <b>${s.th}°</b> (${piFrac(s.th)} rad)${I.q?` · <span class="nw">Quadrant ${I.q}</span> · <span class="nw">basic angle ${AL} = ${I.al}°</span>`:" · on an axis"}</div>
+      <div class="row"><span class="k-blue nw">sin θ = ${E[0]}</span> · <span class="k-amber nw">cos θ = ${E[1]}</span> · <span class="nw">tan θ = ${E[2]}</span></div>`;},
+  readout(s){const I=ucInfo(s.th), th=s.th, E=ucEx(th);
+    if(!I.q) return `<div class="row">θ = ${th}° is on an axis: read the values straight off the circle (radius 1).</div>`;
+    const sg=v=>v>0?"+":"−";
+    return ["sin","cos","tan"].map((f,i)=>`<div class="row nw">${f} ${th}° = <b>${sg([I.s,I.c,I.t][i])}</b>${f} ${I.al}° = <b>${E[i]}</b></div>`).join("")
+      +(s.solve?`<div class="row"><b class="k-red">Solutions: θ = 30°, 150°</b></div>`:"");},
   hint:"E-Math: sin and cos only, 0° to 180°. A-Math: all quadrants, all ratios."
 });
 
@@ -974,53 +988,58 @@ const tangentAid=aid({
 /* =====================================================================
    8. AREA UNDER A CURVE
    ===================================================================== */
-const AC={
-  A:{f:x=>.5*x*x+1,F:x=>x**3/6+x,fs:`½${X2} + 1`,Fs:`${frac(V("x")+"³","6")} + ${X1}`,box:{l:12,t:4,w:124,h:112,x0:-1,x1:5,y0:-2,y1:14,xs:.5,xl:1,ys:1,yl:2},roots:[]},
-  B:{f:x=>x*x-4*x+3,F:x=>x**3/3-2*x*x+3*x,fs:`${X2} − 4${X1} + 3`,Fs:`${frac(V("x")+"³","3")} − 2${X2} + 3${X1}`,box:{l:12,t:4,w:124,h:112,x0:-1,x1:5,y0:-2,y1:9,xs:.5,xl:1,ys:1,yl:1},roots:[1,3]}
+const TT=V("t");
+const KV={
+  const:{v:t=>10,s:t=>10*t,vs:`10`,ss:`10${TT}`,top:[0,60,20],bot:[0,12,2],vel:false},
+  lin:{v:t=>2*t,s:t=>t*t,vs:`2${TT}`,ss:`${TT}²`,top:[0,36,12],bot:[0,12,2],vel:false},
+  curve:{v:t=>6*t-t*t,s:t=>3*t*t-t**3/3,vs:`6${TT} − ${TT}²`,ss:`3${TT}² − ${frac(TT+"³","3")}`,top:[0,36,12],bot:[0,10,2],vel:false},
+  vel:{v:t=>6-2*t,s:t=>6*t-t*t,vs:`6 − 2${TT}`,ss:`6${TT} − ${TT}²`,top:[-2,10,2],bot:[-6,6,2],vel:true}
 };
-const INT=(a,b)=>`∫<span class="lim"><sup>${N(b)}</sup><sub>${N(a)}</sub></span>`;
+const kvBox=(K,top)=>{const r=top?K.top:K.bot; return {l:14,t:top?6:84,w:120,h:56,x0:0,x1:6,y0:r[0],y1:r[1],xs:.5,xl:1,ys:r[2]/2,yl:r[2],xn:"t",yn:top?"s":"v"};};
+const kvDist=(K,T)=>K.vel?(T<=3?K.s(T):9+(9-K.s(T))):K.s(T);
 const areaAid=aid({
-  init:{cv:"A",a:1,b:3,n:4}, label:"Area under a curve with rectangles",
-  pills:[{k:"cv",opts:[["A","½x² + 1"],["B","x² − 4x + 3"]]}],
-  sliders:[{k:"a",label:"a",min:-1,max:4.5,step:.5,on:s=>{if(s.a>=s.b)s.a=s.b-.5}},{k:"b",label:"b",min:-.5,max:5,step:.5,on:s=>{if(s.b<=s.a)s.b=s.a+.5}},
-           {k:"n",label:"n",min:1,max:40,step:1,f:v=>String(v),show:s=>s.step===1||s.step===2}],
+  init:{cv:"const",T:3}, vb:"0 0 140 146", label:"Distance-time graph above a speed-time graph",
+  pills:[{k:"cv",opts:[["const","10 m/s"],["lin","v = 2t"],["curve","v = 6t − t²"],["vel","v = 6 − 2t"]]}],
+  sliders:[{k:"T",label:"t",min:0,max:6,step:.1,f:v=>N(v,1)+" s"}],
   steps:[
-    {set:{cv:"A",a:1,b:3,n:4}, t:s=>`Shaded: the area under ${V("y")} = ${AC[s.cv].fs}, above the ${X1}-axis, from ${X1} = ${V("a")} to ${X1} = ${V("b")}.`},
-    {set:{n:4}, t:()=>`Estimate it with rectangles. Area of each = width × height.<br>Height = ${V("y")} at the <b>middle</b> of each strip (so each top crosses the curve). Add them up.`},
-    {t:()=>`Drag ${V("n")} up. More, thinner rectangles → closer to the exact area.`},
-    {t:s=>`Exact area = ${INT(s.a,s.b)} ${V("y")} d${X1} = [ ${AC[s.cv].Fs} ] → upper limit minus lower limit.`},
-    {set:{cv:"B",a:1,b:3}, t:()=>`Below the ${X1}-axis, the heights are negative → the integral comes out <b class="k-red">negative</b>.<br>The area is the positive value.`},
-    {set:{cv:"B",a:0,b:3}, t:()=>`<b class="k-red">Trap!</b> Here the curve crosses the ${X1}-axis. One integral lets the parts cancel out.<br>Split at the crossing point, then add the positive values.`}
+    {set:{cv:"const",T:3}, t:()=>`A car moves at a constant <b>10 m/s</b>.<br>Distance = speed × time = 10 × ${TT}.<br>That's the <b>area of the rectangle</b> under the speed–time graph.`},
+    {set:{cv:"lin",T:3}, t:()=>`Now the car speeds up steadily: ${V("v")} = 2${TT}.<br>Area under the speed graph = triangle = ½ × ${TT} × 2${TT} = ${TT}².<br>Same as the distance on the top graph!`},
+    {set:{cv:"curve",T:3}, t:()=>`Any speed graph: <b>area under it = distance travelled</b>.<br>Drag ${TT}: the shaded area and the distance grow together.`},
+    {set:{cv:"curve",T:2}, t:()=>`The <b>gradient</b> of the distance graph = speed.<br>So <b>differentiate distance → speed</b>: ${frac("d"+V("s"),"d"+TT)} = ${V("v")}.`},
+    {set:{cv:"curve",T:4}, t:s=>`Going the other way: <b>integrate speed → distance</b>.<br>${V("s")} = ∫ ${V("v")} d${TT}, and the area from 0 to ${N(s.T,1)} = ∫<span class="lim"><sup>${N(s.T,1)}</sup><sub>0</sub></span> ${V("v")} d${TT}.`},
+    {set:{cv:"vel",T:5}, t:()=>`A-Math: use <b>velocity</b> (it has a direction). Below the axis = moving <b>backwards</b>, so that area counts as <b>negative</b>.<br>First find when it stops: ${V("v")} = 0 → 6 − 2${TT} = 0 → ${TT} = 3.<br>Distance travelled = 9 + |−4| = 13 m · Displacement = 9 − 4 = 5 m (at ${TT} = 5).<br><span class="hint">Area under any curve ${V("y")} = f(${X1}) works the same way: see the <a href="#area-under/sheet">cheatsheet</a>.</span>`}
   ],
   draw(svg,s){
-    const C=AC[s.cv], g=graph(svg,C.box), f=C.f;
-    if(s.step===1||s.step===2){const w=(s.b-s.a)/s.n;
-      for(let i=0;i<s.n;i++){const x=s.a+i*w, h=f(x+w/2), y1=g.Y(Math.max(h,0)), y2=g.Y(Math.min(h,0));
-        g.add("rect",{x:g.X(x),y:y1,width:g.X(x+w)-g.X(x),height:y2-y1,fill:h>=0?"var(--blue-fill)":"var(--red-fill)",stroke:h>=0?"var(--blue)":"var(--red)","stroke-width":.3});}
-    } else {
-      const pts=[],neg=[]; for(let i=0;i<=200;i++){const x=s.a+(s.b-s.a)*i/200,y=f(x); pts.push([x,Math.max(y,0)]); neg.push([x,Math.min(y,0)]);}
-      g.poly([[s.a,0],...pts,[s.b,0]],{fill:"var(--blue-fill)"}); g.poly([[s.a,0],...neg,[s.b,0]],{fill:"var(--red-fill)"});
-    }
-    g.plot(f);
-    [["a",s.a],["b",s.b]].forEach(([t,x])=>{g.line(x,C.box.y0,x,C.box.y1,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2","stroke-width":.5}); g.text(x,C.box.y0,t,{dy:-1.5,dx:1.2,"font-style":"italic","font-weight":700,fill:"var(--muted)"});});
-    lab(svg,[g.X(0)+3,20],"y = "+C.fs.replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    const K=KV[s.cv], gt=graph(svg,kvBox(K,true)), gb=graph(svg,kvBox(K,false)), T=s.T;
+    const nm=K.vel?["displacement–time","velocity–time"]:["distance–time","speed–time"];
+    lab(svg,[134,11],nm[0],{"text-anchor":"end","font-size":4,fill:"var(--muted)","font-weight":700});
+    lab(svg,[134,89],nm[1],{"text-anchor":"end","font-size":4,fill:"var(--muted)","font-weight":700});
+    // shaded area under v from 0 to T
+    if(T>0){const P=[],Nn=[]; for(let i=0;i<=120;i++){const t=T*i/120,v=K.v(t); P.push([t,Math.max(v,0)]); Nn.push([t,Math.min(v,0)]);}
+      gb.poly([[0,0],...P,[T,0]],{fill:"var(--blue-fill)"}); gb.poly([[0,0],...Nn,[T,0]],{fill:"var(--red-fill)"});}
+    gb.plot(K.v,{stroke:"var(--blue)","stroke-width":1.2},0,6);
+    gt.plot(K.s,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.7},0,6);
+    if(T>0) gt.plot(K.s,{stroke:"var(--green)","stroke-width":1.3},0,T);
+    // link line at T
+    seg(svg,[gt.X(T),6],[gt.X(T),62],{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5});
+    seg(svg,[gb.X(T),84],[gb.X(T),140],{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5});
+    if(s.step===3||s.step===4){const m=K.v(T),y0=K.s(T); gt.line(T-1.5,y0-1.5*m,T+1.5,y0+1.5*m,{stroke:"var(--amber)","stroke-width":1});}
+    gt.dot(T,K.s(T),"var(--green)",1.8);
+    handle(svg,gb.X(T),gb.Y(K.v(T)),"t");
   },
-  readout(s){const C=AC[s.cv], ex=C.F(s.b)-C.F(s.a);
-    let out="";
-    if(s.step===1||s.step===2){const w=(s.b-s.a)/s.n; let t=0; for(let i=0;i<s.n;i++) t+=w*C.f(s.a+(i+.5)*w);
-      out+=`<div class="row">${s.n} rectangle${s.n>1?"s":""}: total = <b>${N(t,4)}</b></div>`;
-      if(s.step===2) out+=`<div class="row">Exact = ${N(ex,4)} · gap = ${N(Math.abs(t-ex),4)}</div>`;
-      return out;}
-    out+=`<div class="row">${INT(s.a,s.b)} (${C.fs}) d${X1} = [ ${C.Fs} ]<span class="lim"><sup>${N(s.b)}</sup><sub>${N(s.a)}</sub></span></div>
-      <div class="row">= ${toFrac(C.F(s.b))} − ${C.F(s.a)<0?`(${toFrac(C.F(s.a))})`:toFrac(C.F(s.a))} = <b>${toFrac(ex)}</b>${Math.abs(ex-Math.round(ex))>1e-9?` ≈ ${sf3(ex)}`:""}</div>`;
-    const cuts=C.roots.filter(r=>r>s.a+1e-9&&r<s.b-1e-9);
-    if(cuts.length){const pts=[s.a,...cuts,s.b]; const parts=[]; for(let i=0;i<pts.length-1;i++) parts.push(C.F(pts[i+1])-C.F(pts[i]));
-      const area=parts.reduce((t,v)=>t+Math.abs(v),0);
-      out+=`<div class="row k-red">Curve crosses the ${X1}-axis at ${X1} = ${cuts.map(N).join(", ")} → don't trust one integral!</div>
-        <div class="row">Area = ${parts.map(v=>`|${toFrac(v)}|`).join(" + ")} = <b>${toFrac(area)}</b> units²</div>`;
-    } else if(ex<0) out+=`<div class="row">Negative → region is below the ${X1}-axis. Area = <b>${toFrac(-ex)}</b> units²</div>`;
-    else out+=`<div class="row">Area = <b>${toFrac(ex)}</b> units²</div>`;
-    return out;}
+  drag(id,p,s){const [t]=ginv(kvBox(KV[s.cv],false),p); s.T=clamp(snap(t,.1),0,6);},
+  key(s){const K=KV[s.cv], T=s.T, A=K.s(T);
+    if(K.vel){const d=kvDist(K,T);
+      return `<div class="row">Signed area under velocity graph = <b>displacement</b> = <b class="k-green">${sf3(A)} m</b></div>
+        <div class="row">Distance travelled (both areas positive) = <b>${sf3(d)} m</b>${T>3?` <span class="hint nw">(9 forwards + ${sf3(9-A)} back)</span>`:""}</div>`;}
+    return `<div class="row">Shaded area from ${TT} = 0 to ${TT} = ${N(T,1)}: <b class="k-blue">${sf3(A)}</b></div>
+      <div class="row">Distance travelled = <b class="k-green">${sf3(A)} m</b> ✓ same number</div>
+      ${s.step>=3?`<div class="row"><span class="k-amber">Gradient</span> of distance graph at ${TT} = ${N(T,1)}: <b>${sf3(K.v(T))} m/s</b> = speed ✓</div>`:""}`;},
+  readout(s){const K=KV[s.cv], v=K.vel?"velocity":"speed", d=K.vel?"displacement":"distance";
+    return `<div class="row">${v}: ${V("v")} = ${K.vs}</div><div class="row">${d}: ${V("s")} = ${K.ss}</div>
+      ${s.step>=3?`<div class="row">${frac("d"+V("s"),"d"+TT)} = ${K.vs} = ${V("v")} ✓ <span class="hint">(differentiate)</span></div>
+      <div class="row">∫ ${V("v")} d${TT} = ${K.ss} + ${V("c")}; ${V("c")} = 0 because ${V("s")} = 0 at ${TT} = 0 <span class="hint">(integrate)</span></div>`:""}`;},
+  hint:"Drag the dot on the lower graph, or use the t slider."
 });
 
 /* =====================================================================
@@ -1037,9 +1056,11 @@ const complSq=aid({
     {t:s=>{const I=csI(s); return `…but a small corner is missing: ${I.h} × ${I.h} = <b class="k-red">${I.q}</b>.`}},
     {t:s=>{const I=csI(s); return `Add the corner → a complete square.<br><b>${X2} ${I.sg} ${I.A}${X1} + ${I.q} = (${X1} ${I.sg} ${I.h})²</b>`}},
     {t:s=>{const I=csI(s); return `We added ${I.q}, so take it away again:<br><b>${X2} ${I.sg} ${I.A}${X1} = (${X1} ${I.sg} ${I.h})² − ${I.q}</b><br><span class="hint">The sign in the bracket follows ${V("b")}. The (${frac(V("b"),"2")})² is always taken away.</span>`}},
-    {set:{c:5}, t:()=>`With a number on the end: ${X2} + ${V("b")}${X1} + ${V("c")} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}.<br>Drag ${V("c")}. The turning point is shown in the box below.`}
+    {set:{c:5}, t:()=>`With a number on the end: ${X2} + ${V("b")}${X1} + ${V("c")} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}.<br>Drag ${V("b")} and ${V("c")}: watch the turning point move on the graph.`}
   ],
   draw(svg,s){
+    const wide=window.matchMedia("(min-width:861px) and (orientation:landscape)").matches;
+    svg.setAttribute("viewBox",s.step===6?(wide?"0 0 250 104":"0 0 130 200"):"0 0 130 102");
     const I=csI(s), sc=108/14, x0=16, y0=10, X=6*sc, H=I.A/2*sc, Bw=I.A*sc, m=s.step;
     const Rr=(x,y,w,h,fill,stroke,t,col,extra={})=>{S_(svg,"rect",Object.assign({x,y,width:w,height:h,fill,stroke,"stroke-width":.8},extra));
       if(t){const fs=Math.max(3.4,Math.min(6.5,Math.min(w,h)*.38)); lab(svg,[x+w/2,y+h/2+fs*.35],t,{"font-size":fs,fill:col,"font-weight":700,"font-style":"italic"});}};
@@ -1057,7 +1078,16 @@ const complSq=aid({
       if(m>=4){Rr(x0+X,y0+X,H,H,"var(--red-fill)","var(--ink)",fracTxt(I.A*I.A/4),"var(--red)");
         S_(svg,"rect",{x:x0,y:y0,width:X+H,height:X+H,fill:"none",stroke:"var(--green)","stroke-width":1.4});
         lab(svg,[x0+(X+H)/2,y0+X+H+7],`side = x ${I.sg} ${hb}`,{"font-size":4.6,fill:"var(--green)","font-weight":700});}}
+    if(m===6){const hx=-I.B/2, ky=s.c-I.A*I.A/4, y0=Math.floor(ky)-4;
+      const g=graph(svg,Object.assign(wide?{l:138,t:8,w:108,h:88}:{l:16,t:112,w:108,h:84},{x0:-8,x1:8,y0,y1:y0+24,xs:1,xl:2,ys:2,yl:4}));
+      g.plot(x=>x*x+I.B*x+s.c,{stroke:"var(--blue)","stroke-width":1.2});
+      g.dot(hx,ky,"var(--red)",1.9);
+      g.text(hx,ky,`(${fracTxt(hx)}, ${fracTxt(ky)})`,{dx:3,dy:4.5,fill:"var(--red)","font-weight":700,"font-size":4.2});
+      lab(svg,wide?[192,6]:[70,108],"y = x² "+(I.B<0?"− ":"+ ")+I.A+"x"+(s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""),{"font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});}
   },
+  key(s){if(s.step!==6) return ""; const I=csI(s), k=s.c-I.A*I.A/4;
+    return `<div class="row">${poly([[1,X2],[I.B,X1],[s.c,""]])} = <b>(${X1} ${I.sg} ${I.h})²${k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k))}</b></div>
+      <div class="row">Turning point <b class="k-red">(${toFrac(-I.B/2)}, ${toFrac(k)})</b>: drag ${V("b")} and ${V("c")} to move it</div>`;},
   readout(s){const I=csI(s), m=s.step;
     if(m<=2) return `<div class="row">${X2} ${I.sg} ${I.A}${X1}${I.B<0?` <span class="hint">(picture shows the size ${I.A})</span>`:""}</div>`;
     if(m===3) return `<div class="row">Missing corner = (${frac(N(I.B),"2")})² = ${I.q}</div>`;
@@ -1447,9 +1477,9 @@ trigAngles:`
       <tr><td class="anno">rad</td><td>0</td><td>${frac("π","6")}</td><td>${frac("π","4")}</td><td>${frac("π","3")}</td><td>${frac("π","2")}</td></tr>
       <tr><td>sin</td><td>0</td><td>${frac("1","2")}</td><td>${frac("√2","2")}</td><td>${frac("√3","2")}</td><td>1</td></tr>
       <tr><td>cos</td><td>1</td><td>${frac("√3","2")}</td><td>${frac("√2","2")}</td><td>${frac("1","2")}</td><td>0</td></tr>
-      <tr><td>tan</td><td>0</td><td>${frac("1","√3")}</td><td>1</td><td>√3</td><td>undefined</td></tr>
+      <tr><td>tan</td><td>0</td><td>${frac("√3","3")}</td><td>1</td><td>√3</td><td>undefined</td></tr>
     </table>
-    <p class="anno">* ${frac("√2","2")} = ${frac("1","√2")} and ${frac("1","√3")} = ${frac("√3","3")}</p>
+    <p class="anno">* you may also see ${frac("√2","2")} written as ${frac("1","√2")}, and ${frac("√3","3")} as ${frac("1","√3")}: same value</p>
   </div>
 
   <div class="panelc"><h4>6 ratios &amp; principal values <span class="badge">A-Math</span></h4>
@@ -1726,6 +1756,14 @@ diffApps:`
 
 integration:`
 <div class="sheet">
+  <div class="panelc"><h4>Why area under a graph = integral</h4>
+    <ul class="steps">
+      <li>Area under a speed–time graph = distance travelled</li>
+      <li>Differentiate distance → speed: ${frac("d"+V("s"),"d"+V("t"))} = ${V("v")}</li>
+      <li>Integrate speed → distance: ${V("s")} = ∫ ${V("v")} d${V("t")}</li>
+    </ul>
+    <p class="anno">* below the axis (moving backwards) the area counts as negative. <a href="#area-under">Open the Play tab</a></p>
+  </div>
   <div class="panelc"><h4>Rules <span class="badge">memorise: not on the formula sheet</span></h4>
     <table>
       <tr><th>∫ … d${X1}</th><th>Answer (+ ${V("c")})</th></tr>
@@ -1818,32 +1856,32 @@ function thumbFor(t){
    rFormula:`<path d="M0 32 C10 10 20 10 30 32 S50 54 60 32 S80 10 90 32" fill="none" stroke="var(--amber)" stroke-dasharray="3 2"/><path d="M0 20 C12 -6 26 -6 36 30 S60 70 72 30 S96 -6 110 24" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
    circleProps:`<circle cx="32" cy="32" r="28" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M8 46 L32 32 L56 46 M8 46 L32 4 L56 46" fill="none" stroke="var(--blue)" stroke-width="1.5"/><text x="70" y="38" font-size="13" fill="var(--muted)">2× rule</text>`,
    tangentAid:`<path d="M4 60 C30 -20 60 90 100 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="20" y1="22" x2="80" y2="22" stroke="var(--amber)" stroke-width="2"/>`,
-   areaAid:`<path d="M4 58 L24 58 L24 40 L44 40 L44 28 L64 28 L64 12 L84 12 L84 58 Z" fill="var(--blue-fill)" stroke="var(--blue)"/><path d="M4 50 Q50 40 100 0" fill="none" stroke="var(--ink)" stroke-width="2"/>`};
+   areaAid:`<path d="M6 58 Q36 -6 66 30 L66 58 Z" fill="var(--blue-fill)"/><path d="M6 58 Q36 -6 66 30 Q80 48 96 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="6" y1="58" x2="110" y2="58" stroke="var(--muted)"/><text x="70" y="22" font-size="12" fill="var(--muted)">area = distance</text>`};
   return T[t.play]?`<svg class="thumb" viewBox="0 0 120 64">${T[t.play]}</svg>`:"";
 }
 
+const STRANDS=[["alg","Algebra & Graphs"],["trig","Trigonometry"],["geo","Geometry"],["calc","Calculus"]];
+const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math"};
 function renderHome(){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub";
   backBtn.style.display="none"; shareBtn.hidden=true;
   const used=LEVELS.filter(l=>TOPICS.some(t=>t.levels.includes(l.id)));
-  if(!used.some(l=>l.id===homeFilter)) homeFilter="all";
+  if(homeFilter!=="all"&&!used.some(l=>l.id===homeFilter)) homeFilter="all";
   app.innerHTML=`<section class="hero"><h2>Play with the maths.</h2><p>Drag, press Next, and see <i>why</i> the rules work. Each topic has a cheatsheet too.</p></section>`;
   const chips=h("div",{class:"chips",role:"group","aria-label":"Choose level"});
-  [{id:"all",name:"All"},...used].forEach(l=>{
+  [{id:"all",name:"All"},...used.map(l=>({id:l.id,name:SHORT[l.id]}))].forEach(l=>{
     const c=h("button",{class:"chip","aria-pressed":String(homeFilter===l.id)},l.name);
     c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome()};
     chips.append(c);
   });
   app.append(chips);
-  used.filter(l=>homeFilter==="all"||homeFilter===l.id).forEach(l=>{
-    const sec=h("section",{class:"level"},`<h3>${l.name}</h3>`);
-    const grid=h("div",{class:"cards"});
-    TOPICS.filter(t=>t.levels.includes(l.id)).forEach(t=>{
-      const a=h("a",{class:"card",href:"#"+t.id},
-        `${thumbFor(t)}<b>${t.title}</b><span>${t.blurb}</span><div class="tags"><span class="tag">${t.chapter}</span>${t.play?'<span class="tag">Play</span>':""}${t.sheet?'<span class="tag">Cheatsheet</span>':""}</div>`);
-      grid.append(a);
-    });
+  const shown=TOPICS.filter(t=>homeFilter==="all"||t.levels.includes(homeFilter));
+  STRANDS.forEach(([sid,sname])=>{
+    const list=shown.filter(t=>t.strand===sid); if(!list.length) return;
+    const sec=h("section",{class:"level"},`<h3>${sname}</h3>`), grid=h("div",{class:"cards"});
+    list.forEach(t=>grid.append(h("a",{class:"card",href:"#"+t.id},
+      `${thumbFor(t)}<span class="chap">${t.chapter}</span><b>${t.title}</b><span>${t.blurb}</span><div class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}</div>`)));
     sec.append(grid); app.append(sec);
   });
   window.scrollTo(0,0);
