@@ -9,8 +9,6 @@
 <meta name="theme-color" content="#f7f5ef">
 <title>Coach Minyi's Maths Hub</title>
 <script>
-/* Light / dark mode: the reader's saved choice (sun/moon button), else the device setting.
-   Runs before the page paints so there is no flash of the wrong colours. */
 function hubTheme(t){
   document.documentElement.setAttribute("data-theme",t);
   var m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=t==="dark"?"#16171a":"#f7f5ef";
@@ -33,7 +31,6 @@ hubTheme(hubSavedTheme()||(matchMedia("(prefers-color-scheme: dark)").matches?"d
   --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
   --r:14px;
 }
-/* dark mode: set by the script in <head> (saved choice, else device setting) */
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#16171a; --card:#212226; --ink:#ececee; --muted:#a0a0a8; --line:#34353b;
@@ -57,7 +54,6 @@ body{
 button{font:inherit;color:inherit}
 .wrap{max-width:1280px;margin:0 auto;padding:0 16px}
 
-/* ---------- top bar ---------- */
 .bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .bar .wrap{display:flex;align-items:center;gap:10px;min-height:56px}
 .back{display:none;align-items:center;justify-content:center;min-width:44px;height:44px;border:0;background:transparent;border-radius:10px;font-size:26px;cursor:pointer}
@@ -70,7 +66,6 @@ button{font:inherit;color:inherit}
 .share{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:10px;height:40px;padding:0 14px;cursor:pointer;font-size:15px;white-space:nowrap}
 .share[hidden]{display:none}
 
-/* ---------- home ---------- */
 .hero{padding:28px 0 8px}
 .hero h2{font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
 .hero p{margin:0;color:var(--muted)}
@@ -88,7 +83,6 @@ button{font:inherit;color:inherit}
 .card .tags{display:flex;gap:6px;margin-top:auto}
 .tag{font-size:12px;border-radius:6px;padding:2px 8px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
 
-/* ---------- topic ---------- */
 .tabs{display:flex;gap:6px;padding:12px 0}
 .tab{border:1px solid var(--line);background:var(--card);border-radius:10px;min-height:44px;padding:0 18px;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -154,6 +148,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .forms.tight{grid-template-columns:repeat(3,minmax(0,1fr))}
 .forms.tight .eq{text-align:center} .forms.tight .hd,.forms.tight .rd{text-align:center}
 .khead{text-align:center;font-size:18px;font-weight:700;margin:2px 0 6px}
+.kpair{display:grid;grid-template-columns:auto auto;justify-content:center;align-items:baseline;column-gap:10px;row-gap:2px;margin:2px 0 8px}
+.kpair .gl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right}
+.kpair .ge{font-size:18px}
+.kpair .se{font-size:18px;font-weight:700}
+.formbox .gen{font-size:15px;color:var(--ink);padding-top:1px}
+.formbox .eq .brk{white-space:normal}
+.formbox .hd i.v,.formbox .hd [class*="k-"]{text-transform:none}
 .reasonbox{grid-column:1/-1}
 .fb-blue{--fc:var(--blue);--fb:var(--blue-fill)} .fb-red{--fc:var(--red);--fb:var(--red-fill)} .fb-amber{--fc:var(--amber);--fb:var(--amber-fill)}
 .keybox{font-size:16px;line-height:1.55;padding:8px 8px 4px;margin-top:6px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
@@ -166,14 +167,12 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
 .lim{display:inline-flex;flex-direction:column;font-size:.68em;line-height:1.05;vertical-align:middle;margin-left:1px}
 .lim sub,.lim sup{vertical-align:baseline;font-size:1em}
-/* math bits */
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
 .frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
 .frac>span:last-child{padding:0 3px}
 s.cancel{text-decoration-color:var(--red);text-decoration-thickness:2px}
 i.v{font-style:italic;font-family:"Times New Roman",Georgia,serif;font-size:1.08em}
 
-/* ---------- cheatsheet ---------- */
 .sheet{columns:2 420px;column-gap:18px;padding-bottom:30px}
 .panelc{break-inside:avoid;display:inline-block;width:100%;position:relative;isolation:isolate;padding:0 16px 14px;margin:0 0 18px}
 .panelc::before{content:"";position:absolute;inset:14px 0 0 0;z-index:-1;border:1.5px solid var(--ink);border-radius:12px;background-color:var(--card);
@@ -200,7 +199,6 @@ i.v{font-style:italic;font-family:"Times New Roman",Georgia,serif;font-size:1.08
 
 footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 
-/* ---------- phone / portrait ---------- */
 @media (max-width:899px){
   .play{grid-template-columns:1fr}
   .stage{position:sticky;top:56px;z-index:3;padding:6px}
@@ -214,6 +212,9 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .forms.tight .hd{font-size:10.5px}
   .forms.tight .rd{font-size:12px}
   .khead{font-size:16px}
+  .kpair .ge,.kpair .se{font-size:16px}
+  .kpair .gl{font-size:10px;max-width:5.4em;line-height:1.15}
+  .formbox .gen{font-size:14px}
   .explain li{font-size:16px}
 }
 @media (max-width:520px){
@@ -251,9 +252,6 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 <footer>Coach Minyi's Maths Hub · drag, tap and play around</footer>
 
 <script>
-/* =====================================================================
-   DATA — add a topic here. level = which section it shows under.
-   ===================================================================== */
 const LEVELS = [
   {id:"sec1", name:"Sec 1"},
   {id:"sec2", name:"Sec 2"},
@@ -286,9 +284,6 @@ const TOPICS = [
    title:"Area under a graph = distance", blurb:"Speed–time area is distance. Differentiate and integrate between them.", play:"areaAid", sheet:"integration", sheetTitle:"Integration & area"}
 ];
 
-/* =====================================================================
-   helpers
-   ===================================================================== */
 const $ = (s,el=document)=>el.querySelector(s);
 const h = (tag,attrs={},html="")=>{const e=document.createElement(tag);for(const k in attrs)e.setAttribute(k,attrs[k]);e.innerHTML=html;return e};
 const SVGNS="http://www.w3.org/2000/svg";
@@ -297,9 +292,6 @@ const fmt=(n,d=2)=>{const s=(+n).toFixed(d);return s.replace(/\.?0+$/,"")||"0"};
 const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
 const V=s=>`<i class="v">${s}</i>`;
 
-/* =====================================================================
-   PLAY 1 — (a+b)^2 area model
-   ===================================================================== */
 const squareAB = {
   steps:[
     {t:()=>`Here is a square. Each side is ${V("a")} + ${V("b")}.<br>So its area is (${V("a")} + ${V("b")})².`, show:{split:false}},
@@ -332,7 +324,6 @@ const squareAB = {
       if(!S.split){
         svg.append(svgEl("rect",{x:x0,y:y0,width:T,height:T,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.8}));
         svg.append(svgEl("text",{x:x0+T/2,y:y0+T/2+2.5,"text-anchor":"middle","font-size":7,fill:"var(--ink)","font-style":"italic"},"(a + b)²"));
-        // side labels whole
         svg.append(svgEl("text",{x:x0+T/2,y:y0-3.5,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic"},`a + b = ${a+b}`));
         svg.append(svgEl("text",{x:x0-4,y:y0+T/2,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic",transform:`rotate(-90 ${x0-4} ${y0+T/2})`},`a + b = ${a+b}`));
       } else {
@@ -351,7 +342,6 @@ const squareAB = {
         piece(x0+A,y0,B,A,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
         piece(x0,y0+A,A,B,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
         piece(x0+A,y0+A,B,B,"var(--red-fill)","b²","var(--red)","bb",b*b);
-        // side labels split with ticks
         const lab=(x,y,t,anchor="middle")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:"var(--ink)","font-style":"italic"},t));
         lab(x0+A/2,y0-3.5,`a = ${a}`); lab(x0+A+B/2,y0-3.5,`b = ${b}`);
         lab(x0-3.5,y0+A/2+2,`a = ${a}`,"end"); lab(x0-3.5,y0+A+B/2+2,`b = ${b}`,"end");
@@ -359,11 +349,10 @@ const squareAB = {
          [x0-1.5,y0,x0-6,y0],[x0-1.5,y0+A,x0-6,y0+A],[x0-1.5,y0+T,x0-6,y0+T]]
          .forEach(([x1,y1,x2,y2])=>svg.append(svgEl("line",{x1,y1,x2,y2,stroke:"var(--muted)","stroke-width":.5})));
       }
-      // readout (numbers check)
       const tot=(a+b)**2;
       svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
         S.split?`${a*a} + ${2*a*b} + ${b*b} = ${tot}  =  (${a} + ${b})²`:`(${a} + ${b})² = ${tot}`));
-      kb.innerHTML=FORMS([FB("blue","(a + b)²",`(${a} + ${b})² = ${tot}`,"the big square"),FB("amber","a² + 2ab + b²",`${a*a} + ${2*a*b} + ${b*b} = ${tot}`,"the 4 pieces ✓"),FB("red","✗ Common mistake",`${a}² + ${b}² = ${a*a+b*b}`,`forgets the 2 rectangles`)]);
+      kb.innerHTML=FORMS([FB("blue",`(${V("a")} + ${V("b")})²`,`(${a} + ${b})² = ${tot}`,"the big square"),FB("amber",`${V("a")}² + 2${V("ab")} + ${V("b")}²`,`${a*a} + ${2*a*b} + ${b*b} = ${tot}`,"the 4 pieces ✓"),FB("red","✗ Common mistake",`${a}² + ${b}² = ${a*a+b*b}`,`forgets the 2 rectangles`)]);
       ro.innerHTML=""; ro.style.display="none";
       setStep(panel,this.steps,step);
     };
@@ -373,9 +362,6 @@ const squareAB = {
   }
 };
 
-/* =====================================================================
-   PLAY 2 — differentiation: grow square x by h, h -> 0
-   ===================================================================== */
 const diffSquare = {
   steps:[
     {t:()=>`A square with side ${V("x")}.<br>Area = <span class="k-blue">${V("x")}²</span>.<br><span class="hint">Not tested in exams. This just shows why ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}.</span>`, show:{grow:false}},
@@ -402,7 +388,6 @@ const diffSquare = {
         <div class="readout" id="ro"></div>
       </div>`;
     const sx=$("#sx",panel), sh=$("#sh",panel), ro=$("#ro",panel);
-    // h slider is logarithmic so tiny h is reachable: 0..1000 -> 0.001..3
     const hFromS=v=>0.001*Math.pow(3000,v/1000);
     const sFromH=hv=>Math.round(1000*Math.log(hv/0.001)/Math.log(3000));
     const hFmt=hv=> hv>=1?fmt(hv,2): hv>=0.1?fmt(hv,2): hv>=0.01?fmt(hv,3): fmt(hv,4);
@@ -429,7 +414,6 @@ const diffSquare = {
           svg.append(svgEl("text",{x:x0+X+H/2,y:y0+X+H/2+fs*.35,"text-anchor":"middle","font-size":fs*.85,fill:"var(--red)","font-weight":700,"font-style":"italic"},"h²"));
         }
       }
-      // side labels
       const L=(x,y,t,anchor="middle",col="var(--ink)")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:col,"font-style":"italic"},t));
       L(x0+X/2,y0-3.5,"x");
       L(x0-3.5,y0+X/2+2,"x","end");
@@ -437,12 +421,11 @@ const diffSquare = {
         if(H>=4){ L(x0+X+H/2,y0-3.5,"h","middle","var(--amber)"); L(x0-3.5,y0+X+H/2+2,"h","end","var(--amber)"); }
         else { L(x0+X+H+2,y0-3.5,"h","start","var(--amber)"); }
       }
-      // readout
       const ex=2*x*hh+hh*hh, rate=ex/hh;
       svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
         !S.grow?`area = ${fmt(x*x,2)}`:step>=3?`h = ${hFmt(hh)}  ·  rate = ${fmt(rate,4)}  ·  2x = ${fmt(2*x,2)}`:`extra area = ${fmt(ex,4)}`));
       const rows=[1,0.1,0.01,0.001].map(v=>`<tr${Math.abs(Math.log10(hh)-Math.log10(v))<.15?' class="live"':""}><td>${v}</td><td>${fmt(2*x*v+v*v,6)}</td><td>${fmt(2*x+v,6)}</td></tr>`).join("");
-      kb.innerHTML=FORMS([FB("amber","Extra area",fmt(ex,4),`2xh + h²`),FB("blue","Average rate = extra area ÷ h",fmt(rate,4),`= 2x + h`),FB("green","As h → 0, the rate →",`2x = ${fmt(2*x,2)}`,"press ▶ Shrink h")]);
+      kb.innerHTML=FORMS([FB("amber","Extra area",fmt(ex,4),`2xh + h²`),FB("blue",`Average rate = extra area ÷ ${V("h")}`,fmt(rate,4),`= 2x + h`),FB("green",`As ${V("h")} → 0, the rate →`,`2x = ${fmt(2*x,2)}`,"press ▶ Shrink h")]);
       ro.innerHTML=`<table class="mini"><tr><th>h</th><th>extra area</th><th>rate = 2x + h</th></tr>${rows}</table>`;
       setStep(panel,this.steps,step);
     };
@@ -455,7 +438,7 @@ const diffSquare = {
       const start=performance.now(), h0=Math.max(st.h,0.002), dur=4000;
       const tick=now=>{
         const p=Math.min(1,(now-start)/dur);
-        st.h=h0*Math.pow(0.001/h0,p);  // smooth exponential shrink to 0.001
+        st.h=h0*Math.pow(0.001/h0,p);
         sh.value=sFromH(st.h); draw();
         if(p<1) st.anim=requestAnimationFrame(tick); else st.anim=null;
       };
@@ -466,9 +449,6 @@ const diffSquare = {
   }
 };
 
-/* =====================================================================
-   SHARED ENGINE (Tier 1 aids)
-   ===================================================================== */
 const N=(v,d=2)=>{let s=fmt(v,d); if(s==="-0")s="0"; return s.replace("-","−")};
 const PI=Math.PI, rad=d=>d*PI/180, deg=r=>r*180/PI, norm=a=>((a%360)+360)%360;
 const X2=V("x")+"²", X1=V("x");
@@ -477,12 +457,12 @@ function toFrac(v){
   for(let d=2;d<=96;d++){const n=v*d; if(Math.abs(n-Math.round(n))<1e-7) return (n<0?"−":"")+frac(Math.abs(Math.round(n)),d);}
   return N(v,3);
 }
-function fracTxt(v){ // plain-text fraction for inside SVG
+function fracTxt(v){
   if(Math.abs(v-Math.round(v))<1e-9) return N(Math.round(v));
   for(let d=2;d<=8;d++){const n=v*d; if(Math.abs(n-Math.round(n))<1e-7) return (n<0?"−":"")+Math.abs(Math.round(n))+"/"+d;}
   return N(v);
 }
-function poly(cs){ // [[coef, varHTML], ...] -> "2x² − 4x + 1"
+function poly(cs){
   let out="";
   cs.forEach(([c,v])=>{ if(Math.abs(c)<1e-12) return; const neg=c<0, ac=Math.abs(c);
     const body=(v&&Math.abs(ac-1)<1e-12)?v:N(ac)+v;
@@ -494,6 +474,7 @@ const coefStr=a=>a===1?"":a===-1?"−":N(a);
 const sf3=v=>N(+(+v).toPrecision(3),4);
 const piFrac=dg=>{const v=dg/180; if(Math.abs(v)<1e-9) return "0"; for(let q=1;q<=12;q++){const p=v*q; if(Math.abs(p-Math.round(p))<1e-9){const P=Math.round(p); return (P===1?"":P===-1?"−":P)+"π"+(q>1?"/"+q:"");}} return N(v*Math.PI,3);};
 const AL='<span class="k-red">α</span>';
+const CV=(c,s)=>`<i class="v k-${c}">${s}</i>`, CS=(c,t)=>`<span class="k-${c}">${t}</span>`;
 const kStr=k=>Math.abs(k)<1e-12?"":(k>0?" + ":" − ")+N(Math.abs(k));
 
 function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
@@ -523,7 +504,7 @@ function arcMark(svg,c,r,a0,sw,col,label,lr=4.6){
   S_(svg,"path",{d,fill:"none",stroke:col,"stroke-width":.9});
   if(label!=null){const a=rad(a0+sw/2),R=r+lr; S_(svg,"text",{x:c[0]+R*Math.cos(a),y:c[1]-R*Math.sin(a)+1.6,"text-anchor":"middle","font-size":4.2,fill:col,"font-weight":700},label);}
 }
-function angAt(svg,V,A,B,col,r=7,showLabel=true){ // inner angle at V between VA and VB (<180)
+function angAt(svg,V,A,B,col,r=7,showLabel=true){
   let a=dirTo(V,A), b=dirTo(V,B), s=norm(b-a), st=a; if(s>180){st=b;s=360-s;}
   arcMark(svg,V,r,st,s,col,showLabel?N(Math.round(s*10)/10,1)+"°":null);
   return s;
@@ -534,7 +515,6 @@ function rightMark(svg,V,A,B,sz=3.6,col="var(--ink)"){
   S_(svg,"path",{d:`M${p1}L${p2}L${p3}`,fill:"none",stroke:col,"stroke-width":.7});
 }
 
-/* graph engine: o = {l,t,w,h,x0,x1,y0,y1,xs,ys,xl,yl,xf} */
 function ginv(o,p){return [o.x0+(p.x-o.l)/o.w*(o.x1-o.x0), o.y1-(p.y-o.t)/o.h*(o.y1-o.y0)]}
 function graph(svg,o){
   const X=x=>o.l+(x-o.x0)/(o.x1-o.x0)*o.w, Y=y=>o.t+(o.y1-y)/(o.y1-o.y0)*o.h;
@@ -568,7 +548,6 @@ function graph(svg,o){
 }
 graph.n=0;
 
-/* generic aid framework: steps (t, set, name), sliders, pills, buttons, draw, readout, drag */
 function aid(def){return {steps:def.steps, mount(stage,panel){
   const st=Object.assign({step:0},JSON.parse(JSON.stringify(def.init)));
   const flat=!def.jump; if(flat) st.step=def.showStep??def.steps.length-1;
@@ -606,7 +585,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel){
   if(def.drag) dragger(svg,(id,p)=>{def.drag(id,p,st); draw();});
   go(flat?st.step:0);
 }}}
-function bumpText(svg){ // keep diagram text >= ~12px on small screens
+function bumpText(svg){
   const w=svg.getBoundingClientRect().width, vb=svg.viewBox.baseVal; if(!w||!vb) return;
   const ppu=w/vb.width, min=12/ppu; if(ppu>=3.2) return;
   svg.querySelectorAll("text").forEach(t=>{const fs=parseFloat(t.getAttribute("font-size")); if(fs&&fs<min) t.setAttribute("font-size",min.toFixed(2));});
@@ -615,9 +594,6 @@ const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const snap=(v,s)=>Math.round(v/s)*s;
 const signWord=(m)=>Math.abs(m)<1e-9?`<span class="k-amber">= 0</span>`:m>0?`<span class="k-green">&gt; 0</span>`:`<span class="k-red">&lt; 0</span>`;
 
-/* =====================================================================
-   1. QUADRATIC FORMS
-   ===================================================================== */
 const QBOX={l:12,t:4,w:124,h:112,x0:-6,x1:6,y0:-8,y1:8,xs:1,xl:2,ys:1,yl:2};
 function quadInfo(s){
   const b=-2*s.a*s.h, c=s.a*s.h*s.h+s.k, q=-s.k/s.a;
@@ -668,19 +644,17 @@ const quadForms=aid({
   },
   drag(id,p,s){const [x,y]=ginv(QBOX,p); s.h=clamp(snap(x,.5),-4,4); s.k=clamp(snap(y,.5),-6,6);},
   key(s){const I=quadInfo(s), fct=quadFact(s,I);
-    const fb=(c,lbl,rd,eq)=>`<div class="formbox fb-${c}"><div class="hd">${lbl}</div><div class="eq">${eq}</div><div class="rd">→ ${rd}</div></div>`;
+    const fb=(c,lbl,rd,eq,gen)=>`<div class="formbox fb-${c}"><div class="hd">${lbl}</div><div class="gen">${gen}</div><div class="eq">${eq}</div><div class="rd">→ ${rd}</div></div>`;
+    const gT=`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`, gF=`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})`, gE=`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}`;
     return `<div class="forms">
-      ${fb("blue","Turning point form",`turning point (${N(s.h)}, ${N(s.k)})`,`${V("y")} = ${coefStr(s.a)}${br(s.h)}²${kStr(s.k)}`)}
-      ${fct?fb("red","Factorised form",`cuts ${X1}-axis at ${I.roots.map(toFrac).join(", ")}`,`${V("y")} = ${fct}`)
-           :fb("red","Factorised form",I.roots.length?"doesn't factorise nicely":"no real roots",I.roots.length?`<span style="font-size:.8em">${rootsTxt(s,I)}</span>`:`can't factorise`)}
-      ${fb("amber","Expanded form",`cuts ${V("y")}-axis at ${N(I.c)}`,`${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])}`)}
+      ${fb("blue","Turning point form",`turning point (${N(s.h)}, ${N(s.k)})`,`${V("y")} = ${coefStr(s.a)}${br(s.h)}²${kStr(s.k)}`,gT)}
+      ${fct?fb("red","Factorised form",`cuts ${X1}-axis at ${I.roots.map(toFrac).join(", ")}`,`${V("y")} = ${fct}`,gF)
+           :fb("red","Factorised form",I.roots.length?"doesn't factorise nicely":"no real roots",I.roots.length?`<span style="font-size:.8em">${rootsTxt(s,I)}</span>`:`can't factorise`,gF)}
+      ${fb("amber","Expanded form",`cuts ${V("y")}-axis at ${N(I.c)}`,`${V("y")} = ${poly([[s.a,X2],[I.b,X1],[I.c,""]])}`,gE)}
     </div>`;},
   explain:[`Drag the <b>blue dot</b>. 3 boxes = same curve, 3 ways.`,`(${X1} − 2)² → moves <b>right</b> 2 · ${V("a")} &lt; 0 → upside down ∩`]
 });
 
-/* =====================================================================
-   2. DISCRIMINANT — line meets curve
-   ===================================================================== */
 const DBOX={l:12,t:4,w:124,h:112,x0:-2,x1:6,y0:-4,y1:12,xs:1,xl:2,ys:1,yl:2};
 const dInfo=s=>{const B=-(4+s.m), C=5-s.c, D=B*B-4*C; const n=Math.abs(D)<1e-9?1:D>0?2:0; return {B,C,D,n}};
 const discrim=aid({
@@ -708,22 +682,21 @@ const discrim=aid({
   drag(id,p,s){const [,y]=ginv(DBOX,p); s.c=clamp(snap(y,.25),-4,12);},
   key(s){const I=dInfo(s), c=I.n===2?"green":I.n===1?"amber":"red";
     const word=I.n===2?"CUTS: 2 points":I.n===1?"TOUCHES: tangent, 1 point":"MISSES: no points";
-    return FORMS([FB("blue","Line = curve gives",`${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0`,`${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)}`),
+    return KPAIR(`${V("y")} = ${V("m")}${X1} + ${V("c")}`,`${V("y")} = ${poly([[s.m,X1],[s.c,""]])}`,"This line")
+      +FORMS([FB("blue","Line = curve gives",`${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0`,`${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)}`,`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`),
       FB(c,`${V("b")}² − 4${V("ac")}`,`${N(I.D,3)} ${I.n===2?"&gt; 0":I.n===1?"= 0":"&lt; 0"}`,word)]);},
   readout(s){const I=dInfo(s); return `<div class="row hint">Working: (${N(I.B)})² − 4(1)(${N(I.C)}) = ${N(I.D,3)}</div>`;}
 });
 
-/* =====================================================================
-   3. TRIG GRAPHS
-   ===================================================================== */
 const TBOX={l:12,t:4,w:124,h:112,x0:0,x1:360,y0:-6,y1:6,xs:30,xl:90,ys:1,yl:1,xf:v=>v+"°"};
 const angTxt=(s,dg)=>s.u==="rad"?piFrac(dg):N(dg)+"°";
 const TF={sin:Math.sin,cos:Math.cos,tan:Math.tan};
-const trigEq=s=>`${V("y")} = ${s.a===1?"":s.a===-1?"−":N(s.a)+" "}${s.fn} ${s.b===1?"":s.b}${X1}${s.fn==="tan"?"":kStr(s.c)}`;
+const trigEq=s=>`${V("y")} = ${s.a===1?"":s.a===-1?CS("blue","−"):CS("blue",N(s.a))+" "}${s.fn} ${s.b===1?"":CS("amber",s.b)}${X1}${s.fn==="tan"?"":CS("green",kStr(s.c))}`;
+const trigGen=s=>`${V("y")} = ${CV("blue","a")} ${s.fn} ${CV("amber","b")}${X1}${s.fn==="tan"?"":` + ${CV("green","c")}`}`;
 const trigGraphs=aid({
   init:{fn:"sin",a:1,b:1,c:0,u:"deg"}, label:"Trig graph with a, b, c sliders",
   pills:[{k:"fn",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",opts:[["deg","degrees"],["rad","radians"]]}],
-  sliders:[{k:"a",label:"a",min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"b",label:"b",min:1,max:4,step:1},{k:"c",label:"c",min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
+  sliders:[{k:"a",label:CS("blue","a"),min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"b",label:CS("amber","b"),min:1,max:4,step:1},{k:"c",label:CS("green","c"),min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
   steps:[
     {set:{fn:"sin",a:1,b:1,c:0}, t:()=>`${V("y")} = sin ${X1}: <b>1 full wave</b> from 0° to 360°.<br>Max 1, min −1.`},
     {set:{fn:"sin",a:2,b:1,c:0}, t:()=>`${V("a")} stretches it up and down.<br><b>Amplitude = ${V("a")}</b> (ignore the sign). Here ${V("a")} = 2.`},
@@ -740,21 +713,18 @@ const trigGraphs=aid({
       for(let k=0;;k++){const x=(90+180*k)/s.b; if(x>360) break; g.line(x,-6,x,6,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6});}
     } else {
       g.line(0,s.c,360,s.c,{stroke:"var(--green)","stroke-dasharray":"2 1.5","stroke-width":.6});
-      [s.c+amp,s.c-amp].forEach(y=>g.line(0,y,360,y,{stroke:"var(--amber)","stroke-dasharray":"1 1.5","stroke-width":.5}));
+      [s.c+amp,s.c-amp].forEach(y=>g.line(0,y,360,y,{stroke:"var(--green)","stroke-dasharray":"1 1.5","stroke-width":.5}));
     }
     g.plot(x=>s.a*F(rad(s.b*x))+(s.fn==="tan"?0:s.c),{stroke:"var(--blue)","stroke-width":1.3},0,360,720);
     lab(svg,[16,10],trigEq(s).replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.6,"font-style":"italic",fill:"var(--blue)","font-weight":700});
   },
-  explain:[`<b>${V("a")}</b> = height · <b>${V("b")}</b> = waves in 360° · <b>${V("c")}</b> = up/down.`,`Grey dotted curve = the basic graph. Negative ${V("a")} flips it.`],
-  key(s){const amp=Math.abs(s.a), head=KHEAD(trigEq(s));
+  explain:[`${CV("blue","a")} = height · ${CV("amber","b")} = waves in 360° · ${CV("green","c")} = up/down.`,`Grey dotted curve = the basic graph. Negative ${CV("blue","a")} flips it.`],
+  key(s){const amp=Math.abs(s.a), head=KPAIR(trigGen(s),trigEq(s),"This graph"), P=angTxt(s,s.fn==="tan"?180:360), B=CV("amber","b");
     if(s.fn==="tan"){const as=[];for(let k=0;;k++){const x=(90+180*k)/s.b;if(x>360)break;as.push(angTxt(s,x));}
-      return head+FORMS([FB("blue","Amplitude","none","no max or min"),FB("amber","Period",angTxt(s,180/s.b),`${angTxt(s,180)} ÷ ${s.b}`),FB("red","Asymptotes",`<span style="font-size:.75em">${as.join(", ")}</span>`,"dashed lines")],true);}
-    return head+FORMS([FB("blue","Amplitude",N(amp),"height of wave"),FB("amber","Period",angTxt(s,360/s.b),`${angTxt(s,360)} ÷ ${s.b}`),FB("red","Max / Min",`${N(s.c+amp)} / ${N(s.c-amp)}`,`middle ${V("y")} = ${N(s.c)}`)],true);}
+      return head+FORMS([FB("blue","Amplitude","none","no max or min"),FB("amber",`Period = ${P} ÷ ${B}`,angTxt(s,180/s.b),`${P} ÷ ${s.b}`),FB("red","Asymptotes",`<span style="font-size:.75em">${as.join(", ")}</span>`,"dashed lines")],true);}
+    return head+FORMS([FB("blue",`Amplitude = |${CV("blue","a")}|`,N(amp),"height of wave"),FB("amber",`Period = ${P} ÷ ${B}`,angTxt(s,360/s.b),`${P} ÷ ${s.b}`),FB("green",`Max / Min = ${CV("green","c")} ± |${CV("blue","a")}|`,`${N(s.c+amp)} / ${N(s.c-amp)}`,`middle ${V("y")} = ${N(s.c)}`)],true);}
 });
 
-/* =====================================================================
-   4. UNIT CIRCLE / ASTC
-   ===================================================================== */
 const UO=[70,60], UR=42;
 const EX={0:["0","1","0"],30:["½","√3/2","√3/3"],45:["√2/2","√2/2","1"],60:["√3/2","½","√3"],90:["1","0","undefined"]};
 function ucInfo(th){
@@ -811,9 +781,6 @@ const unitCircle=aid({
   hint:"E-Math: sin and cos only, 0° to 180°. A-Math: all quadrants, all ratios."
 });
 
-/* =====================================================================
-   5. R-FORMULA
-   ===================================================================== */
 const RBOX={l:12,t:50,w:124,h:86,x0:0,x1:360,y0:-9,y1:9,xs:30,xl:90,ys:1,yl:3,xf:v=>v+"°",xn:"θ"};
 function rInfo(s){
   const R2=s.a*s.a+s.b*s.b, R=Math.sqrt(R2), al=deg(Math.atan(s.b/s.a));
@@ -827,12 +794,16 @@ function rInfo(s){
 const cs2=v=>v===1?"":N(v)+" ";
 const rLeft=s=>s.mode==="cos"?`${cs2(s.a)}cos θ + ${cs2(s.b)}sin θ`:`${cs2(s.a)}sin θ + ${cs2(s.b)}cos θ`;
 const rRight=(s,I)=>s.mode==="cos"?`${I.Rs.split(" = ")[0]} cos(θ − ${N(I.al)}°)`:`${I.Rs.split(" = ")[0]} sin(θ + ${N(I.al)}°)`;
+const nw=t=>`<span class="nw">${t}</span>`;
+const rGen=s=>s.mode==="cos"?`${nw(`${CV("amber","a")} cos θ + ${CV("green","b")} sin θ`)} = ${nw(`${CV("blue","R")} cos(θ − ${AL})`)}`:`${nw(`${CV("amber","a")} sin θ + ${CV("green","b")} cos θ`)} = ${nw(`${CV("blue","R")} sin(θ + ${AL})`)}`;
+const rSpecC=(s,I)=>{const A=s.a===1?"":CS("amber",N(s.a))+" ", B=s.b===1?"":CS("green",N(s.b))+" ", R=CS("blue",I.Rs.split(" = ")[0]), al=CS("red",N(I.al)+"°");
+  return s.mode==="cos"?`${nw(`${A}cos θ + ${B}sin θ`)} = ${nw(`${R} cos(θ − ${al})`)}`:`${nw(`${A}sin θ + ${B}cos θ`)} = ${nw(`${R} sin(θ + ${al})`)}`;};
 const rFormula=aid({
   init:{mode:"cos",a:3,b:4}, vb:"0 0 140 140", label:"R-formula triangle and waves", showStep:4,
   buttons:[{label:"Show / hide: solving = R/2",fn:s=>{s.step=s.step===5?4:5}}],
   explain:[`2 dashed waves add up to <b>ONE</b> blue wave.`,`${V("R")} = how tall (hypotenuse) · ${AL} = how far shifted.`],
   pills:[{k:"mode",opts:[["cos","a cos θ + b sin θ"],["sin","a sin θ + b cos θ"]]}],
-  sliders:[{k:"a",label:"a",min:1,max:6,step:.5},{k:"b",label:"b",min:1,max:6,step:.5}],
+  sliders:[{k:"a",label:CS("amber","a"),min:1,max:6,step:.5},{k:"b",label:CS("green","b"),min:1,max:6,step:.5}],
   steps:[
     {set:{mode:"cos",a:3,b:4}, t:s=>`Two waves: <span class="k-amber">${s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`}</span> and <span class="k-green">${s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`}</span>.`},
     {t:()=>`Add them, point by point → the <span class="k-blue">blue</span> wave.<br>It is just <b>ONE wave</b>: taller, and shifted sideways.`},
@@ -869,18 +840,15 @@ const rFormula=aid({
   },
   readout(s){return s.step===5?`<div class="row">${rFormula.steps[5].t(s)}</div>`:"";},
   key(s){const I=rInfo(s);
-    return KHEAD(`${rLeft(s)} = ${rRight(s,I)}`)+FORMS([FB("blue","R = height",I.Rs.replace(" = "," ≈ "),`√(${N(s.a)}² + ${N(s.b)}²)`),
+    return KPAIR(rGen(s),rSpecC(s,I),"This wave")+FORMS([FB("blue",`${CV("blue","R")} = height`,I.Rs.replace(" = "," ≈ "),`√(${N(s.a)}² + ${N(s.b)}²)`),
       FB("red",`${AL} = shift`,N(I.al)+"°",`tan ${AL} = ${N(s.b)} ÷ ${N(s.a)}`),FB("amber","Max / Min",`${N(I.R)} / −${N(I.R)}`,`θ = ${N(I.mx,1)}° / ${N(I.mn,1)}°`)],true);},
   hint:"Minus signs: a cos θ − b sin θ = R cos(θ + α) and a sin θ − b cos θ = R sin(θ − α). Same R and α."
 });
 
-/* =====================================================================
-   6. CIRCLE ANGLE PROPERTIES
-   ===================================================================== */
 const CO=[70,58], CR=40;
 const CP=d=>[CO[0]+CR*Math.cos(rad(d)),CO[1]-CR*Math.sin(rad(d))];
 const ptLab=(svg,d,t)=>lab(svg,[CO[0]+(CR+5.5)*Math.cos(rad(d)),CO[1]-(CR+5.5)*Math.sin(rad(d))+1.6],t,{"font-size":4.6,"font-weight":700});
-const onArc=(P,A,B)=>norm(P-A)<norm(B-A); // P on arc going anticlockwise from A to B
+const onArc=(P,A,B)=>norm(P-A)<norm(B-A);
 const reason=t=>`<span class="k-blue">(${t})</span>`;
 const n1=v=>N(Math.round(v*10)/10,1);
 const circleProps=aid({
@@ -964,9 +932,6 @@ const circleProps=aid({
     return "";}
 });
 
-/* =====================================================================
-   7. TANGENT & GRADIENT
-   ===================================================================== */
 const GBOX={l:12,t:4,w:124,h:112,x0:-3,x1:3,y0:-6,y1:6,xs:.5,xl:1,ys:1,yl:2};
 const TC={
   cubic:{f:x=>x**3-3*x+1,d:x=>3*x*x-3,d2:x=>6*x,fs:`${V("x")}³ − 3${X1} + 1`,ds:`3${X2} − 3`,d2s:`6${X1}`,dat:x=>`3(${N(x)})² − 3`,d2at:x=>`6(${N(x)})`,st:[-1,1]},
@@ -1006,9 +971,6 @@ const tangentAid=aid({
     return KHEAD(`${V("y")} = ${C.fs}`)+FORMS(b);}
 });
 
-/* =====================================================================
-   8. AREA UNDER A CURVE
-   ===================================================================== */
 const TT=V("t");
 const KV={
   const:{v:t=>10,s:t=>10*t,vs:`10`,ss:`10${TT}`,top:[0,60,20],bot:[0,12,2],vel:false},
@@ -1037,13 +999,11 @@ const areaAid=aid({
     const nm=K.vel?["displacement–time","velocity–time"]:["distance–time","speed–time"];
     lab(svg,[134,11],nm[0],{"text-anchor":"end","font-size":4,fill:"var(--muted)","font-weight":700});
     lab(svg,[134,89],nm[1],{"text-anchor":"end","font-size":4,fill:"var(--muted)","font-weight":700});
-    // shaded area under v from 0 to T
     if(T>0){const P=[],Nn=[]; for(let i=0;i<=120;i++){const t=T*i/120,v=K.v(t); P.push([t,Math.max(v,0)]); Nn.push([t,Math.min(v,0)]);}
       gb.poly([[0,0],...P,[T,0]],{fill:"var(--blue-fill)"}); gb.poly([[0,0],...Nn,[T,0]],{fill:"var(--red-fill)"});}
     gb.plot(K.v,{stroke:"var(--blue)","stroke-width":1.2},0,6);
     gt.plot(K.s,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.7},0,6);
     if(T>0) gt.plot(K.s,{stroke:"var(--green)","stroke-width":1.3},0,T);
-    // link line at T
     seg(svg,[gt.X(T),6],[gt.X(T),62],{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5});
     seg(svg,[gb.X(T),84],[gb.X(T),140],{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5});
     if(s.step===3||s.step===4){const m=K.v(T),y0=K.s(T); gt.line(T-1.5,y0-1.5*m,T+1.5,y0+1.5*m,{stroke:"var(--amber)","stroke-width":1});}
@@ -1061,9 +1021,6 @@ const areaAid=aid({
       <div class="row">∫ ${V("v")} d${TT} = ${K.ss} + ${V("c")}; ${V("c")} = 0 because ${V("s")} = 0 at ${TT} = 0 <span class="hint">(integrate)</span></div>`:""}`;},
 });
 
-/* =====================================================================
-   9. COMPLETING THE SQUARE (area model)
-   ===================================================================== */
 const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toFrac(A/2),q:toFrac(A*A/4)};};
 const complSq=aid({
   init:{b:6,c:5}, vb:"0 0 130 102", label:"Completing the square with areas",
@@ -1106,18 +1063,18 @@ const complSq=aid({
       g.text(hx,ky,`(${fracTxt(hx)}, ${fracTxt(ky)})`,{dx:3,dy:4.5,fill:"var(--red)","font-weight":700,"font-size":4.2});
       lab(svg,wide?[192,6]:[70,108],"y = x² "+(I.B<0?"− ":"+ ")+I.A+"x"+(s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""),{"font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});}
   },
-  key(s){const I=csI(s), k=s.c-I.A*I.A/4;
-    return FORMS([FB("red","Missing corner",`(${frac(N(I.B),"2")})² = ${I.q}`,"add it, then take it away"),
-      FB("blue","Completed square",`${poly([[1,X2],[I.B,X1],[s.c,""]])} = (${X1} ${I.sg} ${I.h})²${k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k))}`,"same curve, new form"),
-      FB("amber","Turning point",`(${toFrac(-I.B/2)}, ${toFrac(k)})`,`minimum value ${toFrac(k)}`)]);},
+  key(s){const I=csI(s), k=s.c-I.A*I.A/4, b2=`(${frac(V("b"),"2")})`;
+    return FORMS([FB("red","Missing corner",`(${frac(N(I.B),"2")})² = ${I.q}`,"add it, then take it away",`${b2}²`),
+      FB("blue","Completed square",`<span class="brk">${nw(poly([[1,X2],[I.B,X1],[s.c,""]]))} = ${nw(`(${X1} ${I.sg} ${I.h})²${k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k))}`)}</span>`,"same curve, new form",`${nw(`${X2} + ${V("b")}${X1} + ${V("c")}`)} = ${nw(`(${X1} + ${frac(V("b"),"2")})² − ${b2}² + ${V("c")}`)}`),
+      FB("amber","Turning point",`(${toFrac(-I.B/2)}, ${toFrac(k)})`,`minimum value ${toFrac(k)}`,`(−${frac(V("b"),"2")}, ${V("c")} − ${b2}²)`)]);},
   readout(){return "";},
   hint:"If x² has a number in front, take it out first: 2x² + 12x = 2(x² + 6x) = 2[(x + 3)² − 9]. (E-Math only tests x² + px + q.)"
 });
 
-/* shared step UI */
-const FB=(c,lbl,eq,rd)=>`<div class="formbox fb-${c}"><div class="hd">${lbl}</div><div class="eq">${eq}</div>${rd?`<div class="rd">${rd}</div>`:""}</div>`;
+const FB=(c,lbl,eq,rd,gen)=>`<div class="formbox fb-${c}"><div class="hd">${lbl}</div>${gen?`<div class="gen">${gen}</div>`:""}<div class="eq">${eq}</div>${rd?`<div class="rd">${rd}</div>`:""}</div>`;
 const FORMS=(a,tight)=>`<div class="forms${tight?" tight":""}">${a.join("")}</div>`;
 const KHEAD=t=>`<div class="khead">${t}</div>`;
+const KPAIR=(gen,spec,lbl)=>`<div class="kpair"><span class="gl">General form</span><span class="ge">${gen}</span><span class="gl">${lbl}</span><span class="se">${spec}</span></div>`;
 const explainBox=lines=>`<div class="box explain"><ul>${lines.map(l=>`<li>${l}</li>`).join("")}</ul></div>`;
 function stepHeader(n){return `<div class="stepnum"><span data-sn></span><span class="dots">${"<i></i>".repeat(n)}</span></div>`}
 function setStep(panel,steps,i,st){
@@ -1134,10 +1091,6 @@ function wireNav(panel,steps,st,draw){
   $("[data-next]",panel).onclick=()=>{if(st.step<steps.length-1){st.step++;draw()}};
 }
 const PLAYS={squareAB,diffSquare,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,areaAid};
-
-/* =====================================================================
-   CHEATSHEETS
-   ===================================================================== */
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-8.5}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+8.5}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -1855,11 +1808,6 @@ integration:`
 
 };
 
-/* =====================================================================
-   ROUTER  —  #            home
-              #<topic>     topic, Play tab
-              #<topic>/sheet   topic, Cheatsheet tab
-   ===================================================================== */
 const app=$("#app"), titleEl=$("#title"), backBtn=$("#back"), shareBtn=$("#share");
 let homeFilter="all";
 try{ homeFilter=localStorage.getItem("hubFilter")||"all" }catch(e){}
@@ -1948,7 +1896,6 @@ shareBtn.onclick=async()=>{
     shareBtn.textContent="Copied ✓"; setTimeout(()=>shareBtn.textContent="Copy link",1500);
   }catch(e){}
 };
-/* ---------- light / dark toggle (hubTheme lives in <head>) ---------- */
 const themeBtn=$("#themeBtn");
 const SUN=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
 const MOON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
@@ -1963,11 +1910,9 @@ themeBtn.onclick=()=>{
   hubTheme(t); try{localStorage.setItem("hubTheme",t)}catch(e){}
   paintThemeBtn();
 };
-// no saved choice yet → keep following the device if it switches light/dark
 const sysDark=matchMedia("(prefers-color-scheme: dark)");
 const followDevice=()=>{ if(!hubSavedTheme()){ hubTheme(sysDark.matches?"dark":"light"); paintThemeBtn(); } };
 if(sysDark.addEventListener) sysDark.addEventListener("change",followDevice); else if(sysDark.addListener) sysDark.addListener(followDevice);
-// always print in light colours
 let themeBeforePrint=null;
 window.addEventListener("beforeprint",()=>{ themeBeforePrint=document.documentElement.getAttribute("data-theme"); hubTheme("light"); });
 window.addEventListener("afterprint",()=>{ if(themeBeforePrint) hubTheme(themeBeforePrint); themeBeforePrint=null; });
@@ -1976,7 +1921,6 @@ paintThemeBtn();
 window.addEventListener("hashchange",route);
 route();
 
-/* type-in number box beside every slider (student feedback, 1 Nov) */
 const numOf=t=>parseFloat(String(t).replace(/−/g,"-").replace(/[^0-9.\-]/g,""));
 function addNumBox(row){
   const r=$("input[type=range]",row), out=$("output",row); if(!r||!out||row._sync) return;
@@ -1997,7 +1941,7 @@ function addNumBox(row){
     const want=numOf(b.value); if(isNaN(want)){row._sync();return;}
     const lo=+r.min, hi=+r.max, st=+r.step||1;
     set(want);
-    if(Math.abs(shown()-(+r.value))>1e-6){ // slider isn't 1:1 with the number (e.g. log h): search for the closest
+    if(Math.abs(shown()-(+r.value))>1e-6){
       set(lo); const a=shown(); set(hi); const up=shown()>=a; let L=lo,H=hi;
       for(let i=0;i<40&&H-L>st;i++){const m=L+Math.max(1,Math.round((H-L)/2/st))*st; set(m); if((shown()<want)===up) L=m; else H=m;}
       set(L); const dL=Math.abs(shown()-want); set(H); if(dL<=Math.abs(shown()-want)) set(L);
@@ -2013,7 +1957,6 @@ function addNumBox(row){
 new MutationObserver(()=>document.querySelectorAll(".ctrl").forEach(row=>{addNumBox(row); row._sync&&row._sync();}))
   .observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["disabled"]});
 
-/* side-by-side screens (laptop, iPad landscape, 12.9" iPad upright): shrink the diagram so diagram + key boxes fit on screen */
 let fitQ=0;
 function fitStage(){fitQ=0; const st=document.querySelector(".stage"), svg=st&&st.querySelector(":scope>svg"); if(!svg) return;
   if(innerWidth<900){svg.style.maxHeight=""; return;}
