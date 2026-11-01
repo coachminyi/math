@@ -395,7 +395,7 @@ const squareAB = {
     const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
     const draw=()=>{
       const {a,b,step}=st, S=this.steps[step].show;
-      sa.nextElementSibling.textContent=a; sb.nextElementSibling.textContent=b;
+      $("output",sa.closest(".ctrl")).textContent=a; $("output",sb.closest(".ctrl")).textContent=b;
       svg.innerHTML="";
       const sc=92/(a+b), x0=26, y0=12, A=a*sc, B=b*sc, T=A+B;
       const fade=k=>{ if(!S.split) return 1; if(!S.hi||S.hi==="all") return 1;
@@ -473,7 +473,7 @@ const diffSquare = {
     sh.value=sFromH(st.h);
     const draw=()=>{
       const {x,step}=st, hh=st.h, S=this.steps[step].show;
-      sx.nextElementSibling.textContent=fmt(x,1); sh.nextElementSibling.textContent=hFmt(hh);
+      $("output",sx.closest(".ctrl")).textContent=fmt(x,1); $("output",sh.closest(".ctrl")).textContent=hFmt(hh);
       $("#shrinkrow",panel).style.display=S.grow?"flex":"none";
       sh.disabled=!S.grow;
       svg.innerHTML="";
@@ -2087,7 +2087,7 @@ function addNumBox(row){
       bt.setAttribute("aria-label",(d<0?"Decrease ":"Increase ")+(r.getAttribute("aria-label")||"value"));
       bt.addEventListener("click",()=>{ const st=+r.step||1, dec=(String(st).split(".")[1]||"").length; const v=Math.min(+r.max,Math.max(+r.min,+r.value+d*st)); set(+v.toFixed(dec)); });
       return bt; };
-    const mn=mk(-1,"−"), pl=mk(1,"+"); r.before(mn); r.after(pl); row._stp=[mn,pl];
+    const mn=mk(-1,"−"), pl=mk(1,"+"); r.before(mn); out.after(pl); row._stp=[mn,pl];
   }
   const apply=()=>{
     const want=numOf(b.value); if(isNaN(want)){row._sync();return;}
