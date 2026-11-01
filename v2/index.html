@@ -240,7 +240,10 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .forms:not(.tight)>.formbox:last-child:nth-child(odd){grid-column:1/-1}
   .panel>.box:has(.ctrl,.pillrow){order:-1}
   .steptext{font-size:18px;min-height:0}
-  .keybox{font-size:15px}
+  .keybox{font-size:calc(15*var(--k))}
+  .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
+  .forms{gap:calc(8*var(--k))}
+  .formbox{padding:calc(6*var(--k)) calc(10*var(--k))}
   .cards{grid-template-columns:1fr;gap:10px}
   .card{flex-direction:row;align-items:center;gap:12px;padding:10px 12px;min-height:0}
   .card .thumb{width:72px;height:40px;margin:0}
@@ -251,14 +254,16 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .hero{padding:18px 0 4px}
   .chips{margin:14px 0 4px}
   .level{margin:16px 0 22px}
-  .formbox .eq{font-size:18px}
-  .forms.tight .eq{font-size:16px}
-  .forms.tight .hd{font-size:10.5px}
-  .forms.tight .rd{font-size:12px}
-  .khead{font-size:16px}
-  .kpair .ge,.kpair .se{font-size:16px}
-  .kpair .gl{font-size:10px;max-width:5.4em;line-height:1.15}
-  .formbox .gen{font-size:14px}
+  .formbox .eq{font-size:calc(18*var(--k))}
+  .formbox .hd{font-size:calc(12*var(--k))}
+  .formbox .rd{font-size:calc(13.5*var(--k))}
+  .forms.tight .eq{font-size:calc(16*var(--k))}
+  .forms.tight .hd{font-size:calc(10.5*var(--k))}
+  .forms.tight .rd{font-size:calc(12*var(--k))}
+  .khead{font-size:calc(16*var(--k))}
+  .kpair .ge,.kpair .se{font-size:calc(16*var(--k))}
+  .kpair .gl{font-size:calc(10*var(--k));max-width:5.4em;line-height:1.15}
+  .formbox .gen{font-size:calc(14*var(--k))}
   .explain li{font-size:16px}
 }
 @media (max-width:899px) and (orientation:landscape) and (max-height:520px){
@@ -1914,7 +1919,14 @@ function fitText(root,reset){ if(!root) return; if(reset) root._fit=null; const 
     const min=Math.max(12,base*.72);
     while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=1; el.style.fontSize=fs+"px"; }
     if(el.scrollWidth>el.clientWidth+1) el.style.whiteSpace="normal";
-    mem[i]=fs; }); }
+    mem[i]=fs; });
+  root.querySelectorAll(".formbox .rd, .formbox .hd").forEach(el=>{ el.style.fontSize=""; el.style.whiteSpace="nowrap";
+    if(el.scrollWidth<=el.clientWidth+1){ el.style.whiteSpace=""; return; }
+    const base=parseFloat(getComputedStyle(el).fontSize), need=el.scrollWidth/el.clientWidth;
+    if(need>1.18){ el.style.whiteSpace=""; return; }
+    let fs=base; const min=base*.85;
+    while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=.5; el.style.fontSize=fs+"px"; }
+    if(el.scrollWidth>el.clientWidth+1){ el.style.whiteSpace=""; el.style.fontSize=""; } }); }
 function settleKey(kb,reset){ if(!kb) return; const key=kb.closest(".key");
   if(reset&&key){ key.style.minHeight=""; key._minH=0; }
   fitText(kb,reset);
@@ -2043,6 +2055,9 @@ presentBtn.onclick=enterPresent; exitBtn.onclick=exitPresent;
 document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) exitPresent(); });
 document.addEventListener("webkitfullscreenchange",()=>{ if(!document.webkitFullscreenElement) exitPresent(); });
 zoomBtn.onclick=()=>{ if(!cur||!cur.stage) return; const big=cur.stage.classList.toggle("big"); const l=big?"Smaller diagram":"Bigger diagram"; zoomBtn.setAttribute("aria-label",l); zoomBtn.title=l; };
+let footTaps=0, footT=0;
+document.querySelector("footer").addEventListener("click",()=>{ const now=Date.now(); footTaps=(now-footT<900)?footTaps+1:1; footT=now;
+  if(footTaps>=3){ footTaps=0; toast(`${innerWidth} × ${innerHeight} px · ×${(devicePixelRatio||1).toFixed(2)} · text ${getComputedStyle(document.body).fontSize}`); } });
 const barEl=document.querySelector(".bar");
 const setBarH=()=>document.documentElement.style.setProperty("--barh",Math.round(barEl.getBoundingClientRect().height)+"px");
 if(window.ResizeObserver) new ResizeObserver(setBarH).observe(barEl); else addEventListener("resize",setBarH);
