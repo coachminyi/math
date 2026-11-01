@@ -192,6 +192,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 8px}
 .pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
+.plbl{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .lim{display:inline-flex;flex-direction:column;font-size:.68em;line-height:1.05;vertical-align:middle;margin-left:1px}
 .lim sub,.lim sup{vertical-align:baseline;font-size:1em}
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
@@ -642,7 +643,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   panel.innerHTML=`${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${jump}
-      ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
+      ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${s.k}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
@@ -653,6 +654,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const draw=()=>{
     const S=def.steps[st.step];
     (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
+      if(s.maxf){const mx=s.maxf(st); if(+inp.max!==mx){inp.max=mx;} if(st[s.k]>mx) st[s.k]=mx;}
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
     (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
     cbox.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
@@ -846,7 +848,7 @@ const unitCircle=aid({
   fix:s=>{s.th=nearCPS(s.th);},
   pills:[{k:"all",opts:[[0,"This angle only"],[1,"Show all 4 quadrants"]]},
     {k:"sv",opts:[["off","Solve: off"],["sin",SOLVE.sin.lbl],["cos",SOLVE.cos.lbl],["tan",SOLVE.tan.lbl]],on:s=>{if(s.sv!=="off"){const S=SOLVE[s.sv]; s.th=qAng(S.qs[0],S.al);}}}],
-  explain:[`Radius = 1 → sin θ = opp ÷ 1 = <span class="k-blue"><b>height</b></span>, cos θ = adj ÷ 1 = <span class="k-amber"><b>base</b></span>. Tap any dot, or drag P.`,`Other quadrants: <b>same height, same base</b>. Only the signs change (ASTC): <span class="k-green"><b>+</b></span> / <span class="k-red"><b>−</b></span>. Press "Show all 4".`],
+  explain:[`Tap any dot, or drag P.`,`Radius = 1<br><span class="k-blue">sin θ = ${frac("opp","1")} = <b>height</b></span><br><span class="k-amber">cos θ = ${frac("adj","1")} = <b>base</b></span>`],
   steps:[{t:()=>""}],
   draw(svg,s){
     const [ox,oy]=UO, P=d=>[ox+UR*Math.cos(rad(d)),oy-UR*Math.sin(rad(d))], I=ucInfo(s.th), SV=s.sv!=="off"?SOLVE[s.sv]:null;
@@ -893,7 +895,7 @@ const unitCircle=aid({
     return out;},
   readout(s){ if(s.sv==="off") return ""; const SV=SOLVE[s.sv], sols=SV.qs.map(q=>qAng(q,SV.al));
     return `<div class="row">① Basic angle from the <b>positive</b> value: ${AL} = ${fx(SV.inv)} = ${SV.al}°</div><div class="row">② Sign: ${SV.ratio} is ${s.sv==="cos"?"<b>negative</b>":"<b>positive</b>"} → Quadrants ${SV.qs.join(", ")} (${SV.qs.map(q=>QL[q]).join(", ")})</div><div class="row">③ θ = ${SV.qs.map(q=>`${qForm(q,SV.al)} = <b>${qAng(q,SV.al)}°</b>`).join(" or ")}</div>`;},
-  hint:"E-Math: sin and cos only, 0° to 180° (sin(180° − θ) = sin θ, cos(180° − θ) = −cos θ). A-Math: all quadrants, all ratios, radians."
+  hint:"E-Math: sin and cos up to 180° only."
 });
 
 const RBOX={l:12,t:50,w:124,h:86,x0:0,x1:360,y0:-9,y1:9,xs:30,xl:90,ys:1,yl:3,xf:v=>v+"°",xn:"θ"};
@@ -1074,8 +1076,8 @@ const diffChord=aid({
     {label:"▶ Shrink h",show:s=>s.step===1,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=+(h0*(1-p)).toFixed(2);});}},
     {label:"↺ h = 1.5",fn:s=>{s.h=1.5}}],
   steps:[
-    {name:"Chord → tangent", t:()=>`Drag <b>Q</b> into <b>P</b> (or press ▶): the <span class="k-amber"><b>chord PQ</b></span> becomes the <span class="k-green"><b>tangent</b></span> at P.<br>Gradient of the tangent = ${DY}. Move P: its gradient is plotted below → the line ${DY} = 2${X1}.`},
-    {name:"Square grows by h", t:()=>`Grow a square of side ${X1} by ${V("h")}: extra area = <span class="k-amber">2 strips</span> + <span class="k-red">tiny corner</span> = 2${V("xh")} + ${V("h")}².<br>Rate = extra area ÷ ${V("h")} = 2${X1} + ${V("h")} → <b>2${X1}</b> as ${V("h")} → 0. <span class="hint">Not tested in exams.</span>`}
+    {name:"Chord → tangent", t:()=>`Drag <b>Q</b> into <b>P</b>. The <span class="k-amber"><b>chord</b></span> becomes the <span class="k-green"><b>tangent</b></span>.<br>Its gradient = ${DY} = 2${X1} (lower graph).`},
+    {name:"Square grows by h", t:()=>`Grow the square by ${V("h")}. Extra area ÷ ${V("h")} = 2${X1} + ${V("h")}.<br>Shrink ${V("h")} → 0: the rate → <b>2${X1}</b>.`}
   ],
   draw(svg,s){
     if(s.step===1){
@@ -1123,13 +1125,12 @@ const diffChord=aid({
       return FORMS([FB("amber","Extra area",N(ex,4),`2${V("xh")} + ${V("h")}²`),FB("blue",`Average rate = extra area ÷ ${V("h")}`,hh>0?N(ex/hh,4):"→ 2x",`= 2${X1} + ${V("h")}`),FB("green",`As ${V("h")} → 0, the rate →`,`2${X1} = ${N(2*x)}`,"press ▶ Shrink h")]);}
     const x=s.x, hh=s.h, m=2*x+hh, yP=x*x, yQ=(x+hh)**2, tan=hh<1e-9;
     return KHEAD(`${V("y")} = ${X2} · P = (${N(x)}, ${N(yP)})`)+FORMS([
-      FB("amber","Gradient of chord PQ",tan?"= the tangent":N(m,3),tan?"Q has reached P":`rise ÷ run = ${N(yQ-yP,3)} ÷ ${N(hh)}`),
-      FB("green",`Gradient of tangent at P`,N(2*x,3),`2${X1} = 2(${N(x)})`),
-      FB("blue",`${DY} = gradient of the tangent`,`${DY} = 2${X1}`,"the gradient function (lower graph)",null,"wide")]);},
+      FB("amber","Chord PQ gradient",tan?"= tangent":N(m,3),tan?"Q has reached P":`rise ÷ run = ${N(yQ-yP,3)} ÷ ${N(hh)}`),
+      FB("green",`Tangent gradient`,N(2*x,3),`2${X1} = 2(${N(x)})`),
+      FB("blue",`${DY}`,`2${X1}`,"gradient of the tangent")],true);},
   readout(s){ if(s.step!==1) return ""; const x=s.xs, hh=s.h;
     const rows=[1,0.1,0.01,0.001].map(v=>`<tr${hh>0&&Math.abs(Math.log10(hh)-Math.log10(v))<.15?' class="live"':""}><td>${v}</td><td>${fmt(2*x*v+v*v,6)}</td><td>${fmt(2*x+v,6)}</td></tr>`).join("");
     return `<table class="mini"><tr><th>h</th><th>extra area</th><th>rate = 2x + h</th></tr>${rows}</table>`;},
-  hint:"Tab 2 is the old picture: a square growing by h. Same idea, different picture."
 });
 
 const TC={
@@ -1141,8 +1142,8 @@ const DY=frac("d"+V("y"),"d"+V("x")), D2Y=frac("d²"+V("y"),"d"+V("x")+"²");
 const strip=s=>String(s).replace(/<[^>]+>/g,"");
 const tangentAid=aid({
   init:{cv:"cubic",x:-1.5,nm:"tan"}, vb:"0 0 140 172", label:"Curve with a tangent you can slide, gradient graph below",
-  explain:[`Drag <b>P</b>. Tangent gradient = ${DY}, plotted below. Flat tangent = <span class="k-amber"><b>stationary point</b></span> = lower graph crosses 0.`,`${X1}-axis <span class="k-green"><b>green</b></span> = ${V("y")} increasing · <span class="k-red"><b>red</b></span> = decreasing. ${D2Y} &gt; 0 → min ∪ · &lt; 0 → max ∩.`],
-  pills:[{k:"cv",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x=-2}},{k:"nm",opts:[["tan","Tangent"],["nor","Normal"]]}],
+  explain:[`Drag <b>P</b>. Flat tangent = <span class="k-amber"><b>stationary point</b></span>.`,`<span class="k-green"><b>Green</b></span> axis = going up · <span class="k-red"><b>red</b></span> = going down.`],
+  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x=-2}},{k:"nm",opts:[["tan","Tangent"],["nor","Normal"]]}],
   sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.05}],
   buttons:[{label:"Jump to a stationary point",fn:s=>{const L=TC[s.cv].st; const nx=L.find(v=>v>s.x+1e-9); s.x=nx!==undefined?nx:L[0];}}],
   steps:[{t:()=>""}],
@@ -1165,15 +1166,17 @@ const tangentAid=aid({
   drag(id,p,s){let [x]=ginv(GBOX,p); x=clamp(snap(x,.05),-2.5,2.5); TC[s.cv].st.forEach(v=>{if(Math.abs(x-v)<.1)x=v}); s.x=x;},
   key(s){const C=TC[s.cv], x=s.x, y0=C.f(x), m=C.d(x), z=Math.abs(m)<1e-9;
     const c=z?"amber":m>0?"green":"red", w=z?"FLAT: stationary":m>0?"GOING UP ↗":"GOING DOWN ↘";
-    const b=[FB("blue",`Gradient at ${X1} = ${N(x)}`,N(m,3),`${DY} = ${C.dat(x)}`),FB(c,"So the curve is…",w,z?`${DY} = 0`:m>0?`${DY} &gt; 0 → increasing`:`${DY} &lt; 0 → decreasing`)];
+    const b=[FB("blue",`${DY} at ${X1} = ${N(x)}`,N(m,3),`${C.dat(x)}`)];
     if(z){const d2=C.d2(x), k=stKind(C.d,x), L=sgn(C.d(x-.1)), R2=sgn(C.d(x+.1));
-      b.push(FB("red","Max, min or inflexion?",`${KIND[k]} ${shapeIcon(k,"var(--ink)")}`,`${D2Y} = ${N(d2)}${Math.abs(d2)<1e-9?" → check signs":""} · signs ${L} 0 ${R2}`));}
+      b.push(FB("red","Max, min or inflexion?",`${KIND[k]} ${shapeIcon(k,"var(--ink)")}`,`${D2Y} = ${N(d2)} · signs ${L} 0 ${R2}`));}
+    else b.push(FB(c,"The curve is…",w,m>0?`${DY} &gt; 0 → increasing`:`${DY} &lt; 0 → decreasing`));
     const nor=s.nm==="nor", mm=nor?(z?null:-1/m):m, cc=mm===null?null:y0-mm*x;
     const gen=nor?`${V("y")} − ${V("y")}₁ = −${frac("1",V("m"))}(${X1} − ${X1}₁)`:`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`;
     const lineEq=(m,c)=>Math.abs(m)<1e-9?`${V("y")} = ${niceN(c)}`:`${V("y")} = ${Math.abs(m-1)<1e-9?"":Math.abs(m+1)<1e-9?"−":niceN(m)}${X1}${Math.abs(c)<1e-9?"":(c<0?" − ":" + ")+niceN(Math.abs(c))}`;
-    const eq=mm===null?`${X1} = ${N(x)}`:`<span class="brk">${nw(`${V("y")} ${y0<0?"+":"−"} ${niceN(Math.abs(y0))} = ${niceN(mm)}(${X1} ${x<0?"+":"−"} ${N(Math.abs(x))})`)} → ${nw(lineEq(mm,cc))}</span>`;
-    b.push(FB(nor?"ink":"amber",`${nor?"Normal":"Tangent"} at P (${N(x)}, ${niceN(y0)})`,eq,nor?(z?"tangent is flat → normal is vertical":`gradient = −1 ÷ ${niceN(m)} = ${niceN(mm)}`):`gradient ${V("m")} = ${niceN(m)}`,gen,"wide"));
-    return KHEAD(`${V("y")} = ${C.fs}`)+FORMS(b);}
+    const eq=mm===null?`${X1} = ${N(x)}`:lineEq(mm,cc);
+    const rd=mm===null?"flat tangent → vertical normal":`${V("m")} = ${nor?`−1 ÷ ${niceN(m)} = `:""}${niceN(mm)} · P (${N(x)}, ${niceN(y0)})`;
+    b.push(FB(nor?"ink":"amber",`${nor?"Normal":"Tangent"} at P`,eq,rd,gen));
+    return FORMS(b,true);}
 });
 
 const TT=V("t");
@@ -1188,8 +1191,8 @@ function jInfo(s){const P=s.pts, T=Math.min(s.T,P[P.length-1][0]); let i=0; whil
   return {i,p,q,T,vT,a,tot,sofar,tEnd:P[P.length-1][0]};}
 const speedTime=aid({
   init:{j:"abs",T:5,pts:[[0,0],[4,12],[10,12],[14,0]]}, vb:"0 0 140 124", label:"Speed-time graph with draggable corners and a car on a road",
-  explain:[`<b>Area under the speed–time graph = distance.</b> Gradient = acceleration. Drag the corners.`,`Flat part = steady speed (acceleration 0). Sloping down = slowing down → <span class="k-red"><b>negative</b></span> acceleration.`],
-  pills:[{k:"j",opts:Object.entries(JOUR).map(([k,v])=>[k,v.name]),on:s=>{s.pts=JSON.parse(JSON.stringify(JOUR[s.j].pts)); s.T=0;}}],
+  explain:[`<b>Area = distance. Gradient = acceleration.</b>`,`Drag the corners. Flat = steady speed.`],
+  pills:[{k:"j",label:"Sample journeys",opts:Object.entries(JOUR).map(([k,v])=>[k,v.name]),on:s=>{s.pts=JSON.parse(JSON.stringify(JOUR[s.j].pts)); s.T=0;}}],
   sliders:[{k:"T",label:"t",min:0,max:14,step:.1,f:v=>N(v,1)+" s"}],
   buttons:[{label:"▶ Drive",fn:(s,anim)=>{anim(7000,p=>{s.T=+(14*p).toFixed(1);});}}],
   steps:[{t:()=>""}],
@@ -1216,63 +1219,65 @@ const speedTime=aid({
       FB(ac,"Acceleration now = gradient",`${N(I.a,2)} m/s²`,`${aw} · (${N(I.q[1])} − ${N(I.p[1])}) ÷ (${N(I.q[0])} − ${N(I.p[0])})`),
       FB("amber","Average speed = total distance ÷ total time",`${N(I.tot/I.tEnd,2)} m/s`,`${N(I.tot)} ÷ ${N(I.tEnd)}`)]);},
   readout(s){const P=s.pts; return P.slice(0,-1).map((p,k)=>{const sh=segShape(p,P[k+1]); return `<div class="row">${N(p[0])}–${N(P[k+1][0])} s: ${sh==="stopped"?`stopped (speed 0) → <b>0 m</b>`:`${sh} ${segWork(p,P[k+1])} = <b>${N(segArea(p,P[k+1]))} m</b>`}</div>`;}).join("");},
-  hint:"km/h → m/s: ÷ 3.6. m/s → km/h: × 3.6. (1 km/h = 1000 m ÷ 3600 s.)"
 });
 
 const KV={
-  lin:{s:t=>6*t-t*t,v:t=>6-2*t,a:()=>-2,ss:`6${TT} − ${TT}²`,vs:`6 − 2${TT}`,as:"−2",sR:[0,12,4],vR:[-6,6,3],aR:[-4,4,2]},
-  quad:{s:t=>t**3/3-2*t*t+3*t,v:t=>t*t-4*t+3,a:t=>2*t-4,ss:`${frac(TT+"³","3")} − 2${TT}² + 3${TT}`,vs:`${TT}² − 4${TT} + 3`,as:`2${TT} − 4`,sR:[0,20,5],vR:[-4,16,4],aR:[-4,8,4]},
-  hump:{s:t=>3*t*t-t**3/3,v:t=>6*t-t*t,a:t=>6-2*t,ss:`3${TT}² − ${frac(TT+"³","3")}`,vs:`6${TT} − ${TT}²`,as:`6 − 2${TT}`,sR:[0,40,10],vR:[-2,10,2],aR:[-6,6,3]},
-  cub:{s:t=>t**3-6*t*t+9*t,v:t=>3*t*t-12*t+9,a:t=>6*t-12,ss:`${TT}³ − 6${TT}² + 9${TT}`,vs:`3${TT}² − 12${TT} + 9`,as:`6${TT} − 12`,sR:[0,60,20],vR:[-10,50,10],aR:[-12,24,12]}
+  lin:{tR:6,s:t=>6*t-t*t,v:t=>6-2*t,a:()=>-2,ss:`6${TT} − ${TT}²`,vs:`6 − 2${TT}`,as:"−2",sR:[0,10,2],vR:[-6,6,3],aR:[-4,4,2]},
+  quad:{tR:6,s:t=>t**3/3-2*t*t+3*t,v:t=>t*t-4*t+3,a:t=>2*t-4,ss:`${frac(TT+"³","3")} − 2${TT}² + 3${TT}`,vs:`${TT}² − 4${TT} + 3`,as:`2${TT} − 4`,sR:[0,20,5],vR:[-4,16,4],aR:[-4,8,4]},
+  hump:{tR:6,s:t=>2*t*t-t**3/3,v:t=>4*t-t*t,a:t=>4-2*t,ss:`2${TT}² − ${frac(TT+"³","3")}`,vs:`4${TT} − ${TT}²`,as:`4 − 2${TT}`,sR:[0,12,4],vR:[-12,4,4],aR:[-8,4,4]},
+  cub:{tR:5,s:t=>t**3-6*t*t+9*t,v:t=>3*t*t-12*t+9,a:t=>6*t-12,ss:`${TT}³ − 6${TT}² + 9${TT}`,vs:`3${TT}² − 12${TT} + 9`,as:`6${TT} − 12`,sR:[0,20,5],vR:[-6,24,6],aR:[-12,18,6]}
 };
-const kBox=(K,row)=>{const r=row==="s"?K.sR:row==="v"?K.vR:K.aR, t=row==="s"?26:row==="v"?74:122; return {l:18,t,w:116,h:40,x0:0,x1:6,y0:r[0],y1:r[1],xs:.5,xl:1,ys:r[2],yl:r[2],xn:"t",yn:row};};
-const kDist=(K,T)=>{let d=0; const n=120; for(let i=0;i<n;i++){const t0=T*i/n,t1=T*(i+1)/n; d+=Math.abs(K.v((t0+t1)/2))*(t1-t0);} return d;};
-const kZeros=K=>{const z=[]; for(let i=0;i<600;i++){const a=i/100,b=(i+1)/100, va=K.v(a), vb=K.v(b); if(Math.abs(va)<1e-9&&!z.some(x=>Math.abs(x-a)<.02)) z.push(a); else if(va*vb<0) z.push(a-va*(b-a)/(vb-va));} if(Math.abs(K.v(6))<1e-9&&!z.some(x=>Math.abs(x-6)<.02)) z.push(6); return z.filter(x=>x<=6).map(x=>Math.round(x*100)/100);};
-const niceN=(v,d=3)=>{for(let q=1;q<=12;q++){const n=v*q; if(Math.abs(n-Math.round(n))<1e-3) return toFrac(Math.round(n)/q);} return N(+(+v).toPrecision(3),d);};
+const kBox=(K,row)=>{const r=row==="s"?K.sR:row==="v"?K.vR:K.aR, t=row==="s"?26:row==="v"?74:122; return {l:18,t,w:116,h:40,x0:0,x1:K.tR,y0:r[0],y1:r[1],xs:.5,xl:1,ys:r[2],yl:r[2],xn:"t",yn:row};};
+const kDist=(K,T)=>{if(T<=0) return 0; const Z=kZeros(K).filter(z=>z>1e-9&&z<T-1e-9), cuts=[0,...Z,T]; let d=0;
+  for(let c=0;c<cuts.length-1;c++){const a=cuts[c],b=cuts[c+1],n=200,h=(b-a)/n; let sm=0; for(let i=0;i<=n;i++){const w=i===0||i===n?1:i%2?4:2; sm+=w*K.v(a+i*h);} d+=Math.abs(sm*h/3);} return d;};
+const kZeros=K=>{const z=[], E=K.tR*100; for(let i=0;i<E;i++){const a=i/100,b=(i+1)/100, va=K.v(a), vb=K.v(b); if(Math.abs(va)<1e-9&&!z.some(x=>Math.abs(x-a)<.02)) z.push(a); else if(va*vb<0) z.push(a-va*(b-a)/(vb-va));} if(Math.abs(K.v(K.tR))<1e-9&&!z.some(x=>Math.abs(x-K.tR)<.02)) z.push(K.tR); return z.filter(x=>x<=K.tR).map(x=>Math.round(x*100)/100);};
+const niceN=(v,d=3)=>{for(let q=1;q<=24;q++){const n=v*q; if(Math.abs(n-Math.round(n))<1e-3) return toFrac(Math.round(n)/q);} return N(+(+v).toPrecision(3),d);};
 const kinAid=aid({
   init:{cv:"lin",T:2}, vb:"0 0 140 166", label:"Particle on a number line above stacked displacement, velocity and acceleration graphs",
-  explain:[`Differentiate ${V("s")} → ${V("v")} → ${V("a")}. Integrate back: ${V("a")} → ${V("v")} → ${V("s")}. Drag the dot on the ${V("v")} graph.`,`${V("v")} = 0 → <b>at rest</b>, the particle turns round. Below the axis = moving <b>backwards</b> → that area counts as <span class="k-red"><b>negative</b></span>.`],
-  pills:[{k:"cv",opts:[["lin","v = 6 − 2t"],["quad","v = t² − 4t + 3"],["hump","v = 6t − t²"],["cub","s = t³ − 6t² + 9t"]],on:s=>{s.T=2}}],
-  sliders:[{k:"T",label:"t",min:0,max:6,step:.1,f:v=>N(v,1)+" s"}],
-  buttons:[{label:"▶ Play",fn:(s,anim)=>{anim(6000,p=>{s.T=+(6*p).toFixed(1);});}}],
+  explain:[`Differentiate ${V("s")} → ${V("v")} → ${V("a")}. Integrate to go back.`,`<span class="k-amber"><b>${V("v")} = 0 → U-turn.</b></span> Below the axis = going backwards.`],
+  pills:[{k:"cv",label:"Sample equations",opts:[["lin","v = 6 − 2t"],["quad","v = t² − 4t + 3"],["hump","v = 4t − t²"],["cub","s = t³ − 6t² + 9t"]],on:s=>{s.T=2}}],
+  sliders:[{k:"T",label:"t",min:0,max:6,step:.1,f:v=>N(v,1)+" s",maxf:s=>KV[s.cv].tR}],
+  buttons:[{label:"▶ Play",fn:(s,anim)=>{const E=KV[s.cv].tR; anim(1000*E,p=>{s.T=+(E*p).toFixed(1);});}}],
+  fix:s=>{s.T=clamp(s.T,0,KV[s.cv].tR);},
   steps:[{t:()=>""}],
   draw(svg,s){
-    const K=KV[s.cv], T=s.T, sv=K.s(T), vv=K.v(T), av=K.a(T), Z=kZeros(K), rest=Math.abs(vv)<.051||Z.some(z=>Math.abs(z-T)<.051);
+    const K=KV[s.cv], T=Math.min(s.T,K.tR), sv=K.s(T), vv=K.v(T), av=K.a(T), Z=kZeros(K), rest=Math.abs(vv)<.051||Z.some(z=>Math.abs(z-T)<.051), E=K.tR;
     const gs=graph(svg,kBox(K,"s")), gv=graph(svg,kBox(K,"v")), ga=graph(svg,kBox(K,"a"));
     if(T>0){const Pp=[],Nn=[]; for(let i=0;i<=120;i++){const t=T*i/120,v=K.v(t); Pp.push([t,Math.max(v,0)]); Nn.push([t,Math.min(v,0)]);}
       gv.poly([[0,0],...Pp,[T,0]],{fill:"var(--blue-fill)"}); gv.poly([[0,0],...Nn,[T,0]],{fill:"var(--red-fill)"});}
-    gs.plot(K.s,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.7},0,6); if(T>0) gs.plot(K.s,{stroke:"var(--green)","stroke-width":1.3},0,T);
-    gv.plot(K.v,{stroke:"var(--blue)","stroke-width":1.2},0,6);
-    ga.plot(K.a,{stroke:"var(--amber)","stroke-width":1.2},0,6);
-    Z.forEach(z=>{gv.add("circle",{cx:gv.X(z),cy:gv.Y(0),r:1.7,fill:"none",stroke:"var(--amber)","stroke-width":.8}); gs.add("circle",{cx:gs.X(z),cy:gs.Y(K.s(z)),r:1.7,fill:"none",stroke:"var(--amber)","stroke-width":.8});});
+    gs.plot(K.s,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.7},0,E); if(T>0) gs.plot(K.s,{stroke:"var(--green)","stroke-width":1.3},0,T);
+    gv.plot(K.v,{stroke:"var(--blue)","stroke-width":1.2},0,E);
+    ga.plot(K.a,{stroke:"var(--amber)","stroke-width":1.2},0,E);
+    Z.forEach(z=>{const az=K.a(z), kind=z<1e-9?"start":az<0?"max":az>0?"min":"flat", sz=K.s(z), top=az<0;
+      gv.add("circle",{cx:gv.X(z),cy:gv.Y(0),r:2.3,fill:"var(--amber)",stroke:"var(--card)","stroke-width":.8}); gv.text(z,0,"v = 0",{dy:top?6:-3.2,dx:z<.5?0:-2,"text-anchor":z<.5?"start":"middle","font-size":3.6,fill:"var(--amber)","font-weight":700});
+      gs.add("circle",{cx:gs.X(z),cy:gs.Y(sz),r:2.3,fill:"var(--amber)",stroke:"var(--card)","stroke-width":.8}); if(kind!=="start") gs.text(z,sz,kind+" s",{dy:top?-3.2:6,dx:z>E-.6?-2:0,"text-anchor":z>E-.6?"end":"middle","font-size":3.6,fill:"var(--amber)","font-weight":700});});
     [gs,gv,ga].forEach((g,i)=>{const b=kBox(K,["s","v","a"][i]); g.line(T,b.y0,T,b.y1,{stroke:"var(--red)","stroke-dasharray":"1.2 1.2","stroke-width":.5});});
     gs.dot(T,sv,"var(--green)",1.8); ga.dot(T,av,"var(--amber)",1.8);
     const r=K.sR, nx=v=>18+(v-r[0])/(r[1]-r[0])*116, ny=14;
     seg(svg,[18,ny],[134,ny],{stroke:"var(--ink)","stroke-width":.7});
     for(let v=r[0];v<=r[1]+1e-9;v+=r[2]){seg(svg,[nx(v),ny-1.5],[nx(v),ny+1.5],{stroke:"var(--ink)","stroke-width":.5}); if(v!==0) lab(svg,[nx(v),ny+5],N(v),{"font-size":3.4,fill:"var(--muted)"});}
-    lab(svg,[16,ny+1.3],"O",{"font-size":3.8,fill:"var(--muted)","text-anchor":"end"}); lab(svg,[134,ny+9.5],"s (m)",{"font-size":3.4,fill:"var(--muted)","text-anchor":"end"});
-    Z.forEach(z=>S_(svg,"circle",{cx:nx(K.s(z)),cy:ny,r:1.7,fill:"none",stroke:"var(--amber)","stroke-width":.8}));
+    lab(svg,[16,ny+1.3],"O",{"font-size":3.8,fill:"var(--muted)","text-anchor":"end"}); lab(svg,[134,ny-4],"s (m)",{"font-size":3.4,fill:"var(--muted)","text-anchor":"end"});
+    Z.filter(z=>z>1e-9).forEach(z=>{S_(svg,"circle",{cx:nx(K.s(z)),cy:ny,r:2.4,fill:"none",stroke:"var(--amber)","stroke-width":1.2}); lab(svg,[nx(K.s(z)),ny+8.5],"U-turn",{"font-size":3.2,fill:"var(--amber)","font-weight":700});});
     const px=nx(sv); S_(svg,"circle",{cx:px,cy:ny,r:2.6,fill:rest?"var(--amber)":"var(--green)"});
     if(!rest){const d=vv>0?1:-1; S_(svg,"path",{d:`M${px+d*4},${ny-3}L${px+d*8},${ny}L${px+d*4},${ny+3}Z`,fill:vv>0?"var(--green)":"var(--red)"});}
     lab(svg,[px,ny-5],rest?(Math.abs(av)>1e-9?"AT REST · turns round":"AT REST"):(vv>0?"moving right →":"← moving left"),{"font-size":4,"font-weight":700,fill:rest?"var(--amber)":vv>0?"var(--green)":"var(--red)","text-anchor":px>100?"end":px<50?"start":"middle"});
     handle(svg,gv.X(T),gv.Y(vv),"t");
   },
-  drag(id,p,s){const [t]=ginv(kBox(KV[s.cv],"v"),p); s.T=clamp(snap(t,.1),0,6);},
-  key(s){const K=KV[s.cv], T=s.T, sv=K.s(T), vv=K.v(T), av=K.a(T), dist=kDist(K,T), rest=Math.abs(vv)<.051, vc=rest?"amber":vv>0?"green":"red";
+  drag(id,p,s){const [t]=ginv(kBox(KV[s.cv],"v"),p); s.T=clamp(snap(t,.1),0,KV[s.cv].tR);},
+  key(s){const K=KV[s.cv], T=Math.min(s.T,K.tR), sv=K.s(T), vv=K.v(T), av=K.a(T), dist=kDist(K,T), rest=Math.abs(vv)<.051, vc=rest?"amber":vv>0?"green":"red";
     const aw=Math.abs(av)<1e-9?(Math.abs(K.a(0)-K.a(6))<1e-9?"constant velocity":"v is at a max or min here"):rest?"about to move "+(av>0?"right":"left"):(av>0)===(vv>0)?"speeding up":"slowing down";
-    return FORMS([FB("blue",`Displacement ${V("s")} = signed area`,`${niceN(sv)} m`,`from O, after ${N(T,1)} s`),FB("green","Distance travelled",`${niceN(Math.round(dist*1e6)/1e6)} m`,Math.abs(dist-Math.abs(sv))<1e-6?"same as displacement so far":"areas all counted positive"),
-      FB(vc,`Velocity ${V("v")} = ${frac("d"+V("s"),"d"+TT)}`,`${sf3(vv)} m/s`,rest?"AT REST · v = 0":vv>0?"moving right (above axis)":"moving left (below axis)"),FB("amber",`Acceleration ${V("a")} = ${frac("d"+V("v"),"d"+TT)}`,`${sf3(av)} m/s²`,aw)]);},
-  readout(s){const K=KV[s.cv], Z=kZeros(K);
-    return `<div class="row">${V("s")} = ${K.ss}</div><div class="row">${V("v")} = ${frac("d"+V("s"),"d"+TT)} = ${K.vs} <span class="hint">(differentiate)</span></div><div class="row">${V("a")} = ${frac("d"+V("v"),"d"+TT)} = ${K.as} <span class="hint">(differentiate again)</span></div><div class="row">At rest when ${V("v")} = 0: ${Z.length?Z.map(z=>`${TT} = ${N(z)}`).join(", "):"never (0 ≤ t ≤ 6)"} <span class="hint">· ∫ ${V("v")} d${TT} = ${K.ss} + ${V("c")}, ${V("c")} = 0 since ${V("s")} = 0 at ${TT} = 0</span></div>`;},
-  hint:"Displacement = where it is (signed). Distance = how far it has travelled. They differ once the particle turns round."
+    return FORMS([FB("blue",`Displacement ${V("s")} = signed area`,`${niceN(sv)} m`,`from O, after ${N(T,1)} s`),FB("green","Distance travelled",`${niceN(Math.round(dist*1e6)/1e6)} m`,Math.abs(dist-Math.abs(sv))<1e-6?"no U-turn yet":"U-turn: add the parts"),
+      FB(vc,`Velocity ${V("v")} = ${frac("d"+V("s"),"d"+TT)}`,`${sf3(vv)} m/s`,rest?"U-TURN · v = 0":vv>0?"going right →":"← going back"),FB("amber",`Acceleration ${V("a")} = ${frac("d"+V("v"),"d"+TT)}`,`${sf3(av)} m/s²`,aw)]);},
+  readout(s){const K=KV[s.cv], Z=kZeros(K).filter(z=>z>1e-9);
+    return `<div class="row">${V("s")} = ${K.ss}</div><div class="row">${V("v")} = ${frac("d"+V("s"),"d"+TT)} = ${K.vs}</div><div class="row">${V("a")} = ${frac("d"+V("v"),"d"+TT)} = ${K.as}</div><div class="row">U-turn (${V("v")} = 0) at ${Z.length?Z.map(z=>`${TT} = ${N(z)}`).join(", "):"no time here"}</div>`;}
 });
 
 const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toFrac(A/2),q:toFrac(A*A/4),hv:A/2,qv:A*A/4};};
 const complSq=aid({
   init:{b:6,c:5,mv:0}, vb:"0 0 130 200", label:"Completing the square with areas, and the graph",
-  explain:[`Cut the <span class="k-amber"><b>${V("b")}${X1} strip</b></span> in half and move one half down. The <span class="k-red"><b>corner (${frac(V("b"),"2")})²</b></span> is missing: add it <b>and</b> take it away.`,`Graph: start at ${V("y")} = ${X2}'s vertex (0, 0), move <b>left ${frac(V("b"),"2")}</b> then <b>down (${frac(V("b"),"2")})² − ${V("c")}</b>.`],
+  explain:[`Cut the strip in half, move it down.`,`Add the <span class="k-red"><b>missing corner</b></span>, then take it away.`],
   sliders:[{k:"b",label:"b",min:-8,max:8,step:1,on:s=>{if(s.b===0)s.b=1}},{k:"c",label:"c",min:-10,max:10,step:1},{k:"mv",label:"move",min:0,max:1,step:.01,show:s=>s.b>0}],
-  buttons:[{label:"▶ Cut & move",show:s=>s.b>0,fn:(s,anim)=>{anim(2200,p=>{s.mv=+p.toFixed(2);});}},{label:"↺ Start again",show:s=>s.b>0,fn:s=>{s.mv=0}}],
+  buttons:[{label:"▶ Cut & move",show:s=>s.b>0,fn:(s,anim)=>{s.mv=0; anim(2200,p=>{s.mv=+p.toFixed(2);});}}],
   steps:[{t:()=>""}],
   draw(svg,s){
     const wide=window.matchMedia("(min-width:861px) and (orientation:landscape)").matches;
@@ -1300,7 +1305,7 @@ const complSq=aid({
         const fs=Math.max(3.4,Math.min(6.5,H*.38)); lab(svg,[x0+X+H/2,y0+X+H/2+fs*.35],fracTxt(I.qv),{"font-size":fs,fill:"var(--red)","font-weight":700});
         S_(svg,"rect",{x:x0,y:y0,width:X+H,height:X+H,fill:"none",stroke:"var(--green)","stroke-width":1.4});
         lab(svg,[x0+(X+H)/2,y0+X+H+7],`x² + ${I.A}x + ${fracTxt(I.qv)} = (x + ${hb})²`,{"font-size":4.6,fill:"var(--green)","font-weight":700});
-      } else lab(svg,[x0+(X+Bw)/2,y0+X+H+7],mv<.02?`x² + ${I.A}x`:"move the strip under the square…",{"font-size":4.4,fill:"var(--muted)"});
+      } else lab(svg,[x0+(X+Bw)/2,y0+X+H+7],mv<.02?`x² + ${I.A}x`:"",{"font-size":4.4,fill:"var(--muted)"});
     }
     const hx=-I.B/2, ky=s.c-I.qv, gy0=Math.min(0,Math.floor(ky))-4;
     const G=graph(svg,Object.assign(wide?{l:140,t:8,w:104,h:88}:{l:16,t:114,w:104,h:80},{x0:-8,x1:8,y0:gy0,y1:gy0+24,xs:1,xl:2,ys:2,yl:4}));
@@ -1313,15 +1318,14 @@ const complSq=aid({
     if(Math.abs(ky)>1e-9) G.text(hx,ky/2,`${ky<0?"down":"up"} ${fracTxt(Math.abs(ky))}`,{dx:hx>=0?-3:3,dy:1,"text-anchor":hx>=0?"end":"start","font-size":3.6,fill:"var(--green)","font-weight":700});
     G.text(hx,ky,`(${fracTxt(hx)}, ${fracTxt(ky)})`,{dx:hx>=0?3:-3,dy:4.5,"text-anchor":hx>=0?"start":"end",fill:"var(--red)","font-weight":700,"font-size":4.2});
     lab(svg,wide?[192,6]:[68,110],"y = x² "+(I.B<0?"− ":"+ ")+I.A+"x"+(s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""),{"font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
-    lab(svg,wide?[192,101]:[68,198],"grey dashed = y = x²",{"font-size":3.4,fill:"var(--muted)"});
+    lab(svg,wide?[192,101]:[68,198],"dashed = y = x²",{"font-size":3.2,fill:"var(--muted)"});
   },
-  key(s){const I=csI(s), k=s.c-I.qv, b2=`(${frac(V("b"),"2")})`, cT=s.c===0?"":(s.c>0?" + ":" − ")+Math.abs(s.c), kT=k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k));
-    const line=`<span class="brk">${nw(`${CS("blue",X2)} ${I.sg} ${CS("amber",I.A+X1)} ${CS("red",`+ ${I.q} − ${I.q}`)}${cT}`)} = ${nw(`${CS("green",`(${X1} ${I.sg} ${I.h})²`)}${kT}`)}</span>`;
-    return FORMS([FB("green",`Add and take away ${b2}²`,line,"first 3 terms = a perfect square",`${nw(`${X2} + ${V("b")}${X1} + ${V("c")}`)} = ${nw(`(${X1} + ${frac(V("b"),"2")})² − ${b2}² + ${V("c")}`)}`,"wide"),
-      FB("red","Missing corner",`(${frac(N(I.B),"2")})² = ${I.q}`,"half of b, then square it",`${b2}²`),
-      FB("amber","Turning point",`(${toFrac(-I.B/2)}, ${toFrac(k)})`,`${I.B>0?"left":"right"} ${I.h}, ${k<0?"down":"up"} ${toFrac(Math.abs(k))} from (0, 0) · minimum`,`(−${frac(V("b"),"2")}, ${V("c")} − ${b2}²)`)]);},
-  readout(){return "";},
-  hint:"If x² has a number in front, take it out first: 2x² + 12x = 2(x² + 6x) = 2[(x + 3)² − 9]. (E-Math only tests x² + px + q.)"
+  key(s){const I=csI(s), k=s.c-I.qv, cT=s.c===0?"":(s.c>0?" + ":" − ")+Math.abs(s.c), kT=k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k));
+    const line=`${nw(`${CS("blue",X2)} ${I.sg} ${CS("amber",I.A+X1)} ${CS("red",`+ ${I.q} − ${I.q}`)}${cT}`)} = ${nw(`${CS("green",`(${X1} ${I.sg} ${I.h})²`)}${kT}`)}`;
+    return KHEAD(line)+FORMS([FB("amber",`Half of ${V("b")}`,I.h,`${N(I.B)} ÷ 2`),
+      FB("red","Missing corner",I.q,`(${I.h})²`),
+      FB("green","Completed square",`(${X1} ${I.sg} ${I.h})²${kT}`,`turning point (${toFrac(-I.B/2)}, ${toFrac(k)})`)],true);},
+  readout(){return "";}
 });
 
 const FB=(c,lbl,eq,rd,gen,cls)=>`<div class="formbox fb-${c}${cls?" "+cls:""}"><div class="hd">${lbl}</div>${gen?`<div class="gen">${gen}</div>`:""}<div class="eq">${eq}</div>${rd?`<div class="rd">${rd}</div>`:""}</div>`;
@@ -1699,7 +1703,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
     </ul>
   </div>
 
-  <div class="panelc"><h4>Always positive / always negative <span class="badge">A-Math</span></h4>
+  <div class="panelc"><h4>Always positive / always negative</h4>
     <table>
       <tr><th>${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} is…</th><th>Conditions</th></tr>
       <tr><td>always positive (for all ${X1})</td><td>${V("a")} &gt; 0 <b>and</b> ${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
@@ -1748,7 +1752,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
     <p class="anno">* you may also see ${frac("√2","2")} written as ${frac("1","√2")}, and ${frac("√3","3")} as ${frac("1","√3")}: same value</p>
   </div>
 
-  <div class="panelc"><h4>6 ratios &amp; principal values <span class="badge">A-Math</span></h4>
+  <div class="panelc"><h4>6 ratios &amp; principal values</h4>
     <table>
       <tr><td>cosec θ = ${frac("1","sin θ")}</td><td>sec θ = ${frac("1","cos θ")}</td><td>cot θ = ${frac("1","tan θ")}</td></tr>
     </table>
