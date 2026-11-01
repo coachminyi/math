@@ -8,10 +8,21 @@
 <meta name="apple-mobile-web-app-title" content="Maths Hub">
 <meta name="theme-color" content="#f7f5ef">
 <title>Coach Minyi's Maths Hub</title>
+<script>
+/* Light / dark mode: the reader's saved choice (sun/moon button), else the device setting.
+   Runs before the page paints so there is no flash of the wrong colours. */
+function hubTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  var m=document.querySelector('meta[name="theme-color"]'); if(m) m.content=t==="dark"?"#16171a":"#f7f5ef";
+}
+function hubSavedTheme(){ try{ var t=localStorage.getItem("hubTheme"); return t==="light"||t==="dark"?t:null }catch(e){ return null } }
+hubTheme(hubSavedTheme()||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:light;
   --bg:#f7f5ef; --card:#ffffff; --ink:#1c1c1e; --muted:#6b6b70; --line:#dedad0;
   --grid:rgba(60,90,160,.09); --grid2:#cfd6e6;
   --blue:#2459c6; --blue-fill:#dbe6fb;
@@ -22,17 +33,17 @@
   --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
   --r:14px;
 }
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#16171a; --card:#212226; --ink:#ececee; --muted:#a0a0a8; --line:#34353b;
-    --grid:rgba(140,170,255,.08); --grid2:#3a4256;
-    --blue:#7ea6ff; --blue-fill:#22345c;
-    --amber:#f0b04a; --amber-fill:#4a3712;
-    --red:#ff7b8e; --red-fill:#4d2129; --green-fill:#173a2a;
-    --green:#5fd39a;
-    --accent:#7ea6ff; --accent-ink:#0f1320;
-    --shadow:none;
-  }
+/* dark mode: set by the script in <head> (saved choice, else device setting) */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#16171a; --card:#212226; --ink:#ececee; --muted:#a0a0a8; --line:#34353b;
+  --grid:rgba(140,170,255,.08); --grid2:#3a4256;
+  --blue:#7ea6ff; --blue-fill:#22345c;
+  --amber:#f0b04a; --amber-fill:#4a3712;
+  --red:#ff7b8e; --red-fill:#4d2129; --green-fill:#173a2a;
+  --green:#5fd39a;
+  --accent:#7ea6ff; --accent-ink:#0f1320;
+  --shadow:none;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -51,7 +62,10 @@ button{font:inherit;color:inherit}
 .bar .wrap{display:flex;align-items:center;gap:10px;min-height:56px}
 .back{display:none;align-items:center;justify-content:center;min-width:44px;height:44px;border:0;background:transparent;border-radius:10px;font-size:26px;cursor:pointer}
 .back:hover{background:var(--line)}
-.bar h1{font-size:19px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar h1{flex:1;min-width:0;font-size:19px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.themebtn{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;border:0;background:transparent;border-radius:10px;cursor:pointer;color:var(--ink)}
+.themebtn:hover{background:var(--line)}
+.themebtn svg{width:22px;height:22px;display:block}
 .bar .crumb{color:var(--muted);font-weight:400}
 .share{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:10px;height:40px;padding:0 14px;cursor:pointer;font-size:15px;white-space:nowrap}
 .share[hidden]{display:none}
@@ -219,6 +233,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   <button class="back" id="back" aria-label="Back">‹</button>
   <h1 id="title">Coach Minyi's Maths Hub</h1>
   <button class="share" id="share" hidden>Copy link</button>
+  <button class="themebtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch to dark mode"></button>
 </div></header>
 
 <main class="wrap" id="app"></main>
@@ -1922,6 +1937,31 @@ shareBtn.onclick=async()=>{
     shareBtn.textContent="Copied ✓"; setTimeout(()=>shareBtn.textContent="Copy link",1500);
   }catch(e){}
 };
+/* ---------- light / dark toggle (hubTheme lives in <head>) ---------- */
+const themeBtn=$("#themeBtn");
+const SUN=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+const MOON=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const isDark=()=>document.documentElement.getAttribute("data-theme")==="dark";
+function paintThemeBtn(){
+  const lbl=isDark()?"Switch to light mode":"Switch to dark mode";
+  themeBtn.innerHTML=isDark()?SUN:MOON;
+  themeBtn.setAttribute("aria-label",lbl); themeBtn.title=lbl;
+}
+themeBtn.onclick=()=>{
+  const t=isDark()?"light":"dark";
+  hubTheme(t); try{localStorage.setItem("hubTheme",t)}catch(e){}
+  paintThemeBtn();
+};
+// no saved choice yet → keep following the device if it switches light/dark
+const sysDark=matchMedia("(prefers-color-scheme: dark)");
+const followDevice=()=>{ if(!hubSavedTheme()){ hubTheme(sysDark.matches?"dark":"light"); paintThemeBtn(); } };
+if(sysDark.addEventListener) sysDark.addEventListener("change",followDevice); else if(sysDark.addListener) sysDark.addListener(followDevice);
+// always print in light colours
+let themeBeforePrint=null;
+window.addEventListener("beforeprint",()=>{ themeBeforePrint=document.documentElement.getAttribute("data-theme"); hubTheme("light"); });
+window.addEventListener("afterprint",()=>{ if(themeBeforePrint) hubTheme(themeBeforePrint); themeBeforePrint=null; });
+paintThemeBtn();
+
 window.addEventListener("hashchange",route);
 route();
 </script>
