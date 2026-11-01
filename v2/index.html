@@ -230,15 +230,30 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .play{grid-template-columns:1fr;gap:12px}
   .left{display:contents}
   .stage{position:sticky;top:var(--barh,56px);z-index:3;padding:6px}
-  .stage svg{max-height:34vh;max-height:34svh}
-  .stage.tall svg{max-height:46vh;max-height:46svh}
+  .stage svg{max-height:32vh;max-height:32svh}
+  .stage.tall svg{max-height:44vh;max-height:44svh}
   .stage.big svg{max-height:62vh;max-height:62svh}
-  .tabs{padding:8px 0}
-  .tab{min-height:40px}
+  .tabs{padding:6px 0}
+  .tab{min-height:36px;padding:0 14px}
   .key{padding:6px 8px 8px}
   .forms:not(.tight){grid-template-columns:repeat(2,minmax(0,1fr))}
   .forms:not(.tight)>.formbox:last-child:nth-child(odd){grid-column:1/-1}
-  .panel>.box:has(.ctrl,.pillrow){order:-1}
+  .panel{gap:10px}
+  .panel>.box.dock{order:-2}
+  .panel>.box.robox{order:-1}
+  .play>.box.dock{position:sticky;bottom:0;bottom:env(safe-area-inset-bottom,0px);z-index:4;box-shadow:0 -6px 18px rgba(0,0,0,.14)}
+  .box.dock{padding:8px 12px 10px}
+  .dock .ctrl{margin:2px 0;gap:6px}
+  .dock .ctrl label{font-size:18px}
+  .dock input[type=range]{height:34px}
+  .dock input[type=range]::-webkit-slider-thumb{width:28px;height:28px;margin-top:-10px}
+  .dock input[type=range]::-moz-range-thumb{width:24px;height:24px}
+  .dock .stp{width:36px;height:36px;font-size:20px}
+  .dock .numbox{min-height:36px;width:4em;font-size:16px}
+  .dock .pillrow{display:inline-flex;margin:0 6px 4px 0;gap:6px;vertical-align:top}
+  .dock .pill{min-height:34px;padding:0 9px;font-size:14.5px}
+  .dock .pill.sm{min-height:32px}
+  .dock #shrinkrow{margin:4px 0 2px}
   .steptext{font-size:18px;min-height:0}
   .keybox{font-size:calc(15*var(--k))}
   .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
@@ -395,11 +410,12 @@ const squareAB = {
     const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side a plus b split into four pieces"});
     stage.append(svg); const kb=h("div",{class:"keybox"}); key.append(kb); key.classList.remove("empty");
     panel.innerHTML=`${explainBox([`Big square = 4 pieces: <b>(${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</b>`,`Don't forget the <span class="k-amber"><b>2 rectangles</b></span>!`])}
-      <div class="box">
+      <span class="dockslot" hidden></span>
+      <div class="box dock">
         <div class="ctrl"><label for="sa">a</label><input id="sa" type="range" min="1" max="8" step="1" value="5"><output></output></div>
         <div class="ctrl"><label for="sb">b</label><input id="sb" type="range" min="1" max="6" step="1" value="3"><output></output></div>
-        <div class="readout" id="ro"></div>
       </div>
+      <div class="box robox"><div class="readout" id="ro"></div></div>
       <p class="hint">Drag the sliders or type a number. The rule works for any a and b.</p>`;
     const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
     const draw=()=>{
@@ -441,7 +457,7 @@ const squareAB = {
       svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
         S.split?`${a*a} + ${2*a*b} + ${b*b} = ${tot}  =  (${a} + ${b})²`:`(${a} + ${b})² = ${tot}`));
       kb.innerHTML=FORMS([FB("blue",`(${V("a")} + ${V("b")})²`,`(${a} + ${b})² = ${tot}`,"the big square"),FB("amber",`${V("a")}² + 2${V("ab")} + ${V("b")}²`,`${a*a} + ${2*a*b} + ${b*b} = ${tot}`,"the 4 pieces ✓"),FB("red","✗ Common mistake",`${a}² + ${b}² = ${a*a+b*b}`,`forgets the 2 rectangles`)]); settleKey(kb);
-      ro.innerHTML=""; ro.style.display="none";
+      ro.innerHTML=""; ro.closest(".box").style.display="none";
       setStep(panel,this.steps,step);
     };
     sa.oninput=()=>{st.a=+sa.value;draw()}; sb.oninput=()=>{st.b=+sb.value;draw()};
@@ -466,16 +482,17 @@ const diffSquare = {
     const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side x grown by h"});
     stage.append(svg); const kb=h("div",{class:"keybox"}); key.append(kb); key.classList.remove("empty");
     panel.innerHTML=`${explainBox([`Drag ${V("h")}, then press <b>▶ Shrink h</b>.`,`As ${V("h")} → 0, the rate becomes <b>2${V("x")}</b>. So ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}. <span class="hint">(Not tested.)</span>`])}
-      <div class="box">
+      <span class="dockslot" hidden></span>
+      <div class="box dock">
         <div class="ctrl"><label for="sx">x</label><input id="sx" type="range" min="1" max="6" step="0.5" value="3"><output></output></div>
         <div class="ctrl"><label for="sh">h</label><input id="sh" type="range" min="0" max="1000" step="1" value="0"><output></output></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px" id="shrinkrow">
           <button class="pill" id="shrink">▶ Shrink h</button>
           <button class="pill" id="reset">↺ h = 1.5</button>
         </div>
-        <div class="readout" id="ro"></div>
-      </div>`;
-    const sx=$("#sx",panel), sh=$("#sh",panel), ro=$("#ro",panel);
+      </div>
+      <div class="box robox"><div class="readout" id="ro"></div></div>`;
+    const sx=$("#sx",panel), sh=$("#sh",panel), ro=$("#ro",panel), shrinkrow=$("#shrinkrow",panel);
     const hFromS=v=>0.001*Math.pow(3000,v/1000);
     const sFromH=hv=>Math.round(1000*Math.log(hv/0.001)/Math.log(3000));
     const hFmt=hv=> hv>=1?fmt(hv,2): hv>=0.1?fmt(hv,2): hv>=0.01?fmt(hv,3): fmt(hv,4);
@@ -483,7 +500,7 @@ const diffSquare = {
     const draw=()=>{
       const {x,step}=st, hh=st.h, S=this.steps[step].show;
       $("output",sx.closest(".ctrl")).textContent=fmt(x,1); $("output",sh.closest(".ctrl")).textContent=hFmt(hh);
-      $("#shrinkrow",panel).style.display=S.grow?"flex":"none";
+      shrinkrow.style.display=S.grow?"flex":"none";
       sh.disabled=!S.grow;
       svg.innerHTML="";
       const sc=92/(x+3), x0=26, y0=12, X=x*sc, H=S.grow?hh*sc:0;
@@ -514,7 +531,7 @@ const diffSquare = {
         !S.grow?`area = ${fmt(x*x,2)}`:step>=3?`h = ${hFmt(hh)}  ·  rate = ${fmt(rate,4)}  ·  2x = ${fmt(2*x,2)}`:`extra area = ${fmt(ex,4)}`));
       const rows=[1,0.1,0.01,0.001].map(v=>`<tr${Math.abs(Math.log10(hh)-Math.log10(v))<.15?' class="live"':""}><td>${v}</td><td>${fmt(2*x*v+v*v,6)}</td><td>${fmt(2*x+v,6)}</td></tr>`).join("");
       kb.innerHTML=FORMS([FB("amber","Extra area",fmt(ex,4),`2xh + h²`),FB("blue",`Average rate = extra area ÷ ${V("h")}`,fmt(rate,4),`= 2x + h`),FB("green",`As ${V("h")} → 0, the rate →`,`2x = ${fmt(2*x,2)}`,"press ▶ Shrink h")]); settleKey(kb);
-      ro.innerHTML=`<table class="mini"><tr><th>h</th><th>extra area</th><th>rate = 2x + h</th></tr>${rows}</table>`;
+      ro.innerHTML=`<table class="mini"><tr><th>h</th><th>extra area</th><th>rate = 2x + h</th></tr>${rows}</table>`; ro.closest(".box").style.display="";
       setStep(panel,this.steps,step);
     };
     const stopAnim=()=>{ if(st.anim){cancelAnimationFrame(st.anim);st.anim=null;} };
@@ -642,36 +659,38 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
-  const jump=def.jump?`<div class="pillrow">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
-  panel.innerHTML=`${flat?`<div class="exwrap"></div>`:`${jump}<div class="box"><p class="steptext"></p></div>`}
-    <div class="box">
+  const jump=def.jump?`<div class="pillrow jump">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
+  panel.innerHTML=`${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
+    <div class="box dock">
+      ${jump}
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${s.k}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
-      <div class="readout"></div>
     </div>
+    ${flat?"":`<div class="box"><p class="steptext"></p></div>`}
+    <div class="box robox"><div class="readout"></div></div>
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
-  const ro=$(".readout",panel);
+  const ro=$(".readout",panel), cbox=$(".box.dock",panel);
   const draw=()=>{
     const S=def.steps[st.step];
-    (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,panel), inp=$("input",row);
+    (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
-    (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,panel).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
-    panel.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
-    (def.buttons||[]).forEach((b,i)=>{$(`[data-b="${i}"]`,panel).style.display=(b.show&&!b.show(st))?"none":"";});
+    (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
+    cbox.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
+    (def.buttons||[]).forEach((b,i)=>{$(`[data-b="${i}"]`,cbox).style.display=(b.show&&!b.show(st))?"none":"";});
     svg.innerHTML=""; def.draw(svg,st); bumpText(svg); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
-    ro.innerHTML=def.readout?def.readout(st):""; ro.style.display=ro.innerHTML.trim()?"":"none";
-    const cbox=ro.closest(".box"); cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length||c.textContent.trim()))?"":"none";
+    ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
+    cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length||c.textContent.trim()))?"":"none";
     if(flat){const ex=typeof def.explain==="function"?def.explain(st):(def.explain||[]); $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
     else $(".steptext",panel).innerHTML=def.steps[st.step].t(st);
   };
   const go=i=>{st.step=i; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
-  (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,panel).addEventListener("input",e=>{st[s.k]=+e.target.value; s.on&&s.on(st); draw();}));
-  (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,panel).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
+  (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{st[s.k]=+e.target.value; s.on&&s.on(st); draw();}));
+  (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._reset=true; draw();}));
-  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,panel).addEventListener("click",()=>{b.fn(st); st._reset=true; draw();}));
-  panel.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>go(+b.dataset.j));
+  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{b.fn(st); st._reset=true; draw();}));
+  cbox.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>go(+b.dataset.j));
   if(def.drag) dragger(svg,(id,p)=>{def.drag(id,p,st); draw();});
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k)];
   if(prm){
@@ -2003,6 +2022,7 @@ function renderTopic(t,tab,prm){
     cur.stage=stage;
     PLAYS[t.play].mount(stage,panel,key,prm||new URLSearchParams());
     if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
+    placeDock();
   } else {
     app.insertAdjacentHTML("beforeend",`<h2 style="margin:6px 0 22px;font-size:24px">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]);
   }
@@ -2134,7 +2154,14 @@ function fitStage(){fitQ=0; const left=document.querySelector(".left"), st=docum
   const top=left.getBoundingClientRect().top+scrollY, other=left.getBoundingClientRect().height-svg.getBoundingClientRect().height;
   const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px") svg.style.maxHeight=m+"px";}
 const fitSoon=()=>{if(!fitQ) fitQ=requestAnimationFrame(fitStage)};
-addEventListener("resize",()=>{ fitSoon(); settleKey(document.querySelector(".keybox"),true); });
+function placeDock(){
+  const play=document.querySelector(".play"); if(!play) return;
+  const dock=play.querySelector(".box.dock"), panel=play.querySelector(".panel"), slot=play.querySelector(".dockslot"); if(!dock||!panel) return;
+  const docked=innerWidth<900&&innerHeight>=600;
+  if(docked){ if(dock.parentElement!==play) play.append(dock); }
+  else if(dock.parentElement!==panel){ if(slot) slot.after(dock); else panel.prepend(dock); }
+}
+addEventListener("resize",()=>{ placeDock(); fitSoon(); settleKey(document.querySelector(".keybox"),true); });
 new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
 window.addEventListener("hashchange",route);
 route();
