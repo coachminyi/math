@@ -1831,6 +1831,7 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
       <tr><td>Type</td><td>${nw("minimum ∪")}</td><td>${nw("maximum ∩")}</td></tr>
       <tr><td>Min / max value of ${V("y")}</td><td colspan="2">${V("k")}, when ${X1} = ${V("h")}</td></tr>
     </table>
+    <div class="piccards two">${PIC(null,qMini("min"),`${V("a")} &gt; 0: minimum point`,`(${V("h")}, ${V("k")}) is the lowest point`)}${PIC(null,qMini("max"),`${V("a")} &lt; 0: maximum point`,`(${V("h")}, ${V("k")}) is the highest point`)}</div>
     <p class="anno">* 2(${X1} − 3)² − 11 → minimum point (3, −11)</p>
   </div>
 
@@ -1840,6 +1841,7 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
       <li>(${X1} − 2)² ≥ 0 for all ${X1} <span class="tagop">a square is never negative</span></li>
       <li>so (${X1} − 2)² + 3 ≥ 3 &gt; 0 → <b>always positive</b></li>
     </ul>
+    ${picAlwaysPos()}
   </div>
 </div>`,
 
@@ -1872,11 +1874,13 @@ quadGraphs:`${MUST([FB("blue","Turning point form",nw(`${V("y")} = ${V("a")}(${X
       <li>④ Turning point: complete the square, or (factorised form) ${X1} is halfway between the ${X1}-intercepts → put that ${X1} in to get ${V("y")}</li>
       <li>⑤ Label every point with its coordinates, and the curve with its equation</li>
     </ul>
+    ${qSketch(false)}
     <p class="anno">* sketch on writing paper, not graph paper</p>
   </div>
 
   <div class="panelc"><h4>Line of symmetry</h4>
     <p class="big">${X1} = ${V("h")} (from the completed square)</p>
+    ${qSketch(true)}
     <p class="anno">* also halfway between the roots, if there are roots</p>
     <ul class="steps">
       <li>${V("y")} = (${X1} + 1)(${X1} − 3): ${X1} = ${frac("−1 + 3","2")} = 1</li>
@@ -1931,6 +1935,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real and dis
   </div>
 
   <div class="panelc"><h4>Always positive / always negative</h4>
+    <div class="piccards two">${PIC(null,dMini("pos"),"Always positive",`above the ${X1}-axis, never touches it`)}${PIC(null,dMini("neg"),"Always negative",`below the ${X1}-axis, never touches it`)}</div>
     <table>
       <tr><th>${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} is…</th><th>Conditions</th></tr>
       <tr><td>always positive (for all ${X1})</td><td>${nw(`${V("a")} &gt; 0`)} <b>and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}</td></tr>
@@ -2001,6 +2006,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
 
   <div class="panelc"><h4>Solve: 3 steps</h4>
     <p>cos θ = −0.5, for 0° ≤ θ ≤ 360°</p>
+    ${picAstc60()}
     <ul class="steps">
       <li>① Basic angle from the <b>positive</b> value: α = cos⁻¹ 0.5 = 60°</li>
       <li>② Sign: cos is <b>negative</b> → Quadrants 2, 3</li>
@@ -2066,6 +2072,7 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
       <li>② Stretch it to the amplitude with ${V("a")} <span class="tagop">negative ${V("a")}: flip it</span></li>
       <li>③ Shift it up or down by ${V("c")}</li>
     </ul>
+    ${sinQuarters()}
     <p class="anno">* label the greatest and least points and the end points</p>
   </div>
 
@@ -2092,6 +2099,7 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
       <li>max = 1 + 2 = <b>3</b> · min = 1 − 2 = <b>−1</b></li>
       <li>quarter points every ${nw("120° ÷ 4 = 30°")}: 0°, 30°, 60°, 90°, 120°…</li>
     </ul>
+    ${sin3x()}
     ${PLAYLINK("#trig-graphs?fn=sin&a=2&b=3&c=1","Interactive: see this graph")}
   </div>
 
@@ -2145,6 +2153,7 @@ rFormula:`${MUST([FB("blue",nw(`${CV("blue","R")} = ${SQRT(`${V("a")}² + ${V("b
       <li>Max = <b>5</b> when θ − 53.13° = 0° → θ = 53.1°</li>
       <li>Min = <b>−5</b> when θ − 53.13° = 180° → θ = 233.1°</li>
     </ul>
+    ${rWave()}
     <p class="anno">* max = ${V("R")}, min = −${V("R")}, because sin and cos are always between −1 and 1</p>
     ${EG("Squared, or at the bottom of a fraction? Find the least and greatest of the bracket first",[`${nw(`(5 cos(θ − 53.13°))²`)}: least <b>0</b>, greatest <b>25</b>`,`${nw(`${frac("1",`30 + 25 sin(θ + α)`)}`)}: smallest bottom ${nw("30 − 25 = 5")}`,`so greatest value ${nw(`= ${frac("1","5")}`)}`])}
     <p class="anno">* ${nw(`${V("R")} cos(θ − α) = ${V("c")}`)} with ${V("c")} bigger than ${V("R")} (or less than −${V("R")}): no solution</p>
@@ -2190,10 +2199,12 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
       ${PIC(null,cmini({p:{A:200,B:340},l:["OA","OB","AB"],o:1,arcs:[["A","O","B","var(--red)"],["B","O","A","var(--red)"]]}),"OA = OB (radii) → isosceles △, base angles equal","(base ∠s of isos. △)")}
       ${PIC("#circle-props?step=6",cmini({p:{A:270,B:40,C:150},l:["AB","AC","BC"],tan:"A",arcs:[["A","T","C","var(--red)"],["B","A","C","var(--red)"]]}),`Angle between tangent and chord = angle in alternate segment: ∠TAC = ∠ABC <span class="badge">A-Math</span>`,"(∠s in alt. seg.)")}
     </div>
+    ${picHalfChord()}
     ${EG("Chord length or distance from the centre? Use half the chord",[nw("radius² = distance² + (half chord)²"),`radius 13, chord 24: ${nw("half chord = 12")}`,nw("distance² = 13² − 12²"),nw("= 169 − 144 = 25"),nw(`distance = ${SQRT("25")} = 5`)])}
   </div>
 
   <div class="panelc"><h4>How to write it</h4>
+    ${picCentreAngle()}
     <ul class="steps">
       <li>∠AOB = 2 × ∠APB</li>
       <li style="padding-left:3.2em">= 2 × 35° (∠ at centre = 2∠ at circ.)</li>
@@ -2232,6 +2243,7 @@ diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the ta
   </div>
 
   <div class="panelc"><h4>Increasing, decreasing, stationary</h4>
+    ${diffSigns()}
     <table>
       <tr><th>${frac("d"+V("y"),"d"+V("x"))}</th><th>Meaning</th></tr>
       <tr><td>&gt; 0</td><td><span class="k-green">increasing ↗</span></td></tr>
@@ -2311,6 +2323,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
   </div>
 
   <div class="panelc"><h4>Distance–time graph (the other one)</h4>
+    ${picDT()}
     <table>
       <tr><th>Part of the graph</th><th>Means</th></tr>
       <tr><td>gradient</td><td><b>speed</b> = ${frac("distance","time")}</td></tr>
@@ -2360,6 +2373,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
 kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,`integrate to go back: ${nw(`${V("a")} → ${V("v")} → ${V("s")}`)}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
 <div class="sheet">
   <div class="panelc"><h4>s, v, a</h4>
+    ${picSVA()}
     <table>
       <tr><th>Quantity</th><th>Symbol</th><th>How to get it</th></tr>
       <tr><td>displacement (position from O)</td><td>${V("s")}</td><td>${V("s")} = ∫ ${V("v")} d${V("t")}</td></tr>
@@ -2420,6 +2434,7 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
       <li>③ ${nw(`${V("s")}(1) = ${frac("1","3")} − 2 + 3 = ${frac("4","3")}`)} · ${nw(`${V("s")}(3) = 9 − 18 + 9 = 0`)}</li>
       <li>④ Distance = ${frac("4","3")} + |0 − ${frac("4","3")}| = <b>${frac("8","3")} m</b> <span class="anno">(displacement is 0)</span></li>
     </ul>
+    ${picKinArea()}
   </div>
 </div>`,
 
@@ -2431,6 +2446,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
       <li>Differentiate displacement → velocity: ${frac("d"+V("s"),"d"+V("t"))} = ${V("v")}</li>
       <li>Integrate velocity → displacement: ${V("s")} = ∫ ${V("v")} d${V("t")}</li>
     </ul>
+    ${picVTarea()}
     <p class="anno">* below the axis (moving backwards) the area counts as negative · for distance, add the sizes. <a href="#area-under">Open the Kinematics aid</a></p>
   </div>
   <div class="panelc"><h4>Rules <span class="badge">memorise: not on the formula sheet</span></h4>
@@ -2678,6 +2694,7 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
     ${FACTS("Integers that satisfy it",[["",["−1","0","1","2","3"]]])}
     <p class="anno">* −2 is out: ${nw(`−2 &lt; ${X1}`)}, not ≤ (open circle)</p>
     ${EG(`${X1} in more than one part? Split it`,[nw(`${X1} − 2 &lt; 2${X1} + 1 ≤ 9`),`left: ${nw(`${X1} − 2 &lt; 2${X1} + 1`)}`,`${nw(`−2 − 1 &lt; 2${X1} − ${X1}`)}, so ${nw(`−3 &lt; ${X1}`)}`,`right: ${nw(`2${X1} + 1 ≤ 9`)}`,`${nw(`2${X1} ≤ 8`)}, so ${nw(`${X1} ≤ 4`)}`,`take the overlap: ${nw(`−3 &lt; ${X1} ≤ 4`)}`])}
+    ${picOverlap()}
   </div>
 
   <div class="panelc"><h4>Exam phrases</h4>
@@ -2715,6 +2732,7 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
       <tr><td>${nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`)}</td><td>${nw(`(2${X1})³ = 8${V("x")}³`)}</td></tr>
       <tr><td>${nw(`(${frac(V("a"),V("b"))})<sup>${V("n")}</sup> = ${frac(V("a")+"<sup>"+V("n")+"</sup>",V("b")+"<sup>"+V("n")+"</sup>")}`)}</td><td>${nw(`(${frac("2","3")})² = ${frac("4","9")}`)}</td></tr>
     </table>
+    ${picSeven()}
     <p class="anno">* different bases? You can't add the powers. · ${nw("2³ × 3² = 8 × 9 = 72")}</p>
   </div>
 
@@ -2776,6 +2794,7 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
 stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>, with 1 ≤ ${V("A")} &lt; 10`,"one digit before the decimal point"),FB("amber",`10 or more: ${V("n")} positive · less than 1: ${V("n")} negative`,`${nw(`345 000 = 3.45 × 10⁵`)} · ${nw(`0.00072 = 7.2 × 10<sup>−4</sup>`)}`,"count the jumps of the decimal point"),FB("green","Calculator",`use the ×10<sup>x</sup> key, not × 10 ^`,"answer to 3 s.f. unless told otherwise")])}
 <div class="sheet">
   <div class="panelc"><h4>Convert</h4>
+    ${picHops()}
     <table>
       <tr><th>Number</th><th>Standard form</th><th>Why</th></tr>
       <tr><td>6 200 000</td><td>${nw("6.2 × 10⁶")}</td><td>point moves 6 places left</td></tr>
@@ -2951,6 +2970,7 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
   </div>
 
   <div class="panelc"><h4>Compare two sets: write it like this</h4>
+    ${picBox2()}
     ${EG("Average",[`Class B's median (<b>55</b>) is <b>higher</b> than Class A's (<b>48</b>).`,"So <b>generally</b>, Class B did <b>better</b>."])}
     ${EG("Spread",[`Class A's interquartile range (<b>12</b>) is <b>smaller</b> than Class B's (<b>18</b>).`,"So Class A's marks are <b>more consistent</b> (<b>smaller spread</b>)."])}
     <p class="anno">* quote both numbers, then say what they mean · with the mean, compare the standard deviations the same way</p>
@@ -2963,6 +2983,7 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
   </div>
 
   <div class="panelc"><h4>Quartiles from a list</h4>
+    ${picQuartList()}
     ${EG("3, 5, 6, 8, 9, 11, 14 (7 values)",["median = 8, the 4th value",`lower half 3, 5, 6: ${nw("Q1 = 5")}`,`upper half 9, 11, 14: ${nw("Q3 = 11")}`,nw("IQR = 11 − 5 = 6")])}
     <p class="anno">* order the data first · ${V("n")} odd: the median goes in neither half · ${V("n")} even: median = mean of the middle two</p>
   </div>
@@ -3392,17 +3413,134 @@ SHEETLIST.push(
   {id:"amath-formula-sheet",levels:["amath"],chapter:"Given in the exam + what to memorise",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"skills",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"}
 );
-const SV=(vb,inner)=>`<svg viewBox="${vb}" class="lsp" aria-hidden="true">${inner}</svg>`;
-const TX=(x,y,t,o="")=>`<text x="${x}" y="${y}"${/font-size=/.test(o)?"":` font-size="7"`}${/text-anchor=/.test(o)?"":` text-anchor="middle"`}${/fill=/.test(o)?"":` fill="var(--ink)"`} ${o}>${t}</text>`;
-const ARC=(cx,cy,r,a0,a1,col)=>{let d=""; for(let i=0;i<=14;i++){const a=(a0+(a1-a0)*i/14)*Math.PI/180; d+=(i?"L":"M")+(cx+r*Math.cos(a)).toFixed(1)+" "+(cy-r*Math.sin(a)).toFixed(1);} return `<path d="${d}" fill="none" stroke="${col}" stroke-width="1.6"/>`;};
-const AL2=(cx,cy,r,a0,a1,t,col)=>{const m=(a0+a1)/2*Math.PI/180; return ARC(cx,cy,r*0.6,a0,a1,col)+TX((cx+r*Math.cos(m)).toFixed(1),(cy-r*Math.sin(m)+2.4).toFixed(1),t,`fill="${col}" font-weight="700"`);};
-const LN=(x1,y1,x2,y2,o="")=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
-const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
+function SV(vb,inner){return `<svg viewBox="${vb}" class="lsp" aria-hidden="true">${inner}</svg>`;}
+function TX(x,y,t,o=""){return `<text x="${x}" y="${y}"${/font-size=/.test(o)?"":` font-size="7"`}${/text-anchor=/.test(o)?"":` text-anchor="middle"`}${/fill=/.test(o)?"":` fill="var(--ink)"`} ${o}>${t}</text>`;}
+function ARC(cx,cy,r,a0,a1,col){let d=""; for(let i=0;i<=14;i++){const a=(a0+(a1-a0)*i/14)*Math.PI/180; d+=(i?"L":"M")+(cx+r*Math.cos(a)).toFixed(1)+" "+(cy-r*Math.sin(a)).toFixed(1);} return `<path d="${d}" fill="none" stroke="${col}" stroke-width="1.6"/>`;}
+function AL2(cx,cy,r,a0,a1,t,col){const m=(a0+a1)/2*Math.PI/180; return ARC(cx,cy,r*0.6,a0,a1,col)+TX((cx+r*Math.cos(m)).toFixed(1),(cy-r*Math.sin(m)+2.4).toFixed(1),t,`fill="${col}" font-weight="700"`);}
+function LN(x1,y1,x2,y2,o=""){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;}
+function PG(pts,o=""){return `<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;}
 const DASH='stroke-dasharray="3 2"';
-const ARW=(x1,y1,x2,y2,col="var(--ink)",w=1.4,o="")=>{const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,bx=x2-ux*5.5,by=y2-uy*5.5,px=-uy*2.6,py=ux*2.6;
-  return `<line x1="${x1}" y1="${y1}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="${col}" stroke-width="${w}" ${o}/><polygon points="${x2},${y2} ${(bx+px).toFixed(1)},${(by+py).toFixed(1)} ${(bx-px).toFixed(1)},${(by-py).toFixed(1)}" fill="${col}"/>`;};
-const DOT=(x,y,col="var(--red)")=>`<circle cx="${x}" cy="${y}" r="2.2" fill="${col}"/>`;
-const GRID=(X,Y,nx,ny)=>{let s=""; for(let i=0;i<=nx;i++) s+=LN(X(i),Y(0),X(i),Y(ny),`stroke="var(--grid2)" stroke-width=".5"`); for(let j=0;j<=ny;j++) s+=LN(X(0),Y(j),X(nx),Y(j),`stroke="var(--grid2)" stroke-width=".5"`); return s;};
+function ARW(x1,y1,x2,y2,col="var(--ink)",w=1.4,o=""){const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,bx=x2-ux*5.5,by=y2-uy*5.5,px=-uy*2.6,py=ux*2.6;
+  return `<line x1="${x1}" y1="${y1}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="${col}" stroke-width="${w}" ${o}/><polygon points="${x2},${y2} ${(bx+px).toFixed(1)},${(by+py).toFixed(1)} ${(bx-px).toFixed(1)},${(by-py).toFixed(1)}" fill="${col}"/>`;}
+function DOT(x,y,col="var(--red)"){return `<circle cx="${x}" cy="${y}" r="2.2" fill="${col}"/>`;}
+function GRID(X,Y,nx,ny){let s=""; for(let i=0;i<=nx;i++) s+=LN(X(i),Y(0),X(i),Y(ny),`stroke="var(--grid2)" stroke-width=".5"`); for(let j=0;j<=ny;j++) s+=LN(X(0),Y(j),X(nx),Y(j),`stroke="var(--grid2)" stroke-width=".5"`); return s;}
+function SVW(vb,inner){return `<svg viewBox="${vb}" class="lsp wide" aria-hidden="true">${inner}</svg>`;}
+function SFR(x,y,n,d,col="var(--ink)"){return `<text x="${x}" y="${y-2.5}" font-size="8" text-anchor="middle" fill="${col}" font-weight="700">${n}</text><line x1="${x-4.5}" y1="${y}" x2="${x+4.5}" y2="${y}" stroke="${col}" stroke-width="1"/><text x="${x}" y="${y+8.5}" font-size="8" text-anchor="middle" fill="${col}" font-weight="700">${d}</text>`;}
+function DSH(){return 'stroke-dasharray="3 2"';}
+function CVS(x,y,a,b,col){ const o=`fill="none" stroke="${col}" stroke-width="1"`; return `<path d="M${x-6} ${y-9} Q${x-9} ${y-1} ${x-6} ${y+7}" ${o}/><path d="M${x+6} ${y-9} Q${x+9} ${y-1} ${x+6} ${y+7}" ${o}/>`+TX(x,y-2.5,a,`font-size="6.5" fill="${col}" font-weight="700"`)+TX(x,y+5.5,b,`font-size="6.5" fill="${col}" font-weight="700"`); }
+function qMini(k){ const up=k==="min", hk=`(${IT("h")}, ${IT("k")})`;
+  return SV("0 0 80 56",`<path d="${up?"M14 6 Q40 86 66 6":"M14 50 Q40 -30 66 50"}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`+DOT(40,up?46:10)+TX(46,up?50:13,hk,`font-size="8" text-anchor="start" fill="var(--red)" font-weight="700"`)); }
+function picAlwaysPos(){ const X=x=>14+14*x, Y=y=>58-6.5*y; let d=""; for(let i=0;i<=40;i++){ const x=i/10; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y((x-2)**2+3).toFixed(1); }
+  return SV("0 0 100 66",ARW(6,58,96,58,"var(--ink)",1)+ARW(14,64,14,4,"var(--ink)",1)+TX(98,61,IT("x"),`text-anchor="end"`)+TX(18,8,IT("y"),`text-anchor="start"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(X(2),Y(3),X(2),58,`stroke="var(--red)" stroke-width="1" ${DSH()}`)+DOT(X(2),Y(3))+TX(X(2)-4,Y(3)+9,"(2, 3)",`text-anchor="end" fill="var(--red)" font-weight="700"`)); }
+function qSketch(sym){ const X=x=>38+15*x, Y=y=>40-6*y, S='font-size="6"'; let d=""; for(let i=0;i<=40;i++){ const x=-1.6+5.2*i/40; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x-2*x-3).toFixed(1); }
+  let s=ARW(X(-2.3),Y(0),X(4.4),Y(0),"var(--ink)",1)+ARW(X(0),Y(-4.6),X(0),Y(5),"var(--ink)",1)+TX(X(4.4)+3,Y(0)+2,IT("x"),`text-anchor="start"`)+TX(X(0)-3,Y(5)+3,IT("y"),`text-anchor="end"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2"/>`;
+  if(sym) return SV("0 0 114 76",s+LN(X(1),Y(5),X(1),Y(-4.6),`stroke="var(--green)" stroke-width="1.4" ${DSH()}`)+TX(X(1)+3,Y(4.4),`${IT("x")} = 1`,`text-anchor="start" fill="var(--green)" font-weight="700" font-size="7"`)
+    +DOT(X(-1),Y(0))+DOT(X(3),Y(0))+TX(X(-1)-2,Y(0)+8,"−1",`${S} text-anchor="end" fill="var(--red)" font-weight="700"`)+TX(X(3)+2,Y(0)+8,"3",`${S} text-anchor="start" fill="var(--red)" font-weight="700"`)
+    +ARW(X(1),Y(0)-4,X(-1)+2,Y(0)-4,"var(--amber)",1)+ARW(X(1),Y(0)-4,X(3)-2,Y(0)-4,"var(--amber)",1)+TX(X(0),Y(0)-7,"2",`${S} fill="var(--amber)" font-weight="700"`)+TX(X(2),Y(0)-7,"2",`${S} fill="var(--amber)" font-weight="700"`));
+  return SV("0 0 114 76",s+DOT(X(-1),Y(0))+DOT(X(3),Y(0))+DOT(X(0),Y(-3))+DOT(X(1),Y(-4))
+    +TX(X(-1)-2,Y(0)+7,"(−1, 0)",`${S} text-anchor="end"`)+TX(X(3)+2,Y(0)+7,"(3, 0)",`${S} text-anchor="start"`)+TX(X(0)-3,Y(-3)+6,"(0, −3)",`${S} text-anchor="end"`)+TX(X(1),Y(-4)+8,"(1, −4)",`${S} fill="var(--red)" font-weight="700"`)
+    +TX(X(0)+4,9,`${IT("y")} = (${IT("x")} + 1)(${IT("x")} − 3)`,`font-size="6.5" text-anchor="start" fill="var(--blue)" font-weight="700"`)); }
+function picDT(){ const F='font-size="6" font-weight="700"';
+  return SV("0 0 132 70",ARW(14,58,128,58,"var(--ink)",1)+ARW(14,58,14,4,"var(--ink)",1)+TX(126,66,"time",`font-size="6" fill="var(--muted)" text-anchor="end"`)+TX(18,8,"distance",`font-size="6" fill="var(--muted)" text-anchor="start"`)
+    +LN(14,58,44,38,`stroke="var(--blue)" stroke-width="2.2"`)+LN(44,38,64,38,`stroke="var(--amber)" stroke-width="2.2"`)+LN(64,38,80,14,`stroke="var(--green)" stroke-width="2.2"`)+LN(80,14,118,58,`stroke="var(--red)" stroke-width="2.2"`)
+    +TX(34,54,"steady",`${F} fill="var(--blue)" text-anchor="start"`)+TX(54,34,"stopped",`${F} fill="var(--amber)"`)+TX(68,24,"faster",`${F} fill="var(--green)" text-anchor="end"`)+TX(102,30,"returning",`${F} fill="var(--red)" text-anchor="start"`)); }
+function picCentreAngle(){ const B='font-weight="700"';
+  return SV("0 0 100 78",`<circle cx="50" cy="40" r="30" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`+LN(50,10,32.8,64.6)+LN(50,10,67.2,64.6)+LN(50,40,32.8,64.6,`stroke="var(--blue)"`)+LN(50,40,67.2,64.6,`stroke="var(--blue)"`)+DOT(50,40,"var(--ink)")
+    +ARC(50,10,9,252.5,287.5,"var(--amber)")+TX(50,30,"35°",`fill="var(--amber)" font-weight="700" font-size="6"`)+ARC(50,40,7,235,305,"var(--blue)")+TX(50,55,"70°",`fill="var(--blue)" font-weight="700" font-size="6"`)
+    +TX(50,7,"P",B)+TX(29,72,"A",B)+TX(71,72,"B",B)+TX(46.5,45,"O",`${B} text-anchor="end"`)); }
+function picHalfChord(){ return SV("0 0 100 60",`<circle cx="50" cy="30" r="26" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`+LN(26,40,74,40)+LN(50,30,50,40,`stroke="var(--red)" stroke-width="1.8"`)+LN(50,40,74,40,`stroke="var(--amber)" stroke-width="2.2"`)+LN(50,30,74,40,`stroke="var(--blue)" stroke-width="1.8"`)
+    +`<path d="M50 36.5 H53.5 V40" fill="none" stroke="var(--ink)" stroke-width=".7"/>`+DOT(50,30,"var(--ink)")
+    +TX(47,38,"5",`text-anchor="end" fill="var(--red)" font-weight="700"`)+TX(62,48,"12",`fill="var(--amber)" font-weight="700"`)+TX(63,32,"13",`fill="var(--blue)" font-weight="700" text-anchor="start"`)+TX(50,26,"O",`font-weight="700"`)); }
+function dMini(k){ const up=k==="pos"; return SV("0 0 80 56",LN(4,28,76,28,`stroke="var(--muted)"`)+TX(76,25,IT("x"),`text-anchor="end" fill="var(--muted)" font-size="7"`)+`<path d="${up?"M16 4 Q40 44 64 4":"M16 52 Q40 12 64 52"}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`); }
+function picAstc60(){ const L='font-size="9" font-weight="700" fill="var(--muted)"', A=`fill="var(--amber)" font-weight="700" font-size="6.5"`, Bl=`fill="var(--blue)" font-weight="700" font-size="6.5"`;
+  return SV("0 0 120 80",`<rect x="14" y="4" width="46" height="72" fill="var(--red-fill)"/>`+LN(10,40,110,40)+LN(60,4,60,76)+TX(26,24,"S",L)+TX(86,24,"A",L)+TX(26,62,"T",L)+TX(86,62,"C",L)
+    +LN(60,40,45,14,`stroke="var(--blue)" stroke-width="2"`)+LN(60,40,45,66,`stroke="var(--blue)" stroke-width="2"`)+ARC(60,40,10,120,180,"var(--amber)")+ARC(60,40,10,180,240,"var(--amber)")
+    +TX(45,35,"60°",A)+TX(45,51,"60°",A)+TX(43,11,"120°",`${Bl} text-anchor="end"`)+TX(43,74,"240°",`${Bl} text-anchor="end"`)); }
+function sinQuarters(){ const X=d=>14+d/3, Y=v=>30-17*v, M='font-size="6" fill="var(--muted)"'; let p="", s=LN(10,30,138,30);
+  for(let d=0;d<=360;d+=6) p+=(d?"L":"M")+X(d).toFixed(1)+" "+Y(Math.sin(d*Math.PI/180)).toFixed(1);
+  [90,180,270].forEach(d=>{ s+=LN(X(d),14,X(d),46,`stroke="var(--muted)" stroke-width=".7" ${DSH()}`); }); [0,90,180,270,360].forEach(d=>{ s+=TX(X(d),61,d+"°",M); });
+  s+=`<path d="${p}" fill="none" stroke="var(--blue)" stroke-width="2"/>`+[[0,0],[90,1],[180,0],[270,-1],[360,0]].map(([d,v])=>DOT(X(d),Y(v),v?"var(--red)":"var(--amber)")).join("");
+  return SVW("0 0 140 64",s+TX(X(90),Y(1)-4,"greatest",`font-size="6" fill="var(--red)" font-weight="700"`)+TX(X(270),Y(-1)+8,"least",`font-size="6" fill="var(--red)" font-weight="700"`)+TX(X(180)+3,27,"midline",`font-size="6" fill="var(--amber)" font-weight="700" text-anchor="start"`)); }
+function sin3x(){ const X=d=>16+d*0.6, Y=v=>34-7.5*v, S='font-size="6"'; let p=""; for(let d=0;d<=180;d+=3) p+=(d?"L":"M")+X(d).toFixed(1)+" "+Y(2*Math.sin(3*d*Math.PI/180)+1).toFixed(1);
+  return SVW("0 0 140 58",ARW(12,Y(0),134,Y(0),"var(--ink)",1)+ARW(X(0),54,X(0),3,"var(--ink)",1)+TX(137,Y(0)+2,IT("x"),`text-anchor="end"`)+TX(X(0)+4,7,IT("y"),`text-anchor="start"`)
+    +LN(X(0),Y(1),X(180),Y(1),`stroke="var(--green)" stroke-width="1" ${DSH()}`)+`<path d="${p}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +DOT(X(30),Y(3))+DOT(X(90),Y(-1))+DOT(X(150),Y(3))+TX(X(30)+4,Y(3)+1,"(30°, 3)",`${S} text-anchor="start"`)+TX(X(90),Y(-1)+9,"(90°, −1)",S)+TX(X(150)+4,Y(3)+1,"(150°, 3)",`${S} text-anchor="start"`)
+    +TX(X(180)+3,Y(1)+2,"1",`${S} fill="var(--green)" font-weight="700" text-anchor="start"`)+TX(X(180),Y(0)+8,"180°",S)); }
+function rWave(){ const X=d=>18+d*0.31, Y=v=>36-4.4*v, S='font-size="6"'; let p=""; for(let d=0;d<=360;d+=5) p+=(d?"L":"M")+X(d).toFixed(1)+" "+Y(5*Math.cos((d-53.13)*Math.PI/180)).toFixed(1);
+  return SVW("0 0 140 72",ARW(14,36,136,36,"var(--ink)",1)+ARW(18,66,18,3,"var(--ink)",1)+TX(137,33,"θ",`text-anchor="end" font-style="italic"`)+`<path d="${p}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(18,Y(5),X(53.13),Y(5),`stroke="var(--muted)" stroke-width=".7" ${DSH()}`)+LN(18,Y(-5),X(233.13),Y(-5),`stroke="var(--muted)" stroke-width=".7" ${DSH()}`)+TX(15,Y(5)+2,"5",`${S} text-anchor="end"`)+TX(15,Y(-5)+2,"−5",`${S} text-anchor="end"`)
+    +DOT(X(53.13),Y(5))+DOT(X(233.13),Y(-5))+TX(X(53.13)+4,9,"max 5 at 53.1°",`${S} text-anchor="start" fill="var(--red)" font-weight="700"`)+TX(X(233.13),Y(-5)+9,"min −5 at 233.1°",`${S} fill="var(--red)" font-weight="700"`)+TX(X(360),43,"360°",S)); }
+function diffSigns(){ const X=x=>64+22*x, Y=v=>36-7*v, seg=(a,b,col)=>{ let p=""; for(let i=0;i<=20;i++){ const x=a+(b-a)*i/20; p+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x**3-3*x).toFixed(1); } return `<path d="${p}" fill="none" stroke="${col}" stroke-width="2.4"/>`; }, G="var(--green)", R="var(--red)", A="var(--amber)", F='font-size="6.5" font-weight="700"';
+  return SV("0 0 128 72",LN(8,Y(0),122,Y(0),`stroke="var(--muted)"`)+seg(-2.05,-1,G)+seg(-1,1,R)+seg(1,2.05,G)+DOT(X(-1),Y(2),A)+DOT(X(1),Y(-2),A)
+    +TX(X(-1),Y(2)-5,"= 0",`${F} fill="${A}"`)+TX(X(1),Y(-2)+10,"= 0",`${F} fill="${A}"`)+TX(25,30,"↗ &gt; 0",`${F} fill="${G}" text-anchor="end"`)+TX(70,30,"↘ &lt; 0",`${F} fill="${R}" text-anchor="start"`)+TX(103,44,"↗ &gt; 0",`${F} fill="${G}" text-anchor="start"`)); }
+function picSVA(){ const bx=(x,t)=>`<rect x="${x}" y="15" width="22" height="16" rx="3" fill="var(--blue-fill)" stroke="var(--ink)"/>`+TX(x+11,26.5,IT(t),`font-size="9" font-weight="700"`), F='font-size="6" font-weight="700"';
+  return SVW("0 0 136 46",bx(8,"s")+bx(57,"v")+bx(106,"a")+ARW(32,19,55,19,"var(--red)",1.1)+ARW(81,19,104,19,"var(--red)",1.1)+ARW(55,27,32,27,"var(--green)",1.1)+ARW(104,27,81,27,"var(--green)",1.1)
+    +TX(43.5,11,"differentiate",`${F} fill="var(--red)"`)+TX(92.5,11,"differentiate",`${F} fill="var(--red)"`)+TX(43.5,41,"integrate",`${F} fill="var(--green)"`)+TX(92.5,41,"integrate",`${F} fill="var(--green)"`)); }
+function picKinArea(){ const X=t=>18+30*t, Y=v=>30-8*v, f=t=>t*t-4*t+3, path=(a,b)=>{ let p=""; for(let i=0;i<=24;i++){ const t=a+(b-a)*i/24; p+=(i?"L":"M")+X(t).toFixed(1)+" "+Y(f(t)).toFixed(1); } return p; };
+  return SVW("0 0 140 62",`<path d="${path(0,1)} L${X(0)} ${Y(0)} Z" fill="var(--blue-fill)"/><path d="${path(1,3)} Z" fill="var(--red-fill)"/>`
+    +ARW(14,Y(0),134,Y(0),"var(--ink)",1)+ARW(X(0),58,X(0),3,"var(--ink)",1)+TX(137,Y(0)+2,IT("t"),`text-anchor="end"`)+TX(X(0)+4,7,IT("v"),`text-anchor="start"`)+`<path d="${path(0,3.4)}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(X(0.35),24,X(1.25),17,`stroke="var(--blue)" stroke-width=".8"`)+TX(X(1.3)+2,19.5,"+",`font-size="8" fill="var(--blue)" font-weight="700" text-anchor="start"`)+SFR(X(1.3)+13,17,"4","3","var(--blue)")+TX(71,49.5,"−",`font-size="8" fill="var(--red)" font-weight="700"`)+SFR(78,47,"4","3","var(--red)")
+    +TX(X(1),43,"1",`font-size="6"`)+TX(X(3),43,"3",`font-size="6"`)); }
+function picVTarea(){ const X=t=>16+t*24, Y=v=>50-v*9, f=t=>1+1.6*t-0.25*t*t; let p=""; for(let i=0;i<=20;i++){ const t=4*i/20; p+=(i?"L":"M")+X(t).toFixed(1)+" "+Y(f(t)).toFixed(1); }
+  return SV("0 0 128 62",`<path d="${p} L${X(4)} 50 L${X(0)} 50 Z" fill="var(--blue-fill)"/>`+ARW(12,50,124,50,"var(--ink)",1)+ARW(16,58,16,4,"var(--ink)",1)+TX(124,58,IT("t"),`text-anchor="end"`)+TX(20,8,IT("v"),`text-anchor="start"`)+`<path d="${p}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +TX(X(2),37,"area = displacement",`font-size="6.5" font-weight="700" fill="var(--blue)"`)+TX(X(2),46,`= ∫ ${IT("v")} d${IT("t")}`,`font-size="6.5" font-weight="700" fill="var(--blue)"`)); }
+function picOverlap(){ const X=v=>16+11*(v+5), C="var(--card)"; let s=LN(8,52,132,52);
+  for(let v=-5;v<=5;v++) s+=LN(X(v),50,X(v),54)+TX(X(v),61,v<0?"−"+(-v):v,`font-size="6"`);
+  s+=`<rect x="${X(-3)}" y="48" width="${X(4)-X(-3)}" height="8" fill="var(--green-fill)"/>`+LN(X(-3),52,X(4),52,`stroke="var(--green)" stroke-width="2.4"`)+`<circle cx="${X(-3)}" cy="52" r="2.6" fill="${C}" stroke="var(--green)" stroke-width="1.4"/><circle cx="${X(4)}" cy="52" r="2.6" fill="var(--green)"/>`
+    +TX((X(-3)+X(4))/2,44,`−3 &lt; ${IT("x")} ≤ 4`,`font-size="7" fill="var(--green)" font-weight="700"`);
+  s+=LN(X(-3),18,X(-3),48,`stroke="var(--muted)" stroke-width=".7" ${DSH()}`)+LN(X(4),32,X(4),48,`stroke="var(--muted)" stroke-width=".7" ${DSH()}`);
+  s+=ARW(X(-3),16,X(5.6),16,"var(--blue)",1.6)+`<circle cx="${X(-3)}" cy="16" r="2.6" fill="${C}" stroke="var(--blue)" stroke-width="1.4"/>`+TX(X(-3)-5,18.5,`${IT("x")} &gt; −3`,`font-size="6.5" fill="var(--blue)" font-weight="700" text-anchor="end"`);
+  s+=ARW(X(4),30,X(-5.6),30,"var(--amber)",1.6)+`<circle cx="${X(4)}" cy="30" r="2.6" fill="var(--amber)"/>`+TX(X(4)+5,32.5,`${IT("x")} ≤ 4`,`font-size="6.5" fill="var(--amber)" font-weight="700" text-anchor="start"`);
+  return SVW("0 0 142 64",s); }
+function picSeven(){ let s=""; const box=(x,col)=>`<rect x="${x}" y="16" width="13" height="14" rx="2" fill="${col}" stroke="var(--ink)" stroke-width=".8"/>`+TX(x+6.5,26.5,"2",`font-size="8"`);
+  [0,1,2].forEach(i=>{ s+=box(6+i*15,"var(--blue-fill)"); }); s+=TX(52,26.5,"×",`font-size="8"`); [0,1,2,3].forEach(i=>{ s+=box(58+i*15,"var(--amber-fill)"); });
+  s+=`<path d="M6 12 V9 H49 V12" fill="none" stroke="var(--blue)" stroke-width="1"/><path d="M58 12 V9 H116 V12" fill="none" stroke="var(--amber)" stroke-width="1"/><path d="M6 34 V37 H116 V34" fill="none" stroke="var(--green)" stroke-width="1"/>`;
+  return SV("0 0 122 48",s+TX(27.5,7,"2³",`font-size="7" fill="var(--blue)" font-weight="700"`)+TX(87,7,"2⁴",`font-size="7" fill="var(--amber)" font-weight="700"`)+TX(61,46,"seven 2s = 2⁷",`font-size="7" fill="var(--green)" font-weight="700"`)); }
+function picHops(){ const D=["6","2","0","0","0","0","0"]; let s=""; D.forEach((d,i)=>{ s+=TX(14+12*i,38,d,`font-size="10"`); });
+  for(let k=0;k<6;k++){ const a=92-12*k, b=a-12; s+=`<path d="M${a} 28 Q${a-6} 17 ${b+1.5} 27" fill="none" stroke="var(--blue)" stroke-width="1.2"/><polygon points="${b+1},29 ${b+0.5},23.5 ${b+4.5},26" fill="var(--blue)"/>`+TX(a-6,16,k+1,`font-size="6" fill="var(--blue)" font-weight="700"`); }
+  s+=`<circle cx="20" cy="38.5" r="1.7" fill="var(--red)"/><circle cx="92" cy="38.5" r="1.7" fill="var(--muted)"/>`;
+  return SVW("0 0 140 48",s+TX(100,30,"6 jumps left",`font-size="6" fill="var(--blue)" font-weight="700" text-anchor="start"`)+TX(100,41,"6.2 × 10⁶",`font-size="8" fill="var(--red)" font-weight="700" text-anchor="start"`)); }
+function picBox2(){ const X=m=>22+(m-20)*1.6, S='font-size="5.5"', row=(y,v,col,lab)=>LN(X(v[0]),y,X(v[1]),y,`stroke="${col}"`)+LN(X(v[3]),y,X(v[4]),y,`stroke="${col}"`)+LN(X(v[0]),y-3,X(v[0]),y+3,`stroke="${col}"`)+LN(X(v[4]),y-3,X(v[4]),y+3,`stroke="${col}"`)
+    +`<rect x="${X(v[1])}" y="${y-5}" width="${X(v[3])-X(v[1])}" height="10" fill="${col==="var(--blue)"?"var(--blue-fill)":"var(--amber-fill)"}" stroke="${col}"/>`+LN(X(v[2]),y-5,X(v[2]),y+5,`stroke="var(--red)" stroke-width="1.6"`)+TX(X(v[2]),y-7,v[2],`${S} fill="var(--red)" font-weight="700"`)+TX(12,y+2.5,lab,`font-size="7" font-weight="700" fill="${col}"`);
+  let s=row(18,[30,42,48,54,70],"var(--blue)","A")+row(40,[35,46,55,64,80],"var(--amber)","B")+LN(X(20),52,X(90),52);
+  for(let m=20;m<=90;m+=10) s+=LN(X(m),50,X(m),54)+TX(X(m),61,m,S);
+  return SVW("0 0 140 64",s); }
+function picQuartList(){ const V=[3,5,6,8,9,11,14], XS=[14,30,46,70,94,110,126]; let s="";
+  V.forEach((v,i)=>{ const med=i===3, q=i===1?"var(--blue)":i===5?"var(--amber)":null; s+=`<rect x="${XS[i]-7}" y="12" width="14" height="14" rx="2" fill="${med?"var(--red-fill)":"var(--card)"}" stroke="${med?"var(--red)":"var(--ink)"}" stroke-width="${med?1.4:.8}"/>`+TX(XS[i],22.5,v,`font-size="8"${med?' font-weight="700" fill="var(--red)"':""}`); if(q) s+=`<circle cx="${XS[i]}" cy="19" r="9.5" fill="none" stroke="${q}" stroke-width="1.4"/>`; });
+  s+=`<path d="M7 32 V35 H53 V32" fill="none" stroke="var(--blue)" stroke-width="1"/><path d="M87 32 V35 H133 V32" fill="none" stroke="var(--amber)" stroke-width="1"/>`;
+  return SVW("0 0 140 48",s+TX(30,44,"lower half: Q1 = 5",`font-size="6" fill="var(--blue)" font-weight="700"`)+TX(110,44,"upper half: Q3 = 11",`font-size="6" fill="var(--amber)" font-weight="700"`)+TX(70,8,"median",`font-size="6" fill="var(--red)" font-weight="700"`)); }
+function picSineQ(){ const B='font-weight="700"';
+  return SV("0 0 104 66",PG("14,56 86,56 65.9,12.5")+ARC(14,56,9,0,40,"var(--amber)")+ARC(86,56,8,114.8,180,"var(--amber)")
+    +TX(28,52,"40°",`font-size="6" fill="var(--amber)" font-weight="700" text-anchor="start"`)+TX(76,51,"65°",`font-size="6" fill="var(--amber)" font-weight="700" text-anchor="end"`)
+    +TX(10,62,"A",B)+TX(90,62,"B",B)+TX(66,8,"C",B)+TX(80,32,"8 cm",`font-size="6.5" text-anchor="start"`)+TX(36,31,`${IT("b")} = ?`,`font-size="7" fill="var(--red)" font-weight="700" text-anchor="end"`)); }
+function picCosQ(){ return SV("0 0 104 62",PG("40,52 96,52 25.1,14.9")+ARC(40,52,8,0,111.8,"var(--red)")+TX(47,43,"θ",`fill="var(--red)" font-weight="700" font-style="italic"`)
+    +TX(68,59,"7")+TX(29,35,"5",`text-anchor="end"`)+TX(64,30,"10",`text-anchor="start" font-weight="700"`)); }
+function picAB(){ const X=x=>10+11*x, Y=y=>40-11*y, B='font-weight="700"';
+  return SV("0 0 106 68",GRID(i=>X(i),j=>Y(j-2),8,5)+LN(X(0),Y(-2),X(0),Y(3),`stroke="var(--muted)"`)+LN(X(0),Y(0),X(8),Y(0),`stroke="var(--muted)"`)
+    +LN(X(0),Y(0),X(3),Y(-1),`stroke="var(--muted)" stroke-width="1" ${DSH()}`)+LN(X(0),Y(0),X(7),Y(2),`stroke="var(--muted)" stroke-width="1" ${DSH()}`)
+    +`<path d="M${X(3)} ${Y(-1)} H${X(7)} V${Y(2)}" fill="none" stroke="var(--amber)" stroke-width="1.2" ${DSH()}/>`+ARW(X(3),Y(-1),X(7),Y(2),"var(--blue)",1.8)+DOT(X(3),Y(-1),"var(--ink)")+DOT(X(7),Y(2),"var(--ink)")+DOT(X(0),Y(0),"var(--ink)")
+    +TX(X(5),Y(-1)+8,"4",`fill="var(--amber)" font-weight="700"`)+TX(X(7)+4,Y(0.5)+2,"3",`fill="var(--amber)" font-weight="700" text-anchor="start"`)
+    +TX(X(3)-3,Y(-1)+8,"A(3, −1)",`${B} font-size="6" text-anchor="end"`)+TX(X(7)-3,Y(2)-3,"B(7, 2)",`${B} font-size="6" text-anchor="end"`)+TX(X(0)-2,Y(0)-3,"O",`${B} text-anchor="end"`)); }
+function picTipTail(){ const X=x=>12+12*x, Y=y=>54-12*y;
+  return SV("0 0 104 62",GRID(i=>X(i),j=>Y(j),7,3)+ARW(X(0),Y(0),X(2),Y(3),"var(--blue)",1.8)+ARW(X(2),Y(3),X(6),Y(2),"var(--amber)",1.8)+ARW(X(0),Y(0),X(6),Y(2),"var(--green)",1.8,DSH())
+    +CVS(X(0.4),Y(2.2),"2","3","var(--blue)")+CVS(X(4),10,"4","−1","var(--amber)")+CVS(X(4),50,"6","2","var(--green)")); }
+function picOABh(){ const B='font-weight="700"';
+  return SV("0 0 120 72",PG("50,62 10,14 35,14")+PG("50,62 35,14 110,14",`fill="var(--amber-fill)"`)+LN(50,62,50,14,`stroke="var(--red)" stroke-width="1.3" ${DSH()}`)+`<path d="M50 18 H54 V14" fill="none" stroke="var(--ink)" stroke-width=".7"/>`
+    +TX(50,70,"O",B)+TX(6,12,"A",B)+TX(114,12,"B",B)+TX(35,9,"P",B)+TX(24,22,"1",`font-size="7" fill="var(--blue)" font-weight="700"`)+TX(84,22,"3",`font-size="7" fill="var(--amber)" font-weight="700"`)+TX(53,40,"height",`font-size="6" fill="var(--red)" font-weight="700" text-anchor="start"`)); }
+function picCircAxes(){ const X=x=>62+6.5*x, Y=y=>50-6.5*y, B='font-weight="700"';
+  return SV("0 0 100 70",ARW(X(-7.6),Y(0),X(3.4),Y(0),"var(--ink)",1)+ARW(X(0),Y(-2.6),X(0),Y(7.2),"var(--ink)",1)+TX(X(3.4),Y(0)+8,IT("x"))+TX(X(0)+4,Y(7.2)+3,IT("y"),`text-anchor="start"`)
+    +`<circle cx="${X(-3)}" cy="${Y(2)}" r="26" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.8"/>`+LN(X(-3),Y(2),X(1),Y(2),`stroke="var(--red)" stroke-width="1.6"`)+DOT(X(-3),Y(2),"var(--ink)")
+    +TX(X(-1),Y(2)-3,"4",`fill="var(--red)" font-weight="700"`)+TX(X(-3),Y(2)+9,"(−3, 2)",`${B} font-size="6.5"`)); }
+function picLgLine(){ const X=u=>22+130*(u-0.1), Y=v=>58-50*(v-0.6), S='font-size="5.5"';
+  let s=LN(14,62,108,62)+LN(14,62,14,6)+`<path d="M17 59.5 L19 64.5 M20 59.5 L22 64.5 M11.5 56 L16.5 54 M11.5 53 L16.5 51" stroke="var(--ink)" stroke-width=".9"/>`;
+  [0.2,0.4,0.6].forEach(u=>{ s+=LN(X(u),60.5,X(u),63.5)+TX(X(u),70,u,S); }); [0.8,1.0,1.2,1.4].forEach(v=>{ s+=LN(12.5,Y(v),15.5,Y(v))+TX(11,Y(v)+2,v.toFixed(1),`${S} text-anchor="end"`); });
+  s+=LN(X(0.12),Y(0.63),X(0.7),Y(1.53),`stroke="var(--blue)" stroke-width="2"`)+DOT(X(0.2),Y(0.78))+DOT(X(0.6),Y(1.38))+TX(X(0.2)+4,Y(0.78)+6,"(0.2, 0.78)",`${S} text-anchor="start"`)+TX(X(0.6)-4,Y(1.38)-2,"(0.6, 1.38)",`${S} text-anchor="end"`);
+  return SV("0 0 116 74",s+TX(110,59,`lg ${IT("x")}`,`${S} text-anchor="end" fill="var(--muted)"`)+TX(18,8,`lg ${IT("y")}`,`${S} text-anchor="start" fill="var(--muted)"`)); }
+function sin720(){ const X=d=>12+d*0.17, Y=v=>26-15*v, S='font-size="6"'; let p=""; for(let d=0;d<=720;d+=6) p+=(d?"L":"M")+X(d).toFixed(1)+" "+Y(Math.sin(d*Math.PI/180)).toFixed(1);
+  let s=LN(8,26,136,26)+LN(12,6,12,44)+LN(12,Y(0.5),136,Y(0.5),`stroke="var(--amber)" stroke-width="1.2" ${DSH()}`)+TX(9,Y(0.5)+2,"0.5",`${S} text-anchor="end" fill="var(--amber)" font-weight="700"`)+`<path d="${p}" fill="none" stroke="var(--blue)" stroke-width="2"/>`;
+  [30,150,390,510].forEach(d=>{ s+=LN(X(d),Y(0.5),X(d),26,`stroke="var(--red)" stroke-width=".8" ${DSH()}`)+DOT(X(d),Y(0.5))+TX(X(d),34,d+"°",`${S} fill="var(--red)" font-weight="700"`); });
+  return SVW("0 0 142 46",s+TX(X(360),44,"360°",`${S} fill="var(--muted)"`)+TX(X(720),44,"720°",`${S} fill="var(--muted)"`)+LN(X(360),24,X(360),28)+LN(X(720),24,X(720),28)); }
 function ladderAt(x,n,divs,y0,dy){ const R='fill="var(--red)" font-weight="700"', f='font-size="8.5"'; let s=LN(x+7,y0-10,x+7,y0+dy*(divs.length-1)+3.5), v=n;
   divs.forEach((d,i)=>{ const y=y0+dy*i; s+=TX(x,y,d,`${f} ${R}`)+TX(x+19,y,v,f)+LN(x+7,y+3.5,x+31,y+3.5); v/=d; });
   return s+TX(x+19,y0+dy*divs.length,"1",f); }
@@ -3559,7 +3697,7 @@ function picTrigQ(deg,ang,hyp,opp,adj){ const r=deg*Math.PI/180, t=Math.tan(r), 
     +(hyp?TX(f(mx-4*Math.sin(r)),f(my-4*Math.cos(r)),hyp,`${L("var(--blue)")} text-anchor="end"`):"")
     +(opp?TX(f(x+4),f(my+2.5),opp,`${L("var(--green)")} text-anchor="start"`):"")
     +(adj?TX(f(mx),62,adj,L("var(--amber)")):"")); }
-const IT=t=>`<tspan font-style="italic">${t}</tspan>`;
+function IT(t){return `<tspan font-style="italic">${t}</tspan>`;}
 function picMapSq(){ const M=`font-size="6.5" fill="var(--muted)"`;
   return SV("0 0 140 64",TX(22,9,"Map",M)+TX(95,9,"Actual",M)
     +`<rect x="8" y="20" width="27" height="27" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`+TX(21.5,35.5,"1 cm²",`font-size="6.5"`)+TX(21.5,55,"1 cm",`font-size="6.5"`)
@@ -4114,11 +4252,11 @@ emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"
 ${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its opposite angle"),PIC(null,picRule("sas"),"Cosine rule","2 sides and the angle between"),PIC(null,picRule("sss"),"Cosine rule","all 3 sides"))+`<p class="anno">* a right angle? TOA CAH SOH is quicker</p>`)}
 ${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
   +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9°"),nw("or θ = 180° − 36.9° = 143.1°")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
-${PAN("Sine rule",EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm")])
+${PAN("Sine rule",picSineQ()+EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm")])
   +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6°`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
 ${PAN("Cosine rule",STEPS([[nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`),"to find an angle"]])
   +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")} = 7.55`)])
-  +EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8°")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
+  +picCosQ()+EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8°")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
 ${PAN("Area",EG("Sides 6 cm and 9 cm, with 50° between them",[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm²")])
   +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),nw("sin θ = 0.8"),nw("θ = 53.1° or 126.9°")])+`<p class="anno">* sin gives 2 angles: keep both unless one can't fit</p>`)}
 ${MIST([[nw("cos 130° = cos 50°"),nw("cos 130° = −cos 50°")],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("180° − 36.9° = 143.1°")}`],[nw(`${V("a")}² = (49 + 64 − 112) cos 60°`),`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first: ${nw("113 − 56")}`],["rounding in the middle","keep 5 s.f. in working, give 3 s.f. at the end"]])}
@@ -4154,15 +4292,15 @@ emVectors:`${MUST([FB("blue","Size",nw(`|${CVEC(X1,VY)}| = ${SQRT(`${X2} + ${VY}
 <div class="sheet">
 ${PAN("Column vectors",picVecCol()+STEPS([[CVEC("3","2"),"3 right, 2 up"],[nw(`|${CVEC("−5","12")}| = ${SQRT("(−5)² + 12²")} = 13`),"size"],[`${BV("a")} in print, ${TL("a")} by hand`,"writing a vector"]])
   +EG(`${nw(`|${CVEC(X1,"6")}| = 10`)}. Find ${X1}.`,[nw(`${X2} + 36 = 100`),nw(`${X2} = 64`),nw(`${X1} = ±8`)])+`<p class="anno">* equal vectors: same size, same direction · negative vector: flip both signs</p>`)}
-${PAN("Add, subtract, scale",STEPS([nw(`${CVEC("2","3")} + ${CVEC("4","−1")} = ${CVEC("6","2")}`),nw(`3${CVEC("2","−1")} = ${CVEC("6","−3")}`)])
+${PAN("Add, subtract, scale",STEPS([nw(`${CVEC("2","3")} + ${CVEC("4","−1")} = ${CVEC("6","2")}`)])+picTipTail()+`<p class="anno">* tip to tail: the second starts where the first ends</p>`+STEPS([nw(`3${CVEC("2","−1")} = ${CVEC("6","−3")}`)])
   +EG(`${CVEC("2","3")} is parallel to ${CVEC("6",V("k"))}. Find ${V("k")}.`,[nw(`${CVEC("6",V("k"))} = 3${CVEC("2","3")}`),nw(`${V("k")} = 9`)])+`<p class="anno">* parallel: one is a multiple of the other</p>`)}
 ${PAN("Position vectors",STEPS([[`A(3, −1): ${nw(`${VEC("OA")} = ${CVEC("3","−1")}`)}`,"from the origin"]])
-  +EG("A(3, −1), B(7, 2). Find AB and its length.",[nw(`${VEC("AB")} = ${CVEC("7","2")} − ${CVEC("3","−1")} = ${CVEC("4","3")}`),nw(`|${VEC("AB")}| = ${SQRT("4² + 3²")} = 5`)]))}
+  +picAB()+EG("A(3, −1), B(7, 2). Find AB and its length.",[nw(`${VEC("AB")} = ${CVEC("7","2")} − ${CVEC("3","−1")} = ${CVEC("4","3")}`),nw(`|${VEC("AB")}| = ${SQRT("4² + 3²")} = 5`)]))}
 ${PAN(`Routes in ${BV("a")} and ${BV("b")}`,picOAB()+STEPS([[nw(`${VEC("OM")} = ${VEC("OA")} + ${VEC("AM")}`),"go through points you know"],"against the arrow: change the sign"])
   +EG(`${nw(`${VEC("OA")} = ${BV("a")}`)}, ${nw(`${VEC("OB")} = ${BV("b")}`)}, M is the midpoint of AB`,[nw(`${VEC("AB")} = ${BV("b")} − ${BV("a")}`),nw(`${VEC("AM")} = ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`${VEC("OM")} = ${BV("a")} + ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("1","2")}(${BV("a")} + ${BV("b")})`)])
   +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,[`÷ the total parts: ${nw(`${VEC("AP")} = ${frac("1","4")}${VEC("AB")}`)}`,nw(`${VEC("OP")} = ${BV("a")} + ${frac("1","4")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("3","4")}${BV("a")} + ${frac("1","4")}${BV("b")}`)]))}
 ${PAN("Parallel and collinear",EG(`${nw(`${VEC("AB")} = 2${BV("a")} + ${BV("b")}`)}, ${nw(`${VEC("AC")} = 6${BV("a")} + 3${BV("b")}`)}`,[nw(`${VEC("AC")} = 3(2${BV("a")} + ${BV("b")}) = 3${VEC("AB")}`),"so AC is parallel to AB","A is on both, so A, B and C are collinear",nw("AB : AC = 1 : 3")])+`<p class="anno">* always say the shared point</p>`)}
-${PAN("Area ratios",STEPS([[nw("area ratio = base ratio"),"same height"],[nw("area ratio = (length ratio)²"),"similar triangles"]])
+${PAN("Area ratios",STEPS([[nw("area ratio = base ratio"),"same height"],[nw("area ratio = (length ratio)²"),"similar triangles"]])+picOABh()
   +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,["triangles OAP and OPB have the same height from O",nw("area OAP : area OPB = 1 : 3")]))}
 ${MIST([[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),`end minus start: ${nw(`${VEC("OB")} − ${VEC("OA")}`)}`],[nw("(−5)² = −25"),nw("(−5)² = 25")],[`${nw(`${X2} = 64`)}, so ${nw(`${X1} = 8`)}`,nw(`${X1} = ±8`)],[`${nw("AP : PB = 1 : 3")}, so ${nw(`${VEC("AP")} = ${frac("1","3")}${VEC("AB")}`)}`,`÷ the total parts: ${nw(`${frac("1","4")}${VEC("AB")}`)}`],["“parallel, so collinear”","say the shared point too"]])}
 </div>`,
@@ -4265,7 +4403,7 @@ amCoord:`${MUST([FB("blue","Line",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X
 <div class="sheet">
 ${PAN("Perpendicular bisector",picPerpBis()+EG("A(1, 2), B(5, 6)",[nw("midpoint M = (3, 4)"),nw(`${V("m")}<sub>AB</sub> = ${frac("6 − 2","5 − 1")} = 1`),`perpendicular: ${nw(`${V("m")} = −1`)}`,nw(`${V("y")} − 4 = −1(${X1} − 3)`),nw(`${V("y")} = −${X1} + 7`)])+`<p class="anno">* through the midpoint, with the perpendicular gradient · basics: <a href="#sheet/coordinate-geometry">E-Math coordinate geometry</a></p>`)}
 ${PAN("Area from the corners",EG("A(−4, 3), B(3, 5), C(2, −5)",["anticlockwise: A, C, B, back to A",picShoe(),`${CS("blue","↘")}${nw(": (−4)(−5) + (2)(5) + (3)(3) = 39")}`,`${CS("amber","↗")}${nw(": (3)(2) + (−5)(3) + (5)(−4) = −29")}`,nw(`area = ${frac("1","2")}(39 − (−29)) = 34 units²`)])+`<p class="anno">* clockwise gives a negative answer, so go anticlockwise</p>`)}
-${PAN("Circles",EG(nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),[nw("centre = (−3, 2)"),nw(`radius = ${SQRT("16")} = 4`)])+`<p class="anno">* centre: flip the signs in the brackets</p>`
+${PAN("Circles",picCircAxes()+EG(nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),[nw("centre = (−3, 2)"),nw(`radius = ${SQRT("16")} = 4`)])+`<p class="anno">* centre: flip the signs in the brackets</p>`
   +EG(nw(`${X2} + ${V("y")}² − 4${X1} + 10${V("y")} + 4 = 0`),[nw(`2${V("g")} = −4, 2${V("f")} = 10, ${V("c")} = 4`),nw(`${V("g")} = −2, ${V("f")} = 5`),nw("centre = (2, −5)"),nw(`radius = ${SQRT("(−2)² + 5² − 4")} = 5`)])+`<p class="anno">* centre: half each ${X1} and ${V("y")} coefficient, then flip the sign</p><p class="anno">* first divide so ${X2} and ${V("y")}² have 1 in front, and make the right side 0</p>`)}
 ${PAN("Tangent to a circle",picTangent()+EG(`Tangent at P(6, 2) to ${nw(`${X2} + ${V("y")}² − 6${X1} + 4${V("y")} − 12 = 0`)}`,[nw("centre C = (3, −2)"),nw(`${V("m")}<sub>CP</sub> = ${frac("2 − (−2)","6 − 3")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,nw(`${V("y")} − 2 = −${frac("3","4")}(${X1} − 6)`),nw(`4${V("y")} = −3${X1} + 26`)])
   +STEPS(["line meets circle: substitute the line into the circle",`touches once (a tangent): ${nw(`${V("b")}² − 4${V("ac")} = 0`)}`]))}
@@ -4281,7 +4419,7 @@ ${PAN("Make it straight",`<table><tr><th>Equation</th><th>Plot</th><th>${V("m")}
   <tr><td>${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1}`)}</td><td>${frac(V("y"),X1)} against ${X1}</td><td>${V("a")}</td><td>${V("b")}</td></tr></table>`
   +EG(nw(`${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup>`),[`take lg: ${nw(`lg ${V("y")} = lg ${V("a")} + ${X1} lg ${V("b")}`)}`,nw(`lg ${V("y")} = (lg ${V("b")})${X1} + lg ${V("a")}`),`${nw(`${V("Y")} = lg ${V("y")}, ${V("X")} = ${X1}`)}, ${nw(`${V("m")} = lg ${V("b")}, ${V("C")} = lg ${V("a")}`)}`])
   +EG(nw(`${V("y")} = 3${X1}${V("y")} − 5${X1}`),[`÷ ${X1}: ${nw(`${frac(V("y"),X1)} = 3${V("y")} − 5`)}`,nw(`${V("Y")} = ${frac(V("y"),X1)}, ${V("X")} = ${V("y")}, ${V("m")} = 3, ${V("C")} = −5`)]))}
-${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)])+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("C")} off</p>`)}
+${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)])+picLgLine()+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("C")} off</p>`)}
 ${PAN("From a table of data",picLinLaw()+STEPS([`① make a table of ${V("X")} and ${V("Y")} first`,"② plot them and draw the line of best fit","③ gradient: 2 points on your line, far apart",`④ change back: ${nw(`lg ${V("a")} = ${V("C")}`)}, so ${nw(`${V("a")} = 10<sup>${V("C")}</sup>`)}`])+`<p class="anno">* a point well off the line is the wrong reading: read the right value off the line</p>`)}
 ${MIST([[`plot ${V("y")} against ${X1} when it says lg ${V("y")} against ${X1}`,`make the ${V("X")}, ${V("Y")} table first`],["gradient from 2 points in the table","2 points on your line, far apart"],[`stop at ${nw(`lg ${V("a")} = 0.48`)}`,nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)],[nw(`lg(${V("a")}${X1}<sup>${V("n")}</sup>) = lg ${V("a")} × ${V("n")} lg ${X1}`),`the logs add: ${nw(`lg ${V("a")} + ${V("n")} lg ${X1}`)}`]])}
 </div>`,
@@ -4290,7 +4428,7 @@ amTrigId:`${MUST([FB("blue","3 basic identities",`${nw(`sin²${V("A")} + cos²${
 <div class="sheet">
 ${PAN("Solve a basic equation",quadPic()+STEPS(["① basic angle α from the positive value","② ASTC: which quadrants, from the sign",`③ use ${nw("α")}, ${nw("180° − α")}, ${nw("180° + α")}, ${nw("360° − α")}`])
   +EG(`${nw(`cos ${X1} = −0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw("α = cos⁻¹ 0.5 = 60°"),"cos is negative: Quadrants 2 and 3",nw(`${X1} = 180° − 60° = 120°`),nw(`${X1} = 180° + 60° = 240°`)]))}
-${PAN(`${nw(`sin(${V("a")}${X1} + ${V("b")}) = ${V("k")}`)}: bracket first`,`<p class="anno">* let θ = the whole bracket, and find the range of θ first</p>`+EG(`${nw(`sin 2${X1} = 0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw(`θ = 2${X1}: 0° ≤ θ ≤ 720°`),`basic angle ${nw("α = 30°")}`,`sin positive → Q1, Q2: ${nw(`2${X1} = 30°, 150°`)}`,`go round again ${nw("(+ 360°)")}: ${nw(`2${X1} = 390°, 510°`)}`,nw(`${X1} = 15°, 75°, 195°, 255°`)])+`<p class="anno">* sin and cos repeat every 360°, tan every 180°</p>`)}
+${PAN(`${nw(`sin(${V("a")}${X1} + ${V("b")}) = ${V("k")}`)}: bracket first`,`<p class="anno">* let θ = the whole bracket, and find the range of θ first</p>`+EG(`${nw(`sin 2${X1} = 0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw(`θ = 2${X1}: 0° ≤ θ ≤ 720°`),`basic angle ${nw("α = 30°")}`,`sin positive → Q1, Q2: ${nw(`2${X1} = 30°, 150°`)}`,`go round again ${nw("(+ 360°)")}: ${nw(`2${X1} = 390°, 510°`)}`,nw(`${X1} = 15°, 75°, 195°, 255°`)])+sin720()+`<p class="anno">* ${nw("sin θ = 0.5")} 4 times between 0° and 720°, so 4 answers · sin and cos repeat every 360°, tan every 180°</p>`)}
 ${PAN("Use an identity first",EG(`${nw(`2 cos²${X1} + 3 sin ${X1} = 3`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`swap cos²: ${nw(`2(1 − sin²${X1}) + 3 sin ${X1} = 3`)}`,nw(`2 − 2 sin²${X1} + 3 sin ${X1} − 3 = 0`),`${nw("× (−1)")}: ${nw(`2 sin²${X1} − 3 sin ${X1} + 1 = 0`)}`,nw(`(2 sin ${X1} − 1)(sin ${X1} − 1) = 0`),`${nw(`sin ${X1} = ${frac("1","2")}`)} or ${nw(`sin ${X1} = 1`)}`,nw(`${X1} = 30°, 90°, 150°`)])
   +EG(`${nw(`sin ${X1} cos ${X1} = sin ${X1}`)}: factorise, never ÷`,[nw(`sin ${X1}(cos ${X1} − 1) = 0`),`${nw(`sin ${X1} = 0`)} or ${nw(`cos ${X1} = 1`)}`,nw(`${X1} = 0°, 180°, 360°`)]))}
 ${PAN("Addition formulae: exact values",EG("sin 75° without a calculator",[nw("sin 75° = sin(45° + 30°)"),`${nw("= sin 45° cos 30°")} ${nw("+ cos 45° sin 30°")}`,`${nw(`= ${frac(SQRT("2"),"2")} × ${frac(SQRT("3"),"2")}`)} ${nw(`+ ${frac(SQRT("2"),"2")} × ${frac("1","2")}`)}`,nw(`= ${frac(`${SQRT("6")} + ${SQRT("2")}`,"4")}`)])+`<p class="anno">* the addition and double angle formulae are on the <a href="#sheet/amath-formula-sheet">formula sheet</a></p>`)}
