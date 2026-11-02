@@ -220,6 +220,23 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .steps li{padding:5px 0;line-height:1.5}
 .panelc .anno{line-height:1.5}
 .steps li .tagop{color:var(--blue);font-size:14px;float:right;white-space:nowrap;margin-left:10px}
+.eg{border-left:3px solid var(--blue);margin:10px 0 2px;padding:1px 0 1px 10px}
+.eg .egh{font-size:14px;font-weight:700;color:var(--blue);line-height:1.4;margin-bottom:2px}
+.eg .egl{font-size:16px;line-height:1.6}
+.facts{margin:10px 0 2px}
+.facts .fh{font-size:14px;font-weight:700;color:var(--blue);margin:0 0 6px}
+.facts .fr{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:start;margin:0 0 6px}
+.facts .fr.nol{grid-template-columns:minmax(0,1fr)}
+.facts .fl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:7px;min-width:4.4em}
+.facts .fcs{display:flex;flex-wrap:wrap;gap:6px}
+.fact{display:inline-block;border:1.5px solid var(--blue);background:var(--blue-fill);border-radius:8px;padding:2px 9px;font-size:16px;line-height:1.45;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink)}
+.mb{display:inline-block;border:2px solid var(--fc);background:var(--fb);border-radius:8px;padding:0 7px;font-weight:700;white-space:nowrap;color:var(--ink);line-height:1.45}
+.whyh{font-size:14px;font-weight:700;color:var(--muted);line-height:1.4;margin:0 0 4px}
+.rmatch{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;align-items:center;column-gap:6px;font-size:17px;line-height:1.45;margin:0 0 6px}
+.rmatch .mb{justify-self:center}
+.rmatch .ar{justify-self:center;font-size:15px;line-height:1.1}
+.whyc{font-size:17px;line-height:1.5;margin:4px 0 2px}
+.whyc .mb{padding:0 5px;font-size:15px}
 .badge{display:inline-block;font-size:12px;font-weight:700;background:var(--red-fill);color:var(--red);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .cmini{width:96px;min-width:84px;height:auto;display:block}
 .miniq{width:72px;height:auto;display:block}
@@ -467,7 +484,7 @@ const squareAB = {
     const st={a:prmNum(prm,"a",1,8,5),b:prmNum(prm,"b",1,6,3),step:5}; if(cur) cur.state=()=>({a:st.a,b:st.b});
     const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side a plus b split into four pieces"});
     stage.append(svg); const kb=h("div",{class:"keybox"}); key.append(kb); key.classList.remove("empty");
-    panel.innerHTML=`${explainBox([`Big square = 4 pieces: <b>(${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</b>`,`Don't forget the <span class="k-amber"><b>2 rectangles</b></span>!`])}
+    panel.innerHTML=`${explainBox([`Big square = 4 pieces:<br><b>${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</b>`,`Don't forget the <span class="k-amber"><b>2 rectangles</b></span>!`])}
       <span class="dockslot" hidden></span>
       <div class="box dock">
         <div class="ctrl"><label for="sa">a</label><input id="sa" type="range" min="1" max="8" step="1" value="5"><output></output></div>
@@ -673,7 +690,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
     (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
     cbox.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
-    (def.buttons||[]).forEach((b,i)=>{$(`[data-b="${i}"]`,cbox).style.display=(b.show&&!b.show(st))?"none":"";});
+    (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st)));});
     svg.innerHTML=""; def.draw(svg,st); bumpText(svg); layoutFracs(svg); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
@@ -697,8 +714,9 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     (def.link||[]).forEach(k=>{ if(prm.has(k)) st[k]=prmNum(prm,k,-1e6,1e6,st[k]); });
     if(def.fix) def.fix(st);
   }
-  if(cur){ cur.state=()=>{ const o={}; keys.forEach(k=>{o[k]=st[k]}); if(def.jump) o.step=st.step; return o; }; }
-  const first=(!flat&&prm&&prm.has("step"))?clamp(parseInt(prm.get("step"))||0,0,def.steps.length-1):(flat?st.step:0);
+  const step0=flat?st.step:0;
+  if(cur){ cur.state=()=>{ const o={}; keys.forEach(k=>{o[k]=st[k]}); if(def.jump||st.step!==step0) o.step=st.step; return o; }; }
+  const first=(prm&&prm.has("step"))?clamp(parseInt(prm.get("step"))||0,0,def.steps.length-1):(flat?st.step:0);
   go(first);
 }}}
 function bumpText(svg){
@@ -930,9 +948,13 @@ const nw=t=>`<span class="nw">${t}</span>`;
 const rGen=s=>s.mode==="cos"?`${nw(`${CV("amber","a")} cos θ + ${CV("green","b")} sin θ`)} = ${nw(`${CV("blue","R")} cos(θ − ${AL})`)}`:`${nw(`${CV("amber","a")} sin θ + ${CV("green","b")} cos θ`)} = ${nw(`${CV("blue","R")} sin(θ + ${AL})`)}`;
 const rSpecC=(s,I)=>{const A=s.a===1?"":CS("amber",N(s.a))+" ", B=s.b===1?"":CS("green",N(s.b))+" ", R=CS("blue",I.Rs.split(" = ")[0]), al=CS("red",N(I.al)+"°");
   return s.mode==="cos"?`${nw(`${A}cos θ + ${B}sin θ`)} = ${nw(`${R} cos(θ − ${al})`)}`:`${nw(`${A}sin θ + ${B}cos θ`)} = ${nw(`${R} sin(θ + ${al})`)}`;};
+const rWhy=(mode,A,B,tail="")=>{const c=mode==="cos", f1=c?"cos θ":"sin θ", f2=c?"sin θ":"cos θ", ex=c?`${V("R")} cos(θ − ${AL})`:`${V("R")} sin(θ + ${AL})`;
+  const bx=(col,t)=>`<span class="mb fb-${col}">${t}</span>`, x=`<s class="cancel">${V("R")}</s>`;
+  return `<div class="whyh">Expand ${nw(ex)}:</div><div class="rmatch">${bx("amber",`${V("R")} cos ${AL}`)}<span>${f1} +</span>${bx("green",`${V("R")} sin ${AL}`)}<span>${f2}</span><span class="ar k-amber">↕</span><span></span><span class="ar k-green">↕</span><span></span>${bx("amber",A)}<span>${f1} +</span>${bx("green",B)}<span>${f2}</span></div><div class="whyc">${nw(`tan ${AL} = ${frac(bx("green",`${x} sin ${AL}`),bx("amber",`${x} cos ${AL}`))} = ${frac(CV("green","b"),CV("amber","a"))}`)}</div>${tail}`;};
 const rFormula=aid({
   init:{mode:"cos",a:3,b:4}, vb:"0 0 140 140", label:"R-formula triangle and waves", showStep:4,
-  buttons:[{label:`Show / hide: solving = ${frac(V("R"),"2")}`,fn:s=>{s.step=s.step===5?4:5}}],
+  buttons:[{label:`Solve = ${frac(V("R"),"2")}`,fn:s=>{s.step=s.step===5?4:5},pressed:s=>s.step===5},
+    {label:`Why tan ${AL} = ${frac(V("b"),V("a"))}?`,fn:s=>{s.step=s.step===6?4:6},pressed:s=>s.step===6}],
   explain:[`2 dashed waves add up to <b>ONE</b> blue wave.`,`${V("R")} = how tall (hypotenuse) · ${AL} = how far shifted.`],
   pills:[{k:"mode",opts:[["cos","a cos θ + b sin θ"],["sin","a sin θ + b cos θ"]]}],
   sliders:[{k:"a",label:CS("amber","a"),min:1,max:6,step:.5},{k:"b",label:CS("green","b"),min:1,max:6,step:.5}],
@@ -945,36 +967,44 @@ const rFormula=aid({
     {t:s=>{const I=rInfo(s), al=N(I.al), cosm=s.mode==="cos";
       const fn=cosm?`cos(θ − ${al}°)`:`sin(θ + ${al}°)`;
       const vals=cosm?[60,300,-60].filter(v=>v>=-I.al-1e-9&&v<=360-I.al+1e-9):[30,150,390,510].filter(v=>v>=I.al-1e-9&&v<=360+I.al+1e-9);
-      const rng=cosm?`θ − ${al}° must lie between −${al}° and ${N(360-I.al)}°`:`θ + ${al}° must lie between ${al}° and ${N(360+I.al)}°`;
-      return `Solving: ${rLeft(s)} = ${N(I.k,3)}<br>→ ${N(I.R,3)} ${fn} = ${N(I.k,3)} → ${fn} = ${frac("1","2")}<br>→ ${cosm?`θ − ${al}°`:`θ + ${al}°`} = ${vals.map(v=>v+"°").join(" or ")} <span class="hint">(${rng})</span><br>→ θ = <b>${I.sols.map(x=>N(x,1)+"°").join(" or ")}</b> (1 d.p., red dots)`;}}
+      const inner=cosm?`θ − ${al}°`:`θ + ${al}°`, lo=cosm?`−${al}°`:`${al}°`, hi=`${N(cosm?360-I.al:360+I.al)}°`;
+      return [`Solve ${nw(rLeft(s))} ${nw(`= ${N(I.k,3)}`)}`,
+        `① ${nw(`${N(I.R,3)} ${fn}`)} ${nw(`= ${N(I.k,3)}`)}`,
+        `② ${nw(`${fn} = ${frac("1","2")}`)}`,
+        `③ Range: ${nw(`${lo} ≤ ${inner}`)} ${nw(`≤ ${hi}`)}`,
+        `④ ${nw(inner)} ${nw(`= ${vals.map(v=>v+"°").join(" or ")}`)}`,
+        `⑤ θ = <b>${I.sols.map(x=>N(x,1)+"°").join(" or ")}</b> <span class="hint">(1 d.p., red dots)</span>`].map(l=>`<div class="row">${l}</div>`).join("");}},
+    {t:s=>{const I=rInfo(s); return rWhy(s.mode,N(s.a),N(s.b),`<div class="whyc">${nw(`${AL} = tan⁻¹ ${frac(CS("green",N(s.b)),CS("amber",N(s.a)))} = ${N(I.al)}°`)}</div>`);}}
   ],
   draw(svg,s){
-    const I=rInfo(s), sc=5.2, O=[14,44], A=[O[0]+s.a*sc,O[1]], B=[A[0],O[1]-s.b*sc];
+    const I=rInfo(s), sc=5.2, O=[14,41], A=[O[0]+s.a*sc,O[1]], B=[A[0],O[1]-s.b*sc], why=s.step===6;
+    const fs=Math.max(3.8,12/((svg.getBoundingClientRect().width||560)/140)), lw=fs*6.2;
     if(s.step>=2){
       S_(svg,"path",{d:`M${O}L${A}L${B}Z`,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.7});
+      if(why){ seg(svg,O,A,{stroke:"var(--amber)","stroke-width":1.5}); seg(svg,A,B,{stroke:"var(--green)","stroke-width":1.5}); seg(svg,O,B,{stroke:"var(--blue)","stroke-width":1.5}); }
       rightMark(svg,A,O,B,2.6);
-      lab(svg,[(O[0]+A[0])/2,O[1]+4.5],`a = ${N(s.a)}`,{"font-size":3.8,fill:"var(--amber)","font-weight":700});
-      lab(svg,[A[0]+2,(A[1]+B[1])/2+1.3],`b = ${N(s.b)}`,{"font-size":3.8,fill:"var(--green)","font-weight":700,"text-anchor":"start"});
+      lab(svg,[why?Math.max((O[0]+A[0])/2,2+lw/2):(O[0]+A[0])/2,O[1]+4.5],why?"a = R cos α":`a = ${N(s.a)}`,{"font-size":3.8,fill:"var(--amber)","font-weight":700});
+      lab(svg,[A[0]+2,(A[1]+B[1])/2+1.3],why?"b = R sin α":`b = ${N(s.b)}`,{"font-size":3.8,fill:"var(--green)","font-weight":700,"text-anchor":"start"});
       lab(svg,[(O[0]+B[0])/2-2,(O[1]+B[1])/2-1.5],`R = ${N(I.R)}`,{"font-size":3.8,fill:"var(--blue)","font-weight":700,"text-anchor":"end"});
       if(s.step>=3) arcMark(svg,O,7,0,I.al,"var(--red)","α",3.4);
     }
-    const lx=s.step>=2?Math.max(B[0]+20,62):14;
+    const lx=s.step>=2?Math.max(why?A[0]+5+lw:B[0]+20,62):14;
     lab(svg,[lx,12],(s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`),{"text-anchor":"start","font-size":4.2,fill:"var(--amber)","font-weight":700});
     lab(svg,[lx,19],(s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`),{"text-anchor":"start","font-size":4.2,fill:"var(--green)","font-weight":700});
     if(s.step>=1) lab(svg,[lx,26],"sum (one wave)",{"text-anchor":"start","font-size":4.2,fill:"var(--blue)","font-weight":700});
-    if(s.step>=4) lab(svg,[lx,33],`= ${rRight(s,I)}`,{"text-anchor":"start","font-size":4.2,fill:"var(--blue)"});
+    if(s.step>=4&&!why) lab(svg,[lx,33],`= ${rRight(s,I)}`,{"text-anchor":"start","font-size":4.2,fill:"var(--blue)"});
     const g=graph(svg,RBOX), c1=x=>s.mode==="cos"?s.a*Math.cos(rad(x)):s.a*Math.sin(rad(x)), c2=x=>s.mode==="cos"?s.b*Math.sin(rad(x)):s.b*Math.cos(rad(x));
     g.plot(c1,{stroke:"var(--amber)","stroke-width":.8,"stroke-dasharray":s.step>=1?"2 1.2":"none"});
     g.plot(c2,{stroke:"var(--green)","stroke-width":.8,"stroke-dasharray":s.step>=1?"2 1.2":"none"});
     if(s.step>=1) g.plot(x=>c1(x)+c2(x),{stroke:"var(--blue)","stroke-width":1.4});
     if(s.step>=4){g.dot(I.mx,I.R,"var(--blue)",1.7); g.text(I.mx,I.R,`max ${N(I.R)}`,{dx:2,dy:-1.5,"font-size":3.6,fill:"var(--blue)"});}
-    if(s.step>=5){g.line(0,I.k,360,I.k,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6}); I.sols.forEach(x=>g.dot(x,I.k,"var(--red)",1.7));}
+    if(s.step===5){g.line(0,I.k,360,I.k,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6}); I.sols.forEach(x=>g.dot(x,I.k,"var(--red)",1.7));}
   },
-  readout(s){return s.step===5?`<div class="row">${rFormula.steps[5].t(s)}</div>`:"";},
+  readout(s){return s.step>=5?rFormula.steps[s.step].t(s):"";},
   key(s){const I=rInfo(s);
     return KPAIR(rGen(s),rSpecC(s,I),"This wave")+FORMS([FB("blue",`${CV("blue","R")} = height`,I.Rs.replace(" = "," ≈ "),`√(${N(s.a)}² + ${N(s.b)}²)`),
       FB("red",`${AL} = shift`,N(I.al)+"°",`tan ${AL} = ${N(s.b)} ÷ ${N(s.a)}`),FB("amber","Max / Min",`${N(I.R)} and −${N(I.R)}`,`θ = ${N(I.mx,1)}°, ${N(I.mn,1)}°`)],true);},
-  hint:"Minus signs: a cos θ − b sin θ = R cos(θ + α) and a sin θ − b cos θ = R sin(θ − α). Same R and α."
+  hint:`Minus signs (same R and α):<br>${nw("a cos θ − b sin θ = R cos(θ + α)")}<br>${nw("a sin θ − b cos θ = R sin(θ − α)")}`
 });
 
 const CO=[70,58], CR=40;
@@ -1421,6 +1451,8 @@ function cmini(o){
 }
 const MUST=boxes=>`<div class="must"><div class="musth">Must know</div>${FORMS(boxes)}</div>`;
 const PIC=(href,inner,prop,reason)=>`<${href?`a href="${href}"`:"div"} class="piccard">${inner}<div class="pt">${prop}</div>${reason?`<div class="anno">${reason}</div>`:""}${href?`<div class="go">▶ Play</div>`:""}</${href?"a":"div"}>`;
+const EG=(head,lines)=>`<div class="eg">${head?`<div class="egh">${head}</div>`:""}${lines.map(l=>`<div class="egl">${l}</div>`).join("")}</div>`;
+const FACTS=(head,rows)=>`<div class="facts">${head?`<div class="fh">${head}</div>`:""}${rows.map(([l,xs])=>`<div class="fr${l?"":" nol"}">${l?`<span class="fl">${l}</span>`:""}<div class="fcs">${xs.map(x=>`<span class="fact">${x}</span>`).join("")}</div></div>`).join("")}</div>`;
 const PLAYLINK=(href,txt="Play with this")=>`<p class="anno" style="text-align:center"><a class="pill sm playlink" href="${href}">▶ ${txt}</a></p>`;
 const SHEETS = {
 expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab")} + ${V("b")}²`,"square, double product, square"),FB("red",`(${V("a")} − ${V("b")})²`,`${V("a")}² − 2${V("ab")} + ${V("b")}²`,"only the middle sign changes"),FB("green",`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`,`${V("a")}² − ${V("b")}²`,"difference of two squares")])}
@@ -1432,7 +1464,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
       <tr><td>${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(${V("x")} − 5)²`)} = ${nw(`${V("x")}² − 10${V("x")} + 25`)}</td></tr>
       <tr><td>${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}</td><td>${nw(`(${V("x")} + 4)(${V("x")} − 4)`)} = ${nw(`${V("x")}² − 16`)}</td></tr>
     </table>
-    <p class="anno">* middle term = 2 × first × last, e.g. 2 × 3${V("x")} × 2 = 12${V("x")}</p>
+    <p class="anno">* middle term = 2 × first × last · e.g. ${nw(`(3${V("x")} + 2)²`)}: ${nw(`2 × 3${V("x")} × 2 = 12${V("x")}`)}</p>
   </div>
 
   <div class="panelc"><h4>Picture it</h4>
@@ -1468,7 +1500,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
     <ul class="steps">
       <li>51² = (50 + 1)² = 2500 + 100 + 1 = <b>2601</b></li>
       <li>99² = (100 − 1)² = 10 000 − 200 + 1 = <b>9801</b></li>
-      <li>101 × 99 = (100 + 1)(100 − 1) = 10 000 − 1 = <b>9999</b></li>
+      <li>${nw("101 × 99")} = ${nw("(100 + 1)(100 − 1)")} = ${nw("10 000 − 1")} = <b>9999</b></li>
     </ul>
   </div>
 
@@ -1483,11 +1515,11 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
   </div>
 </div>`,
 
-diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup>`)} × ${nw(frac("d"+V("u"),"d"+X1))}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,"quotient: diff top × copy bottom − diff bottom × copy top, over bottom²")])}
+diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup>`)} × ${nw(frac("d"+V("u"),"d"+X1))}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,`quotient: ${nw("diff top × copy bottom")} ${nw("− diff bottom × copy top")}, over bottom²`)])}
 <div class="sheet">
   <div class="panelc"><h4>Power rule</h4>
     <p class="big">${frac("d","d"+V("x"))}(${V("x")}<sup>${V("n")}</sup>) = ${V("n")}${V("x")}<sup>${V("n")} − 1</sup></p>
-    <p class="anno" style="text-align:center">bring the power down in front, then power − 1</p>
+    <p class="anno" style="text-align:center">bring the power down in front, then ${nw("power − 1")}</p>
     <table>
       <tr><th>${V("y")}</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
       <tr><td>${V("x")}²</td><td>2${V("x")}</td></tr>
@@ -1529,7 +1561,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <tr><td>Quotient: ${frac(V("u"),V("v"))}</td><td>${frac(V("v")+frac("d"+V("u"),"d"+V("x"))+" − "+V("u")+frac("d"+V("v"),"d"+V("x")),V("v")+"²")}</td></tr>
     </table>
     <p class="anno">* quotient: differentiate top, copy bottom, minus differentiate bottom, copy top, over bottom squared</p>
-    <p class="anno">* trig rules need ${X1} in radians · chain rule: differentiate the outside, then × the inside differentiated</p>
+    <p class="anno">* trig rules need ${X1} in radians · chain rule: differentiate the outside, ${nw("then × the inside")} differentiated</p>
   </div>
 
   <div class="panelc"><h4>Term by term</h4>
@@ -1545,7 +1577,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <li>① gradient of the tangent at a point</li>
       <li>② rate of change of ${V("y")} as ${V("x")} changes</li>
     </ul>
-    <p class="anno">* gradient at ${V("x")} = 3 for ${V("y")} = ${V("x")}²: ${frac("d"+V("y"),"d"+V("x"))} = 2(3) = 6</p>
+    ${EG(`e.g. gradient of ${V("y")} = ${V("x")}² at ${V("x")} = 3`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 2${V("x")}`)}`,`${nw(`= 2(3) = <b>6</b>`)}`])}
   </div>
 
   <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
@@ -1558,7 +1590,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <text x="150" y="80" font-size="12" fill="var(--amber)">chord PQ</text><text x="150" y="95" font-size="12" fill="var(--green)">tangent at P</text>
     </svg></a>
     <ul class="steps">
-      <li>Chord PQ: gradient = rise ÷ run = 2${V("x")} + ${V("h")}</li>
+      <li>Chord PQ: gradient = ${nw("rise ÷ run")} = ${nw(`2${V("x")} + ${V("h")}`)}</li>
       <li>Slide Q into P (${V("h")} → 0): the chord becomes the <b>tangent</b></li>
       <li>Gradient → <b>2${V("x")}</b>, so ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}</li>
     </ul>
@@ -1620,7 +1652,7 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
 
   <div class="panelc"><h4>What you can read off</h4>
     <table>
-      <tr><th>${nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}</th><th>${V("a")} &gt; 0</th><th>${V("a")} &lt; 0</th></tr>
+      <tr><th>${nw(`${V("y")} =`)} ${nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}</th><th>${V("a")} &gt; 0</th><th>${V("a")} &lt; 0</th></tr>
       <tr><td>Turning point</td><td colspan="2">(${V("h")}, ${V("k")})</td></tr>
       <tr><td>Type</td><td>${nw("minimum ∪")}</td><td>${nw("maximum ∩")}</td></tr>
       <tr><td>Min / max value of ${V("y")}</td><td colspan="2">${V("k")}, when ${X1} = ${V("h")}</td></tr>
@@ -1683,7 +1715,7 @@ quadGraphs:`${MUST([FB("blue","Turning point form",nw(`${V("y")} = ${V("a")}(${X
       <div class="x">✗ ${nw(`${V("y")} = (${X1} + 1)(${X1} − 3)`)}<br>→ cuts at ${X1} = 1, −3</div>
       <div class="ok">✓ cuts at ${X1} = −1, 3</div>
     </div>
-    <div class="note"><b>Note!</b> The sign inside the bracket flips: (${X1} − 2) → 2, (${X1} + 1) → −1.</div>
+    <div class="note"><b>Note!</b> The sign inside the bracket flips: ${nw(`(${X1} − 2) → 2`)}, ${nw(`(${X1} + 1) → −1`)}.</div>
   </div>
 </div>`,
 
@@ -1726,8 +1758,8 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
   <div class="panelc"><h4>Always positive / always negative</h4>
     <table>
       <tr><th>${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} is…</th><th>Conditions</th></tr>
-      <tr><td>always positive (for all ${X1})</td><td>${V("a")} &gt; 0 <b>and</b> ${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
-      <tr><td>always negative (for all ${X1})</td><td>${V("a")} &lt; 0 <b>and</b> ${V("b")}² − 4${V("ac")} &lt; 0</td></tr>
+      <tr><td>always positive (for all ${X1})</td><td>${nw(`${V("a")} &gt; 0`)} <b>and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}</td></tr>
+      <tr><td>always negative (for all ${X1})</td><td>${nw(`${V("a")} &lt; 0`)} <b>and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}</td></tr>
     </table>
   </div>
 
@@ -1736,8 +1768,8 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
       <div class="x">✗ using the line's ${V("c")} in ${V("b")}² − 4${V("ac")}</div>
       <div class="ok">✓ rearrange to … = 0 first<br>then read ${V("a")}, ${V("b")}, ${V("c")}</div>
     </div>
-    <div class="note"><b>Note!</b> In the example above, ${V("c")} = 5 − ${V("k")}, not ${V("k")} and not 5.</div>
-    <div class="note"><b>Note!</b> If ${V("k")} is in front of ${X2}, you also need ${V("a")} ≠ 0 for it to be a quadratic (and ${V("a")} &gt; 0 or ${V("a")} &lt; 0 for always positive / negative).</div>
+    <div class="note"><b>Note!</b> In the example above, ${nw(`${V("c")} = 5 − ${V("k")}`)}, not ${V("k")} and not 5.</div>
+    <div class="note"><b>Note!</b> If ${V("k")} is in front of ${X2}, you also need ${nw(`${V("a")} ≠ 0`)} for it to be a quadratic (and ${nw(`${V("a")} &gt; 0`)} or ${nw(`${V("a")} &lt; 0`)} for always positive / negative).</div>
   </div>
 </div>`,
 
@@ -1769,7 +1801,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
       <tr><td>cos</td><td>1</td><td>${frac("√3","2")}</td><td>${frac("√2","2")}</td><td>${frac("1","2")}</td><td>0</td></tr>
       <tr><td>tan</td><td>0</td><td>${frac("√3","3")}</td><td>1</td><td>√3</td><td>undefined</td></tr>
     </table>
-    <p class="anno">* you may also see ${frac("√2","2")} written as ${frac("1","√2")}, and ${frac("√3","3")} as ${frac("1","√3")}: same value</p>
+    ${FACTS("Same value, written 2 ways",[["",[`${frac("√2","2")} = ${frac("1","√2")}`,`${frac("√3","3")} = ${frac("1","√3")}`]]])}
   </div>
 
   <div class="panelc"><h4>6 ratios &amp; principal values</h4>
@@ -1789,9 +1821,9 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
     <ul class="steps">
       <li>① Basic angle from the <b>positive</b> value: α = cos⁻¹ 0.5 = 60°</li>
       <li>② Sign: cos is <b>negative</b> → Quadrants 2, 3</li>
-      <li>③ θ = 180° − 60° = <b>120°</b> or θ = 180° + 60° = <b>240°</b></li>
+      <li>③ ${nw(`θ = 180° − 60° = <b>120°</b>`)} or ${nw(`θ = 180° + 60° = <b>240°</b>`)}</li>
     </ul>
-    <p class="anno">* multiple angles: sin 2${X1} = ${V("k")} for 0° ≤ ${X1} ≤ 360° → solve for 2${X1} in 0° ≤ 2${X1} ≤ 720° (double the range first), then halve</p>
+    ${EG(`Multiple angles: ${nw(`sin 2${X1} = ${V("k")}`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`① double the range: ${nw(`0° ≤ 2${X1} ≤ 720°`)}`,`② solve for 2${X1} in that range`,`③ halve every answer`])}
     ${PLAYLINK("#unit-circle?th=120&sv=cos","Play: see both answers light up")}
   </div>
 
@@ -1826,10 +1858,11 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
 
   <div class="panelc"><h4>Read the graph off the equation</h4>
     <table>
-      <tr><th>Graph</th><th>Amplitude</th><th>Period</th><th>Max</th><th>Min</th></tr>
-      <tr><td>${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
-      <tr><td>${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
-      <tr><td>${nw(`${V("y")} = ${V("a")} tan ${V("b")}${X1}`)}</td><td>none</td><td>${frac("180°",V("b"))}</td><td>none</td><td>none</td></tr>
+      <tr><th>Graph</th><th>${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}<br>${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}</th><th>${nw(`${V("y")} =`)} ${nw(`${V("a")} tan ${V("b")}${X1}`)}</th></tr>
+      <tr><td>Amplitude</td><td>|${V("a")}|</td><td>none</td></tr>
+      <tr><td>Period</td><td>${frac("360°",V("b"))}</td><td>${frac("180°",V("b"))}</td></tr>
+      <tr><td>Max</td><td>${nw(`${V("c")} + |${V("a")}|`)}</td><td>none</td></tr>
+      <tr><td>Min</td><td>${nw(`${V("c")} − |${V("a")}|`)}</td><td>none</td></tr>
     </table>
     <p class="anno">* radians: period ${frac("2π",V("b"))} for sin, cos; ${frac("π",V("b"))} for tan</p>
     <p class="anno">* ${V("y")} = ${V("a")} sin ${frac(X1,V("b"))} + ${V("c")}: period = 360° × ${V("b")} (the graph is stretched)</p>
@@ -1895,13 +1928,13 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
       <path d="M102 78 L102 70 L110 70" fill="none" stroke="var(--ink)"/>
       <path d="M44 78 A24 24 0 0 0 40 65" fill="none" stroke="var(--red)" stroke-width="1.5"/>
       <text x="50" y="72" font-size="13" fill="var(--red)" font-weight="700">α</text>
-      <text x="65" y="92" font-size="13" text-anchor="middle" fill="var(--amber)" font-weight="700">a</text>
-      <text x="116" y="52" font-size="13" fill="var(--green)" font-weight="700">b</text>
+      <text x="65" y="92" font-size="13" text-anchor="middle" fill="var(--amber)" font-weight="700">a = R cos α</text>
+      <text x="116" y="54" font-size="13" fill="var(--green)" font-weight="700">b = R sin α</text>
       <text x="56" y="40" font-size="13" fill="var(--blue)" font-weight="700">R</text>
-      <text x="135" y="40" font-size="12" fill="var(--ink)">R = √(a² + b²)</text>
-      <text x="135" y="60" font-size="12" fill="var(--ink)">tan α = b ÷ a</text>
+      <text x="122" y="22" font-size="12" fill="var(--ink)">R = √(a² + b²)</text>
     </svg></a>
-    ${PLAYLINK("#r-formula","Play: two waves make one")}
+    ${rWhy("cos",V("a"),V("b"))}
+    ${PLAYLINK("#r-formula?step=6","Play: why tan α = b ÷ a")}
   </div>
 
   <div class="panelc"><h4>Max and min</h4>
@@ -1918,7 +1951,7 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
     <ul class="steps">
       <li>① 5 cos(θ − 53.13°) = 2.5</li>
       <li>② cos(θ − 53.13°) = 0.5 <span class="tagop">÷ 5</span></li>
-      <li>③ Range: −53.13° ≤ θ − 53.13° ≤ 306.87° <span class="tagop">− 53.13° all round</span></li>
+      <li>③ Range: ${nw("−53.13° ≤ θ − 53.13°")} ${nw("≤ 306.87°")} <span class="tagop">− 53.13° all round</span></li>
       <li>④ θ − 53.13° = 60° or 300° <span class="anno">(−60° is outside the range, so reject it)</span></li>
       <li>⑤ θ = <b>113.1°</b> or <b>353.1°</b></li>
     </ul>
@@ -1937,10 +1970,10 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
 <div class="sheet">
   <div class="panelc"><h4>Angle properties <span class="anno">(tap a picture to drag it)</span></h4>
     <div class="piccards">
-      ${PIC("#circle-props?step=0",cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),"Angle at centre = 2 × angle at circumference","(∠ at centre = 2∠ at circ.)")}
+      ${PIC("#circle-props?step=0",cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),`Angle at centre = ${nw("2 × angle")} at circumference`,"(∠ at centre = 2∠ at circ.)")}
       ${PIC("#circle-props?step=1",cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]}),"Angles in the same segment are equal","(∠s in same seg.)")}
       ${PIC("#circle-props?step=2",cmini({p:{A:180,B:0,P:60},l:["AB","AP","BP"],o:1,rt:"P"}),"Angle in a semicircle = 90°","(rt. ∠ in semicircle)")}
-      ${PIC("#circle-props?step=3",cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]}),"Cyclic quad: opposite angles add to 180° (∠A + ∠C = 180°, not equal)","(∠s in opp. seg.)")}
+      ${PIC("#circle-props?step=3",cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]}),`Cyclic quad: opposite angles add to 180° (${nw("∠A + ∠C = 180°")}, not equal)`,"(∠s in opp. seg.)")}
     </div>
   </div>
 
@@ -1973,7 +2006,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
   </div>
 </div>`,
 
-diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the tangent`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"normal: gradient −1 ÷ m"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y"),FB("green","Max or min?",`${frac("d²"+V("y"),"d"+V("x")+"²")} &lt; 0 max ∩ · &gt; 0 min ∪`,"= 0 → use the sign test")])}
+diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the tangent`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),`normal: gradient ${nw("−1 ÷ m")}`),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y"),FB("green","Max or min?",`${frac("d²"+V("y"),"d"+V("x")+"²")} &lt; 0 max ∩ · &gt; 0 min ∪`,"= 0 → use the sign test")])}
 <div class="sheet">
   <div class="panelc"><h4>Tangent and normal</h4>
     <a href="#tangent-gradient?cv=cubic&x=-1.5&nm=nor" class="piclink"><svg viewBox="0 0 200 80" style="width:100%;max-width:260px;display:block;margin:0 auto">
@@ -1988,8 +2021,8 @@ diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the ta
       <li>Gradient of normal = −${frac("1",V("m"))} <span class="tagop">normal ⊥ tangent</span></li>
       <li>Equation: <span class="nw">${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)</span></li>
     </ul>
-    <p class="anno">* if ${V("m")} = 0: tangent is ${V("y")} = ${V("y")}₁, normal is the vertical line ${X1} = ${X1}₁</p>
-    <p class="anno">* ${V("y")} = ${X2} at (1, 1): ${V("m")} = 2 → tangent ${V("y")} = 2${X1} − 1; normal ${V("y")} = −${frac("1","2")}${X1} + ${frac("3","2")}</p>
+    <p class="anno">* if ${V("m")} = 0: · tangent ${nw(`${V("y")} = ${V("y")}₁`)} (flat) · normal ${nw(`${X1} = ${X1}₁`)} (vertical)</p>
+    ${EG(`e.g. ${V("y")} = ${X2} at (1, 1)`,[`${nw(`${V("m")} = 2(1) = 2`)}`,`tangent: ${nw(`${V("y")} = 2${X1} − 1`)}`,`normal gradient: ${nw(`−${frac("1","2")}`)}`,`normal: ${nw(`${V("y")} = −${frac("1","2")}${X1} + ${frac("3","2")}`)}`])}
     ${PLAYLINK("#tangent-gradient","Play: slide the tangent")}
   </div>
 
@@ -2000,26 +2033,29 @@ diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the ta
       <tr><td>&lt; 0</td><td><span class="k-red">decreasing ↘</span></td></tr>
       <tr><td>= 0</td><td><span class="k-amber">stationary point</span> (find both ${X1} and ${V("y")})</td></tr>
     </table>
-    <p class="anno">* "show increasing for all ${X1}": ${V("y")} = ${V("x")}³ + 3${X1} → ${frac("d"+V("y"),"d"+V("x"))} = 3${X2} + 3 &gt; 0, since ${X2} ≥ 0</p>
-    <p class="anno">* "range of ${X1} for which ${V("y")} is increasing": solve ${frac("d"+V("y"),"d"+V("x"))} &gt; 0</p>
+    ${EG(`"Show ${V("y")} = ${V("x")}³ + 3${X1} is increasing for all ${X1}"`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 3${X2} + 3`)}`,`${nw(`${X2} ≥ 0`)}, so ${nw(`3${X2} + 3 ≥ 3 &gt; 0`)} ✓`])}
+    ${EG(`"Range of ${X1} for which ${V("y")} is increasing"`,[`solve ${nw(`${frac("d"+V("y"),"d"+V("x"))} &gt; 0`)}`])}
   </div>
 
   <div class="panelc"><h4>Max, min or inflexion?</h4>
     <div class="piccards">
       ${PIC("#tangent-gradient?cv=cubic&x=-1",shapeIcon("max","var(--amber)",72),"Maximum",`${frac("d²"+V("y"),"d"+V("x")+"²")} &lt; 0 · signs + 0 −`)}
       ${PIC("#tangent-gradient?cv=cubic&x=1",shapeIcon("min","var(--amber)",72),"Minimum",`${frac("d²"+V("y"),"d"+V("x")+"²")} &gt; 0 · signs − 0 +`)}
-      ${PIC("#tangent-gradient?cv=cube&x=0",shapeIcon("infUp","var(--amber)",72),"Inflexion","signs + 0 + or − 0 −")}
+      ${PIC("#tangent-gradient?cv=cube&x=0",shapeIcon("infUp","var(--amber)",72),"Inflexion",`signs ${nw("+ 0 +")} · or ${nw("− 0 −")}`)}
     </div>
     <p class="anno">* ${frac("d²"+V("y"),"d"+V("x")+"²")} = 0 → this test can't tell. Use the sign test (it could be max, min or inflexion).</p>
     <ul class="steps">
-      <li>${V("y")} = ${V("x")}³ − 3${X1} + 1 → ${frac("d"+V("y"),"d"+V("x"))} = 3${X2} − 3 = 0 <span class="nw">→ ${X1} = ±1</span></li>
-      <li>${frac("d²"+V("y"),"d"+V("x")+"²")} = 6${X1}: at ${X1} = 1, 6 &gt; 0 → <b>min (1, −1)</b>; at ${X1} = −1, −6 &lt; 0 → <b>max (−1, 3)</b></li>
+      <li>${nw(`${V("y")} = ${V("x")}³ − 3${X1} + 1`)}</li>
+      <li>${nw(`${frac("d"+V("y"),"d"+V("x"))} = 3${X2} − 3 = 0`)} <span class="nw">→ ${X1} = ±1</span></li>
+      <li>${nw(`${frac("d²"+V("y"),"d"+V("x")+"²")} = 6${X1}`)}</li>
+      <li>${nw(`${X1} = 1: 6 &gt; 0`)} → <b>min (1, −1)</b></li>
+      <li>${nw(`${X1} = −1: −6 &lt; 0`)} → <b>max (−1, 3)</b></li>
     </ul>
   </div>
 
   <div class="panelc"><h4>Connected rates</h4>
     <p class="big">${frac("d"+V("A"),"d"+V("t"))} = ${frac("d"+V("A"),"d"+V("r"))} × ${frac("d"+V("r"),"d"+V("t"))}</p>
-    <p class="anno">* circle: ${V("A")} = π${V("r")}² → ${frac("d"+V("A"),"d"+V("r"))} = 2π${V("r")}. If ${frac("d"+V("r"),"d"+V("t"))} = 0.5 cm/s and ${V("r")} = 4: ${frac("d"+V("A"),"d"+V("t"))} = 2π(4) × 0.5 = 4π cm²/s</p>
+    ${EG(`e.g. circle: radius grows at 0.5 cm/s. Rate of area when ${V("r")} = 4?`,[`${nw(`${V("A")} = π${V("r")}²`)} → ${nw(`${frac("d"+V("A"),"d"+V("r"))} = 2π${V("r")}`)}`,`${nw(`${frac("d"+V("A"),"d"+V("t"))} = 2π(4) × 0.5`)}`,`${nw(`= <b>4π cm²/s</b>`)}`])}
   </div>
 
   <div class="panelc"><h4>Max / min word problems</h4>
@@ -2061,7 +2097,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
     <ul class="steps">
       <li>Triangle: ${frac("1","2")} × base × height</li>
       <li>Rectangle: base × height</li>
-      <li>Trapezium: ${frac("1","2")} × (sum of parallel sides) × width</li>
+      <li>Trapezium:<br>${nw(`${frac("1","2")} × (sum of parallel sides) × width`)}</li>
     </ul>
     <p class="anno">* split the area at every corner, find each piece, add them up</p>
     <p class="anno">* average speed = ${frac("total distance","total time")} (NOT the average of the speeds)</p>
@@ -2091,7 +2127,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
     <p>A car speeds up from rest to 12 m/s in 4 s, keeps 12 m/s for 6 s, then slows to a stop in 4 s.</p>
     <ul class="steps">
       <li>Acceleration in the first 4 s = ${frac("12 − 0","4")} = <b>3 m/s²</b></li>
-      <li>Distance = ${frac("1","2")} × 4 × 12 + 6 × 12 + ${frac("1","2")} × 4 × 12 = 24 + 72 + 24 = <b>120 m</b></li>
+      <li>Distance = ${nw(`${frac("1","2")} × 4 × 12 + 6 × 12 + ${frac("1","2")} × 4 × 12`)}<br>= ${nw("24 + 72 + 24")} = <b>120 m</b></li>
       <li>Average speed = ${frac("120","14")} = <b>8.57 m/s</b> (3 s.f.)</li>
     </ul>
   </div>
@@ -2101,7 +2137,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
       <div class="x">✗ slowing down 3 m/s²<br>written as "acceleration 3 m/s²"</div>
       <div class="ok">✓ acceleration = −3 m/s²<br>or "deceleration 3 m/s²"</div>
       <div class="x">✗ average speed = (0 + 12 + 0) ÷ 3</div>
-      <div class="ok">✓ average speed = total distance ÷ total time</div>
+      <div class="ok">✓ average speed = ${frac("total distance","total time")}</div>
     </div>
   </div>
 </div>`,
@@ -2218,7 +2254,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
       <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--red)" font-weight="700">−</text>
       <g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="65" y="54">1</text><text x="155" y="54">3</text><text x="20" y="54">0</text></g>
     </svg>
-    <p class="anno">* ${V("y")} = ${X2} − 4${X1} + 3 from 0 to 3: ∫ = 0, but area = ${frac("4","3")} + ${frac("4","3")} = ${frac("8","3")}</p>
+    ${EG(`e.g. the picture: ${nw(`${V("y")} = ${X2} − 4${X1} + 3`)}`,[`${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${V("y")} d${X1} = ${frac("4","3")}`)} <span class="k-blue">above</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> ${V("y")} d${X1} = −${frac("4","3")}`)} <span class="k-red">below</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> ${V("y")} d${X1} = 0`)} ✗ not the area`,`area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = <b>${frac("8","3")}</b>`)}`])}
   </div>
 
   <div class="panelc"><h4>Curve and a straight line</h4>
@@ -2231,7 +2267,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
 
   <div class="panelc"><h4>Reverse of differentiation</h4>
     <ul class="steps">
-      <li>If ${frac("d","d"+X1)}[F(${X1})] = f(${X1}), then ∫ f(${X1}) d${X1} = F(${X1}) + ${V("c")}</li>
+      <li>If ${frac("d","d"+X1)}[F(${X1})] = f(${X1}), then ${nw(`∫ f(${X1}) d${X1}`)} = ${nw(`F(${X1}) + ${V("c")}`)}</li>
     </ul>
     <p class="anno">* "Hence find ∫…": use the derivative from the part before, and adjust for any number in front</p>
   </div>
@@ -2382,7 +2418,8 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
       <li>${nw(`−4 &lt; 2${X1} ≤ 6`)} <span class="tagop">− 1 all three parts</span></li>
       <li>${nw(`−2 &lt; ${X1} ≤ 3`)} <span class="tagop">÷ 2 all three parts</span></li>
     </ul>
-    <p class="anno">* integers that satisfy it: −1, 0, 1, 2, 3 (not −2: the dot is open)</p>
+    ${FACTS("Integers that satisfy it",[["",["−1","0","1","2","3"]]])}
+    <p class="anno">* −2 is out: ${nw(`−2 &lt; ${X1}`)}, not ≤ (open dot)</p>
   </div>
 
   <div class="panelc"><h4>Exam phrases</h4>
@@ -2403,7 +2440,7 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
       <div class="x">✗ ${X1} &gt; 2, so smallest integer is 2</div>
       <div class="ok">✓ smallest integer is 3</div>
     </div>
-    <div class="note"><b>Note!</b> Swapping sides also flips: 5 &gt; ${X1} means ${X1} &lt; 5.</div>
+    <div class="note"><b>Note!</b> Swapping sides also flips: ${nw(`5 &gt; ${X1}`)} means ${nw(`${X1} &lt; 5`)}.</div>
   </div>
 </div>`,
 
@@ -2418,7 +2455,7 @@ indices:`${MUST([FB("blue","Same base: add, subtract, multiply",`${nw(`${V("a")}
       <tr><td>${nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`)}</td><td>${nw(`(2${X1})³ = 8${V("x")}³`)}</td></tr>
       <tr><td>${nw(`(${frac(V("a"),V("b"))})<sup>${V("n")}</sup> = ${frac(V("a")+"<sup>"+V("n")+"</sup>",V("b")+"<sup>"+V("n")+"</sup>")}`)}</td><td>${nw(`(${frac("2","3")})² = ${frac("4","9")}`)}</td></tr>
     </table>
-    <p class="anno">* different bases? You can't add the powers. 2³ × 3² stays 8 × 9 = 72.</p>
+    <p class="anno">* different bases? You can't add the powers. · ${nw("2³ × 3² = 8 × 9 = 72")}</p>
   </div>
 
   <div class="panelc"><h4>Negative and fraction powers</h4>
@@ -2442,14 +2479,14 @@ indices:`${MUST([FB("blue","Same base: add, subtract, multiply",`${nw(`${V("a")}
     <ul class="steps">
       <li>${nw(`3<sup>2${X1}</sup> = ${frac("1","27")}`)} = 3<sup>−3</sup> → 2${X1} = −3 → ${X1} = −${frac("3","2")}</li>
     </ul>
-    <p class="anno">* useful: 4 = 2², 8 = 2³, 9 = 3², 27 = 3³, 25 = 5², 1 = anything⁰</p>
+    ${FACTS("Know these: they make the bases the same",[["Base 2",["4 = 2²","8 = 2³","16 = 2⁴","32 = 2⁵"]],["Base 3",["9 = 3²","27 = 3³","81 = 3⁴"]],["Base 5",["25 = 5²","125 = 5³"]],["Any",["1 = anything⁰"]]])}
   </div>
 
   <div class="panelc"><h4>Simplify</h4>
     <ul class="steps">
       <li>${nw(`(2${V("a")}³${V("b")})² ÷ 4${V("a")}⁴${V("b")}<sup>−1</sup>`)}</li>
       <li>${nw(`= 4${V("a")}⁶${V("b")}² ÷ 4${V("a")}⁴${V("b")}<sup>−1</sup>`)} <span class="tagop">square everything inside</span></li>
-      <li>${nw(`= ${V("a")}²${V("b")}³`)} <span class="tagop">4 ÷ 4 = 1, then subtract powers: 6 − 4, 2 − (−1)</span></li>
+      <li>${nw(`= ${V("a")}²${V("b")}³`)} <span class="tagop">4 ÷ 4 = 1 · ${V("a")}: 6 − 4 = 2 · ${V("b")}: 2 − (−1) = 3</span></li>
     </ul>
   </div>
 
@@ -2471,10 +2508,10 @@ stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>,
   <div class="panelc"><h4>Convert</h4>
     <table>
       <tr><th>Number</th><th>Standard form</th><th>Why</th></tr>
-      <tr><td>6 200 000</td><td>6.2 × 10⁶</td><td>point moves 6 places left</td></tr>
-      <tr><td>0.000 038</td><td>3.8 × 10<sup>−5</sup></td><td>point moves 5 places right</td></tr>
-      <tr><td>4.1 × 10³</td><td>4100</td><td>3 places right</td></tr>
-      <tr><td>9.05 × 10<sup>−2</sup></td><td>0.0905</td><td>2 places left</td></tr>
+      <tr><td>6 200 000</td><td>${nw("6.2 × 10⁶")}</td><td>point moves 6 places left</td></tr>
+      <tr><td>0.000 038</td><td>${nw("3.8 × 10<sup>−5</sup>")}</td><td>point moves 5 places right</td></tr>
+      <tr><td>${nw("4.1 × 10³")}</td><td>4100</td><td>3 places right</td></tr>
+      <tr><td>${nw("9.05 × 10<sup>−2</sup>")}</td><td>0.0905</td><td>2 places left</td></tr>
     </table>
   </div>
 
@@ -2492,7 +2529,7 @@ stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>,
       <li>${nw(`= 3.2 × 10⁵ + 0.4 × 10⁵`)} <span class="tagop">change the smaller one</span></li>
       <li>${nw(`= 3.6 × 10⁵`)}</li>
     </ul>
-    <p class="anno">* or just type both into the calculator with the ×10<sup>x</sup> key and read the answer</p>
+    <p class="anno">* or just type both into the calculator with ${nw("the ×10<sup>x</sup> key")} and read the answer</p>
   </div>
 
   <div class="panelc"><h4>Prefixes</h4>
@@ -2524,7 +2561,7 @@ interest:`${MUST([FB("blue","Simple interest",`${V("I")} = ${frac(`${V("P")} × 
     <table>
       <tr><th></th><th>Simple</th><th>Compound</th></tr>
       <tr><td>Working</td><td>${nw(`${frac("5000 × 3 × 4","100")}`)}</td><td>${nw(`5000 × 1.03⁴`)}</td></tr>
-      <tr><td>Interest</td><td><b>$600</b></td><td>5627.54 − 5000 = <b>$627.54</b></td></tr>
+      <tr><td>Interest</td><td><b>$600</b></td><td>${nw("5627.54 − 5000")} = <b>$627.54</b></td></tr>
     </table>
     <p class="anno">* compound earns interest on the interest, so it grows faster</p>
   </div>
@@ -2549,10 +2586,10 @@ interest:`${MUST([FB("blue","Simple interest",`${V("I")} = ${frac(`${V("P")} × 
 
   <div class="panelc"><h4>Growth and decay (same formula)</h4>
     <ul class="steps">
-      <li>Value goes DOWN by 15% a year: multiplier = 1 − 0.15 = <b>0.85</b></li>
+      <li>Value goes DOWN by 15% a year: multiplier = ${nw("1 − 0.15")} = <b>0.85</b></li>
       <li>$80 000 car after 3 years: ${nw(`80 000 × 0.85³`)} = <b>$49 130</b></li>
     </ul>
-    <p class="anno">* growth: (1 + ${frac(V("r"),"100")})<sup>n</sup> · decay / depreciation: (1 − ${frac(V("r"),"100")})<sup>n</sup></p>
+    ${FACTS("Multiplier",[["Growth",[`(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`]],["Decay",[`(1 − ${frac(V("r"),"100")})<sup>${V("n")}</sup>`]]])}
   </div>
 
   <div class="panelc"><h4>Note!</h4>
@@ -2589,7 +2626,7 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
       <tr><td>∅ or { }</td><td>empty set</td><td>A ∩ B = ∅ → nothing in common</td></tr>
       <tr><td>n(A)</td><td>number of elements in A</td><td>n({2, 4, 6}) = 3</td></tr>
     </table>
-    <p class="anno">* {x : x is a prime, x &lt; 10} reads "the set of x such that…" = {2, 3, 5, 7}</p>
+    ${EG(`${nw(`{${X1} : ${X1} is a prime, ${X1} &lt; 10}`)}`,[`reads "the set of ${X1} such that…"`,`${nw("= {2, 3, 5, 7}")}`])}
   </div>
 
   <div class="panelc"><h4>Counting with a Venn diagram</h4>
@@ -2599,7 +2636,7 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
       <li>② Football only: 18 − 7 = 11 · basketball only: 15 − 7 = 8</li>
       <li>③ Neither: 30 − (11 + 7 + 8) = <b>4</b></li>
     </ul>
-    <p class="anno">* ${nw(`n(A ∪ B) = n(A) + n(B) − n(A ∩ B)`)}: 18 + 15 − 7 = 26</p>
+    ${EG("Shortcut",[`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`,`here: ${nw("18 + 15 − 7 = 26")}`])}
   </div>
 
   <div class="panelc"><h4>Note!</h4>
@@ -2622,7 +2659,7 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
       <li>② Go across from ${frac("1","4")}N, ${frac("1","2")}N, ${frac("3","4")}N on the vertical axis</li>
       <li>③ Drop down and read Q1, median, Q3</li>
     </ul>
-    <p class="anno">* "how many scored more than 60": N − (cumulative frequency at 60)</p>
+    <p class="anno">* "how many scored more than 60": · ${nw("N − (cumulative")} frequency at 60)</p>
   </div>
 
   <div class="panelc"><h4>Box-and-whisker plot</h4>
@@ -2673,7 +2710,7 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
     ${treeP()}
     <ul class="steps">
       <li>P(both red) = ${frac("3","5")} × ${frac("2","4")} = <b>${frac("3","10")}</b> <span class="tagop">along the branch: ×</span></li>
-      <li>P(one of each) = ${frac("3","5")} × ${frac("2","4")} + ${frac("2","5")} × ${frac("3","4")}<br>= <b>${frac("3","5")}</b> <span class="tagop">two branches: +</span></li>
+      <li>${nw("P(one of each)")} = ${nw(`${frac("3","5")} × ${frac("2","4")} + ${frac("2","5")} × ${frac("3","4")}`)}<br>= <b>${frac("3","5")}</b> <span class="tagop">two branches: +</span></li>
     </ul>
     <p class="anno">* without replacement: the second denominator drops by 1 · with replacement: it stays 5</p>
   </div>
@@ -2685,8 +2722,8 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
       <tr><td>either / or / one of each</td><td>add the branches that work</td></tr>
       <tr><td>at least one</td><td>1 − P(none)</td></tr>
       <tr><td>not</td><td>1 − P(it)</td></tr>
-      <tr><td>mutually exclusive</td><td>can't both happen → P(A or B) = P(A) + P(B)</td></tr>
-      <tr><td>independent</td><td>one doesn't affect the other → P(A and B) = P(A) × P(B)</td></tr>
+      <tr><td>mutually exclusive</td><td>can't both happen → ${nw("P(A or B)")} = ${nw("P(A) + P(B)")}</td></tr>
+      <tr><td>independent</td><td>one doesn't affect the other → ${nw("P(A and B)")} = ${nw("P(A) × P(B)")}</td></tr>
     </table>
   </div>
 
@@ -2714,9 +2751,10 @@ matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0",
     <ul class="steps">
       <li>${MX([["2","3"],["1","4"]])}${MX([["5"],["6"]])} = ${MX([["2×5 + 3×6"],["1×5 + 4×6"]])} = ${MX([["28"],["29"]])}</li>
     </ul>
-    <p class="anno">* row 1 across × column down, add up; then row 2 · (2 × 2)(2 × 1) → 2 × 1</p>
+    <p class="anno">* row 1 across × column down, add up · then row 2 the same way</p>
     <table>
       <tr><th>Can you multiply?</th><th>Answer</th></tr>
+      <tr><td>(2 × 2)(2 × 1)</td><td>yes → 2 × 1 (the one above)</td></tr>
       <tr><td>(2 × 3)(3 × 1)</td><td>yes → 2 × 1</td></tr>
       <tr><td>(2 × 3)(2 × 3)</td><td>no: 3 ≠ 2</td></tr>
       <tr><td>(1 × 3)(3 × 2)</td><td>yes → 1 × 2</td></tr>
