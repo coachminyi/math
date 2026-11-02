@@ -841,7 +841,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
 }}}
 function bumpText(svg){
   const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb) return;
-  const ppu=r.width/vb.width, min=12/ppu; if(ppu>=3.2) return;
+  const ppu=Math.min(r.width/vb.width,(r.height||r.width)/vb.height), min=12/ppu; if(ppu>=3.2) return;
   svg.querySelectorAll("text").forEach(t=>{const fs=parseFloat(t.getAttribute("font-size")); if(fs&&fs<min) t.setAttribute("font-size",min.toFixed(2));});
 }
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
@@ -1019,11 +1019,11 @@ const unitCircle=aid({
         if(I.al>12) arcMark(svg,UO,9,(q===1||q===4)?0:180,(q===1||q===3)?I.al:-I.al,"var(--red)",null);} }
     else if(I.q>1){const G=P(I.al); S_(svg,"path",{d:`M${ox},${oy}L${G[0]},${oy}L${G}Z`,fill:"none",stroke:"var(--muted)","stroke-dasharray":"1.5 1.2","stroke-width":.7}); lab(svg,[G[0]+3,G[1]-1],I.al+"°",{"font-size":3.4,fill:"var(--muted)"});}
     if(SV){ const al=SV.al, sols=SV.qs.map(q=>qAng(q,al));
-      if(s.sv==="sin"){const y=oy-UR*.5; seg(svg,[18,y],[122,y],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,[20,y-2],SV.txt,{"text-anchor":"start","font-size":3.8,fill:"var(--red)","font-weight":700});}
-      if(s.sv==="cos"){const x=ox-UR*.5; seg(svg,[x,10],[x,112],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,[x-2,112],SV.txt,{"text-anchor":"end","font-size":3.8,fill:"var(--red)","font-weight":700});}
+      if(s.sv==="sin"){const y=oy-UR*.5; seg(svg,[18,y],[122,y],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,innerWidth<900?[ox+2,y-2]:[20,y-2],innerWidth<900?SV.txt.split(" = ")[1]:SV.txt,{"text-anchor":"start","font-size":3.8,fill:"var(--red)","font-weight":700});}
+      if(s.sv==="cos"){const x=ox-UR*.5; seg(svg,[x,10],[x,112],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,[x-2,112],innerWidth<900?SV.txt.split(" = ")[1]:SV.txt,{"text-anchor":"end","font-size":3.8,fill:"var(--red)","font-weight":700});}
       if(s.sv==="tan"){const L=UR*1.15; seg(svg,[ox-L,oy+L],[ox+L,oy-L],{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.7}); lab(svg,[ox+L+1,oy-L-1],SV.txt,{"text-anchor":"start","font-size":3.8,fill:"var(--red)","font-weight":700});}
       sols.forEach(d=>{const Q=P(d); S_(svg,"circle",{cx:Q[0],cy:Q[1],r:4.2,fill:"var(--red)",opacity:.25}); S_(svg,"circle",{cx:Q[0],cy:Q[1],r:2,fill:"var(--red)"});
-        const J=ucInfo(d); lab(svg,[Q[0]+(J.c>=0?5:-5),Q[1]+(J.s>=0?-3:7)],d+"°",{"font-size":4,fill:"var(--red)","font-weight":700,"text-anchor":J.c>=0?"start":"end"});});}
+        const J=ucInfo(d); lab(svg,[Q[0]+(J.c>=0?9:-9),Q[1]+(J.s>=0?-3:7)],d+"°",{"font-size":4,fill:"var(--red)","font-weight":700,"text-anchor":J.c>=0?"start":"end"});});}
     CPS.forEach(d=>{const Q=P(d), on=d===s.th; S_(svg,"circle",{cx:Q[0],cy:Q[1],r:on?0:1.3,fill:"var(--muted)","pointer-events":"none"}); S_(svg,"circle",{cx:Q[0],cy:Q[1],r:5,fill:"transparent","data-drag":"p",style:"cursor:pointer"});});
     const Pp=P(s.th), F=[Pp[0],oy];
     arcMark(svg,UO,6,0,s.th,"var(--muted)",s.th>14?"θ":null,3.4);
@@ -1032,8 +1032,9 @@ const unitCircle=aid({
     seg(svg,UO,F,{stroke:s.all&&I.q?sc(I.c):"var(--amber)","stroke-width":1.6});
     seg(svg,F,Pp,{stroke:s.all&&I.q?sc(I.s):"var(--blue)","stroke-width":1.6});
     seg(svg,UO,Pp,{"stroke-width":.9});
-    if(Math.abs(I.s)>.12) lab(svg,[F[0]+(I.c>=0?2:-2),(oy+Pp[1])/2+1.5],"sin θ = "+ucEx(s.th)[0],{"text-anchor":I.c>=0?"start":"end","font-size":3.8,fill:"var(--blue)","font-weight":700});
-    if(Math.abs(I.c)>.2) lab(svg,[ox+(F[0]-ox)*.7,oy+(I.s>=0?5:-2.5)],"cos θ = "+ucEx(s.th)[1],{"font-size":3.8,fill:"var(--amber)","font-weight":700});
+    const nar=innerWidth<900;
+    if(Math.abs(I.s)>.12) lab(svg,[F[0]+(I.c>=0?2:-2),(oy+Pp[1])/2+1.5],(nar?"":"sin θ = ")+ucEx(s.th)[0],{"text-anchor":I.c>=0?"start":"end","font-size":3.8,fill:"var(--blue)","font-weight":700});
+    if(Math.abs(I.c)>.2) lab(svg,[ox+(F[0]-ox)*.7,oy+(I.s>=0?5:-2.5)],(nar?"":"cos θ = ")+ucEx(s.th)[1],{"font-size":3.8,fill:"var(--amber)","font-weight":700});
     lab(svg,[Pp[0]+(I.c>=0?4:-4),Pp[1]+(I.s>=0?-2:5)],"P",{"font-size":4.6,"font-weight":700});
     handle(svg,Pp[0],Pp[1],"p");
   },
@@ -1272,7 +1273,7 @@ const diffChord=aid({
     if(!tan){
       g.line(-3,yP+m*(-3-x),3,yP+m*(3-x),{stroke:"var(--amber)","stroke-width":1.2});
       g.line(x,yP,xq,yP,{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.6}); g.line(xq,yP,xq,yQ,{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.6});
-      if(hh>=.3){ g.text(x+hh/2,yP,`run ${N(hh)}`,{dy:4.2,"text-anchor":"middle","font-size":3.6,fill:"var(--muted)"}); g.text(xq,(yP+yQ)/2,`rise ${N(yQ-yP,3)}`,{dx:1.8,dy:1.2,"text-anchor":"start","font-size":3.6,fill:"var(--muted)"}); }
+      if(hh>=.3){ g.text(x+hh/2,yP,`run ${N(hh)}`,{dy:4.2,"text-anchor":"middle","font-size":3.6,fill:"var(--muted)"}); if(g.X(xq)>106){ const ym=g.Y((yP+yQ)/2); lab(svg,[139,ym],"rise",{dy:"-0.25em","text-anchor":"end","font-size":3.6,fill:"var(--muted)"}); lab(svg,[139,ym],N(yQ-yP,2),{dy:"0.85em","text-anchor":"end","font-size":3.6,fill:"var(--muted)"}); } else g.text(xq,(yP+yQ)/2,`rise ${N(yQ-yP,3)}`,{dx:1.8,dy:1.2,"text-anchor":"start","font-size":3.6,fill:"var(--muted)"}); }
       g.dot(xq,yQ,"var(--amber)",1.6); lab(svg,[g.X(xq)+3.5,g.Y(yQ)-2.5],"Q",{"font-size":4.6,"font-weight":700,fill:"var(--amber)"});
       handle(svg,g.X(xq),g.Y(yQ),"q","var(--amber)");
     }
@@ -1314,7 +1315,7 @@ const tangentAid=aid({
     const g=graph(svg,GBOX), C=TC[s.cv], y0=C.f(s.x), m=C.d(s.x), z=Math.abs(m)<1e-9, col=z?"var(--amber)":m>0?"var(--green)":"var(--red)";
     for(let i=0;i<160;i++){const a=-4+i/20, b=a+.05, dm=C.d(a+.025); g.line(a,0,b,0,{stroke:dm>0?"var(--green)":"var(--red)","stroke-width":1.4,"stroke-linecap":"butt"});}
     g.plot(C.f);
-    lab(svg,[16,10],"y = "+strip(C.fs),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    if(innerWidth>=900) lab(svg,[16,10],"y = "+strip(C.fs),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
     C.st.forEach(x=>{const k=stKind(C.d,x), yy=C.f(x); g.add("circle",{cx:g.X(x),cy:g.Y(yy),r:1.6,fill:"none",stroke:"var(--amber)","stroke-width":.7});
       g.add("path",{d:SHAPE[k],transform:`translate(${g.X(x).toFixed(1)} ${(g.Y(yy)+(k==="max"?-8:k==="min"?8:0)+(k.startsWith("inf")?(x<0?-8:8):0)).toFixed(1)}) scale(.55)`,fill:"none",stroke:"var(--amber)","stroke-width":1.6,"stroke-linecap":"round"});});
     const sy=GBOX.t+GBOX.h+8, pts=[-4,...C.st,4];
@@ -1323,9 +1324,9 @@ const tangentAid=aid({
     g.line(-4,y0+m*(-4-s.x),4,y0+m*(4-s.x),{stroke:col,"stroke-width":1.1});
     if(s.nm==="nor"){ if(z) g.line(s.x,-4,s.x,4,{stroke:"var(--ink)","stroke-width":.9,"stroke-dasharray":"2 1.5"}); else g.line(-4,y0-(-4-s.x)/m,4,y0-(4-s.x)/m,{stroke:"var(--ink)","stroke-width":.9,"stroke-dasharray":"2 1.5"});
       if(!z){const u=[1,m], L=Math.hypot(1,m), ux=u[0]/L*0.42, uy=u[1]/L*0.42, vx=-m/L*0.42, vy=1/L*0.42; g.add("path",{d:`M${g.X(s.x+ux)} ${g.Y(y0+uy)} L${g.X(s.x+ux+vx)} ${g.Y(y0+uy+vy)} L${g.X(s.x+vx)} ${g.Y(y0+vy)}`,fill:"none",stroke:"var(--ink)","stroke-width":.6});}
-      lab(svg,[134,GBOX.t+5],"normal (dashed) ⊥ tangent",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"}); }
+      if(innerWidth>=900) lab(svg,[134,GBOX.t+5],"normal (dashed) ⊥ tangent",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"}); }
     if(y0>=-4&&y0<=4){ lab(svg,[g.X(s.x)+3,g.Y(y0)-3],"P",{"font-size":4.6,"font-weight":700,"text-anchor":"start"}); handle(svg,g.X(s.x),g.Y(y0),"p",col);}
-    gradGraph(svg,GBOX2,C.d,s.x,{label:"{dy/dx} = "+strip(C.ds)});
+    gradGraph(svg,GBOX2,C.d,s.x,{label:innerWidth>=900?"{dy/dx} = "+strip(C.ds):null});
   },
   drag(id,p,s){let [x]=ginv(GBOX,p); x=clamp(snap(x,.05),-2.5,2.5); TC[s.cv].st.forEach(v=>{if(Math.abs(x-v)<.1)x=v}); s.x=x;},
   key(s){const C=TC[s.cv], x=s.x, y0=C.f(x), m=C.d(x), z=Math.abs(m)<1e-9;
@@ -1492,9 +1493,10 @@ const complSq=aid({
     Rr(x0,y0,X,X,"var(--blue-fill)","var(--ink)","x²","var(--blue)");
     L(x0+X/2,y0-3,"x"); L(x0-3,y0+X/2+2,"x","end");
     if(s.b<0){
+      if(innerWidth<900){ lab(svg,[2,y0+X+10],"b < 0: use the algebra →",{"text-anchor":"start","font-size":4,fill:"var(--red)","font-weight":700}); lab(svg,[2,y0+X+21],`x² − ${I.A}x = (x − ${hb})² − ${fracTxt(I.qv)}`,{"text-anchor":"start","font-size":4.6,"font-weight":700}); } else {
       lab(svg,[x0+X/2,y0+X+8],"b is negative: the strips would be CUT AWAY,",{"font-size":4,fill:"var(--red)","font-weight":700});
       lab(svg,[x0+X/2,y0+X+14],"so the picture doesn't help. Use the algebra →",{"font-size":4,fill:"var(--red)","font-weight":700});
-      lab(svg,[x0+X/2,y0+X+21],`x² − ${I.A}x = (x − ${hb})² − ${fracTxt(I.qv)}`,{"font-size":4.6,"font-weight":700});
+      lab(svg,[x0+X/2,y0+X+21],`x² − ${I.A}x = (x − ${hb})² − ${fracTxt(I.qv)}`,{"font-size":4.6,"font-weight":700}); }
     } else {
       Rr(x0+X,y0,H,X,"var(--amber-fill)","var(--ink)",hb+"x","var(--amber)");
       const g=svgEl("g",{transform:`translate(${((1-mv)*(X+H)).toFixed(2)} 0) rotate(${(-90*(1-mv)).toFixed(2)} ${x0} ${y0+X})`}); svg.append(g);
@@ -1510,7 +1512,7 @@ const complSq=aid({
       } else lab(svg,[x0+(X+Bw)/2,y0+X+H+7],mv<.02?`x² + ${I.A}x`:"",{"font-size":4.4,fill:"var(--muted)"});
     }
     const hx=-I.B/2, ky=s.c-I.qv, gy0=Math.min(0,Math.floor(ky))-4;
-    const G=graph(svg,Object.assign(wide?{l:140,t:8,w:104,h:88}:{l:16,t:114,w:104,h:80},{x0:-8,x1:8,y0:gy0,y1:gy0+24,xs:1,xl:2,ys:2,yl:4}));
+    const G=graph(svg,Object.assign(wide?{l:140,t:8,w:104,h:88}:{l:16,t:114,w:104,h:80},{x0:-8,x1:8,y0:gy0,y1:gy0+24,xs:1,xl:innerWidth<900?100:2,ys:2,yl:innerWidth<900?100:4}));
     G.plot(x=>x*x,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.7});
     G.plot(x=>x*x+I.B*x+s.c,{stroke:"var(--blue)","stroke-width":1.2});
     if(Math.abs(hx)>1e-9) G.line(0,0,hx,0,{stroke:"var(--amber)","stroke-width":1.1,"marker-end":"none"}); if(Math.abs(hx)>1e-9) G.dot(hx,0,"var(--amber)",1.2);
@@ -1519,7 +1521,7 @@ const complSq=aid({
     if(Math.abs(hx)>1e-9) G.text(hx/2,0,`${hx<0?"left":"right"} ${fracTxt(Math.abs(hx))}`,{dy:-3.2,"text-anchor":"middle","font-size":3.6,fill:"var(--amber)","font-weight":700});
     if(Math.abs(ky)>1e-9) G.text(hx,ky/2,`${ky<0?"down":"up"} ${fracTxt(Math.abs(ky))}`,{dx:hx>=0?-3:3,dy:1,"text-anchor":hx>=0?"end":"start","font-size":3.6,fill:"var(--green)","font-weight":700});
     G.text(hx,ky,`(${fracTxt(hx)}, ${fracTxt(ky)})`,{dx:hx>=0?3:-3,dy:4.5,"text-anchor":hx>=0?"start":"end",fill:"var(--red)","font-weight":700,"font-size":4.2});
-    lab(svg,wide?[192,6]:[68,110],"y = x² "+(I.B<0?"− ":"+ ")+I.A+"x"+(s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""),{"font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    lab(svg,wide?[192,7.5]:[68,110],"y = x² "+(I.B<0?"− ":"+ ")+I.A+"x"+(s.c?(s.c>0?" + ":" − ")+Math.abs(s.c):""),{"font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
     lab(svg,wide?[192,101]:[68,198],"dashed = y = x²",{"font-size":3.2,fill:"var(--muted)"});
   },
   key(s){const I=csI(s), k=s.c-I.qv, cT=s.c===0?"":(s.c>0?" + ":" − ")+Math.abs(s.c), kT=k===0?"":(k>0?" + ":" − ")+toFrac(Math.abs(k));
