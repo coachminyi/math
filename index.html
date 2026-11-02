@@ -494,6 +494,17 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
   .printfoot svg{width:70px;height:70px;flex:none}
   .printfoot b{font-size:14px;color:#000}
 }
+.brand{font-weight:700;font-size:18px;color:var(--ink);text-decoration:none;white-space:nowrap;flex:none;margin-right:14px}
+.topnav{display:flex;gap:2px;margin-right:auto;flex:none}
+.topnav a{position:relative;padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15.5px;white-space:nowrap}
+.topnav a:hover{background:var(--line)}
+.topnav a[aria-current="page"]{color:var(--accent)}
+.topnav a[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:3px;height:2.5px;border-radius:2px;background:var(--accent)}
+.ttl{cursor:pointer}
+@media (min-width:900px){ .bar .ttl,.bar .back,.homeswitch{display:none !important} body[data-page] .bar .lessbtn{display:none} }
+@media (min-width:900px) and (max-width:1180px){ .bar .ibtn .lbl{display:none} .bar .ibtn{padding:0 10px} }
+.ptitle{margin:14px 0 2px;font-size:20px;font-weight:700;line-height:1.25}
+.ptitle span{display:block;font-size:13.5px;font-weight:400;color:var(--muted)}
 .lessbtn{text-decoration:none;font-weight:700;color:var(--accent);border:1px solid var(--line);background:var(--card);height:40px;border-radius:999px;padding:0 14px}
 .lessbtn .lbl{display:inline}
 body[data-page="lessons"] .lessbtn{display:none}
@@ -505,7 +516,9 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 
 <header class="bar"><div class="wrap">
   <button class="back" id="back" aria-label="Back">‹</button>
-  <div class="ttl"><h1 id="title">Coach Minyi's Maths Hub</h1><div class="crumb" id="crumb"></div></div>
+  <a class="brand wide-only" href="#" id="brand">Coach Minyi's Maths Hub</a>
+  <nav class="topnav wide-only" aria-label="Sections"><a href="#sheets" data-n="sheets">Cheatsheets</a><a href="#exam" data-n="exam">Formulas</a><a href="#play" data-n="play">Interactive</a><a href="#lessons" data-n="lessons">Tuition</a></nav>
+  <div class="ttl" id="ttl" title="Home"><h1 id="title">Coach Minyi's Maths Hub</h1><div class="crumb" id="crumb"></div></div>
   <button class="ibtn phone-only" id="zoomBtn" hidden aria-label="Bigger diagram" title="Bigger diagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="ibtn" id="share" hidden aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg><span class="lbl">Copy link</span></button>
   <button class="ibtn wide-only" id="qrBtn" hidden aria-label="Show QR code" title="QR code for this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2M14 19h2v2M19 19h2v2"/></svg><span class="lbl">QR</span></button>
@@ -3672,6 +3685,7 @@ const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.
 let homeView="sheets"; try{ const v=localStorage.getItem("hubHome2"); if(VIEWS.some(([k])=>k===v)) homeView=v; }catch(e){}
 const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome2",v)}catch(e){} };
 const setPage=p=>{ document.body.dataset.page=p; };
+const setNav=k=>document.querySelectorAll(".topnav a").forEach(a=>{ if(a.dataset.n===k) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
 const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
 function sheetRow(s,skip){ return h("a",{class:"srow",href:"#sheet/"+s.id,"data-q":(s.chapter+" "+s.title).toLowerCase()},
@@ -3680,7 +3694,7 @@ function renderHome(keep){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
   backBtn.style.display="none"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
-  cur=null; setPage("home");
+  cur=null; setPage("home"); setNav(homeView);
   const v=homeView;
   const used=LEVELS.filter(l=>homeItems(v).some(x=>x.levels.includes(l.id)));
   if(homeFilter!=="all"&&!used.some(l=>l.id===homeFilter)) homeFilter="all";
@@ -3743,7 +3757,7 @@ function renderLessons(){
   document.title="Maths tuition with Coach Minyi · Maths Hub";
   titleEl.textContent="Maths tuition with Coach Minyi"; crumbEl.textContent="Sec 1–4 · Jurong East";
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
-  cur={t:null,tab:"lessons",state:null,stage:null,sheet:null,lessons:true}; setPage("lessons");
+  cur={t:null,tab:"lessons",state:null,stage:null,sheet:null,lessons:true}; setPage("lessons"); setNav("lessons");
   app.innerHTML=`<div class="lpage"><div class="ltop">${AVATAR("lg")}<h2>Maths tuition in Jurong East</h2></div>
     <p class="lead">Hi, I’m Coach Minyi. I’ve been teaching maths full-time for 8 years, mostly Sec 1 to 4 Maths, ${nw("E-Math")} and ${nw("A-Math")}. Lessons are 1-to-1 or in small groups of up to 3.</p>
     <p class="lead">Quite a few of my Sec 4s this year have been with me since P5. The cheatsheets and interactive aids on this site are what I use with them in class.</p>
@@ -3770,7 +3784,7 @@ function renderTopic(t,tab,prm){
   document.title=t.title+" · Maths Hub";
   titleEl.textContent=t.title; crumbEl.textContent=`${lvl.name} · ${t.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=(tab!=="play"); printBtn.hidden=(tab==="play");
-  remember(t.id); setPage(tab==="play"?"play":"sheet");
+  remember(t.id); setPage(tab==="play"?"play":"sheet"); setNav(tab==="play"?"play":"sheets");
   cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t)};
   app.innerHTML="";
   const tabs=h("div",{class:"tabs",role:"tablist"});
@@ -3780,6 +3794,7 @@ function renderTopic(t,tab,prm){
     b.onclick=()=>{location.hash=t.id+(k==="sheet"?"/sheet":"")};
     tabs.append(b);
   });
+  if(tab==="play") app.append(h("div",{class:"ptitle wide-only"},`${t.title}<span>${lvl.name} · ${t.chapter}</span>`));
   if(t.play&&t.sheet) app.append(tabs); else app.append(h("div",{style:"height:12px"}));
   if(tab==="play"){
     const wrap=h("div",{class:"play"}), left=h("div",{class:"left"}), stage=h("div",{class:"stage"}), key=h("div",{class:"key empty"}), panel=h("div",{class:"panel"});
@@ -3794,7 +3809,7 @@ function renderTopic(t,tab,prm){
   }
   window.scrollTo(0,0);
 }
-const sheetEnd=()=>`<div class="sheetend"><button class="pill sm" type="button" data-print>Print / save as PDF</button></div>`;
+const sheetEnd=exam=>`<div class="sheetend"><a class="pill sm" href="${exam?"#exam":"#sheets"}">← ${exam?"Formulas":"All cheatsheets"}</a><button class="pill sm" type="button" data-print>Print / save as PDF</button></div>`;
 function bindPrint(){ app.querySelectorAll("[data-print]").forEach(b=>b.onclick=printSheet); }
 function fillPrintFoot(withQR){
   const url=topicLink(), pf=$("#printFoot"); let qr="";
@@ -3819,8 +3834,8 @@ function renderSheetOnly(s){
   document.title=s.title+" · Maths Hub";
   titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:`Exam skills · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
-  cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet");
-  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd();
+  cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
+  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
   digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
@@ -3845,6 +3860,7 @@ function topicLink(){
   return base+hsh;
 }
 backBtn.onclick=()=>{ location.hash=""; };
+$("#ttl").onclick=()=>{ if(location.hash.replace(/^#/,"")) location.hash=""; else window.scrollTo(0,0); };
 shareBtn.onclick=async()=>{
   const url=topicLink();
   try{
