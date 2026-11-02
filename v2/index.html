@@ -330,6 +330,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .tabs{padding:6px 0}
 }
 @media (max-width:520px){
+  .big{font-size:18px;line-height:1.5}
   .panelc td.anno{white-space:normal}
   .cmini{width:84px;min-width:84px}
   .panelc td:first-child:has(.cmini){width:88px;padding:4px}
@@ -1274,14 +1275,14 @@ const kinAid=aid({
 
 const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toFrac(A/2),q:toFrac(A*A/4),hv:A/2,qv:A*A/4};};
 const complSq=aid({
-  init:{b:6,c:5,mv:0}, vb:"0 0 130 200", label:"Completing the square with areas, and the graph",
+  init:{b:6,c:5,mv:0}, vb:"0 0 250 104", label:"Completing the square with areas, and the graph",
   explain:[`Cut the strip in half, move it down.`,`Add the <span class="k-red"><b>missing corner</b></span>, then take it away.`],
   sliders:[{k:"b",label:"b",min:-8,max:8,step:1,on:s=>{if(s.b===0)s.b=1}},{k:"c",label:"c",min:-10,max:10,step:1},{k:"mv",label:"move",min:0,max:1,step:.01,show:s=>s.b>0}],
   buttons:[{label:"▶ Cut & move",show:s=>s.b>0,fn:(s,anim)=>{s.mv=0; anim(2200,p=>{s.mv=+p.toFixed(2);});}}],
   steps:[{t:()=>""}],
   draw(svg,s){
-    const wide=window.matchMedia("(min-width:861px) and (orientation:landscape)").matches;
-    svg.setAttribute("viewBox",wide?"0 0 250 104":"0 0 130 200");
+    const wide=true;
+    svg.setAttribute("viewBox","0 0 250 104");
     const I=csI(s), sc=104/14, x0=14, y0=10, X=6*sc, H=I.hv*sc, Bw=I.A*sc, mv=s.b>0?s.mv:0;
     const Rr=(x,y,w,h,fill,stroke,t,col,extra={},g=svg)=>{S_(g,"rect",Object.assign({x,y,width:w,height:h,fill,stroke,"stroke-width":.8},extra));
       if(t){const fs=Math.max(3.4,Math.min(6.5,Math.min(w,h)*.38)); lab(g,[x+w/2,y+h/2+fs*.35],t,{"font-size":fs,fill:col,"font-weight":700,"font-style":"italic"});}};
@@ -1463,7 +1464,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
   </div>
 </div>`,
 
-diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${frac("d","d"+X1)}(${V("u")})<sup>${V("n")}</sup> = ${V("n")}(${V("u")})<sup>${V("n")} − 1</sup> × ${frac("d"+V("u"),"d"+X1)}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,"quotient: diff top × copy bottom − diff bottom × copy top, over bottom²")])}
+diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${nw(`${frac("d","d"+X1)}(${V("u")})<sup>${V("n")}</sup>`)} = ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup> × ${frac("d"+V("u"),"d"+X1)}`)}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,"quotient: diff top × copy bottom − diff bottom × copy top, over bottom²")])}
 <div class="sheet">
   <div class="panelc"><h4>Power rule</h4>
     <p class="big">${frac("d","d"+V("x"))}(${V("x")}<sup>${V("n")}</sup>) = ${V("n")}${V("x")}<sup>${V("n")} − 1</sup></p>
@@ -1547,7 +1548,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
   </div>
 </div>`,
 
-complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`(${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}`,"halve b · add and take away its square"),FB("amber","Turning point",`(−${frac(V("b"),"2")}, ${V("c")} − (${frac(V("b"),"2")})²)`,"read it off the completed square"),FB("green","Min or max value",`${V("k")}, when ${X1} = ${V("h")}`,`from ${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)])}
+complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + ${frac(V("b"),"2")})²`)} − ${nw(`(${frac(V("b"),"2")})²`)} + ${V("c")}`,"halve b · add and take away its square"),FB("amber","Turning point",nw(`(−${frac(V("b"),"2")}, ${V("c")} − (${frac(V("b"),"2")})²)`),"read it off the completed square"),FB("green","Min or max value",`${V("k")}, when ${X1} = ${V("h")}`,`from ${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)])}
 <div class="sheet">
   <div class="panelc"><h4>3 steps: x² + bx + c</h4>
     <ul class="steps">
@@ -1555,7 +1556,7 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`(${X1} + ${frac
       <li>② Add <b>and</b> take away (${frac(V("b"),"2")})²</li>
       <li>③ The first 3 terms make a perfect square</li>
     </ul>
-    <p class="big">${X2} + ${V("b")}${X1} + ${V("c")} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})² + ${V("c")}</p>
+    <p class="big">${nw(`${X2} + ${V("b")}${X1} + ${V("c")}`)} = ${nw(`(${X1} + ${frac(V("b"),"2")})²`)} − ${nw(`(${frac(V("b"),"2")})²`)} + ${V("c")}</p>
     <table>
       <tr><th>Example</th><th>Working</th></tr>
       <tr><td>${X2} + 8${X1} + 5</td><td>= ${X2} + 8${X1} + 16 − 16 + 5<br>= <b>(${X1} + 4)² − 11</b></td></tr>
@@ -1721,7 +1722,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
   </div>
 </div>`,
 
-trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or tan⁻¹ of the POSITIVE value`,"always acute: cos⁻¹ 0.5 = 60°, even for cos θ = −0.5"),FB("blue","ASTC = which ratios are +",`A · S · T · C`,"All · Sin · Tan · Cos, anticlockwise from Q1"),FB("green",`θ from ${AL}`,`${AL} · 180° − ${AL} · 180° + ${AL} · 360° − ${AL}`,"quadrants 1 · 2 · 3 · 4")])}
+trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or tan⁻¹ of the POSITIVE value`,"always acute: cos⁻¹ 0.5 = 60°, even for cos θ = −0.5"),FB("blue","ASTC = which ratios are +",`A · S · T · C`,"All · Sin · Tan · Cos, anticlockwise from Q1"),FB("green",`θ from ${AL}`,`${AL} · ${nw(`180° − ${AL}`)} · ${nw(`180° + ${AL}`)} · ${nw(`360° − ${AL}`)}`,"quadrants 1 · 2 · 3 · 4")])}
 <div class="sheet">
   <div class="panelc"><h4>ASTC: which ratios are positive</h4>
     <a href="#unit-circle?th=150&all=1" class="piclink"><svg viewBox="0 0 220 150" style="width:100%;max-width:300px;display:block;margin:0 auto">
@@ -1953,7 +1954,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
   </div>
 </div>`,
 
-diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the tangent`,`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`,"normal: gradient −1 ÷ m"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y"),FB("green","Max or min?",`${frac("d²"+V("y"),"d"+V("x")+"²")} &lt; 0 max ∩ · &gt; 0 min ∪`,"= 0 → use the sign test")])}
+diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the tangent`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"normal: gradient −1 ÷ m"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y"),FB("green","Max or min?",`${frac("d²"+V("y"),"d"+V("x")+"²")} &lt; 0 max ∩ · &gt; 0 min ∪`,"= 0 → use the sign test")])}
 <div class="sheet">
   <div class="panelc"><h4>Tangent and normal</h4>
     <a href="#tangent-gradient?cv=cubic&x=-1.5&nm=nor" class="piclink"><svg viewBox="0 0 200 80" style="width:100%;max-width:260px;display:block;margin:0 auto">
@@ -2086,7 +2087,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
   </div>
 </div>`,
 
-kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))} · ${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`,`integrate to go back: ${V("a")} → ${V("v")} → ${V("s")}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
+kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,`integrate to go back: ${V("a")} → ${V("v")} → ${V("s")}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
 <div class="sheet">
   <div class="panelc"><h4>s, v, a</h4>
     <table>
@@ -2148,7 +2149,7 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
   </div>
 </div>`,
 
-integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`,"add 1 to the power, divide by the new power"),FB("amber","Definite integral",`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`,"upper − lower, no + c"),FB("red","Area below the axis","integral comes out negative","area = its positive value · split at crossings")])}
+integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`,"add 1 to the power, divide by the new power"),FB("amber","Definite integral",`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}`,"upper − lower, no + c"),FB("red","Area below the axis","integral comes out negative","area = its positive value · split at crossings")])}
 <div class="sheet">
   <div class="panelc"><h4>Why area under a graph = integral</h4>
     <ul class="steps">
@@ -2370,9 +2371,11 @@ function renderTopic(t,tab,prm){
     placeDock();
   } else {
     app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]);
+    fitMust();
   }
   window.scrollTo(0,0);
 }
+function fitMust(){ requestAnimationFrame(()=>fitText(document.querySelector(".must"),true)); }
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
@@ -2380,6 +2383,7 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s};
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title} — cheatsheet</h2>`+SHEETS[s.sheet];
+  fitMust();
   window.scrollTo(0,0);
 }
 
@@ -2520,7 +2524,7 @@ function placeDock(){
   if(docked){ if(dock.parentElement!==play) play.append(dock); }
   else if(dock.parentElement!==panel){ if(slot) slot.after(dock); else panel.prepend(dock); }
 }
-addEventListener("resize",()=>{ placeDock(); fitSoon(); settleKey(document.querySelector(".keybox"),true); });
+addEventListener("resize",()=>{ placeDock(); fitSoon(); settleKey(document.querySelector(".keybox"),true); fitMust(); });
 new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
 window.addEventListener("hashchange",route);
 route();
