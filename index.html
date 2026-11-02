@@ -797,7 +797,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
-  const jump=def.jump?`<div class="pillrow jump">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
+  const jump=def.jump&&def.steps.length>1?`<div class="pillrow jump">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
   panel.innerHTML=`${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${jump}
@@ -1247,7 +1247,9 @@ const diffChord=aid({
     {label:"▶ Shrink h",show:s=>s.step===1,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=+(h0*(1-p)).toFixed(2);});}},
     {label:"↺ h = 1.5",fn:s=>{s.h=1.5}}],
   steps:[
-    {name:"Chord → tangent", t:()=>`Drag <b>Q</b> into <b>P</b>. The <span class="k-amber"><b>chord</b></span> becomes the <span class="k-green"><b>tangent</b></span>.<br>Its gradient = ${DY} = 2${X1} (lower graph).`},
+    {name:"Chord → tangent", t:()=>`Drag <b>Q</b> into <b>P</b>. The <span class="k-amber"><b>chord</b></span> becomes the <span class="k-green"><b>tangent</b></span>.<br>Its gradient = ${DY} = 2${X1} (lower graph).`}
+  ],
+  hiddenSteps:[
     {name:"Square grows by h", t:()=>`Grow the square by ${V("h")}. Extra area ÷ ${V("h")} = 2${X1} + ${V("h")}.<br>Shrink ${V("h")} → 0: the rate → <b>2${X1}</b>.`}
   ],
   draw(svg,s){
@@ -2152,8 +2154,8 @@ rFormula:`${MUST([FB("blue",nw(`${CV("blue","R")} = ${SQRT(`${V("a")}² + ${V("b
       <li>${nw(`${V("R")} = ${SQRT("3² + 4²")} = 5`)} <span class="tagop">${V("a")} = 3, ${V("b")} = 4</span></li>
       <li>${nw(`tan ${AL} = ${frac("4","3")}`)} → ${nw(`${AL} = 53.13°`)}</li>
       <li>${nw("3 cos θ + 4 sin θ")} = ${nw("5 cos(θ − 53.13°)")}</li>
-      <li>Max = <b>5</b> when θ − 53.13° = 0° → θ = 53.1°</li>
-      <li>Min = <b>−5</b> when θ − 53.13° = 180° → θ = 233.1°</li>
+      <li>Max = <b>5</b> when θ − 53.13° = 0° → θ = 53.1° (1 d.p.)</li>
+      <li>Min = <b>−5</b> when θ − 53.13° = 180° → θ = 233.1° (1 d.p.)</li>
     </ul>
     ${rWave()}
     <p class="anno">* max = ${V("R")}, min = −${V("R")}, because sin and cos are always between −1 and 1</p>
@@ -2443,7 +2445,7 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
   </div>
 </div>`,
 
-integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`,"add 1 to the power, divide by the new power"),FB("amber","Definite integral",`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}`,"upper − lower, no + c"),FB("red","Area below the axis","integral comes out negative","area = its positive value · split at crossings")])}
+integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`,"add 1 to the power, divide by the new power"),FB("amber","Definite integral",`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}`,"upper − lower, no + c"),FB("green","+ c","every indefinite integral","a point on the curve finds c")])}
 <div class="sheet">
   <div class="panelc"><h4>Why area under a graph = integral</h4>
     <ul class="steps">
@@ -2482,40 +2484,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
       <li>= ${frac("38","6")} = <b>${frac("19","3")}</b></li>
     </ul>
     <p class="anno">* no + ${V("c")} for a definite integral</p>
-  </div>
-
-  <div class="panelc"><h4>Area: 4 cases</h4>
-    <table>
-      <tr><th>Region</th><th>Integral comes out</th><th>Area</th></tr>
-      <tr><td>above the ${X1}-axis</td><td>positive</td><td>= the integral</td></tr>
-      <tr><td>below the ${X1}-axis</td><td>negative</td><td>= its positive value</td></tr>
-      <tr><td>crosses the ${X1}-axis</td><td>parts cancel</td><td>split at the crossing, add positive values</td></tr>
-      <tr><td>between the curve and the ${V("y")}-axis</td><td>use ${nw(`∫ ${X1} d${V("y")}`)}, not ${nw(`∫ ${V("y")} d${X1}`)}</td><td>make ${X1} the subject first</td></tr>
-    </table>
-    <svg viewBox="0 0 220 60" style="width:100%;max-width:300px;display:block;margin:6px auto 0">
-      <path d="M20.0,40.0 20.0,13.0 21.5,14.2 23.0,15.4 24.5,16.5 26.0,17.6 27.5,18.8 29.0,19.8 30.5,20.9 32.0,22.0 33.5,23.0 35.0,24.0 36.5,25.0 38.0,26.0 39.5,26.9 41.0,27.8 42.5,28.8 44.0,29.6 45.5,30.5 47.0,31.4 48.5,32.2 50.0,33.0 51.5,33.8 53.0,34.6 54.5,35.3 56.0,36.0 57.5,36.8 59.0,37.4 60.5,38.1 62.0,38.8 63.5,39.4 65.0,40.0 65.0,40.0Z" fill="var(--blue-fill)"/><path d="M65.0,40.0 65.0,40.0 68.0,41.2 71.0,42.2 74.0,43.2 77.0,44.2 80.0,45.0 83.0,45.8 86.0,46.4 89.0,47.0 92.0,47.6 95.0,48.0 98.0,48.4 101.0,48.6 104.0,48.8 107.0,49.0 110.0,49.0 113.0,49.0 116.0,48.8 119.0,48.6 122.0,48.4 125.0,48.0 128.0,47.6 131.0,47.0 134.0,46.4 137.0,45.8 140.0,45.0 143.0,44.2 146.0,43.2 149.0,42.2 152.0,41.2 155.0,40.0 155.0,40.0Z" fill="var(--red-fill)"/>
-      <line x1="10" y1="40" x2="200" y2="40" stroke="var(--ink)"/>
-      <path d="M20.0,13.0 24.1,16.2 28.1,19.2 32.1,22.1 36.2,24.8 40.2,27.4 44.3,29.8 48.4,32.1 52.4,34.3 56.4,36.3 60.5,38.1 64.5,39.8 68.6,41.4 72.7,42.8 76.7,44.1 80.8,45.2 84.8,46.2 88.8,47.0 92.9,47.7 97.0,48.2 101.0,48.6 105.1,48.9 109.1,49.0 113.1,49.0 117.2,48.8 121.2,48.4 125.3,48.0 129.4,47.3 133.4,46.6 137.5,45.7 141.5,44.6 145.6,43.4 149.6,42.0 153.6,40.5 157.7,38.9 161.8,37.1 165.8,35.2 169.9,33.1 173.9,30.9 178.0,28.5 182.0,26.0" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--red)" font-weight="700">−</text>
-      <g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="65" y="54">1</text><text x="155" y="54">3</text><text x="20" y="54">0</text></g>
-    </svg>
-    ${EG(`e.g. the picture: ${nw(`${V("y")} = ${X2} − 4${X1} + 3`)}`,[`${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${V("y")} d${X1} = ${frac("4","3")}`)} <span class="k-blue">above</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> ${V("y")} d${X1} = −${frac("4","3")}`)} <span class="k-red">below</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> ${V("y")} d${X1} = 0`)} ✗ not the area`,`area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = <b>${frac("8","3")}</b>`)}`])}
-  </div>
-
-  <div class="panelc"><h4>Curve and a straight line</h4>
-    <ul class="steps">
-      <li>Area between them = ∫ (upper − lower) d${X1}</li>
-      <li>or: area of a triangle / trapezium ± area under the curve</li>
-    </ul>
-    <p class="anno">* find where they meet first; those ${X1}-values are the limits</p>
-    <svg viewBox="0 0 150 80" class="lsp wide" aria-hidden="true"><path d="M18.0 70.0 L90.0 34.0 L87.6 31.7 L85.2 29.7 L82.8 27.9 L80.4 26.3 L78.0 25.0 L75.6 23.9 L73.2 23.1 L70.8 22.5 L68.4 22.1 L66.0 22.0 L63.6 22.1 L61.2 22.5 L58.8 23.1 L56.4 23.9 L54.0 25.0 L51.6 26.3 L49.2 27.9 L46.8 29.7 L44.4 31.7 L42.0 34.0 L39.6 36.5 L37.2 39.3 L34.8 42.3 L32.4 45.5 L30.0 49.0 L27.6 52.7 L25.2 56.7 L22.8 60.9 L20.4 65.3 Z" fill="var(--blue-fill)"/>
-      <path d="M8 70 H142 M18 70 V3" fill="none" stroke="var(--ink)"/><line x1="90" y1="34" x2="90" y2="70" stroke="var(--muted)" stroke-dasharray="3 2"/>
-      <path d="M18.0 70.0 L20.4 65.4 L22.7 61.0 L25.1 56.8 L27.5 52.9 L29.9 49.2 L32.2 45.8 L34.6 42.5 L37.0 39.6 L39.3 36.8 L41.7 34.3 L44.1 32.0 L46.4 30.0 L48.8 28.1 L51.2 26.6 L53.6 25.2 L55.9 24.1 L58.3 23.2 L60.7 22.6 L63.0 22.2 L65.4 22.0 L67.8 22.1 L70.2 22.4 L72.5 22.9 L74.9 23.6 L77.3 24.6 L79.6 25.9 L82.0 27.3 L84.4 29.0 L86.8 31.0 L89.1 33.1 L91.5 35.5 L93.9 38.2 L96.2 41.0 L98.6 44.1 L101.0 47.5 L103.3 51.1 L105.7 54.9 L108.1 58.9 L110.5 63.2 L112.8 67.7 L115.2 72.4" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <line x1="18" y1="70" x2="123.6" y2="17.2" stroke="var(--amber)" stroke-width="2"/><circle cx="18" cy="70" r="2.2" fill="var(--red)"/><circle cx="90" cy="34" r="2.2" fill="var(--red)"/>
-      <text x="66" y="7" font-size="6.5" fill="var(--blue)" text-anchor="middle">upper</text><text x="66" y="15" font-size="7" font-weight="700" fill="var(--blue)" text-anchor="middle"><tspan font-style="italic">y</tspan> = 4${RX} − ${RX}²</text>
-      <text x="126" y="20" font-size="7" font-weight="700" fill="var(--amber)"><tspan font-style="italic">y</tspan> = ${RX}</text><text x="126" y="28" font-size="6.5" fill="var(--amber)">lower</text>
-      <text x="54" y="40" font-size="6.5" fill="var(--ink)" text-anchor="middle">area</text><text x="18" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">0</text><text x="90" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">3</text></svg>
-    ${EG(`e.g. the picture: ${nw(`${V("y")} = 4${X1} − ${X2}`)} and ${nw(`${V("y")} = ${X1}`)}`,[`meet: ${nw(`4${X1} − ${X2} = ${X1}`)}`,`${nw(`${X1}(3 − ${X1}) = 0`)}, so ${nw(`${X1} = 0`)} or 3`,`upper − lower: ${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (4${X1} − ${X2} − ${X1}) d${X1}`)}`,nw(`= ∫<span class="lim"><sup>3</sup><sub>0</sub></span> (3${X1} − ${X2}) d${X1}`),nw(`= [${frac("3"+X2,"2")} − ${frac(V("x")+"³","3")}]<span class="lim"><sup>3</sup><sub>0</sub></span>`),nw(`= ${frac("27","2")} − 9 = <b>${frac("9","2")} units²</b>`)])}
+    <p class="anno">* areas (below the axis, curve and line, tangent triangles): <a href="#sheet/applications-of-integration">Applications of integration</a></p>
   </div>
 
   <div class="panelc"><h4>Reverse of differentiation</h4>
@@ -2553,7 +2522,7 @@ const SHEETLIST=[
   {id:"differentiation-rules",levels:["amath"],ord:11,chapter:"Differentiation",title:"Differentiation rules",sheet:"diffBasics",aid:"diff-x-squared"},
   {id:"differentiation-uses",levels:["amath"],ord:12,chapter:"Differentiation",title:"Uses of differentiation",sheet:"diffApps",aid:"tangent-gradient"},
   {id:"kinematics",levels:["amath"],ord:15,chapter:"Kinematics",title:"Kinematics",sheet:"kinematics",aid:"area-under"},
-  {id:"integration",levels:["amath"],ord:13,chapter:"Integration",title:"Integration & area",sheet:"integration",aid:null}
+  {id:"integration",levels:["amath"],ord:13,chapter:"Integration",title:"Integration",sheet:"integration",aid:null}
 ];
 const MX=(rows,cls="")=>`<span class="mx${cls?" "+cls:""}" style="grid-template-columns:repeat(${rows[0].length},auto)">${rows.map(r=>r.map(c=>`<span>${c}</span>`).join("")).join("")}</span>`;
 const SF=(x,y,n,d,col="var(--ink)")=>`<text x="${x}" y="${y-2.5}" font-size="8" text-anchor="middle" fill="${col}">${n}</text><line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="${col}" stroke-width="1"/><text x="${x}" y="${y+8.5}" font-size="8" text-anchor="middle" fill="${col}">${d}</text>`;
@@ -3986,7 +3955,7 @@ ${PAN("One rule, any base",`<p class="big">${nw("volume = base area × height")}
   <tr><td>triangle</td><td>${nw(`${frac("1","2")} × base × height`)} of the triangle</td></tr></table>
   ${picPrismBase()}<p class="anno">* a prism lying down: its "height" is the length</p>`)}
 ${PAN("The solids",PICS(PIC(null,picSolid("cuboid"),nw(`${V("V")} = ${V("lbh")}`),`surface ${nw(`2${V("lb")} + 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`),PIC(null,picSolid("cyl"),nw(`${V("V")} = π${V("r")}²${V("h")}`),`surface ${nw(`2π${V("r")}² + 2π${V("r")} × ${V("h")}`)}`),PIC(null,picSolid("prism"),`${V("V")} = ${nw("triangle area × length")}`,"2 triangles + toilet paper")))}
-${PAN("Cylinder",picCylNet()+EG(`${nw(`${V("r")} = 4 cm`)}, ${nw(`${V("h")} = 10 cm`)}`,[nw("V = base area × height"),nw("= π(4)² × 10 = 160π"),nw("= 503 cm³ (3 s.f.)"),"surface = 2 circles + toilet paper",nw("= 2π(4)² + 2π(4) × 10"),nw("= 32π + 80π = 112π = 352 cm²")]))}
+${PAN("Cylinder",picCylNet()+EG(`${nw(`${V("r")} = 4 cm`)}, ${nw(`${V("h")} = 10 cm`)}`,[nw("V = base area × height"),nw("= π(4)² × 10 = 160π"),nw("= 503 cm³ (3 s.f.)"),"surface = 2 circles + toilet paper",nw("= 2π(4)² + 2π(4) × 10"),nw("= 32π + 80π = 112π"),nw("= 352 cm² (3 s.f.)")]))}
 ${PAN("Triangular prism",picPrismQ()+EG("Triangle: base 6 cm, height 4 cm. Length 10 cm.",[nw(`base area = ${frac("1","2")} × 6 × 4 = 12 cm²`),nw("V = 12 × 10 = 120 cm³")]))}
 ${PAN("Capacity",FACTS("",[["",["1 litre = 1000 cm³","18 000 cm³ = 18 litres"]]]))}
 ${MIST([["closed cylinder surface = 2πrh only",`add the 2 circles: ${nw("2πr² + 2πr × h")}`],["r = the diameter","halve the diameter first"],["volume in cm²","volume is in cm³"]])}
@@ -4107,9 +4076,9 @@ s2Trig:`${MUST([FB("blue","TOA",nw(`tan θ = ${frac("opp","adj")}`)),FB("amber",
 <div class="sheet">
 ${PAN("They're ratios",`<p>sin, cos and tan are ratios of the sides of a right-angled triangle: ${nw("one side ÷ another")}.</p>`+picTwo40()+EG("tan 40° = 0.839…",["in every right-angled triangle with a 40° angle,",nw("opp ÷ adj = 0.839…")]))}
 ${PAN("Label the sides",picRight("trig")+STEPS(["hyp: the longest side, opposite the right angle","opp: opposite θ","adj: next to θ (not the hyp)"]))}
-${PAN("Find a side",picTrigQ(35,"35°","hyp 10",`opp ${RX}`,"")+STEPS([[nw(`sin 35° = ${frac(X1,"10")}`),"hyp 10, find opp: SOH"],nw(`${X1} = 10 sin 35° = 5.74 cm`)])
-  +picTrigQ(40,"40°","","opp 7",`adj ${RX}`)+STEPS([[nw(`tan 40° = ${frac("7",X1)}`),"opp 7, find adj: TOA"],nw(`${X1} = ${frac("7","tan 40°")} = 8.34 cm`)]))}
-${PAN("Find an angle",picTrigQ(32,"θ","","opp 5","adj 8")+STEPS([[nw(`tan θ = ${frac("5","8")}`),"opp 5, adj 8: TOA"],[nw("θ = tan⁻¹ 0.625 = 32.0°"),"SHIFT, then tan"]]))}
+${PAN("Find a side",picTrigQ(35,"35°","hyp 10",`opp ${RX}`,"")+STEPS([[nw(`sin 35° = ${frac(X1,"10")}`),"hyp 10, find opp: SOH"],nw(`${X1} = 10 sin 35°`),nw("= 5.74 cm (3 s.f.)")])
+  +picTrigQ(40,"40°","","opp 7",`adj ${RX}`)+STEPS([[nw(`tan 40° = ${frac("7",X1)}`),"opp 7, find adj: TOA"],nw(`${X1} = ${frac("7","tan 40°")}`),nw("= 8.34 cm (3 s.f.)")]))}
+${PAN("Find an angle",picTrigQ(32,"θ","","opp 5","adj 8")+STEPS([[nw(`tan θ = ${frac("5","8")}`),"opp 5, adj 8: TOA"],[nw("θ = tan⁻¹ 0.625"),"SHIFT, then tan"],nw("= 32.0° (1 d.p.)")]))}
 ${PAN("3 steps",STEPS(["① label opp, adj, hyp from θ","② pick TOA, CAH or SOH: the one with the side you have and the side you want","③ calculator in degrees (D on the screen)"]))}
 ${MIST([["calculator not in degrees","check for D at the top of the screen"],["label opp and adj from the wrong angle","label from θ every time"],[`${nw(`${X1} = 7 tan 40°`)} when ${X1} is on the bottom`,nw(`${X1} = 7 ÷ tan 40°`)]])}
 </div>`,
@@ -4119,9 +4088,9 @@ s2Volume:`${MUST([FB("blue","Pyramid and cone",nw(`${V("V")} = ${frac("1","3")} 
 ${PAN(`Why ${frac("1","3")}?`,STEPS([[nw(`${V("V")} = base area × height`),"prism, cylinder"],[nw(`${V("V")} = ${frac("1","3")} × base area × height`),"pyramid, cone"]])+picThird()+`<p class="anno">* same base, same height: 3 cones of water fill the cylinder exactly, so 1 cone is ${frac("1","3")} of it</p><p class="anno">* a pyramid is ${frac("1","3")} of the box it fits in, the same way</p>`)}
 ${PAN("The solids",PICS(PIC(null,picSolid("pyr"),nw(`${V("V")} = ${frac("1","3")} × base area × ${V("h")}`)),PIC(null,picSolid("cone"),nw(`${V("V")} = ${frac("1","3")}π${V("r")}²${V("h")}`),`curved surface ${nw(`π${V("rl")}`)}`),PIC(null,picSolid("sphere"),nw(`${V("V")} = ${frac("4","3")}π${V("r")}³`),`surface ${nw(`4π${V("r")}²`)}`)))}
 ${PAN("Cone",picConeQ()+EG(`${nw(`${V("r")} = 3 cm`)}, ${nw(`${V("h")} = 4 cm`)}`,[nw(`${V("l")} = ${SQRT("3² + 4²")} = 5 cm`),nw(`${V("V")} = ${frac("1","3")}π(3)²(4) = 12π`),nw("= 37.7 cm³ (3 s.f.)"),"total surface area = curved + base",nw("= π(3)(5) + π(3)²"),nw("= 15π + 9π = 24π"),nw("= 75.4 cm² (3 s.f.)")]))}
-${PAN("Sphere",EG(nw(`${V("r")} = 6 cm`),[nw(`${V("V")} = ${frac("4","3")}π(6)³ = 288π = 905 cm³`),nw("surface = 4π(6)² = 144π = 452 cm²")]))}
+${PAN("Sphere",EG(nw(`${V("r")} = 6 cm`),[nw(`${V("V")} = ${frac("4","3")}π(6)³ = 288π`),nw("= 905 cm³ (3 s.f.)"),nw("surface area = 4π(6)² = 144π"),nw("= 452 cm² (3 s.f.)")]))}
 ${PAN("Pyramid",picPyrQ()+EG("Square base 10 cm by 10 cm, height 12 cm",[nw("base area = 10 × 10 = 100 cm²"),nw(`${V("V")} = ${frac("1","3")} × 100 × 12 = 400 cm³`)]))}
-${PAN("Hemisphere",picHemi()+STEPS([[nw(`curved surface = 2π${V("r")}²`),`half of 4π${V("r")}²`],[nw(`solid: 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`),"+ the flat circle"],nw(`${V("r")} = 5: 3π(25) = 75π = 236 cm²`)])+`<p class="anno">* in the SEC exam the cone and sphere formulas are given: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a></p>`)}
+${PAN("Hemisphere",picHemi()+STEPS([[nw(`curved surface = 2π${V("r")}²`),`half of 4π${V("r")}²`],[nw(`solid: 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`),"+ the flat circle"],nw(`${V("r")} = 5 cm: 3π(5)² = 75π`),nw("= 236 cm² (3 s.f.)")])+`<p class="anno">* in the SEC exam the cone and sphere formulas are given: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a></p>`)}
 ${MIST([["slant height in the volume",`use the vertical height ${V("h")}`],[`forget the ${frac("1","3")}`,`${nw(`× ${frac("1","3")}`)} for pyramids and cones`],[`solid hemisphere surface = ${nw(`2π${V("r")}²`)}`,`+ the flat face: ${nw(`3π${V("r")}²`)}`]])}
 </div>`,
 
@@ -4258,40 +4227,40 @@ emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"
 <div class="sheet">
 ${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its opposite angle"),PIC(null,picRule("sas"),"Cosine rule","2 sides and the angle between"),PIC(null,picRule("sss"),"Cosine rule","all 3 sides"))+`<p class="anno">* a right angle? TOA CAH SOH is quicker</p>`)}
 ${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
-  +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9°"),nw("or θ = 180° − 36.9° = 143.1°")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
-${PAN("Sine rule",picSineQ()+EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm")])
-  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6°`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
+  +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9° (1 d.p.)"),nw("or θ = 180° − 36.9° = 143.1°")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
+${PAN("Sine rule",picSineQ()+EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm (3 s.f.)")])
+  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6° (1 d.p.)`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
 ${PAN("Cosine rule",STEPS([[nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`),"to find an angle"]])
-  +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")} = 7.55`)])
-  +picCosQ()+EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8°")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
-${PAN("Area",EG("Sides 6 cm and 9 cm, with 50° between them",[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm²")])
-  +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),nw("sin θ = 0.8"),nw("θ = 53.1° or 126.9°")])+`<p class="anno">* sin gives 2 angles: keep both unless one can't fit</p>`)}
+  +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")}`),nw("= 7.55 (3 s.f.)")])
+  +picCosQ()+EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8° (1 d.p.)")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
+${PAN("Area",EG("Sides 6 cm and 9 cm, with 50° between them",[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm² (3 s.f.)")])
+  +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),nw("sin θ = 0.8"),nw("θ = 53.1° or 126.9° (1 d.p.)")])+`<p class="anno">* sin gives 2 angles: keep both unless one can't fit</p>`)}
 ${MIST([[nw("cos 130° = cos 50°"),nw("cos 130° = −cos 50°")],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("180° − 36.9° = 143.1°")}`],[nw(`${V("a")}² = (49 + 64 − 112) cos 60°`),`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first: ${nw("113 − 56")}`],["rounding in the middle","keep 5 s.f. in working, give 3 s.f. at the end (angles 1 d.p.)"]])}
 </div>`,
 
 emTrigApp:`${MUST([FB("blue","Looking up or down","from the horizontal","up: elevation · down: depression"),FB("amber","Bearing","from North, clockwise",nw("3 figures: 065°")),FB("green","Which rule?","right angle? TOA CAH SOH","no right angle? sine or cosine rule")])}
 <div class="sheet">
 ${PAN("Elevation and depression",picElev()+STEPS([[nw("depression = elevation"),"alt. ∠s, horizontals &#47;&#47;"]])
-  +EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw(`tan 28° = ${frac(V("h"),"30")}`),nw(`${V("h")} = 30 tan 28° = 15.951 m`),nw("height = 1.6 + 15.951"),nw("= 17.6 m")])+`<p class="anno">* add the eye level at the end</p>`)}
-${PAN("Two points, one tower",picTower()+EG("A tower is 50 m tall. From A the angle of elevation of the top is 30°, from B it is 45°. A and B are on the same side, in a line with the tower.",["B to the foot of the tower:",nw("50 ÷ tan 45° = 50 m"),"A to the foot of the tower:",nw("50 ÷ tan 30° = 86.603 m"),nw("AB = 86.603 − 50 = 36.6 m")])+`<p class="anno">* two right-angled triangles, one tan each</p>`)}
+  +EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw(`tan 28° = ${frac(V("h"),"30")}`),nw(`${V("h")} = 30 tan 28° = 15.951 m`),nw("height = 1.6 + 15.951"),nw("= 17.6 m (3 s.f.)")])+`<p class="anno">* add the eye level at the end</p>`)}
+${PAN("Two points, one tower",picTower()+EG("A tower is 50 m tall. From A the angle of elevation of the top is 30°, from B it is 45°. A and B are on the same side, in a line with the tower.",["B to the foot of the tower:",nw("50 ÷ tan 45° = 50 m"),"A to the foot of the tower:",nw("50 ÷ tan 30° = 86.603 m"),nw("AB = 86.603 − 50"),nw("= 36.6 m (3 s.f.)")])+`<p class="anno">* two right-angled triangles, one tan each</p>`)}
 ${PAN("Bearings",picBearing()+STEPS(["start at the point after “from”","face North, turn clockwise"])+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">* going back: add or subtract 180°</p>`)}
-${PAN("Journeys",picJourney()+EG("A ship sails 12 km on a bearing of 040°, then 8 km on 120°. How far is it from the start?",[`bearing of A from B: ${nw("040° + 180° = 220°")}`,`angle at B: ${nw("220° − 120° = 100°")}`,nw("AC² = 12² + 8² − 2(12)(8) cos 100°"),nw("= 241.34"),nw("AC = 15.5 km")]))}
-${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6°")])+`<p class="anno">* pyramid, slant EDGE and the base: use half the base diagonal · slant FACE and the base: use half the base side</p>`)}
-${PAN("Shortest distance",picShortest()+EG("C is 150 m from A. A straight path from A makes 35° with AC. A 40 m pole stands at C. Find the greatest angle of elevation of its top from the path.",[`${nw("shortest distance = 150 sin 35°")} ${nw("= 86.036 m")}`,nw(`tan θ = ${frac("40","86.036")}`),nw("θ = 24.9°")])+`<p class="anno">* the shortest distance is perpendicular to the path, and gives the greatest angle</p>`)}
+${PAN("Journeys",picJourney()+EG("A ship sails 12 km on a bearing of 040°, then 8 km on 120°. How far is it from the start?",[`bearing of A from B: ${nw("040° + 180° = 220°")}`,`angle at B: ${nw("220° − 120° = 100°")}`,nw("AC² = 12² + 8² − 2(12)(8) cos 100°"),nw("= 241.34"),nw("AC = 15.5 km (3 s.f.)")]))}
+${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6° (1 d.p.)")])+`<p class="anno">* pyramid, slant EDGE and the base: use half the base diagonal · slant FACE and the base: use half the base side</p>`)}
+${PAN("Shortest distance",picShortest()+EG("C is 150 m from A. A straight path from A makes 35° with AC. A 40 m pole stands at C. Find the greatest angle of elevation of its top from the path.",[`${nw("shortest distance = 150 sin 35°")} ${nw("= 86.036 m")}`,nw(`tan θ = ${frac("40","86.036")}`),nw("θ = 24.9° (1 d.p.)")])+`<p class="anno">* the shortest distance is perpendicular to the path, and gives the greatest angle</p>`)}
 ${MIST([["angle of depression from the vertical","from the horizontal"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`add or subtract ${nw("180°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`]])}
 </div>`,
 
 emArcs:`${MUST([FB("blue","Radians",nw("π rad = 180°"),"1 rad: the arc = the radius"),FB("amber","Arc length",nw(`${V("s")} = ${V("rθ")}`),"θ in radians"),FB("green","Sector area",nw(`${frac("1","2")}${V("r")}²${V("θ")}`),"θ in radians")])}
 <div class="sheet">
 ${PAN("In degrees",picSector()+STEPS([nw(`arc = ${frac("θ","360°")} × 2π${V("r")}`),nw(`sector = ${frac("θ","360°")} × π${V("r")}²`)])
-  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm")} (keep 7.854 for the perimeter)`,nw(`sector = ${frac("75°","360°")} × π(6)² = 23.6 cm²`),nw("perimeter = 6 + 6 + 7.854 = 19.9 cm")])+`<p class="anno">* perimeter = the 2 radii + the arc</p>`)}
+  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm")} (keep 7.854 for the perimeter)`,nw(`sector = ${frac("75°","360°")} × π(6)²`),nw("= 23.6 cm² (3 s.f.)"),nw("perimeter = 6 + 6 + 7.854"),nw("= 19.9 cm (3 s.f.)")])+`<p class="anno">* perimeter = the 2 radii + the arc</p>`)}
 ${PAN("Degrees and radians",pic1rad()+STEPS([[nw(`× ${frac("π","180°")}`),"degrees to radians"],[nw(`× ${frac("180°","π")}`),"radians to degrees"]])
   +FACTS("Worth knowing",[["",[nw("180° = π"),nw(`90° = ${frac("π","2")}`),nw(`60° = ${frac("π","3")}`),nw(`45° = ${frac("π","4")}`),nw(`30° = ${frac("π","6")}`)]]])
-  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad"),nw(`1.2 rad = 1.2 × ${frac("180°","π")} = 68.8°`)])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`)}
+  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad"),nw(`1.2 rad = 1.2 × ${frac("180°","π")}`),nw("= 68.8° (1 d.p.)")])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`)}
 ${PAN("In radians",EG(`${nw(`${V("r")} = 5 cm`)}, ${nw("θ = 1.2 rad")}`,[nw(`${V("s")} = 5 × 1.2 = 6 cm`),nw(`area = ${frac("1","2")} × 5² × 1.2 = 15 cm²`)])
   +EG(`Backwards: area 24 cm², ${nw(`${V("r")} = 4 cm`)}. Find θ.`,[nw(`${frac("1","2")} × 4² × θ = 24`),nw("8θ = 24"),nw("θ = 3 rad")])+`<p class="anno">* both radian formulas are on the <a href="#sheet/emath-formula-sheet">formula sheet</a></p>`)}
 ${PAN("Segment",picSegment()+STEPS([nw("segment = sector − triangle"),nw(`= ${frac("1","2")}${V("r")}²θ − ${frac("1","2")}${V("r")}² sin θ`)])
-  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 1.4 rad")}, calculator in RAD`,[nw(`sector = ${frac("1","2")}(6)²(1.4) = 25.2`),nw(`triangle = ${frac("1","2")}(6)² sin 1.4 = 17.738`),nw("segment = 25.2 − 17.738 = 7.46 cm²")])+`<p class="anno">* know the chord but not θ? Use ${nw(`sin ${frac("θ","2")} = ${frac("half chord",V("r"))}`)} to find ${frac("θ","2")}, then double it to get θ</p>`)}
+  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 1.4 rad")}, calculator in RAD`,[nw(`sector = ${frac("1","2")}(6)²(1.4) = 25.2`),nw(`triangle = ${frac("1","2")}(6)² sin 1.4 = 17.738`),nw("segment = 25.2 − 17.738"),nw("= 7.46 cm² (3 s.f.)")])+`<p class="anno">* know the chord but not θ? Use ${nw(`sin ${frac("θ","2")} = ${frac("half chord",V("r"))}`)} to find ${frac("θ","2")}, then double it to get θ</p>`)}
 ${MIST([[`${nw(`${V("s")} = ${V("rθ")}`)} with θ in degrees`,"change θ to radians first"],[`${nw("sin 1.2")} in degree mode`,"calculator in RAD"],["perimeter of a sector = the arc",`add the 2 radii: ${nw(`2${V("r")} + ${V("s")}`)}`],["major arc worked out with θ",`use ${nw("2π − θ")} (or ${nw("360° − θ")})`]])}
 </div>`,
 
@@ -4399,11 +4368,11 @@ amLogs:`${MUST([FB("blue","Index form ⇔ log form",nw(`${V("y")} = ${V("a")}<su
 ${PAN("Laws of logs",STEPS([[nw(`${LOGA(V("a"))} ${X1} + ${LOGA(V("a"))} ${V("y")} = ${LOGA(V("a"))} ${V("xy")}`),"product"],[nw(`${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")} = ${LOGA(V("a"))} ${frac(X1,V("y"))}`),"quotient"],[nw(`${LOGA(V("a"))} ${X1}<sup>${V("r")}</sup> = ${V("r")} ${LOGA(V("a"))} ${X1}`),"power"]])
   +FACTS("Special values",[["",[nw(`${LOGA(V("a"))} ${V("a")} = 1`),nw(`${LOGA(V("a"))} 1 = 0`),nw(`${V("a")}<sup>${LOGA(V("a"))} ${V("b")}</sup> = ${V("b")}`)]]])+`<p class="anno">* the laws only work when every log has the same base</p>`)}
 ${PAN("Exponential equations",EG(nw(`2<sup>${X1} + 1</sup> = 32`),[nw(`2<sup>${X1} + 1</sup> = 2⁵`),nw(`${X1} + 1 = 5, ${X1} = 4`)])
-  +EG(nw(`3<sup>${X1}</sup> = 20`),["20 isn't a power of 3, so take lg",nw(`lg 3<sup>${X1}</sup> = lg 20`),nw(`${X1} lg 3 = lg 20`),nw(`${X1} = ${frac("lg 20","lg 3")} = 2.73`)]))}
+  +EG(nw(`3<sup>${X1}</sup> = 20`),["20 isn't a power of 3, so take lg",nw(`lg 3<sup>${X1}</sup> = lg 20`),nw(`${X1} lg 3 = lg 20`),nw(`${X1} = ${frac("lg 20","lg 3")}`),nw("= 2.73 (3 s.f.)")]))}
 ${PAN(`Substitute ${nw(`${V("u")} = ${V("a")}<sup>${X1}</sup>`)}`,EG(nw(`2<sup>2${X1}</sup> − 6(2<sup>${X1}</sup>) + 8 = 0`),[`let ${nw(`${V("u")} = 2<sup>${X1}</sup>`)}: ${nw(`${V("u")}² − 6${V("u")} + 8 = 0`)}`,nw(`(${V("u")} − 2)(${V("u")} − 4) = 0`),`${nw(`2<sup>${X1}</sup> = 2`)} or ${nw(`2<sup>${X1}</sup> = 4`)}`,nw(`${X1} = 1 or ${X1} = 2`)])+`<p class="anno">* ${nw(`2<sup>2${X1}</sup> = (2<sup>${X1}</sup>)² = ${V("u")}²`)}: let ${V("u")} be the smaller power</p>`)}
 ${PAN("Log equations",EG(nw(`lg(${X1} + 3) + lg ${X1} = 1`),[nw(`lg [${X1}(${X1} + 3)] = 1`),`${nw(`lg ${V("A")} = 1`)} means ${nw(`${V("A")} = 10¹`)}`,nw(`${X1}(${X1} + 3) = 10¹`),nw(`${X2} + 3${X1} − 10 = 0`),nw(`(${X1} + 5)(${X1} − 2) = 0`),`${nw(`${X1} = 2`)} (reject −5: ${nw("lg(−5)")} is undefined)`])+`<p class="anno">* check every answer in every log</p>`)}
 ${PAN("The graphs",picExpLog()+STEPS([[nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`),`through (0, 1), never touches the ${X1}-axis`],[nw(`${V("y")} = ${LOGA(V("a"))} ${X1}`),`through (1, 0), never touches the ${V("y")}-axis`]])+`<p class="anno">* they are mirror images in the line ${nw(`${V("y")} = ${X1}`)}</p>`)}
-${MIST([[`${nw(`${LOGA(V("a"))}(${X1} − ${V("y")})`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`,`only ${nw(`${LOGA(V("a"))} ${frac(X1,V("y"))}`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`],[nw(`lg ${X1}³ = (lg ${X1})³`),nw(`lg ${X1}³ = 3 lg ${X1}`)],[nw(`${LOGA("2")} ${X1} + ${LOGA("4")} ${X1} = ${LOGA("2")} ${X2}`),`same base first: ${nw(`${LOGA("4")} ${X1} = ${frac("1","2")}${LOGA("2")} ${X1}`)}`],[`${nw(`2<sup>${X1}</sup> = 10`)}, so ${nw(`${X1} = ${frac("10","2")}`)}`,nw(`${X1} = ${frac("lg 10","lg 2")} = 3.32`)],["keep a root that puts a negative inside a log","reject it, and say why"]])}
+${MIST([[`${nw(`${LOGA(V("a"))}(${X1} − ${V("y")})`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`,`only ${nw(`${LOGA(V("a"))} ${frac(X1,V("y"))}`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`],[nw(`lg ${X1}³ = (lg ${X1})³`),nw(`lg ${X1}³ = 3 lg ${X1}`)],[nw(`${LOGA("2")} ${X1} + ${LOGA("4")} ${X1} = ${LOGA("2")} ${X2}`),`same base first: ${nw(`${LOGA("4")} ${X1} = ${frac("1","2")}${LOGA("2")} ${X1}`)}`],[`${nw(`2<sup>${X1}</sup> = 10`)}, so ${nw(`${X1} = ${frac("10","2")}`)}`,nw(`${X1} = ${frac("lg 10","lg 2")}`),nw("= 3.32 (3 s.f.)")],["keep a root that puts a negative inside a log","reject it, and say why"]])}
 </div>`,
 
 amCoord:`${MUST([FB("blue","Line",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"a gradient and one point"),FB("amber","Circle",`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})²`)}<br>${nw(`= ${V("r")}²`)}`,`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`),FB("green","General form",nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)} · radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`)])}
@@ -4426,7 +4395,7 @@ ${PAN("Make it straight",`<table><tr><th>Equation</th><th>Plot</th><th>${V("m")}
   <tr><td>${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1}`)}</td><td>${frac(V("y"),X1)} against ${X1}</td><td>${V("a")}</td><td>${V("b")}</td></tr></table>`
   +EG(nw(`${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup>`),[`take lg: ${nw(`lg ${V("y")} = lg ${V("a")} + ${X1} lg ${V("b")}`)}`,nw(`lg ${V("y")} = (lg ${V("b")})${X1} + lg ${V("a")}`),`${nw(`${V("Y")} = lg ${V("y")}, ${V("X")} = ${X1}`)}, ${nw(`${V("m")} = lg ${V("b")}, ${V("C")} = lg ${V("a")}`)}`])
   +EG(nw(`${V("y")} = 3${X1}${V("y")} − 5${X1}`),[`÷ ${X1}: ${nw(`${frac(V("y"),X1)} = 3${V("y")} − 5`)}`,nw(`${V("Y")} = ${frac(V("y"),X1)}, ${V("X")} = ${V("y")}, ${V("m")} = 3, ${V("C")} = −5`)]))}
-${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)])+picLgLine()+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("C")} off</p>`)}
+${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup>`),nw("= 3.02 (3 s.f.)")])+picLgLine()+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("C")} off</p>`)}
 ${PAN("From a table of data",picLinLaw()+STEPS([`① make a table of ${V("X")} and ${V("Y")} first`,"② plot them and draw the line of best fit","③ gradient: 2 points on your line, far apart",`④ change back: ${nw(`lg ${V("a")} = ${V("C")}`)}, so ${nw(`${V("a")} = 10<sup>${V("C")}</sup>`)}`])+`<p class="anno">* a point well off the line is the wrong reading: read the right value off the line</p>`)}
 ${MIST([[`plot ${V("y")} against ${X1} when it says lg ${V("y")} against ${X1}`,`make the ${V("X")}, ${V("Y")} table first`],["gradient from 2 points in the table","2 points on your line, far apart"],[`stop at ${nw(`lg ${V("a")} = 0.48`)}`,nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)],[nw(`lg(${V("a")}${X1}<sup>${V("n")}</sup>) = lg ${V("a")} × ${V("n")} lg ${X1}`),`the logs add: ${nw(`lg ${V("a")} + ${V("n")} lg ${X1}`)}`]])}
 </div>`,
@@ -4445,6 +4414,113 @@ ${MIST([[nw("cos⁻¹(−0.5) = −60°"),`${nw("120°")}: cos⁻¹ gives 0° to
 </div>`
 };
 Object.assign(SHEETS,SHEETS7);
+function picSix(n){ const X=x=>40+11*x, Y=y=>28-9*y, f={"3":x=>0.12*x**3,"2":x=>0.4*x*x,"1":x=>0.8*x,"0":x=>1.5,"-1":x=>1/x,"-2":x=>1/(x*x)}[String(n)]; let d="", pen=false;
+  for(let i=0;i<=128;i++){ const x=-3.2+6.4*i/128; if(n<0&&Math.abs(x)<0.04){ pen=false; continue; } const y=f(x); if(!isFinite(y)||Math.abs(y)>2.8){ pen=false; continue; } d+=(pen?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1); pen=true; }
+  return SV("0 0 80 56",LN(4,28,76,28,`stroke="var(--muted)"`)+LN(40,2,40,54,`stroke="var(--muted)"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`); }
+function picExpGD(){ const X=x=>50+12*x, Y=y=>52-9*y; let g="", dc=""; for(let i=0;i<=70;i++){ const x=-3.5+7*i/70, y1=2**x, y2=0.5**x; if(y1<=5.2) g+=(g?"L":"M")+X(x).toFixed(1)+" "+Y(y1).toFixed(1); if(y2<=5.2) dc+=(dc?"L":"M")+X(x).toFixed(1)+" "+Y(y2).toFixed(1); }
+  return SV("0 0 100 62",LN(6,52,94,52,`stroke="var(--muted)"`)+LN(50,4,50,58,`stroke="var(--muted)"`)+`<path d="${g}" fill="none" stroke="var(--green)" stroke-width="2"/><path d="${dc}" fill="none" stroke="var(--red)" stroke-width="2"/>`+DOT(50,43,"var(--ink)")
+    +TX(73,10,"growth",`font-size="6.5" fill="var(--green)" font-weight="700" text-anchor="end"`)+TX(27,10,"decay",`font-size="6.5" fill="var(--red)" font-weight="700" text-anchor="start"`)); }
+function picLineMeet(){ const X=x=>38+15*x, Y=y=>40-6*y; let d=""; for(let i=0;i<=40;i++){ const x=-1.6+5.2*i/40; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x-2*x-3).toFixed(1); }
+  const r1=-0.303, r2=3.303;
+  return SV("0 0 114 76",ARW(X(-2.3),Y(0),X(4.4),Y(0),"var(--ink)",1)+ARW(X(0),Y(-4.6),X(0),Y(5),"var(--ink)",1)+TX(X(4.4)+3,Y(0)+2,IT("x"),`text-anchor="start"`)+TX(X(0)-3,Y(5)+3,IT("y"),`text-anchor="end"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(X(-1.5),Y(-3.5),X(4.2),Y(2.2),`stroke="var(--amber)" stroke-width="1.8"`)+LN(X(r1),Y(r1-2),X(r1),Y(0),`stroke="var(--red)" stroke-width=".9" ${DASH}`)+LN(X(r2),Y(r2-2),X(r2),Y(0),`stroke="var(--red)" stroke-width=".9" ${DASH}`)+DOT(X(r1),Y(r1-2))+DOT(X(r2),Y(r2-2))
+    +TX(X(0)+4,9,`${IT("y")} = ${IT("x")}² − 2${IT("x")} − 3`,`font-size="6.5" text-anchor="start" fill="var(--blue)" font-weight="700"`)+TX(4,73,`${IT("y")} = ${IT("x")} − 2`,`font-size="6.5" text-anchor="start" fill="var(--amber)" font-weight="700"`)); }
+function picAreaUnder(){ const X=x=>16+24*x, Y=y=>58-4.6*y; let c="", sh=""; for(let i=0;i<=40;i++){ const x=3.3*i/40; c+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x+1).toFixed(1); } for(let i=0;i<=20;i++){ const x=1+2*i/20; sh+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x+1).toFixed(1); }
+  return SV("0 0 120 66",`<path d="${sh} L${X(3)} ${Y(0)} L${X(1)} ${Y(0)} Z" fill="var(--blue-fill)"/>`+ARW(10,58,116,58,"var(--ink)",1)+ARW(16,64,16,3,"var(--ink)",1)+`<path d="${c}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(X(1),Y(2),X(1),58,`stroke="var(--muted)" stroke-width=".8"`)+LN(X(3),Y(10),X(3),58,`stroke="var(--muted)" stroke-width=".8"`)+TX(X(1),65,"1",`font-size="6.5"`)+TX(X(3),65,"3",`font-size="6.5"`)
+    +TX(20,14,`${IT("y")} = ${IT("x")}² + 1`,`font-size="6.5" text-anchor="start" fill="var(--blue)" font-weight="700"`)+TX(X(2.1),52,"area",`font-size="6.5" font-weight="700"`)); }
+function picTanTri(){ const X=x=>20+60*x, Y=y=>58-36*y, B='font-weight="700"'; let c="", sh=""; for(let i=0;i<=30;i++){ const x=1.25*i/30; c+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x).toFixed(1); } for(let i=0;i<=20;i++){ const x=i/20; sh+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x).toFixed(1); }
+  return SV("0 0 112 70",`<path d="${sh} L${X(0.5)} ${Y(0)} Z" fill="var(--amber-fill)"/>`+LN(8,58,108,58)+LN(20,66,20,2)+`<path d="${c}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(X(0.42),Y(-0.16),X(1.25),Y(1.5),`stroke="var(--red)" stroke-width="1.6"`)+LN(X(1),Y(1),X(1),58,`stroke="var(--muted)" stroke-width=".8" ${DASH}`)+DOT(X(1),Y(1),"var(--ink)")+DOT(X(0.5),Y(0),"var(--ink)")
+    +TX(X(1)+3,Y(1)+2,"P(1, 1)",`${B} font-size="6.5" text-anchor="start"`)+TX(X(0.5),67,"R",B)+TX(16,66,"O",`${B} text-anchor="end"`)+TX(X(1),67,"1",`font-size="6.5"`)); }
+function picYaxisArea(){ const X=x=>16+28*x, Y=y=>62-12*y; let c="", sh=""; for(let i=0;i<=30;i++){ const x=2.15*i/30; c+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x).toFixed(1); } for(let i=0;i<=20;i++){ const x=1+i/20; sh+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x*x).toFixed(1); }
+  return SV("0 0 100 70",`<path d="M${X(0)} ${Y(1)} L${sh.slice(1)} L${X(0)} ${Y(4)} Z" fill="var(--blue-fill)"/>`+ARW(10,62,92,62,"var(--ink)",1)+ARW(16,68,16,2,"var(--ink)",1)+`<path d="${c}" fill="none" stroke="var(--blue)" stroke-width="2"/>`
+    +LN(16,Y(1),90,Y(1),`stroke="var(--muted)" stroke-width=".8" ${DASH}`)+LN(16,Y(4),90,Y(4),`stroke="var(--muted)" stroke-width=".8" ${DASH}`)+TX(13,Y(1)+2,"1",`font-size="6.5" text-anchor="end"`)+TX(13,Y(4)+2,"4",`font-size="6.5" text-anchor="end"`)
+    +TX(X(2.15)+2,Y(4.6)+6,`${IT("y")} = ${IT("x")}²`,`font-size="6.5" text-anchor="start" fill="var(--blue)" font-weight="700"`)); }
+function picTanSec(){ const B='font-weight="700"';
+  return SV("0 0 104 70",`<circle cx="70" cy="36" r="24" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`+LN(10,60,70,60,`stroke="var(--blue)" stroke-width="1.6"`)+LN(10,60,92.1,45.4)+LN(70,60,52.5,52.4,`stroke="var(--muted)"`)+LN(70,60,92.1,45.4,`stroke="var(--muted)"`)
+    +ARC(70,60,8,156.5,180,"var(--amber)")+ARC(92.1,45.4,8,190.1,213.4,"var(--amber)")+ARC(10,60,14,0,10.1,"var(--blue)")+DOT(70,60,"var(--ink)")+DOT(52.5,52.4,"var(--ink)")+DOT(92.1,45.4,"var(--ink)")
+    +TX(7,64,"A",B)+TX(70,69,"B",B)+TX(95,44,"C",`${B} text-anchor="start"`)+TX(50,49,"D",B)); }
+function picMidpt(){ const B='font-weight="700"', ch=(x,y)=>`<path d="M${x-2.5} ${y-2.5} L${x} ${y} L${x-2.5} ${y+2.5}" fill="none" stroke="var(--blue)" stroke-width="1.1"/>`, tk=(x,y,n)=>{ let s=""; for(let i=0;i<n;i++){ const o=(i-(n-1)/2)*2.4; s+=LN(x+o-1.5,y+2.6,x+o+1.5,y-2.6,`stroke="var(--red)" stroke-width="1"`); } return s; };
+  return SV("0 0 90 66",PG("40,8 10,56 80,56")+LN(25,32,60,32,`stroke="var(--blue)" stroke-width="1.8"`)+ch(44,32)+ch(47,56)+DOT(25,32,"var(--ink)")+DOT(60,32,"var(--ink)")
+    +tk(32.5,20,1)+tk(17.5,44,1)+tk(50,20,2)+tk(70,44,2)+TX(40,5.5,"A",B)+TX(6,62,"B",B)+TX(84,62,"C",B)+TX(21,31,"M",`${B} text-anchor="end"`)+TX(64,31,"N",`${B} text-anchor="start"`)); }
+const SHEETS8={
+emFuncGraphs:`${MUST([FB("blue",nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`),`6 shapes: ${nw(`${V("n")} = 3, 2, 1, 0, −1, −2`)}`,`${nw(`${V("k")} &lt; 0`)} flips it in the ${X1}-axis`),FB("amber",nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`crosses the ${V("y")}-axis at ${V("k")}`,`${nw(`${V("a")} &gt; 1`)}: growth · ${nw(`0 &lt; ${V("a")} &lt; 1`)}: decay`),FB("green","Solve off the graph",nw(`f(${X1}) = ${V("k")}`),`draw ${nw(`${V("y")} = ${V("k")}`)}, read the ${X1} values`)])}
+<div class="sheet">
+${PAN(`The 6 shapes of ${nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`)}`,PICS(PIC(null,picSix(3),nw(`${V("n")} = 3`),"through O, one bend each side"),PIC(null,picSix(2),nw(`${V("n")} = 2`),"∪ with its lowest point at O"),PIC(null,picSix(1),nw(`${V("n")} = 1`),"a straight line through O"),PIC(null,picSix(0),nw(`${V("n")} = 0`),"a flat line"),PIC(null,picSix(-1),nw(`${V("n")} = −1`),"2 branches in opposite corners"),PIC(null,picSix(-2),nw(`${V("n")} = −2`),`2 branches, both above the ${X1}-axis`))+`<p class="anno">* drawn for ${nw(`${V("k")} &gt; 0`)} · ${nw(`${V("k")} &lt; 0`)} flips the shape upside down</p>`)}
+${PAN(`Find ${V("k")} or ${V("n")} from a point`,EG(`${nw(`${V("y")} = ${V("k")}${X2}`)} passes through (2, 12). Find ${V("k")}.`,[nw(`12 = ${V("k")}(2)²`),nw(`12 = 4${V("k")}`),nw(`${V("k")} = 3`)])+EG(`${nw(`${V("y")} = 2${X1}<sup>${V("n")}</sup>`)} passes through (3, 54). Find ${V("n")}.`,[nw(`54 = 2(3)<sup>${V("n")}</sup>`),nw(`3<sup>${V("n")}</sup> = 27 = 3³`),nw(`${V("n")} = 3`)])+`<p class="anno">* a negative ${X1}? keep the bracket: ${nw("(−3)² = 9")}, but ${nw("−3² = −9")}</p>`)}
+${PAN("Exponential graphs",picExpGD()+STEPS([[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`at ${nw(`${X1} = 0`)}, ${nw(`${V("y")} = ${V("k")}`)}`],[`never touches the ${X1}-axis`,"it only gets closer"],[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup> + ${V("b")}`),`crosses the ${V("y")}-axis at ${nw(`${V("k")} + ${V("b")}`)}`]])
+  +EG(`${nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`)} passes through (0, 5) and (2, 45). Find ${V("k")} and ${V("a")}.`,[`${nw(`${X1} = 0`)}: ${nw(`5 = ${V("k")}${V("a")}⁰`)}, so ${nw(`${V("k")} = 5`)}`,`${nw(`${X1} = 2`)}: ${nw(`45 = 5${V("a")}²`)}`,nw(`${V("a")}² = 9`),`${nw(`${V("a")} = 3`)} (${V("a")} is positive)`]))}
+${PAN("Growth and decay",EG("A car worth $40 000 loses 15% of its value every year. Find its value after 3 years.",[`every year it keeps 85%: ${nw("× 0.85")}`,nw(`${V("V")} = 40 000(0.85)<sup>${V("t")}</sup>`),nw("= 40 000(0.85)³"),nw("= $24 565")])+`<p class="anno">* up 5% a year: × 1.05 · down 15% a year: × 0.85</p>`)}
+${PAN("Plot a curve",STEPS([`① complete the table: put each ${X1} in, with brackets round negatives`,"② plot each point with a small ×","③ join them with ONE smooth curve: no ruler, no corners"]))}
+${PAN("Answers from the graph",picLineMeet()+STEPS([[`solve ${nw(`f(${X1}) = ${V("k")}`)}`,`draw ${nw(`${V("y")} = ${V("k")}`)}`],["the line misses the curve","no solution"],[nw(`${V("y")} &gt; ${V("k")}`),"where the curve is above the line"]])
+  +EG(`The curve ${nw(`${V("y")} = ${X2} − 2${X1} − 3`)} is drawn. Which line do you draw to solve ${nw(`${X2} − 3${X1} − 1 = 0`)}?`,[nw(`${X2} − 3${X1} − 1 = 0`),`split it so the curve appears: ${nw(`${X2} − 2${X1} − 3 − ${X1} + 2 = 0`)}`,nw(`${X2} − 2${X1} − 3 = ${X1} − 2`),`draw ${nw(`${V("y")} = ${X1} − 2`)}`,`they meet at ${nw(`${X1} ≈ −0.3`)} and ${nw(`${X1} ≈ 3.3`)}`]))}
+${PAN("Gradient of a curve",STEPS(["① draw the tangent: a ruler line that just touches the curve at the point","② pick 2 points far apart ON THE TANGENT",`③ gradient = ${frac("rise","run")}`])+`<p class="anno">* then say what it means: on a distance–time graph, the gradient is the speed</p>`)}
+${PAN("Real-life graphs",`<table><tr><th>Graph</th><th>What it tells you</th></tr><tr><td>distance–time</td><td>gradient = speed · flat = not moving</td></tr><tr><td>speed–time</td><td>gradient = acceleration · area = distance</td></tr><tr><td>filling a container</td><td>narrow part: depth rises fast (steep) · wide part: rises slowly</td></tr></table>`+PLAYLINK("#sheet/speed-time-graphs","Speed–time graphs sheet"))}
+${MIST([[`${nw(`${V("y")} = ${frac(V("k"),X1)}`)} drawn as one curve through O`,`2 separate branches: it never touches the ${V("y")}-axis`],[nw(`${V("k")}(−3)² = −9${V("k")}`),`keep the bracket: ${nw("(−3)² = 9")}, so ${nw(`9${V("k")}`)}`],[`${nw(`${V("y")} = 5(2)<sup>${X1}</sup>`)} crosses the ${V("y")}-axis at ${nw("(0, 2)")}`,`any number to the power 0 is 1: ${nw("(0, 5)")}`],["straight segments between the plotted points","one smooth curve"],["gradient from 2 points on the curve","draw the tangent, use 2 points on it"],["flat on a distance–time graph = constant speed","flat = not moving"]])}
+</div>`,
+
+amIntApp:`${MUST([FB("blue","Area under a curve",nw(`${V("A")} = ∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> ${V("y")} d${X1}`),`${V("a")}, ${V("b")}: the ${X1}-values at the 2 ends`),FB("red",`Below the ${X1}-axis`,"the integral is negative","area = its size · split at every root"),FB("green","Curve and line",nw(`∫ (upper − lower) d${X1}`),"limits: where they meet")])}
+<div class="sheet">
+${PAN("Area under a curve",picAreaUnder()+EG(`Area under ${nw(`${V("y")} = ${X2} + 1`)} from ${nw(`${X1} = 1`)} to ${nw(`${X1} = 3`)}`,[nw(`${V("A")} = ∫<span class="lim"><sup>3</sup><sub>1</sub></span> (${X2} + 1) d${X1}`),nw(`= [${frac(V("x")+"³","3")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span>`),nw(`= (9 + 3) − (${frac("1","3")} + 1)`),nw(`= ${frac("32","3")} units²`)]))}
+  <div class="panelc"><h4>Area: 4 cases</h4>
+    <table>
+      <tr><th>Region</th><th>Integral comes out</th><th>Area</th></tr>
+      <tr><td>above the ${X1}-axis</td><td>positive</td><td>= the integral</td></tr>
+      <tr><td>below the ${X1}-axis</td><td>negative</td><td>= its positive value</td></tr>
+      <tr><td>crosses the ${X1}-axis</td><td>parts cancel</td><td>split at the crossing, add positive values</td></tr>
+      <tr><td>between the curve and the ${V("y")}-axis</td><td>use ${nw(`∫ ${X1} d${V("y")}`)}, not ${nw(`∫ ${V("y")} d${X1}`)}</td><td>make ${X1} the subject first</td></tr>
+    </table>
+    <svg viewBox="0 0 220 60" style="width:100%;max-width:300px;display:block;margin:6px auto 0">
+      <path d="M20.0,40.0 20.0,13.0 21.5,14.2 23.0,15.4 24.5,16.5 26.0,17.6 27.5,18.8 29.0,19.8 30.5,20.9 32.0,22.0 33.5,23.0 35.0,24.0 36.5,25.0 38.0,26.0 39.5,26.9 41.0,27.8 42.5,28.8 44.0,29.6 45.5,30.5 47.0,31.4 48.5,32.2 50.0,33.0 51.5,33.8 53.0,34.6 54.5,35.3 56.0,36.0 57.5,36.8 59.0,37.4 60.5,38.1 62.0,38.8 63.5,39.4 65.0,40.0 65.0,40.0Z" fill="var(--blue-fill)"/><path d="M65.0,40.0 65.0,40.0 68.0,41.2 71.0,42.2 74.0,43.2 77.0,44.2 80.0,45.0 83.0,45.8 86.0,46.4 89.0,47.0 92.0,47.6 95.0,48.0 98.0,48.4 101.0,48.6 104.0,48.8 107.0,49.0 110.0,49.0 113.0,49.0 116.0,48.8 119.0,48.6 122.0,48.4 125.0,48.0 128.0,47.6 131.0,47.0 134.0,46.4 137.0,45.8 140.0,45.0 143.0,44.2 146.0,43.2 149.0,42.2 152.0,41.2 155.0,40.0 155.0,40.0Z" fill="var(--red-fill)"/>
+      <line x1="10" y1="40" x2="200" y2="40" stroke="var(--ink)"/>
+      <path d="M20.0,13.0 24.1,16.2 28.1,19.2 32.1,22.1 36.2,24.8 40.2,27.4 44.3,29.8 48.4,32.1 52.4,34.3 56.4,36.3 60.5,38.1 64.5,39.8 68.6,41.4 72.7,42.8 76.7,44.1 80.8,45.2 84.8,46.2 88.8,47.0 92.9,47.7 97.0,48.2 101.0,48.6 105.1,48.9 109.1,49.0 113.1,49.0 117.2,48.8 121.2,48.4 125.3,48.0 129.4,47.3 133.4,46.6 137.5,45.7 141.5,44.6 145.6,43.4 149.6,42.0 153.6,40.5 157.7,38.9 161.8,37.1 165.8,35.2 169.9,33.1 173.9,30.9 178.0,28.5 182.0,26.0" fill="none" stroke="var(--blue)" stroke-width="2"/>
+      <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--red)" font-weight="700">−</text>
+      <g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="65" y="54">1</text><text x="155" y="54">3</text><text x="20" y="54">0</text></g>
+    </svg>
+    ${EG(`e.g. the picture: ${nw(`${V("y")} = ${X2} − 4${X1} + 3`)}`,[`${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${V("y")} d${X1} = ${frac("4","3")}`)} <span class="k-blue">above</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> ${V("y")} d${X1} = −${frac("4","3")}`)} <span class="k-red">below</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> ${V("y")} d${X1} = 0`)} ✗ not the area`,`area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = <b>${frac("8","3")}</b>`)}`])}
+  </div>
+
+  <div class="panelc"><h4>Curve and a straight line</h4>
+    <ul class="steps">
+      <li>Area between them = ∫ (upper − lower) d${X1}</li>
+      <li>or: area of a triangle / trapezium ± area under the curve</li>
+    </ul>
+    <p class="anno">* find where they meet first; those ${X1}-values are the limits</p>
+    <svg viewBox="0 0 150 80" class="lsp wide" aria-hidden="true"><path d="M18.0 70.0 L90.0 34.0 L87.6 31.7 L85.2 29.7 L82.8 27.9 L80.4 26.3 L78.0 25.0 L75.6 23.9 L73.2 23.1 L70.8 22.5 L68.4 22.1 L66.0 22.0 L63.6 22.1 L61.2 22.5 L58.8 23.1 L56.4 23.9 L54.0 25.0 L51.6 26.3 L49.2 27.9 L46.8 29.7 L44.4 31.7 L42.0 34.0 L39.6 36.5 L37.2 39.3 L34.8 42.3 L32.4 45.5 L30.0 49.0 L27.6 52.7 L25.2 56.7 L22.8 60.9 L20.4 65.3 Z" fill="var(--blue-fill)"/>
+      <path d="M8 70 H142 M18 70 V3" fill="none" stroke="var(--ink)"/><line x1="90" y1="34" x2="90" y2="70" stroke="var(--muted)" stroke-dasharray="3 2"/>
+      <path d="M18.0 70.0 L20.4 65.4 L22.7 61.0 L25.1 56.8 L27.5 52.9 L29.9 49.2 L32.2 45.8 L34.6 42.5 L37.0 39.6 L39.3 36.8 L41.7 34.3 L44.1 32.0 L46.4 30.0 L48.8 28.1 L51.2 26.6 L53.6 25.2 L55.9 24.1 L58.3 23.2 L60.7 22.6 L63.0 22.2 L65.4 22.0 L67.8 22.1 L70.2 22.4 L72.5 22.9 L74.9 23.6 L77.3 24.6 L79.6 25.9 L82.0 27.3 L84.4 29.0 L86.8 31.0 L89.1 33.1 L91.5 35.5 L93.9 38.2 L96.2 41.0 L98.6 44.1 L101.0 47.5 L103.3 51.1 L105.7 54.9 L108.1 58.9 L110.5 63.2 L112.8 67.7 L115.2 72.4" fill="none" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="18" y1="70" x2="123.6" y2="17.2" stroke="var(--amber)" stroke-width="2"/><circle cx="18" cy="70" r="2.2" fill="var(--red)"/><circle cx="90" cy="34" r="2.2" fill="var(--red)"/>
+      <text x="66" y="7" font-size="6.5" fill="var(--blue)" text-anchor="middle">upper</text><text x="66" y="15" font-size="7" font-weight="700" fill="var(--blue)" text-anchor="middle"><tspan font-style="italic">y</tspan> = 4${RX} − ${RX}²</text>
+      <text x="126" y="20" font-size="7" font-weight="700" fill="var(--amber)"><tspan font-style="italic">y</tspan> = ${RX}</text><text x="126" y="28" font-size="6.5" fill="var(--amber)">lower</text>
+      <text x="54" y="40" font-size="6.5" fill="var(--ink)" text-anchor="middle">area</text><text x="18" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">0</text><text x="90" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">3</text></svg>
+    ${EG(`e.g. the picture: ${nw(`${V("y")} = 4${X1} − ${X2}`)} and ${nw(`${V("y")} = ${X1}`)}`,[`meet: ${nw(`4${X1} − ${X2} = ${X1}`)}`,`${nw(`${X1}(3 − ${X1}) = 0`)}, so ${nw(`${X1} = 0`)} or 3`,`upper − lower: ${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (4${X1} − ${X2} − ${X1}) d${X1}`)}`,nw(`= ∫<span class="lim"><sup>3</sup><sub>0</sub></span> (3${X1} − ${X2}) d${X1}`),nw(`= [${frac("3"+X2,"2")} − ${frac(V("x")+"³","3")}]<span class="lim"><sup>3</sup><sub>0</sub></span>`),nw(`= ${frac("27","2")} − 9 = <b>${frac("9","2")} units²</b>`)])}
+  </div>
+${PAN(`Along the ${V("y")}-axis`,picYaxisArea()+EG(`Area between ${nw(`${V("y")} = ${X2}`)} (${nw(`${X1} ≥ 0`)}), the ${V("y")}-axis, ${nw(`${V("y")} = 1`)} and ${nw(`${V("y")} = 4`)}`,[`make ${X1} the subject: ${nw(`${X1} = ${V("y")}<sup>${frac("1","2")}</sup>`)}`,nw(`${V("A")} = ∫<span class="lim"><sup>4</sup><sub>1</sub></span> ${V("y")}<sup>${frac("1","2")}</sup> d${V("y")}`),nw(`= [${frac("2","3")}${V("y")}<sup>${frac("3","2")}</sup>]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw(`= ${frac("2","3")}(8 − 1)`),nw(`= ${frac("14","3")} units²`)]))}
+${PAN("A tangent cuts off a triangle",picTanTri()+`<p class="anno">* curve part: integrate · straight part: ${nw(`${frac("1","2")} × base × height`)} · then add or take away, from the sketch</p>`
+  +EG(`${nw(`${V("y")} = ${X2}`)}. The tangent at P(1, 1) meets the ${X1}-axis at R. Find the shaded area.`,[`tangent: gradient ${nw(`2${X1} = 2`)}, so ${nw(`${V("y")} − 1 = 2(${X1} − 1)`)}`,`R: put ${nw(`${V("y")} = 0`)}, so ${nw(`${X1} = ${frac("1","2")}`)}`,`under the curve: ${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${X2} d${X1} = ${frac("1","3")}`)}`,`triangle: ${nw(`${frac("1","2")} × ${frac("1","2")} × 1 = ${frac("1","4")}`)}`,`shaded: ${nw(`${frac("1","3")} − ${frac("1","4")} = ${frac("1","12")} units²`)}`]))}
+${PAN("Rules for definite integrals",STEPS([[nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} + ∫<span class="lim"><sup>${V("c")}</sup><sub>${V("b")}</sub></span> f(${X1}) d${X1} = ∫<span class="lim"><sup>${V("c")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`),"join the limits"],[nw(`∫<span class="lim"><sup>${V("a")}</sup><sub>${V("b")}</sub></span> f(${X1}) d${X1} = −∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`),"swap the limits: change the sign"],[nw(`∫ ${V("k")}f(${X1}) d${X1} = ${V("k")}∫ f(${X1}) d${X1}`),"a number in front comes out"]])
+  +EG(`Given ${nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> f(${X1}) d${X1} = 7`)}`,[nw(`∫<span class="lim"><sup>1</sup><sub>4</sub></span> f(${X1}) d${X1} = −7`),nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> 3f(${X1}) d${X1} = 3 × 7 = 21`),nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> [f(${X1}) + 2] d${X1} = 7 + [2${X1}]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw("= 7 + 6 = 13")]))}
+${PAN("Find an unknown limit",EG(`${nw(`∫<span class="lim"><sup>${V("k")}</sup><sub>0</sub></span> (2${X1} + 1) d${X1} = 6`)}, where ${nw(`${V("k")} &gt; 0`)}. Find ${V("k")}.`,[nw(`[${X2} + ${X1}]<span class="lim"><sup>${V("k")}</sup><sub>0</sub></span> = 6`),nw(`${V("k")}² + ${V("k")} = 6`),nw(`${V("k")}² + ${V("k")} − 6 = 0`),nw(`(${V("k")} + 3)(${V("k")} − 2) = 0`),`${nw(`${V("k")} = 2`)} (reject −3: ${nw(`${V("k")} &gt; 0`)})`]))}
+${PAN(`"Hence": use the part before`,EG(`Show that ${nw(`${frac("d","d"+X1)}(${X1} ln ${X1}) = ln ${X1} + 1`)}. Hence find ${nw(`∫ ln ${X1} d${X1}`)}.`,[`product rule: ${nw(`${X1} × ${frac("1",X1)} + ln ${X1} = ln ${X1} + 1`)}`,`so ${nw(`∫ (ln ${X1} + 1) d${X1} = ${X1} ln ${X1} + ${V("c")}`)}`,nw(`∫ ln ${X1} d${X1} + ${X1} = ${X1} ln ${X1} + ${V("c")}`),nw(`∫ ln ${X1} d${X1} = ${X1} ln ${X1} − ${X1} + ${V("c")}`)])+`<p class="anno">* there's no product rule for integration: always use the "show that" part</p>`)}
+${MIST([[`${nw(`∫<span class="lim"><sup>2</sup><sub>−1</sub></span> (${X2} − ${X1} − 2) d${X1} = −${frac("9","2")}`)}, so the area is ${nw(`−${frac("9","2")}`)}`,`below the axis: area = ${frac("9","2")}`],[`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (${X2} − 2${X1}) d${X1} = 0`)}, so the area is 0`,`root at ${nw(`${X1} = 2`)}: area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = ${frac("8","3")}`)}`],[nw(`∫ (lower − upper) d${X1}`),nw(`∫ (upper − lower) d${X1}`)],[`along the ${V("y")}-axis: ${nw(`∫ ${V("y")} d${V("y")}`)}`,`${nw(`∫ ${X1} d${V("y")}`)}: make ${X1} the subject first`],["assume the triangle's corner is on the curve",`read it off the sketch: on the axis, put ${nw(`${V("y")} = 0`)} in the line`],[nw(`∫ ${X1}e<sup>${X1}</sup> d${X1} = ${frac(X2,"2")}e<sup>${X1}</sup> + ${V("c")}`),"no product rule for integration: use the part before"]])}
+</div>`,
+
+amProofs:`${MUST([FB("blue","Every line needs a reason","statement (reason)","no reason, no mark"),FB("amber","Similar triangles","AA is enough","match the letters in order"),FB("green","A product",nw("AB² = AC × AD"),"comes from 2 similar triangles: find them first")])}
+<div class="sheet">
+${PAN("Write it like this",picTanSec()+EG(`AB is a tangent to the circle at B, and ADC is a straight line. Prove that ${nw("AB² = AC × AD")}.`,[`${nw("∠ABD = ∠ACB")}<br>(∠s in alt. seg.)`,`${nw("∠BAD = ∠CAB")}<br>(common ∠)`,`${nw("△ABD is similar to △ACB")} (AA)`,`so ${nw(`${frac("AB","AC")} = ${frac("AD","AB")}`)}<br>(similar △s)`,`${nw("AB² = AC × AD")} (shown)`])+`<p class="anno">* the last line is exactly what the question asked for</p>`)}
+${PAN("Reasons to quote",`<table><tr><th>Fact</th><th>Write</th></tr>
+  <tr><td>angles on a straight line</td><td>(adj. ∠s on a str. line)</td></tr><tr><td>vertically opposite</td><td>(vert. opp. ∠s)</td></tr><tr><td>parallel lines</td><td>(alt. ∠s, AB &#47;&#47; CD) · (corr. ∠s, AB &#47;&#47; CD)</td></tr>
+  <tr><td>isosceles triangle</td><td>(base ∠s of isos. △)</td></tr><tr><td>angle at the centre</td><td>(∠ at centre = 2∠ at circ.)</td></tr><tr><td>angle in a semicircle</td><td>(∠ in semicircle)</td></tr>
+  <tr><td>same segment</td><td>(∠s in same seg.)</td></tr><tr><td>cyclic quadrilateral</td><td>(opp. ∠s of cyclic quad.)</td></tr><tr><td>tangent and radius</td><td>(tan ⊥ rad)</td></tr>
+  <tr><td>2 tangents from a point</td><td>(tangents from ext. pt.)</td></tr><tr><td>tangent and chord</td><td>(∠s in alt. seg.)</td></tr></table>`)}
+${PAN("Prove 4 points lie on a circle",STEPS(["show ONE of these:",["opposite angles add to 180°","(converse of opp. ∠s of cyclic quad.)"],["an exterior angle = the interior opposite angle","(converse of ext. ∠ of cyclic quad.)"],["2 equal angles on the same chord, same side","(converse of ∠s in same seg.)"]]))}
+${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN ∥ BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(midpoint theorem)`])+`<p class="anno">* both points must be midpoints of 2 sides of the <b>same</b> triangle</p>`)}
+${PAN("Prove a tangent, or parallel lines",STEPS([["show the angle between the line and the radius is 90°","then it's a tangent (converse of tan ⊥ rad)"],["show a pair of alternate angles are equal","then the lines are parallel (converse of alt. ∠s)"]]))}
+${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in same seg.) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of cyclic quad.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
+</div>`
+};
+Object.assign(SHEETS,SHEETS8);
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
@@ -4456,7 +4532,7 @@ const STHUMB={
   "algebraic-fractions":()=>FT(frac(`${X2} − 9`,`${X1} + 3`)), "quadratic-equations-graphs":()=>miniQF("roots"),
   "proportion":()=>picProp("inverse"), "congruence-similarity":picSim, "pythagoras":()=>picRight("pyth"),
   "trigonometry-sec2":()=>picRight("trig"), "volume-surface-area-2":()=>picSolid("cone"), "data-sec2":()=>picChart("hist"),
-  "averages":()=>FT(nw(`mean = ${frac("total","how many")}`)), "congruence-similarity-sec3":picAshape, "probability-sec2":picProb,
+  "averages":()=>FT(nw(`mean = ${frac("total","how many")}`)), "congruence-similarity-sec3":picAshape, "functions-graphs":()=>picSix(3), "applications-of-integration":picAreaUnder, "proofs-plane-geometry":picTanSec, "probability-sec2":picProb,
   "quadratic-equations":()=>FT(QUAD_F,1),
   "indices":()=>FT(nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)),
   "standard-form":()=>FT(nw("3.2 × 10⁵")), "interest":()=>FT(nw(`${V("P")}${PAR(`1 + ${frac(V("r"),"100")}`,V("n"))}`)),
@@ -4488,6 +4564,9 @@ SHEETLIST.push(
   {id:"further-trigonometry",levels:["emath"],ord:7,chapter:"Further Trigonometry",title:"Sine rule, cosine rule & area",sheet:"emTrig2",aid:null,kw:"sine rule cosine rule half ab sin c obtuse angle trigonometry"},
   {id:"bearings-elevation-3d",levels:["emath"],ord:8,chapter:"Applications of Trigonometry",title:"Bearings, elevation & 3D",sheet:"emTrigApp",aid:null,kw:"bearings angle of elevation depression 3d shortest distance trigonometry"},
   {id:"arc-length-sector-area",levels:["emath"],ord:9,chapter:"Arc Length & Radians",title:"Arc length, sector area & radians",sheet:"emArcs",aid:null,kw:"radian arc sector segment circle perimeter"},
+  {id:"functions-graphs",levels:["emath"],ord:5,chapter:"Functions & Graphs",title:"Functions & graphs",sheet:"emFuncGraphs",aid:null,kw:"y = kx^n power graphs reciprocal exponential growth decay table of values plot curve tangent gradient solve graphically container"},
+  {id:"applications-of-integration",levels:["amath"],ord:14,chapter:"Applications of Integration",title:"Applications of integration: area",sheet:"amIntApp",aid:null,kw:"area under a curve definite integral below the axis curve and line y-axis tangent normal triangle unknown limit hence"},
+  {id:"proofs-plane-geometry",levels:["amath"],ord:16.5,chapter:"Proofs in Plane Geometry",title:"Proofs in plane geometry",sheet:"amProofs",aid:null,kw:"proof reasons congruent similar midpoint theorem concyclic tangent alternate segment cyclic quadrilateral"},
   {id:"vectors",levels:["emath"],ord:15,chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"},
   {id:"polynomials-partial-fractions",levels:["amath"],ord:4,chapter:"Polynomials",title:"Polynomials & partial fractions",sheet:"amPoly",aid:null,kw:"remainder theorem factor theorem cubic long division sum difference of cubes partial fractions"},
   {id:"binomial-theorem",levels:["amath"],ord:5,chapter:"Binomial Theorem",title:"Binomial theorem",sheet:"amBinom",aid:null,kw:"binomial expansion pascal triangle ncr general term independent of x"},
