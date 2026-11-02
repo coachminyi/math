@@ -550,8 +550,6 @@ const TOPICS = [
    title:"Why x² differentiates to 2x", blurb:"Slide Q into P: the chord becomes the tangent, and its gradient is 2x.", play:"diffChord", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"tangent-gradient", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Tangents, gradient & stationary points", blurb:"Slide the tangent. Uphill, downhill, flat. Gradient graph underneath.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Uses of differentiation"},
-  {id:"general-term", strand:"calc", levels:["amath"], chapter:"Differentiation",
-   title:"Put in x, get the gradient", blurb:"Put r into the general term to get any term. Put x into the gradient formula to get the gradient anywhere.", play:"genTerm", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"speed-time", strand:"alg", levels:["emath"], chapter:"Speed–time graphs",
    title:"Speed–time & distance–time graphs", blurb:"Drag the corners of a journey. Area = distance, gradient = acceleration.", play:"speedTime", sheet:"speedTime", sheetTitle:"Speed–time graphs"},
   {id:"area-under", strand:"calc", levels:["amath"], chapter:"Kinematics",
@@ -1722,7 +1720,6 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <tr><td>Put in</td><td>${nw(`${V("r")} = 2`)} → the 3rd term</td><td>${nw(`${X1} = 3`)} → the gradient at ${nw(`${X1} = 3`)}</td></tr>
       <tr><td>Gives</td><td><b>every</b> term</td><td>the gradient at <b>every</b> point</td></tr>
     </table>
-    ${PLAYLINK("#general-term","Interactive: one formula, every gradient")}
   </div>
 
   <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
