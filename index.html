@@ -329,6 +329,12 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .rt.ix{margin-left:.32em}
 .rt>.rtn{position:absolute;right:calc(100% - .26em);bottom:50%;font-size:.6em;line-height:1;font-style:normal}
 .piccard .rt>svg{position:absolute;width:.6em;height:100%;max-width:none;margin:0}
+.vec{display:inline-block;position:relative;padding-top:.32em;line-height:1.05;font-style:normal}
+.vec::before{content:"";position:absolute;left:.04em;right:.2em;top:.14em;border-top:1.3px solid currentColor}
+.vec::after{content:"";position:absolute;right:0;top:-.02em;border-left:.34em solid currentColor;border-top:.16em solid transparent;border-bottom:.16em solid transparent}
+.bv{font-weight:700;font-style:normal}
+.tl{display:inline-block;position:relative;font-style:italic;padding-bottom:.3em}
+.tl::after{content:"~";position:absolute;left:0;right:0;top:.9em;text-align:center;font-size:.9em;font-style:normal;line-height:1}
 .pb{display:inline-block;position:relative;padding:0 .4em;margin:0 1px;white-space:nowrap}
 .pb::before,.pb::after{content:"";position:absolute;top:.08em;bottom:.08em;width:.3em;border:1.6px solid currentColor;border-top:0;border-bottom:0}
 .pb::before{left:.04em;border-right:0;border-radius:100% 0 0 100%/50% 0 0 50%}
@@ -3056,9 +3062,9 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     <ul class="steps fml">
       ${GRP("Pythagoras","pythagoras")}
       ${FL(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)+FNOTE(`${V("c")} = hypotenuse`))}
-      ${GRP("SOH CAH TOA","trigonometry-sec2")}
-      ${FLB("",nw(`sin θ = ${frac("opp","hyp")}`),nw(`cos θ = ${frac("adj","hyp")}`),nw(`tan θ = ${frac("opp","adj")}`))}
-      ${GRP("Obtuse angles","trig-ratios-any-angle")}
+      ${GRP("TOA CAH SOH","trigonometry-sec2")}
+      ${FLB("",nw(`tan θ = ${frac("opp","adj")}`),nw(`cos θ = ${frac("adj","hyp")}`),nw(`sin θ = ${frac("opp","hyp")}`))}
+      ${GRP("Obtuse angles","further-trigonometry")}
       ${FLB("",nw("sin(180° − θ) = sin θ"),nw("cos(180° − θ) = −cos θ"))}
       ${GRP("Area","perimeter-area")}
       ${FL(`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`)}
@@ -3069,7 +3075,7 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${FLB("Cylinder",`Volume = ${nw(`π${V("r")}²${V("h")}`)}`,`Curved surface area = ${nw(`2π${V("rh")}`)}`)}
       ${GRP("Pyramids","volume-surface-area-2")}
       ${FL(`Volume of a pyramid = ${nw(`${frac("1","3")} × base area × height`)}`)}
-      ${GRP("Arcs and sectors in degrees")}
+      ${GRP("Arcs and sectors in degrees","arc-length-sector-area")}
       ${FL(`Arc length = ${nw(`${frac("θ","360°")} × 2π${V("r")}`)}`)}
       ${FL(`Sector area = ${nw(`${frac("θ","360°")} × π${V("r")}²`)}`)}
       ${FL(nw("π radians = 180°"))}
@@ -3079,11 +3085,11 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${GRP("Similar shapes","congruence-similarity")}
       ${FL(`Area ratio = ${nw("(length ratio)²")}`)}
       ${FL(`Volume ratio = ${nw("(length ratio)³")}`)}
-      ${GRP("Coordinates","linear-graphs")}
+      ${GRP("Coordinates","coordinate-geometry")}
       ${FL(`Gradient = ${GRAD_F}`)}
       ${FL(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)+FNOTE(`${V("m")} = gradient, ${V("c")} = ${V("y")}-intercept`))}
       ${FL(`Length = ${LEN_F}`)}
-      ${GRP("Vectors")}
+      ${GRP("Vectors","vectors")}
       ${FLB("Size of a vector",nw(`|${MX([[X1],[V("y")]])}| = ${SQRT(`${X2} + ${V("y")}²`)}`))}
     </ul>
   </div>
@@ -3631,12 +3637,12 @@ ${PAN("Real life",EG("A 5 m ladder leans on a wall. Its foot is 1.4 m from the w
 ${MIST([[nw(`${V("a")} + ${V("b")} = ${V("c")}`),nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)],["add the squares to find a short side",`subtract: ${nw(`${V("c")}² − ${V("a")}²`)}`],["forget the square root at the end",`${nw(`${V("c")}² = 65`)} means ${nw(`${V("c")} = ${SQRT("65")}`)}`]])}
 </div>`,
 
-s2Trig:`${MUST([FB("blue","SOH",nw(`sin θ = ${frac("opp","hyp")}`)),FB("amber","CAH",nw(`cos θ = ${frac("adj","hyp")}`)),FB("green","TOA",nw(`tan θ = ${frac("opp","adj")}`))])}
+s2Trig:`${MUST([FB("blue","TOA",nw(`tan θ = ${frac("opp","adj")}`)),FB("amber","CAH",nw(`cos θ = ${frac("adj","hyp")}`)),FB("green","SOH",nw(`sin θ = ${frac("opp","hyp")}`))])}
 <div class="sheet">
 ${PAN("Label the sides",picRight("trig")+STEPS(["hyp: the longest side, opposite the right angle","opp: opposite θ","adj: next to θ (not the hyp)"]))}
 ${PAN("Find a side",STEPS([[nw(`${X1} = 10 sin 35° = 5.74 cm`),"hyp 10, find opp"],[nw(`tan 40° = ${frac("7",X1)}`),"opp 7, find adj"],nw(`${X1} = ${frac("7","tan 40°")} = 8.34 cm`)]))}
 ${PAN("Find an angle",STEPS([[nw(`tan θ = ${frac("5","8")}`),"opp 5, adj 8"],[nw("θ = tan⁻¹ 0.625 = 32.0°"),"SHIFT, then tan"]]))}
-${PAN("3 steps",STEPS(["① label opp, adj, hyp from θ","② pick SOH, CAH or TOA: the 2 sides you have or want","③ calculator in degrees (D on the screen)"]))}
+${PAN("3 steps",STEPS(["① label opp, adj, hyp from θ","② pick TOA, CAH or SOH: the 2 sides you have or want","③ calculator in degrees (D on the screen)"]))}
 ${MIST([["calculator in radians","degrees: D on the screen"],["label opp and adj from the wrong angle","label from θ every time"],[`${nw(`${X1} = 7 tan 40°`)} when ${X1} is on the bottom`,nw(`${X1} = 7 ÷ tan 40°`)]])}
 </div>`,
 
@@ -3681,6 +3687,144 @@ ${MIST([[`P = ${frac("7","3")}`,"never more than 1: check the fraction"],["not r
 </div>`
 };
 Object.assign(SHEETS,SHEETS5);
+const ARW=(x1,y1,x2,y2,col="var(--ink)",w=1.4,o="")=>{const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,bx=x2-ux*5.5,by=y2-uy*5.5,px=-uy*2.6,py=ux*2.6;
+  return `<line x1="${x1}" y1="${y1}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="${col}" stroke-width="${w}" ${o}/><polygon points="${x2},${y2} ${(bx+px).toFixed(1)},${(by+py).toFixed(1)} ${(bx-px).toFixed(1)},${(by-py).toFixed(1)}" fill="${col}"/>`;};
+const DOT=(x,y,col="var(--red)")=>`<circle cx="${x}" cy="${y}" r="2.2" fill="${col}"/>`;
+const VEC=t=>`<span class="vec">${t}</span>`, BV=t=>`<b class="bv">${t}</b>`, TL=t=>`<span class="tl">${t}</span>`, CVEC=(a,b)=>MX([[a],[b]]);
+const GRID=(X,Y,nx,ny)=>{let s=""; for(let i=0;i<=nx;i++) s+=LN(X(i),Y(0),X(i),Y(ny),`stroke="var(--grid2)" stroke-width=".5"`); for(let j=0;j<=ny;j++) s+=LN(X(0),Y(j),X(nx),Y(j),`stroke="var(--grid2)" stroke-width=".5"`); return s;};
+const AM='fill="var(--amber)" font-weight="700"';
+function picRunRise(){ const X=x=>10+17*x, Y=y=>76-15*y;
+  let s=GRID(X,Y,6,4)+LN(X(0),Y(0),X(6.2),Y(0))+LN(X(0),Y(0),X(0),Y(4.5));
+  s+=`<path d="M${X(1)} ${Y(1)} H${X(5)} V${Y(4)}" fill="none" stroke="var(--amber)" stroke-width="1.6" ${DASH}/><path d="M${X(5)-5} ${Y(1)} V${Y(1)-5} H${X(5)}" fill="none" stroke="var(--amber)" stroke-width=".8"/>`;
+  s+=LN(X(1),Y(1),X(5),Y(4),`stroke="var(--blue)" stroke-width="2"`)+DOT(X(1),Y(1))+DOT(X(5),Y(4));
+  s+=TX(61,69,"run 4",`${AM} font-size="6.5"`)+TX(99,41,"rise 3",`${AM} font-size="6.5" text-anchor="start"`)+TX(52,34,"AB = 5",`fill="var(--blue)" font-weight="700" font-size="7"`)
+    +TX(27,69,"A(1, 1)",`font-size="5.5"`)+TX(91,12,"B(5, 4)",`font-size="5.5" text-anchor="end"`);
+  return SV("0 0 122 80",s); }
+function picPart(){ let s=`<path d="M12 62 H108 V14" fill="none" stroke="var(--muted)" stroke-width="1" ${DASH}/><path d="M12 62 H36 V50" fill="none" stroke="var(--amber)" stroke-width="1.8"/>`;
+  s+=LN(12,62,108,14,`stroke="var(--blue)" stroke-width="2"`)+DOT(12,62)+DOT(108,14)+DOT(36,50,"var(--amber)");
+  s+=TX(24,70,"2",`${AM} font-size="6.5"`)+TX(39,58,"1",`${AM} font-size="6.5" text-anchor="start"`)+TX(72,70,"run 8",`font-size="6" fill="var(--muted)"`)+TX(111,40,"rise 4",`font-size="6" fill="var(--muted)" text-anchor="start"`)
+    +TX(8,65,"A",`font-weight="700" text-anchor="end"`)+TX(32,47,"P",`${AM} text-anchor="end"`)+TX(112,16,"B",`font-weight="700" text-anchor="start"`);
+  return SV("0 0 134 74",s); }
+function picBoxTri(){ const X=x=>26+14*x, Y=y=>66-14*y, P=(x,y)=>`${X(x)},${Y(y)}`, F='fill="var(--amber-fill)" stroke="none"';
+  let s=PG(`${P(0,4)} ${P(1,4)} ${P(0,1)}`,F)+PG(`${P(0,1)} ${P(0,0)} ${P(6,0)}`,F)+PG(`${P(1,4)} ${P(6,4)} ${P(6,0)}`,F);
+  s+=`<rect x="${X(0)}" y="${Y(4)}" width="84" height="56" fill="none" stroke="var(--muted)" stroke-width="1" ${DASH}/>`+PG(`${P(1,4)} ${P(0,1)} ${P(6,0)}`);
+  s+=TX(30,19,"1.5",`${AM} font-size="5"`)+TX(X(2),Y(0.33)+2,"3",`${AM} font-size="5.5"`)+TX(X(4.4),Y(2.7)+2,"10",`${AM} font-size="5.5"`);
+  s+=TX(X(1),Y(4)-3,"A(1, 4)",`font-size="5.5"`)+TX(X(0)-3,Y(1)+2,"B(0, 1)",`font-size="5.5" text-anchor="end"`)+TX(X(6),Y(0)+8,"C(6, 0)",`font-size="5.5" text-anchor="end"`);
+  return SV("0 0 118 76",s); }
+function picObtuse(){ return SV("0 0 120 62",LN(6,52,114,52)+LN(60,52,92.8,29.1,`stroke="var(--blue)" stroke-width="1.8"`)+LN(60,52,27.2,29.1,`stroke="var(--blue)" stroke-width="1.8"`)
+  +LN(27.2,29.1,92.8,29.1,`stroke="var(--muted)" ${DASH}`)+LN(92.8,29.1,92.8,52,`stroke="var(--muted)" ${DASH}`)+LN(27.2,29.1,27.2,52,`stroke="var(--muted)" ${DASH}`)
+  +ARC(60,52,15,0,35,"var(--amber)")+TX(80,48.5,"θ",AM)+ARC(60,52,8,0,145,"var(--blue)")+TX(60,40,"180° − θ",`fill="var(--blue)" font-weight="700" font-size="6"`)
+  +TX(60,25.5,"same height: same sin",`font-size="5.5" fill="var(--muted)"`)+TX(93,59.5,"cos +",`font-size="5.5" fill="var(--green)" font-weight="700"`)+TX(27,59.5,"cos −",`font-size="5.5" fill="var(--red)" font-weight="700"`)); }
+function picRule(k){ const A="14,56", B="96,56", C="40,12", hi='stroke="var(--amber)" stroke-width="3"', Q=(x,y)=>TX(x,y,"?",`fill="var(--blue)" font-weight="700" font-size="8"`);
+  let s=PG(`${A} ${B} ${C}`);
+  if(k==="sine") s+=LN(96,56,40,12,hi)+ARC(14,56,10,0,59.4,"var(--amber)")+Q(20,33);
+  if(k==="sas") s+=LN(14,56,40,12,hi)+LN(14,56,96,56,hi)+ARC(14,56,10,0,59.4,"var(--amber)")+Q(74,33);
+  if(k==="sss") s+=LN(14,56,40,12,hi)+LN(14,56,96,56,hi)+LN(96,56,40,12,hi)+Q(31,52);
+  return SV("0 0 110 66",s+TX(9,62,"A",`font-weight="700"`)+TX(101,62,"B",`font-weight="700"`)+TX(40,8,"C",`font-weight="700"`)); }
+function picElev(){ return SV("0 0 120 68",LN(4,58,116,58)+LN(96,58,96,14,`stroke-width="2.4"`)+LN(14,58,96,14,`stroke="var(--blue)" stroke-width="1.6"`)+LN(96,14,40,14,`stroke="var(--muted)" ${DASH}`)
+  +ARC(14,58,18,0,28.2,"var(--amber)")+TX(38,55,"α",AM)+TX(46,55,"elevation",`font-size="5.5" fill="var(--muted)" text-anchor="start"`)
+  +ARC(96,14,18,180,208.2,"var(--amber)")+TX(72,22.5,"α",AM)+TX(66,10,"depression",`font-size="5.5" fill="var(--muted)" text-anchor="end"`)
+  +TX(100,16,"T",`font-weight="700" text-anchor="start"`)+TX(14,66,"B",`font-weight="700"`)); }
+function picBearing(){ return SV("0 0 122 70",ARW(40,62,40,13,"var(--ink)",1.2)+TX(40,10,"N",`font-weight="700"`)+LN(94.4,36.6,94.4,15,`stroke="var(--muted)" ${DASH}`)+TX(94.4,12,"N",`font-weight="700" fill="var(--muted)"`)
+  +LN(40,62,94.4,36.6,`stroke="var(--blue)" stroke-width="1.8"`)+DOT(40,62)+DOT(94.4,36.6)
+  +ARC(40,62,16,25,90,"var(--amber)")+TX(53,44,"065°",`${AM} font-size="6.5"`)+ARC(94.4,36.6,8,-155,90,"var(--green)")+TX(107,49,"245°",`fill="var(--green)" font-weight="700" font-size="6.5"`)
+  +TX(34,68,"A",`font-weight="700"`)+TX(88,32,"B",`font-weight="700" text-anchor="end"`)); }
+function picJourney(){ return SV("0 0 112 86",ARW(14,78,14,50,"var(--ink)",1.1)+TX(14,47,"N",`font-weight="700" font-size="6"`)+LN(57.2,26.5,57.2,9,`stroke="var(--muted)" ${DASH}`)+TX(57.2,6.5,"N",`font-weight="700" font-size="6" fill="var(--muted)"`)
+  +LN(14,78,57.2,26.5,`stroke="var(--blue)" stroke-width="1.8"`)+LN(57.2,26.5,96,48.9,`stroke="var(--blue)" stroke-width="1.8"`)+LN(14,78,96,48.9,`stroke="var(--red)" ${DASH}`)
+  +ARC(14,78,12,50,90,"var(--amber)")+TX(24.5,56,"040°",`${AM} font-size="5.5"`)+ARC(57.2,26.5,8,-130,-30,"var(--red)")+TX(60,43.5,"100°",`fill="var(--red)" font-weight="700" font-size="6"`)
+  +TX(37,44,"12 km",`font-size="6" text-anchor="end"`)+TX(80,34,"8 km",`font-size="6" text-anchor="start"`)+TX(58,70,"?",`fill="var(--red)" font-weight="700"`)
+  +DOT(14,78)+DOT(57.2,26.5)+DOT(96,48.9)+TX(9,84,"A",`font-weight="700"`)+TX(51,24,"B",`font-weight="700" text-anchor="end"`)+TX(101,51,"C",`font-weight="700" text-anchor="start"`)); }
+function picCuboid(){ return SV("0 0 104 74",`<path d="M10 62 H74 V32 H10 Z M10 32 L32 16 H96 L74 32 M74 62 L96 46 V16" fill="none" stroke="var(--ink)" stroke-width="1.1"/><path d="M10 62 L32 46 H96 M32 46 V16" fill="none" stroke="var(--muted)" stroke-width=".9" ${DASH}/>`
+  +LN(10,62,96,46,`stroke="var(--amber)" stroke-width="1.6" ${DASH}`)+LN(10,62,96,16,`stroke="var(--blue)" stroke-width="1.8"`)+ARC(10,62,16,10.5,28.1,"var(--red)")+TX(31,57,"θ",`fill="var(--red)" font-weight="700" font-size="6.5"`)
+  +TX(42,70,"8",`font-size="6.5"`)+TX(89,57,"6",`font-size="6.5" text-anchor="start"`)+TX(6,49,"5",`font-size="6.5" text-anchor="end"`)); }
+function picSector(){ return SV("0 0 92 66",`<path d="M18 58 L70 58 A52 52 0 0 0 31.5 7.8 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M70 58 A52 52 0 0 0 31.5 7.8" fill="none" stroke="var(--amber)" stroke-width="2.6"/>`
+  +ARC(18,58,10,0,75,"var(--red)")+TX(31,52,"θ",`fill="var(--red)" font-weight="700"`)+TX(44,65,"r",`font-style="italic" font-weight="700"`)+TX(66,22,"arc",AM)); }
+function pic1rad(){ return SV("0 0 78 68",LN(18,58,64,58)+LN(18,58,42.9,19.3)+`<path d="M64 58 A46 46 0 0 0 42.9 19.3" fill="none" stroke="var(--amber)" stroke-width="2.6"/>`
+  +ARC(18,58,9,0,57.3,"var(--red)")+TX(36,52,"1 rad",`fill="var(--red)" font-weight="700" font-size="5.5"`)+TX(41,65.5,"r",`font-style="italic" font-weight="700"`)+TX(25,37,"r",`font-style="italic" font-weight="700"`)+TX(68,32,"r",`font-style="italic" ${AM}`)); }
+function picSegment(){ return SV("0 0 100 70",`<circle cx="50" cy="40" r="26" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M71.3 25.1 A26 26 0 0 0 28.7 25.1 Z" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.4"/>`
+  +PG("50,40 71.3,25.1 28.7,25.1",`fill="var(--blue-fill)"`)+ARC(50,40,5,35,145,"var(--red)")+TX(50,32.8,"θ",`fill="var(--red)" font-weight="700" font-size="6"`)+TX(64,37.5,"r",`font-style="italic" font-weight="700"`)+TX(50,21,"segment",`${AM} font-size="5.5"`)); }
+function picVecCol(){ const X=x=>10+14*x, Y=y=>58-14*y;
+  return SV("0 0 90 64",GRID(X,Y,5,3.5)+`<path d="M24 44 H66 V16" fill="none" stroke="var(--amber)" stroke-width="1.4" ${DASH}/>`+ARW(24,44,66,16,"var(--blue)",2)+DOT(24,44,"var(--blue)")
+  +TX(45,51.5,"3",`${AM} font-size="7"`)+TX(70,32,"2",`${AM} font-size="7" text-anchor="start"`)
+  +TX(31,21,"3",`fill="var(--blue)" font-weight="700" font-size="7"`)+TX(31,30,"2",`fill="var(--blue)" font-weight="700" font-size="7"`)+`<path d="M27 14 Q24.5 23 27 32 M35 14 Q37.5 23 35 32" fill="none" stroke="var(--blue)" stroke-width="1"/>`); }
+function picOAB(){ return SV("0 0 116 68",ARW(12,60,96,52,"var(--blue)",1.6)+ARW(12,60,46,10,"var(--green)",1.6)+ARW(96,52,46,10,"var(--ink)",1.3)+LN(12,60,71,31,`stroke="var(--amber)" stroke-width="1.4" ${DASH}`)+DOT(71,31,"var(--amber)")
+  +TX(54,63.5,"a",`fill="var(--blue)" font-weight="700" font-size="7.5"`)+TX(24,33,"b",`fill="var(--green)" font-weight="700" font-size="7.5" text-anchor="end"`)+TX(86,28,"b − a",`font-weight="700" font-size="6.5" text-anchor="start"`)
+  +TX(68,41,"M",AM)+TX(8,65,"O",`font-weight="700"`)+TX(101,56,"A",`font-weight="700"`)+TX(46,6.5,"B",`font-weight="700"`)); }
+const SHEETS6={
+emCoord:`${MUST([FB("blue","Length",nw(`AB = ${SQRT("run² + rise²")}`),"Pythagoras on the run and the rise"),FB("amber","Gradient",nw(`${V("m")} = ${frac("rise","run")}`),"left to right: + goes up, − goes down"),FB("green","Parallel · perpendicular",`${nw(`${V("m")}₁ = ${V("m")}₂`)} · ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`,"perpendicular: flip it, then change the sign")])}
+<div class="sheet">
+${PAN("One triangle does it all",picRunRise()+STEPS([[nw("run = 5 − 1 = 4"),`the ${X1}'s`],[nw("rise = 4 − 1 = 3"),`the ${VY}'s`],[nw(`AB = ${SQRT("4² + 3²")} = 5`),"Pythagoras"],[nw(`${V("m")} = ${frac("3","4")}`),"rise over run"]])+`<p class="anno">* start both subtractions at the same point</p>`)}
+${PAN("Midpoint and part-way",EG("Midpoint of A(1, 1) and B(5, 4): add, then halve",[nw(`M = ${PAR(`${frac("1 + 5","2")}, ${frac("1 + 4","2")}`)}`),nw("= (3, 2.5)")])
+  +picPart()+EG("A(2, 1), B(10, 5), AP : PB = 1 : 3. Find P.",[`${nw("AP : AB = 1 : 4")} (1 + 3 parts)`,nw("run = 8, rise = 4"),`${nw(`× ${frac("1","4")}`)}: 2 across, 1 up`,nw("P = (2 + 2, 1 + 1) = (4, 2)")])+`<p class="anno">* the small triangle is a scaled copy of the big one</p>`)}
+${PAN("Equation of a line",EG("Through (2, 3) and (6, 11)",[nw(`${V("m")} = ${frac("11 − 3","6 − 2")} = 2`),nw(`${VY} = 2${X1} + ${V("c")}`),`put in (2, 3): ${nw(`3 = 2(2) + ${V("c")}`)}`,nw(`${V("c")} = −1`),nw(`${VY} = 2${X1} − 1`)])
+  +STEPS([[nw(`${VY} = 3`),"flat line"],[nw(`${X1} = 4`),"vertical line"],[`${nw(`2${VY} = 6${X1} − 8`)} → ${nw(`${VY} = 3${X1} − 4`)}`,`get ${VY} alone, then read ${V("m")}`]]))}
+${PAN("Parallel and perpendicular",FACTS("Perpendicular: flip it, then change the sign",[["",[`${frac("2","3")} → −${frac("3","2")}`,`−4 → ${frac("1","4")}`,`−${frac("7","4")} → ${frac("4","7")}`]]])
+  +EG(`Perpendicular to ${nw(`${VY} = 2${X1} + 3`)}, through (1, 5)`,[`gradient: ${nw(`−${frac("1","2")}`)}`,nw(`5 = −${frac("1","2")}(1) + ${V("c")}`),nw(`${V("c")} = ${frac("11","2")}`),nw(`${VY} = −${frac("1","2")}${X1} + ${frac("11","2")}`),`× 2: ${nw(`2${VY} = −${X1} + 11`)}`])+`<p class="anno">* parallel lines have the same gradient, so they never meet</p>`)}
+${PAN("Where two lines meet",picTwoLines()+STEPS([`${nw(`${VY} = ${X1} + 1`)} and ${nw(`${VY} = −${X1} + 5`)}`,[nw(`${X1} + 1 = −${X1} + 5`),`same ${VY}`],nw(`${X1} = 2, ${VY} = 3`),"they meet at (2, 3)"])+`<p class="anno">* the ${X1}-axis is ${nw(`${VY} = 0`)}, the ${VY}-axis is ${nw(`${X1} = 0`)}</p>`)}
+${PAN("Area and shortest distance",picBoxTri()+EG("No flat side? Box it in, take away the corners",[nw("box = 6 × 4 = 24"),nw("corners = 1.5 + 3 + 10 = 14.5"),nw("area = 24 − 14.5 = 9.5 units²")])
+  +EG("Shortest distance from A to BC",[nw(`BC = ${SQRT("6² + 1²")} = ${SQRT("37")}`),nw(`${V("h")} = ${frac("2 × 9.5",SQRT("37"))}`),nw("= 3.12 units (3 s.f.)")])+`<p class="anno">* the height is always perpendicular to the base</p>`)}
+${MIST([[`${nw(`2${VY} = 6${X1} − 8`)}, so ${nw(`${V("m")} = 6`)}`,`${nw(`${VY} = 3${X1} − 4`)} first, so ${nw(`${V("m")} = 3`)}`],[`perpendicular to ${nw(`−${frac("7","4")}`)} is ${nw(`−${frac("4","7")}`)}`,`flip, then change the sign: ${nw(frac("4","7"))}`],[`${nw("AP : PB = 3 : 4")}, so scale by ${nw(frac("3","4"))}`,`${nw("AP : AB = 3 : 7")}, so scale by ${nw(frac("3","7"))}`],["height = the slant side","the height is perpendicular to the base"]])}
+</div>`,
+
+emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"),FB("amber","Cosine rule",`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)}<br>${nw(`− 2${V("bc")} cos ${V("A")}`)}`,"2 sides and the angle between, or 3 sides"),FB("green","Area",nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),`${V("C")} is the angle between ${V("a")} and ${V("b")}`)])}
+<div class="sheet">
+${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its opposite angle"),PIC(null,picRule("sas"),"Cosine rule","2 sides and the angle between"),PIC(null,picRule("sss"),"Cosine rule","all 3 sides"))+`<p class="anno">* a right angle? TOA CAH SOH is quicker</p>`)}
+${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
+  +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9°"),nw("or θ = 180° − 36.9° = 143.1°")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
+${PAN("Sine rule",EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm")])
+  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6°`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines on top</p>`)}
+${PAN("Cosine rule",STEPS([[nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`),"to find an angle"]])
+  +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")} = 7.55`)])
+  +EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8°")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
+${PAN("Area",EG("Sides 6 cm and 9 cm, with 50° between them",[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm²")])
+  +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),nw("sin θ = 0.8"),nw("θ = 53.1° or 126.9°")])+`<p class="anno">* sin gives 2 angles: keep both unless one can't fit</p>`)}
+${MIST([[nw("cos 130° = cos 50°"),nw("cos 130° = −cos 50°")],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("180° − 36.9° = 143.1°")}`],[nw(`${V("a")}² = (49 + 64 − 112) cos 60°`),`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first: ${nw("113 − 56")}`],["rounding in the middle","keep 5 s.f. in working, give 3 s.f. at the end"]])}
+</div>`,
+
+emTrigApp:`${MUST([FB("blue","Looking up or down","from the horizontal","up: elevation · down: depression"),FB("amber","Bearing","from North, clockwise",nw("3 figures: 065°")),FB("green","Which rule?","right angle? TOA CAH SOH","no right angle? sine or cosine rule")])}
+<div class="sheet">
+${PAN("Elevation and depression",picElev()+STEPS([[nw("depression = elevation"),"alt. ∠s"]])
+  +EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw("30 tan 28° = 15.951 m"),nw("height = 1.6 + 15.951"),nw("= 17.6 m")])+`<p class="anno">* add the eye level at the end</p>`)}
+${PAN("Two points, one tower",EG("A tower is 50 m tall. From A the angle of elevation of the top is 30°, from B it is 45°. A and B are on the same side, in a line with the tower.",[nw("from B: 50 ÷ tan 45° = 50 m"),nw("from A: 50 ÷ tan 30° = 86.603 m"),nw("AB = 86.603 − 50 = 36.6 m")])+`<p class="anno">* two right-angled triangles, one tan each</p>`)}
+${PAN("Bearings",picBearing()+STEPS(["start at the point after “from”","face North, turn clockwise"])+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">* going back: add or subtract 180°</p>`)}
+${PAN("Journeys",picJourney()+EG("A ship sails 12 km on a bearing of 040°, then 8 km on 120°. How far is it from the start?",[`back bearing at B: ${nw("040° + 180° = 220°")}`,`angle at B: ${nw("220° − 120° = 100°")}`,nw("AC² = 12² + 8² − 2(12)(8) cos 100°"),nw("= 241.34"),nw("AC = 15.5 km")]))}
+${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6°")])+`<p class="anno">* pyramid: use half the diagonal of the base, not half the side</p>`)}
+${PAN("Shortest distance",EG("C is 150 m from A. A straight path from A makes 35° with AC. A 40 m pole stands at C. Find the greatest angle of elevation of its top from the path.",[`${nw("shortest distance = 150 sin 35°")} ${nw("= 86.036 m")}`,nw(`tan θ = ${frac("40","86.036")}`),nw("θ = 24.9°")])+`<p class="anno">* the shortest distance is perpendicular to the path, and gives the greatest angle</p>`)}
+${MIST([["angle of depression from the vertical","from the horizontal"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`add or subtract ${nw("180°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`]])}
+</div>`,
+
+emArcs:`${MUST([FB("blue","Radians",nw("π rad = 180°"),"1 rad: the arc = the radius"),FB("amber","Arc length",nw(`${V("s")} = ${V("rθ")}`),"θ in radians"),FB("green","Sector area",nw(`${frac("1","2")}${V("r")}²${V("θ")}`),"θ in radians")])}
+<div class="sheet">
+${PAN("In degrees",picSector()+STEPS([nw(`arc = ${frac("θ","360°")} × 2π${V("r")}`),nw(`sector = ${frac("θ","360°")} × π${V("r")}²`)])
+  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6) = 7.854 cm`),nw(`sector = ${frac("75°","360°")} × π(6)² = 23.6 cm²`),nw("perimeter = 6 + 6 + 7.854 = 19.9 cm")])+`<p class="anno">* perimeter = the 2 radii + the arc</p>`)}
+${PAN("Degrees and radians",pic1rad()+STEPS([[nw(`× ${frac("π","180°")}`),"degrees to radians"],[nw(`× ${frac("180°","π")}`),"radians to degrees"]])
+  +FACTS("Worth knowing",[["",[nw("180° = π"),nw(`90° = ${frac("π","2")}`),nw(`60° = ${frac("π","3")}`),nw(`45° = ${frac("π","4")}`),nw(`30° = ${frac("π","6")}`)]]])
+  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad"),nw(`1.2 rad = 1.2 × ${frac("180°","π")} = 68.8°`)])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`)}
+${PAN("In radians",EG(`${nw(`${V("r")} = 5 cm`)}, ${nw("θ = 1.2 rad")}`,[nw(`${V("s")} = 5 × 1.2 = 6 cm`),nw(`area = ${frac("1","2")} × 5² × 1.2 = 15 cm²`)])
+  +EG(`Backwards: area 24 cm², ${nw(`${V("r")} = 4 cm`)}. Find θ.`,[nw(`${frac("1","2")} × 4² × θ = 24`),nw("8θ = 24"),nw("θ = 3 rad")])+`<p class="anno">* both radian formulas are on the <a href="#sheet/emath-formula-sheet">formula sheet</a></p>`)}
+${PAN("Segment",picSegment()+STEPS([nw("segment = sector − triangle"),nw(`= ${frac("1","2")}${V("r")}²θ − ${frac("1","2")}${V("r")}² sin θ`)])
+  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 1.4 rad")}, calculator in RAD`,[nw(`sector = ${frac("1","2")}(6)²(1.4) = 25.2`),nw(`triangle = ${frac("1","2")}(6)² sin 1.4 = 17.738`),nw("segment = 25.2 − 17.738 = 7.46 cm²")])+`<p class="anno">* only half a chord? Use ${nw(`sin ${frac("θ","2")} = ${frac("half chord",V("r"))}`)}, then double</p>`)}
+${MIST([[`${nw(`${V("s")} = ${V("rθ")}`)} with θ in degrees`,"change θ to radians first"],[`${nw("sin 1.2")} in degree mode`,"calculator in RAD"],["perimeter of a sector = the arc",`add the 2 radii: ${nw(`2${V("r")} + ${V("s")}`)}`],["major arc worked out with θ",`use ${nw("2π − θ")} (or ${nw("360° − θ")})`]])}
+</div>`,
+
+emVectors:`${MUST([FB("blue","Size",nw(`|${CVEC(X1,VY)}| = ${SQRT(`${X2} + ${VY}²`)}`),"+ is right or up · − is left or down"),FB("amber","End minus start",nw(`${VEC("AB")} = ${VEC("OB")} − ${VEC("OA")}`),nw(`= ${BV("b")} − ${BV("a")}`)),FB("green","Parallel",nw(`${VEC("PQ")} = ${V("k")}${VEC("AB")}`),"plus a shared point: collinear")])}
+<div class="sheet">
+${PAN("Column vectors",picVecCol()+STEPS([[CVEC("3","2"),"3 right, 2 up"],[nw(`|${CVEC("−5","12")}| = ${SQRT("(−5)² + 12²")} = 13`),"size"],[`${BV("a")} in print, ${TL("a")} by hand`,"writing a vector"]])
+  +EG(`${nw(`|${CVEC(X1,"6")}| = 10`)}. Find ${X1}.`,[nw(`${X2} + 36 = 100`),nw(`${X2} = 64`),nw(`${X1} = ±8`)])+`<p class="anno">* equal vectors: same size, same direction · negative vector: flip both signs</p>`)}
+${PAN("Add, subtract, scale",STEPS([nw(`${CVEC("2","3")} + ${CVEC("4","−1")} = ${CVEC("6","2")}`),nw(`3${CVEC("2","−1")} = ${CVEC("6","−3")}`)])
+  +EG(`${CVEC("2","3")} is parallel to ${CVEC("6",V("k"))}. Find ${V("k")}.`,[nw(`${CVEC("6",V("k"))} = 3${CVEC("2","3")}`),nw(`${V("k")} = 9`)])+`<p class="anno">* parallel: one is a multiple of the other</p>`)}
+${PAN("Position vectors",STEPS([[`A(3, −1): ${nw(`${VEC("OA")} = ${CVEC("3","−1")}`)}`,"from the origin"]])
+  +EG("A(3, −1), B(7, 2). Find AB and its length.",[nw(`${VEC("AB")} = ${CVEC("7","2")} − ${CVEC("3","−1")} = ${CVEC("4","3")}`),nw(`|${VEC("AB")}| = ${SQRT("4² + 3²")} = 5`)]))}
+${PAN(`Routes in ${BV("a")} and ${BV("b")}`,picOAB()+STEPS([[nw(`${VEC("AC")} = ${VEC("AB")} + ${VEC("BC")}`),"go through points you know"],"against the arrow: change the sign"])
+  +EG(`${nw(`${VEC("OA")} = ${BV("a")}`)}, ${nw(`${VEC("OB")} = ${BV("b")}`)}, M is the midpoint of AB`,[nw(`${VEC("AB")} = ${BV("b")} − ${BV("a")}`),nw(`${VEC("AM")} = ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`${VEC("OM")} = ${BV("a")} + ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("1","2")}(${BV("a")} + ${BV("b")})`)])
+  +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,[`÷ the total parts: ${nw(`${VEC("AP")} = ${frac("1","4")}${VEC("AB")}`)}`,nw(`${VEC("OP")} = ${BV("a")} + ${frac("1","4")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("3","4")}${BV("a")} + ${frac("1","4")}${BV("b")}`)]))}
+${PAN("Parallel and collinear",EG(`${nw(`${VEC("AB")} = 2${BV("a")} + ${BV("b")}`)}, ${nw(`${VEC("AC")} = 6${BV("a")} + 3${BV("b")}`)}`,[nw(`${VEC("AC")} = 3(2${BV("a")} + ${BV("b")}) = 3${VEC("AB")}`),"so AC is parallel to AB","A is on both, so A, B and C are collinear",nw("AB : AC = 1 : 3")])+`<p class="anno">* always say the shared point</p>`)}
+${PAN("Area ratios",STEPS([[nw("area ratio = base ratio"),"same height"],[nw("area ratio = (length ratio)²"),"similar triangles"]])
+  +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,["triangles OAP and OPB have the same height from O",nw("area OAP : area OPB = 1 : 3")]))}
+${MIST([[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),`end minus start: ${nw(`${VEC("OB")} − ${VEC("OA")}`)}`],[nw("(−5)² = −25"),nw("(−5)² = 25")],[`${nw(`${X2} = 64`)}, so ${nw(`${X1} = 8`)}`,nw(`${X1} = ±8`)],[`${nw("AP : PB = 1 : 3")}, so ${nw(`${VEC("AP")} = ${frac("1","3")}${VEC("AB")}`)}`,`÷ the total parts: ${nw(`${frac("1","4")}${VEC("AB")}`)}`],["“parallel, so collinear”","say the shared point too"]])}
+</div>`
+};
+Object.assign(SHEETS,SHEETS6);
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
@@ -3700,7 +3844,9 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”")
+  "command-words":()=>FT("“Hence…”"),
+  "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
+  "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol
 };
 SHEETLIST.push(
   {id:"simultaneous-equations",levels:["sec2"],ord:1,chapter:"Algebra",title:"Simultaneous equations & linear graphs",sheet:"s2Simul",aid:null,kw:"elimination substitution graphical solve two equations"},
@@ -3710,11 +3856,16 @@ SHEETLIST.push(
   {id:"proportion",levels:["sec2"],ord:6,chapter:"Numbers",title:"Proportion & map scales",sheet:"s2Prop",aid:null,kw:"direct inverse proportion constant k map scale area"},
   {id:"congruence-similarity",levels:["sec2"],ord:7,chapter:"Geometry",title:"Congruence & similarity",sheet:"s2Similar",aid:null,kw:"similar triangles scale factor enlargement scale drawing area ratio"},
   {id:"pythagoras",levels:["sec2"],ord:8,chapter:"Geometry",title:"Pythagoras' theorem",sheet:"s2Pyth",aid:null,kw:"hypotenuse right-angled triangle"},
-  {id:"trigonometry-sec2",levels:["sec2"],ord:9,chapter:"Geometry",title:"Trigonometry: SOH CAH TOA",sheet:"s2Trig",aid:null,kw:"sin cos tan opposite adjacent hypotenuse angle"},
+  {id:"trigonometry-sec2",levels:["sec2"],ord:9,chapter:"Geometry",title:"Trigonometry: TOA CAH SOH",sheet:"s2Trig",aid:null,kw:"sin cos tan opposite adjacent hypotenuse angle"},
   {id:"volume-surface-area-2",levels:["sec2","emath"],ord:{sec2:10,emath:122},chapter:"Measurement",title:"Volume & surface area: pyramids, cones & spheres",sheet:"s2Volume",aid:null,kw:"mensuration cone sphere pyramid hemisphere slant height"},
   {id:"data-sec2",levels:["sec2"],ord:11,chapter:"Statistics",title:"Dot diagrams, histograms & stem-and-leaf",sheet:"s2Data",aid:null,kw:"statistics stem and leaf histogram dot diagram"},
   {id:"averages",levels:["sec2"],ord:12,chapter:"Statistics",title:"Mean, median & mode",sheet:"s2Averages",aid:null,kw:"average mean median mode frequency table"},
-  {id:"probability-sec2",levels:["sec2"],ord:13,chapter:"Probability",title:"Probability: single events",sheet:"s2Prob",aid:null,kw:"probability chance not happening"}
+  {id:"probability-sec2",levels:["sec2"],ord:13,chapter:"Probability",title:"Probability: single events",sheet:"s2Prob",aid:null,kw:"probability chance not happening"},
+  {id:"coordinate-geometry",levels:["emath"],chapter:"Coordinate Geometry",title:"Coordinate geometry",sheet:"emCoord",aid:null,kw:"gradient length distance midpoint equation of a line y = mx + c parallel perpendicular area shortest distance collinear"},
+  {id:"further-trigonometry",levels:["emath"],chapter:"Further Trigonometry",title:"Sine rule, cosine rule & area",sheet:"emTrig2",aid:null,kw:"sine rule cosine rule half ab sin c obtuse angle trigonometry"},
+  {id:"bearings-elevation-3d",levels:["emath"],chapter:"Applications of Trigonometry",title:"Bearings, elevation & 3D",sheet:"emTrigApp",aid:null,kw:"bearings angle of elevation depression 3d shortest distance trigonometry"},
+  {id:"arc-length-sector-area",levels:["emath"],chapter:"Arc Length & Radians",title:"Arc length, sector area & radians",sheet:"emArcs",aid:null,kw:"radian arc sector segment circle perimeter"},
+  {id:"vectors",levels:["emath"],chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"}
 );
 
 const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn"), printBtn=$("#printBtn");
