@@ -7,6 +7,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Maths Hub">
 <meta name="theme-color" content="#f7f5ef">
+<meta name="description" content="Free maths cheatsheets and interactive aids for Sec 1–4 Maths, E-Math and A-Math, by Coach Minyi (Jurong East).">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Coach Minyi's Maths Hub</title>
 <script>
 function hubTheme(t){
@@ -246,14 +250,46 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .panelc td.anno{font-size:14px;white-space:nowrap}
 .sheetfoot{color:var(--muted);font-size:14px;padding:0 0 30px}
 
-.homeswitch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0 0}
+.homeswitch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 0}
+.tabnote{color:var(--muted);font-size:15px;margin:12px 0 0}
+.hero .by{font-size:15px;margin-top:2px}
+.lcard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;margin:30px 0 6px}
+.lcard h3{margin:0 0 6px;font-size:18px}
+.lcard p{margin:0 0 12px;line-height:1.5}
+.lcard .acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pill.tg{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);text-decoration:none}
+.pill.tg[aria-disabled="true"]{background:var(--card);color:var(--muted);border-color:var(--line);border-style:dashed;cursor:default}
+.pill.ghost{text-decoration:none;color:var(--accent);font-weight:700;background:transparent}
+.tiny{color:var(--muted);font-size:13.5px;margin:14px 0 0;line-height:1.45}
+.lpage{max-width:760px;padding:6px 0 10px}
+.lpage h2{font-size:26px;margin:14px 0 6px}
+.lpage .lead{font-size:18px;line-height:1.55;margin:0 0 16px}
+.lfacts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.lfacts span{border:1.5px solid var(--blue);background:var(--blue-fill);border-radius:999px;padding:4px 12px;font-weight:700;font-size:15px}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 20px}
+.lgrid div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
+.lgrid b{display:block;margin-bottom:2px}
+.sheetend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:14px 0 6px;margin:4px 0 0;color:var(--muted);font-size:15px}
+.sheetend a{color:var(--accent);font-weight:700;text-decoration:none}
+.printfoot{display:none}
+.fml .go{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
+.fml .lbl{color:var(--muted);font-size:14px;flex-basis:100%;margin-bottom:-2px}
+.given{border-left:4px solid var(--green);padding-left:10px}
+.fml .grp{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 0 2px;border-bottom:1px solid var(--line);margin-bottom:2px}
+.fml .grp:first-child{padding-top:2px}
+.fml .grp .go{letter-spacing:0;text-transform:none}
+.fml .grp i.v{text-transform:none}
+.badge.ok{background:var(--green-fill);color:var(--green)}
+.binom{display:inline-flex;align-items:center;vertical-align:middle;margin:0 1px}
+.binom .p{font-size:1.75em;line-height:1;font-weight:300;transform:scaleX(.75)}
+.binom .st{display:inline-flex;flex-direction:column;align-items:center;font-size:.82em;line-height:1.1}
 .hs{min-height:52px;border:1px solid var(--line);background:var(--card);border-radius:12px;font-size:18px;font-weight:700;cursor:pointer}
 .hs[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .srows{display:flex;flex-direction:column;gap:8px}
 .srow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;text-decoration:none;color:inherit;min-height:52px;box-shadow:var(--shadow)}
 .srow:hover{border-color:var(--accent)}
 .srow .chap{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex:0 0 100%}
-.srow b{font-size:17px;flex:1;min-width:0}
+.srow b{font-size:17px;flex:1 1 160px;min-width:0}
 .srow .tags{display:flex;gap:6px;flex-wrap:wrap;flex:0 0 auto;margin-left:auto;align-items:center}
 .srow .tag{flex:0 0 auto}
 .piccard svg.ico{width:64px;margin:6px auto 8px}
@@ -328,7 +364,8 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   @media (max-width:400px){ .must .forms{grid-template-columns:minmax(0,1fr)} }
   .must .formbox .eq{font-size:15.5px}
   .piccards{grid-template-columns:repeat(2,1fr)}
-  .hs{min-height:46px;font-size:16px}
+  .hs{min-height:46px;font-size:15px;padding:0 4px}
+  .bar .lessbtn{height:36px;padding:0 12px;font-size:14.5px}
   .cards{grid-template-columns:1fr;gap:10px}
   .card{flex-direction:row;align-items:center;gap:12px;padding:10px 12px;min-height:0}
   .card .thumb{width:72px;height:40px;margin:0}
@@ -403,10 +440,18 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
 #toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s,transform .2s;z-index:30;pointer-events:none}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media print{
-  .bar,.tabs,footer,.exitp,#toast,.modal{display:none}
+  .bar,.tabs,footer,.exitp,#toast,.modal,.sheetend,.playlink,.piccard .go,.lcard{display:none}
   body{background:#fff}
   .panelc::before{border-color:#000}
+  .printfoot{display:flex;align-items:center;gap:14px;border-top:1px solid #999;margin:10px 16px 0;padding:10px 0 0;font-size:13px;color:#333;break-inside:avoid}
+  .printfoot svg{width:70px;height:70px;flex:none}
+  .printfoot b{font-size:14px;color:#000}
 }
+.lessbtn{text-decoration:none;font-weight:700;color:var(--accent);border:1px solid var(--line);background:var(--card);height:40px;border-radius:999px;padding:0 14px}
+.lessbtn .lbl{display:inline}
+body[data-page="lessons"] .lessbtn{display:none}
+@media (max-width:899px){ body:not([data-page="home"]) .lessbtn{display:none} }
+footer a{color:var(--accent);font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
@@ -418,13 +463,16 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
   <button class="ibtn" id="share" hidden aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg><span class="lbl">Copy link</span></button>
   <button class="ibtn wide-only" id="qrBtn" hidden aria-label="Show QR code" title="QR code for this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2M14 19h2v2M19 19h2v2"/></svg><span class="lbl">QR</span></button>
   <button class="ibtn wide-only" id="presentBtn" hidden aria-label="Present on a big screen" title="Present: hide the menus, make everything bigger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span class="lbl">Present</span></button>
+  <button class="ibtn wide-only" id="printBtn" hidden aria-label="Print or save as PDF" title="Print or save as PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2"/><rect x="6" y="14" width="12" height="7"/></svg><span class="lbl">Print</span></button>
+  <a class="ibtn lessbtn" id="lessBtn" href="#lessons"><span class="lbl">Lessons</span></a>
   <button class="themebtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch to dark mode"></button>
 </div></header>
 <button class="exitp" id="exitPresent">✕ Exit present mode</button>
 <div class="modal" id="qrModal" hidden><div class="mbox"><p class="mt" id="qrTitle"></p><div class="qr" id="qrBox"></div><p class="url" id="qrUrl"></p><button class="pill" id="qrClose">Close</button></div></div>
 
 <main class="wrap" id="app"></main>
-<footer>Coach Minyi's Maths Hub · drag, tap and play around</footer>
+<div class="printfoot" id="printFoot"></div>
+<footer>Coach Minyi's Maths Hub · <a href="#lessons">Lessons in Jurong East</a></footer>
 
 <script>
 const LEVELS = [
@@ -455,6 +503,8 @@ const TOPICS = [
    title:"Why x² differentiates to 2x", blurb:"Slide Q into P: the chord becomes the tangent, and its gradient is 2x.", play:"diffChord", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"tangent-gradient", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Tangents, gradient & stationary points", blurb:"Slide the tangent. Uphill, downhill, flat. Gradient graph underneath.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Uses of differentiation"},
+  {id:"general-term", strand:"calc", levels:["amath"], chapter:"Differentiation",
+   title:"The gradient formula is a general term", blurb:"Put r into the general term to get any term. Put x into the gradient formula to get the gradient anywhere.", play:"genTerm", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"speed-time", strand:"alg", levels:["emath"], chapter:"Speed–time graphs",
    title:"Speed–time & distance–time graphs", blurb:"Drag the corners of a journey. Area = distance, gradient = acceleration.", play:"speedTime", sheet:"speedTime", sheetTitle:"Speed–time graphs"},
   {id:"area-under", strand:"calc", levels:["amath"], chapter:"Kinematics",
@@ -467,6 +517,7 @@ const SVGNS="http://www.w3.org/2000/svg";
 function svgEl(tag,attrs={},text){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
 const fmt=(n,d=2)=>{const s=(+n).toFixed(d);return s.replace(/\.?0+$/,"")||"0"};
 const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const BIN=(n,r)=>`<span class="binom"><span class="p">(</span><span class="st"><span>${n}</span><span>${r}</span></span><span class="p">)</span></span>`;
 const fx=s=>String(s).replace(/\{([^/}]*)\/([^}]*)\}/g,(m,n,d)=>frac(n,d));
 const V=s=>`<i class="v">${s}</i>`;
 
@@ -1225,6 +1276,43 @@ const tangentAid=aid({
     return FORMS(b,true);}
 });
 
+const GTB={l:12,t:50,w:124,h:92,x0:-2.5,x1:2.5,y0:-5,y1:6,xs:.5,xl:1,ys:1,yl:2};
+const BTERMS=["16","32x","24x²","8x³","x⁴"], BTERMH=["16",`32${X1}`,`24${X2}`,`8${V("x")}³`,`${V("x")}⁴`], NCR4=[1,4,6,4,1], SUBN="₀₁₂₃₄₅₆₇₈₉";
+const genTerm=aid({
+  init:{cv:"cubic",r:2,x:2}, vb:"0 0 140 156", label:"The 5 terms of a binomial expansion above a curve with its tangent",
+  explain:[`<b>General term</b>: put in ${V("r")} → you get <b>any</b> term.`,`${DY}: put in ${V("x")} → you get the gradient at <b>any</b> point.`],
+  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"]]}],
+  sliders:[{k:"r",label:CS("amber","r"),min:0,max:4,step:1},{k:"x",label:CS("blue","x"),min:-2,max:2,step:.5}],
+  steps:[{t:()=>""}],
+  draw(svg,s){
+    const C=TC[s.cv];
+    lab(svg,[8,7],"(2 + x)⁴ =",{"text-anchor":"start","font-size":4.6,"font-weight":700,fill:"var(--amber)"});
+    lab(svg,[134,7],"5 terms",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"});
+    BTERMS.forEach((tx,i)=>{ const x=8+i*26.5, on=i===s.r;
+      S_(svg,"rect",{x,y:11,width:22,height:12,rx:2,fill:on?"var(--amber-fill)":"var(--card)",stroke:on?"var(--amber)":"var(--line)","stroke-width":on?1.1:.6});
+      lab(svg,[x+11,19.3],tx,{"font-size":4.6,"font-weight":on?700:400});
+      lab(svg,[x+11,28.5],"T"+SUBN[i+1],{"font-size":3.8,fill:on?"var(--amber)":"var(--muted)","font-weight":on?700:400});
+      if(on) lab(svg,[x+11,34.5],`r = ${i}`,{"font-size":3.6,fill:"var(--amber)","font-weight":700});
+      if(i<4) lab(svg,[x+24.25,18.9],"+",{"font-size":4,fill:"var(--muted)"}); });
+    S_(svg,"line",{x1:4,x2:136,y1:39.5,y2:39.5,stroke:"var(--line)","stroke-width":.5});
+    lab(svg,[14,46.5],"y = "+strip(C.fs),{"text-anchor":"start","font-size":4.4,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    const g=graph(svg,GTB); g.plot(C.f);
+    lab(svg,[6,151.5],"{dy/dx}",{"font-size":3.6,fill:"var(--muted)"});
+    [-2,-1,0,1,2].forEach(k=>{ const m=C.d(k), yk=C.f(k), on=Math.abs(k-s.x)<1e-9;
+      g.line(k-.28,yk-.28*m,k+.28,yk+.28*m,{stroke:"var(--muted)","stroke-width":.7});
+      lab(svg,[g.X(k),151.5],N(m),{"font-size":on?4.4:3.8,fill:on?"var(--blue)":"var(--muted)","font-weight":on?700:400}); });
+    const y0=C.f(s.x), m=C.d(s.x), col=Math.abs(m)<1e-9?"var(--amber)":m>0?"var(--green)":"var(--red)";
+    g.line(-2.5,y0+m*(-2.5-s.x),2.5,y0+m*(2.5-s.x),{stroke:col,"stroke-width":1.1});
+    if(y0>=GTB.y0&&y0<=GTB.y1){ lab(svg,[g.X(s.x)+(s.x>1?-3:3),g.Y(y0)-3],`gradient ${N(m)}`,{"font-size":3.8,"font-weight":700,fill:col,"text-anchor":s.x>1?"end":"start"}); handle(svg,g.X(s.x),g.Y(y0),"p",col); }
+  },
+  drag(id,p,s){ let [x]=ginv(GTB,p); s.x=clamp(snap(x,.5),-2,2); },
+  key(s){ const C=TC[s.cv], r=s.r, x=s.x, m=C.d(x), p2=2**(4-r);
+    const xs=r===0?"":` × ${X1}${r>1?`<sup>${r}</sup>`:""}`;
+    return FORMS([
+      FB("amber",`General term, ${V("r")} = ${r}`,`T<sub>${r+1}</sub> = ${BTERMH[r]}`,`${BIN("4",String(r))}2<sup>${4-r}</sup>${r?X1+(r>1?`<sup>${r}</sup>`:""):""} = ${NCR4[r]} × ${p2}${xs}`,`T<sub>${V("r")}+1</sub> = ${BIN("4",V("r"))}2<sup>4 − ${V("r")}</sup>${X1}<sup>${V("r")}</sup>`),
+      FB("blue",`Gradient at ${V("x")} = ${N(x)}`,`${N(m)}`,`${C.dat(x)} = ${N(m)}`,`${DY} = ${C.ds}`)]);}
+});
+
 const TT=V("t");
 const JOUR={abs:{name:"Speed up · steady · slow down",pts:[[0,0],[4,12],[10,12],[14,0]]},bus:{name:"Bus stop",pts:[[0,10],[2,10],[5,0],[7,0],[10,12],[14,12]]},acc:{name:"Faster and faster",pts:[[0,0],[4,2],[9,8],[14,16]]}};
 const SBOX={l:16,t:34,w:118,h:84,x0:0,x1:14,y0:0,y1:16,xs:1,xl:2,ys:2,yl:4,xn:"t (s)",yn:"v (m/s)"};
@@ -1393,7 +1481,7 @@ function wireNav(panel,steps,st,draw){
   $("[data-prev]",panel).onclick=()=>{if(st.step>0){st.step--;draw()}};
   $("[data-next]",panel).onclick=()=>{if(st.step<steps.length-1){st.step++;draw()}};
 }
-const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,speedTime,kinAid};
+const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid};
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-8.5}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+8.5}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -1486,7 +1574,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
     ${PLAYLINK("#a-plus-b-squared","Play: cut the square yourself")}
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + ${V("b")}²`)}</div>
       <div class="ok">✓ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</div>
@@ -1578,6 +1666,16 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <li>② rate of change of ${V("y")} as ${V("x")} changes</li>
     </ul>
     ${EG(`e.g. gradient of ${V("y")} = ${V("x")}² at ${V("x")} = 3`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 2${V("x")}`)}`,`${nw(`= 2(3) = <b>6</b>`)}`])}
+  </div>
+
+  <div class="panelc"><h4>${frac("d"+V("y"),"d"+V("x"))} is a general term</h4>
+    <table>
+      <tr><th></th><th>Binomial</th><th>Curve</th></tr>
+      <tr><td>One formula</td><td>${nw(`T<sub>${V("r")} + 1</sub> = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)}</td><td>${nw(`${frac("d"+V("y"),"d"+V("x"))} = 2${V("x")}`)} for ${nw(`${V("y")} = ${X2}`)}</td></tr>
+      <tr><td>Put in</td><td>${nw(`${V("r")} = 2`)} → the 3rd term</td><td>${nw(`${X1} = 3`)} → the gradient at ${nw(`${X1} = 3`)}</td></tr>
+      <tr><td>Gives</td><td><b>every</b> term</td><td>the gradient at <b>every</b> point</td></tr>
+    </table>
+    ${PLAYLINK("#general-term","Play: one formula, every gradient")}
   </div>
 
   <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
@@ -1708,7 +1806,7 @@ quadGraphs:`${MUST([FB("blue","Turning point form",nw(`${V("y")} = ${V("a")}(${X
     </ul>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`${V("y")} = (${X1} − 2)² + 1`)}<br>→ turning point (−2, 1)</div>
       <div class="ok">✓ turning point (2, 1)</div>
@@ -1763,7 +1861,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
     </table>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ using the line's ${V("c")} in ${V("b")}² − 4${V("ac")}</div>
       <div class="ok">✓ rearrange to … = 0 first<br>then read ${V("a")}, ${V("b")}, ${V("c")}</div>
@@ -1836,7 +1934,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
     <p class="anno">* sine rule finding an angle: sin⁻¹ gives only the acute answer. If the angle could be obtuse, the other answer is 180° − that angle.</p>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ α = sin⁻¹(−0.5) = −30°</div>
       <div class="ok">✓ α = sin⁻¹ 0.5 = 30°<br>then ASTC for the sign</div>
@@ -1897,7 +1995,7 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
     ${PLAYLINK("#trig-graphs?fn=sin&a=2&b=3&c=1","Play: see this graph")}
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ period of sin 3${X1} = 3 × 360°</div>
       <div class="ok">✓ 360° ÷ 3 = 120°</div>
@@ -1957,7 +2055,7 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
     </ul>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ tan α = ${frac(V("a"),V("b"))}</div>
       <div class="ok">✓ tan α = ${frac(V("b"),V("a"))}</div>
@@ -1997,7 +2095,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
     <p class="anno">* reason on the same line as the working; the answer on the next line</p>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ∠APB = ∠AQB when P and Q are on opposite sides of AB</div>
       <div class="ok">✓ opposite sides<br>→ ∠APB + ∠AQB = 180°</div>
@@ -2132,7 +2230,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
     </ul>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ slowing down 3 m/s²<br>written as "acceleration 3 m/s²"</div>
       <div class="ok">✓ acceleration = −3 m/s²<br>or "deceleration 3 m/s²"</div>
@@ -2272,7 +2370,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
     <p class="anno">* "Hence find ∫…": use the derivative from the part before, and adjust for any number in front</p>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`∫ (2${X1} + 1)³ d${X1}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","4")} + ${V("c")}`)}</div>
       <div class="ok">✓ ${nw(`${frac("(2"+X1+" + 1)⁴","4 × 2")} + ${V("c")}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","8")} + ${V("c")}`)}</div>
@@ -2387,7 +2485,7 @@ quadEqns:`${MUST([FB("blue","Factorise → each bracket = 0",`${nw(`(${X1} − 2
     </ul>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`${X2} = 5${X1}`)}<br>→ ${X1} = 5</div>
       <div class="ok">✓ ${nw(`${X2} − 5${X1} = 0`)}<br>→ ${nw(`${X1}(${X1} − 5) = 0`)} → ${X1} = 0 or 5</div>
@@ -2433,7 +2531,7 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
     </table>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`−2${X1} ≤ 8`)}<br>→ ${X1} ≤ −4</div>
       <div class="ok">✓ ${X1} ≥ −4</div>
@@ -2490,7 +2588,7 @@ indices:`${MUST([FB("blue","Same base: add, subtract, multiply",`${nw(`${V("a")}
     </ul>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ 2³ × 2⁴ = 4⁷</div>
       <div class="ok">✓ 2⁷ (base stays)</div>
@@ -2544,7 +2642,7 @@ stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>,
     </table>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ 12 × 10⁵</div>
       <div class="ok">✓ 1.2 × 10⁶</div>
@@ -2592,7 +2690,7 @@ interest:`${MUST([FB("blue","Simple interest",`${V("I")} = ${frac(`${V("P")} × 
     ${FACTS("Multiplier",[["Growth",[`(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`]],["Decay",[`(1 − ${frac(V("r"),"100")})<sup>${V("n")}</sup>`]]])}
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ monthly, but ${V("r")} = 6 and ${V("n")} = 2</div>
       <div class="ok">✓ ${V("r")} = 0.5 and ${V("n")} = 24</div>
@@ -2639,7 +2737,7 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
     ${EG("Shortcut",[`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`,`here: ${nw("18 + 15 − 7 = 26")}`])}
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ A ∩ B = all of A and all of B</div>
       <div class="ok">✓ only what they share</div>
@@ -2686,7 +2784,7 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
     <p class="anno">* grouped data: use the mid-value of each class as ${X1}</p>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ Q1 read at ${frac("1","4")} of the biggest mark</div>
       <div class="ok">✓ Q1 read at ${frac("1","4")} of N (the frequency axis)</div>
@@ -2727,7 +2825,7 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
     </table>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ P(both red) = ${frac("3","5")} × ${frac("3","5")} (no replacement)</div>
       <div class="ok">✓ ${frac("3","5")} × ${frac("2","4")}</div>
@@ -2771,7 +2869,7 @@ matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0",
     <p class="anno">* rows = days, columns = items. Keep the same order in the price matrix.</p>
   </div>
 
-  <div class="panelc"><h4>Note!</h4>
+  <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ multiply element by element</div>
       <div class="ok">✓ row × column, then add</div>
@@ -2794,8 +2892,266 @@ SHEETLIST.push(
   {id:"probability",levels:["emath"],chapter:"Probability",title:"Probability",sheet:"probability",aid:null},
   {id:"matrices",levels:["emath"],chapter:"Matrices",title:"Matrices",sheet:"matrices",aid:null}
 );
+const GRP=(t,id)=>`<li class="grp"><span>${t}</span>${id?`<a class="go" href="#sheet/${id}">cheatsheet →</a>`:""}</li>`;
+const FL=f=>`<li>${f}</li>`;
+const dd=(a,b)=>frac("d"+a,"d"+b), dydx=dd(V("y"),V("x"));
+const SHEETS3={
+emFormula:`${MUST([FB("green","Given",`the green panel`,"printed in your exam paper"),FB("red","Not given",`everything else`,"memorise: the lists below"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">From the 2027 SEC syllabus (K310 G3 Mathematics).</p>
+<div class="sheet">
+  <div class="panelc"><h4>Given in the exam <span class="badge ok">formula list</span></h4>
+    <ul class="steps fml given">
+      ${GRP("Compound interest")}
+      ${FL(`Total amount = ${nw(`${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`)}`)}
+      ${GRP("Mensuration")}
+      ${FL(`Curved surface area of a cone = ${nw(`π${V("rl")}`)}`)}
+      ${FL(`Surface area of a sphere = ${nw(`4π${V("r")}²`)}`)}
+      ${FL(`Volume of a cone = ${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Volume of a sphere = ${nw(`${frac("4","3")}π${V("r")}³`)}`)}
+      ${FL(`Area of triangle ${V("ABC")} = ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}`)}
+      ${FL(`Arc length = ${nw(`${V("r")}θ`)}, θ in radians`)}
+      ${FL(`Sector area = ${nw(`${frac("1","2")}${V("r")}²θ`)}, θ in radians`)}
+      ${GRP("Trigonometry")}
+      ${FL(`${nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))} = ${frac(V("c"),"sin "+V("C"))}`)}`)}
+      ${FL(`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)} ${nw(`− 2${V("bc")} cos ${V("A")}`)}`)}
+      ${GRP("Statistics")}
+      ${FL(`Mean = ${nw(frac("Σ"+V("fx"),"Σ"+V("f")))}`)}
+      ${FL(`Standard deviation = ${nw(`√(${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − (${frac("Σ"+V("fx"),"Σ"+V("f"))})²)`)}`)}
+    </ul>
+  </div>
 
-const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn");
+  <div class="panelc"><h4>Not given: numbers &amp; algebra</h4>
+    <ul class="steps fml">
+      ${GRP("Expansion","expansion")}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`${V("a")}² − ${V("b")}²`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)}
+      ${GRP("Quadratic formula","quadratic-equations")}
+      ${FL(`${nw(`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`)}`)}
+      ${GRP("Completing the square","completing-the-square")}
+      ${FL(`${nw(`${X2} + ${V("p")}${X1} + ${V("q")}`)} = ${nw(`(${X1} + ${frac(V("p"),"2")})² − (${frac(V("p"),"2")})² + ${V("q")}`)}`)}
+      ${GRP("Indices","indices")}
+      ${FL(`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}, ${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}`)}
+      ${FL(`${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}, ${nw(`${V("a")}<sup>0</sup> = 1`)}, ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`)}
+      ${GRP("Money and rates","interest")}
+      ${FL(`Simple interest = ${nw(frac(V("PRT"),"100"))}`)}
+      ${FL(`Percentage change = ${nw(`${frac("change","original")} × 100%`)}`)}
+      ${FL(`Average speed = ${nw(frac("total distance","total time"))}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: geometry &amp; measurement</h4>
+    <ul class="steps fml">
+      ${GRP("Right-angled triangles")}
+      ${FL(`Pythagoras: ${nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)} (${V("c")} = hypotenuse)`)}
+      ${FL(`${nw(`sin θ = ${frac("opp","hyp")}`)}, ${nw(`cos θ = ${frac("adj","hyp")}`)}, ${nw(`tan θ = ${frac("opp","adj")}`)}`)}
+      ${GRP("Obtuse angles","trig-ratios-any-angle")}
+      ${FL(`${nw("sin(180° − θ) = sin θ")}, ${nw("cos(180° − θ) = −cos θ")}`)}
+      ${GRP("Area and volume")}
+      ${FL(`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}, parallelogram = ${nw("base × height")}`)}
+      ${FL(`Circle: area ${nw(`π${V("r")}²`)}, circumference ${nw(`2π${V("r")}`)}`)}
+      ${FL(`Prism or cylinder: volume = ${nw("base area × length")}, cylinder ${nw(`π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Pyramid: volume = ${nw(`${frac("1","3")} × base area × height`)}`)}
+      ${FL(`Cylinder: curved surface area = ${nw(`2π${V("rh")}`)}`)}
+      ${GRP("Arcs and sectors in degrees")}
+      ${FL(`Arc = ${nw(`${frac("θ","360°")} × 2π${V("r")}`)}, sector = ${nw(`${frac("θ","360°")} × π${V("r")}²`)}`)}
+      ${FL(`${nw("π rad = 180°")}`)}
+      ${GRP("Angles and shapes","circle-properties")}
+      ${FL(`Angles inside an ${V("n")}-sided polygon add to ${nw(`(${V("n")} − 2) × 180°`)}; outside angles add to 360°`)}
+      ${FL(`Similar shapes: area ratio = ${nw("(length ratio)²")}, volume ratio = ${nw("(length ratio)³")}`)}
+      ${GRP("Coordinates and vectors")}
+      ${FL(`Gradient = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}, ${nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)}`)}
+      ${FL(`Length = ${nw(`√((${X1}₂ − ${X1}₁)² + (${V("y")}₂ − ${V("y")}₁)²)`)}`)}
+      ${FL(`Size of a vector: ${nw(`|${MX([[X1],[V("y")]])}| = √(${X2} + ${V("y")}²)`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: statistics &amp; probability</h4>
+    <ul class="steps fml">
+      ${GRP("Spread","measures-of-spread")}
+      ${FL(`Interquartile range = ${nw(`${V("Q")}₃ − ${V("Q")}₁`)}`)}
+      ${GRP("Probability","probability")}
+      ${FL(`${nw("P(not A) = 1 − P(A)")}`)}
+      ${FL(`${nw("AND → multiply")}, ${nw("OR → add")} (only if they can't both happen)`)}
+      ${GRP("Sets","sets")}
+      ${FL(`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`)}
+    </ul>
+  </div>
+</div>`,
+
+amFormula:`${MUST([FB("green","Given",`the green panel`,"printed in your exam paper"),FB("red","Not given",`everything else`,"memorise: the lists below"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">From the 2027 SEC syllabus (K341 G3 Additional Mathematics).</p>
+<div class="sheet">
+  <div class="panelc"><h4>Given in the exam <span class="badge ok">formula list</span></h4>
+    <ul class="steps fml given">
+      ${GRP("Quadratic equation")}
+      ${FL(`For ${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}: ${nw(`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`)}`)}
+      ${GRP("Binomial expansion")}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>`)} ${nw(`+ ${BIN(V("n"),"1")}${V("a")}<sup>${V("n")} − 1</sup>${V("b")}`)} ${nw(`+ ${BIN(V("n"),"2")}${V("a")}<sup>${V("n")} − 2</sup>${V("b")}²`)} ${nw(`+ … + ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)} ${nw(`+ … + ${V("b")}<sup>${V("n")}</sup>`)}`)}
+      ${FL(`${V("n")} a positive integer, ${nw(`${BIN(V("n"),V("r"))} = ${frac(V("n")+"!",V("r")+"!("+V("n")+" − "+V("r")+")!")}`)} ${nw(`= ${frac(`${V("n")}(${V("n")} − 1)…(${V("n")} − ${V("r")} + 1)`,V("r")+"!")}`)}`)}
+      ${GRP("Trig identities")}
+      ${FL(`${nw(`sin²${V("A")} + cos²${V("A")} = 1`)}`)}
+      ${FL(`${nw(`sec²${V("A")} = 1 + tan²${V("A")}`)}, ${nw(`cosec²${V("A")} = 1 + cot²${V("A")}`)}`)}
+      ${FL(`${nw(`sin(${V("A")} ± ${V("B")})`)} = ${nw(`sin ${V("A")} cos ${V("B")} ± cos ${V("A")} sin ${V("B")}`)}`)}
+      ${FL(`${nw(`cos(${V("A")} ± ${V("B")})`)} = ${nw(`cos ${V("A")} cos ${V("B")} ∓ sin ${V("A")} sin ${V("B")}`)}`)}
+      ${FL(`${nw(`tan(${V("A")} ± ${V("B")}) = ${frac(`tan ${V("A")} ± tan ${V("B")}`,`1 ∓ tan ${V("A")} tan ${V("B")}`)}`)}`)}
+      ${FL(`${nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)}`)}
+      ${FL(`${nw(`cos 2${V("A")} = cos²${V("A")} − sin²${V("A")}`)} ${nw(`= 2cos²${V("A")} − 1`)} ${nw(`= 1 − 2sin²${V("A")}`)}`)}
+      ${FL(`${nw(`tan 2${V("A")} = ${frac(`2 tan ${V("A")}`,`1 − tan²${V("A")}`)}`)}`)}
+      ${GRP("Triangle ABC")}
+      ${FL(`${nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))} = ${frac(V("c"),"sin "+V("C"))}`)}`)}
+      ${FL(`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)} ${nw(`− 2${V("bc")} cos ${V("A")}`)}`)}
+      ${FL(`${nw(`Δ = ${frac("1","2")}${V("bc")} sin ${V("A")}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: algebra</h4>
+    <ul class="steps fml">
+      ${GRP(`${V("b")}² − 4${V("ac")}`,"discriminant")}
+      ${FL(`${nw(`&gt; 0`)}: 2 real, different roots · ${nw(`= 0`)}: 2 equal roots · ${nw(`&lt; 0`)}: no real roots`)}
+      ${FL(`Always positive: ${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
+      ${GRP("Completing the square","completing-the-square")}
+      ${FL(`${nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}: turning point ${nw(`(${V("h")}, ${V("k")})`)}`)}
+      ${GRP("Polynomials")}
+      ${FL(`Remainder theorem: ${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)} leaves remainder ${nw(`f(${V("a")})`)}`)}
+      ${FL(`Factor theorem: ${nw(`(${X1} − ${V("a")})`)} is a factor ⇔ ${nw(`f(${V("a")}) = 0`)}`)}
+      ${FL(`${nw(`${V("a")}³ + ${V("b")}³`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")}² − ${V("ab")} + ${V("b")}²)`)}`)}
+      ${FL(`${nw(`${V("a")}³ − ${V("b")}³`)} = ${nw(`(${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`)}
+      ${GRP("Partial fractions: the 3 forms")}
+      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`)}
+      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`)}
+      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`)}
+      ${GRP("Binomial")}
+      ${FL(`${nw(`${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)} is the ${nw(`(${V("r")} + 1)`)}th term, ${nw(`T<sub>${V("r")} + 1</sub>`)}`)}
+      ${GRP("Exponentials and logs")}
+      ${FL(`${nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`)} ⇔ ${nw(`${X1} = log<sub>${V("a")}</sub> ${V("y")}`)}`)}
+      ${FL(`${nw(`log<sub>${V("a")}</sub> ${V("xy")} = log<sub>${V("a")}</sub> ${X1} + log<sub>${V("a")}</sub> ${V("y")}`)}`)}
+      ${FL(`${nw(`log<sub>${V("a")}</sub> ${frac(X1,V("y"))} = log<sub>${V("a")}</sub> ${X1} − log<sub>${V("a")}</sub> ${V("y")}`)}`)}
+      ${FL(`${nw(`log<sub>${V("a")}</sub> ${X1}<sup>${V("k")}</sup> = ${V("k")} log<sub>${V("a")}</sub> ${X1}`)}, ${nw(`log<sub>${V("a")}</sub> ${V("a")} = 1`)}, ${nw(`log<sub>${V("a")}</sub> 1 = 0`)}`)}
+      ${FL(`Change of base: ${nw(`log<sub>${V("a")}</sub> ${V("b")} = ${frac(`log<sub>${V("c")}</sub> ${V("b")}`,`log<sub>${V("c")}</sub> ${V("a")}`)}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: trigonometry</h4>
+    <ul class="steps fml">
+      ${GRP("The six ratios","trig-ratios-any-angle")}
+      ${FL(`${nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`)}, ${nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`)}`)}
+      ${FL(`${nw(`sec ${V("A")} = ${frac("1","cos "+V("A"))}`)}, ${nw(`cosec ${V("A")} = ${frac("1","sin "+V("A"))}`)}, ${nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`)}`)}
+      ${FL(`Exact values for 30°, 45°, 60° and ASTC: see the cheatsheet`)}
+      ${GRP("Graphs","trig-graphs")}
+      ${FL(`${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}: amplitude ${nw(`|${V("a")}|`)}, period ${nw(frac("360°",V("b")))}`)}
+      ${FL(`max ${nw(`${V("c")} + |${V("a")}|`)}, min ${nw(`${V("c")} − |${V("a")}|`)}; tan: period ${nw(frac("180°",V("b")))}`)}
+      ${GRP("R-formula","r-formula")}
+      ${FL(`${nw(`${V("a")} cos θ + ${V("b")} sin θ`)} = ${nw(`${V("R")} cos(θ − α)`)}`)}
+      ${FL(`${nw(`${V("R")} = √(${V("a")}² + ${V("b")}²)`)}, ${nw(`tan α = ${frac(V("b"),V("a"))}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: coordinate geometry</h4>
+    <ul class="steps fml">
+      ${GRP("Lines")}
+      ${FL(`Midpoint = ${nw(`(${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")})`)}`)}
+      ${FL(`Gradient = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}, length = ${nw(`√((${X1}₂ − ${X1}₁)² + (${V("y")}₂ − ${V("y")}₁)²)`)}`)}
+      ${FL(`Parallel: ${nw(`${V("m")}₁ = ${V("m")}₂`)} · perpendicular: ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`)}
+      ${GRP("Circles")}
+      ${FL(`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`)}: centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`)}
+      ${FL(`${nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`)}: centre ${nw(`(−${V("g")}, −${V("f")})`)}, radius ${nw(`√(${V("g")}² + ${V("f")}² − ${V("c")})`)}`)}
+      ${GRP("Area of a shape from its corners")}
+      ${FL(`List the corners in order and repeat the first. Area = ${nw(`${frac("1","2")}|(sum of ↘ products)`)} ${nw("− (sum of ↗ products)|")}`)}
+      ${GRP("Linear law")}
+      ${FL(`${nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`)}, e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}: ${nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Not given: calculus</h4>
+    <ul class="steps fml">
+      ${GRP("Differentiation","differentiation-rules")}
+      ${FL(`${nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`)}`)}
+      ${FL(`${nw(`sin ${X1} → cos ${X1}`)}, ${nw(`cos ${X1} → −sin ${X1}`)}, ${nw(`tan ${X1} → sec²${X1}`)}`)}
+      ${FL(`${nw(`e<sup>${X1}</sup> → e<sup>${X1}</sup>`)}, ${nw(`ln ${X1} → ${frac("1",X1)}`)}`)}
+      ${FL(`Product: ${nw(`${frac("d","d"+X1)}(${V("uv")}) = ${V("u")}${dd(V("v"),X1)} + ${V("v")}${dd(V("u"),X1)}`)}`)}
+      ${FL(`Quotient: ${nw(`${frac("d","d"+X1)}(${frac(V("u"),V("v"))}) = ${frac(`${V("v")}${dd(V("u"),X1)} − ${V("u")}${dd(V("v"),X1)}`,V("v")+"²")}`)}`)}
+      ${FL(`Chain: ${nw(`${dd(V("y"),X1)} = ${dd(V("y"),V("u"))} × ${dd(V("u"),X1)}`)}`)}
+      ${GRP("Uses","differentiation-uses")}
+      ${FL(`Tangent: ${nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`)}; normal gradient ${nw(`−${frac("1",V("m"))}`)}`)}
+      ${FL(`Stationary: ${nw(`${dydx} = 0`)}; ${nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`)} min, ${nw(`&lt; 0`)} max`)}
+      ${FL(`Rates: ${nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`)}`)}
+      ${GRP("Integration","integration")}
+      ${FL(`${nw(`∫${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)}, ${nw(`${V("n")} ≠ −1`)}`)}
+      ${FL(`${nw(`∫(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup> d${X1}`)} = ${nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`)}`)}
+      ${FL(`${nw(`∫sin ${X1} d${X1} = −cos ${X1} + ${V("c")}`)}, ${nw(`∫cos ${X1} d${X1} = sin ${X1} + ${V("c")}`)}`)}
+      ${FL(`${nw(`∫sec²${X1} d${X1} = tan ${X1} + ${V("c")}`)}, ${nw(`∫e<sup>${V("a")}${X1} + ${V("b")}</sup> d${X1} = ${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`)}`)}
+      ${FL(`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`)}`)}
+      ${GRP("Kinematics","kinematics")}
+      ${FL(`${nw(`${V("v")} = ${dd(V("s"),V("t"))}`)}, ${nw(`${V("a")} = ${dd(V("v"),V("t"))}`)}; ${nw(`${V("s")} = ∫${V("v")} d${V("t")}`)}, ${nw(`${V("v")} = ∫${V("a")} d${V("t")}`)}`)}
+    </ul>
+  </div>
+</div>`,
+
+cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise"),FB("amber",`<span class="m">π</span>`,`calculator value`,"or 3.142, unless it says 'in terms of π'"),FB("red","Working",`always show it`,"missing working loses marks")])}
+<div class="sheet">
+  <div class="panelc"><h4>They say → you do</h4>
+    <table>
+      <tr><th>They say</th><th>You do</th></tr>
+      <tr><td><b>Find</b> / <b>Calculate</b></td><td>Show the working, then the answer.</td></tr>
+      <tr><td><b>Solve</b></td><td>Find every value that works, inside the range given.</td></tr>
+      <tr><td><b>Show that</b></td><td>Work from the question to the given answer. Write every step. Last line = their answer.</td></tr>
+      <tr><td><b>Hence</b></td><td>You must use the part before.</td></tr>
+      <tr><td><b>Hence or otherwise</b></td><td>The part before is the quick way, but any correct method scores.</td></tr>
+      <tr><td><b>Deduce</b></td><td>Use the result you just found. Little extra working.</td></tr>
+      <tr><td><b>State</b> / <b>Write down</b></td><td>The answer only. Usually 1 mark.</td></tr>
+      <tr><td><b>Explain</b> / <b>Give a reason</b></td><td>One sentence with the maths reason, e.g. "since ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}".</td></tr>
+      <tr><td><b>Express in the form</b> …</td><td>Your final line must look exactly like that form.</td></tr>
+      <tr><td><b>Exact value</b> / <b>in terms of π</b> / <b>surd form</b></td><td>No decimals. Keep fractions, surds and π.</td></tr>
+      <tr><td><b>Simplify</b></td><td>As few terms as possible; a single fraction in lowest terms.</td></tr>
+      <tr><td><b>Factorise completely</b></td><td>Take out every common factor, then check no bracket factorises again.</td></tr>
+      <tr><td><b>Prove</b> (A-Math)</td><td>Start from one side, end on the other side. Every step must be true.</td></tr>
+      <tr><td><b>Verify</b></td><td>Put the values in and show both sides are equal.</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Graphs: sketch, draw, plot</h4>
+    <table>
+      <tr><th>They say</th><th>You do</th></tr>
+      <tr><td><b>Sketch</b></td><td>The right shape, with the key points labelled (where it cuts the axes, turning points). Not to scale.</td></tr>
+      <tr><td><b>Draw</b> / <b>Plot</b></td><td>Accurate, on the grid, using the scale they give. Plot points with a sharp pencil, then one smooth curve.</td></tr>
+      <tr><td><b>Use your graph to estimate</b></td><td>Read it off the graph and draw the lines you used.</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>"Show that … correct to 2 d.p."</h4>
+    ${EG(`e.g. "Show that ${X1} = 2.37, correct to 2 decimal places"`,[`${nw(`${X1} = 2.3714…`)} <span class="k-blue">more decimals first</span>`,`${nw(`= 2.37`)} (2 d.p.) ✓`])}
+    <p class="anno">* writing only 2.37 does not show it: the rounding has to be seen</p>
+  </div>
+
+  <div class="panelc"><h4>"Hence": use the part before</h4>
+    ${EG(`(a) Factorise ${nw(`${X2} − 5${X1} + 6`)}. (b) Hence solve ${nw(`${X2} − 5${X1} + 6 = 0`)}.`,[`(a) ${nw(`(${X1} − 2)(${X1} − 3)`)}`,`(b) ${nw(`(${X1} − 2)(${X1} − 3) = 0`)} <span class="k-blue">uses (a)</span>`,`${nw(`${X1} = 2`)} or ${nw(`${X1} = 3`)}`])}
+  </div>
+
+  <div class="panelc"><h4>Common mistakes</h4>
+    <div class="wrongright">
+      <div class="x">✗ "Show that": start from the answer and work backwards</div>
+      <div class="ok">✓ start from what the question gives; end on their answer</div>
+      <div class="x">✗ round in the middle, then keep going</div>
+      <div class="ok">✓ keep the full calculator value; round only at the end</div>
+      <div class="x">✗ angle 53.13° when nothing is said</div>
+      <div class="ok">✓ 53.1° (angles: 1 d.p.)</div>
+      <div class="x">✗ "Hence" but a different method</div>
+      <div class="ok">✓ use the part before, or you can lose the marks</div>
+      <div class="x">✗ exact value: 0.333</div>
+      <div class="ok">✓ ${frac("1","3")}</div>
+    </div>
+  </div>
+</div>`
+};
+Object.assign(SHEETS,SHEETS3);
+SHEETLIST.push(
+  {id:"emath-formula-sheet",levels:["emath"],chapter:"Given in the exam + what to memorise",title:"E-Math formula sheet",sheet:"emFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
+  {id:"amath-formula-sheet",levels:["amath"],chapter:"Given in the exam + what to memorise",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
+  {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"skills",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"}
+);
+
+const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn"), printBtn=$("#printBtn");
 let homeFilter="all", cur=null;
 try{ homeFilter=localStorage.getItem("hubFilter")||"all" }catch(e){}
 function prmNum(prm,k,lo,hi,dflt){ if(!prm||!prm.has(k)) return dflt; const n=parseFloat(String(prm.get(k)).replace("−","-")); return isNaN(n)?dflt:Math.min(hi,Math.max(lo,n)); }
@@ -2836,6 +3192,7 @@ function thumbFor(t){
    tangentAid:`<path d="M4 60 C30 -20 60 90 100 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="20" y1="22" x2="80" y2="22" stroke="var(--amber)" stroke-width="2"/>`,
    diffChord:`<path d="M6 60 Q50 -50 100 54" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="10" y1="52" x2="80" y2="14" stroke="var(--amber)" stroke-width="2"/><circle cx="30" cy="38" r="4" fill="var(--accent)"/><circle cx="62" cy="21" r="4" fill="var(--amber)"/><text x="88" y="60" font-size="13" fill="var(--muted)">Q → P</text>`,
    speedTime:`<path d="M6 58 L30 14 L70 14 L104 58 Z" fill="var(--blue-fill)"/><path d="M6 58 L30 14 L70 14 L104 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="58" x2="112" y2="58" stroke="var(--muted)"/><rect x="44" y="30" width="14" height="7" rx="2" fill="var(--red)"/>`,
+   genTerm:`<rect x="2" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><rect x="28" y="2" width="22" height="13" rx="2" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="54" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><path d="M4 62 C30 6 58 70 104 22" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="62" y1="54" x2="112" y2="20" stroke="var(--green)" stroke-width="2"/>`,
    kinAid:`<path d="M6 40 Q30 -10 56 40 T106 40" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M6 40 Q30 -10 56 40 Z" fill="var(--blue-fill)"/><path d="M56 40 Q80 90 106 40 Z" fill="var(--red-fill)"/><line x1="4" y1="40" x2="112" y2="40" stroke="var(--muted)"/><circle cx="56" cy="8" r="4" fill="var(--green)"/>`};
   return T[t.play]?`<svg class="thumb" viewBox="0 0 120 64">${T[t.play]}</svg>`:"";
 }
@@ -2844,53 +3201,94 @@ const STRANDS=[["alg","Algebra & Graphs"],["trig","Trigonometry"],["geo","Geomet
 const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math"};
 function cardFor(t){ return h("a",{class:"card",href:"#"+t.id},
   `${thumbFor(t)}<div class="txt"><span class="chap">${t.chapter}</span><b>${t.title}</b><span class="blurb">${t.blurb}</span><div class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}</div></div>`); }
-let homeView="play"; try{ homeView=localStorage.getItem("hubHome")==="sheets"?"sheets":"play" }catch(e){}
-const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome",v)}catch(e){} };
+const CONTACT={tg:""}, CF_TOKEN="";
+const tgURL=()=>CONTACT.tg?"https://t.me/"+CONTACT.tg:"";
+const tgBtn=()=>tgURL()?`<a class="pill tg" href="${tgURL()}" target="_blank" rel="noopener">Message me on Telegram</a>`:`<span class="pill tg" aria-disabled="true">Telegram link coming soon</span>`;
+const lessonsCard=()=>`<div class="lcard"><h3>Made by Coach Minyi</h3><p>I teach Sec 1–4 Maths, E-Math and A-Math, 1-to-1 or in small groups, in Jurong East. These cheatsheets come from my lessons. Slots are limited, so message me to ask.</p><div class="acts">${tgBtn()}<a class="pill ghost" href="#lessons">About my lessons →</a></div></div>`;
+const VIEWS=[["sheets","Cheatsheets"],["exam","Formulas"],["play","▶ Play"]];
+const VIEWNOTE={sheets:"One page per chapter: the must-knows, the common mistakes and the pictures.",exam:"What the exam gives you, what you must memorise, and what the question words mean.",play:"Drag the sliders and see <i>why</i> the rules work. Each aid has a cheatsheet too."};
+const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
+let homeView="sheets"; try{ const v=localStorage.getItem("hubHome2"); if(VIEWS.some(([k])=>k===v)) homeView=v; }catch(e){}
+const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome2",v)}catch(e){} };
+const setPage=p=>{ document.body.dataset.page=p; };
 const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
 function sheetRow(s){ return h("a",{class:"srow",href:"#sheet/"+s.id,"data-q":(s.chapter+" "+s.title).toLowerCase()},
-  `<span class="chap">${s.chapter}</span><b>${s.title}</b><span class="tags">${s.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${s.aid?`<span class="tag aidtag">▶ Play</span>`:""}</span>`); }
+  `<span class="chap">${s.chapter}</span><b>${s.title}</b><span class="tags">${s.tag?`<span class="tag lvl">${s.tag}</span>`:s.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${s.aid?`<span class="tag aidtag">▶ Play</span>`:""}</span>`); }
 function renderHome(){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
-  backBtn.style.display="none"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=zoomBtn.hidden=true;
-  cur=null;
-  const sheets=homeView==="sheets";
-  const used=LEVELS.filter(l=>sheets?SHEETLIST.some(s=>s.levels.includes(l.id)):TOPICS.some(t=>t.levels.includes(l.id)));
+  backBtn.style.display="none"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
+  cur=null; setPage("home");
+  const v=homeView;
+  const used=LEVELS.filter(l=>homeItems(v).some(x=>x.levels.includes(l.id)));
   if(homeFilter!=="all"&&!used.some(l=>l.id===homeFilter)) homeFilter="all";
-  app.innerHTML=`<div class="homeswitch" role="tablist"><button class="hs" role="tab" data-v="play" aria-selected="${!sheets}">▶ Play</button><button class="hs" role="tab" data-v="sheets" aria-selected="${sheets}">Cheatsheets</button></div>`
-    +(sheets?`<section class="hero"><h2>Cheatsheets.</h2><p>One page per chapter: the must-knows, the traps, the pictures. Tap a picture to play with it.</p></section>`
-            :`<section class="hero"><h2>Play with the maths.</h2><p>Drag the sliders and see <i>why</i> the rules work. Each aid has a cheatsheet too.</p></section>`);
-  app.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(); });
+  app.innerHTML=`<section class="hero"><h2>Free maths cheatsheets</h2><p>Sec 1–4 Maths, E-Math and A-Math.</p><p class="by">Made by Coach Minyi</p></section>`;
+  const sb=h("input",{class:"search",type:"search",placeholder:"Search a chapter or topic…","aria-label":"Search everything"}); app.append(sb);
+  const res=h("section",{class:"level",hidden:""}); app.append(res);
+  const body=h("div",{class:"homebody"}); app.append(body);
   const chips=h("div",{class:"chips",role:"group","aria-label":"Choose level"});
   [{id:"all",name:"All"},...used.map(l=>({id:l.id,name:SHORT[l.id]}))].forEach(l=>{
     const c=h("button",{class:"chip","aria-pressed":String(homeFilter===l.id)},l.name);
     c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome()};
     chips.append(c);
   });
-  app.append(chips);
-  if(sheets){
-    const sb=h("input",{class:"search",type:"search",placeholder:"Search a chapter or topic…","aria-label":"Search cheatsheets"}); app.append(sb);
+  if(v!=="exam") body.append(chips);
+  body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div><p class="tabnote">${VIEWNOTE[v]}</p>`);
+  body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(); });
+  const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
+  if(v==="sheets"){
     LEVELS.forEach(l=>{
-      const list=SHEETLIST.filter(s=>homeFilter==="all"?s.levels[0]===l.id:(homeFilter===l.id&&s.levels.includes(l.id))); if(!list.length) return;
+      const list=homeItems("sheets").filter(s=>homeFilter==="all"?s.levels[0]===l.id:(homeFilter===l.id&&s.levels.includes(l.id))); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${l.name}</h3>`), rows=h("div",{class:"srows"});
-      list.forEach(s=>rows.append(sheetRow(s))); sec.append(rows); app.append(sec);
+      list.forEach(s=>rows.append(sheetRow(s))); sec.append(rows); body.append(sec);
     });
-    const none=h("p",{class:"hint",hidden:""},"Nothing matches. Try another word."); app.append(none);
-    sb.oninput=()=>{ const q=sb.value.trim().toLowerCase(); let any=false;
-      app.querySelectorAll("section.level").forEach(sec=>{ let vis=0; sec.querySelectorAll(".srow").forEach(r=>{ const ok=!q||r.dataset.q.includes(q); r.hidden=!ok; if(ok) vis++; }); sec.hidden=!vis; any=any||vis>0; });
-      none.hidden=any; };
+  } else if(v==="exam"){
+    [["formula","Formula sheets"],["skills","Exam skills"]].forEach(([g,name])=>{
+      const list=homeItems("exam").filter(s=>s.group===g); if(!list.length) return;
+      const sec=h("section",{class:"level"},`<h3>${name}</h3>`), rows=h("div",{class:"srows"});
+      list.forEach(s=>rows.append(sheetRow(s))); sec.append(rows); body.append(sec);
+    });
   } else {
     const rec=recentTopics();
-    if(rec.length){ const sec=h("section",{class:"level"},`<h3>Recently opened</h3>`), grid=h("div",{class:"cards"}); rec.forEach(t=>grid.append(cardFor(t))); sec.append(grid); app.append(sec); }
-    const shown=TOPICS.filter(t=>homeFilter==="all"||t.levels.includes(homeFilter));
+    if(rec.length){ const sec=h("section",{class:"level"},`<h3>Recently opened</h3>`), grid=h("div",{class:"cards"}); rec.forEach(t=>grid.append(cardFor(t))); sec.append(grid); body.append(sec); }
+    const shown=TOPICS.filter(fit);
     STRANDS.forEach(([sid,sname])=>{
       const list=shown.filter(t=>t.strand===sid); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${sname}</h3>`), grid=h("div",{class:"cards"});
       list.forEach(t=>grid.append(cardFor(t)));
-      sec.append(grid); app.append(sec);
+      sec.append(grid); body.append(sec);
     });
   }
+  app.insertAdjacentHTML("beforeend",lessonsCard()+`<p class="tiny">Tip: add this site to your Home Screen (Share → Add to Home Screen) and it opens like an app, even offline.</p>`);
+  sb.oninput=()=>{ const q=sb.value.trim().toLowerCase();
+    if(!q){ res.hidden=true; body.hidden=false; return; }
+    const hits=[...SHEETLIST.filter(s=>(s.chapter+" "+s.title+" "+(s.kw||"")).toLowerCase().includes(q)).map(sheetRow),
+      ...TOPICS.filter(t=>(t.chapter+" "+t.title+" "+t.blurb).toLowerCase().includes(q)).map(playRow)];
+    res.innerHTML=`<h3>${hits.length?"Results":"Nothing matches. Try another word."}</h3>`;
+    if(hits.length){ const rows=h("div",{class:"srows"}); hits.forEach(r=>rows.append(r)); res.append(rows); }
+    res.hidden=false; body.hidden=true; };
+  window.scrollTo(0,0);
+}
+function playRow(t){ return h("a",{class:"srow",href:"#"+t.id},
+  `<span class="chap">${t.chapter}</span><b>${t.title}</b><span class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}<span class="tag aidtag">▶ Play</span></span>`); }
+function renderLessons(){
+  document.title="Lessons with Coach Minyi · Maths Hub";
+  titleEl.textContent="Lessons with Coach Minyi"; crumbEl.textContent="Sec 1–4 · Jurong East";
+  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
+  cur={t:null,tab:"lessons",state:null,stage:null,sheet:null,lessons:true}; setPage("lessons");
+  app.innerHTML=`<div class="lpage"><h2>Maths lessons in Jurong East</h2>
+    <p class="lead">I'm Coach Minyi. I teach Sec 1–4 Maths, E-Math and A-Math in Jurong East, 1-to-1 or in small groups. The cheatsheets and Play aids on this site are the ones I use in my lessons.</p>
+    <div class="lfacts"><span>Sec 1–4</span><span>Maths, E-Math, A-Math</span><span>1-to-1 or small group</span><span>In person, Jurong East</span></div>
+    <h3>What lessons look like</h3>
+    <div class="lgrid">
+      <div><b>Every chapter, step by step</b>Notes, worked examples, then practice until it sticks.</div>
+      <div><b>Real exam practice</b>Questions in the style of real school papers, plus short mock tests before WAs and exams.</div>
+      <div><b>Mistakes followed up</b>Homework is marked and corrected, and weak spots come back until they are fixed.</div>
+      <div><b>See why it works</b>The pictures and Play aids on this site, so the rules make sense instead of being memorised blind.</div>
+    </div>
+    <div class="lcard"><h3>Ask about a slot</h3><p>Slots are limited, so message me to ask. Tell me the level, E-Math or A-Math, and which days suit you.</p><div class="acts">${tgBtn()}</div></div>
+  </div>`;
   window.scrollTo(0,0);
 }
 
@@ -2900,8 +3298,8 @@ function renderTopic(t,tab,prm){
   const lvl=LEVELS.find(l=>l.id===(t.levels.includes(homeFilter)?homeFilter:t.levels[0]));
   document.title=t.title+" · Maths Hub";
   titleEl.textContent=t.title; crumbEl.textContent=`${lvl.name} · ${t.chapter}`;
-  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=(tab!=="play");
-  remember(t.id);
+  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=(tab!=="play"); printBtn.hidden=(tab==="play");
+  remember(t.id); setPage(tab==="play"?"play":"sheet");
   cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t)};
   app.innerHTML="";
   const tabs=h("div",{class:"tabs",role:"tablist"});
@@ -2920,11 +3318,20 @@ function renderTopic(t,tab,prm){
     if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
     placeDock();
   } else {
-    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]);
-    digest(app); fitMust();
+    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]+sheetEnd());
+    digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   }
   window.scrollTo(0,0);
 }
+const sheetEnd=()=>`<div class="sheetend"><span>From Coach Minyi's lessons · <a href="#lessons">Ask about lessons</a></span><button class="pill sm" type="button" data-print>Print / save as PDF</button></div>`;
+function bindPrint(){ app.querySelectorAll("[data-print]").forEach(b=>b.onclick=printSheet); }
+function fillPrintFoot(withQR){
+  const url=topicLink(), pf=$("#printFoot"); let qr="";
+  try{ if(withQR&&window.qrcode){ const q=qrcode(0,"M"); q.addData(url); q.make(); qr=q.createSvgTag(3,0); } }catch(e){}
+  pf.innerHTML=`${qr}<div><b>Coach Minyi's Maths Hub</b><br>${url.split("://").pop()}<br>Free cheatsheets · Maths lessons in Jurong East</div>`;
+}
+async function printSheet(){ try{ await loadQR(); }catch(e){} fillPrintFoot(true); window.print(); }
+window.addEventListener("beforeprint",()=>fillPrintFoot(!!window.qrcode));
 function fitMust(){ requestAnimationFrame(()=>fitText(document.querySelector(".must"),true)); }
 function digest(root){
   const brk=(sel,pats)=>root.querySelectorAll(sel).forEach(el=>{
@@ -2939,11 +3346,11 @@ function digest(root){
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
-  titleEl.textContent=s.title; crumbEl.textContent=`${lvl.name} · ${s.chapter}`;
-  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
-  cur={t:null,tab:"sheet",state:null,stage:null,sheet:s};
-  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title} — cheatsheet</h2>`+SHEETS[s.sheet];
-  digest(app); fitMust();
+  titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:`Exam skills · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
+  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
+  cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet");
+  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd();
+  digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
@@ -2951,14 +3358,16 @@ function route(){
   const raw=decodeURIComponent(location.hash.replace(/^#\/?/,""));
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
-    if(s){ setHomeView("sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
-  if(parts[0]==="sheets"||parts[0]==="play"){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
+    if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
+  if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
+  if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
   if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); renderTopic(t,tab,prm); }
   else { exitPresent(); renderHome(); }
 }
 function topicLink(){
   const base=location.href.split("#")[0]; if(!cur) return base;
+  if(cur.lessons) return base+"#lessons";
   if(!cur.t) return cur.sheet?base+"#sheet/"+cur.sheet.id:base;
   let hsh="#"+cur.t.id+(cur.tab==="sheet"?"/sheet":"");
   if(cur.tab==="play"&&cur.state){ const p=new URLSearchParams(); Object.entries(cur.state()).forEach(([k,v])=>p.set(k,String(v))); const q=p.toString(); if(q) hsh+="?"+q; }
@@ -2975,7 +3384,7 @@ shareBtn.onclick=async()=>{
 const qrModal=$("#qrModal"); let qrLib=null;
 function loadQR(){ if(window.qrcode) return Promise.resolve(); if(!qrLib) qrLib=new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"; s.onload=res; s.onerror=()=>{ qrLib=null; rej(); }; document.head.append(s); }); return qrLib; }
 qrBtn.onclick=async()=>{
-  const url=topicLink(); $("#qrTitle").textContent=cur&&cur.t?cur.t.title:cur&&cur.sheet?cur.sheet.title:"Maths Hub"; $("#qrUrl").textContent=url; $("#qrBox").innerHTML=""; qrModal.hidden=false;
+  const url=topicLink(); $("#qrTitle").textContent=cur&&cur.t?cur.t.title:cur&&cur.sheet?cur.sheet.title:cur&&cur.lessons?"Lessons with Coach Minyi":"Maths Hub"; $("#qrUrl").textContent=url; $("#qrBox").innerHTML=""; qrModal.hidden=false;
   try{ await loadQR(); const q=qrcode(0,"M"); q.addData(url); q.make(); $("#qrBox").innerHTML=q.createSvgTag(6,2); }
   catch(e){ $("#qrBox").innerHTML='<p class="hint">The QR code needs internet. Share the link instead.</p>'; }
 };
@@ -2994,7 +3403,9 @@ function exitPresent(){
   try{ if(document.fullscreenElement||document.webkitFullscreenElement){ const f=document.exitFullscreen||document.webkitExitFullscreen; const p=f&&f.call(document); if(p&&p.catch) p.catch(()=>{}); } }catch(e){}
   fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
 }
-presentBtn.onclick=enterPresent; exitBtn.onclick=exitPresent;
+presentBtn.onclick=enterPresent; exitBtn.onclick=exitPresent; printBtn.onclick=printSheet;
+if("serviceWorker" in navigator&&location.protocol==="https:") addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); });
+if(CF_TOKEN&&location.protocol==="https:"){ const s=document.createElement("script"); s.defer=true; s.src="https://static.cloudflareinsights.com/beacon.min.js"; s.setAttribute("data-cf-beacon",JSON.stringify({token:CF_TOKEN})); document.head.append(s); }
 document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) exitPresent(); });
 document.addEventListener("webkitfullscreenchange",()=>{ if(!document.webkitFullscreenElement) exitPresent(); });
 zoomBtn.onclick=()=>{ if(!cur||!cur.stage) return; const big=cur.stage.classList.toggle("big"); const l=big?"Smaller diagram":"Bigger diagram"; zoomBtn.setAttribute("aria-label",l); zoomBtn.title=l; };
