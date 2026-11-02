@@ -3256,12 +3256,13 @@ const AL2=(cx,cy,r,a0,a1,t,col)=>{const m=(a0+a1)/2*Math.PI/180; return ARC(cx,c
 const LN=(x1,y1,x2,y2,o="")=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
 const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
 const DASH='stroke-dasharray="3 2"';
-function picLadder(){ const A='fill="var(--amber)" font-weight="700"', G='fill="var(--green)" font-weight="700"', f='font-size="8.5"';
-  return SV("0 0 120 62",LN(19,5,19,38)+LN(19,21,66,21)+LN(19,38,66,38)
-    +TX(11,17,"2",`${f} ${A}`)+TX(11,34,"3",`${f} ${A}`)
-    +TX(33,17,"12",f)+TX(55,17,"18",f)+TX(33,34,"6",f)+TX(55,34,"9",f)
-    +TX(33,53,"2",`${f} ${G}`)+TX(55,53,"3",`${f} ${G}`)
-    +TX(95,26,"HCF = 6",`font-size="8" ${A}`)+TX(95,45,"LCM = 36",`font-size="8" ${G}`)); }
+function ladderAt(x,n,divs,y0,dy){ const R='fill="var(--red)" font-weight="700"', f='font-size="8.5"'; let s=LN(x+7,y0-10,x+7,y0+dy*(divs.length-1)+3.5), v=n;
+  divs.forEach((d,i)=>{ const y=y0+dy*i; s+=TX(x,y,d,`${f} ${R}`)+TX(x+19,y,v,f)+LN(x+7,y+3.5,x+31,y+3.5); v/=d; });
+  return s+TX(x+19,y0+dy*divs.length,"1",f); }
+function picLadder(){ const A='fill="var(--amber)" font-weight="700"', G='fill="var(--green)" font-weight="700"';
+  return SV("0 0 120 56",ladderAt(10,12,[2,2,3],12,13)+ladderAt(50,18,[2,3,3],12,13)
+    +TX(101,24,"HCF = 6",`font-size="8" ${A}`)+TX(101,40,"LCM = 36",`font-size="8" ${G}`)); }
+function picLadder2(){ return SV("0 0 120 74",ladderAt(22,84,[2,2,3,7],13,14)+ladderAt(72,90,[2,3,3,5],13,14)); }
 function picLadder1(){ const R='fill="var(--red)" font-weight="700"', f='font-size="8.5"'; let s=LN(48,3,48,59);
   [["2","84"],["2","42"],["3","21"],["7","7"]].forEach(([d,n],i)=>{ const y=13+14*i; s+=TX(40,y,d,`${f} ${R}`)+TX(66,y,n,f)+LN(48,y+3.5,84,y+3.5); });
   return SV("0 0 120 74",s+TX(66,69,"1",f)+TX(88,69,"stop at 1",`font-size="6" fill="var(--muted)" text-anchor="start"`)); }
@@ -3334,20 +3335,19 @@ const STEPS=rows=>`<ul class="steps">${rows.map(r=>Array.isArray(r)?`<li>${r[0]}
 const PAN=(title,body)=>`<div class="panelc"><h4>${title}</h4>${body}</div>`;
 const VY=V("y"), VN=V("n"), Tn=`T<sub>${V("n")}</sub>`;
 const SHEETS4={
-s1Primes:`${MUST([FB("blue","Prime number","exactly 2 factors","1 and itself · 1 is NOT prime"),FB("amber","HCF","lowest power of the shared primes","the biggest number that divides both"),FB("green","LCM","highest power of every prime","the smallest number both divide into")])}
+s1Primes:`${MUST([FB("blue","Prime number","exactly 2 factors","1 and itself · 1 is NOT prime"),FB("amber","HCF","only what they have in common","the biggest number that divides both"),FB("green","LCM","every base, highest power","the smallest number both divide into")])}
 <div class="sheet">
 ${PAN("Prime factorisation",`${picLadder1()}<p class="big">${nw("84 = 2² × 3 × 7")}</p><p class="anno">* keep dividing by primes until you reach 1</p>${FACTS("Primes under 30",[["",["2","3","5","7","11","13","17","19","23","29"]]])}`)}
 ${PAN("Is it prime?",EG("Is 41 prime?",[nw(`${SQRT("41")} ≈ 6.4`),"try 2, 3, 4, 5, 6: none divide exactly","so 41 is prime"])
   +EG("Is 91 prime?",[nw(`${SQRT("91")} ≈ 9.5`),"try 2 to 9: 7 divides exactly",nw("91 = 7 × 13, so not prime")])
   +`<p class="anno">* only try numbers up to the square root: factors come in pairs, and the smaller one is never bigger than it</p>`)}
-${PAN("HCF and LCM from the primes",`<p class="big">${nw("84 = 2² × 3 × 7")}<br>${nw("90 = 2 × 3² × 5")}</p>
+${PAN("HCF and LCM: one ladder each",`${picLadder2()}<p class="big">${nw("84 = 2² × 3 × 7")}<br>${nw("90 = 2 × 3² × 5")}</p>
   <table><tr><th>Prime</th><th>84</th><th>90</th><th>HCF</th><th>LCM</th></tr>
   <tr><td>2</td><td>2²</td><td>2</td><td>2</td><td>2²</td></tr>
   <tr><td>3</td><td>3</td><td>3²</td><td>3</td><td>3²</td></tr>
   <tr><td>5</td><td>none</td><td>5</td><td>none</td><td>5</td></tr>
   <tr><td>7</td><td>7</td><td>none</td><td>none</td><td>7</td></tr></table>
-  ${EG("HCF takes the lowest power, LCM the highest",[nw("HCF = 2 × 3 = 6"),nw("LCM = 2² × 3² × 5 × 7 = 1260")])}`)}
-${PAN("Ladder method",`${picLadder()}${STEPS(["Divide both by a prime that goes into both.","Stop when no prime goes into both.",[nw(`HCF = <span class="k-amber">2 × 3</span> = 6`),"left column"],[nw(`LCM = <span class="k-amber">2 × 3</span> × <span class="k-green">2 × 3</span> = 36`),"the whole L"]])}<p class="anno">* the L trick for LCM only works for 2 numbers</p>`)}
+  ${EG("HCF: only what they have in common",[nw("HCF = 2 × 3 = 6")])}${EG("LCM: every base, highest power",[nw("LCM = 2² × 3² × 5 × 7"),nw("= 1260")])}`)}
 ${PAN("Square roots and cube roots",STEPS([nw("324 = 2² × 3⁴"),[nw(`${SQRT("324")} = 2 × 3² = 18`),"halve every power"],nw("1728 = 2⁶ × 3³"),[nw(`${SQRT("1728","3")} = 2² × 3 = 12`),"divide every power by 3"]])+`<p class="anno">* a perfect square has every power even</p>`)}
 ${PAN("HCF or LCM?",`<table><tr><th>They ask</th><th>Use</th></tr>
   <tr><td>largest number of equal groups, longest equal pieces, biggest square tiles</td><td><b>HCF</b></td></tr>
