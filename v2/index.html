@@ -217,7 +217,8 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .wrongright div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:16px}
 .wrongright .x{color:var(--red)} .wrongright .ok{color:var(--green)}
 .steps{margin:6px 0 0;padding:0;list-style:none;font-size:17px}
-.steps li{padding:3px 0}
+.steps li{padding:5px 0;line-height:1.5}
+.panelc .anno{line-height:1.5}
 .steps li .tagop{color:var(--blue);font-size:14px;float:right;white-space:nowrap;margin-left:10px}
 .badge{display:inline-block;font-size:12px;font-weight:700;background:var(--red-fill);color:var(--red);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .cmini{width:96px;min-width:84px;height:auto;display:block}
@@ -1740,7 +1741,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
   </div>
 </div>`,
 
-trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or tan⁻¹ of the POSITIVE value`,"always acute: cos⁻¹ 0.5 = 60°, even for cos θ = −0.5"),FB("blue","ASTC = which ratios are +",`A · S · T · C`,"All · Sin · Tan · Cos, anticlockwise from Q1"),FB("green",`θ from ${AL}`,`${AL} · ${nw(`180° − ${AL}`)} · ${nw(`180° + ${AL}`)} · ${nw(`360° − ${AL}`)}`,"quadrants 1 · 2 · 3 · 4")])}
+trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or tan⁻¹ of the POSITIVE value`,"always acute: cos⁻¹ 0.5 = 60°, even for cos θ = −0.5"),FB("blue","ASTC = which ratios are +",`A S T C`,"All, Sin, Tan, Cos: anticlockwise from Q1"),FB("green",`θ from ${AL}`,`Q1: ${AL}<br>Q2: ${nw(`180° − ${AL}`)}<br>Q3: ${nw(`180° + ${AL}`)}<br>Q4: ${nw(`360° − ${AL}`)}`,"same triangle in every quadrant")])}
 <div class="sheet">
   <div class="panelc"><h4>ASTC: which ratios are positive</h4>
     <a href="#unit-circle?th=150&all=1" class="piclink"><svg viewBox="0 0 220 150" style="width:100%;max-width:300px;display:block;margin:0 auto">
@@ -2882,11 +2883,21 @@ function renderTopic(t,tab,prm){
     placeDock();
   } else {
     app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]);
-    fitMust();
+    digest(app); fitMust();
   }
   window.scrollTo(0,0);
 }
 function fitMust(){ requestAnimationFrame(()=>fitText(document.querySelector(".must"),true)); }
+function digest(root){
+  const brk=(sel,pats)=>root.querySelectorAll(sel).forEach(el=>{
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT), nodes=[]; let n; while((n=walker.nextNode())) nodes.push(n);
+    nodes.forEach(t=>{ if(t.parentElement.closest(".nw, svg, .frac, .mx, sup, .lim")) return; let s=t.nodeValue; if(!pats.some(p=>s.includes(p))) return;
+      const parts=s.split(/( · | → )/); if(parts.length<3) return; const frag=document.createDocumentFragment();
+      parts.forEach(pt=>{ if(pt===" · ") frag.append(document.createElement("br")); else if(pt===" → "){ frag.append(document.createElement("br")); frag.append(document.createTextNode("→ ")); } else if(pt) frag.append(document.createTextNode(pt)); });
+      t.replaceWith(frag); }); });
+  brk(".panelc .anno, .panelc td, .panelc .steps li, .panelc .wrongright div, .panelc .note, .must .formbox .rd, .must .formbox .eq, .piccard .pt, .piccard .anno",[" · "," → "]);
+  root.querySelectorAll(".panelc > p:not(.anno):not(.big)").forEach(p=>{ p.innerHTML=p.innerHTML.replace(/\. (?=[A-Z0-9$])/g,".<br>"); });
+}
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
@@ -2894,7 +2905,7 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s};
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title} — cheatsheet</h2>`+SHEETS[s.sheet];
-  fitMust();
+  digest(app); fitMust();
   window.scrollTo(0,0);
 }
 
