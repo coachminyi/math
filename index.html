@@ -326,6 +326,9 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .rt{display:inline-block;position:relative;padding-left:.6em;margin:0 1px 0 2px;white-space:nowrap}
 .rt>svg{position:absolute;left:0;top:0;width:.6em;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round;overflow:visible}
 .rt>.rti{display:inline-block;border-top:1.4px solid currentColor;padding:2px 3px 0 2px;line-height:1.3}
+.rt.ix{margin-left:.32em}
+.rt>.rtn{position:absolute;right:calc(100% - .26em);bottom:50%;font-size:.6em;line-height:1;font-style:normal}
+.piccard .rt>svg{position:absolute;width:.6em;height:100%;max-width:none;margin:0}
 .pb{display:inline-block;position:relative;padding:0 .4em;margin:0 1px;white-space:nowrap}
 .pb::before,.pb::after{content:"";position:absolute;top:.08em;bottom:.08em;width:.3em;border:1.6px solid currentColor;border-top:0;border-bottom:0}
 .pb::before{left:.04em;border-right:0;border-radius:100% 0 0 100%/50% 0 0 50%}
@@ -610,7 +613,8 @@ const SVGNS="http://www.w3.org/2000/svg";
 function svgEl(tag,attrs={},text){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
 const fmt=(n,d=2)=>{const s=(+n).toFixed(d);return s.replace(/\.?0+$/,"")||"0"};
 const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
-const SQRT=x=>`<span class="rt"><svg viewBox="0 0 10 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0.5 25 L3 22.5 L6.2 39.5 L10 0.7" vector-effect="non-scaling-stroke"/></svg><span class="rti">${x}</span></span>`;
+const SQRT=(x,n)=>`<span class="rt${n?" ix":""}">${n?`<span class="rtn">${n}</span>`:""}<svg viewBox="0 0 10 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0.5 25 L3 22.5 L6.2 39.5 L10 0.7" vector-effect="non-scaling-stroke"/></svg><span class="rti">${x}</span></span>`;
+const RT=s=>String(s).replace(/√(\d+(?:\.\d+)?)/g,(m,n)=>SQRT(n));
 const PAR=(x,p)=>`<span class="pb">${x}</span>${p?`<sup class="pbs">${p}</sup>`:""}`;
 const BIN=(n,r)=>`<span class="binom"><span class="p">(</span><span class="st"><span>${n}</span><span>${r}</span></span><span class="p">)</span></span>`;
 const fx=s=>String(s).replace(/\{([^/}]*)\/([^}]*)\}/g,(m,n,d)=>frac(n,d));
@@ -887,7 +891,7 @@ function ratOf(v,maxD=48){for(let d=1;d<=maxD;d++){const n=v*d; if(Math.abs(n-Ma
 function surd(q){const f=ratOf(q); if(!f) return null; const [n,m]=f; let r=n*m,k=1; for(let i=2;i*i<=r;i++) while(r%(i*i)===0){r/=i*i;k*=i;} const g=gcd(k,m); return {k:k/g,m:m/g,r};}
 const rootsTxt=(s,I)=>{
   if(I.exact) return `${X1} = <span class="nw">${I.roots.map(toFrac).join(" or ")}</span>`;
-  const S=I.S, sr=`${S.k>1?S.k:""}√${S.r}`, sd=S.m>1?frac(sr,S.m):sr;
+  const S=I.S, sr=`${S.k>1?S.k:""}${SQRT(S.r)}`, sd=S.m>1?frac(sr,S.m):sr;
   return `<span class="nw">${X1} = ${Math.abs(s.h)<1e-12?"":N(s.h)+" "}± ${sd}</span> ≈ <span class="nw">${sf3(I.roots[0])} or ${sf3(I.roots[1])} (3 s.f.)</span>`;};
 function quadFact(s,I){
   if(!I.nice) return null;
@@ -1067,7 +1071,7 @@ const unitCircle=aid({
   drag(id,p,s){s.th=nearCPS(dirTo(UO,[p.x,p.y]));},
   key(s){const I=ucInfo(s.th),E=ucEx(s.th),sg=v=>v>0?"+":"−", SV=s.sv!=="off"?SOLVE[s.sv]:null;
     let out=KHEAD(`θ = ${s.th}° <span class="hint">(${fx(piFrac(s.th))} rad)</span>${I.q?` · <span class="nw">basic angle ${AL} = ${I.al}°</span>`:""}`)
-      +FORMS([FB("blue",`${M_("sin θ")} = height`,fx(E[0]),I.q?`${sg(I.s)}sin ${I.al}°`:"on an axis"),FB("amber",`${M_("cos θ")} = base`,fx(E[1]),I.q?`${sg(I.c)}cos ${I.al}°`:"on an axis"),FB("green",M_("tan θ"),fx(E[2]),I.q?`${sg(I.t)}tan ${I.al}°`:"")],true);
+      +FORMS([FB("blue",`${M_("sin θ")} = height`,RT(fx(E[0])),I.q?`${sg(I.s)}sin ${I.al}°`:"on an axis"),FB("amber",`${M_("cos θ")} = base`,RT(fx(E[1])),I.q?`${sg(I.c)}cos ${I.al}°`:"on an axis"),FB("green",M_("tan θ"),RT(fx(E[2])),I.q?`${sg(I.t)}tan ${I.al}°`:"")],true);
     if(I.q) out+=FORMS([FB("red",`Quadrant ${I.q} (${QL[I.q]}) → ${M_(`θ = ${qForm(I.q)}`)}`,`θ = ${qForm(I.q,I.al)} = ${s.th}°`,`${AL} is always the acute angle to the ${X1}-axis`)]);
     if(SV){const sols=SV.qs.map(q=>qAng(q,SV.al));
       out+=FORMS([FB("green",`Solve ${M_(SV.lbl+", 0° ≤ θ ≤ 360°")}`,`θ = ${sols.map(v=>v+"°").join(" or ")}`,`${AL} = ${fx(SV.inv)} = ${SV.al}° · ${SV.ratio} is ${SV.sign} in Q${SV.qs.join(", Q")} → ${SV.qs.map(q=>qForm(q)).join(" and ")}`)]);}
@@ -1092,7 +1096,7 @@ const rLeft=s=>s.mode==="cos"?`${cs2(s.a)}cos θ + ${cs2(s.b)}sin θ`:`${cs2(s.a
 const rRight=(s,I)=>s.mode==="cos"?`${I.Rs.split(" = ")[0]} cos(θ − ${N(I.al)}°)`:`${I.Rs.split(" = ")[0]} sin(θ + ${N(I.al)}°)`;
 const nw=t=>`<span class="nw">${t}</span>`;
 const rGen=s=>s.mode==="cos"?`${nw(`${CV("amber","a")} cos θ + ${CV("green","b")} sin θ`)} = ${nw(`${CV("blue","R")} cos(θ − ${AL})`)}`:`${nw(`${CV("amber","a")} sin θ + ${CV("green","b")} cos θ`)} = ${nw(`${CV("blue","R")} sin(θ + ${AL})`)}`;
-const rSpecC=(s,I)=>{const A=s.a===1?"":CS("amber",N(s.a))+" ", B=s.b===1?"":CS("green",N(s.b))+" ", R=CS("blue",I.Rs.split(" = ")[0]), al=CS("red",N(I.al)+"°");
+const rSpecC=(s,I)=>{const A=s.a===1?"":CS("amber",N(s.a))+" ", B=s.b===1?"":CS("green",N(s.b))+" ", R=CS("blue",RT(I.Rs.split(" = ")[0])), al=CS("red",N(I.al)+"°");
   return s.mode==="cos"?`${nw(`${A}cos θ + ${B}sin θ`)} = ${nw(`${R} cos(θ − ${al})`)}`:`${nw(`${A}sin θ + ${B}cos θ`)} = ${nw(`${R} sin(θ + ${al})`)}`;};
 const rWhy=(mode,A,B,tail="")=>{const c=mode==="cos", f1=c?"cos θ":"sin θ", f2=c?"sin θ":"cos θ", ex=c?`${V("R")} cos(θ − ${AL})`:`${V("R")} sin(θ + ${AL})`;
   const bx=(col,t)=>`<span class="mb fb-${col}">${t}</span>`, x=`<s class="cancel">${V("R")}</s>`;
@@ -1107,9 +1111,9 @@ const rFormula=aid({
   steps:[
     {set:{mode:"cos",a:3,b:4}, t:s=>`Two waves: <span class="k-amber">${s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`}</span> and <span class="k-green">${s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`}</span>.`},
     {t:()=>`Add them, point by point → the <span class="k-blue">blue</span> wave.<br>It is just <b>ONE wave</b>: taller, and shifted sideways.`},
-    {t:()=>`How tall? Draw a right-angled triangle with sides ${V("a")} and ${V("b")}.<br>Hypotenuse <b>${V("R")} = √(${V("a")}² + ${V("b")}²)</b>.`},
+    {t:()=>`How tall? Draw a right-angled triangle with sides ${V("a")} and ${V("b")}.<br>Hypotenuse <b>${nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)}</b>.`},
     {t:()=>`How far shifted? <b>tan ${AL} = ${frac(V("b"),V("a"))}</b>, with ${AL} acute.<br>${AL} (alpha) is the <b>angle</b>, not the side ${V("a")}.`},
-    {t:s=>{const I=rInfo(s); return `So <b>${rLeft(s)} = ${rRight(s,I)}</b>.<br>Max = ${V("R")} at θ = ${N(I.mx,1)}°. Min = −${V("R")} at θ = ${N(I.mn,1)}°.`}},
+    {t:s=>{const I=rInfo(s); return `So <b>${rLeft(s)} = ${RT(rRight(s,I))}</b>.<br>Max = ${V("R")} at θ = ${N(I.mx,1)}°. Min = −${V("R")} at θ = ${N(I.mn,1)}°.`}},
     {t:s=>{const I=rInfo(s), al=N(I.al), cosm=s.mode==="cos";
       const fn=cosm?`cos(θ − ${al}°)`:`sin(θ + ${al}°)`;
       const vals=cosm?[60,300,-60].filter(v=>v>=-I.al-1e-9&&v<=360-I.al+1e-9):[30,150,390,510].filter(v=>v>=I.al-1e-9&&v<=360+I.al+1e-9);
@@ -1148,7 +1152,7 @@ const rFormula=aid({
   },
   readout(s){return s.step>=5?rFormula.steps[s.step].t(s):"";},
   key(s){const I=rInfo(s);
-    return KPAIR(rGen(s),rSpecC(s,I),"This wave")+FORMS([FB("blue",`${CV("blue","R")} = height`,I.Rs.replace(" = "," ≈ "),`√(${N(s.a)}² + ${N(s.b)}²)`),
+    return KPAIR(rGen(s),rSpecC(s,I),"This wave")+FORMS([FB("blue",`${CV("blue","R")} = height`,RT(I.Rs.replace(" = "," ≈ ")),SQRT(`${N(s.a)}² + ${N(s.b)}²`)),
       FB("red",`${AL} = shift`,N(I.al)+"°",`tan ${AL} = ${N(s.b)} ÷ ${N(s.a)}`),FB("amber","Max / Min",`${N(I.R)} and −${N(I.R)}`,`θ = ${N(I.mx,1)}°, ${N(I.mn,1)}°`)],true);},
   hint:`Minus signs (same R and α):<br>${nw("a cos θ − b sin θ = R cos(θ + α)")}<br>${nw("a sin θ − b cos θ = R sin(θ − α)")}`
 });
@@ -1719,7 +1723,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
       <tr><th>${V("y")}</th><th>Rewrite</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
       <tr><td>${frac("1",V("x"))}</td><td>${V("x")}<sup>−1</sup></td><td>−${V("x")}<sup>−2</sup> = −${frac("1",V("x")+"²")}</td></tr>
       <tr><td>${frac("1",V("x")+"²")}</td><td>${V("x")}<sup>−2</sup></td><td>−2${V("x")}<sup>−3</sup> = −${frac("2",V("x")+"³")}</td></tr>
-      <tr><td>√${V("x")}</td><td>${V("x")}<sup>½</sup></td><td>½${V("x")}<sup>−½</sup> = ${frac("1","2√"+V("x"))}</td></tr>
+      <tr><td>${SQRT(V("x"))}</td><td>${V("x")}<sup>½</sup></td><td>½${V("x")}<sup>−½</sup> = ${frac("1","2"+SQRT(V("x")))}</td></tr>
     </table>
     <div class="wrongright">
       <div class="x">✗ ${frac("d","d"+V("x"))}(${frac("1",V("x")+"²")}) = ${frac("1","2"+V("x"))}</div>
@@ -1989,11 +1993,11 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
     <table>
       <tr><th>θ</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr>
       <tr><td class="anno">rad</td><td>0</td><td>${frac("π","6")}</td><td>${frac("π","4")}</td><td>${frac("π","3")}</td><td>${frac("π","2")}</td></tr>
-      <tr><td>sin</td><td>0</td><td>${frac("1","2")}</td><td>${frac("√2","2")}</td><td>${frac("√3","2")}</td><td>1</td></tr>
-      <tr><td>cos</td><td>1</td><td>${frac("√3","2")}</td><td>${frac("√2","2")}</td><td>${frac("1","2")}</td><td>0</td></tr>
-      <tr><td>tan</td><td>0</td><td>${frac("√3","3")}</td><td>1</td><td>√3</td><td>undefined</td></tr>
+      <tr><td>sin</td><td>0</td><td>${frac("1","2")}</td><td>${frac(SQRT("2"),"2")}</td><td>${frac(SQRT("3"),"2")}</td><td>1</td></tr>
+      <tr><td>cos</td><td>1</td><td>${frac(SQRT("3"),"2")}</td><td>${frac(SQRT("2"),"2")}</td><td>${frac("1","2")}</td><td>0</td></tr>
+      <tr><td>tan</td><td>0</td><td>${frac(SQRT("3"),"3")}</td><td>1</td><td>${SQRT("3")}</td><td>undefined</td></tr>
     </table>
-    ${FACTS("Same value, written 2 ways",[["",[`${frac("√2","2")} = ${frac("1","√2")}`,`${frac("√3","3")} = ${frac("1","√3")}`]]])}
+    ${FACTS("Same value, written 2 ways",[["",[`${frac(SQRT("2"),"2")} = ${frac("1",SQRT("2"))}`,`${frac(SQRT("3"),"3")} = ${frac("1",SQRT("3"))}`]]])}
   </div>
 
   <div class="panelc"><h4>6 ratios &amp; principal values</h4>
@@ -2100,7 +2104,7 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
   </div>
 </div>`,
 
-rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`,"the hypotenuse","the wave goes up to R and down to −R"),FB("red",`tan ${AL} = ${frac(V("b"),V("a"))}`,`${AL} acute`,"b over a, not a over b"),FB("amber","Max and min",`${V("R")} and −${V("R")}`,"sin and cos are never beyond ±1")])}
+rFormula:`${MUST([FB("blue",nw(`${CV("blue","R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`),"the hypotenuse","the wave goes up to R and down to −R"),FB("red",`tan ${AL} = ${frac(V("b"),V("a"))}`,`${AL} acute`,"b over a, not a over b"),FB("amber","Max and min",`${V("R")} and −${V("R")}`,"sin and cos are never beyond ±1")])}
 <div class="sheet">
   <div class="panelc"><h4>The 4 forms <span class="badge">memorise: not on the formula sheet</span></h4>
     <table>
@@ -2110,7 +2114,7 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
       <tr><td>${nw(`${V("a")} cos θ + ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ − α)`)}</td></tr>
       <tr><td>${nw(`${V("a")} cos θ − ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ + α)`)}</td></tr>
     </table>
-    <p class="big">${nw(`${V("R")} = √(${V("a")}² + ${V("b")}²)`)} &nbsp;·&nbsp; ${nw(`tan ${AL} = ${frac(V("b"),V("a"))}`)}</p>
+    <p class="big">${nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)} &nbsp;·&nbsp; ${nw(`tan ${AL} = ${frac(V("b"),V("a"))}`)}</p>
     <p class="anno">* ${V("a")}, ${V("b")} &gt; 0 and ${AL} acute. ${V("a")} = the number in front of the ratio named in the R-form.</p>
   </div>
 
@@ -2123,7 +2127,9 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
       <text x="65" y="92" font-size="13" text-anchor="middle" fill="var(--amber)" font-weight="700">a = R cos α</text>
       <text x="116" y="54" font-size="13" fill="var(--green)" font-weight="700">b = R sin α</text>
       <text x="56" y="40" font-size="13" fill="var(--blue)" font-weight="700">R</text>
-      <text x="122" y="22" font-size="12" fill="var(--ink)">R = √(a² + b²)</text>
+      <text x="122" y="22" font-size="12" fill="var(--ink)">R =</text>
+      <path d="M145 16.5 L147.5 15 L150.5 24 L154 7 H198" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round"/>
+      <text x="156" y="22" font-size="12" fill="var(--ink)" textLength="40" lengthAdjust="spacingAndGlyphs">a² + b²</text>
     </svg></a>
     ${rWhy("cos",V("a"),V("b"))}
     ${PLAYLINK("#r-formula?step=6","Interactive: why tan α = b ÷ a")}
@@ -2535,7 +2541,7 @@ function cfP(){let d=""; const pts=[[0,0],[10,4],[20,14],[30,34],[40,62],[50,84]
   <g font-size="7" text-anchor="middle"><text x="${xq(25)}" y="79" fill="var(--green)">Q1</text><text x="${xq(50)}" y="79" fill="var(--amber)">median</text><text x="${xq(75)}" y="79" fill="var(--red)">Q3</text></g><text x="180" y="79" font-size="7" text-anchor="end" fill="var(--muted)">marks</text><text x="24" y="10" font-size="7" fill="var(--muted)">cumulative frequency</text></svg>`;}
 
 const SHEETS2={
-quadEqns:`${MUST([FB("blue","Factorise → each bracket = 0",`${nw(`(${X1} − 2)(${X1} + 5) = 0`)} → ${nw(`${X1} = 2 or −5`)}`,"only works when the other side is 0"),FB("amber","Quadratic formula",`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`,"memorise · use when it won't factorise"),FB("green","First make it = 0",`${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`,"bring everything to one side, then read a, b, c")])}
+quadEqns:`${MUST([FB("blue","Factorise → each bracket = 0",`${nw(`(${X1} − 2)(${X1} + 5) = 0`)} → ${nw(`${X1} = 2 or −5`)}`,"only works when the other side is 0"),FB("amber","Quadratic formula",nw(`${X1} = ${frac(`−${V("b")} ± ${SQRT(`${V("b")}² − 4${V("ac")}`)}`,`2${V("a")}`)}`),"memorise · use when it won't factorise"),FB("green","First make it = 0",`${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`,"bring everything to one side, then read a, b, c")])}
 <div class="sheet">
   <div class="panelc"><h4>3 ways to solve</h4>
     <table>
@@ -2551,8 +2557,8 @@ quadEqns:`${MUST([FB("blue","Factorise → each bracket = 0",`${nw(`(${X1} − 2
     <p>Solve ${nw(`2${X2} − 3${X1} − 4 = 0`)}</p>
     <ul class="steps">
       <li>① ${V("a")} = 2, ${V("b")} = −3, ${V("c")} = −4 <span class="tagop">signs included!</span></li>
-      <li>② ${X1} = ${frac(`−(−3) ± √((−3)² − 4(2)(−4))`,`2(2)`)}</li>
-      <li>③ ${X1} = ${frac(`3 ± √41`,`4`)}</li>
+      <li>② ${nw(`${X1} = ${frac(`−(−3) ± ${SQRT(`(−3)² − 4(2)(−4)`)}`,`2(2)`)}`)}</li>
+      <li>③ ${nw(`${X1} = ${frac(`3 ± ${SQRT("41")}`,`4`)}`)}</li>
       <li>④ ${X1} = <b>2.35</b> or <b>−0.85</b> <span class="tagop">2 d.p., as the question asks</span></li>
     </ul>
     <p class="anno">* write the ± line, then do + and − separately on the calculator</p>
@@ -2636,7 +2642,7 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
   </div>
 </div>`,
 
-indices:`${MUST([FB("blue","Same base: work on the powers",`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}<br>${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}<br>${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}`,"memorise"),FB("amber","Zero and negative",`${nw(`${V("a")}<sup>0</sup> = 1`)} · ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`,"negative power = flip it (not a negative number)"),FB("green","Fraction power = root",`${nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = <sup>${V("n")}</sup>√${V("a")}`)} · ${nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (<sup>${V("n")}</sup>√${V("a")})<sup>${V("m")}</sup>`)}`,"denominator = root, numerator = power")])}
+indices:`${MUST([FB("blue","Same base: work on the powers",`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}<br>${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}<br>${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}`,"memorise"),FB("amber","Zero and negative",`${nw(`${V("a")}<sup>0</sup> = 1`)} · ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`,"negative power = flip it (not a negative number)"),FB("green","Fraction power = root",`${nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`)} · ${nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`)}`,"denominator = root, numerator = power")])}
 <div class="sheet">
   <div class="panelc"><h4>The laws, with numbers</h4>
     <table>
@@ -2655,9 +2661,9 @@ indices:`${MUST([FB("blue","Same base: work on the powers",`${nw(`${V("a")}<sup>
       <tr><th>Power</th><th>Means</th><th>Value</th></tr>
       <tr><td>2<sup>−3</sup></td><td>${frac("1","2³")}</td><td>${frac("1","8")}</td></tr>
       <tr><td>(${frac("2","3")})<sup>−2</sup></td><td>flip, then square: (${frac("3","2")})²</td><td>${frac("9","4")}</td></tr>
-      <tr><td>8<sup>${frac("2","3")}</sup></td><td>(³√8)²</td><td>2² = 4</td></tr>
-      <tr><td>27<sup>−${frac("1","3")}</sup></td><td>${frac("1","³√27")}</td><td>${frac("1","3")}</td></tr>
-      <tr><td>16<sup>${frac("3","4")}</sup></td><td>(⁴√16)³</td><td>2³ = 8</td></tr>
+      <tr><td>8<sup>${frac("2","3")}</sup></td><td>${nw(`(${SQRT("8","3")})²`)}</td><td>2² = 4</td></tr>
+      <tr><td>27<sup>−${frac("1","3")}</sup></td><td>${frac("1",SQRT("27","3"))}</td><td>${frac("1","3")}</td></tr>
+      <tr><td>16<sup>${frac("3","4")}</sup></td><td>${nw(`(${SQRT("16","4")})³`)}</td><td>2³ = 8</td></tr>
     </table>
     <p class="anno">* root first (small numbers), then the power</p>
   </div>
@@ -2842,7 +2848,7 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
   </div>
 </div>`,
 
-spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${frac("1","2")}N · Q3 at ${frac("3","4")}N`,"on the cumulative frequency axis · 80th percentile at 0.8N"),FB("amber","Interquartile range",`IQR = Q3 − Q1`,"the middle 50%: smaller IQR = more consistent"),FB("green","Standard deviation",`SD = √(${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − mean²)`,"on the formula sheet · bigger SD = more spread out")])}
+spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${frac("1","2")}N · Q3 at ${frac("3","4")}N`,"on the cumulative frequency axis · 80th percentile at 0.8N"),FB("amber","Interquartile range",`IQR = Q3 − Q1`,"the middle 50%: smaller IQR = more consistent"),FB("green","Standard deviation",nw(`SD = ${SQRT(`${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − mean²`)}`),"on the formula sheet · bigger SD = more spread out")])}
 <div class="sheet">
   <div class="panelc"><h4>Cumulative frequency curve</h4>
     ${cfP()}
@@ -3290,14 +3296,15 @@ const AL2=(cx,cy,r,a0,a1,t,col)=>{const m=(a0+a1)/2*Math.PI/180; return ARC(cx,c
 const LN=(x1,y1,x2,y2,o="")=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
 const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`} stroke-width="1.2" ${o}/>`;
 const DASH='stroke-dasharray="3 2"';
-function picTree(){ const n=(x,y,t,p)=>(p?`<circle cx="${x}" cy="${y-2.4}" r="6.2" fill="var(--red-fill)" stroke="var(--red)"/>`:"")+TX(x,y,t,`font-weight="700" fill="${p?"var(--red)":"var(--ink)"}"`);
-  return SV("0 0 120 80",LN(58,13,44,24)+LN(62,13,76,24)+LN(78,33,68,44)+LN(82,33,92,44)+LN(94,53,86,64)+LN(98,53,106,64)+n(60,10,"84")+n(40,31,"2",1)+n(80,31,"42")+n(64,51,"2",1)+n(96,51,"21")+n(82,71,"3",1)+n(110,71,"7",1)); }
 function picLadder(){ const A='fill="var(--amber)" font-weight="700"', G='fill="var(--green)" font-weight="700"', f='font-size="8.5"';
   return SV("0 0 120 62",LN(19,5,19,38)+LN(19,21,66,21)+LN(19,38,66,38)
     +TX(11,17,"2",`${f} ${A}`)+TX(11,34,"3",`${f} ${A}`)
     +TX(33,17,"12",f)+TX(55,17,"18",f)+TX(33,34,"6",f)+TX(55,34,"9",f)
     +TX(33,53,"2",`${f} ${G}`)+TX(55,53,"3",`${f} ${G}`)
     +TX(95,26,"HCF = 6",`font-size="8" ${A}`)+TX(95,45,"LCM = 36",`font-size="8" ${G}`)); }
+function picLadder1(){ const R='fill="var(--red)" font-weight="700"', f='font-size="8.5"'; let s=LN(48,3,48,59);
+  [["2","84"],["2","42"],["3","21"],["7","7"]].forEach(([d,n],i)=>{ const y=13+14*i; s+=TX(40,y,d,`${f} ${R}`)+TX(66,y,n,f)+LN(48,y+3.5,84,y+3.5); });
+  return SV("0 0 120 74",s+TX(66,69,"1",f)+TX(88,69,"stop at 1",`font-size="6" fill="var(--muted)" text-anchor="start"`)); }
 function picNumLine(){ let s=LN(4,20,126,20)+`<path d="M122 17 L126 20 L122 23" fill="none" stroke="var(--ink)"/>`;
   for(let v=-5;v<=5;v++){const x=65+11*v; s+=LN(x,17,x,23)+TX(x,31,v<0?"−"+(-v):v,v===0?`font-weight="700"`:"");}
   return SV("0 0 130 36",s+`<path d="M32 15 Q54 -2 87 15" fill="none" stroke="var(--blue)" stroke-width="1.5"/><path d="M83 11 L87 15 L82 16" fill="none" stroke="var(--blue)" stroke-width="1.5"/>`+TX(60,7,"+5",`fill="var(--blue)" font-weight="700"`)+TX(14,10,"smaller",`font-size="5.5" fill="var(--muted)"`)+TX(116,10,"bigger",`font-size="5.5" fill="var(--muted)"`)); }
@@ -3369,7 +3376,10 @@ const VY=V("y"), VN=V("n"), Tn=`T<sub>${V("n")}</sub>`;
 const SHEETS4={
 s1Primes:`${MUST([FB("blue","Prime number","exactly 2 factors","1 and itself · 1 is NOT prime"),FB("amber","HCF","lowest power of the shared primes","the biggest number that divides both"),FB("green","LCM","highest power of every prime","the smallest number both divide into")])}
 <div class="sheet">
-${PAN("Prime factorisation",`${picTree()}<p class="big">${nw("84 = 2² × 3 × 7")}</p>${FACTS("Primes under 30",[["",["2","3","5","7","11","13","17","19","23","29"]]])}`)}
+${PAN("Prime factorisation",`${picLadder1()}<p class="big">${nw("84 = 2² × 3 × 7")}</p><p class="anno">* keep dividing by primes until you reach 1</p>${FACTS("Primes under 30",[["",["2","3","5","7","11","13","17","19","23","29"]]])}`)}
+${PAN("Is it prime?",EG("Is 41 prime?",[nw(`${SQRT("41")} ≈ 6.4`),"try 2, 3, 4, 5, 6: none divide exactly","so 41 is prime"])
+  +EG("Is 91 prime?",[nw(`${SQRT("91")} ≈ 9.5`),"try 2 to 9: 7 divides exactly",nw("91 = 7 × 13, so not prime")])
+  +`<p class="anno">* only try numbers up to the square root: factors come in pairs, and the smaller one is never bigger than it</p>`)}
 ${PAN("HCF and LCM from the primes",`<p class="big">${nw("84 = 2² × 3 × 7")}<br>${nw("90 = 2 × 3² × 5")}</p>
   <table><tr><th>Prime</th><th>84</th><th>90</th><th>HCF</th><th>LCM</th></tr>
   <tr><td>2</td><td>2²</td><td>2</td><td>2</td><td>2²</td></tr>
@@ -3378,7 +3388,7 @@ ${PAN("HCF and LCM from the primes",`<p class="big">${nw("84 = 2² × 3 × 7")}<
   <tr><td>7</td><td>7</td><td>none</td><td>none</td><td>7</td></tr></table>
   ${EG("HCF takes the lowest power, LCM the highest",[nw("HCF = 2 × 3 = 6"),nw("LCM = 2² × 3² × 5 × 7 = 1260")])}`)}
 ${PAN("Ladder method",`${picLadder()}${STEPS(["Divide both by a prime that goes into both.","Stop when no prime goes into both.",[nw(`HCF = <span class="k-amber">2 × 3</span> = 6`),"left column"],[nw(`LCM = <span class="k-amber">2 × 3</span> × <span class="k-green">2 × 3</span> = 36`),"the whole L"]])}<p class="anno">* the L trick for LCM only works for 2 numbers</p>`)}
-${PAN("Square roots and cube roots",STEPS([nw("324 = 2² × 3⁴"),[nw("√324 = 2 × 3² = 18"),"halve every power"],nw("1728 = 2⁶ × 3³"),[nw("∛1728 = 2² × 3 = 12"),"divide every power by 3"]])+`<p class="anno">* a perfect square has every power even</p>`)}
+${PAN("Square roots and cube roots",STEPS([nw("324 = 2² × 3⁴"),[nw(`${SQRT("324")} = 2 × 3² = 18`),"halve every power"],nw("1728 = 2⁶ × 3³"),[nw(`${SQRT("1728","3")} = 2² × 3 = 12`),"divide every power by 3"]])+`<p class="anno">* a perfect square has every power even</p>`)}
 ${PAN("HCF or LCM?",`<table><tr><th>They ask</th><th>Use</th></tr>
   <tr><td>largest number of equal groups, longest equal pieces, biggest square tiles</td><td><b>HCF</b></td></tr>
   <tr><td>next time they happen together, smallest number both divide into</td><td><b>LCM</b></td></tr></table>
@@ -3394,7 +3404,7 @@ ${PAN("× and ÷ with negatives",`<table><tr><th>Work out</th><th>Answer</th></t
   <tr><td>${nw("(−12) ÷ 3")}</td><td>−4</td></tr><tr><td>${nw("(−12) ÷ (−3)")}</td><td>4</td></tr>
   <tr><td>(−2)²</td><td>4</td></tr><tr><td>−2²</td><td>−4: square first, then the minus</td></tr></table>`)}
 ${PAN("Order of operations",STEPS([nw("18 − 3 × (−2)²"),[nw("= 18 − 3 × 4"),"powers first"],[nw("= 18 − 12"),"then ×"],nw("= 6")]))}
-${PAN("Types of numbers",FACTS("",[["Integers",["…, −2, −1, 0, 1, 2, …"]],["Rational",[frac("1","2"),"−0.75","0.333…"]],["Irrational",["√2","π"]]])+`<p class="anno">* rational = can be written as a fraction of two integers · irrational: the decimals never end and never repeat · real numbers = both</p>`)}
+${PAN("Types of numbers",FACTS("",[["Integers",["…, −2, −1, 0, 1, 2, …"]],["Rational",[frac("1","2"),"−0.75","0.333…"]],["Irrational",[SQRT("2"),"π"]]])+`<p class="anno">* rational = can be written as a fraction of two integers · irrational: the decimals never end and never repeat · real numbers = both</p>`)}
 ${MIST([["−2² = 4","−2² = −4 · (−2)² = 4"],["5 − (−3) = 2",nw("5 + 3 = 8")],["−7 &gt; −2","−7 &lt; −2: further left is smaller"],["8 − 2 × 3 = 18",`× first: ${nw("8 − 6 = 2")}`]])}
 </div>`,
 
@@ -3612,13 +3622,13 @@ ${PAN("Areas",EG("Length ratio 2 : 3. The small shape has area 20 cm².",[nw("ar
 ${MIST([["match sides by where they sit on the page","match by the equal angles (the letter order)"],["area ratio = length ratio",nw("(length ratio)²")],["similar means the same size","same size is congruent; similar can be any size"]])}
 </div>`,
 
-s2Pyth:`${MUST([FB("blue","Pythagoras",nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`),`${V("c")} = hypotenuse, opposite the right angle`),FB("amber","Find the long side","add the squares, then √",nw("√(5² + 12²) = 13")),FB("green","Find a short side","subtract the squares, then √",nw("√(10² − 6²) = 8"))])}
+s2Pyth:`${MUST([FB("blue","Pythagoras",nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`),`${V("c")} = hypotenuse, opposite the right angle`),FB("amber","Find the long side","add the squares, then square root",nw(`${SQRT("5² + 12²")} = 13`)),FB("green","Find a short side","subtract the squares, then square root",nw(`${SQRT("10² − 6²")} = 8`))])}
 <div class="sheet">
 ${PAN("The triangle",picRight("pyth")+FACTS("Whole-number triangles",[["",["3, 4, 5","5, 12, 13","8, 15, 17","7, 24, 25"]]])+`<p class="anno">* and their multiples, like 6, 8, 10</p>`)}
-${PAN("Find a side",STEPS([[nw(`${V("c")}² = 4² + 7² = 65`),"the 2 shorter sides are 4 cm and 7 cm"],nw(`${V("c")} = √65 = 8.06 cm (3 s.f.)`)]))}
+${PAN("Find a side",STEPS([[nw(`${V("c")}² = 4² + 7² = 65`),"the 2 shorter sides are 4 cm and 7 cm"],nw(`${V("c")} = ${SQRT("65")} = 8.06 cm (3 s.f.)`)]))}
 ${PAN("Is it right-angled?",STEPS([[nw("9² + 12² = 81 + 144 = 225 = 15²"),"yes ✓"],[nw("6² + 7² = 85, but 9² = 81"),"no"]]))}
-${PAN("Real life",EG("A 5 m ladder leans on a wall. Its foot is 1.4 m from the wall. How high does it reach?",[nw(`${V("h")}² = 5² − 1.4² = 23.04`),nw(`${V("h")} = √23.04 = 4.8 m`)]))}
-${MIST([[nw(`${V("a")} + ${V("b")} = ${V("c")}`),nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)],["add the squares to find a short side",`subtract: ${nw(`${V("c")}² − ${V("a")}²`)}`],["forget the √ at the end",`${nw(`${V("c")}² = 65`)} means ${nw(`${V("c")} = √65`)}`]])}
+${PAN("Real life",EG("A 5 m ladder leans on a wall. Its foot is 1.4 m from the wall. How high does it reach?",[nw(`${V("h")}² = 5² − 1.4² = 23.04`),nw(`${V("h")} = ${SQRT("23.04")} = 4.8 m`)]))}
+${MIST([[nw(`${V("a")} + ${V("b")} = ${V("c")}`),nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)],["add the squares to find a short side",`subtract: ${nw(`${V("c")}² − ${V("a")}²`)}`],["forget the square root at the end",`${nw(`${V("c")}² = 65`)} means ${nw(`${V("c")} = ${SQRT("65")}`)}`]])}
 </div>`,
 
 s2Trig:`${MUST([FB("blue","SOH",nw(`sin θ = ${frac("opp","hyp")}`)),FB("amber","CAH",nw(`cos θ = ${frac("adj","hyp")}`)),FB("green","TOA",nw(`tan θ = ${frac("opp","adj")}`))])}
@@ -3633,7 +3643,7 @@ ${MIST([["calculator in radians","degrees: D on the screen"],["label opp and adj
 s2Volume:`${MUST([FB("blue","Pyramid and cone",nw(`${V("V")} = ${frac("1","3")} × base area × ${V("h")}`),`cone: ${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`),FB("amber","Sphere",nw(`${V("V")} = ${frac("4","3")}π${V("r")}³`),`surface ${nw(`4π${V("r")}²`)}`),FB("green","Cone surface",`curved ${nw(`π${V("rl")}`)}`,`${V("l")} = slant height`)])}
 <div class="sheet">
 ${PAN("The solids",PICS(PIC(null,picSolid("pyr"),nw(`${V("V")} = ${frac("1","3")} × base × ${V("h")}`)),PIC(null,picSolid("cone"),nw(`${V("V")} = ${frac("1","3")}π${V("r")}²${V("h")}`),`curved surface ${nw(`π${V("rl")}`)}`),PIC(null,picSolid("sphere"),nw(`${V("V")} = ${frac("4","3")}π${V("r")}³`),`surface ${nw(`4π${V("r")}²`)}`)))}
-${PAN("Cone",EG(`${nw(`${V("r")} = 3 cm`)}, ${nw(`${V("h")} = 4 cm`)}`,[nw(`${V("l")} = √(3² + 4²) = 5 cm`),nw(`${V("V")} = ${frac("1","3")}π(3)²(4) = 12π = 37.7 cm³`),nw("surface = π(3)(5) + π(3)²"),nw("= 15π + 9π = 24π = 75.4 cm²")]))}
+${PAN("Cone",EG(`${nw(`${V("r")} = 3 cm`)}, ${nw(`${V("h")} = 4 cm`)}`,[nw(`${V("l")} = ${SQRT("3² + 4²")} = 5 cm`),nw(`${V("V")} = ${frac("1","3")}π(3)²(4) = 12π = 37.7 cm³`),nw("surface = π(3)(5) + π(3)²"),nw("= 15π + 9π = 24π = 75.4 cm²")]))}
 ${PAN("Sphere",EG(nw(`${V("r")} = 6 cm`),[nw(`${V("V")} = ${frac("4","3")}π(6)³ = 288π = 905 cm³`),nw("surface = 4π(6)² = 144π = 452 cm²")]))}
 ${PAN("Pyramid",EG("Square base 10 cm by 10 cm, height 12 cm",[nw(`${V("V")} = ${frac("1","3")} × 100 × 12 = 400 cm³`)]))}
 ${PAN("Hemisphere",STEPS([[nw(`curved surface = 2π${V("r")}²`),`half of 4π${V("r")}²`],[nw(`solid: 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`),"+ the flat circle"],nw(`${V("r")} = 5: 3π(25) = 75π = 236 cm²`)])+`<p class="anno">* in the SEC exam the cone and sphere formulas are given: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a></p>`)}
