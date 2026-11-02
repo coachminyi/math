@@ -263,6 +263,14 @@ a.piccard:hover{border-color:var(--accent)}
 .miniw{width:100%;max-width:200px;height:auto;display:block;margin:0 auto}
 .quadpic{width:100%;max-width:300px;display:block;margin:0 auto}
 .quadpic a{text-decoration:none}
+sup .frac{font-size:.72em;line-height:1;vertical-align:baseline;position:relative;top:-.45em;margin:0 1px}
+.mx{display:inline-grid;column-gap:9px;row-gap:1px;border-left:1.6px solid var(--ink);border-right:1.6px solid var(--ink);border-radius:9px;padding:3px 7px;vertical-align:middle;text-align:center;font-variant-numeric:tabular-nums;margin:0 3px;line-height:1.25}
+.vennp{width:100%;max-width:150px;height:auto;display:block;margin:0 auto 4px}
+.nlp{width:100%;max-width:200px;height:auto;display:block;margin:0 auto 4px}
+.dicep{width:100%;max-width:190px;height:auto;display:block;margin:6px auto 2px}
+.treep{width:100%;max-width:300px;height:auto;display:block;margin:6px auto 2px}
+.boxp{width:100%;max-width:320px;height:auto;display:block;margin:6px auto 2px}
+.cfp{width:100%;max-width:320px;height:auto;display:block;margin:6px auto 2px}
 footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 
 @media (max-width:899px){
@@ -2254,6 +2262,499 @@ const SHEETLIST=[
   {id:"kinematics",levels:["amath"],chapter:"Kinematics",title:"Kinematics",sheet:"kinematics",aid:"area-under"},
   {id:"integration",levels:["amath"],chapter:"Integration",title:"Integration & area",sheet:"integration",aid:null}
 ];
+const MX=(rows,cls="")=>`<span class="mx${cls?" "+cls:""}" style="grid-template-columns:repeat(${rows[0].length},auto)">${rows.map(r=>r.map(c=>`<span>${c}</span>`).join("")).join("")}</span>`;
+const SF=(x,y,n,d,col="var(--ink)")=>`<text x="${x}" y="${y-2.5}" font-size="8" text-anchor="middle" fill="${col}">${n}</text><line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="${col}" stroke-width="1"/><text x="${x}" y="${y+8.5}" font-size="8" text-anchor="middle" fill="${col}">${d}</text>`;
+function venn(kind){const W=96,H=64,ca=[36,32],cb=[60,32],r=22,id="vn"+(++venn.n);
+  const base=`<rect x="2" y="2" width="92" height="60" rx="4" fill="var(--card)" stroke="var(--ink)"/>`, outl=`<circle cx="${ca[0]}" cy="${ca[1]}" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="${cb[0]}" cy="${cb[1]}" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`;
+  const A=`<circle cx="${ca[0]}" cy="${ca[1]}" r="${r}"`, B=`<circle cx="${cb[0]}" cy="${cb[1]}" r="${r}"`, F=`fill="var(--blue-fill)"`, C=`fill="var(--card)"`;
+  let sh="";
+  if(kind==="and") sh=`<clipPath id="${id}">${A}/></clipPath>${B} ${F} clip-path="url(#${id})"/>`;
+  if(kind==="or") sh=`${A} ${F}/>${B} ${F}/>`;
+  if(kind==="notA") sh=`<rect x="2" y="2" width="92" height="60" rx="4" ${F}/>${A} ${C}/>`;
+  if(kind==="AnotB") sh=`${A} ${F}/>${B} ${C}/>`;
+  if(kind==="notOr") sh=`<rect x="2" y="2" width="92" height="60" rx="4" ${F}/>${A} ${C}/>${B} ${C}/>`;
+  if(kind==="sub") return `<svg viewBox="0 0 96 64" class="vennp">${base}<circle cx="48" cy="32" r="26" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="54" cy="36" r="13" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><text x="30" y="20" font-size="9" fill="var(--ink)">A</text><text x="50" y="40" font-size="9" fill="var(--ink)">B</text><text x="6" y="12" font-size="8" fill="var(--muted)">ξ</text></svg>`;
+  if(kind==="disj") return `<svg viewBox="0 0 96 64" class="vennp">${base}<circle cx="28" cy="32" r="18" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="68" cy="32" r="18" fill="none" stroke="var(--ink)" stroke-width="1.2"/><text x="24" y="36" font-size="9" fill="var(--ink)">A</text><text x="64" y="36" font-size="9" fill="var(--ink)">B</text><text x="6" y="12" font-size="8" fill="var(--muted)">ξ</text></svg>`;
+  return `<svg viewBox="0 0 96 64" class="vennp">${base}${sh}${outl}<text x="20" y="15" font-size="9" fill="var(--ink)">A</text><text x="70" y="15" font-size="9" fill="var(--ink)">B</text><text x="6" y="60" font-size="8" fill="var(--muted)">ξ</text></svg>`;}
+venn.n=0;
+function nline(kind,val){const W=120,y=18,x0=14,x1=106,xv=60; const open=kind==="gt"||kind==="lt", right=kind==="gt"||kind==="ge";
+  return `<svg viewBox="0 0 120 34" class="nlp"><line x1="4" y1="${y}" x2="116" y2="${y}" stroke="var(--ink)"/><path d="M112 14 L118 18 L112 22" fill="none" stroke="var(--ink)"/><path d="M8 14 L2 18 L8 22" fill="none" stroke="var(--ink)"/>
+  <line x1="${xv}" y1="${y}" x2="${right?x1:x0}" y2="${y}" stroke="var(--blue)" stroke-width="3"/><path d="${right?`M${x1-5} 13 L${x1+1} 18 L${x1-5} 23`:`M${x0+5} 13 L${x0-1} 18 L${x0+5} 23`}" fill="none" stroke="var(--blue)" stroke-width="2"/>
+  <circle cx="${xv}" cy="${y}" r="4" fill="${open?"var(--card)":"var(--blue)"}" stroke="var(--blue)" stroke-width="2"/><text x="${xv}" y="32" font-size="9" text-anchor="middle" fill="var(--ink)">${val}</text></svg>`;}
+function diceGrid(){let s=`<svg viewBox="-2 -6 96 98" class="dicep"><text x="52" y="-1" font-size="6.5" text-anchor="middle" fill="var(--muted)">2nd die</text><text x="2" y="52" font-size="6.5" fill="var(--muted)" transform="rotate(-90 2 52)">1st die</text>`;
+  for(let k=1;k<=6;k++){ s+=`<text x="${14+(k-1)*12.5+6.25}" y="${9}" font-size="6.5" text-anchor="middle" fill="var(--ink)" font-weight="700">${k}</text><text x="${11}" y="${10+(k-1)*12.5+9}" font-size="6.5" text-anchor="end" fill="var(--ink)" font-weight="700">${k}</text>`; }
+  for(let i=1;i<=6;i++){for(let j=1;j<=6;j++){const x=14+(j-1)*12.5,y=10+(i-1)*12.5, hit=i+j===7; s+=`<rect x="${x}" y="${y}" width="12.5" height="12.5" fill="${hit?"var(--amber-fill)":"var(--card)"}" stroke="var(--line)"/><text x="${x+6.25}" y="${y+9}" font-size="7" text-anchor="middle" fill="${hit?"var(--amber)":"var(--muted)"}" font-weight="${hit?700:400}">${i+j}</text>`;}}
+  return s+"</svg>";}
+function treeP(){return `<svg viewBox="0 0 150 96" class="treep">
+  <line x1="18" y1="48" x2="52" y2="22" stroke="var(--ink)"/><line x1="18" y1="48" x2="52" y2="74" stroke="var(--ink)"/>
+  <line x1="66" y1="22" x2="100" y2="8" stroke="var(--ink)"/><line x1="66" y1="22" x2="100" y2="36" stroke="var(--ink)"/>
+  <line x1="66" y1="74" x2="100" y2="60" stroke="var(--ink)"/><line x1="66" y1="74" x2="100" y2="88" stroke="var(--ink)"/>
+  ${SF(30,30,"3","5","var(--red)")}${SF(30,68,"2","5","var(--blue)")}${SF(78,10,"2","4","var(--red)")}${SF(78,33,"2","4","var(--blue)")}${SF(78,63,"3","4","var(--red)")}${SF(78,86,"1","4","var(--blue)")}
+  <g font-size="8" font-weight="700"><text x="56" y="25" fill="var(--red)">R</text><text x="56" y="77" fill="var(--blue)">B</text><text x="104" y="11" fill="var(--red)">R</text><text x="104" y="39" fill="var(--blue)">B</text><text x="104" y="63" fill="var(--red)">R</text><text x="104" y="91" fill="var(--blue)">B</text></g>
+  <text x="112" y="11" font-size="7" fill="var(--muted)">RR</text><text x="112" y="39" font-size="7" fill="var(--muted)">RB</text><text x="112" y="63" font-size="7" fill="var(--muted)">BR</text><text x="112" y="91" font-size="7" fill="var(--muted)">BB</text>
+  <text x="4" y="52" font-size="7" fill="var(--muted)">1st</text><text x="78" y="50" font-size="7" fill="var(--muted)">2nd</text></svg>`;}
+function boxPlotP(){return `<svg viewBox="0 0 200 60" class="boxp"><line x1="10" y1="40" x2="190" y2="40" stroke="var(--ink)"/>
+  <line x1="30" y1="20" x2="70" y2="20" stroke="var(--ink)" stroke-width="1.2"/><line x1="130" y1="20" x2="178" y2="20" stroke="var(--ink)" stroke-width="1.2"/>
+  <rect x="70" y="8" width="60" height="24" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><line x1="96" y1="8" x2="96" y2="32" stroke="var(--ink)" stroke-width="2"/>
+  <line x1="30" y1="12" x2="30" y2="28" stroke="var(--ink)" stroke-width="1.2"/><line x1="178" y1="12" x2="178" y2="28" stroke="var(--ink)" stroke-width="1.2"/>
+  <g font-size="8" text-anchor="middle" fill="var(--blue)"><text x="30" y="52">min</text><text x="70" y="52">Q1</text><text x="96" y="52">median</text><text x="130" y="52">Q3</text><text x="178" y="52">max</text></g>
+  <text x="100" y="5" font-size="7" text-anchor="middle" fill="var(--amber)" font-weight="700">IQR = Q3 − Q1</text></svg>`;}
+function cfP(){let d=""; const pts=[[0,0],[10,4],[20,14],[30,34],[40,62],[50,84],[60,96],[70,100]]; pts.forEach(([x,y],i)=>{d+=(i?"L":"M")+(20+x*2.2)+" "+(70-y*0.6);});
+  const yq=q=>70-q*0.6, xq=q=>{for(let i=1;i<pts.length;i++){if(pts[i][1]>=q){const [x0,y0]=pts[i-1],[x1,y1]=pts[i]; return 20+(x0+(q-y0)/(y1-y0)*(x1-x0))*2.2;}} return 0;};
+  const g=(q,lbl,col)=>`<line x1="20" y1="${yq(q)}" x2="${xq(q)}" y2="${yq(q)}" stroke="${col}" stroke-dasharray="3 2"/><line x1="${xq(q)}" y1="${yq(q)}" x2="${xq(q)}" y2="70" stroke="${col}" stroke-dasharray="3 2"/><text x="14" y="${yq(q)+3}" font-size="7" text-anchor="end" fill="${col}">${lbl}</text>`;
+  return `<svg viewBox="0 0 190 84" class="cfp"><line x1="20" y1="70" x2="185" y2="70" stroke="var(--ink)"/><line x1="20" y1="4" x2="20" y2="70" stroke="var(--ink)"/><path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2"/>${g(25,"¼N","var(--green)")}${g(50,"½N","var(--amber)")}${g(75,"¾N","var(--red)")}
+  <g font-size="7" text-anchor="middle"><text x="${xq(25)}" y="79" fill="var(--green)">Q1</text><text x="${xq(50)}" y="79" fill="var(--amber)">median</text><text x="${xq(75)}" y="79" fill="var(--red)">Q3</text></g><text x="180" y="79" font-size="7" text-anchor="end" fill="var(--muted)">marks</text><text x="24" y="10" font-size="7" fill="var(--muted)">cumulative frequency</text></svg>`;}
+
+const SHEETS2={
+quadEqns:`${MUST([FB("blue","Factorise → each bracket = 0",`${nw(`(${X1} − 2)(${X1} + 5) = 0`)} → ${nw(`${X1} = 2 or −5`)}`,"only works when the other side is 0"),FB("amber","Quadratic formula",`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`,"memorise · use when it won't factorise"),FB("green","First make it = 0",`${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`,"bring everything to one side, then read a, b, c")])}
+<div class="sheet">
+  <div class="panelc"><h4>3 ways to solve</h4>
+    <table>
+      <tr><th>Method</th><th>Use it when</th><th>Example</th></tr>
+      <tr><td>Factorise</td><td>it factorises nicely (whole numbers)</td><td>${nw(`${X2} + 5${X1} + 6 = 0`)}<br>${nw(`(${X1} + 2)(${X1} + 3) = 0`)}<br>${nw(`${X1} = −2 or −3`)}</td></tr>
+      <tr><td>Formula</td><td>it doesn't factorise, or "to 2 d.p."</td><td>${nw(`2${X2} − 3${X1} − 4 = 0`)}</td></tr>
+      <tr><td>Complete the square</td><td>the question says so, or you want the turning point</td><td>${nw(`${X2} + 6${X1} + 5`)}<br>= ${nw(`(${X1} + 3)² − 4`)}</td></tr>
+    </table>
+    ${PLAYLINK("#sheet/completing-the-square","Completing the square sheet")}
+  </div>
+
+  <div class="panelc"><h4>Formula, step by step</h4>
+    <p>Solve ${nw(`2${X2} − 3${X1} − 4 = 0`)}</p>
+    <ul class="steps">
+      <li>① ${V("a")} = 2, ${V("b")} = −3, ${V("c")} = −4 <span class="tagop">signs included!</span></li>
+      <li>② ${X1} = ${frac(`−(−3) ± √((−3)² − 4(2)(−4))`,`2(2)`)}</li>
+      <li>③ ${X1} = ${frac(`3 ± √41`,`4`)}</li>
+      <li>④ ${X1} = <b>2.35</b> or <b>−0.85</b> <span class="tagop">2 d.p., as the question asks</span></li>
+    </ul>
+    <p class="anno">* write the ± line, then do + and − separately on the calculator</p>
+  </div>
+
+  <div class="panelc"><h4>Fraction in the equation? Multiply it away</h4>
+    <ul class="steps">
+      <li>${frac("3",X1+" − 1")} + 2 = ${X1}</li>
+      <li>${nw(`3 + 2(${X1} − 1) = ${X1}(${X1} − 1)`)} <span class="tagop">× (${X1} − 1) every term</span></li>
+      <li>${nw(`3 + 2${X1} − 2 = ${X2} − ${X1}`)}</li>
+      <li>${nw(`${X2} − 3${X1} − 1 = 0`)} <span class="tagop">= 0, then formula</span></li>
+      <li>${X1} = <b>3.30</b> or <b>−0.303</b></li>
+    </ul>
+    <p class="anno">* with two fractions, multiply by both denominators</p>
+  </div>
+
+  <div class="panelc"><h4>Word problems</h4>
+    <ul class="steps">
+      <li>① Let the unknown be ${X1} (say what it is, with units)</li>
+      <li>② Form the equation from the story</li>
+      <li>③ Solve → two answers</li>
+      <li>④ <b>Reject</b> the one that makes no sense (negative length, age…) and say why</li>
+      <li>⑤ Answer the actual question</li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`${X2} = 5${X1}`)}<br>→ ${X1} = 5</div>
+      <div class="ok">✓ ${nw(`${X2} − 5${X1} = 0`)}<br>→ ${nw(`${X1}(${X1} − 5) = 0`)} → ${X1} = 0 or 5</div>
+      <div class="x">✗ ${nw(`(${X1} − 2)(${X1} + 5) = 3`)}<br>→ ${X1} − 2 = 3</div>
+      <div class="ok">✓ expand, make it = 0 first</div>
+    </div>
+    <div class="note"><b>Note!</b> Dividing both sides by ${X1} loses the answer ${X1} = 0. Factorise instead.</div>
+  </div>
+</div>`,
+
+linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2${X1} ≤ 8`)} → ${nw(`${X1} ≥ −4`)}`,"the only difference from an equation"),FB("blue","Number line",`● for ≤ ≥ &nbsp; ○ for &lt; &gt;`,"filled dot = that number counts"),FB("green","Words → symbol",`at least ≥ · at most ≤ · more than &gt; · less than &lt;`,"'not more than' = ≤")])}
+<div class="sheet">
+  <div class="panelc"><h4>Solve it like an equation</h4>
+    <ul class="steps">
+      <li>${nw(`3 − 2${X1} ≤ 11`)}</li>
+      <li>${nw(`−2${X1} ≤ 8`)} <span class="tagop">− 3 both sides</span></li>
+      <li>${nw(`${X1} ≥ −4`)} <span class="tagop">÷ (−2): FLIP</span></li>
+    </ul>
+    <div class="piccards two">
+      ${PIC(null,nline("ge","−4"),`${X1} ≥ −4`,"filled dot, arrow right")}
+      ${PIC(null,nline("lt","3"),`${X1} &lt; 3`,"open dot, arrow left")}
+    </div>
+  </div>
+
+  <div class="panelc"><h4>Two at once</h4>
+    <ul class="steps">
+      <li>${nw(`−3 &lt; 2${X1} + 1 ≤ 7`)}</li>
+      <li>${nw(`−4 &lt; 2${X1} ≤ 6`)} <span class="tagop">− 1 all three parts</span></li>
+      <li>${nw(`−2 &lt; ${X1} ≤ 3`)} <span class="tagop">÷ 2 all three parts</span></li>
+    </ul>
+    <p class="anno">* integers that satisfy it: −1, 0, 1, 2, 3 (not −2: the dot is open)</p>
+  </div>
+
+  <div class="panelc"><h4>Exam phrases</h4>
+    <table>
+      <tr><th>They say</th><th>You write</th></tr>
+      <tr><td>smallest integer value of ${X1}</td><td>first whole number inside the range</td></tr>
+      <tr><td>greatest prime value of ${X1}</td><td>list the integers, pick the prime</td></tr>
+      <tr><td>${X1} is at least 5</td><td>${X1} ≥ 5</td></tr>
+      <tr><td>${X1} is more than 5</td><td>${X1} &gt; 5</td></tr>
+      <tr><td>between 2 and 9 inclusive</td><td>2 ≤ ${X1} ≤ 9</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`−2${X1} ≤ 8`)}<br>→ ${X1} ≤ −4</div>
+      <div class="ok">✓ ${X1} ≥ −4</div>
+      <div class="x">✗ ${X1} &gt; 2, so smallest integer is 2</div>
+      <div class="ok">✓ smallest integer is 3</div>
+    </div>
+    <div class="note"><b>Note!</b> Swapping sides also flips: 5 &gt; ${X1} means ${X1} &lt; 5.</div>
+  </div>
+</div>`,
+
+indices:`${MUST([FB("blue","Same base: add, subtract, multiply",`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}<br>${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}<br>${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}`,"memorise"),FB("amber","Zero and negative",`${nw(`${V("a")}<sup>0</sup> = 1`)} · ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`,"negative power = flip it (not a negative number)"),FB("green","Fraction power = root",`${nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = <sup>${V("n")}</sup>√${V("a")}`)} · ${nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (<sup>${V("n")}</sup>√${V("a")})<sup>${V("m")}</sup>`)}`,"denominator = root, numerator = power")])}
+<div class="sheet">
+  <div class="panelc"><h4>The laws, with numbers</h4>
+    <table>
+      <tr><th>Law</th><th>Example</th></tr>
+      <tr><td>${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}</td><td>${nw(`2³ × 2⁴ = 2⁷`)}</td></tr>
+      <tr><td>${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}</td><td>${nw(`5⁶ ÷ 5² = 5⁴`)}</td></tr>
+      <tr><td>${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}</td><td>${nw(`(3²)⁴ = 3⁸`)}</td></tr>
+      <tr><td>${nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`)}</td><td>${nw(`(2${X1})³ = 8${V("x")}³`)}</td></tr>
+      <tr><td>${nw(`(${frac(V("a"),V("b"))})<sup>${V("n")}</sup> = ${frac(V("a")+"<sup>"+V("n")+"</sup>",V("b")+"<sup>"+V("n")+"</sup>")}`)}</td><td>${nw(`(${frac("2","3")})² = ${frac("4","9")}`)}</td></tr>
+    </table>
+    <p class="anno">* different bases? You can't add the powers. 2³ × 3² stays 8 × 9 = 72.</p>
+  </div>
+
+  <div class="panelc"><h4>Negative and fraction powers</h4>
+    <table>
+      <tr><th>Power</th><th>Means</th><th>Value</th></tr>
+      <tr><td>2<sup>−3</sup></td><td>${frac("1","2³")}</td><td>${frac("1","8")}</td></tr>
+      <tr><td>(${frac("2","3")})<sup>−2</sup></td><td>flip, then square: (${frac("3","2")})²</td><td>${frac("9","4")}</td></tr>
+      <tr><td>8<sup>${frac("2","3")}</sup></td><td>(³√8)²</td><td>2² = 4</td></tr>
+      <tr><td>27<sup>−${frac("1","3")}</sup></td><td>${frac("1","³√27")}</td><td>${frac("1","3")}</td></tr>
+      <tr><td>16<sup>${frac("3","4")}</sup></td><td>(⁴√16)³</td><td>2³ = 8</td></tr>
+    </table>
+    <p class="anno">* root first (small numbers), then the power</p>
+  </div>
+
+  <div class="panelc"><h4>Equations: make the bases the same</h4>
+    <ul class="steps">
+      <li>${nw(`2<sup>${X1} + 1</sup> = 32`)}</li>
+      <li>${nw(`2<sup>${X1} + 1</sup> = 2⁵`)} <span class="tagop">32 = 2⁵</span></li>
+      <li>${nw(`${X1} + 1 = 5`)} → ${X1} = 4 <span class="tagop">same base → equate powers</span></li>
+    </ul>
+    <ul class="steps">
+      <li>${nw(`3<sup>2${X1}</sup> = ${frac("1","27")}`)} = 3<sup>−3</sup> → 2${X1} = −3 → ${X1} = −${frac("3","2")}</li>
+    </ul>
+    <p class="anno">* useful: 4 = 2², 8 = 2³, 9 = 3², 27 = 3³, 25 = 5², 1 = anything⁰</p>
+  </div>
+
+  <div class="panelc"><h4>Simplify</h4>
+    <ul class="steps">
+      <li>${nw(`(2${V("a")}³${V("b")})² ÷ 4${V("a")}⁴${V("b")}<sup>−1</sup>`)}</li>
+      <li>${nw(`= 4${V("a")}⁶${V("b")}² ÷ 4${V("a")}⁴${V("b")}<sup>−1</sup>`)} <span class="tagop">square everything inside</span></li>
+      <li>${nw(`= ${V("a")}²${V("b")}³`)} <span class="tagop">4 ÷ 4 = 1, then subtract powers: 6 − 4, 2 − (−1)</span></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ 2³ × 2⁴ = 4⁷</div>
+      <div class="ok">✓ 2⁷ (base stays)</div>
+      <div class="x">✗ (2${V("a")})³ = 2${V("a")}³</div>
+      <div class="ok">✓ 8${V("a")}³</div>
+      <div class="x">✗ ${V("a")}<sup>−2</sup> = −${V("a")}²</div>
+      <div class="ok">✓ ${frac("1",V("a")+"²")}</div>
+    </div>
+    <div class="note"><b>Note!</b> A negative power never makes a positive number negative. It flips the fraction.</div>
+  </div>
+</div>`,
+
+stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>, with 1 ≤ ${V("A")} &lt; 10`,"one digit before the decimal point"),FB("amber","Big → + · small → −",`${nw(`345 000 = 3.45 × 10⁵`)} · ${nw(`0.00072 = 7.2 × 10<sup>−4</sup>`)}`,"count the jumps of the decimal point"),FB("green","Calculator",`use the ×10<sup>x</sup> key, not × 10 ^`,"answer to 3 s.f. unless told otherwise")])}
+<div class="sheet">
+  <div class="panelc"><h4>Convert</h4>
+    <table>
+      <tr><th>Number</th><th>Standard form</th><th>Why</th></tr>
+      <tr><td>6 200 000</td><td>6.2 × 10⁶</td><td>point moves 6 places left</td></tr>
+      <tr><td>0.000 038</td><td>3.8 × 10<sup>−5</sup></td><td>point moves 5 places right</td></tr>
+      <tr><td>4.1 × 10³</td><td>4100</td><td>3 places right</td></tr>
+      <tr><td>9.05 × 10<sup>−2</sup></td><td>0.0905</td><td>2 places left</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>× and ÷: use the index laws</h4>
+    <ul class="steps">
+      <li>${nw(`(3 × 10⁴) × (2 × 10<sup>−7</sup>)`)} = ${nw(`6 × 10<sup>−3</sup>`)} <span class="tagop">3 × 2, then 4 + (−7)</span></li>
+      <li>${nw(`(8 × 10⁵) ÷ (4 × 10²)`)} = ${nw(`2 × 10³`)} <span class="tagop">8 ÷ 4, then 5 − 2</span></li>
+      <li>${nw(`(5 × 10³) × (4 × 10²)`)} = 20 × 10⁵<br>= <b>${nw("2 × 10⁶")}</b> <span class="tagop">20 is not allowed: fix it</span></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>+ and −: same power first</h4>
+    <ul class="steps">
+      <li>${nw(`3.2 × 10⁵ + 4 × 10⁴`)}</li>
+      <li>${nw(`= 3.2 × 10⁵ + 0.4 × 10⁵`)} <span class="tagop">change the smaller one</span></li>
+      <li>${nw(`= 3.6 × 10⁵`)}</li>
+    </ul>
+    <p class="anno">* or just type both into the calculator with the ×10<sup>x</sup> key and read the answer</p>
+  </div>
+
+  <div class="panelc"><h4>Prefixes</h4>
+    <table>
+      <tr><th>Prefix</th><th>Power</th><th>Example</th></tr>
+      <tr><td>giga (G)</td><td>10⁹</td><td>2 GB = 2 × 10⁹ bytes</td></tr>
+      <tr><td>mega (M)</td><td>10⁶</td><td>5 MW = 5 × 10⁶ W</td></tr>
+      <tr><td>kilo (k)</td><td>10³</td><td>3 km = 3 × 10³ m</td></tr>
+      <tr><td>milli (m)</td><td>10<sup>−3</sup></td><td>7 mm = 7 × 10<sup>−3</sup> m</td></tr>
+      <tr><td>micro (μ)</td><td>10<sup>−6</sup></td><td>4 μm = 4 × 10<sup>−6</sup> m</td></tr>
+      <tr><td>nano (n)</td><td>10<sup>−9</sup></td><td>2 nm = 2 × 10<sup>−9</sup> m</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ 12 × 10⁵</div>
+      <div class="ok">✓ 1.2 × 10⁶</div>
+      <div class="x">✗ 0.5 × 10<sup>−3</sup></div>
+      <div class="ok">✓ 5 × 10<sup>−4</sup></div>
+    </div>
+    <div class="note"><b>Note!</b> ${V("A")} must be from 1 up to (not including) 10. Fix ${V("A")} first, then adjust the power.</div>
+  </div>
+</div>`,
+
+interest:`${MUST([FB("blue","Simple interest",`${V("I")} = ${frac(`${V("P")} × ${V("R")} × ${V("T")}`,"100")}`,"memorise · same amount every year"),FB("amber","Compound interest",`${V("A")} = ${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`,"on the formula sheet · interest = A − P"),FB("green","Not yearly?",`half-yearly: ${V("r")} ÷ 2, ${V("n")} × 2 · monthly: ${V("r")} ÷ 12, ${V("n")} × 12`,"r and n must match the period")])}
+<div class="sheet">
+  <div class="panelc"><h4>Simple vs compound: $5000 at 3% for 4 years</h4>
+    <table>
+      <tr><th></th><th>Simple</th><th>Compound</th></tr>
+      <tr><td>Working</td><td>${nw(`${frac("5000 × 3 × 4","100")}`)}</td><td>${nw(`5000 × 1.03⁴`)}</td></tr>
+      <tr><td>Interest</td><td><b>$600</b></td><td>5627.54 − 5000 = <b>$627.54</b></td></tr>
+    </table>
+    <p class="anno">* compound earns interest on the interest, so it grows faster</p>
+  </div>
+
+  <div class="panelc"><h4>Compounded monthly</h4>
+    <p>$2000 at 6% per year, compounded monthly, for 2 years</p>
+    <ul class="steps">
+      <li>① rate per month = 6 ÷ 12 = 0.5% <span class="tagop">r ÷ 12</span></li>
+      <li>② periods = 2 × 12 = 24 <span class="tagop">n × 12</span></li>
+      <li>③ ${V("A")} = ${nw(`2000(1.005)²⁴`)} = <b>$2254.32</b></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Working backwards</h4>
+    <p>Grows to $3000 after 3 years at 4% compound. Find the start amount.</p>
+    <ul class="steps">
+      <li>${nw(`3000 = ${V("P")}(1.04)³`)}</li>
+      <li>${V("P")} = ${frac("3000","1.04³")} = <b>$2666.99</b> <span class="tagop">÷ 1.04³</span></li>
+    </ul>
+    <p class="anno">* keep the full calculator value until the last step, then round to 2 d.p.</p>
+  </div>
+
+  <div class="panelc"><h4>Growth and decay (same formula)</h4>
+    <ul class="steps">
+      <li>Value goes DOWN by 15% a year: multiplier = 1 − 0.15 = <b>0.85</b></li>
+      <li>$80 000 car after 3 years: ${nw(`80 000 × 0.85³`)} = <b>$49 130</b></li>
+    </ul>
+    <p class="anno">* growth: (1 + ${frac(V("r"),"100")})<sup>n</sup> · decay / depreciation: (1 − ${frac(V("r"),"100")})<sup>n</sup></p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ monthly, but ${V("r")} = 6 and ${V("n")} = 2</div>
+      <div class="ok">✓ ${V("r")} = 0.5 and ${V("n")} = 24</div>
+      <div class="x">✗ "interest = $5627.54"</div>
+      <div class="ok">✓ interest = ${V("A")} − ${V("P")} = $627.54</div>
+    </div>
+    <div class="note"><b>Note!</b> Money answers to 2 d.p. Don't round in the middle of the working.</div>
+  </div>
+</div>`,
+
+sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),FB("amber","∪ = OR (everything in either)",`A ∪ B`,"in A, in B, or in both"),FB("red","′ = NOT (outside)",`A′`,"everything in ξ that is not in A")])}
+<div class="sheet">
+  <div class="panelc"><h4>Shade it</h4>
+    <div class="piccards">
+      ${PIC(null,venn("and"),"A ∩ B","in both")}
+      ${PIC(null,venn("or"),"A ∪ B","in either")}
+      ${PIC(null,venn("notA"),"A′","not in A")}
+      ${PIC(null,venn("AnotB"),"A ∩ B′","in A but not in B")}
+      ${PIC(null,venn("notOr"),"(A ∪ B)′","in neither")}
+      ${PIC(null,venn("sub"),"B ⊂ A","B is inside A")}
+    </div>
+  </div>
+
+  <div class="panelc"><h4>Symbols</h4>
+    <table>
+      <tr><th>Symbol</th><th>Say</th><th>Example</th></tr>
+      <tr><td>∈</td><td>is an element of</td><td>3 ∈ {1, 2, 3}</td></tr>
+      <tr><td>∉</td><td>is not an element of</td><td>5 ∉ {1, 2, 3}</td></tr>
+      <tr><td>⊂ (or ⊆)</td><td>is a subset of</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
+      <tr><td>ξ</td><td>universal set</td><td>everything in the question</td></tr>
+      <tr><td>∅ or { }</td><td>empty set</td><td>A ∩ B = ∅ → nothing in common</td></tr>
+      <tr><td>n(A)</td><td>number of elements in A</td><td>n({2, 4, 6}) = 3</td></tr>
+    </table>
+    <p class="anno">* {x : x is a prime, x &lt; 10} reads "the set of x such that…" = {2, 3, 5, 7}</p>
+  </div>
+
+  <div class="panelc"><h4>Counting with a Venn diagram</h4>
+    <p>30 students: 18 play football (F), 15 play basketball (B), 7 play both.</p>
+    <ul class="steps">
+      <li>① Put the overlap in first: n(F ∩ B) = 7</li>
+      <li>② Football only: 18 − 7 = 11 · basketball only: 15 − 7 = 8</li>
+      <li>③ Neither: 30 − (11 + 7 + 8) = <b>4</b></li>
+    </ul>
+    <p class="anno">* ${nw(`n(A ∪ B) = n(A) + n(B) − n(A ∩ B)`)}: 18 + 15 − 7 = 26</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ A ∩ B = all of A and all of B</div>
+      <div class="ok">✓ only what they share</div>
+      <div class="x">✗ 2 ⊂ {1, 2, 3}</div>
+      <div class="ok">✓ 2 ∈ {1, 2, 3} · {2} ⊂ {1, 2, 3}</div>
+    </div>
+    <div class="note"><b>Note!</b> Always fill the overlap first, then subtract outwards.</div>
+  </div>
+</div>`,
+
+spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${frac("1","2")}N · Q3 at ${frac("3","4")}N`,"on the cumulative frequency axis · 80th percentile at 0.8N"),FB("amber","Interquartile range",`IQR = Q3 − Q1`,"the middle 50%: smaller IQR = more consistent"),FB("green","Standard deviation",`SD = √(${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − mean²)`,"on the formula sheet · bigger SD = more spread out")])}
+<div class="sheet">
+  <div class="panelc"><h4>Cumulative frequency curve</h4>
+    ${cfP()}
+    <ul class="steps">
+      <li>① Plot at the <b>upper</b> end of each class, start at 0</li>
+      <li>② Go across from ${frac("1","4")}N, ${frac("1","2")}N, ${frac("3","4")}N on the vertical axis</li>
+      <li>③ Drop down and read Q1, median, Q3</li>
+    </ul>
+    <p class="anno">* "how many scored more than 60": N − (cumulative frequency at 60)</p>
+  </div>
+
+  <div class="panelc"><h4>Box-and-whisker plot</h4>
+    ${boxPlotP()}
+    <p class="anno">* 5 numbers: min, Q1, median, Q3, max · the box = the middle half of the data</p>
+  </div>
+
+  <div class="panelc"><h4>Compare two sets: say both</h4>
+    <table>
+      <tr><th>Compare</th><th>Say</th></tr>
+      <tr><td>mean (or median)</td><td>"Class A did better on average because its mean is higher."</td></tr>
+      <tr><td>SD (or IQR)</td><td>"Class B is more consistent because its SD is smaller."</td></tr>
+    </table>
+    <p class="anno">* always use the numbers in the sentence, and name the class</p>
+  </div>
+
+  <div class="panelc"><h4>SD on the Casio fx-97SG X</h4>
+    <ul class="steps">
+      <li>① MENU → Statistics → 1-Variable</li>
+      <li>② SETUP (SHIFT MENU) → Statistics → Frequency ON <span class="tagop">for a frequency table</span></li>
+      <li>③ Type the ${X1} values (mid-values for groups) and the frequencies</li>
+      <li>④ OPTN → 1-Variable Calc → read ${V("x̄")} (mean) and σ${V("x")} (SD)</li>
+    </ul>
+    <p class="anno">* grouped data: use the mid-value of each class as ${X1}</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ Q1 read at ${frac("1","4")} of the biggest mark</div>
+      <div class="ok">✓ Q1 read at ${frac("1","4")} of N (the frequency axis)</div>
+      <div class="x">✗ "bigger SD = better"</div>
+      <div class="ok">✓ bigger SD = more spread out, less consistent</div>
+    </div>
+    <div class="note"><b>Note!</b> Plot the cumulative frequency at the upper class boundary, never the mid-value.</div>
+  </div>
+</div>`,
+
+probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can happen","total number of outcomes")}`,"always between 0 and 1"),FB("amber","AND → multiply · OR → add",`P(A and B) = P(A) × P(B)`,"× along the branches · OR adds only if they can't both happen"),FB("green","At least one",`P(at least one) = 1 − P(none)`,"faster than adding every case")])}
+<div class="sheet">
+  <div class="panelc"><h4>Possibility diagram: two dice</h4>
+    ${diceGrid()}
+    <p class="anno" style="text-align:center">P(total = 7) = ${frac("6","36")} = ${frac("1","6")}</p>
+    <p class="anno">* 6 × 6 = 36 equally likely outcomes; count the ones you want</p>
+  </div>
+
+  <div class="panelc"><h4>Tree diagram: without replacement</h4>
+    <p>3 red, 2 blue. Two taken, not put back.</p>
+    ${treeP()}
+    <ul class="steps">
+      <li>P(both red) = ${frac("3","5")} × ${frac("2","4")} = <b>${frac("3","10")}</b> <span class="tagop">along the branch: ×</span></li>
+      <li>P(one of each) = ${frac("3","5")} × ${frac("2","4")} + ${frac("2","5")} × ${frac("3","4")}<br>= <b>${frac("3","5")}</b> <span class="tagop">two branches: +</span></li>
+    </ul>
+    <p class="anno">* without replacement: the second denominator drops by 1 · with replacement: it stays 5</p>
+  </div>
+
+  <div class="panelc"><h4>Words → maths</h4>
+    <table>
+      <tr><th>The question says</th><th>Do</th></tr>
+      <tr><td>both / and / then</td><td>multiply along the branches</td></tr>
+      <tr><td>either / or / one of each</td><td>add the branches that work</td></tr>
+      <tr><td>at least one</td><td>1 − P(none)</td></tr>
+      <tr><td>not</td><td>1 − P(it)</td></tr>
+      <tr><td>mutually exclusive</td><td>can't both happen → P(A or B) = P(A) + P(B)</td></tr>
+      <tr><td>independent</td><td>one doesn't affect the other → P(A and B) = P(A) × P(B)</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ P(both red) = ${frac("3","5")} × ${frac("3","5")} (no replacement)</div>
+      <div class="ok">✓ ${frac("3","5")} × ${frac("2","4")}</div>
+      <div class="x">✗ P(A or B) = P(A) + P(B) always</div>
+      <div class="ok">✓ only if A and B can't both happen</div>
+    </div>
+    <div class="note"><b>Note!</b> Give the answer as a fraction in its simplest form (or a decimal). Never more than 1.</div>
+  </div>
+</div>`,
+
+matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0","3","4"]])} is 2 × 3`,"rows first, across; then columns, down"),FB("amber","Add / subtract",`same order only · element by element`,"2 × 3 plus 2 × 3 → 2 × 3"),FB("green","Multiply: row × column",`(${V("m")} × ${V("n")})(${V("n")} × ${V("p")}) → ${V("m")} × ${V("p")}`,"inner numbers must match")])}
+<div class="sheet">
+  <div class="panelc"><h4>Add, subtract, scalar multiple</h4>
+    <ul class="steps">
+      <li>${MX([["1","4"],["2","0"]])} + ${MX([["3","−1"],["5","2"]])} = ${MX([["4","3"],["7","2"]])}</li>
+      <li>3${MX([["1","4"],["2","0"]])} = ${MX([["3","12"],["6","0"]])} <span class="tagop">multiply every element</span></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Multiply: row × column</h4>
+    <ul class="steps">
+      <li>${MX([["2","3"],["1","4"]])}${MX([["5"],["6"]])} = ${MX([["2×5 + 3×6"],["1×5 + 4×6"]])} = ${MX([["28"],["29"]])}</li>
+    </ul>
+    <p class="anno">* row 1 across × column down, add up; then row 2 · (2 × 2)(2 × 1) → 2 × 1</p>
+    <table>
+      <tr><th>Can you multiply?</th><th>Answer</th></tr>
+      <tr><td>(2 × 3)(3 × 1)</td><td>yes → 2 × 1</td></tr>
+      <tr><td>(2 × 3)(2 × 3)</td><td>no: 3 ≠ 2</td></tr>
+      <tr><td>(1 × 3)(3 × 2)</td><td>yes → 1 × 2</td></tr>
+    </table>
+  </div>
+
+  <div class="panelc"><h4>Real information</h4>
+    <p>A shop sells 20 pens and 15 files on Monday, 10 pens and 30 files on Tuesday. Pens cost $2, files $3.</p>
+    <ul class="steps">
+      <li>Sales ${MX([["20","15"],["10","30"]])} × prices ${MX([["2"],["3"]])} = ${MX([["40 + 45"],["20 + 90"]])}</li>
+      <li>= ${MX([["85"],["110"]])}</li>
+      <li>Meaning: Monday took <b>$85</b>, Tuesday took <b>$110</b></li>
+    </ul>
+    <p class="anno">* rows = days, columns = items. Keep the same order in the price matrix.</p>
+  </div>
+
+  <div class="panelc"><h4>Note!</h4>
+    <div class="wrongright">
+      <div class="x">✗ multiply element by element</div>
+      <div class="ok">✓ row × column, then add</div>
+      <div class="x">✗ AB = BA</div>
+      <div class="ok">✓ usually different (order matters)</div>
+    </div>
+    <div class="note"><b>Note!</b> Say what each row and column stands for, or the "meaning" mark is lost.</div>
+  </div>
+</div>`
+};
+Object.assign(SHEETS,SHEETS2);
+SHEETLIST.push(
+  {id:"quadratic-equations",levels:["emath"],chapter:"Quadratic Equations & Functions",title:"Solving quadratic equations",sheet:"quadEqns",aid:null},
+  {id:"linear-inequalities",levels:["emath"],chapter:"Linear Inequalities",title:"Linear inequalities",sheet:"linIneq",aid:null},
+  {id:"indices",levels:["emath"],chapter:"Indices",title:"Indices",sheet:"indices",aid:null},
+  {id:"standard-form",levels:["emath"],chapter:"Standard Form",title:"Standard form",sheet:"stdForm",aid:null},
+  {id:"interest",levels:["emath"],chapter:"Simple & Compound Interest",title:"Simple & compound interest",sheet:"interest",aid:null},
+  {id:"sets",levels:["emath"],chapter:"Set Language & Notation",title:"Sets & Venn diagrams",sheet:"sets",aid:null},
+  {id:"measures-of-spread",levels:["emath"],chapter:"Statistics: Measures of Spread",title:"Quartiles, box plots & standard deviation",sheet:"spread",aid:null},
+  {id:"probability",levels:["emath"],chapter:"Probability",title:"Probability",sheet:"probability",aid:null},
+  {id:"matrices",levels:["emath"],chapter:"Matrices",title:"Matrices",sheet:"matrices",aid:null}
+);
 
 const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn");
 let homeFilter="all", cur=null;
