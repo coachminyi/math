@@ -303,8 +303,34 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .sheetend a{color:var(--accent);font-weight:700;text-decoration:none}
 .printfoot{display:none}
 .fml .go{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
-.fml .lbl{color:var(--muted);font-size:14px;flex-basis:100%;margin-bottom:-2px}
-.given{border-left:4px solid var(--green);padding-left:10px}
+.fml .lbl{color:var(--muted);font-size:14px;flex-basis:100%;line-height:1.3;margin-bottom:1px}
+.fml .frow{display:flex;flex-wrap:wrap;align-items:center;column-gap:28px;row-gap:4px}
+.fml .fi{max-width:100%}
+.fml .fnote{color:var(--muted);font-size:14.5px}
+.fml .fmap{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:20px;row-gap:5px;align-items:center}
+.fml .fmap .h{font-size:13px;font-weight:700;color:var(--muted)}
+.panelc.pg>h4{background:var(--green-fill);border-color:var(--green)}
+.panelc.pn>h4{background:var(--red-fill);border-color:var(--red)}
+.panelc.pg{column-span:all;display:block}
+.panelc.pg::before{background-image:none}
+.fpaper{font-family:Cambria,"Times New Roman",Georgia,serif;font-size:18.5px;line-height:1.5;max-width:660px;margin:0 auto;padding:2px 0 4px}
+.fpaper .ft{text-align:center;font-style:italic;font-size:21px;margin:4px 0 6px}
+.fpaper .ft.b{font-weight:700}
+.fpaper .fsec{text-align:center;font-weight:700;font-size:16.5px;letter-spacing:.03em;margin:16px 0 0}
+.fpaper .fsub{font-style:italic;margin:14px 0 2px}
+.fpaper .ftx{padding-left:1.3em}
+.fpaper .fd{text-align:center;padding:5px 0}
+.fpaper .frac{line-height:1.2;margin:0 2px}
+.fpaper .frac>span{padding:0 2px}
+.mx.det{border-radius:0;column-gap:11px}
+.rt{display:inline-block;position:relative;padding-left:.6em;margin:0 1px 0 2px;white-space:nowrap}
+.rt>svg{position:absolute;left:0;top:0;width:.6em;height:100%;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round;overflow:visible}
+.rt>.rti{display:inline-block;border-top:1.4px solid currentColor;padding:2px 3px 0 2px;line-height:1.3}
+.pb{display:inline-block;position:relative;padding:0 .4em;margin:0 1px;white-space:nowrap}
+.pb::before,.pb::after{content:"";position:absolute;top:.08em;bottom:.08em;width:.3em;border:1.6px solid currentColor;border-top:0;border-bottom:0}
+.pb::before{left:.04em;border-right:0;border-radius:100% 0 0 100%/50% 0 0 50%}
+.pb::after{right:.04em;border-left:0;border-radius:0 100% 100% 0/0 50% 50% 0}
+sup.pbs{vertical-align:top;font-size:.72em;line-height:1;position:relative;top:-.05em}
 .fml .grp{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 0 2px;border-bottom:1px solid var(--line);margin-bottom:2px}
 .fml .grp:first-child{padding-top:2px}
 .fml .grp .go{letter-spacing:0;text-transform:none}
@@ -490,6 +516,14 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
   .bar,.tabs,footer,.exitp,#toast,.modal,.sheetend,.playlink,.piccard .go,.lcard{display:none}
   body{background:#fff}
   .panelc::before{border-color:#000}
+  .panelc.pg{column-span:none}
+  .fpaper{font-size:13.5px;line-height:1.25}
+  .fpaper .fd{font-size:inherit !important;white-space:normal !important;padding:0}
+  .fpaper .ft{font-size:16px;margin:0 0 2px}
+  .fpaper .fsec{margin:4px 0 0;font-size:14px}
+  .fpaper .fsub{margin:3px 0 0}
+  .must .formbox{padding-top:4px;padding-bottom:4px}
+  .fml .steps li,.steps.fml li{padding:3px 0}
   .printfoot{display:flex;align-items:center;gap:14px;border-top:1px solid #999;margin:10px 16px 0;padding:10px 0 0;font-size:13px;color:#333;break-inside:avoid}
   .printfoot svg{width:70px;height:70px;flex:none}
   .printfoot b{font-size:14px;color:#000}
@@ -575,6 +609,8 @@ const SVGNS="http://www.w3.org/2000/svg";
 function svgEl(tag,attrs={},text){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
 const fmt=(n,d=2)=>{const s=(+n).toFixed(d);return s.replace(/\.?0+$/,"")||"0"};
 const frac=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const SQRT=x=>`<span class="rt"><svg viewBox="0 0 10 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0.5 25 L3 22.5 L6.2 39.5 L10 0.7" vector-effect="non-scaling-stroke"/></svg><span class="rti">${x}</span></span>`;
+const PAR=(x,p)=>`<span class="pb">${x}</span>${p?`<sup class="pbs">${p}</sup>`:""}`;
 const BIN=(n,r)=>`<span class="binom"><span class="p">(</span><span class="st"><span>${n}</span><span>${r}</span></span><span class="p">)</span></span>`;
 const fx=s=>String(s).replace(/\{([^/}]*)\/([^}]*)\}/g,(m,n,d)=>frac(n,d));
 const V=s=>`<i class="v">${s}</i>`;
@@ -2951,45 +2987,57 @@ SHEETLIST.push(
 );
 const GRP=(t,id)=>`<li class="grp"><span>${t}</span>${id?`<a class="go" href="#sheet/${id}">cheatsheet →</a>`:""}</li>`;
 const FL=f=>`<li>${f}</li>`;
+const FLB=(l,...fs)=>`<li class="frow">${l?`<span class="lbl">${l}</span>`:""}${fs.map(f=>`<span class="fi">${f}</span>`).join("")}</li>`;
+const FMAP=(hd,rows)=>`<li class="fmap">${hd?hd.map(x=>`<span class="h">${x}</span>`).join(""):""}${rows.map(([a,b])=>`<span>${a}</span><span>${b}</span>`).join("")}</li>`;
+const FNOTE=t=>` <span class="fnote">${t}</span>`;
+const FD=f=>`<div class="fd">${f}</div>`, FSUB=t=>`<div class="fsub">${t}</div>`;
 const dd=(a,b)=>frac("d"+a,"d"+b), dydx=dd(V("y"),V("x"));
+const SINE_RULE=nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))} = ${frac(V("c"),"sin "+V("C"))}`);
+const COS_RULE=`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)} ${nw(`− 2${V("bc")} cos ${V("A")}`)}`;
+const QUAD_F=nw(`${X1} = ${frac(`−${V("b")} ± ${SQRT(`${V("b")}² − 4${V("ac")}`)}`,`2${V("a")}`)}`);
+const XY=a=>`${a}₂ − ${a}₁`;
+const LEN_F=nw(SQRT(`(${XY(X1)})² + (${XY(V("y"))})²`));
+const GRAD_F=nw(frac(XY(V("y")),XY(X1)));
+const SHOE=`<span class="mx det" style="grid-template-columns:repeat(5,auto)">${[X1,V("y")].map(c=>[1,2,3].map(i=>`<span>${c}${"₀₁₂₃"[i]}</span>`).join("")+`<span>…</span><span>${c}₁</span>`).join("")}</span>`;
 const SHEETS3={
-emFormula:`${MUST([FB("green","Given",`the first box below`,"printed in your exam paper"),FB("red","Not given",`everything else`,"memorise: the lists below"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam paper"),FB("red","Not given",`the red boxes`,"memorise these"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Maths formula list.</p>
 <div class="sheet">
-  <div class="panelc"><h4>Given in the exam <span class="badge ok">formula list</span></h4>
-    <ul class="steps fml given">
-      ${GRP("Compound interest")}
-      ${FL(`Total amount = ${nw(`${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`)}`)}
-      ${GRP("Mensuration")}
-      ${FL(`Curved surface area of a cone = ${nw(`π${V("rl")}`)}`)}
-      ${FL(`Surface area of a sphere = ${nw(`4π${V("r")}²`)}`)}
-      ${FL(`Volume of a cone = ${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`)}
-      ${FL(`Volume of a sphere = ${nw(`${frac("4","3")}π${V("r")}³`)}`)}
-      ${FL(`Area of triangle ${V("ABC")} = ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}`)}
-      ${FL(`Arc length = ${nw(`${V("r")}θ`)}, θ in radians`)}
-      ${FL(`Sector area = ${nw(`${frac("1","2")}${V("r")}²θ`)}, θ in radians`)}
-      ${GRP("Trigonometry")}
-      ${FL(`${nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))} = ${frac(V("c"),"sin "+V("C"))}`)}`)}
-      ${FL(`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)} ${nw(`− 2${V("bc")} cos ${V("A")}`)}`)}
-      ${GRP("Statistics")}
-      ${FL(`Mean = ${nw(frac("Σ"+V("fx"),"Σ"+V("f")))}`)}
-      ${FL(`Standard deviation = ${nw(`√(${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − (${frac("Σ"+V("fx"),"Σ"+V("f"))})²)`)}`)}
-    </ul>
+  <div class="panelc pg"><h4>Given in the exam</h4>
+    <div class="fpaper">
+      <div class="ft b">Mathematical Formulae</div>
+      ${FSUB("Compound interest")}
+      ${FD(`Total amount = ${nw(`${V("P")}${PAR(`1 + ${frac(V("r"),"100")}`,V("n"))}`)}`)}
+      ${FSUB("Mensuration")}
+      ${FD(`Curved surface area of a cone = ${nw(V("πrl"))}`)}
+      ${FD(`Surface area of a sphere = ${nw(`4${V("πr")}²`)}`)}
+      ${FD(`Volume of a cone = ${nw(`${frac("1","3")}${V("πr")}²${V("h")}`)}`)}
+      ${FD(`Volume of a sphere = ${nw(`${frac("4","3")}${V("πr")}³`)}`)}
+      ${FD(`Area of triangle ${V("ABC")} = ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}`)}
+      ${FD(`Arc length = ${nw(`${V("rθ")},`)} where ${V("θ")} is in radians`)}
+      ${FD(`Sector area = ${nw(`${frac("1","2")}${V("r")}²${V("θ")},`)} where ${V("θ")} is in radians`)}
+      ${FSUB("Trigonometry")}
+      ${FD(SINE_RULE)}
+      ${FD(COS_RULE)}
+      ${FSUB("Statistics")}
+      ${FD(`Mean = ${nw(frac("Σ"+V("fx"),"Σ"+V("f")))}`)}
+      ${FD(`Standard deviation = ${nw(SQRT(`${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − ${PAR(frac("Σ"+V("fx"),"Σ"+V("f")),"2")}`))}`)}
+    </div>
   </div>
 
-  <div class="panelc"><h4>Not given: numbers &amp; algebra</h4>
+  <div class="panelc pn"><h4>Not given: numbers &amp; algebra</h4>
     <ul class="steps fml">
       ${GRP("Expansion","expansion")}
       ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`${V("a")}² − ${V("b")}²`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)}
       ${GRP("Quadratic formula","quadratic-equations")}
-      ${FL(`${nw(`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`)}`)}
+      ${FL(QUAD_F)}
       ${GRP("Completing the square","completing-the-square")}
-      ${FL(`${nw(`${X2} + ${V("p")}${X1} + ${V("q")}`)} = ${nw(`(${X1} + ${frac(V("p"),"2")})² − (${frac(V("p"),"2")})² + ${V("q")}`)}`)}
+      ${FL(`${nw(`${X2} + ${V("p")}${X1} + ${V("q")}`)} = ${nw(`${PAR(`${X1} + ${frac(V("p"),"2")}`,"2")} − ${PAR(frac(V("p"),"2"),"2")} + ${V("q")}`)}`)}
       ${GRP("Indices","indices")}
-      ${FL(`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}, ${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}`)}
-      ${FL(`${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}, ${nw(`${V("a")}<sup>0</sup> = 1`)}, ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`)}
+      ${FLB("",nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`),nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`))}
+      ${FLB("",nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`),nw(`${V("a")}<sup>0</sup> = 1`),nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`))}
       ${GRP("Money and rates","interest")}
       ${FL(`Simple interest = ${nw(frac(V("PRT"),"100"))}`)}
       ${FL(`Percentage change = ${nw(`${frac("change","original")} × 100%`)}`)}
@@ -2997,154 +3045,181 @@ emFormula:`${MUST([FB("green","Given",`the first box below`,"printed in your exa
     </ul>
   </div>
 
-  <div class="panelc"><h4>Not given: geometry &amp; measurement</h4>
+  <div class="panelc pn"><h4>Not given: geometry &amp; measurement</h4>
     <ul class="steps fml">
-      ${GRP("Right-angled triangles")}
-      ${FL(`Pythagoras: ${nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)} (${V("c")} = hypotenuse)`)}
-      ${FL(`${nw(`sin θ = ${frac("opp","hyp")}`)}, ${nw(`cos θ = ${frac("adj","hyp")}`)}, ${nw(`tan θ = ${frac("opp","adj")}`)}`)}
+      ${GRP("Pythagoras","pythagoras")}
+      ${FL(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)+FNOTE(`${V("c")} = hypotenuse`))}
+      ${GRP("SOH CAH TOA","trigonometry-sec2")}
+      ${FLB("",nw(`sin θ = ${frac("opp","hyp")}`),nw(`cos θ = ${frac("adj","hyp")}`),nw(`tan θ = ${frac("opp","adj")}`))}
       ${GRP("Obtuse angles","trig-ratios-any-angle")}
-      ${FL(`${nw("sin(180° − θ) = sin θ")}, ${nw("cos(180° − θ) = −cos θ")}`)}
-      ${GRP("Area and volume")}
-      ${FL(`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}, parallelogram = ${nw("base × height")}`)}
-      ${FL(`Circle: area ${nw(`π${V("r")}²`)}, circumference ${nw(`2π${V("r")}`)}`)}
-      ${FL(`Prism or cylinder: volume = ${nw("base area × length")}, cylinder ${nw(`π${V("r")}²${V("h")}`)}`)}
-      ${FL(`Pyramid: volume = ${nw(`${frac("1","3")} × base area × height`)}`)}
-      ${FL(`Cylinder: curved surface area = ${nw(`2π${V("rh")}`)}`)}
+      ${FLB("",nw("sin(180° − θ) = sin θ"),nw("cos(180° − θ) = −cos θ"))}
+      ${GRP("Area","perimeter-area")}
+      ${FL(`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`)}
+      ${FL(`Parallelogram = ${nw("base × height")}`)}
+      ${FLB("Circle",`Area = ${nw(`π${V("r")}²`)}`,`Circumference = ${nw(`2π${V("r")}`)}`)}
+      ${GRP("Prisms and cylinders","volume-surface-area-1")}
+      ${FL(`Volume of a prism = ${nw("base area × length")}`)}
+      ${FLB("Cylinder",`Volume = ${nw(`π${V("r")}²${V("h")}`)}`,`Curved surface area = ${nw(`2π${V("rh")}`)}`)}
+      ${GRP("Pyramids","volume-surface-area-2")}
+      ${FL(`Volume of a pyramid = ${nw(`${frac("1","3")} × base area × height`)}`)}
       ${GRP("Arcs and sectors in degrees")}
-      ${FL(`Arc = ${nw(`${frac("θ","360°")} × 2π${V("r")}`)}, sector = ${nw(`${frac("θ","360°")} × π${V("r")}²`)}`)}
-      ${FL(`${nw("π rad = 180°")}`)}
-      ${GRP("Angles and shapes","circle-properties")}
-      ${FL(`Angles inside an ${V("n")}-sided polygon add to ${nw(`(${V("n")} − 2) × 180°`)}; outside angles add to 360°`)}
-      ${FL(`Similar shapes: area ratio = ${nw("(length ratio)²")}, volume ratio = ${nw("(length ratio)³")}`)}
-      ${GRP("Coordinates and vectors")}
-      ${FL(`Gradient = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}, ${nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)}`)}
-      ${FL(`Length = ${nw(`√((${X1}₂ − ${X1}₁)² + (${V("y")}₂ − ${V("y")}₁)²)`)}`)}
-      ${FL(`Size of a vector: ${nw(`|${MX([[X1],[V("y")]])}| = √(${X2} + ${V("y")}²)`)}`)}
+      ${FL(`Arc length = ${nw(`${frac("θ","360°")} × 2π${V("r")}`)}`)}
+      ${FL(`Sector area = ${nw(`${frac("θ","360°")} × π${V("r")}²`)}`)}
+      ${FL(nw("π radians = 180°"))}
+      ${GRP("Polygons","polygons")}
+      ${FL(`Sum of interior angles = ${nw(`(${V("n")} − 2) × 180°`)}`+FNOTE(`${V("n")} = number of sides`))}
+      ${FL(`Sum of exterior angles = 360°`)}
+      ${GRP("Similar shapes","congruence-similarity")}
+      ${FL(`Area ratio = ${nw("(length ratio)²")}`)}
+      ${FL(`Volume ratio = ${nw("(length ratio)³")}`)}
+      ${GRP("Coordinates","linear-graphs")}
+      ${FL(`Gradient = ${GRAD_F}`)}
+      ${FL(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)+FNOTE(`${V("m")} = gradient, ${V("c")} = ${V("y")}-intercept`))}
+      ${FL(`Length = ${LEN_F}`)}
+      ${GRP("Vectors")}
+      ${FLB("Size of a vector",nw(`|${MX([[X1],[V("y")]])}| = ${SQRT(`${X2} + ${V("y")}²`)}`))}
     </ul>
   </div>
 
-  <div class="panelc"><h4>Not given: statistics &amp; probability</h4>
+  <div class="panelc pn"><h4>Not given: statistics &amp; probability</h4>
     <ul class="steps fml">
       ${GRP("Spread","measures-of-spread")}
       ${FL(`Interquartile range = ${nw(`${V("Q")}₃ − ${V("Q")}₁`)}`)}
       ${GRP("Probability","probability")}
-      ${FL(`${nw("P(not A) = 1 − P(A)")}`)}
-      ${FL(`${nw("AND → multiply")}, ${nw("OR → add")} (only if they can't both happen)`)}
+      ${FL(nw("P(not A) = 1 − P(A)"))}
+      ${FL(nw("AND → multiply"))}
+      ${FL(nw("OR → add")+FNOTE("only if they can't both happen"))}
       ${GRP("Sets","sets")}
       ${FL(`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`)}
     </ul>
   </div>
 </div>`,
 
-amFormula:`${MUST([FB("green","Given",`the first box below`,"printed in your exam paper"),FB("red","Not given",`everything else`,"memorise: the lists below"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam paper"),FB("red","Not given",`the red boxes`,"memorise these"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Additional Maths formula list.</p>
 <div class="sheet">
-  <div class="panelc"><h4>Given in the exam <span class="badge ok">formula list</span></h4>
-    <ul class="steps fml given">
-      ${GRP("Quadratic equation")}
-      ${FL(`For ${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}: ${nw(`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`)}`)}
-      ${GRP("Binomial expansion")}
-      ${FL(`${nw(`(${V("a")} + ${V("b")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>`)} ${nw(`+ ${BIN(V("n"),"1")}${V("a")}<sup>${V("n")} − 1</sup>${V("b")}`)} ${nw(`+ ${BIN(V("n"),"2")}${V("a")}<sup>${V("n")} − 2</sup>${V("b")}²`)} ${nw(`+ … + ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)} ${nw(`+ … + ${V("b")}<sup>${V("n")}</sup>`)}`)}
-      ${FL(`${V("n")} a positive integer, ${nw(`${BIN(V("n"),V("r"))} = ${frac(V("n")+"!",V("r")+"!("+V("n")+" − "+V("r")+")!")}`)} ${nw(`= ${frac(`${V("n")}(${V("n")} − 1)…(${V("n")} − ${V("r")} + 1)`,V("r")+"!")}`)}`)}
-      ${GRP("Trig identities")}
-      ${FL(`${nw(`sin²${V("A")} + cos²${V("A")} = 1`)}`)}
-      ${FL(`${nw(`sec²${V("A")} = 1 + tan²${V("A")}`)}, ${nw(`cosec²${V("A")} = 1 + cot²${V("A")}`)}`)}
-      ${FL(`${nw(`sin(${V("A")} ± ${V("B")})`)} = ${nw(`sin ${V("A")} cos ${V("B")} ± cos ${V("A")} sin ${V("B")}`)}`)}
-      ${FL(`${nw(`cos(${V("A")} ± ${V("B")})`)} = ${nw(`cos ${V("A")} cos ${V("B")} ∓ sin ${V("A")} sin ${V("B")}`)}`)}
-      ${FL(`${nw(`tan(${V("A")} ± ${V("B")}) = ${frac(`tan ${V("A")} ± tan ${V("B")}`,`1 ∓ tan ${V("A")} tan ${V("B")}`)}`)}`)}
-      ${FL(`${nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)}`)}
-      ${FL(`${nw(`cos 2${V("A")} = cos²${V("A")} − sin²${V("A")}`)} ${nw(`= 2cos²${V("A")} − 1`)} ${nw(`= 1 − 2sin²${V("A")}`)}`)}
-      ${FL(`${nw(`tan 2${V("A")} = ${frac(`2 tan ${V("A")}`,`1 − tan²${V("A")}`)}`)}`)}
-      ${GRP("Triangle ABC")}
-      ${FL(`${nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))} = ${frac(V("c"),"sin "+V("C"))}`)}`)}
-      ${FL(`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)} ${nw(`− 2${V("bc")} cos ${V("A")}`)}`)}
-      ${FL(`${nw(`Δ = ${frac("1","2")}${V("bc")} sin ${V("A")}`)}`)}
-    </ul>
+  <div class="panelc pg"><h4>Given in the exam</h4>
+    <div class="fpaper">
+      <div class="ft">Mathematical Formulae</div>
+      <div class="fsec">1. ALGEBRA</div>
+      ${FSUB("Quadratic Equation")}
+      <div class="ftx">For the equation ${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)},</div>
+      ${FD(QUAD_F)}
+      ${FSUB("Binomial expansion")}
+      ${FD(`${nw(`(${V("a")} + ${V("b")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>`)} ${nw(`+ ${BIN(V("n"),"1")}${V("a")}<sup>${V("n")} − 1</sup>${V("b")}`)} ${nw(`+ ${BIN(V("n"),"2")}${V("a")}<sup>${V("n")} − 2</sup>${V("b")}²`)} ${nw(`+ … + ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)} ${nw(`+ … + ${V("b")}<sup>${V("n")}</sup>,`)}`)}
+      <div class="ftx">where ${V("n")} is a positive integer and</div>
+      ${FD(`${nw(`${BIN(V("n"),V("r"))} = ${frac(V("n")+"!",`${V("r")}! (${V("n")} − ${V("r")})!`)}`)} ${nw(`= ${frac(`${V("n")}(${V("n")} − 1) … (${V("n")} − ${V("r")} + 1)`,V("r")+"!")}`)}`)}
+      <div class="fsec">2. TRIGONOMETRY</div>
+      ${FSUB("Identities")}
+      ${FD(nw(`sin²${V("A")} + cos²${V("A")} = 1`))}
+      ${FD(nw(`sec²${V("A")} = 1 + tan²${V("A")}`))}
+      ${FD(nw(`cosec²${V("A")} = 1 + cot²${V("A")}`))}
+      ${FD(`${nw(`sin(${V("A")} ± ${V("B")})`)} = ${nw(`sin ${V("A")} cos ${V("B")} ± cos ${V("A")} sin ${V("B")}`)}`)}
+      ${FD(`${nw(`cos(${V("A")} ± ${V("B")})`)} = ${nw(`cos ${V("A")} cos ${V("B")} ∓ sin ${V("A")} sin ${V("B")}`)}`)}
+      ${FD(nw(`tan(${V("A")} ± ${V("B")}) = ${frac(`tan ${V("A")} ± tan ${V("B")}`,`1 ∓ tan ${V("A")} tan ${V("B")}`)}`))}
+      ${FD(nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`))}
+      ${FD(`${nw(`cos 2${V("A")} = cos²${V("A")} − sin²${V("A")}`)} ${nw(`= 2 cos²${V("A")} − 1`)} ${nw(`= 1 − 2 sin²${V("A")}`)}`)}
+      ${FD(nw(`tan 2${V("A")} = ${frac(`2 tan ${V("A")}`,`1 − tan²${V("A")}`)}`))}
+      ${FSUB(`Formulae for ${V("ΔABC")}`)}
+      ${FD(SINE_RULE)}
+      ${FD(COS_RULE)}
+      ${FD(nw(`${V("Δ")} = ${frac("1","2")}${V("bc")} sin ${V("A")}`))}
+    </div>
   </div>
 
-  <div class="panelc"><h4>Not given: algebra</h4>
+  <div class="panelc pn"><h4>Not given: algebra</h4>
     <ul class="steps fml">
-      ${GRP(`${V("b")}² − 4${V("ac")}`,"discriminant")}
-      ${FL(`${nw(`&gt; 0`)}: 2 real, different roots · ${nw(`= 0`)}: 2 equal roots · ${nw(`&lt; 0`)}: no real roots`)}
-      ${FL(`Always positive: ${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
+      ${GRP("Discriminant","discriminant")}
+      ${FMAP(null,[[nw(`${V("b")}² − 4${V("ac")} &gt; 0`),"2 real, different roots"],[nw(`${V("b")}² − 4${V("ac")} = 0`),"2 equal roots"],[nw(`${V("b")}² − 4${V("ac")} &lt; 0`),"no real roots"]])}
+      ${FLB("Always positive",`${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
       ${GRP("Completing the square","completing-the-square")}
-      ${FL(`${nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}: turning point ${nw(`(${V("h")}, ${V("k")})`)}`)}
+      ${FL(nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)+FNOTE(`turning point ${nw(`(${V("h")}, ${V("k")})`)}`))}
       ${GRP("Polynomials")}
-      ${FL(`Remainder theorem: ${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)} leaves remainder ${nw(`f(${V("a")})`)}`)}
-      ${FL(`Factor theorem: ${nw(`(${X1} − ${V("a")})`)} is a factor ⇔ ${nw(`f(${V("a")}) = 0`)}`)}
+      ${FLB("Remainder theorem",`${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)} leaves remainder ${nw(`f(${V("a")})`)}`)}
+      ${FLB("Factor theorem",`${nw(`(${X1} − ${V("a")})`)} is a factor ⇔ ${nw(`f(${V("a")}) = 0`)}`)}
       ${FL(`${nw(`${V("a")}³ + ${V("b")}³`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")}² − ${V("ab")} + ${V("b")}²)`)}`)}
       ${FL(`${nw(`${V("a")}³ − ${V("b")}³`)} = ${nw(`(${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`)}
-      ${GRP("Partial fractions: the 3 forms")}
-      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`)}
-      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`)}
-      ${FL(`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`)}
+      ${GRP("Partial fractions")}
+      ${FLB("Two different linear factors",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`)}
+      ${FLB("A repeated factor",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`)}
+      ${FLB(`A factor ${nw(`${X2} + ${V("c")}²`)} that won't factorise`,`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`)}
       ${GRP("Binomial")}
-      ${FL(`${nw(`${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)} is the ${nw(`(${V("r")} + 1)`)}th term, ${nw(`T<sub>${V("r")} + 1</sub>`)}`)}
+      ${FL(nw(`${V("T")}<sub>${V("r")} + 1</sub> = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)+FNOTE("general term"))}
       ${GRP("Exponentials and logs")}
       ${FL(`${nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`)} ⇔ ${nw(`${X1} = log<sub>${V("a")}</sub> ${V("y")}`)}`)}
-      ${FL(`${nw(`log<sub>${V("a")}</sub> ${V("xy")} = log<sub>${V("a")}</sub> ${X1} + log<sub>${V("a")}</sub> ${V("y")}`)}`)}
-      ${FL(`${nw(`log<sub>${V("a")}</sub> ${frac(X1,V("y"))} = log<sub>${V("a")}</sub> ${X1} − log<sub>${V("a")}</sub> ${V("y")}`)}`)}
-      ${FL(`${nw(`log<sub>${V("a")}</sub> ${X1}<sup>${V("k")}</sup> = ${V("k")} log<sub>${V("a")}</sub> ${X1}`)}, ${nw(`log<sub>${V("a")}</sub> ${V("a")} = 1`)}, ${nw(`log<sub>${V("a")}</sub> 1 = 0`)}`)}
-      ${FL(`Change of base: ${nw(`log<sub>${V("a")}</sub> ${V("b")} = ${frac(`log<sub>${V("c")}</sub> ${V("b")}`,`log<sub>${V("c")}</sub> ${V("a")}`)}`)}`)}
+      ${FL(nw(`log<sub>${V("a")}</sub> ${V("xy")} = log<sub>${V("a")}</sub> ${X1} + log<sub>${V("a")}</sub> ${V("y")}`))}
+      ${FL(nw(`log<sub>${V("a")}</sub> ${frac(X1,V("y"))} = log<sub>${V("a")}</sub> ${X1} − log<sub>${V("a")}</sub> ${V("y")}`))}
+      ${FL(nw(`log<sub>${V("a")}</sub> ${X1}<sup>${V("k")}</sup> = ${V("k")} log<sub>${V("a")}</sub> ${X1}`))}
+      ${FLB("",nw(`log<sub>${V("a")}</sub> ${V("a")} = 1`),nw(`log<sub>${V("a")}</sub> 1 = 0`))}
+      ${FLB("Change of base",nw(`log<sub>${V("a")}</sub> ${V("b")} = ${frac(`log<sub>${V("c")}</sub> ${V("b")}`,`log<sub>${V("c")}</sub> ${V("a")}`)}`))}
     </ul>
   </div>
 
-  <div class="panelc"><h4>Not given: trigonometry</h4>
+  <div class="panelc pn"><h4>Not given: trigonometry</h4>
     <ul class="steps fml">
       ${GRP("The six ratios","trig-ratios-any-angle")}
-      ${FL(`${nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`)}, ${nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`)}`)}
-      ${FL(`${nw(`sec ${V("A")} = ${frac("1","cos "+V("A"))}`)}, ${nw(`cosec ${V("A")} = ${frac("1","sin "+V("A"))}`)}, ${nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`)}`)}
+      ${FLB("",nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`),nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`))}
+      ${FLB("",nw(`sec ${V("A")} = ${frac("1","cos "+V("A"))}`),nw(`cosec ${V("A")} = ${frac("1","sin "+V("A"))}`),nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`))}
       ${FL(`Exact values for 30°, 45°, 60° and ASTC: see the cheatsheet`)}
       ${GRP("Graphs","trig-graphs")}
-      ${FL(`${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}: amplitude ${nw(`|${V("a")}|`)}, period ${nw(frac("360°",V("b")))}`)}
-      ${FL(`max ${nw(`${V("c")} + |${V("a")}|`)}, min ${nw(`${V("c")} − |${V("a")}|`)}; tan: period ${nw(frac("180°",V("b")))}`)}
+      ${FL(`${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)} or ${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}`)}
+      ${FLB("",`Amplitude = ${nw(`|${V("a")}|`)}`,`Period = ${nw(frac("360°",V("b")))}`)}
+      ${FLB("",`Max = ${nw(`${V("c")} + |${V("a")}|`)}`,`Min = ${nw(`${V("c")} − |${V("a")}|`)}`)}
+      ${FL(`${nw(`${V("y")} = ${V("a")} tan ${V("b")}${X1} + ${V("c")}`)}: period = ${nw(frac("180°",V("b")))}`)}
       ${GRP("R-formula","r-formula")}
       ${FL(`${nw(`${V("a")} cos θ + ${V("b")} sin θ`)} = ${nw(`${V("R")} cos(θ − α)`)}`)}
-      ${FL(`${nw(`${V("R")} = √(${V("a")}² + ${V("b")}²)`)}, ${nw(`tan α = ${frac(V("b"),V("a"))}`)}`)}
+      ${FLB("",nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`),nw(`tan α = ${frac(V("b"),V("a"))}`))}
     </ul>
   </div>
 
-  <div class="panelc"><h4>Not given: coordinate geometry</h4>
+  <div class="panelc pn"><h4>Not given: coordinate geometry</h4>
     <ul class="steps fml">
       ${GRP("Lines")}
-      ${FL(`Midpoint = ${nw(`(${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")})`)}`)}
-      ${FL(`Gradient = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}, length = ${nw(`√((${X1}₂ − ${X1}₁)² + (${V("y")}₂ − ${V("y")}₁)²)`)}`)}
-      ${FL(`Parallel: ${nw(`${V("m")}₁ = ${V("m")}₂`)} · perpendicular: ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`)}
+      ${FL(`Midpoint = ${nw(PAR(`${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")}`))}`)}
+      ${FL(`Gradient = ${GRAD_F}`)}
+      ${FL(`Length = ${LEN_F}`)}
+      ${FLB("",`Parallel: ${nw(`${V("m")}₁ = ${V("m")}₂`)}`,`Perpendicular: ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`)}
       ${GRP("Circles")}
-      ${FL(`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`)}: centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`)}
-      ${FL(`${nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`)}: centre ${nw(`(−${V("g")}, −${V("f")})`)}, radius ${nw(`√(${V("g")}² + ${V("f")}² − ${V("c")})`)}`)}
+      ${FL(nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`))}
+      ${FLB("",`Centre ${nw(`(${V("a")}, ${V("b")})`)}`,`Radius ${V("r")}`)}
+      ${FL(nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`))}
+      ${FLB("",`Centre ${nw(`(−${V("g")}, −${V("f")})`)}`,`Radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`)}
       ${GRP("Area of a shape from its corners")}
-      ${FL(`List the corners in order and repeat the first. Area = ${nw(`${frac("1","2")}|(sum of ↘ products)`)} ${nw("− (sum of ↗ products)|")}`)}
+      ${FLB("List the corners in order and repeat the first",`Area = ${nw(`${frac("1","2")}${SHOE}`)}`)}
+      ${FL(`${nw(`= ${frac("1","2")}|(${X1}₁${V("y")}₂ + ${X1}₂${V("y")}₃ + …)`)} ${nw(`− (${V("y")}₁${X1}₂ + ${V("y")}₂${X1}₃ + …)|`)}`)}
       ${GRP("Linear law")}
-      ${FL(`${nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`)}, e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}: ${nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`)}`)}
+      ${FL(nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`)+FNOTE(`plot ${V("Y")} against ${V("X")}`))}
+      ${FLB(`e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}`,nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`)+FNOTE(`${V("Y")} = lg ${V("y")}, ${V("X")} = lg ${X1}`))}
     </ul>
   </div>
 
-  <div class="panelc"><h4>Not given: calculus</h4>
+  <div class="panelc pn"><h4>Not given: calculus</h4>
     <ul class="steps fml">
       ${GRP("Differentiation","differentiation-rules")}
-      ${FL(`${nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`)}`)}
-      ${FL(`${nw(`sin ${X1} → cos ${X1}`)}, ${nw(`cos ${X1} → −sin ${X1}`)}, ${nw(`tan ${X1} → sec²${X1}`)}`)}
-      ${FL(`${nw(`e<sup>${X1}</sup> → e<sup>${X1}</sup>`)}, ${nw(`ln ${X1} → ${frac("1",X1)}`)}`)}
-      ${FL(`Product: ${nw(`${frac("d","d"+X1)}(${V("uv")}) = ${V("u")}${dd(V("v"),X1)} + ${V("v")}${dd(V("u"),X1)}`)}`)}
-      ${FL(`Quotient: ${nw(`${frac("d","d"+X1)}(${frac(V("u"),V("v"))}) = ${frac(`${V("v")}${dd(V("u"),X1)} − ${V("u")}${dd(V("v"),X1)}`,V("v")+"²")}`)}`)}
-      ${FL(`Chain: ${nw(`${dd(V("y"),X1)} = ${dd(V("y"),V("u"))} × ${dd(V("u"),X1)}`)}`)}
+      ${FMAP([V("y"),dydx],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${V("n")}${X1}<sup>${V("n")} − 1</sup>`)],[nw(`sin ${X1}`),nw(`cos ${X1}`)],[nw(`cos ${X1}`),nw(`−sin ${X1}`)],[nw(`tan ${X1}`),nw(`sec²${X1}`)],[nw(`e<sup>${X1}</sup>`),nw(`e<sup>${X1}</sup>`)],[nw(`ln ${X1}`),nw(frac("1",X1))]])}
+      ${FLB("Product rule",nw(`${frac("d","d"+X1)}(${V("uv")}) = ${V("u")}${dd(V("v"),X1)} + ${V("v")}${dd(V("u"),X1)}`))}
+      ${FLB("Quotient rule",nw(`${frac("d","d"+X1)}${PAR(frac(V("u"),V("v")))} = ${frac(`${V("v")}${dd(V("u"),X1)} − ${V("u")}${dd(V("v"),X1)}`,V("v")+"²")}`))}
+      ${FLB("Chain rule",nw(`${dd(V("y"),X1)} = ${dd(V("y"),V("u"))} × ${dd(V("u"),X1)}`))}
       ${GRP("Uses","differentiation-uses")}
-      ${FL(`Tangent: ${nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`)}; normal gradient ${nw(`−${frac("1",V("m"))}`)}`)}
-      ${FL(`Stationary: ${nw(`${dydx} = 0`)}; ${nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`)} min, ${nw(`&lt; 0`)} max`)}
-      ${FL(`Rates: ${nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`)}`)}
+      ${FLB(`Tangent at ${nw(`(${X1}₁, ${V("y")}₁)`)}`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`))}
+      ${FL(`Normal gradient = ${nw(`−${frac("1",V("m"))}`)}`)}
+      ${FLB("Stationary point",nw(`${dydx} = 0`))}
+      ${FLB("",`${nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`)}: minimum`,`${nw(`${frac("d²"+V("y"),"d"+X1+"²")} &lt; 0`)}: maximum`)}
+      ${FLB("Rates of change",nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`))}
       ${GRP("Integration","integration")}
-      ${FL(`${nw(`∫${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)}, ${nw(`${V("n")} ≠ −1`)}`)}
+      ${FL(nw(`∫${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)+FNOTE(nw(`${V("n")} ≠ −1`)))}
       ${FL(`${nw(`∫(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup> d${X1}`)} = ${nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`)}`)}
-      ${FL(`${nw(`∫sin ${X1} d${X1} = −cos ${X1} + ${V("c")}`)}, ${nw(`∫cos ${X1} d${X1} = sin ${X1} + ${V("c")}`)}`)}
-      ${FL(`${nw(`∫sec²${X1} d${X1} = tan ${X1} + ${V("c")}`)}, ${nw(`∫e<sup>${V("a")}${X1} + ${V("b")}</sup> d${X1} = ${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`)}`)}
-      ${FL(`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`)}`)}
+      ${FL(nw(`∫sin ${X1} d${X1} = −cos ${X1} + ${V("c")}`))}
+      ${FL(nw(`∫cos ${X1} d${X1} = sin ${X1} + ${V("c")}`))}
+      ${FL(nw(`∫sec²${X1} d${X1} = tan ${X1} + ${V("c")}`))}
+      ${FL(nw(`∫e<sup>${V("a")}${X1} + ${V("b")}</sup> d${X1} = ${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`))}
+      ${FL(nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`))}
       ${GRP("Kinematics","kinematics")}
-      ${FL(`${nw(`${V("v")} = ${dd(V("s"),V("t"))}`)}, ${nw(`${V("a")} = ${dd(V("v"),V("t"))}`)}; ${nw(`${V("s")} = ∫${V("v")} d${V("t")}`)}, ${nw(`${V("v")} = ∫${V("a")} d${V("t")}`)}`)}
+      ${FLB("",nw(`${V("v")} = ${dd(V("s"),V("t"))}`),nw(`${V("a")} = ${dd(V("v"),V("t"))}`))}
+      ${FLB("",nw(`${V("s")} = ∫${V("v")} d${V("t")}`),nw(`${V("v")} = ∫${V("a")} d${V("t")}`))}
     </ul>
   </div>
 </div>`,
-
 cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise"),FB("amber",`<span class="m">π</span>`,`calculator value`,"or 3.142, unless it says 'in terms of π'"),FB("red","Working",`always show it`,"missing working loses marks")])}
 <div class="sheet">
   <div class="panelc"><h4>They say → you do</h4>
@@ -3818,7 +3893,12 @@ function fillPrintFoot(withQR){
 }
 async function printSheet(){ try{ await loadQR(); }catch(e){} fillPrintFoot(true); window.print(); }
 window.addEventListener("beforeprint",()=>fillPrintFoot(!!window.qrcode));
-function fitMust(){ requestAnimationFrame(()=>fitText(document.querySelector(".must"),true)); }
+function fitMust(){ requestAnimationFrame(()=>{ fitText(document.querySelector(".must"),true); fitPaper(); }); }
+function fitPaper(){ app.querySelectorAll(".fpaper .fd").forEach(el=>{ el.style.fontSize=""; el.style.whiteSpace="nowrap";
+  if(el.scrollWidth<=el.clientWidth+1) return;
+  const base=parseFloat(getComputedStyle(el).fontSize), min=base*.8; let fs=base;
+  while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=.5; el.style.fontSize=fs+"px"; }
+  if(el.scrollWidth>el.clientWidth+1){ el.style.fontSize=""; el.style.whiteSpace=""; } }); }
 function digest(root){
   const brk=(sel,pats)=>root.querySelectorAll(sel).forEach(el=>{
     const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT), nodes=[]; let n; while((n=walker.nextNode())) nodes.push(n);
