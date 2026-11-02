@@ -257,8 +257,30 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .lcard h3{margin:0 0 6px;font-size:18px}
 .lcard p{margin:0 0 12px;line-height:1.5}
 .lcard .acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.pill.tg{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);text-decoration:none}
-.pill.tg[aria-disabled="true"]{background:var(--card);color:var(--muted);border-color:var(--line);border-style:dashed;cursor:default}
+.pill.wa{background:#0f7b6c;color:#fff;border-color:#0f7b6c;text-decoration:none;gap:8px}
+.pill.wa:hover{background:#0c6a5d}
+.pill.wa .waic{width:20px;height:20px;flex:none}
+.pill.wa[aria-disabled="true"]{background:var(--card);color:var(--muted);border-color:var(--line);border-style:dashed;cursor:default}
+.avatar{width:40px;height:40px;border-radius:50%;display:block;flex:none;background:#bfeae4;object-fit:cover}
+.avatar.sm{width:44px;height:44px}
+.avatar.lg{width:76px;height:76px;box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+.lhead{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.lhead h3{margin:0}
+.ltop{display:flex;align-items:center;gap:16px;margin:14px 0 10px}
+.ltop h2{margin:0}
+.hero2{position:relative;overflow:hidden;isolation:isolate;margin:18px 0 8px;padding:22px 20px 18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(140deg,var(--blue-fill) 0%,var(--card) 62%);box-shadow:var(--shadow)}
+.hero2::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:linear-gradient(110deg,transparent 30%,#000 100%);mask-image:linear-gradient(110deg,transparent 30%,#000 100%)}
+.hero2 .art{position:absolute;right:36px;top:26px;width:170px;height:auto;z-index:-1;opacity:.55}
+@media (max-width:420px){ .hero2 .stats span:nth-child(3){display:none} }
+.hero2 .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.hero2 h2{font-size:34px;line-height:1.08;letter-spacing:-.02em;margin:0 0 10px}
+.hero2 h2 .mark{background:linear-gradient(transparent 64%,var(--amber-fill) 64%,var(--amber-fill) 92%,transparent 92%);padding:0 2px;margin:0 -2px}
+.hero2 .sub{color:var(--muted);margin:0 0 14px;max-width:36ch;line-height:1.45}
+.hero2 .stats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.hero2 .stats span{font-size:13.5px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.hero2 .by{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--muted);font-size:14.5px;line-height:1.35}
+.hero2 .by b{color:var(--ink)}
+.hero2 .by:hover b{color:var(--accent)}
 .pill.ghost{text-decoration:none;color:var(--accent);font-weight:700;background:transparent}
 .tiny{color:var(--muted);font-size:13.5px;margin:14px 0 0;line-height:1.45}
 .lpage{max-width:760px;padding:6px 0 10px}
@@ -408,6 +430,11 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .panelc th,.panelc td{padding:6px 5px}
   body{font-size:16px}
   .hero h2{font-size:25px}
+  .hero2{padding:18px 16px 16px;margin-top:14px}
+  .hero2 h2{font-size:28px}
+  .hero2 .art{display:none}
+  .ltop .avatar.lg{width:64px;height:64px}
+  .lpage h2{font-size:23px}
   .wrongright{grid-template-columns:1fr}
   .stage svg{max-height:32vh;max-height:32svh}
 }
@@ -3598,10 +3625,12 @@ const STRANDS=[["alg","Algebra & Graphs"],["trig","Trigonometry"],["geo","Geomet
 const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math"};
 function cardFor(t){ return h("a",{class:"card",href:"#"+t.id},
   `${thumbFor(t)}<div class="txt"><span class="chap">${t.chapter}</span><b>${t.title}</b><span class="blurb">${t.blurb}</span><div class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}</div></div>`); }
-const CONTACT={tg:""}, CF_TOKEN="";
-const tgURL=()=>CONTACT.tg?"https://t.me/"+CONTACT.tg:"";
-const tgBtn=()=>tgURL()?`<a class="pill tg" href="${tgURL()}" target="_blank" rel="noopener">Message me on Telegram</a>`:`<span class="pill tg" aria-disabled="true">Telegram link coming soon</span>`;
-const lessonsCard=()=>`<div class="lcard"><h3>Made by Coach Minyi</h3><p>I teach Sec 1–4 Maths, E-Math and A-Math, 1-to-1 or in small groups, in Jurong East. These cheatsheets come from my lessons. Slots are limited, so message me to ask.</p><div class="acts">${tgBtn()}<a class="pill ghost" href="#lessons">About my lessons →</a></div></div>`;
+const CONTACT={wa:""}, CF_TOKEN="";
+const waURL=()=>{ const u=(CONTACT.wa||"").trim(); return /^https:\/\/wa\.me\/(message|qr)\/[A-Za-z0-9]+$/.test(u)?u:""; };
+const WA_ICON=`<svg viewBox="0 0 24 24" aria-hidden="true" class="waic"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>`;
+const waBtn=()=>waURL()?`<a class="pill wa" href="${waURL()}" target="_blank" rel="noopener">${WA_ICON}Chat on WhatsApp</a>`:`<span class="pill wa" aria-disabled="true">${WA_ICON}WhatsApp link coming soon</span>`;
+const AVATAR=(cls="")=>`<img class="avatar ${cls}" src="avatar.png" alt="Coach Minyi" width="256" height="256" loading="lazy">`;
+const lessonsCard=()=>`<div class="lcard"><div class="lhead">${AVATAR("sm")}<h3>Made by Coach Minyi</h3></div><p>I teach Sec 1–4 Maths, E-Math and A-Math in Jurong East, 1-to-1 or in groups of up to 3. These cheatsheets come from my lessons. Slots are limited, and new students can start with a free 1-hour trial.</p><div class="acts">${waBtn()}<a class="pill ghost" href="#lessons">About my lessons →</a></div></div>`;
 const VIEWS=[["sheets","Cheatsheets"],["exam","Formulas"],["play","▶ Play"]];
 const VIEWNOTE={sheets:"One page per chapter: the must-knows, the common mistakes and the pictures.",exam:"What the exam gives you, what you must memorise, and what the question words mean.",play:"Drag the sliders and see <i>why</i> the rules work. Each aid has a cheatsheet too."};
 const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
@@ -3620,7 +3649,13 @@ function renderHome(){
   const v=homeView;
   const used=LEVELS.filter(l=>homeItems(v).some(x=>x.levels.includes(l.id)));
   if(homeFilter!=="all"&&!used.some(l=>l.id===homeFilter)) homeFilter="all";
-  app.innerHTML=`<section class="hero"><h2>Free maths cheatsheets</h2><p>Sec 1–4 Maths, E-Math and A-Math.</p><p class="by">Made by Coach Minyi</p></section>`;
+  const nSheets=SHEETLIST.filter(s=>!s.exam).length, nPlays=TOPICS.length;
+  app.innerHTML=`<section class="hero2"><svg class="art" viewBox="0 0 120 80" aria-hidden="true"><line x1="12" y1="21" x2="62" y2="21" stroke="var(--amber)" stroke-width="5" stroke-linecap="round"/><path d="M4 74 C14 40 24 26 37 26 C50 26 58 46 70 52 C84 58 96 46 116 8" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/></svg>
+    <p class="eyebrow">Sec 1–4 · E-Math · A-Math</p>
+    <h2>Free maths <span class="mark">cheatsheets</span></h2>
+    <p class="sub">One clear page for every chapter, and interactive aids that show <i>why</i> the maths works.</p>
+    <div class="stats"><span>${nSheets} cheatsheets</span><span>${nPlays} Play aids</span><span>Formula sheets</span></div>
+    <a class="by" href="#lessons">${AVATAR()}<span>Made by <b>Coach Minyi</b> · maths tuition in Jurong East</span></a></section>`;
   const sb=h("input",{class:"search",type:"search",placeholder:"Search a chapter or topic…","aria-label":"Search everything"}); app.append(sb);
   const res=h("section",{class:"level",hidden:""}); app.append(res);
   const body=h("div",{class:"homebody"}); app.append(body);
@@ -3670,21 +3705,21 @@ function renderHome(){
 function playRow(t){ return h("a",{class:"srow",href:"#"+t.id},
   `<span class="chap">${t.chapter}</span><b>${t.title}</b><span class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}<span class="tag aidtag">▶ Play</span></span>`); }
 function renderLessons(){
-  document.title="Lessons with Coach Minyi · Maths Hub";
-  titleEl.textContent="Lessons with Coach Minyi"; crumbEl.textContent="Sec 1–4 · Jurong East";
+  document.title="Maths tuition with Coach Minyi · Maths Hub";
+  titleEl.textContent="Maths tuition with Coach Minyi"; crumbEl.textContent="Sec 1–4 · Jurong East";
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
   cur={t:null,tab:"lessons",state:null,stage:null,sheet:null,lessons:true}; setPage("lessons");
-  app.innerHTML=`<div class="lpage"><h2>Maths lessons in Jurong East</h2>
-    <p class="lead">I'm Coach Minyi. I teach Sec 1–4 Maths, E-Math and A-Math in Jurong East, 1-to-1 or in small groups. The cheatsheets and Play aids on this site are the ones I use in my lessons.</p>
-    <div class="lfacts"><span>Sec 1–4</span><span>Maths, E-Math, A-Math</span><span>1-to-1 or small group</span><span>In person, Jurong East</span></div>
+  app.innerHTML=`<div class="lpage"><div class="ltop">${AVATAR("lg")}<h2>Maths tuition in Jurong East</h2></div>
+    <p class="lead">I’m Coach Minyi, a full-time maths tutor with 8 years of experience. I teach Sec 1–4 Maths, E-Math and A-Math, 1-to-1 or in small groups of up to 3. Many of my current Sec 4 students have been with me since Primary 5. The cheatsheets and Play aids on this site are the same ones I use in lessons.</p>
+    <div class="lfacts"><span>Sec 1–4</span><span>Maths</span><span>E-Math</span><span>A-Math</span><span>1-to-1 or groups of up to 3</span><span>In person, Jurong East</span><span>Free 1h trial</span></div>
     <h3>What lessons look like</h3>
     <div class="lgrid">
-      <div><b>Every chapter, step by step</b>Notes, worked examples, then practice until it sticks.</div>
-      <div><b>Real exam practice</b>Questions in the style of real school papers, plus short mock tests before WAs and exams.</div>
-      <div><b>Mistakes followed up</b>Homework is marked and corrected, and weak spots come back until they are fixed.</div>
-      <div><b>See why it works</b>The pictures and Play aids on this site, so the rules make sense instead of being memorised blind.</div>
+      <div><b>One chapter at a time</b>Short notes, worked examples, then practice until the method sticks.</div>
+      <div><b>Try first, then hints</b>Students attempt questions on their own first. I give small hints before showing the method, so they learn to think it through, not copy.</div>
+      <div><b>Practice that matches school papers</b>Questions based on real school papers, plus short mock tests in class before WAs and exams.</div>
+      <div><b>Weak spots revisited</b>Homework is marked and gone through. Topics they struggle with come back in later practice until they’re solid.</div>
     </div>
-    <div class="lcard"><h3>Ask about a slot</h3><p>Slots are limited, so message me to ask. Tell me the level, E-Math or A-Math, and which days suit you.</p><div class="acts">${tgBtn()}</div></div>
+    <div class="lcard"><h3>Ask about a slot</h3><p>Slots are limited. Message me on WhatsApp with the student’s level, school, E-Math or A-Math, and the days that suit you. New students can start with a free 1-hour trial lesson.</p><div class="acts">${waBtn()}</div></div>
   </div>`;
   window.scrollTo(0,0);
 }
