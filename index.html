@@ -1920,7 +1920,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
-      <div class="x">✗ using the line's ${V("c")} in ${V("b")}² − 4${V("ac")}</div>
+      <div class="x">✗ using the line's ${V("c")} in ${nw(`${V("b")}² − 4${V("ac")}`)}</div>
       <div class="ok">✓ rearrange to … = 0 first<br>then read ${V("a")}, ${V("b")}, ${V("c")}</div>
     </div>
     <div class="note"><b>Note!</b> In the example above, ${nw(`${V("c")} = 5 − ${V("k")}`)}, not ${V("k")} and not 5.</div>
@@ -2054,7 +2054,7 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
-      <div class="x">✗ period of sin 3${X1} = 3 × 360°</div>
+      <div class="x">✗ period of sin 3${X1} = ${nw("3 × 360°")}</div>
       <div class="ok">✓ 360° ÷ 3 = 120°</div>
       <div class="x">✗ tan has amplitude 1</div>
       <div class="ok">✓ tan has no amplitude</div>
@@ -2291,7 +2291,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
     <div class="wrongright">
       <div class="x">✗ slowing down 3 m/s²<br>written as "acceleration 3 m/s²"</div>
       <div class="ok">✓ acceleration = −3 m/s²<br>or "deceleration 3 m/s²"</div>
-      <div class="x">✗ average speed = (0 + 12 + 0) ÷ 3</div>
+      <div class="x">✗ average speed = ${nw("(0 + 12 + 0) ÷ 3")}</div>
       <div class="ok">✓ average speed = ${frac("total distance","total time")}</div>
     </div>
   </div>
@@ -2884,9 +2884,9 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
-      <div class="x">✗ P(both red) = ${frac("3","5")} × ${frac("3","5")} (no replacement)</div>
+      <div class="x">✗ P(both red) = ${nw(`${frac("3","5")} × ${frac("3","5")}`)} (no replacement)</div>
       <div class="ok">✓ ${frac("3","5")} × ${frac("2","4")}</div>
-      <div class="x">✗ P(A or B) = P(A) + P(B) always</div>
+      <div class="x">✗ P(A or B) = ${nw("P(A) + P(B)")} always</div>
       <div class="ok">✓ only if A and B can't both happen</div>
     </div>
     <div class="note"><b>Note!</b> Give the answer as a fraction in its simplest form (or a decimal). Never more than 1.</div>
@@ -3372,7 +3372,7 @@ ${PAN("Quadrilaterals",`<table><tr><th>Shape</th><th>Key facts</th></tr>
   <p class="anno">* the angles in any quadrilateral add to 360°</p>`)}
 ${PAN("Polygons",FACTS("Angle sums",[["",["3 sides: 180°","4: 360°","5: 540°","6: 720°","8: 1080°"]]])+EG("Regular hexagon",[nw("exterior = 360° ÷ 6 = 60°"),nw("interior = 180° − 60° = 120°")])+EG("Each interior angle is 156°. How many sides?",[nw("exterior = 180° − 156° = 24°"),nw(`${VN} = 360° ÷ 24° = 15`)]))}
 ${PAN("Constructions",STEPS(["ruler and compasses only (protractor only if allowed)","perpendicular bisector: 2 arcs from each end, join where they cross","angle bisector: an arc on both arms, then 2 arcs, join to the corner","leave every arc and line"]))}
-${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],["hexagon angle sum = 6 × 180°",nw("(6 − 2) × 180° = 720°")],["every rhombus is a square","only if its angles are 90°"]])}
+${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],[`hexagon angle sum = ${nw("6 × 180°")}`,nw("(6 − 2) × 180° = 720°")],["every rhombus is a square","only if its angles are 90°"]])}
 </div>`,
 
 s1Ratio:`${MUST([FB("blue","Ratio","same units, whole numbers","simplify like a fraction"),FB("amber","Speed",frac("distance","time"),"average speed = total distance ÷ total time"),FB("green","Speed units",nw("km/h → m/s: ÷ 3.6"),nw("m/s → km/h: × 3.6"))])}
@@ -3382,7 +3382,7 @@ ${PAN("Simplify",`<table><tr><th>Ratio</th><th>Simplest</th></tr><tr><td>45 min 
   +EG(`${nw("a : b = 2 : 3")} and ${nw("b : c = 4 : 5")}`,["make b the same: 12",`${nw("a : b = 8 : 12")}, ${nw("b : c = 12 : 15")}`,nw("a : b : c = 8 : 12 : 15")]))}
 ${PAN("Rate",EG("3 kg of rice cost $7.50",[nw("1 kg: $7.50 ÷ 3 = $2.50"),nw("8 kg: 8 × $2.50 = $20")]))}
 ${PAN("Average speed",EG("60 km in 1.5 h, then 40 km in 0.5 h",[nw("total distance = 100 km"),nw("total time = 2 h"),nw("average speed = 100 ÷ 2 = 50 km/h")])+`<p class="anno">* not the average of the two speeds (40 and 80)</p>`+FACTS("Units",[["",["72 km/h = 20 m/s","15 m/s = 54 km/h"]]]))}
-${MIST([["average speed = (40 + 80) ÷ 2 = 60","total distance ÷ total time = 50 km/h"],["45 min : 2 h = 45 : 2",`same units first: ${nw("45 : 120 = 3 : 8")}`],["72 km/h = 72 × 3.6 m/s",`÷ 3.6: ${nw("20 m/s")}`]])}
+${MIST([[`average speed = ${nw("(40 + 80) ÷ 2 = 60")}`,"total distance ÷ total time = 50 km/h"],["45 min : 2 h = 45 : 2",`same units first: ${nw("45 : 120 = 3 : 8")}`],["72 km/h = 72 × 3.6 m/s",`÷ 3.6: ${nw("20 m/s")}`]])}
 </div>`,
 
 s1Percent:`${MUST([FB("blue","% of","× the decimal",nw("15% of 80 = 0.15 × 80 = 12")),FB("amber","Increase / decrease","× the new %",`${nw("+20%: × 1.2")} · ${nw("−20%: × 0.8")}`),FB("green","Reverse %","find 1% first","after +20%, the new price is 120%")])}
@@ -3396,7 +3396,7 @@ ${PAN("Money",`<table><tr><th>Question</th><th>Working</th></tr>
   <tr><td>Simple interest: $2000, 3% a year, 4 years</td><td>${nw(frac("2000 × 3 × 4","100"))} = ${nw("$240")}</td></tr>
   <tr><td>Hire purchase: 20% deposit on $1500, then ${nw("12 × $110")}</td><td>${nw("$300 + $1320 = $1620")}: $120 more than paying cash</td></tr>
   <tr><td>S$1 = US$0.74. Change S$500.</td><td>${nw("500 × 0.74 = US$370")}</td></tr></table>`)}
-${MIST([["+20% then −20% gets back to the start",nw("100 → 120 → 96")],["reverse %: $96 + 20% of $96","$96 is 80% of the original"],["% change ÷ the new value","÷ the original value"]])}
+${MIST([["+20% then −20% gets back to the start",nw("100 → 120 → 96")],[`reverse %: ${nw("$96 + 20% of $96")}`,"$96 is 80% of the original"],["% change ÷ the new value","÷ the original value"]])}
 </div>`,
 
 s1Patterns:`${MUST([FB("blue","Linear sequence","same difference each time","5, 8, 11, 14: + 3 each"),FB("amber",`${VN}th term`,nw(`${Tn} = (difference)${VN} + ?`),"find ? from the first term"),FB("green","Is it in the sequence?",nw(`${Tn} = the number`),`${VN} must be a whole number`)])}
@@ -3427,7 +3427,7 @@ s1Area:`${MUST([FB("blue","Parallelogram","base × height","height ⊥ base, not
 ${PAN("The area formulas",PICS(PIC(null,picShape("tri"),`Triangle = ${nw(`${frac("1","2")} × base × ${V("h")}`)}`),PIC(null,picShape("para"),`Parallelogram = ${nw(`base × ${V("h")}`)}`),PIC(null,picShape("trap"),`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`)))}
 ${PAN("A composite shape",EG("A 10 cm by 6 cm rectangle with a semicircle on one 6 cm side",[nw(`area = 10 × 6 + ${frac("1","2")}π(3)²`),nw("= 60 + 14.137… = 74.1 cm²"),nw("perimeter = 10 + 6 + 10 + π(3)"),nw("= 35.4 cm")])+`<p class="anno">* the side under the semicircle is not part of the perimeter</p>`)}
 ${PAN("Units",FACTS("",[["Length",["1 m = 100 cm","1 km = 1000 m"]],["Area",["1 m² = 10 000 cm²"]],["Volume",["1 m³ = 1 000 000 cm³","1 litre = 1000 cm³"]]]))}
-${MIST([["parallelogram: base × slanted side","base × perpendicular height"],["1 m² = 100 cm²",nw("100 × 100 = 10 000 cm²")],["semicircle edge = πr only","add the straight edge if it is part of the outline"]])}
+${MIST([[`parallelogram: ${nw("base × slanted side")}`,"base × perpendicular height"],["1 m² = 100 cm²",nw("100 × 100 = 10 000 cm²")],["semicircle edge = πr only","add the straight edge if it is part of the outline"]])}
 </div>`,
 
 s1Volume:`${MUST([FB("blue","Prism","cross-section area × length","cuboid, cylinder, triangular prism"),FB("amber","Cylinder",nw(`${V("V")} = π${V("r")}²${V("h")}`),`curved surface ${nw(`2π${V("rh")}`)}`),FB("green","Surface area","add up every face","draw the net if unsure")])}
@@ -3449,7 +3449,7 @@ ${PAN("Pie chart angles",`<table><tr><th>40 students</th><th>Number</th><th>Angl
   <tr><td>Total</td><td>40</td><td>360° ✓</td></tr></table>`)}
 ${PAN("Pictogram",EG("Key: one circle = 4 students",["Tue: 2 and a half circles",nw("2.5 × 4 = 10 students")]))}
 ${PAN("Misleading charts",STEPS(["an axis that doesn't start at 0 makes small changes look big","bars of different widths, or 3D pictures, mislead"]))}
-${MIST([["pie angle = percentage × 100","fraction × 360°"],["count the pictogram symbols and stop","× by the key"]])}
+${MIST([[`pie angle = ${nw("percentage × 100")}`,"fraction × 360°"],["count the pictogram symbols and stop","× by the key"]])}
 </div>`
 };
 Object.assign(SHEETS,SHEETS4);
@@ -3554,7 +3554,7 @@ ${PAN("Cone",EG(`${nw(`${V("r")} = 3 cm`)}, ${nw(`${V("h")} = 4 cm`)}`,[nw(`${V(
 ${PAN("Sphere",EG(nw(`${V("r")} = 6 cm`),[nw(`${V("V")} = ${frac("4","3")}π(6)³ = 288π = 905 cm³`),nw("surface = 4π(6)² = 144π = 452 cm²")]))}
 ${PAN("Pyramid",EG("Square base 10 cm by 10 cm, height 12 cm",[nw(`${V("V")} = ${frac("1","3")} × 100 × 12 = 400 cm³`)]))}
 ${PAN("Hemisphere",STEPS([[nw(`curved surface = 2π${V("r")}²`),`half of 4π${V("r")}²`],[nw(`solid: 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`),"+ the flat circle"],nw(`${V("r")} = 5: 3π(25) = 75π = 236 cm²`)])+`<p class="anno">* in the SEC exam the cone and sphere formulas are given: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a></p>`)}
-${MIST([["slant height in the volume",`use the vertical height ${V("h")}`],[`forget the ${frac("1","3")}`,`pyramid and cone: × ${frac("1","3")}`],[`solid hemisphere surface = ${nw(`2π${V("r")}²`)}`,`+ the flat face: ${nw(`3π${V("r")}²`)}`]])}
+${MIST([["slant height in the volume",`use the vertical height ${V("h")}`],[`forget the ${frac("1","3")}`,`${nw(`× ${frac("1","3")}`)} for pyramids and cones`],[`solid hemisphere surface = ${nw(`2π${V("r")}²`)}`,`+ the flat face: ${nw(`3π${V("r")}²`)}`]])}
 </div>`,
 
 s2Data:`${MUST([FB("blue","Dot diagram","one dot per value","shows clusters and gaps"),FB("amber","Histogram","bars touch, equal class widths","classes along the bottom"),FB("green","Stem-and-leaf","stem = tens, leaf = ones","always give a key")])}
@@ -3575,7 +3575,7 @@ ${PAN("Grouped data",`<table><tr><th>Class</th><th>Mid-value</th><th>${V("f")}</
   +EG("Estimated mean",[nw("(5 × 4 + 15 × 6) ÷ 10"),nw("= 110 ÷ 10 = 11")]))}
 ${PAN("Which average?",STEPS(["mean: uses every value, but one extreme value pulls it","median: best when there is an extreme value","mode: for categories, like favourite colour"]))}
 ${PAN("Missing value",EG("The mean of 5 numbers is 8. Four of them are 6, 7, 9 and 10.",[nw("total = 5 × 8 = 40"),nw("missing = 40 − 32 = 8")]))}
-${MIST([["median without ordering first","order the values first"],[`table mean = Σ${X1} ÷ number of columns`,nw(frac("Σ"+V("fx"),"Σ"+V("f")))],[`median position ${frac(VN,"2")}`,frac(`${VN} + 1`,"2")]])}
+${MIST([["median without ordering first","order the values first"],[`table mean = ${nw(`Σ${X1} ÷ number`)} of columns`,nw(frac("Σ"+V("fx"),"Σ"+V("f")))],[`median position ${frac(VN,"2")}`,frac(`${VN} + 1`,"2")]])}
 </div>`,
 
 s2Prob:`${MUST([FB("blue","Probability",nw(frac("ways it can happen","total outcomes")),"outcomes equally likely · between 0 and 1"),FB("amber","Not happening",nw("P(not A) = 1 − P(A)")),FB("green","Answer","a fraction in simplest form","or a decimal · never more than 1")])}
