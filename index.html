@@ -342,6 +342,7 @@ sup.pbs{vertical-align:top;font-size:.72em;line-height:1;position:relative;top:-
 .scard:hover{border-color:var(--accent)}
 .scard .sth{height:96px;display:flex;align-items:center;justify-content:center;padding:8px;border-bottom:1px solid var(--line);background:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px) var(--bg);background-size:14px 14px;overflow:hidden}
 .scard .sth svg{width:auto;height:78px;max-width:100%;margin:0;display:block}
+.scard .sth .rt>svg{width:.6em;height:100%;max-width:none;margin:0}
 .scard .sth .sfm{font-size:18px;font-weight:700;white-space:nowrap;color:var(--ink);line-height:1.2}
 .scard .sth .sfm.sm{font-size:14.5px}
 .scard .stt{padding:9px 11px 11px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -3291,6 +3292,12 @@ const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(-
 const DASH='stroke-dasharray="3 2"';
 function picTree(){ const n=(x,y,t,p)=>(p?`<circle cx="${x}" cy="${y-2.4}" r="6.2" fill="var(--red-fill)" stroke="var(--red)"/>`:"")+TX(x,y,t,`font-weight="700" fill="${p?"var(--red)":"var(--ink)"}"`);
   return SV("0 0 120 80",LN(58,13,44,24)+LN(62,13,76,24)+LN(78,33,68,44)+LN(82,33,92,44)+LN(94,53,86,64)+LN(98,53,106,64)+n(60,10,"84")+n(40,31,"2",1)+n(80,31,"42")+n(64,51,"2",1)+n(96,51,"21")+n(82,71,"3",1)+n(110,71,"7",1)); }
+function picLadder(){ const A='fill="var(--amber)" font-weight="700"', G='fill="var(--green)" font-weight="700"', f='font-size="8.5"';
+  return SV("0 0 120 62",LN(19,5,19,38)+LN(19,21,66,21)+LN(19,38,66,38)
+    +TX(11,17,"2",`${f} ${A}`)+TX(11,34,"3",`${f} ${A}`)
+    +TX(33,17,"12",f)+TX(55,17,"18",f)+TX(33,34,"6",f)+TX(55,34,"9",f)
+    +TX(33,53,"2",`${f} ${G}`)+TX(55,53,"3",`${f} ${G}`)
+    +TX(95,26,"HCF = 6",`font-size="8" ${A}`)+TX(95,45,"LCM = 36",`font-size="8" ${G}`)); }
 function picNumLine(){ let s=LN(4,20,126,20)+`<path d="M122 17 L126 20 L122 23" fill="none" stroke="var(--ink)"/>`;
   for(let v=-5;v<=5;v++){const x=65+11*v; s+=LN(x,17,x,23)+TX(x,31,v<0?"−"+(-v):v,v===0?`font-weight="700"`:"");}
   return SV("0 0 130 36",s+`<path d="M32 15 Q54 -2 87 15" fill="none" stroke="var(--blue)" stroke-width="1.5"/><path d="M83 11 L87 15 L82 16" fill="none" stroke="var(--blue)" stroke-width="1.5"/>`+TX(60,7,"+5",`fill="var(--blue)" font-weight="700"`)+TX(14,10,"smaller",`font-size="5.5" fill="var(--muted)"`)+TX(116,10,"bigger",`font-size="5.5" fill="var(--muted)"`)); }
@@ -3370,6 +3377,7 @@ ${PAN("HCF and LCM from the primes",`<p class="big">${nw("84 = 2² × 3 × 7")}<
   <tr><td>5</td><td>none</td><td>5</td><td>none</td><td>5</td></tr>
   <tr><td>7</td><td>7</td><td>none</td><td>none</td><td>7</td></tr></table>
   ${EG("HCF takes the lowest power, LCM the highest",[nw("HCF = 2 × 3 = 6"),nw("LCM = 2² × 3² × 5 × 7 = 1260")])}`)}
+${PAN("Ladder method",`${picLadder()}${STEPS(["Divide both by a prime that goes into both.","Stop when no prime goes into both.",[nw(`HCF = <span class="k-amber">2 × 3</span> = 6`),"left column"],[nw(`LCM = <span class="k-amber">2 × 3</span> × <span class="k-green">2 × 3</span> = 36`),"the whole L"]])}<p class="anno">* the L trick for LCM only works for 2 numbers</p>`)}
 ${PAN("Square roots and cube roots",STEPS([nw("324 = 2² × 3⁴"),[nw("√324 = 2 × 3² = 18"),"halve every power"],nw("1728 = 2⁶ × 3³"),[nw("∛1728 = 2² × 3 = 12"),"divide every power by 3"]])+`<p class="anno">* a perfect square has every power even</p>`)}
 ${PAN("HCF or LCM?",`<table><tr><th>They ask</th><th>Use</th></tr>
   <tr><td>largest number of equal groups, longest equal pieces, biggest square tiles</td><td><b>HCF</b></td></tr>
@@ -3540,8 +3548,8 @@ SHEETLIST.push(
   {id:"percentage",levels:["sec1"],ord:9,chapter:"Numbers",title:"Percentage",sheet:"s1Percent",aid:null,kw:"percentage increase decrease reverse discount GST simple interest hire purchase exchange"},
   {id:"number-patterns",levels:["sec1"],ord:10,chapter:"Algebra",title:"Number patterns",sheet:"s1Patterns",aid:null,kw:"sequence nth term general term"},
   {id:"linear-graphs",levels:["sec1"],ord:11,chapter:"Graphs",title:"Coordinates & linear graphs",sheet:"s1Graphs",aid:null,kw:"gradient y = mx + c intercept straight line"},
-  {id:"perimeter-area",levels:["sec1"],ord:12,chapter:"Measurement",title:"Perimeter & area",sheet:"s1Area",aid:null,kw:"parallelogram trapezium circle composite units"},
-  {id:"volume-surface-area-1",levels:["sec1"],ord:13,chapter:"Measurement",title:"Volume & surface area: prisms & cylinders",sheet:"s1Volume",aid:null,kw:"cuboid cylinder prism capacity litres net"},
+  {id:"perimeter-area",levels:["sec1","emath"],ord:{sec1:12,emath:120},chapter:"Measurement",title:"Perimeter & area",sheet:"s1Area",aid:null,kw:"mensuration parallelogram trapezium circle composite units"},
+  {id:"volume-surface-area-1",levels:["sec1","emath"],ord:{sec1:13,emath:121},chapter:"Measurement",title:"Volume & surface area: prisms & cylinders",sheet:"s1Volume",aid:null,kw:"mensuration cuboid cylinder prism capacity litres net"},
   {id:"data-handling",levels:["sec1"],ord:14,chapter:"Statistics",title:"Charts & data",sheet:"s1Data",aid:null,kw:"bar chart pie chart line graph pictogram statistics"}
 );
 const SHEETS5={
@@ -3665,7 +3673,7 @@ ${MIST([[`P = ${frac("7","3")}`,"never more than 1: check the fraction"],["not r
 Object.assign(SHEETS,SHEETS5);
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
-  "primes-hcf-lcm":picTree, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
+  "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
   "basic-algebra":()=>FT(nw(`${V("a")}(${V("b")} + ${V("c")}) = ${V("ab")} + ${V("ac")}`),1),
   "linear-equations":()=>FT(nw(`2${X1} + 3 = 11`)), "angles-parallel-lines":()=>picPar("corr"), "polygons":picTriExt,
   "ratio-rate-speed":()=>picBar(3,4,"$12","$84"), "percentage":picPct, "number-patterns":picSticks, "linear-graphs":picGrad,
@@ -3675,9 +3683,9 @@ const STHUMB={
   "proportion":()=>picProp("inverse"), "congruence-similarity":picSim, "pythagoras":()=>picRight("pyth"),
   "trigonometry-sec2":()=>picRight("trig"), "volume-surface-area-2":()=>picSolid("cone"), "data-sec2":()=>picChart("hist"),
   "averages":()=>FT(nw(`mean = ${frac("Σ"+V("fx"),"Σ"+V("f"))}`)), "probability-sec2":picProb,
-  "quadratic-equations":()=>FT(nw(`${X1} = ${frac(`−${V("b")} ± √(${V("b")}² − 4${V("ac")})`,`2${V("a")}`)}`),1),
+  "quadratic-equations":()=>FT(QUAD_F,1),
   "indices":()=>FT(nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)),
-  "standard-form":()=>FT(nw("3.2 × 10⁵")), "interest":()=>FT(nw(`${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`)),
+  "standard-form":()=>FT(nw("3.2 × 10⁵")), "interest":()=>FT(nw(`${V("P")}${PAR(`1 + ${frac(V("r"),"100")}`,V("n"))}`)),
   "sets":()=>venn("and"), "measures-of-spread":boxPlotP, "probability":treeP, "matrices":()=>FT(MX([["2","3"],["1","4"]])),
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
@@ -3693,7 +3701,7 @@ SHEETLIST.push(
   {id:"congruence-similarity",levels:["sec2"],ord:7,chapter:"Geometry",title:"Congruence & similarity",sheet:"s2Similar",aid:null,kw:"similar triangles scale factor enlargement scale drawing area ratio"},
   {id:"pythagoras",levels:["sec2"],ord:8,chapter:"Geometry",title:"Pythagoras' theorem",sheet:"s2Pyth",aid:null,kw:"hypotenuse right-angled triangle"},
   {id:"trigonometry-sec2",levels:["sec2"],ord:9,chapter:"Geometry",title:"Trigonometry: SOH CAH TOA",sheet:"s2Trig",aid:null,kw:"sin cos tan opposite adjacent hypotenuse angle"},
-  {id:"volume-surface-area-2",levels:["sec2"],ord:10,chapter:"Measurement",title:"Volume & surface area: pyramids, cones & spheres",sheet:"s2Volume",aid:null,kw:"cone sphere pyramid hemisphere slant height"},
+  {id:"volume-surface-area-2",levels:["sec2","emath"],ord:{sec2:10,emath:122},chapter:"Measurement",title:"Volume & surface area: pyramids, cones & spheres",sheet:"s2Volume",aid:null,kw:"mensuration cone sphere pyramid hemisphere slant height"},
   {id:"data-sec2",levels:["sec2"],ord:11,chapter:"Statistics",title:"Dot diagrams, histograms & stem-and-leaf",sheet:"s2Data",aid:null,kw:"statistics stem and leaf histogram dot diagram"},
   {id:"averages",levels:["sec2"],ord:12,chapter:"Statistics",title:"Mean, median & mode",sheet:"s2Averages",aid:null,kw:"average mean median mode frequency table"},
   {id:"probability-sec2",levels:["sec2"],ord:13,chapter:"Probability",title:"Probability: single events",sheet:"s2Prob",aid:null,kw:"probability chance not happening"}
@@ -3763,6 +3771,7 @@ const setPage=p=>{ document.body.dataset.page=p; };
 const setNav=k=>document.querySelectorAll(".topnav a").forEach(a=>{ if(a.dataset.n===k) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
 const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
+const ordOf=(s,lv)=>(s.ord&&typeof s.ord==="object"?s.ord[lv]:s.ord)??99;
 function sheetRow(s,skip){ return h("a",{class:"srow",href:"#sheet/"+s.id,"data-q":(s.chapter+" "+s.title).toLowerCase()},
   `${s.chapter.toLowerCase()===s.title.toLowerCase()?"":`<span class="chap">${s.chapter}</span>`}<b>${s.title}</b><span class="tags">${s.tag?`<span class="tag lvl">${s.tag}</span>`:s.levels.filter(l=>l!==skip).map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${s.aid?`<span class="tag aidtag">Interactive</span>`:""}</span>`); }
 function renderHome(keep){
@@ -3792,7 +3801,7 @@ function renderHome(keep){
   const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
   if(v==="sheets"){
     LEVELS.forEach(l=>{
-      const list=homeItems("sheets").filter(s=>homeFilter==="all"?s.levels[0]===l.id:(homeFilter===l.id&&s.levels.includes(l.id))).sort((a,b)=>(a.ord??99)-(b.ord??99)); if(!list.length) return;
+      const list=homeItems("sheets").filter(s=>homeFilter==="all"?s.levels[0]===l.id:(homeFilter===l.id&&s.levels.includes(l.id))).sort((a,b)=>ordOf(a,l.id)-ordOf(b,l.id)); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${l.name}</h3>`), grid=h("div",{class:"scards"});
       list.forEach(s=>grid.append(sheetCard(s,l.id))); sec.append(grid); body.append(sec);
     });
