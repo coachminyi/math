@@ -89,9 +89,6 @@ button{font:inherit;color:inherit}
   .bar .crumb{font-size:12px}
 }
 
-.hero{padding:28px 0 8px}
-.hero h2{font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
-.hero p{margin:0;color:var(--muted)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 6px}
 .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 16px;min-height:44px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -121,16 +118,8 @@ button{font:inherit;color:inherit}
 .sheetlink{text-decoration:none;align-self:flex-start;font-weight:400}
 .panel{display:flex;flex-direction:column;gap:14px}
 .box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
-.stepnum{font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
-.dots{display:flex;gap:5px}
-.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
-.dots i.on{background:var(--accent)}
 .steptext{font-size:20px;margin:8px 0 0;min-height:3.2em}
 .steptext .m{white-space:nowrap}
-.nav{display:flex;gap:10px}
-.btn{flex:1;min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;font-weight:700}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.btn:disabled{opacity:.35;cursor:default}
 .ctrl{display:flex;align-items:center;gap:8px;margin:6px 0}
 .ctrl label{font-weight:700;font-size:20px;font-style:italic;min-width:1.2em;flex:none}
 .ctrl input[type=range]{flex:1;min-width:50px}
@@ -138,9 +127,7 @@ button{font:inherit;color:inherit}
 .stp{flex:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;font-weight:700;line-height:1;padding:0;cursor:pointer}
 .stp:active{background:var(--line)}
 .stp:disabled{opacity:.35}
-.numwrap{flex:none}
-.ctrl:has(.numbox) output{display:none}
-.numwrap{display:flex;align-items:center;gap:4px}
+.numwrap{flex:none;display:flex;align-items:center;gap:4px}
 .numbox{width:4.6em;min-height:44px;font-size:18px;font-variant-numeric:tabular-nums;text-align:center;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:0 4px;-moz-appearance:textfield;appearance:textfield}
 .numbox::-webkit-inner-spin-button,.numbox::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .numbox:focus{outline:none;border-color:var(--accent)}
@@ -248,11 +235,9 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .panelc td.exs{text-align:center}
 .panelc td .cap{display:block;font-size:12.5px;color:var(--blue);text-align:center;white-space:nowrap}
 .panelc td.anno{font-size:14px;white-space:nowrap}
-.sheetfoot{color:var(--muted);font-size:14px;padding:0 0 30px}
 
 .homeswitch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 0}
 .tabnote{color:var(--muted);font-size:15px;margin:12px 0 0}
-.hero .by{font-size:15px;margin-top:2px}
 .lcard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;margin:30px 0 6px}
 .lcard h3{margin:0 0 6px;font-size:18px}
 .lcard p{margin:0 0 12px;line-height:1.5}
@@ -264,36 +249,28 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .avatar{width:40px;height:40px;border-radius:50%;display:block;flex:none;background:#bfeae4;object-fit:cover}
 .avatar.sm{width:44px;height:44px}
 .avatar.lg{width:76px;height:76px;box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
-.lhead{display:flex;align-items:center;gap:12px;margin:0 0 8px}
 .waqr{display:flex;align-items:center;gap:14px;margin-top:16px;color:var(--muted);font-size:14.5px}
 .waqr[hidden]{display:none}
 #waQr{background:#fff;padding:6px;border-radius:10px;line-height:0;border:1px solid var(--line)}
 #waQr svg{width:120px;height:120px;display:block}
-.lhead h3{margin:0}
 .ltop{display:flex;align-items:center;gap:16px;margin:14px 0 10px}
 .ltop h2{margin:0}
 .hero2{position:relative;overflow:hidden;isolation:isolate;margin:18px 0 8px;padding:22px 20px 18px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(140deg,var(--blue-fill) 0%,var(--card) 62%);box-shadow:var(--shadow)}
 .hero2::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:linear-gradient(110deg,transparent 30%,#000 100%);mask-image:linear-gradient(110deg,transparent 30%,#000 100%)}
 .hero2 .art{position:absolute;right:36px;top:26px;width:170px;height:auto;z-index:-1;opacity:.55}
-@media (max-width:420px){ .hero2 .stats span:nth-child(3){display:none} }
 .hero2 .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
 .hero2 h2{font-size:34px;line-height:1.08;letter-spacing:-.02em;margin:0 0 10px}
 .hero2 h2 .mark{background:linear-gradient(transparent 64%,var(--amber-fill) 64%,var(--amber-fill) 92%,transparent 92%);padding:0 2px;margin:0 -2px}
-.hero2 .sub{color:var(--muted);margin:0 0 14px;max-width:36ch;line-height:1.45}
-.hero2 .stats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.hero2 .stats span{font-size:13.5px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
 .hero2 .by{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--muted);font-size:14.5px;line-height:1.35}
 .hero2 .by b{color:var(--ink)}
 .hero2 .by:hover b{color:var(--accent)}
-.pill.ghost{text-decoration:none;color:var(--accent);font-weight:700;background:transparent}
 .tiny{color:var(--muted);font-size:13.5px;margin:14px 0 0;line-height:1.45}
 .lpage{max-width:760px;padding:6px 0 10px}
 .lpage h2{font-size:26px;margin:14px 0 6px}
 .lpage .lead{font-size:18px;line-height:1.55;margin:0 0 16px}
-.lfacts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.lfacts{display:flex;flex-wrap:wrap;column-gap:16px;row-gap:4px;margin:0 0 18px}
 .lfacts span{font-weight:700;font-size:15px;color:var(--ink)}
 .lfacts span::before{content:"✓";color:var(--green);margin-right:5px}
-.lfacts{column-gap:16px;row-gap:4px}
 .lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:0 0 20px}
 .lgrid div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
 .lgrid b{display:block;margin-bottom:2px}
@@ -363,15 +340,8 @@ sup.pbs{vertical-align:top;font-size:.72em;line-height:1;position:relative;top:-
 .binom .st{display:inline-flex;flex-direction:column;align-items:center;font-size:.82em;line-height:1.1}
 .hs{min-height:52px;border:1px solid var(--line);background:var(--card);border-radius:12px;font-size:18px;font-weight:700;cursor:pointer}
 .hs[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.srows{display:flex;flex-direction:column;gap:8px}
-.srow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;text-decoration:none;color:inherit;min-height:52px;box-shadow:var(--shadow)}
-.srow:hover{border-color:var(--accent)}
-.srow .chap{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex:0 0 100%}
-.srow b{font-size:17px;flex:1 1 160px;min-width:0}
-.srow .tags{display:flex;gap:6px;flex-wrap:wrap;flex:0 0 auto;margin-left:auto;align-items:center}
-.srow .tag{flex:0 0 auto}
 .piccard svg.ico{width:64px;margin:6px auto 8px}
-.srow[hidden],section.level[hidden]{display:none}
+section.level[hidden]{display:none}
 .tag.aidtag{color:var(--green);border-color:var(--green)}
 .search{width:100%;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;padding:0 14px;margin:14px 0 4px}
 .sheeth{margin:6px 0 16px;font-size:24px}
@@ -411,7 +381,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .stage{position:sticky;top:var(--barh,56px);z-index:3;padding:6px}
   .stage svg{max-height:32vh;max-height:32svh}
   .stage.tall svg{max-height:44vh;max-height:44svh}
-  .stage.big svg{max-height:62vh;max-height:62svh}
+  .stage.zoomed svg{max-height:62vh;max-height:62svh}
   .tabs{padding:6px 0}
   .tab{min-height:36px;padding:0 14px}
   .key{padding:6px 8px 8px}
@@ -432,7 +402,6 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .dock .pillrow{display:inline-flex;margin:0 6px 4px 0;gap:6px;vertical-align:top}
   .dock .pill{min-height:34px;padding:0 9px;font-size:14.5px}
   .dock .pill.sm{min-height:32px}
-  .dock #shrinkrow{margin:4px 0 2px}
   .steptext{font-size:18px;min-height:0}
   .keybox{font-size:calc(15*var(--k))}
   .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
@@ -451,7 +420,6 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .card .blurb{display:none}
   .card b{font-size:16px}
   .card .tags{margin:2px 0 0}
-  .hero{padding:18px 0 4px}
   .chips{margin:14px 0 4px}
   .level{margin:16px 0 22px}
   .formbox .eq{font-size:calc(18*var(--k))}
@@ -469,7 +437,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 @media (max-width:899px) and (orientation:landscape) and (max-height:520px){
   .play{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-areas:"s k" "s p";gap:10px}
   .stage{grid-area:s;align-self:start}
-  .stage svg,.stage.tall svg,.stage.big svg{max-height:calc(100vh - var(--barh,56px) - 26px);max-height:calc(100svh - var(--barh,56px) - 26px)}
+  .stage svg,.stage.tall svg,.stage.zoomed svg{max-height:calc(100vh - var(--barh,56px) - 26px);max-height:calc(100svh - var(--barh,56px) - 26px)}
   .key{grid-area:k}
   .panel{grid-area:p}
   .tabs{padding:6px 0}
@@ -483,7 +451,6 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .panelc table{font-size:15px}
   .panelc th,.panelc td{padding:6px 5px}
   body{font-size:16px}
-  .hero h2{font-size:25px}
   .hero2{padding:18px 16px 16px;margin-top:14px}
   .hero2 h2{font-size:28px}
   .hero2 .art{display:none}
@@ -523,7 +490,7 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
 #toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s,transform .2s;z-index:30;pointer-events:none}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 @media print{
-  .bar,.tabs,footer,.exitp,#toast,.modal,.sheetend,.playlink,.piccard .go,.lcard{display:none}
+  .bar,.tabs,footer,.exitp,#toast,.modal,.sheetend,.playlink,.pl,.piccard .go,.lcard{display:none}
   body{background:#fff}
   .panelc::before{border-color:#000}
   .panelc.pg{column-span:none}
@@ -562,7 +529,7 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   <button class="back" id="back" aria-label="Back">‹</button>
   <a class="brand wide-only" href="#" id="brand">Coach Minyi's Maths Hub</a>
   <nav class="topnav wide-only" aria-label="Sections"><a href="#sheets" data-n="sheets">Cheatsheets</a><a href="#exam" data-n="exam">Formulas</a><a href="#play" data-n="play">Interactive</a><a href="#lessons" data-n="lessons">Tuition</a></nav>
-  <div class="ttl" id="ttl" title="Home"><h1 id="title">Coach Minyi's Maths Hub</h1><div class="crumb" id="crumb"></div></div>
+  <div class="ttl" id="ttl" title="Home" role="button" tabindex="0"><h1 id="title">Coach Minyi's Maths Hub</h1><div class="crumb" id="crumb"></div></div>
   <button class="ibtn phone-only" id="zoomBtn" hidden aria-label="Bigger diagram" title="Bigger diagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="ibtn" id="share" hidden aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg><span class="lbl">Copy link</span></button>
   <button class="ibtn wide-only" id="qrBtn" hidden aria-label="Show QR code" title="QR code for this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2M14 19h2v2M19 19h2v2"/></svg><span class="lbl">QR</span></button>
@@ -572,7 +539,7 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   <button class="themebtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch to dark mode"></button>
 </div></header>
 <button class="exitp" id="exitPresent">✕ Exit present mode</button>
-<div class="modal" id="qrModal" hidden><div class="mbox"><p class="mt" id="qrTitle"></p><div class="qr" id="qrBox"></div><p class="url" id="qrUrl"></p><button class="pill" id="qrClose">Close</button></div></div>
+<div class="modal" id="qrModal" hidden role="dialog" aria-modal="true" aria-labelledby="qrTitle"><div class="mbox"><p class="mt" id="qrTitle"></p><div class="qr" id="qrBox"></div><p class="url" id="qrUrl"></p><button class="pill" id="qrClose">Close</button></div></div>
 
 <main class="wrap" id="app"></main>
 <div class="printfoot" id="printFoot"></div>
@@ -637,7 +604,7 @@ const squareAB = {
     {t:()=>`<span class="k-red">Common mistake:</span> (${V("a")} + ${V("b")})² = ${V("a")}² + ${V("b")}² ✗<br>That forgets the <span class="k-amber">2 rectangles</span>!`, show:{split:true,hi:"mistake"}}
   ],
   mount(stage,panel,key,prm){
-    const st={a:prmNum(prm,"a",1,8,5),b:prmNum(prm,"b",1,6,3),step:5}; if(cur) cur.state=()=>({a:st.a,b:st.b});
+    const st={a:Math.round(prmNum(prm,"a",1,8,5)),b:Math.round(prmNum(prm,"b",1,6,3)),step:5}; if(cur) cur.state=()=>({a:st.a,b:st.b});
     const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side a plus b split into four pieces"});
     stage.append(svg); const kb=h("div",{class:"keybox"}); key.append(kb); key.classList.remove("empty");
     panel.innerHTML=`${explainBox([`Big square = 4 pieces:<br><b>${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</b>`,`Don't forget the <span class="k-amber"><b>2 rectangles</b></span>!`])}
@@ -651,7 +618,7 @@ const squareAB = {
     const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
     const draw=()=>{
       const {a,b,step}=st, S=this.steps[step].show;
-      $("output",sa.closest(".ctrl")).textContent=a; $("output",sb.closest(".ctrl")).textContent=b;
+      sa.value=a; sb.value=b; $("output",sa.closest(".ctrl")).textContent=a; $("output",sb.closest(".ctrl")).textContent=b;
       svg.innerHTML="";
       const sc=92/(a+b), x0=26, y0=12, A=a*sc, B=b*sc, T=A+B;
       const fade=k=>{ if(!S.split) return 1; if(!S.hi||S.hi==="all") return 1;
@@ -689,10 +656,8 @@ const squareAB = {
         S.split?`${a*a} + ${2*a*b} + ${b*b} = ${tot}  =  (${a} + ${b})²`:`(${a} + ${b})² = ${tot}`));
       kb.innerHTML=FORMS([FB("blue",`(${V("a")} + ${V("b")})²`,`(${a} + ${b})² = ${tot}`,"the big square"),FB("amber",`${V("a")}² + 2${V("ab")} + ${V("b")}²`,`${a*a} + ${2*a*b} + ${b*b} = ${tot}`,"the 4 pieces ✓"),FB("red","✗ Common mistake",`${a}² + ${b}² = ${a*a+b*b}`,`forgets the 2 rectangles`)]); settleKey(kb);
       ro.innerHTML=""; ro.closest(".box").style.display="none";
-      setStep(panel,this.steps,step);
     };
     sa.oninput=()=>{st.a=+sa.value;draw()}; sb.oninput=()=>{st.b=+sb.value;draw()};
-    wireNav(panel,this.steps,st,draw);
     draw();
   }
 };
@@ -727,11 +692,11 @@ const kStr=k=>Math.abs(k)<1e-12?"":(k>0?" + ":" − ")+N(Math.abs(k));
 
 function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
 function dragger(svg,cb){
-  let id=null;
-  svg.addEventListener("pointerdown",e=>{const t=e.target.closest("[data-drag]"); if(!t) return;
-    id=t.getAttribute("data-drag"); try{svg.setPointerCapture(e.pointerId)}catch(_){}; e.preventDefault(); cb(id,svgPt(svg,e));});
-  svg.addEventListener("pointermove",e=>{ if(id){ e.preventDefault(); cb(id,svgPt(svg,e)); } });
-  ["pointerup","pointercancel"].forEach(k=>svg.addEventListener(k,()=>{id=null}));
+  let id=null, pid=null;
+  svg.addEventListener("pointerdown",e=>{const t=e.target.closest("[data-drag]"); if(!t||id) return;
+    id=t.getAttribute("data-drag"); pid=e.pointerId; try{svg.setPointerCapture(e.pointerId)}catch(_){}; e.preventDefault(); cb(id,svgPt(svg,e));});
+  svg.addEventListener("pointermove",e=>{ if(id&&e.pointerId===pid){ e.preventDefault(); cb(id,svgPt(svg,e)); } });
+  ["pointerup","pointercancel"].forEach(k=>svg.addEventListener(k,e=>{ if(e.pointerId===pid){ id=null; pid=null; } }));
 }
 function handle(svg,x,y,id,col="var(--accent)"){
   svg.append(svgEl("circle",{cx:x,cy:y,r:7,fill:"transparent","data-drag":id,style:"cursor:grab"}));
@@ -832,7 +797,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     <div class="box dock">
       ${jump}
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
-      ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${s.k}"><output></output></div>`).join("")}
+      ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
     ${flat?"":`<div class="box"><p class="steptext"></p></div>`}
@@ -840,14 +805,13 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel);
   const draw=()=>{
-    const S=def.steps[st.step];
     (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
       if(s.maxf){const mx=s.maxf(st); if(+inp.max!==mx){inp.max=mx;} if(st[s.k]>mx) st[s.k]=mx;}
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
     (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))));
     cbox.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
     (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st)));});
-    svg.innerHTML=""; def.draw(svg,st); bumpText(svg); layoutFracs(svg); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width);
+    svg.innerHTML=""; def.draw(svg,st); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width); bumpText(svg); layoutFracs(svg);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
     cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length||c.textContent.trim()))?"":"none";
@@ -855,18 +819,18 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     else $(".steptext",panel).innerHTML=def.steps[st.step].t(st);
   };
   const go=i=>{st.step=i; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
-  (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); st[s.k]=+e.target.value; s.on&&s.on(st); draw();}));
+  (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._reset=true; draw();}));
   const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
-  const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
+  const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
   (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._reset=true; draw();}));
   cbox.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j);});
   if(def.drag) dragger(svg,(id,p)=>{stopAnim(); def.drag(id,p,st); draw();});
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
   if(prm){
     (def.pills||[]).forEach(p=>{ if(prm.has(p.k)){ const v=prm.get(p.k), o=p.opts.find(([val])=>String(val)===v); if(o){ st[p.k]=isNaN(+o[0])?o[0]:+o[0]; p.on&&p.on(st); } } });
-    (def.sliders||[]).forEach(s=>{ if(prm.has(s.k)){ st[s.k]=prmNum(prm,s.k,s.min,s.max,st[s.k]); s.on&&s.on(st); } });
+    (def.sliders||[]).forEach(s=>{ if(prm.has(s.k)){ st[s.k]=clamp(+(s.min+Math.round((prmNum(prm,s.k,s.min,s.max,st[s.k])-s.min)/s.step)*s.step).toFixed(6),s.min,s.max); s.on&&s.on(st); } });
     (def.link||[]).forEach(k=>{ if(prm.has(k)) st[k]=prmNum(prm,k,-1e6,1e6,st[k]); });
     if(def.fix) def.fix(st);
   }
@@ -876,13 +840,12 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   go(first);
 }}}
 function bumpText(svg){
-  const w=svg.getBoundingClientRect().width, vb=svg.viewBox.baseVal; if(!w||!vb) return;
-  const ppu=w/vb.width, min=12/ppu; if(ppu>=3.2) return;
+  const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb) return;
+  const ppu=r.width/vb.width, min=12/ppu; if(ppu>=3.2) return;
   svg.querySelectorAll("text").forEach(t=>{const fs=parseFloat(t.getAttribute("font-size")); if(fs&&fs<min) t.setAttribute("font-size",min.toFixed(2));});
 }
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const snap=(v,s)=>Math.round(v/s)*s;
-const signWord=(m)=>Math.abs(m)<1e-9?`<span class="k-amber">= 0</span>`:m>0?`<span class="k-green">&gt; 0</span>`:`<span class="k-red">&lt; 0</span>`;
 
 const QBOX={l:12,t:4,w:124,h:112,x0:-6,x1:6,y0:-8,y1:8,xs:1,xl:2,ys:1,yl:2};
 function quadInfo(s){
@@ -908,7 +871,7 @@ function quadFact(s,I){
 }
 const quadForms=aid({
   init:{a:1,h:1,k:-4}, label:"Parabola with a draggable turning point",
-  sliders:[{k:"a",label:"a",min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"h",label:"h",min:-4,max:4,step:.5},{k:"k",label:"k",min:-6,max:6,step:.5}],
+  sliders:[{k:"a",label:"a",min:-3,max:3,step:.5,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},{k:"h",label:"h",min:-4,max:4,step:.5},{k:"k",label:"k",min:-6,max:6,step:.5}],
   steps:[
     {set:{a:1,h:2,k:-3}, t:()=>`${V("y")} = (${X1} − ${V("h")})² + ${V("k")} has its <b>turning point at (${V("h")}, ${V("k")})</b>.<br>Drag the dot on the graph.`},
     {set:{a:1,h:2,k:-3}, t:()=>`Watch the sign! <b>(${X1} − 2)²</b> moves the graph <b>right</b> 2.<br><b>(${X1} + 2)²</b> moves it <b>left</b> 2. Try the ${V("h")} slider.`},
@@ -949,7 +912,7 @@ const DBOX={l:12,t:4,w:124,h:112,x0:-2,x1:6,y0:-4,y1:12,xs:1,xl:2,ys:1,yl:2};
 const dInfo=s=>{const B=-(4+s.m), C=5-s.c, D=B*B-4*C; const n=Math.abs(D)<1e-9?1:D>0?2:0; return {B,C,D,n}};
 const discrim=aid({
   init:{m:1,c:3}, label:"Curve and a movable straight line",
-  sliders:[{k:"m",label:"m",min:-4,max:4,step:.25},{k:"c",label:"c",min:-6,max:10,step:.25}],
+  sliders:[{k:"m",label:"m",min:-4,max:4,step:.25},{k:"c",label:"c",min:-12,max:12,step:.25}],
   buttons:[{label:"Cuts (2 points)",fn:s=>{s.m=1;s.c=3}},{label:"Make it a tangent",fn:s=>{s.c=5-(4+s.m)**2/4;}},{label:"Misses (0 points)",fn:s=>{s.m=0;s.c=-1}}],
   explain:[`Drag the <b>grey ring</b> to move the line.`,`${V("b")}² − 4${V("ac")}: <span class="k-green"><b>&gt; 0 cuts</b></span> · <span class="k-amber"><b>= 0 tangent</b></span> · <span class="k-red"><b>&lt; 0 misses</b></span>`],
   steps:[
@@ -986,7 +949,7 @@ const trigGen=s=>`${V("y")} = ${CV("blue","a")} ${s.fn} ${CV("amber","b")}${X1}$
 const trigGraphs=aid({
   init:{fn:"sin",a:1,b:1,c:0,u:"deg"}, label:"Trig graph with a, b, c sliders",
   pills:[{k:"fn",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",opts:[["deg","degrees"],["rad","radians"]]}],
-  sliders:[{k:"a",label:CS("blue","a"),min:-3,max:3,step:.5,on:s=>{if(s.a===0)s.a=.5}},{k:"b",label:CS("amber","b"),min:1,max:4,step:1},{k:"c",label:CS("green","c"),min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
+  sliders:[{k:"a",label:CS("blue","a"),min:-3,max:3,step:.5,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},{k:"b",label:CS("amber","b"),min:1,max:4,step:1},{k:"c",label:CS("green","c"),min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
   steps:[
     {set:{fn:"sin",a:1,b:1,c:0}, t:()=>`${V("y")} = sin ${X1}: <b>1 full wave</b> from 0° to 360°.<br>Max 1, min −1.`},
     {set:{fn:"sin",a:2,b:1,c:0}, t:()=>`${V("a")} stretches it up and down.<br><b>Amplitude = ${V("a")}</b> (ignore the sign). Here ${V("a")} = 2.`},
@@ -1167,7 +1130,6 @@ const CO=[70,58], CR=40;
 const CP=d=>[CO[0]+CR*Math.cos(rad(d)),CO[1]-CR*Math.sin(rad(d))];
 const ptLab=(svg,d,t)=>lab(svg,[CO[0]+(CR+5.5)*Math.cos(rad(d)),CO[1]-(CR+5.5)*Math.sin(rad(d))+1.6],t,{"font-size":4.6,"font-weight":700});
 const onArc=(P,A,B)=>norm(P-A)<norm(B-A);
-const reason=t=>`<span class="k-blue">(${t})</span>`;
 const n1=v=>N(Math.round(v*10)/10,1);
 const circleProps=aid({
   init:{A:210,B:330,P:90,Q:130,C:300,D:40,Tx:126,Ty:22}, jump:true, label:"Circle with draggable points",
@@ -1227,7 +1189,7 @@ const circleProps=aid({
     if(m===3){const K=["A","B","C","D"], i=K.indexOf(id), prev=s[K[(i+3)%4]], next=s[K[(i+1)%4]];
       if(!(norm(a-prev)>4&&norm(a-prev)<norm(next-prev)-4)) return;}
     if(m===6&&id==="B"&&(norm(a-270)<8||norm(270-a)<8)) return;
-    const others=["A","B","P","Q","C"].filter(k=>k!==id&&!(m===6&&k==="A"));
+    const VIS={0:"ABP",1:"ABPQ",2:"ABP",4:"P"}, others=[..."ABPQC"].filter(k=>k!==id&&(VIS[m]==null||VIS[m].includes(k))&&!(m===6&&k==="A"));
     if(m!==3&&m!==6&&others.some(k=>s[k]!=null&&Math.abs(((a-s[k]+540)%360)-180)<4)) return;
     if(m===6&&(Math.abs(((a-270+540)%360)-180)<4||Math.abs(((a-s[id==="B"?"C":"B"]+540)%360)-180)<4)) return;
     s[id]=a;
@@ -1272,7 +1234,7 @@ const CH2={l:12,t:116,w:124,h:50,x0:-3,x1:3,y0:-6,y1:6,xs:.5,xl:1,ys:2,yl:4,yn:"
 const diffChord=aid({
   init:{x:1,h:1.5,xs:3,_trail:[]}, jump:true, vb:"0 0 140 172", label:"Chord PQ on y = x squared turning into the tangent", link:["x","h"],
   fix:s=>{s.x=clamp(snap(s.x,.1),-2.5,2.5); s.h=clamp(snap(s.h,.01),0,2);},
-  sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.1,show:s=>s.step===0},{k:"xs",label:"x",min:1,max:6,step:.5,show:s=>s.step===1},{k:"h",label:"h",min:0,max:2,step:.01}],
+  sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.1,show:s=>s.step===0},{k:"xs",label:"x",min:1,max:6,step:.5,show:s=>s.step===1},{k:"h",label:"h",min:0,max:2,step:.01,maxf:s=>s.step===0?Math.max(.01,+Math.min(2,3-s.x).toFixed(2)):2}],
   buttons:[{label:"▶ Slide Q to P",show:s=>s.step===0,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=+(h0*(1-p)).toFixed(2);});}},
     {label:"▶ Shrink h",show:s=>s.step===1,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=+(h0*(1-p)).toFixed(2);});}},
     {label:"↺ h = 1.5",fn:s=>{s.h=1.5}}],
@@ -1344,7 +1306,7 @@ const strip=s=>String(s).replace(/<[^>]+>/g,"");
 const tangentAid=aid({
   init:{cv:"cubic",x:-1.5,nm:"tan"}, vb:"0 0 140 208", label:"Curve with a tangent you can slide, gradient graph below",
   explain:[`Drag <b>P</b>. Flat tangent = <span class="k-amber"><b>stationary point</b></span>.`,`<span class="k-green"><b>Green</b></span> axis = going up · <span class="k-red"><b>red</b></span> = going down.`],
-  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x=-2}},{k:"nm",opts:[["tan","Tangent"],["nor","Normal"]]}],
+  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x={cubic:-1.5,quad:-.5,cube:-1}[s.cv]}},{k:"nm",opts:[["tan","Tangent"],["nor","Normal"]]}],
   sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.05}],
   buttons:[{label:"Jump to a stationary point",fn:s=>{const L=TC[s.cv].st; const nx=L.find(v=>v>s.x+1e-9); s.x=nx!==undefined?nx:L[0];}}],
   steps:[{t:()=>""}],
@@ -1467,9 +1429,10 @@ const KV={
   cub:{tR:6,s:t=>t**3/3-2.5*t*t+4*t,v:t=>t*t-5*t+4,a:t=>2*t-5,ss:`${frac(TT+"³","3")} − ${frac("5","2")}${TT}² + 4${TT}`,vs:`${TT}² − 5${TT} + 4`,as:`2${TT} − 5`,sR:[-4,8,2],vR:[-4,12,4],aR:[-6,8,2]}
 };
 const kBox=(K,row)=>{const r=row==="s"?K.sR:row==="v"?K.vR:K.aR, t=row==="s"?26:row==="v"?74:122; return {l:18,t,w:116,h:40,x0:0,x1:K.tR,y0:r[0],y1:r[1],xs:.5,xl:1,ys:r[2],yl:r[2],xn:"t",yn:row};};
-const kDist=(K,T)=>{if(T<=0) return 0; const Z=kZeros(K).filter(z=>z>1e-9&&z<T-1e-9), cuts=[0,...Z,T]; let d=0;
+const kDist=(K,T)=>{if(T<=0) return 0; const Z=kZ(K).filter(z=>z>1e-9&&z<T-1e-9), cuts=[0,...Z,T]; let d=0;
   for(let c=0;c<cuts.length-1;c++){const a=cuts[c],b=cuts[c+1],n=200,h=(b-a)/n; let sm=0; for(let i=0;i<=n;i++){const w=i===0||i===n?1:i%2?4:2; sm+=w*K.v(a+i*h);} d+=Math.abs(sm*h/3);} return d;};
 const kZeros=K=>{const z=[], E=K.tR*100; for(let i=0;i<E;i++){const a=i/100,b=(i+1)/100, va=K.v(a), vb=K.v(b); if(Math.abs(va)<1e-9&&!z.some(x=>Math.abs(x-a)<.02)) z.push(a); else if(va*vb<0) z.push(a-va*(b-a)/(vb-va));} if(Math.abs(K.v(K.tR))<1e-9&&!z.some(x=>Math.abs(x-K.tR)<.02)) z.push(K.tR); return z.filter(x=>x<=K.tR).map(x=>Math.round(x*100)/100);};
+const kZ=K=>K._z||(K._z=kZeros(K));
 const niceN=(v,d=3)=>{for(let q=1;q<=24;q++){const n=v*q; if(Math.abs(n-Math.round(n))<1e-3) return toFrac(Math.round(n)/q);} return N(+(+v).toPrecision(3),d);};
 const kinAid=aid({
   init:{cv:"lin",T:2}, vb:"0 0 140 166", label:"Particle on a number line above stacked displacement, velocity and acceleration graphs",
@@ -1480,7 +1443,7 @@ const kinAid=aid({
   fix:s=>{s.T=clamp(s.T,0,KV[s.cv].tR);},
   steps:[{t:()=>""}],
   draw(svg,s){
-    const K=KV[s.cv], T=Math.min(s.T,K.tR), sv=K.s(T), vv=K.v(T), av=K.a(T), Z=kZeros(K), rest=Math.abs(vv)<.051||Z.some(z=>Math.abs(z-T)<.051), E=K.tR;
+    const K=KV[s.cv], T=Math.min(s.T,K.tR), sv=K.s(T), vv=K.v(T), av=K.a(T), Z=kZ(K), rest=Math.abs(vv)<.051||Z.some(z=>Math.abs(z-T)<.051), E=K.tR;
     const gs=graph(svg,kBox(K,"s")), gv=graph(svg,kBox(K,"v")), ga=graph(svg,kBox(K,"a"));
     if(T>0){const Pp=[],Nn=[]; for(let i=0;i<=120;i++){const t=T*i/120,v=K.v(t); Pp.push([t,Math.max(v,0)]); Nn.push([t,Math.min(v,0)]);}
       gv.poly([[0,0],...Pp,[T,0]],{fill:"var(--blue-fill)"}); gv.poly([[0,0],...Nn,[T,0]],{fill:"var(--red-fill)"});}
@@ -1507,7 +1470,7 @@ const kinAid=aid({
     const aw=Math.abs(av)<1e-9?(Math.abs(K.a(0)-K.a(6))<1e-9?"constant velocity":"v is at a max or min here"):rest?"about to move "+(av>0?"right":"left"):(av>0)===(vv>0)?"speeding up":"slowing down";
     return FORMS([FB("blue",`Displacement ${V("s")} = signed area`,`${niceN(sv)} m`,`from O, after ${N(T,1)} s`),FB("green","Distance travelled",`${niceN(Math.round(dist*1e6)/1e6)} m`,Math.abs(dist-Math.abs(sv))<1e-6?"no U-turn yet":"U-turn: add the parts"),
       FB(vc,`Velocity ${V("v")} = ${frac("d"+V("s"),"d"+TT)}`,`${sf3(vv)} m/s`,rest?"U-TURN · v = 0":vv>0?"going right →":"← going back"),FB("amber",`Acceleration ${V("a")} = ${frac("d"+V("v"),"d"+TT)}`,`${sf3(av)} m/s²`,aw)]);},
-  readout(s){const K=KV[s.cv], Z=kZeros(K).filter(z=>z>1e-9);
+  readout(s){const K=KV[s.cv], Z=kZ(K).filter(z=>z>1e-9);
     return `<div class="row">${V("s")} = ${K.ss}</div><div class="row">${V("v")} = ${frac("d"+V("s"),"d"+TT)} = ${K.vs}</div><div class="row">${V("a")} = ${frac("d"+V("v"),"d"+TT)} = ${K.as}</div><div class="row">U-turn (${V("v")} = 0) at ${Z.length?Z.map(z=>`${TT} = ${N(z)}`).join(", "):"no time here"}</div>`;}
 });
 
@@ -1515,7 +1478,7 @@ const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toF
 const complSq=aid({
   init:{b:6,c:5,mv:0}, vb:"0 0 250 104", label:"Completing the square with areas, and the graph",
   explain:[`Cut the strip in half, move it down.`,`Add the <span class="k-red"><b>missing corner</b></span>, then take it away.`],
-  sliders:[{k:"b",label:"b",min:-8,max:8,step:1,on:s=>{if(s.b===0)s.b=1}},{k:"c",label:"c",min:-10,max:10,step:1},{k:"mv",label:"move",min:0,max:1,step:.01,show:s=>s.b>0}],
+  sliders:[{k:"b",label:"b",min:-8,max:8,step:1,on:(s,p)=>{if(s.b===0)s.b=p>0?-1:1}},{k:"c",label:"c",min:-10,max:10,step:1},{k:"mv",label:"move",min:0,max:1,step:.01,show:s=>s.b>0}],
   buttons:[{label:"▶ Cut & move",show:s=>s.b>0,fn:(s,anim)=>{s.mv=0; anim(2200,p=>{s.mv=+p.toFixed(2);});}}],
   steps:[{t:()=>""}],
   draw(svg,s){
@@ -1572,24 +1535,10 @@ const FORMS=(a,tight)=>`<div class="forms${tight?" tight":""}">${a.join("")}</di
 const KHEAD=t=>`<div class="khead">${t}</div>`;
 const KPAIR=(gen,spec,lbl)=>`<div class="kpair"><span class="gl">General form</span><span class="ge">${gen}</span><span class="gl">${lbl}</span><span class="se">${spec}</span></div>`;
 const explainBox=lines=>`<div class="box explain"><ul>${lines.map(l=>`<li>${l}</li>`).join("")}</ul></div>`;
-function stepHeader(n){return `<div class="stepnum"><span data-sn></span><span class="dots">${"<i></i>".repeat(n)}</span></div>`}
-function setStep(panel,steps,i,st){
-  if(!$("[data-sn]",panel)) return;
-  $("[data-sn]",panel).textContent=`Step ${i+1} of ${steps.length}`;
-  [...panel.querySelectorAll(".dots i")].forEach((d,k)=>d.classList.toggle("on",k<=i));
-  $(".steptext",panel).innerHTML=steps[i].t(st);
-  $("[data-prev]",panel).disabled=i===0;
-  const nx=$("[data-next]",panel); nx.disabled=i===steps.length-1;
-}
-function wireNav(panel,steps,st,draw){
-  if(!$("[data-prev]",panel)) return;
-  $("[data-prev]",panel).onclick=()=>{if(st.step>0){st.step--;draw()}};
-  $("[data-next]",panel).onclick=()=>{if(st.step<steps.length-1){st.step++;draw()}};
-}
 const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid};
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
-  return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-8.5}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+8.5}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
+  return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
 function miniQF(kind){const X=x=>8+(x+2)/6*52, Y=y=>4+(5-y)/10*40; let d=""; for(let i=0;i<=24;i++){const x=-2+6*i/24, y=(x-1)**2-4; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1);}
   const dot=(x,y)=>`<circle cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="3" fill="var(--red)"/>`;
   const mark=kind==="tp"?dot(1,-4)+`<line x1="${X(1)}" y1="${Y(0)}" x2="${X(1)}" y2="${Y(-4)}" stroke="var(--red)" stroke-dasharray="2 2"/>`:kind==="roots"?dot(-1,0)+dot(3,0):dot(0,-3);
@@ -1646,7 +1595,7 @@ const MUST=boxes=>`<div class="must"><div class="musth">Must know</div>${FORMS(b
 const PIC=(href,inner,prop,reason)=>`<${href?`a href="${href}"`:"div"} class="piccard">${inner}<div class="pt">${prop}</div>${reason?`<div class="anno">${reason}</div>`:""}${href?`<div class="go">Try it →</div>`:""}</${href?"a":"div"}>`;
 const EG=(head,lines)=>`<div class="eg">${head?`<div class="egh">${head}</div>`:""}${lines.map(l=>`<div class="egl">${l}</div>`).join("")}</div>`;
 const FACTS=(head,rows)=>`<div class="facts">${head?`<div class="fh">${head}</div>`:""}${rows.map(([l,xs])=>`<div class="fr${l?"":" nol"}">${l?`<span class="fl">${l}</span>`:""}<div class="fcs">${xs.map(x=>`<span class="fact">${x}</span>`).join("")}</div></div>`).join("")}</div>`;
-const PLAYLINK=(href,txt="Try it")=>`<p class="anno" style="text-align:center"><a class="pill sm playlink" href="${href}">${txt} →</a></p>`;
+const PLAYLINK=(href,txt="Try it")=>`<p class="anno pl" style="text-align:center"><a class="pill sm playlink" href="${href}">${txt} →</a></p>`;
 const SHEETS = {
 expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab")} + ${V("b")}²`,"square, double product, square"),FB("red",`(${V("a")} − ${V("b")})²`,`${V("a")}² − 2${V("ab")} + ${V("b")}²`,"only the middle sign changes"),FB("green",`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`,`${V("a")}² − ${V("b")}²`,"difference of two squares")])}
 <div class="sheet">
@@ -1784,16 +1733,16 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
 
   <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
     <a href="#diff-x-squared?x=1&h=1.5" class="piclink"><svg viewBox="0 0 220 100" style="width:100%;max-width:300px;display:block;margin:0 auto">
-      <path d="M20 90 Q110 -70 200 90" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <line x1="30" y1="86" x2="150" y2="22" stroke="var(--amber)" stroke-width="2"/>
-      <line x1="40" y1="96" x2="120" y2="42" stroke="var(--green)" stroke-width="2" stroke-dasharray="4 3"/>
-      <circle cx="66" cy="66" r="4" fill="var(--accent)"/><circle cx="119" cy="39" r="4" fill="var(--amber)"/>
-      <text x="56" y="82" font-size="13" font-weight="700" fill="var(--ink)">P</text><text x="124" y="34" font-size="13" font-weight="700" fill="var(--amber)">Q</text>
-      <text x="150" y="80" font-size="12" fill="var(--amber)">chord PQ</text><text x="150" y="95" font-size="12" fill="var(--green)">tangent at P</text>
+      <path d="M21.5 88.6L29.8 91.1L38.0 92.9L46.2 94.2L54.5 94.9L62.8 95.0L71.0 94.5L79.2 93.4L87.5 91.8L95.8 89.5L104.0 86.7L112.2 83.3L120.5 79.3L128.8 74.7L137.0 69.5L145.2 63.8L153.5 57.4L161.8 50.5L170.0 43.0L178.2 34.9L186.5 26.2L194.8 17.0L203.0 7.1" fill="none" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="87.5" y1="97.6" x2="186.5" y2="32" stroke="var(--amber)" stroke-width="2"/>
+      <line x1="76.5" y1="97.1" x2="197.5" y2="51.3" stroke="var(--green)" stroke-width="2" stroke-dasharray="4 3"/>
+      <circle cx="104" cy="86.7" r="4" fill="var(--accent)"/><circle cx="170" cy="43" r="4" fill="var(--amber)"/>
+      <text x="94" y="80" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="end">P</text><text x="162" y="38" font-size="13" font-weight="700" fill="var(--amber)" text-anchor="end">Q</text>
+      <text x="10" y="22" font-size="12" fill="var(--amber)">chord PQ</text><text x="10" y="38" font-size="12" fill="var(--green)">tangent at P</text>
     </svg></a>
     <ul class="steps">
       <li>Chord PQ: gradient = ${nw("rise ÷ run")} = ${nw(`2${V("x")} + ${V("h")}`)}</li>
-      <li>Slide Q into P (${V("h")} → 0): the chord becomes the <b>tangent</b></li>
+      <li>Slide Q into P ${nw(`(${V("h")} → 0)`)}: the chord becomes the <b>tangent</b></li>
       <li>Gradient → <b>2${V("x")}</b>, so ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}</li>
     </ul>
     <p class="anno">Not needed in the exam. It shows why the power rule works.</p>
@@ -2274,18 +2223,18 @@ diffApps:`${MUST([FB("blue",`${frac("d"+V("y"),"d"+V("x"))} = gradient of the ta
   </div>
 </div>`,
 
-speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration","m/s² · flat = steady speed · downhill = slowing down"),FB("blue","Area under speed–time graph","= distance travelled","triangle · rectangle · trapezium"),FB("amber","km/h ↔ m/s","÷ 3.6 → m/s · × 3.6 → km/h","72 km/h = 20 m/s")])}
+speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration","m/s² · flat = steady speed · downhill = slowing down"),FB("blue","Area under speed–time graph","= distance travelled","triangle · rectangle · trapezium"),FB("amber","km/h ↔ m/s",`${nw("÷ 3.6 → m/s")} · ${nw("× 3.6 → km/h")}`,"72 km/h = 20 m/s")])}
 <div class="sheet">
   <div class="panelc"><h4>Speed–time graph</h4>
     <a href="#speed-time" class="piclink"><svg viewBox="0 0 220 100" style="width:100%;max-width:320px;display:block;margin:0 auto">
       <path d="M20 85 L70 25 L140 25 L200 85 Z" fill="var(--blue-fill)"/>
       <path d="M20 85 L70 25 L140 25 L200 85" fill="none" stroke="var(--blue)" stroke-width="2.5"/>
       <line x1="15" y1="85" x2="212" y2="85" stroke="var(--ink)"/><line x1="20" y1="90" x2="20" y2="10" stroke="var(--ink)"/>
-      <text x="45" y="48" font-size="11" fill="var(--green)" font-weight="700" transform="rotate(-50 45 48)">speeding up</text>
+      <text x="22" y="70" font-size="10" fill="var(--green)" font-weight="700" transform="rotate(-50 22 70)">speeding up</text>
       <text x="105" y="20" font-size="11" fill="var(--ink)" text-anchor="middle">steady</text>
-      <text x="168" y="44" font-size="11" fill="var(--red)" font-weight="700" transform="rotate(50 168 44)">slowing down</text>
+      <text x="150" y="22" font-size="10" fill="var(--red)" font-weight="700" transform="rotate(45 150 22)">slowing down</text>
       <text x="105" y="62" font-size="12" fill="var(--blue)" text-anchor="middle" font-weight="700">area = distance</text>
-      <text x="206" y="97" font-size="10" fill="var(--muted)">t (s)</text><text x="4" y="14" font-size="10" fill="var(--muted)">v</text>
+      <text x="216" y="97" font-size="10" fill="var(--muted)" text-anchor="end">t (s)</text><text x="4" y="14" font-size="10" fill="var(--muted)">v</text>
     </svg></a>
     <table>
       <tr><th>Part of the graph</th><th>Means</th></tr>
@@ -2346,7 +2295,7 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
   </div>
 </div>`,
 
-kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,`integrate to go back: ${V("a")} → ${V("v")} → ${V("s")}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
+kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,`integrate to go back: ${nw(`${V("a")} → ${V("v")} → ${V("s")}`)}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
 <div class="sheet">
   <div class="panelc"><h4>s, v, a</h4>
     <table>
@@ -2373,7 +2322,7 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
 
   <div class="panelc"><h4>Distance travelled vs displacement</h4>
     <a href="#area-under?cv=lin&T=5" class="piclink"><svg viewBox="0 0 220 70" style="width:100%;max-width:300px;display:block;margin:0 auto">
-      <path d="M20 10 L110 45 L110 45 Z" fill="var(--blue-fill)"/><path d="M20 10 L110 45 L20 45 Z" fill="var(--blue-fill)"/>
+      <path d="M20 10 L110 45 L20 45 Z" fill="var(--blue-fill)"/>
       <path d="M110 45 L170 68 L170 45 Z" fill="var(--red-fill)"/>
       <line x1="10" y1="45" x2="210" y2="45" stroke="var(--ink)"/><line x1="20" y1="10" x2="170" y2="68" stroke="var(--blue)" stroke-width="2.5"/>
       <text x="55" y="38" font-size="12" fill="var(--blue)" font-weight="700">+9</text><text x="150" y="62" font-size="12" fill="var(--red)" font-weight="700">−4</text>
@@ -2490,10 +2439,10 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
 };
 const SHEETLIST=[
   {id:"expansion",levels:["sec2"],ord:3,chapter:"Expansion & Factorisation",title:"Expansion: the 3 special products",sheet:"expansion",aid:"a-plus-b-squared"},
-  {id:"completing-the-square",levels:["emath","amath"],ord:{amath:1},chapter:"Quadratic Functions",title:"Completing the square",sheet:"complSq",aid:"complete-square"},
-  {id:"quadratic-graphs",levels:["emath","amath"],ord:{amath:1.5},chapter:"Quadratic Functions",title:"Quadratic graphs",sheet:"quadGraphs",aid:"quad-forms"},
-  {id:"speed-time-graphs",levels:["emath"],chapter:"Speed–time graphs",title:"Speed–time graphs",sheet:"speedTime",aid:"speed-time"},
-  {id:"circle-properties",levels:["emath","amath"],ord:{amath:16},chapter:"Properties of Circles",title:"Circle properties",sheet:"circles",aid:"circle-props"},
+  {id:"completing-the-square",levels:["emath","amath"],ord:{emath:1.2,amath:1},chapter:"Quadratic Functions",title:"Completing the square",sheet:"complSq",aid:"complete-square"},
+  {id:"quadratic-graphs",levels:["emath","amath"],ord:{emath:1.4,amath:1.5},chapter:"Quadratic Functions",title:"Quadratic graphs",sheet:"quadGraphs",aid:"quad-forms"},
+  {id:"speed-time-graphs",levels:["emath"],ord:5.5,chapter:"Speed–time graphs",title:"Speed–time graphs",sheet:"speedTime",aid:"speed-time"},
+  {id:"circle-properties",levels:["emath","amath"],ord:{emath:10,amath:16},chapter:"Properties of Circles",title:"Circle properties",sheet:"circles",aid:"circle-props"},
   {id:"discriminant",levels:["amath"],ord:2,chapter:"Equations & Inequalities",title:"b² − 4ac (discriminant)",sheet:"discrim",aid:"discriminant"},
   {id:"trig-ratios-any-angle",levels:["amath"],ord:9,chapter:"Trigonometry",title:"Trig ratios of any angle",sheet:"trigAngles",aid:"unit-circle"},
   {id:"trig-graphs",levels:["amath"],ord:9.5,chapter:"Trigonometry",title:"Trig graphs",sheet:"trigGraphs",aid:"trig-graphs"},
@@ -2505,7 +2454,7 @@ const SHEETLIST=[
 ];
 const MX=(rows,cls="")=>`<span class="mx${cls?" "+cls:""}" style="grid-template-columns:repeat(${rows[0].length},auto)">${rows.map(r=>r.map(c=>`<span>${c}</span>`).join("")).join("")}</span>`;
 const SF=(x,y,n,d,col="var(--ink)")=>`<text x="${x}" y="${y-2.5}" font-size="8" text-anchor="middle" fill="${col}">${n}</text><line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="${col}" stroke-width="1"/><text x="${x}" y="${y+8.5}" font-size="8" text-anchor="middle" fill="${col}">${d}</text>`;
-function venn(kind){const W=96,H=64,ca=[36,32],cb=[60,32],r=22,id="vn"+(++venn.n);
+function venn(kind){const ca=[36,32],cb=[60,32],r=22,id="vn"+(venn.n=(venn.n||0)+1);
   const base=`<rect x="2" y="2" width="92" height="60" rx="4" fill="var(--card)" stroke="var(--ink)"/>`, outl=`<circle cx="${ca[0]}" cy="${ca[1]}" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="${cb[0]}" cy="${cb[1]}" r="${r}" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`;
   const A=`<circle cx="${ca[0]}" cy="${ca[1]}" r="${r}"`, B=`<circle cx="${cb[0]}" cy="${cb[1]}" r="${r}"`, F=`fill="var(--blue-fill)"`, C=`fill="var(--card)"`;
   let sh="";
@@ -2518,7 +2467,7 @@ function venn(kind){const W=96,H=64,ca=[36,32],cb=[60,32],r=22,id="vn"+(++venn.n
   if(kind==="disj") return `<svg viewBox="0 0 96 64" class="vennp">${base}<circle cx="28" cy="32" r="18" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="68" cy="32" r="18" fill="none" stroke="var(--ink)" stroke-width="1.2"/><text x="24" y="36" font-size="9" fill="var(--ink)">A</text><text x="64" y="36" font-size="9" fill="var(--ink)">B</text><text x="6" y="12" font-size="8" fill="var(--muted)">ξ</text></svg>`;
   return `<svg viewBox="0 0 96 64" class="vennp">${base}${sh}${outl}<text x="20" y="15" font-size="9" fill="var(--ink)">A</text><text x="70" y="15" font-size="9" fill="var(--ink)">B</text><text x="6" y="60" font-size="8" fill="var(--muted)">ξ</text></svg>`;}
 venn.n=0;
-function nline(kind,val){const W=120,y=18,x0=14,x1=106,xv=60; const open=kind==="gt"||kind==="lt", right=kind==="gt"||kind==="ge";
+function nline(kind,val){const y=18,x0=14,x1=106,xv=60; const open=kind==="gt"||kind==="lt", right=kind==="gt"||kind==="ge";
   return `<svg viewBox="0 0 120 34" class="nlp"><line x1="4" y1="${y}" x2="116" y2="${y}" stroke="var(--ink)"/><path d="M112 14 L118 18 L112 22" fill="none" stroke="var(--ink)"/><path d="M8 14 L2 18 L8 22" fill="none" stroke="var(--ink)"/>
   <line x1="${xv}" y1="${y}" x2="${right?x1:x0}" y2="${y}" stroke="var(--blue)" stroke-width="3"/><path d="${right?`M${x1-5} 13 L${x1+1} 18 L${x1-5} 23`:`M${x0+5} 13 L${x0-1} 18 L${x0+5} 23`}" fill="none" stroke="var(--blue)" stroke-width="2"/>
   <circle cx="${xv}" cy="${y}" r="4" fill="${open?"var(--card)":"var(--blue)"}" stroke="var(--blue)" stroke-width="2"/><text x="${xv}" y="32" font-size="9" text-anchor="middle" fill="var(--ink)">${val}</text></svg>`;}
@@ -2629,7 +2578,7 @@ linIneq:`${MUST([FB("red","× or ÷ by a NEGATIVE → flip the sign",`${nw(`−2
   <div class="panelc"><h4>Exam phrases</h4>
     <table>
       <tr><th>They say</th><th>You write</th></tr>
-      <tr><td>smallest integer value of ${X1}</td><td>first whole number inside the range</td></tr>
+      <tr><td>smallest integer value of ${X1}</td><td>first integer inside the range</td></tr>
       <tr><td>greatest prime value of ${X1}</td><td>list the integers, pick the prime</td></tr>
       <tr><td>${X1} is at least 5</td><td>${X1} ≥ 5</td></tr>
       <tr><td>${X1} is more than 5</td><td>${X1} &gt; 5</td></tr>
@@ -2825,7 +2774,8 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
       <tr><th>Symbol</th><th>Say</th><th>Example</th></tr>
       <tr><td>∈</td><td>is an element of</td><td>3 ∈ {1, 2, 3}</td></tr>
       <tr><td>∉</td><td>is not an element of</td><td>5 ∉ {1, 2, 3}</td></tr>
-      <tr><td>⊂ (or ⊆)</td><td>is a subset of</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
+      <tr><td>⊆</td><td>is a subset of</td><td>{1, 2} ⊆ {1, 2, 3}</td></tr>
+      <tr><td>⊂</td><td>is a proper subset of (not equal)</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
       <tr><td>ξ</td><td>universal set</td><td>everything in the question</td></tr>
       <tr><td>∅ or { }</td><td>empty set</td><td>A ∩ B = ∅ → nothing in common</td></tr>
       <tr><td>n(A)</td><td>number of elements in A</td><td>n({2, 4, 6}) = 3</td></tr>
@@ -2901,7 +2851,7 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
   </div>
 </div>`,
 
-probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can happen","total number of outcomes")}`,"always between 0 and 1"),FB("amber","AND → multiply · OR → add",`P(A and B) = P(A) × P(B)`,"× along the branches · OR adds only if they can't both happen"),FB("green","At least one",`P(at least one) = 1 − P(none)`,"faster than adding every case")])}
+probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can happen","total number of outcomes")}`,"always between 0 and 1"),FB("amber","AND → multiply · OR → add",`P(A and B) = P(A) × P(B)`,"only if independent · on a tree, × along the branches · OR adds only if they can't both happen"),FB("green","At least one",`P(at least one) = 1 − P(none)`,"faster than adding every case")])}
 <div class="sheet">
   <div class="panelc"><h4>Possibility diagram: two dice</h4>
     ${diceGrid()}
@@ -2988,15 +2938,15 @@ matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0",
 };
 Object.assign(SHEETS,SHEETS2);
 SHEETLIST.push(
-  {id:"quadratic-equations",levels:["emath"],chapter:"Quadratic Equations & Functions",title:"Solving quadratic equations",sheet:"quadEqns",aid:null},
-  {id:"linear-inequalities",levels:["sec2","emath"],ord:2,chapter:"Linear Inequalities",title:"Linear inequalities",sheet:"linIneq",aid:null},
-  {id:"indices",levels:["emath"],chapter:"Indices",title:"Indices",sheet:"indices",aid:null},
-  {id:"standard-form",levels:["emath"],chapter:"Standard Form",title:"Standard form",sheet:"stdForm",aid:null},
-  {id:"interest",levels:["emath"],chapter:"Simple & Compound Interest",title:"Simple & compound interest",sheet:"interest",aid:null},
-  {id:"sets",levels:["emath"],chapter:"Set Language & Notation",title:"Sets & Venn diagrams",sheet:"sets",aid:null},
-  {id:"measures-of-spread",levels:["emath"],chapter:"Statistics: Measures of Spread",title:"Quartiles, box plots & standard deviation",sheet:"spread",aid:null},
-  {id:"probability",levels:["emath"],chapter:"Probability",title:"Probability",sheet:"probability",aid:null},
-  {id:"matrices",levels:["emath"],chapter:"Matrices",title:"Matrices",sheet:"matrices",aid:null}
+  {id:"quadratic-equations",levels:["emath"],ord:1,chapter:"Quadratic Equations & Functions",title:"Solving quadratic equations",sheet:"quadEqns",aid:null},
+  {id:"linear-inequalities",levels:["sec2","emath"],ord:{sec2:2,emath:2},chapter:"Linear Inequalities",title:"Linear inequalities",sheet:"linIneq",aid:null},
+  {id:"indices",levels:["emath"],ord:3,chapter:"Indices",title:"Indices",sheet:"indices",aid:null},
+  {id:"standard-form",levels:["emath"],ord:3.2,chapter:"Standard Form",title:"Standard form",sheet:"stdForm",aid:null},
+  {id:"interest",levels:["emath"],ord:3.4,chapter:"Simple & Compound Interest",title:"Simple & compound interest",sheet:"interest",aid:null},
+  {id:"sets",levels:["emath"],ord:11,chapter:"Set Language & Notation",title:"Sets & Venn diagrams",sheet:"sets",aid:null},
+  {id:"measures-of-spread",levels:["emath"],ord:12,chapter:"Statistics: Measures of Spread",title:"Quartiles, box plots & standard deviation",sheet:"spread",aid:null},
+  {id:"probability",levels:["emath"],ord:13,chapter:"Probability",title:"Probability",sheet:"probability",aid:null},
+  {id:"matrices",levels:["emath"],ord:14,chapter:"Matrices",title:"Matrices",sheet:"matrices",aid:null}
 );
 const GRP=(t,id)=>`<li class="grp"><span>${t}</span>${id?`<a class="go" href="#sheet/${id}">cheatsheet →</a>`:""}</li>`;
 const FL=f=>`<li>${f}</li>`;
@@ -3100,7 +3050,7 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${FL(`Interquartile range = ${nw(`${V("Q")}₃ − ${V("Q")}₁`)}`)}
       ${GRP("Probability","probability")}
       ${FL(nw("P(not A) = 1 − P(A)"))}
-      ${FL(nw("AND → multiply"))}
+      ${FL(nw("AND → multiply")+FNOTE("independent, or along the tree branches"))}
       ${FL(nw("OR → add")+FNOTE("only if they can't both happen"))}
       ${GRP("Sets","sets")}
       ${FL(`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`)}
@@ -3295,12 +3245,12 @@ SHEETLIST.push(
   {id:"amath-formula-sheet",levels:["amath"],chapter:"Given in the exam + what to memorise",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"skills",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"}
 );
-const SV=(vb,inner)=>`<svg viewBox="${vb}" class="lsp">${inner}</svg>`;
+const SV=(vb,inner)=>`<svg viewBox="${vb}" class="lsp" aria-hidden="true">${inner}</svg>`;
 const TX=(x,y,t,o="")=>`<text x="${x}" y="${y}"${/font-size=/.test(o)?"":` font-size="7"`}${/text-anchor=/.test(o)?"":` text-anchor="middle"`}${/fill=/.test(o)?"":` fill="var(--ink)"`} ${o}>${t}</text>`;
 const ARC=(cx,cy,r,a0,a1,col)=>{let d=""; for(let i=0;i<=14;i++){const a=(a0+(a1-a0)*i/14)*Math.PI/180; d+=(i?"L":"M")+(cx+r*Math.cos(a)).toFixed(1)+" "+(cy-r*Math.sin(a)).toFixed(1);} return `<path d="${d}" fill="none" stroke="${col}" stroke-width="1.6"/>`;};
 const AL2=(cx,cy,r,a0,a1,t,col)=>{const m=(a0+a1)/2*Math.PI/180; return ARC(cx,cy,r*0.6,a0,a1,col)+TX((cx+r*Math.cos(m)).toFixed(1),(cy-r*Math.sin(m)+2.4).toFixed(1),t,`fill="${col}" font-weight="700"`);};
 const LN=(x1,y1,x2,y2,o="")=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
-const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`} stroke-width="1.2" ${o}/>`;
+const PG=(pts,o="")=>`<polygon points="${pts}"${/fill=/.test(o)?"":` fill="var(--blue-fill)"`}${/stroke=/.test(o)?"":` stroke="var(--ink)"`}${/stroke-width=/.test(o)?"":` stroke-width="1.2"`} ${o}/>`;
 const DASH='stroke-dasharray="3 2"';
 function picLadder(){ const A='fill="var(--amber)" font-weight="700"', G='fill="var(--green)" font-weight="700"', f='font-size="8.5"';
   return SV("0 0 120 62",LN(19,5,19,38)+LN(19,21,66,21)+LN(19,38,66,38)
@@ -3336,7 +3286,7 @@ function picGrad(){ const X=x=>14+12*x, Y=y=>80-8.5*y; let s="";
   s+=`<path d="M${X(1)} ${Y(1)} H${X(4)} V${Y(7)}" fill="none" stroke="var(--amber)" stroke-width="1.6" ${DASH}/>`+TX((X(1)+X(4))/2,Y(1)+7,"run 3",`fill="var(--amber)" font-weight="700" font-size="6.5"`)+TX(X(4)+4,(Y(1)+Y(7))/2,"rise 6",`fill="var(--amber)" font-weight="700" font-size="6.5" text-anchor="start"`);
   s+=`<circle cx="${X(1)}" cy="${Y(1)}" r="2.2" fill="var(--red)"/><circle cx="${X(4)}" cy="${Y(7)}" r="2.2" fill="var(--red)"/>`+TX(X(1)-2,Y(1)-3,"(1, 1)",`font-size="5.5" text-anchor="end"`)+TX(X(4)-3,Y(7)-2,"(4, 7)",`font-size="5.5" text-anchor="end"`);
   return SV("0 0 110 88",s); }
-function picShape(k){ let s;
+function picShape(k){ let s="";
   if(k==="para") s=PG("10,52 66,52 86,12 30,12")+LN(30,12,30,52,DASH+` stroke="var(--red)"`)+TX(38,36,"h",`fill="var(--red)" font-weight="700"`)+TX(38,61,"base");
   if(k==="trap") s=PG("8,52 92,52 70,14 30,14")+LN(30,14,30,52,DASH+` stroke="var(--red)"`)+TX(37,36,"h",`fill="var(--red)" font-weight="700"`)+TX(50,10,"a",`font-weight="700"`)+TX(50,61,"b",`font-weight="700"`);
   if(k==="tri") s=PG("8,52 92,52 34,12")+LN(34,12,34,52,DASH+` stroke="var(--red)"`)+TX(40,36,"h",`fill="var(--red)" font-weight="700"`)+TX(50,61,"base");
@@ -3834,7 +3784,7 @@ function picExpLog(){ const X=x=>40+13*x, Y=y=>56-13*y; let s=LN(X(-2.6),Y(0),X(
   let e="",l=""; for(let i=0;i<=40;i++){ const x=-2.6+i*4.6/40, u=0.27+i*5.23/40; e+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(2**x).toFixed(1); l+=(i?"L":"M")+X(u).toFixed(1)+" "+Y(Math.log2(u)).toFixed(1); }
   s+=`<path d="${e}" fill="none" stroke="var(--blue)" stroke-width="1.8"/><path d="${l}" fill="none" stroke="var(--amber)" stroke-width="1.8"/>`+DOT(X(0),Y(1),"var(--blue)")+DOT(X(1),Y(0),"var(--amber)");
   s+=TX(X(0)-2,Y(1)-2,"(0, 1)",`font-size="5" text-anchor="end" fill="var(--blue)"`)+TX(X(1)+2,Y(0)+7,"(1, 0)",`font-size="5" text-anchor="start" fill="var(--amber)"`)
-    +TX(X(-0.4),Y(3.2),`y = 2<tspan baseline-shift="super" font-size="4.5">x</tspan>`,`font-size="6" fill="var(--blue)" font-weight="700" text-anchor="end"`)+TX(X(4.2),Y(1.2),"y = log₂ x",`font-size="6" ${AM}`)+TX(X(3.9)+2,Y(3.9)+5,"y = x",`font-size="5.5" fill="var(--muted)" text-anchor="start"`);
+    +TX(X(-0.4),Y(3.2),`y = 2<tspan dy="-2.4" font-size="4.5">x</tspan>`,`font-size="6" fill="var(--blue)" font-weight="700" text-anchor="end"`)+TX(X(4.2),Y(1.2),"y = log₂ x",`font-size="6" ${AM}`)+TX(X(3.9)+2,Y(3.9)+5,"y = x",`font-size="5.5" fill="var(--muted)" text-anchor="start"`);
   return SV("0 0 116 84",s); }
 function picPerpBis(){ const X=x=>8+11*x, Y=y=>82-11*y, M=[X(3),Y(4)]; let s=GRID(X,Y,7,7);
   s+=LN(X(1),Y(2),X(5),Y(6),`stroke="var(--blue)" stroke-width="1.8"`)+LN(X(0.5),Y(6.5),X(6.5),Y(0.5),`stroke="var(--amber)" stroke-width="1.6" ${DASH}`);
@@ -3897,7 +3847,7 @@ ${PAN("Perpendicular bisector",picPerpBis()+EG("A(1, 2), B(5, 6)",[nw("midpoint 
 ${PAN("Area from the corners",EG("A(−4, 3), B(3, 5), C(2, −5)",["anticlockwise: A, C, B, back to A",nw(`${frac("1","2")}${MX([["−4","2","3","−4"],["3","−5","5","3"]],"det")}`),nw("↘: (−4)(−5) + (2)(5) + (3)(3) = 39"),nw("↗: (3)(2) + (−5)(3) + (5)(−4) = −29"),nw(`area = ${frac("1","2")}(39 − (−29)) = 34 units²`)])+`<p class="anno">* clockwise gives a negative answer, so go anticlockwise</p>`)}
 ${PAN("Circles",STEPS([[nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),"centre (−3, 2), radius 4"]])
   +EG(nw(`${X2} + ${V("y")}² − 6${X1} + 4${V("y")} − 12 = 0`),[nw(`${V("g")} = −3, ${V("f")} = 2, ${V("c")} = −12`),nw("centre = (3, −2)"),nw(`radius = ${SQRT("(−3)² + 2² − (−12)")} = 5`)])+`<p class="anno">* first divide so ${X2} and ${V("y")}² have 1 in front, and make the right side 0</p>`)}
-${PAN("Tangent to a circle",picTangent()+EG("Tangent at P(6, 2) to the circle above",[nw(`${V("m")}<sub>CP</sub> = ${frac("2 − (−2)","6 − 3")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,nw(`${V("y")} − 2 = −${frac("3","4")}(${X1} − 6)`),nw(`4${V("y")} = −3${X1} + 26`)])
+${PAN("Tangent to a circle",picTangent()+EG(`Tangent at P(6, 2) to ${nw(`${X2} + ${V("y")}² − 6${X1} + 4${V("y")} − 12 = 0`)}`,[nw(`${V("m")}<sub>CP</sub> = ${frac("2 − (−2)","6 − 3")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,nw(`${V("y")} − 2 = −${frac("3","4")}(${X1} − 6)`),nw(`4${V("y")} = −3${X1} + 26`)])
   +STEPS(["line meets circle: substitute the line into the circle",`touches once (a tangent): ${nw(`${V("b")}² − 4${V("ac")} = 0`)}`]))}
 ${MIST([["perpendicular bisector through A","through the midpoint of AB"],["shoelace corners in any order","anticlockwise, and end where you started"],[`${nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)}: centre (3, −2), radius 16`,"centre (−3, 2), radius 4"],["tangent gradient = radius gradient",`perpendicular: ${nw(`−${frac("1",`${V("m")}<sub>radius</sub>`)}`)}`]])}
 </div>`,
@@ -3967,11 +3917,11 @@ SHEETLIST.push(
   {id:"data-sec2",levels:["sec2"],ord:11,chapter:"Statistics",title:"Dot diagrams, histograms & stem-and-leaf",sheet:"s2Data",aid:null,kw:"statistics stem and leaf histogram dot diagram"},
   {id:"averages",levels:["sec2"],ord:12,chapter:"Statistics",title:"Mean, median & mode",sheet:"s2Averages",aid:null,kw:"average mean median mode frequency table"},
   {id:"probability-sec2",levels:["sec2"],ord:13,chapter:"Probability",title:"Probability: single events",sheet:"s2Prob",aid:null,kw:"probability chance not happening"},
-  {id:"coordinate-geometry",levels:["emath"],chapter:"Coordinate Geometry",title:"Coordinate geometry",sheet:"emCoord",aid:null,kw:"gradient length distance midpoint equation of a line y = mx + c parallel perpendicular area shortest distance collinear"},
-  {id:"further-trigonometry",levels:["emath"],chapter:"Further Trigonometry",title:"Sine rule, cosine rule & area",sheet:"emTrig2",aid:null,kw:"sine rule cosine rule half ab sin c obtuse angle trigonometry"},
-  {id:"bearings-elevation-3d",levels:["emath"],chapter:"Applications of Trigonometry",title:"Bearings, elevation & 3D",sheet:"emTrigApp",aid:null,kw:"bearings angle of elevation depression 3d shortest distance trigonometry"},
-  {id:"arc-length-sector-area",levels:["emath"],chapter:"Arc Length & Radians",title:"Arc length, sector area & radians",sheet:"emArcs",aid:null,kw:"radian arc sector segment circle perimeter"},
-  {id:"vectors",levels:["emath"],chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"},
+  {id:"coordinate-geometry",levels:["emath"],ord:4,chapter:"Coordinate Geometry",title:"Coordinate geometry",sheet:"emCoord",aid:null,kw:"gradient length distance midpoint equation of a line y = mx + c parallel perpendicular area shortest distance collinear"},
+  {id:"further-trigonometry",levels:["emath"],ord:7,chapter:"Further Trigonometry",title:"Sine rule, cosine rule & area",sheet:"emTrig2",aid:null,kw:"sine rule cosine rule half ab sin c obtuse angle trigonometry"},
+  {id:"bearings-elevation-3d",levels:["emath"],ord:8,chapter:"Applications of Trigonometry",title:"Bearings, elevation & 3D",sheet:"emTrigApp",aid:null,kw:"bearings angle of elevation depression 3d shortest distance trigonometry"},
+  {id:"arc-length-sector-area",levels:["emath"],ord:9,chapter:"Arc Length & Radians",title:"Arc length, sector area & radians",sheet:"emArcs",aid:null,kw:"radian arc sector segment circle perimeter"},
+  {id:"vectors",levels:["emath"],ord:15,chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"},
   {id:"polynomials-partial-fractions",levels:["amath"],ord:4,chapter:"Polynomials",title:"Polynomials & partial fractions",sheet:"amPoly",aid:null,kw:"remainder theorem factor theorem cubic long division sum difference of cubes partial fractions"},
   {id:"binomial-theorem",levels:["amath"],ord:5,chapter:"Binomial Theorem",title:"Binomial theorem",sheet:"amBinom",aid:null,kw:"binomial expansion pascal triangle ncr general term independent of x"},
   {id:"exponentials-logarithms",levels:["amath"],ord:6,chapter:"Exponentials & Logarithms",title:"Exponentials & logarithms",sheet:"amLogs",aid:null,kw:"log lg ln laws of logarithms change of base exponential equations indices"},
@@ -4019,7 +3969,7 @@ function thumbFor(t){
    rFormula:`<path d="M0 32 C10 10 20 10 30 32 S50 54 60 32 S80 10 90 32" fill="none" stroke="var(--amber)" stroke-dasharray="3 2"/><path d="M0 20 C12 -6 26 -6 36 30 S60 70 72 30 S96 -6 110 24" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
    circleProps:`<circle cx="32" cy="32" r="28" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M8 46 L32 32 L56 46 M8 46 L32 4 L56 46" fill="none" stroke="var(--blue)" stroke-width="1.5"/><text x="70" y="38" font-size="13" fill="var(--muted)">2× rule</text>`,
    tangentAid:`<path d="M4 60 C30 -20 60 90 100 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="20" y1="22" x2="80" y2="22" stroke="var(--amber)" stroke-width="2"/>`,
-   diffChord:`<path d="M6 60 Q50 -50 100 54" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="10" y1="52" x2="80" y2="14" stroke="var(--amber)" stroke-width="2"/><circle cx="30" cy="38" r="4" fill="var(--accent)"/><circle cx="62" cy="21" r="4" fill="var(--amber)"/><text x="88" y="60" font-size="13" fill="var(--muted)">Q → P</text>`,
+   diffChord:`<path d="M8 4 Q50 110 92 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="52" y1="63.5" x2="95" y2="12.5" stroke="var(--amber)" stroke-width="2"/><circle cx="60.1" cy="53.9" r="4" fill="var(--accent)"/><circle cx="79.4" cy="31" r="4" fill="var(--amber)"/><text x="88" y="60" font-size="13" fill="var(--muted)">Q → P</text>`,
    speedTime:`<path d="M6 58 L30 14 L70 14 L104 58 Z" fill="var(--blue-fill)"/><path d="M6 58 L30 14 L70 14 L104 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="58" x2="112" y2="58" stroke="var(--muted)"/><rect x="44" y="30" width="14" height="7" rx="2" fill="var(--red)"/>`,
    genTerm:`<rect x="2" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><rect x="28" y="2" width="22" height="13" rx="2" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="54" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><path d="M4 62 C30 6 58 70 104 22" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="62" y1="54" x2="112" y2="20" stroke="var(--green)" stroke-width="2"/>`,
    kinAid:`<path d="M6 40 Q30 -10 56 40 T106 40" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M6 40 Q30 -10 56 40 Z" fill="var(--blue-fill)"/><path d="M56 40 Q80 90 106 40 Z" fill="var(--red-fill)"/><line x1="4" y1="40" x2="112" y2="40" stroke="var(--muted)"/><circle cx="56" cy="8" r="4" fill="var(--green)"/>`};
@@ -4045,8 +3995,6 @@ const setNav=k=>document.querySelectorAll(".topnav a").forEach(a=>{ if(a.dataset
 const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
 const ordOf=(s,lv)=>(s.ord&&typeof s.ord==="object"?s.ord[lv]:s.ord)??99;
-function sheetRow(s,skip){ return h("a",{class:"srow",href:"#sheet/"+s.id,"data-q":(s.chapter+" "+s.title).toLowerCase()},
-  `${s.chapter.toLowerCase()===s.title.toLowerCase()?"":`<span class="chap">${s.chapter}</span>`}<b>${s.title}</b><span class="tags">${s.tag?`<span class="tag lvl">${s.tag}</span>`:s.levels.filter(l=>l!==skip).map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${s.aid?`<span class="tag aidtag">Interactive</span>`:""}</span>`); }
 function renderHome(keep){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
@@ -4138,10 +4086,10 @@ function renderTopic(t,tab,prm){
   if(tab==="sheet"&&!t.sheet) tab="play";
   if(tab==="play"&&!t.play) tab="sheet";
   const lvl=LEVELS.find(l=>l.id===(t.levels.includes(homeFilter)?homeFilter:t.levels[0]));
-  document.title=t.title+" · Maths Hub";
+  const tSheet=sheetForTopic(t); document.title=(tab==="sheet"&&tSheet?tSheet.title:t.title)+" · Maths Hub";
   titleEl.textContent=t.title; crumbEl.textContent=`${lvl.name} · ${t.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=(tab!=="play"); printBtn.hidden=(tab==="play");
-  remember(t.id); setPage(tab==="play"?"play":"sheet"); setNav(tab==="play"?"play":"sheets");
+  if(tab==="play") remember(t.id); setPage(tab==="play"?"play":"sheet"); setNav(tab==="play"?"play":"sheets");
   cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t)};
   app.innerHTML="";
   const tabs=h("div",{class:"tabs",role:"tablist"});
@@ -4161,7 +4109,7 @@ function renderTopic(t,tab,prm){
     if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
     placeDock();
   } else {
-    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]+sheetEnd());
+    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${(cur.sheet&&cur.sheet.title)||t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]+sheetEnd());
     digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   }
   window.scrollTo(0,0);
@@ -4203,14 +4151,14 @@ function renderSheetOnly(s){
 }
 
 function route(){
-  const raw=decodeURIComponent(location.hash.replace(/^#\/?/,""));
+  let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
-    if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
+    if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
-  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); renderTopic(t,tab,prm); }
+  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); if(tab==="sheet") exitPresent(); renderTopic(t,tab,prm); }
   else { exitPresent(); renderHome(); }
 }
 function topicLink(){
@@ -4223,6 +4171,7 @@ function topicLink(){
 }
 backBtn.onclick=()=>{ location.hash=""; };
 $("#ttl").onclick=()=>{ if(location.hash.replace(/^#/,"")) location.hash=""; else window.scrollTo(0,0); };
+$("#ttl").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#ttl").click(); } };
 shareBtn.onclick=async()=>{
   const url=topicLink();
   try{
@@ -4233,11 +4182,11 @@ shareBtn.onclick=async()=>{
 const qrModal=$("#qrModal"); let qrLib=null;
 function loadQR(){ if(window.qrcode) return Promise.resolve(); if(!qrLib) qrLib=new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"; s.onload=res; s.onerror=()=>{ qrLib=null; rej(); }; document.head.append(s); }); return qrLib; }
 qrBtn.onclick=async()=>{
-  const url=topicLink(); $("#qrTitle").textContent=cur&&cur.t?cur.t.title:cur&&cur.sheet?cur.sheet.title:cur&&cur.lessons?"Lessons with Coach Minyi":"Maths Hub"; $("#qrUrl").textContent=url; $("#qrBox").innerHTML=""; qrModal.hidden=false;
+  const url=topicLink(); $("#qrTitle").textContent=cur&&cur.t?cur.t.title:cur&&cur.sheet?cur.sheet.title:cur&&cur.lessons?"Lessons with Coach Minyi":"Maths Hub"; $("#qrUrl").textContent=url; $("#qrBox").innerHTML=""; qrModal.hidden=false; $("#qrClose").focus();
   try{ await loadQR(); const q=qrcode(0,"M"); q.addData(url); q.make(); $("#qrBox").innerHTML=q.createSvgTag(6,2); }
   catch(e){ $("#qrBox").innerHTML='<p class="hint">The QR code needs internet. Share the link instead.</p>'; }
 };
-$("#qrClose").onclick=()=>{ qrModal.hidden=true; };
+$("#qrClose").onclick=()=>{ qrModal.hidden=true; qrBtn.focus(); };
 qrModal.onclick=e=>{ if(e.target===qrModal) qrModal.hidden=true; };
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ qrModal.hidden=true; exitPresent(); } });
 const exitBtn=$("#exitPresent");
@@ -4257,7 +4206,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:") addEventListener(
 if(CF_TOKEN&&location.protocol==="https:"){ const s=document.createElement("script"); s.defer=true; s.src="https://static.cloudflareinsights.com/beacon.min.js"; s.setAttribute("data-cf-beacon",JSON.stringify({token:CF_TOKEN})); document.head.append(s); }
 document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) exitPresent(); });
 document.addEventListener("webkitfullscreenchange",()=>{ if(!document.webkitFullscreenElement) exitPresent(); });
-zoomBtn.onclick=()=>{ if(!cur||!cur.stage) return; const big=cur.stage.classList.toggle("big"); const l=big?"Smaller diagram":"Bigger diagram"; zoomBtn.setAttribute("aria-label",l); zoomBtn.title=l; };
+zoomBtn.onclick=()=>{ if(!cur||!cur.stage) return; const big=cur.stage.classList.toggle("zoomed"); const l=big?"Smaller diagram":"Bigger diagram"; zoomBtn.setAttribute("aria-label",l); zoomBtn.title=l; };
 let footTaps=0, footT=0;
 document.querySelector("footer").addEventListener("click",()=>{ const now=Date.now(); footTaps=(now-footT<900)?footTaps+1:1; footT=now;
   if(footTaps>=3){ footTaps=0; toast(`${innerWidth} × ${innerHeight} px · ×${(devicePixelRatio||1).toFixed(2)} · text ${getComputedStyle(document.body).fontSize}`); } });
@@ -4329,7 +4278,7 @@ function addNumBox(row){
   row._sync();
 }
 new MutationObserver(()=>document.querySelectorAll(".ctrl").forEach(row=>{addNumBox(row); row._sync&&row._sync();}))
-  .observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["disabled"]});
+  .observe(app,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["disabled"]});
 
 let fitQ=0;
 function fitStage(){fitQ=0; const left=document.querySelector(".left"), st=document.querySelector(".stage"), svg=st&&st.querySelector(":scope>svg"); if(!svg||!left) return;
@@ -4344,8 +4293,9 @@ function placeDock(){
   if(docked){ if(dock.parentElement!==play) play.append(dock); }
   else if(dock.parentElement!==panel){ if(slot) slot.after(dock); else panel.prepend(dock); }
 }
-addEventListener("resize",()=>{ placeDock(); fitSoon(); settleKey(document.querySelector(".keybox"),true); fitMust(); });
-new MutationObserver(fitSoon).observe(document.body,{childList:true,subtree:true});
+let lastW=innerWidth, rzQ=0;
+addEventListener("resize",()=>{ if(rzQ) return; rzQ=requestAnimationFrame(()=>{ rzQ=0; placeDock(); fitSoon(); if(innerWidth!==lastW){ lastW=innerWidth; settleKey(document.querySelector(".keybox"),true); fitMust(); } }); });
+new MutationObserver(fitSoon).observe(app,{childList:true,subtree:true});
 window.addEventListener("hashchange",route);
 route();
 fitSoon();
