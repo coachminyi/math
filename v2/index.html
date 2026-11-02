@@ -206,15 +206,15 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .panelc::before{content:"";position:absolute;inset:14px 0 0 0;z-index:-1;border:1.5px solid var(--ink);border-radius:12px;background-color:var(--card);
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:18px 18px}
 .panelc>h4{display:inline-block;margin:0 0 10px -2px;background:var(--amber-fill);color:var(--ink);border:1.5px solid var(--ink);border-radius:8px;padding:2px 12px;font-size:16px}
-.panelc table{width:100%;border-collapse:collapse;font-size:16.5px;background:var(--card)}
+.panelc table{width:100%;border-collapse:collapse;font-size:16px;background:var(--card)}
 .panelc th,.panelc td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:middle}
 .panelc th{font-size:15px;color:var(--muted);font-weight:700}
-.big{font-size:21px;font-weight:700;text-align:center;margin:4px 0 8px}
+.big{font-size:19px;font-weight:700;text-align:center;margin:4px 0 8px}
 .note{border-left:4px solid var(--red);background:var(--red-fill);border-radius:6px;padding:8px 12px;margin:10px 0 0;font-size:16px}
 .note b{color:var(--red)}
 .anno{color:var(--blue);font-size:15px}
 .wrongright{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.wrongright div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:16.5px}
+.wrongright div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:16px}
 .wrongright .x{color:var(--red)} .wrongright .ok{color:var(--green)}
 .steps{margin:6px 0 0;padding:0;list-style:none;font-size:17px}
 .steps li{padding:3px 0}
@@ -222,6 +222,9 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .badge{display:inline-block;font-size:12px;font-weight:700;background:var(--red-fill);color:var(--red);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .cmini{width:96px;min-width:84px;height:auto;display:block}
 .miniq{width:72px;height:auto;display:block}
+.miniqf{width:76px;height:auto;display:block;margin:4px auto 0}
+.panelc td.exs{text-align:center}
+.panelc td .cap{display:block;font-size:12.5px;color:var(--blue);text-align:center;white-space:nowrap}
 .panelc td.anno{font-size:14px;white-space:nowrap}
 .sheetfoot{color:var(--muted);font-size:14px;padding:0 0 30px}
 
@@ -244,7 +247,7 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .musth{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;font-weight:700}
 .must .forms{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
 .must .formbox{padding:8px 12px}
-.must .formbox .eq{white-space:normal;font-size:19px;line-height:1.35}
+.must .formbox .eq{font-size:17px;line-height:1.35}
 .must .formbox .rd{font-size:14px}
 .piccards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:6px 0 4px}
 .piccards.two{grid-template-columns:1fr 1fr}
@@ -296,7 +299,8 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .forms{gap:calc(8*var(--k))}
   .formbox{padding:calc(6*var(--k)) calc(10*var(--k))}
   .must{--k:1px}
-  .must .formbox .eq{font-size:17px}
+  @media (max-width:400px){ .must .forms{grid-template-columns:minmax(0,1fr)} }
+  .must .formbox .eq{font-size:15.5px}
   .piccards{grid-template-columns:repeat(2,1fr)}
   .hs{min-height:46px;font-size:16px}
   .cards{grid-template-columns:1fr;gap:10px}
@@ -330,7 +334,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .tabs{padding:6px 0}
 }
 @media (max-width:520px){
-  .big{font-size:18px;line-height:1.5}
+  .big{font-size:17px;line-height:1.5}
   .panelc{overflow-x:auto}
   .panelc td.anno{white-space:normal}
   .cmini{width:84px;min-width:84px}
@@ -785,7 +789,7 @@ const discrim=aid({
   key(s){const I=dInfo(s), c=I.n===2?"green":I.n===1?"amber":"red";
     const word=I.n===2?"CUTS: 2 points":I.n===1?"TOUCHES: tangent, 1 point":"MISSES: no points";
     return KPAIR(`${V("y")} = ${V("m")}${X1} + ${V("c")}`,`${V("y")} = ${poly([[s.m,X1],[s.c,""]])}`,"This line")
-      +FORMS([FB("blue","Line = curve gives",`${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0`,`${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)}`,`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`),
+      +FORMS([FB("blue","Line = curve gives",nw(`${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0`),`${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)}`,`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`),
       FB(c,`${V("b")}² − 4${V("ac")}`,`${N(I.D,3)} ${I.n===2?"&gt; 0":I.n===1?"= 0":"&lt; 0"}`,word)]);},
   readout(s){const I=dInfo(s); return `<div class="row hint">Working: (${N(I.B)})² − 4(1)(${N(I.C)}) = ${N(I.D,3)}</div>`;}
 });
@@ -1352,6 +1356,10 @@ const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-8.5}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+8.5}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
+function miniQF(kind){const X=x=>8+(x+2)/6*52, Y=y=>4+(5-y)/10*40; let d=""; for(let i=0;i<=24;i++){const x=-2+6*i/24, y=(x-1)**2-4; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1);}
+  const dot=(x,y)=>`<circle cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="3" fill="var(--red)"/>`;
+  const mark=kind==="tp"?dot(1,-4)+`<line x1="${X(1)}" y1="${Y(0)}" x2="${X(1)}" y2="${Y(-4)}" stroke="var(--red)" stroke-dasharray="2 2"/>`:kind==="roots"?dot(-1,0)+dot(3,0):dot(0,-3);
+  return `<svg viewBox="0 0 64 48" class="miniqf"><line x1="2" y1="${Y(0)}" x2="62" y2="${Y(0)}" stroke="var(--muted)"/><line x1="${X(0)}" y1="2" x2="${X(0)}" y2="46" stroke="var(--muted)"/><path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2"/>${mark}</svg>`;}
 function miniLC(n){const col=n===2?"var(--green)":n===1?"var(--amber)":"var(--red)", y=n===2?22:n===1?32:38;
   const dots=n===2?`<circle cx="16.9" cy="22" r="2.4" fill="${col}"/><circle cx="43.1" cy="22" r="2.4" fill="${col}"/>`:n===1?`<circle cx="30" cy="32" r="2.4" fill="${col}"/>`:"";
   return `<svg viewBox="0 0 60 42" class="miniq"><path d="M8 4 Q30 60 52 4" fill="none" stroke="var(--blue)" stroke-width="2"/><line x1="2" y1="${y}" x2="58" y2="${y}" stroke="${col}" stroke-width="2"/>${dots}</svg>`;}
@@ -1409,9 +1417,9 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
   <div class="panelc"><h4>3 special products</h4>
     <table>
       <tr><th>Rule</th><th>Example</th></tr>
-      <tr><td>(${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</td><td>(3${V("x")} + 2)² = 9${V("x")}² + 12${V("x")} + 4</td></tr>
-      <tr><td>(${V("a")} − ${V("b")})² = ${V("a")}² − 2${V("ab")} + ${V("b")}²</td><td>(${V("x")} − 5)² = ${V("x")}² − 10${V("x")} + 25</td></tr>
-      <tr><td>(${V("a")} + ${V("b")})(${V("a")} − ${V("b")}) = ${V("a")}² − ${V("b")}²</td><td>(${V("x")} + 4)(${V("x")} − 4) = ${V("x")}² − 16</td></tr>
+      <tr><td>${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(3${V("x")} + 2)²`)} = ${nw(`9${V("x")}² + 12${V("x")} + 4`)}</td></tr>
+      <tr><td>${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(${V("x")} − 5)²`)} = ${nw(`${V("x")}² − 10${V("x")} + 25`)}</td></tr>
+      <tr><td>${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}</td><td>${nw(`(${V("x")} + 4)(${V("x")} − 4)`)} = ${nw(`${V("x")}² − 16`)}</td></tr>
     </table>
     <p class="anno">* middle term = 2 × first × last, e.g. 2 × 3${V("x")} × 2 = 12${V("x")}</p>
   </div>
@@ -1437,10 +1445,10 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
 
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
-      <div class="x">✗ (${V("a")} + ${V("b")})² = ${V("a")}² + ${V("b")}²</div>
-      <div class="ok">✓ (${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²</div>
-      <div class="x">✗ (${V("x")} − 3)² = ${V("x")}² − 9</div>
-      <div class="ok">✓ (${V("x")} − 3)² = ${V("x")}² − 6${V("x")} + 9</div>
+      <div class="x">✗ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + ${V("b")}²`)}</div>
+      <div class="ok">✓ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</div>
+      <div class="x">✗ ${nw(`(${V("x")} − 3)²`)} = ${nw(`${V("x")}² − 9`)}</div>
+      <div class="ok">✓ ${nw(`(${V("x")} − 3)²`)} = ${nw(`${V("x")}² − 6${V("x")} + 9`)}</div>
     </div>
     <div class="note"><b>Note!</b> Squaring a bracket ≠ squaring each term. Don't forget the middle term.</div>
   </div>
@@ -1464,7 +1472,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
   </div>
 </div>`,
 
-diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${nw(`${frac("d","d"+X1)}(${V("u")})<sup>${V("n")}</sup>`)} = ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup> × ${frac("d"+V("u"),"d"+X1)}`)}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,"quotient: diff top × copy bottom − diff bottom × copy top, over bottom²")])}
+diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"power down in front, then power − 1"),FB("amber","Chain rule",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup>`)} × ${nw(frac("d"+V("u"),"d"+X1))}`,"outside first, × the inside differentiated"),FB("green","Product and quotient",`${V("uv")} → ${V("u")}${V("v")}′ + ${V("v")}${V("u")}′`,"quotient: diff top × copy bottom − diff bottom × copy top, over bottom²")])}
 <div class="sheet">
   <div class="panelc"><h4>Power rule</h4>
     <p class="big">${frac("d","d"+V("x"))}(${V("x")}<sup>${V("n")}</sup>) = ${V("n")}${V("x")}<sup>${V("n")} − 1</sup></p>
@@ -1489,7 +1497,7 @@ diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n
     </table>
     <div class="wrongright">
       <div class="x">✗ ${frac("d","d"+V("x"))}(${frac("1",V("x")+"²")}) = ${frac("1","2"+V("x"))}</div>
-      <div class="ok">✓ ${V("x")}<sup>−2</sup> → −2${V("x")}<sup>−3</sup> = −${frac("2",V("x")+"³")}</div>
+      <div class="ok">✓ ${V("x")}<sup>−2</sup><br>→ −2${V("x")}<sup>−3</sup> = −${frac("2",V("x")+"³")}</div>
     </div>
     <div class="note"><b>Note!</b> Never differentiate the denominator on its own. Change to a negative power first.</div>
   </div>
@@ -1559,8 +1567,8 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
     <p class="big">${nw(`${X2} + ${V("b")}${X1} + ${V("c")}`)} = ${nw(`(${X1} + ${frac(V("b"),"2")})²`)} − ${nw(`(${frac(V("b"),"2")})²`)} + ${V("c")}</p>
     <table>
       <tr><th>Example</th><th>Working</th></tr>
-      <tr><td>${X2} + 8${X1} + 5</td><td>= ${X2} + 8${X1} + 16 − 16 + 5<br>= <b>(${X1} + 4)² − 11</b></td></tr>
-      <tr><td>${X2} − 5${X1} + 2</td><td>= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + 2<br>= <b>(${X1} − ${frac("5","2")})² − ${frac("17","4")}</b></td></tr>
+      <tr><td>${nw(`${X2} + 8${X1} + 5`)}</td><td>${nw(`= ${X2} + 8${X1} + 16 − 16 + 5`)}<br>= <b>${nw(`(${X1} + 4)² − 11`)}</b></td></tr>
+      <tr><td>${nw(`${X2} − 5${X1} + 2`)}</td><td>${nw(`= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + 2`)}<br>= <b>${nw(`(${X1} − ${frac("5","2")})² − ${frac("17","4")}`)}</b></td></tr>
     </table>
     <p class="anno">* the sign in the bracket follows ${V("b")}; the (${frac(V("b"),"2")})² is always taken away</p>
   </div>
@@ -1618,14 +1626,14 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
   </div>
 </div>`,
 
-quadGraphs:`${MUST([FB("blue","Turning point form",`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`,`turning point (${V("h")}, ${V("k")})`),FB("red","Factorised form",`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})`,`cuts the ${X1}-axis at ${V("p")} and ${V("q")}`),FB("amber","Expanded form",`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}`,`cuts the ${V("y")}-axis at ${V("c")}`)])}
+quadGraphs:`${MUST([FB("blue","Turning point form",nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`),`turning point (${V("h")}, ${V("k")})`),FB("red","Factorised form",nw(`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})`),`cuts the ${X1}-axis at ${V("p")} and ${V("q")}`),FB("amber","Expanded form",nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}`),`cuts the ${V("y")}-axis at ${V("c")}`)])}
 <div class="sheet">
   <div class="panelc"><h4>3 forms, 3 different facts</h4>
     <table>
-      <tr><th>Form</th><th>Example</th><th>Read off</th></tr>
-      <tr><td>${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}</td><td>${V("y")} = (${X1} − 1)² − 4</td><td>turning point (1, −4)</td></tr>
-      <tr><td>${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})</td><td>${V("y")} = (${X1} + 1)(${X1} − 3)</td><td>cuts ${X1}-axis at −1 and 3</td></tr>
-      <tr><td>${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}</td><td>${V("y")} = ${X2} − 2${X1} − 3</td><td>cuts ${V("y")}-axis at −3</td></tr>
+      <tr><th>Form</th><th>Example → what it shows</th></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}</td><td class="exs">${nw(`${V("y")} = (${X1} − 1)² − 4`)}${miniQF("tp")}<span class="cap">turning point (1, −4)</span></td></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")})`)}</td><td class="exs">${nw(`${V("y")} = (${X1} + 1)(${X1} − 3)`)}${miniQF("roots")}<span class="cap">cuts ${X1}-axis at −1, 3</span></td></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")}`)}</td><td class="exs">${nw(`${V("y")} = ${X2} − 2${X1} − 3`)}${miniQF("yint")}<span class="cap">cuts ${V("y")}-axis at −3</span></td></tr>
     </table>
     <p class="anno">* all three are the same curve</p>
     ${PLAYLINK("#quad-forms?a=1&h=1&k=-4","Play: drag the turning point")}
@@ -1659,9 +1667,9 @@ quadGraphs:`${MUST([FB("blue","Turning point form",`${V("y")} = ${V("a")}(${X1} 
 
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
-      <div class="x">✗ ${V("y")} = (${X1} − 2)² + 1 → turning point (−2, 1)</div>
+      <div class="x">✗ ${nw(`${V("y")} = (${X1} − 2)² + 1`)}<br>→ turning point (−2, 1)</div>
       <div class="ok">✓ turning point (2, 1)</div>
-      <div class="x">✗ ${V("y")} = (${X1} + 1)(${X1} − 3) cuts at ${X1} = 1, −3</div>
+      <div class="x">✗ ${nw(`${V("y")} = (${X1} + 1)(${X1} − 3)`)}<br>→ cuts at ${X1} = 1, −3</div>
       <div class="ok">✓ cuts at ${X1} = −1, 3</div>
     </div>
     <div class="note"><b>Note!</b> The sign inside the bracket flips: (${X1} − 2) → 2, (${X1} + 1) → −1.</div>
@@ -1715,7 +1723,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real, differ
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
       <div class="x">✗ using the line's ${V("c")} in ${V("b")}² − 4${V("ac")}</div>
-      <div class="ok">✓ rearrange to … = 0 first, then read ${V("a")}, ${V("b")}, ${V("c")}</div>
+      <div class="ok">✓ rearrange to … = 0 first<br>then read ${V("a")}, ${V("b")}, ${V("c")}</div>
     </div>
     <div class="note"><b>Note!</b> In the example above, ${V("c")} = 5 − ${V("k")}, not ${V("k")} and not 5.</div>
     <div class="note"><b>Note!</b> If ${V("k")} is in front of ${X2}, you also need ${V("a")} ≠ 0 for it to be a quadratic (and ${V("a")} &gt; 0 or ${V("a")} &lt; 0 for always positive / negative).</div>
@@ -1788,7 +1796,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
       <div class="x">✗ α = sin⁻¹(−0.5) = −30°</div>
-      <div class="ok">✓ α = sin⁻¹ 0.5 = 30°, then use ASTC for the sign</div>
+      <div class="ok">✓ α = sin⁻¹ 0.5 = 30°<br>then ASTC for the sign</div>
     </div>
     <div class="note"><b>Note!</b> The calculator gives only one angle. Always check the range for the other answer(s).</div>
   </div>
@@ -1808,9 +1816,9 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
   <div class="panelc"><h4>Read the graph off the equation</h4>
     <table>
       <tr><th>Graph</th><th>Amplitude</th><th>Period</th><th>Max</th><th>Min</th></tr>
-      <tr><td>${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
-      <tr><td>${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
-      <tr><td>${V("y")} = ${V("a")} tan ${V("b")}${X1}</td><td>none</td><td>${frac("180°",V("b"))}</td><td>none</td><td>none</td></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}</td><td>|${V("a")}|</td><td>${frac("360°",V("b"))}</td><td>${V("c")} + |${V("a")}|</td><td>${V("c")} − |${V("a")}|</td></tr>
+      <tr><td>${nw(`${V("y")} = ${V("a")} tan ${V("b")}${X1}`)}</td><td>none</td><td>${frac("180°",V("b"))}</td><td>none</td><td>none</td></tr>
     </table>
     <p class="anno">* radians: period ${frac("2π",V("b"))} for sin, cos; ${frac("π",V("b"))} for tan</p>
     <p class="anno">* ${V("y")} = ${V("a")} sin ${frac(X1,V("b"))} + ${V("c")}: period = 360° × ${V("b")} (the graph is stretched)</p>
@@ -1861,12 +1869,12 @@ rFormula:`${MUST([FB("blue",`${CV("blue","R")} = √(${V("a")}² + ${V("b")}²)`
   <div class="panelc"><h4>The 4 forms <span class="badge">memorise: not on the formula sheet</span></h4>
     <table>
       <tr><th>Expression</th><th>R-form</th></tr>
-      <tr><td>${V("a")} sin θ + ${V("b")} cos θ</td><td>${V("R")} sin(θ + α)</td></tr>
-      <tr><td>${V("a")} sin θ − ${V("b")} cos θ</td><td>${V("R")} sin(θ − α)</td></tr>
-      <tr><td>${V("a")} cos θ + ${V("b")} sin θ</td><td>${V("R")} cos(θ − α)</td></tr>
-      <tr><td>${V("a")} cos θ − ${V("b")} sin θ</td><td>${V("R")} cos(θ + α)</td></tr>
+      <tr><td>${nw(`${V("a")} sin θ + ${V("b")} cos θ`)}</td><td>${nw(`${V("R")} sin(θ + α)`)}</td></tr>
+      <tr><td>${nw(`${V("a")} sin θ − ${V("b")} cos θ`)}</td><td>${nw(`${V("R")} sin(θ − α)`)}</td></tr>
+      <tr><td>${nw(`${V("a")} cos θ + ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ − α)`)}</td></tr>
+      <tr><td>${nw(`${V("a")} cos θ − ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ + α)`)}</td></tr>
     </table>
-    <p class="big">${V("R")} = √(${V("a")}² + ${V("b")}²) &nbsp;·&nbsp; tan ${AL} = ${frac(V("b"),V("a"))}</p>
+    <p class="big">${nw(`${V("R")} = √(${V("a")}² + ${V("b")}²)`)} &nbsp;·&nbsp; ${nw(`tan ${AL} = ${frac(V("b"),V("a"))}`)}</p>
     <p class="anno">* ${V("a")}, ${V("b")} &gt; 0 and ${AL} acute. ${V("a")} = the number in front of the ratio named in the R-form.</p>
   </div>
 
@@ -1948,7 +1956,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
       <div class="x">✗ ∠APB = ∠AQB when P and Q are on opposite sides of AB</div>
-      <div class="ok">✓ opposite sides → ∠APB + ∠AQB = 180°</div>
+      <div class="ok">✓ opposite sides<br>→ ∠APB + ∠AQB = 180°</div>
     </div>
     <div class="note"><b>Note!</b> "Angle at centre" only works when both angles stand on the <b>same</b> arc. If P is on the minor arc, use the <b>reflex</b> angle at O.</div>
   </div>
@@ -2079,8 +2087,8 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
 
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
-      <div class="x">✗ deceleration of 3 m/s² written as acceleration 3 m/s²</div>
-      <div class="ok">✓ acceleration = −3 m/s², or "deceleration 3 m/s²"</div>
+      <div class="x">✗ slowing down 3 m/s²<br>written as "acceleration 3 m/s²"</div>
+      <div class="ok">✓ acceleration = −3 m/s²<br>or "deceleration 3 m/s²"</div>
       <div class="x">✗ average speed = (0 + 12 + 0) ÷ 3</div>
       <div class="ok">✓ average speed = total distance ÷ total time</div>
     </div>
@@ -2176,7 +2184,7 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
   </div>
 
   <div class="panelc"><h4>Definite integral</h4>
-    <p class="big">∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})</p>
+    <p class="big">${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}</p>
     <ul class="steps">
       <li>∫<span class="lim"><sup>3</sup><sub>1</sub></span> (${frac("1","2")}${X2} + 1) d${X1} = [${frac(V("x")+"³","6")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span></li>
       <li>= (${frac("27","6")} + 3) − (${frac("1","6")} + 1) <span class="tagop">upper − lower</span></li>
@@ -2219,8 +2227,8 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
 
   <div class="panelc"><h4>Note!</h4>
     <div class="wrongright">
-      <div class="x">✗ ∫ (2${X1} + 1)³ d${X1} = ${frac("(2"+X1+" + 1)⁴","4")} + ${V("c")}</div>
-      <div class="ok">✓ ${frac("(2"+X1+" + 1)⁴","4 × 2")} + ${V("c")} = ${frac("(2"+X1+" + 1)⁴","8")} + ${V("c")}</div>
+      <div class="x">✗ ${nw(`∫ (2${X1} + 1)³ d${X1}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","4")} + ${V("c")}`)}</div>
+      <div class="ok">✓ ${nw(`${frac("(2"+X1+" + 1)⁴","4 × 2")} + ${V("c")}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","8")} + ${V("c")}`)}</div>
       <div class="x">✗ ∫ sin ${X1} d${X1} = cos ${X1} + ${V("c")}</div>
       <div class="ok">✓ −cos ${X1} + ${V("c")}</div>
     </div>
