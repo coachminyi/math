@@ -2490,18 +2490,18 @@ integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1
 };
 const SHEETLIST=[
   {id:"expansion",levels:["sec2"],ord:3,chapter:"Expansion & Factorisation",title:"Expansion: the 3 special products",sheet:"expansion",aid:"a-plus-b-squared"},
-  {id:"completing-the-square",levels:["emath","amath"],chapter:"Quadratic Functions",title:"Completing the square",sheet:"complSq",aid:"complete-square"},
-  {id:"quadratic-graphs",levels:["emath","amath"],chapter:"Quadratic Functions",title:"Quadratic graphs",sheet:"quadGraphs",aid:"quad-forms"},
+  {id:"completing-the-square",levels:["emath","amath"],ord:{amath:1},chapter:"Quadratic Functions",title:"Completing the square",sheet:"complSq",aid:"complete-square"},
+  {id:"quadratic-graphs",levels:["emath","amath"],ord:{amath:1.5},chapter:"Quadratic Functions",title:"Quadratic graphs",sheet:"quadGraphs",aid:"quad-forms"},
   {id:"speed-time-graphs",levels:["emath"],chapter:"Speed–time graphs",title:"Speed–time graphs",sheet:"speedTime",aid:"speed-time"},
-  {id:"circle-properties",levels:["emath","amath"],chapter:"Properties of Circles",title:"Circle properties",sheet:"circles",aid:"circle-props"},
-  {id:"discriminant",levels:["amath"],chapter:"Equations & Inequalities",title:"b² − 4ac (discriminant)",sheet:"discrim",aid:"discriminant"},
-  {id:"trig-ratios-any-angle",levels:["amath"],chapter:"Trigonometry",title:"Trig ratios of any angle",sheet:"trigAngles",aid:"unit-circle"},
-  {id:"trig-graphs",levels:["amath"],chapter:"Trigonometry",title:"Trig graphs",sheet:"trigGraphs",aid:"trig-graphs"},
-  {id:"r-formula",levels:["amath"],chapter:"Trigonometry",title:"R-formula",sheet:"rFormula",aid:"r-formula"},
-  {id:"differentiation-rules",levels:["amath"],chapter:"Differentiation",title:"Differentiation rules",sheet:"diffBasics",aid:"diff-x-squared"},
-  {id:"differentiation-uses",levels:["amath"],chapter:"Differentiation",title:"Uses of differentiation",sheet:"diffApps",aid:"tangent-gradient"},
-  {id:"kinematics",levels:["amath"],chapter:"Kinematics",title:"Kinematics",sheet:"kinematics",aid:"area-under"},
-  {id:"integration",levels:["amath"],chapter:"Integration",title:"Integration & area",sheet:"integration",aid:null}
+  {id:"circle-properties",levels:["emath","amath"],ord:{amath:16},chapter:"Properties of Circles",title:"Circle properties",sheet:"circles",aid:"circle-props"},
+  {id:"discriminant",levels:["amath"],ord:2,chapter:"Equations & Inequalities",title:"b² − 4ac (discriminant)",sheet:"discrim",aid:"discriminant"},
+  {id:"trig-ratios-any-angle",levels:["amath"],ord:9,chapter:"Trigonometry",title:"Trig ratios of any angle",sheet:"trigAngles",aid:"unit-circle"},
+  {id:"trig-graphs",levels:["amath"],ord:9.5,chapter:"Trigonometry",title:"Trig graphs",sheet:"trigGraphs",aid:"trig-graphs"},
+  {id:"r-formula",levels:["amath"],ord:10.5,chapter:"Trigonometry",title:"R-formula",sheet:"rFormula",aid:"r-formula"},
+  {id:"differentiation-rules",levels:["amath"],ord:11,chapter:"Differentiation",title:"Differentiation rules",sheet:"diffBasics",aid:"diff-x-squared"},
+  {id:"differentiation-uses",levels:["amath"],ord:12,chapter:"Differentiation",title:"Uses of differentiation",sheet:"diffApps",aid:"tangent-gradient"},
+  {id:"kinematics",levels:["amath"],ord:15,chapter:"Kinematics",title:"Kinematics",sheet:"kinematics",aid:"area-under"},
+  {id:"integration",levels:["amath"],ord:13,chapter:"Integration",title:"Integration & area",sheet:"integration",aid:null}
 ];
 const MX=(rows,cls="")=>`<span class="mx${cls?" "+cls:""}" style="grid-template-columns:repeat(${rows[0].length},auto)">${rows.map(r=>r.map(c=>`<span>${c}</span>`).join("")).join("")}</span>`;
 const SF=(x,y,n,d,col="var(--ink)")=>`<text x="${x}" y="${y-2.5}" font-size="8" text-anchor="middle" fill="${col}">${n}</text><line x1="${x-5}" y1="${y}" x2="${x+5}" y2="${y}" stroke="${col}" stroke-width="1"/><text x="${x}" y="${y+8.5}" font-size="8" text-anchor="middle" fill="${col}">${d}</text>`;
@@ -3147,18 +3147,18 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${FLB("Always positive",`${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
       ${GRP("Completing the square","completing-the-square")}
       ${FL(nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)+FNOTE(`turning point ${nw(`(${V("h")}, ${V("k")})`)}`))}
-      ${GRP("Polynomials")}
+      ${GRP("Polynomials","polynomials-partial-fractions")}
       ${FLB("Remainder theorem",`${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)} leaves remainder ${nw(`f(${V("a")})`)}`)}
       ${FLB("Factor theorem",`${nw(`(${X1} − ${V("a")})`)} is a factor ⇔ ${nw(`f(${V("a")}) = 0`)}`)}
       ${FL(`${nw(`${V("a")}³ + ${V("b")}³`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")}² − ${V("ab")} + ${V("b")}²)`)}`)}
       ${FL(`${nw(`${V("a")}³ − ${V("b")}³`)} = ${nw(`(${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`)}
-      ${GRP("Partial fractions")}
+      ${GRP("Partial fractions","polynomials-partial-fractions")}
       ${FLB("Two different linear factors",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`)}
       ${FLB("A repeated factor",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`)}
       ${FLB(`A factor ${nw(`${X2} + ${V("c")}²`)} that won't factorise`,`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} = ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`)}
-      ${GRP("Binomial")}
+      ${GRP("Binomial","binomial-theorem")}
       ${FL(nw(`${V("T")}<sub>${V("r")} + 1</sub> = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`)+FNOTE("general term"))}
-      ${GRP("Exponentials and logs")}
+      ${GRP("Exponentials and logs","exponentials-logarithms")}
       ${FL(`${nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`)} ⇔ ${nw(`${X1} = log<sub>${V("a")}</sub> ${V("y")}`)}`)}
       ${FL(nw(`log<sub>${V("a")}</sub> ${V("xy")} = log<sub>${V("a")}</sub> ${X1} + log<sub>${V("a")}</sub> ${V("y")}`))}
       ${FL(nw(`log<sub>${V("a")}</sub> ${frac(X1,V("y"))} = log<sub>${V("a")}</sub> ${X1} − log<sub>${V("a")}</sub> ${V("y")}`))}
@@ -3187,20 +3187,20 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
 
   <div class="panelc pn"><h4>Not given: coordinate geometry</h4>
     <ul class="steps fml">
-      ${GRP("Lines")}
+      ${GRP("Lines","coordinate-geometry-circles")}
       ${FL(`Midpoint = ${nw(PAR(`${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")}`))}`)}
       ${FL(`Gradient = ${GRAD_F}`)}
       ${FL(`Length = ${LEN_F}`)}
       ${FLB("",`Parallel: ${nw(`${V("m")}₁ = ${V("m")}₂`)}`,`Perpendicular: ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`)}
-      ${GRP("Circles")}
+      ${GRP("Circles","coordinate-geometry-circles")}
       ${FL(nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`))}
       ${FLB("",`Centre ${nw(`(${V("a")}, ${V("b")})`)}`,`Radius ${V("r")}`)}
       ${FL(nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`))}
       ${FLB("",`Centre ${nw(`(−${V("g")}, −${V("f")})`)}`,`Radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`)}
-      ${GRP("Area of a shape from its corners")}
+      ${GRP("Area of a shape from its corners","coordinate-geometry-circles")}
       ${FLB("List the corners in order and repeat the first",`Area = ${nw(`${frac("1","2")}${SHOE}`)}`)}
       ${FL(`${nw(`= ${frac("1","2")}|(${X1}₁${V("y")}₂ + ${X1}₂${V("y")}₃ + …)`)} ${nw(`− (${V("y")}₁${X1}₂ + ${V("y")}₂${X1}₃ + …)|`)}`)}
-      ${GRP("Linear law")}
+      ${GRP("Linear law","linear-law")}
       ${FL(nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`)+FNOTE(`plot ${V("Y")} against ${V("X")}`))}
       ${FLB(`e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}`,nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`)+FNOTE(`${V("Y")} = lg ${V("y")}, ${V("X")} = lg ${X1}`))}
     </ul>
@@ -3772,7 +3772,7 @@ ${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its op
 ${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
   +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9°"),nw("or θ = 180° − 36.9° = 143.1°")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
 ${PAN("Sine rule",EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm")])
-  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6°`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines on top</p>`)}
+  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6°`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
 ${PAN("Cosine rule",STEPS([[nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`),"to find an angle"]])
   +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")} = 7.55`)])
   +EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8°")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
@@ -3825,6 +3825,110 @@ ${MIST([[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),`end minus start: ${
 </div>`
 };
 Object.assign(SHEETS,SHEETS6);
+const LOGA=b=>`log<sub>${b}</sub>`, TRP=`${V("T")}<sub>${V("r")} + 1</sub>`;
+function picPascal(){ const R=[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1],[1,5,10,10,5,1]]; let s="";
+  R.forEach((row,i)=>row.forEach((v,k)=>{ s+=TX(60+(k-i/2)*15,9+11*i,v,i===4?`fill="var(--blue)" font-weight="700" font-size="7"`:`font-size="6.5"`); }));
+  s+=LN(52.5,44,57.5,48.5,`stroke="var(--amber)" stroke-width="1"`)+LN(67.5,44,62.5,48.5,`stroke="var(--amber)" stroke-width="1"`)+TX(4,53,"n = 4",`font-size="5.5" fill="var(--blue)" text-anchor="start" font-weight="700"`);
+  return SV("0 0 120 68",s); }
+function picExpLog(){ const X=x=>40+13*x, Y=y=>56-13*y; let s=LN(X(-2.6),Y(0),X(5.5),Y(0))+LN(X(0),Y(-1.9),X(0),Y(3.9))+LN(X(-1.9),Y(-1.9),X(3.9),Y(3.9),`stroke="var(--muted)" ${DASH}`);
+  let e="",l=""; for(let i=0;i<=40;i++){ const x=-2.6+i*4.6/40, u=0.27+i*5.23/40; e+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(2**x).toFixed(1); l+=(i?"L":"M")+X(u).toFixed(1)+" "+Y(Math.log2(u)).toFixed(1); }
+  s+=`<path d="${e}" fill="none" stroke="var(--blue)" stroke-width="1.8"/><path d="${l}" fill="none" stroke="var(--amber)" stroke-width="1.8"/>`+DOT(X(0),Y(1),"var(--blue)")+DOT(X(1),Y(0),"var(--amber)");
+  s+=TX(X(0)-2,Y(1)-2,"(0, 1)",`font-size="5" text-anchor="end" fill="var(--blue)"`)+TX(X(1)+2,Y(0)+7,"(1, 0)",`font-size="5" text-anchor="start" fill="var(--amber)"`)
+    +TX(X(-0.4),Y(3.2),`y = 2<tspan baseline-shift="super" font-size="4.5">x</tspan>`,`font-size="6" fill="var(--blue)" font-weight="700" text-anchor="end"`)+TX(X(4.2),Y(1.2),"y = log₂ x",`font-size="6" ${AM}`)+TX(X(3.9)+2,Y(3.9)+5,"y = x",`font-size="5.5" fill="var(--muted)" text-anchor="start"`);
+  return SV("0 0 116 84",s); }
+function picPerpBis(){ const X=x=>8+11*x, Y=y=>82-11*y, M=[X(3),Y(4)]; let s=GRID(X,Y,7,7);
+  s+=LN(X(1),Y(2),X(5),Y(6),`stroke="var(--blue)" stroke-width="1.8"`)+LN(X(0.5),Y(6.5),X(6.5),Y(0.5),`stroke="var(--amber)" stroke-width="1.6" ${DASH}`);
+  s+=`<path d="M${M[0]+3.5} ${M[1]-3.5} L${M[0]+7} ${M[1]} L${M[0]+3.5} ${M[1]+3.5}" fill="none" stroke="var(--ink)" stroke-width=".8"/>`;
+  s+=DOT(X(1),Y(2))+DOT(X(5),Y(6))+DOT(M[0],M[1],"var(--amber)")+TX(X(1)-2,Y(2)+7,"A(1, 2)",`font-size="5.5" text-anchor="end"`)+TX(X(5)+2,Y(6)-2,"B(5, 6)",`font-size="5.5" text-anchor="start"`)+TX(M[0]-7,M[1]+3,"M",`${AM} text-anchor="end"`);
+  return SV("0 0 100 88",s); }
+function picTangent(){ return SV("0 0 106 76",`<circle cx="40" cy="42" r="26" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`+LN(40,42,59.9,25.3,`stroke="var(--red)" stroke-width="1.6"`)+LN(40.6,2.3,79.2,48.3,`stroke="var(--amber)" stroke-width="1.8"`)
+  +`<path d="M56.8 27.9 L59.4 31 L62.5 28.4" fill="none" stroke="var(--ink)" stroke-width=".8"/>`+DOT(40,42,"var(--ink)")+DOT(59.9,25.3)
+  +TX(36,47,"C",`font-weight="700" text-anchor="end"`)+TX(63,21,"P",`font-weight="700" text-anchor="start"`)+TX(47,30,"radius",`font-size="5.5" fill="var(--red)" text-anchor="end"`)+TX(82,47,"tangent",`font-size="5.5" ${AM} text-anchor="start"`)); }
+function picLinLaw(){ const X=x=>14+17*x, Y=y=>70-7.5*y; let s=ARW(X(0),Y(0),X(5.7),Y(0),"var(--ink)",1)+ARW(X(0),Y(0),X(0),Y(8.8),"var(--ink)",1);
+  s+=LN(X(0.3),Y(0.95),X(5.4),Y(8.6),`stroke="var(--blue)" stroke-width="1.6"`);
+  [[1,2.1],[2,3.4],[3,5.05],[5,7.95]].forEach(([x,y])=>{ s+=DOT(X(x),Y(y),"var(--ink)"); });
+  s+=DOT(X(4),Y(5.2),"var(--red)")+`<circle cx="${X(4)}" cy="${Y(5.2)}" r="5" fill="none" stroke="var(--red)" stroke-width="1"/>`+TX(X(4),Y(5.2)+12,"wrong reading",`font-size="5.5" fill="var(--red)"`);
+  s+=TX(X(0)+3,Y(8.8)+2,"lg y",`font-size="6" text-anchor="start" font-style="italic"`)+TX(X(5.7),Y(0)+8,"lg x",`font-size="6" text-anchor="end" font-style="italic"`);
+  return SV("0 0 120 80",s); }
+const SHEETS7={
+amPoly:`${MUST([FB("blue","Remainder theorem",nw(`remainder = f(${V("a")})`),`when f(${X1}) is divided by ${nw(`(${X1} − ${V("a")})`)}`),FB("amber","Factor theorem",nw(`f(${V("a")}) = 0`),`so ${nw(`(${X1} − ${V("a")})`)} is a factor`),FB("green","Sum and difference of cubes",nw(`${V("a")}³ ± ${V("b")}³ = (${V("a")} ± ${V("b")})(${V("a")}² ∓ ${V("ab")} + ${V("b")}²)`),"SOAP: Same, Opposite, Always Positive")])}
+<div class="sheet">
+${PAN("Dividing",STEPS([nw("dividend = quotient × divisor + remainder")])
+  +EG(nw(`(3${X1}³ + 4${X2} − 6${X1} + 3) ÷ (${X1} − 1)`),[`quotient ${nw(`3${X2} + 7${X1} + 1`)}, remainder 4`,`${nw(`3${X1}³ + 4${X2} − 6${X1} + 3`)} ${nw(`= (${X1} − 1)(3${X2} + 7${X1} + 1) + 4`)}`,`check: ${nw("f(1) = 3 + 4 − 6 + 3 = 4")} ✓`])+`<p class="anno">* stop when the remainder has a lower degree than the divisor</p>`)}
+${PAN("Remainder and factor theorems",STEPS([[nw(`÷ (${X1} − 2)`),"remainder f(2)"],[nw(`÷ (2${X1} + 1)`),`remainder ${nw(`f(−${frac("1","2")})`)}`]])
+  +EG(`${nw(`(${X1} − 3)`)} is a factor of ${nw(`${X1}³ − 2${X2} + ${V("k")}${X1} + 6`)}. Find ${V("k")}.`,[nw("f(3) = 0"),nw(`27 − 18 + 3${V("k")} + 6 = 0`),nw(`${V("k")} = −5`)]))}
+${PAN("Solve a cubic",EG(`Solve ${nw(`${X1}³ − 2${X2} − 5${X1} + 6 = 0`)}`,[`try 1: ${nw("f(1) = 1 − 2 − 5 + 6 = 0")}, so ${nw(`(${X1} − 1)`)} is a factor`,`${nw(`f(${X1}) = (${X1} − 1)(${X2} + ${V("b")}${X1} − 6)`)} (match the ${X1}³ and the 6)`,`compare ${X2}: ${nw(`${V("b")} − 1 = −2`)}, so ${nw(`${V("b")} = −1`)}`,nw(`f(${X1}) = (${X1} − 1)(${X1} − 3)(${X1} + 2)`),nw(`${X1} = 1, 3 or −2`)])+`<p class="anno">* stuck? Get a root from the calculator, then show f(root) = 0</p>`)}
+${PAN("Partial fractions: which form?",`<table><tr><th>Denominator has</th><th>Write</th></tr>
+  <tr><td>${nw(`(${V("a")}${X1} + ${V("b")})`)}</td><td>${nw(frac(V("A"),`${V("a")}${X1} + ${V("b")}`))}</td></tr>
+  <tr><td>${nw(`(${V("a")}${X1} + ${V("b")})²`)}</td><td>${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`(${V("a")}${X1} + ${V("b")})²`)}`)}</td></tr>
+  <tr><td>${nw(`${X2} + ${V("c")}²`)}</td><td>${nw(frac(`${V("A")}${X1} + ${V("B")}`,`${X2} + ${V("c")}²`))}</td></tr></table>`
+  +STEPS(["① improper fraction? Do long division first","② factorise the denominator completely","③ write the form from the table",`④ put in values of ${X1}, or compare coefficients`]))}
+${PAN("Partial fractions: examples",EG(nw(frac(`${X1} − 10`,`(${X1} + 4)(${X1} − 3)`)),[nw(`= ${frac(V("A"),`${X1} + 4`)} + ${frac(V("B"),`${X1} − 3`)}`),nw(`${X1} − 10 = ${V("A")}(${X1} − 3) + ${V("B")}(${X1} + 4)`),`${nw(`${X1} = 3`)}: ${nw(`−7 = 7${V("B")}`)}, so ${nw(`${V("B")} = −1`)}`,`${nw(`${X1} = −4`)}: ${nw(`−14 = −7${V("A")}`)}, so ${nw(`${V("A")} = 2`)}`,nw(`= ${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)])
+  +EG(`Repeated factor: ${nw(frac(`2${X1} + 1`,`(2${X1} − 5)²`))}`,[nw(`2${X1} + 1 = ${V("A")}(2${X1} − 5) + ${V("B")}`),`compare ${X1}: ${nw(`2 = 2${V("A")}`)}, so ${nw(`${V("A")} = 1`)}`,`${nw(`${X1} = ${frac("5","2")}`)}: ${nw(`${V("B")} = 6`)}`,nw(`= ${frac("1",`2${X1} − 5`)} + ${frac("6",`(2${X1} − 5)²`)}`)])+`<p class="anno">* pick values of ${X1} that make a bracket 0</p>`)}
+${MIST([[`÷ ${nw(`(${X2} + 1)`)}, expect a number left over`,`the remainder can be linear, like ${nw(`${V("p")}${X1} + ${V("q")}`)}`],[`${nw(`(${X1} − 2)(2${X2} + 5${X1} − 3)`)} for “factorise completely”`,nw(`(${X1} − 2)(2${X1} − 1)(${X1} + 3)`)],[`only ${nw(frac(V("B"),`(${V("a")}${X1} + ${V("b")})²`))} for a repeated factor`,`both: ${nw(`${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`(${V("a")}${X1} + ${V("b")})²`)}`)}`],["partial fractions straight away on an improper fraction","long division first"]])}
+</div>`,
+
+amBinom:`${MUST([FB("blue",`${V("n")} choose ${V("r")}`,nw(`${BIN(V("n"),V("r"))} = ${frac(`${V("n")}!`,`${V("r")}! (${V("n")} − ${V("r")})!`)}`),"calculator: nCr"),FB("amber","General term",nw(`${TRP} = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`),`the 1st term is ${nw(`${V("r")} = 0`)}`),FB("green","The pattern",`powers of ${V("a")} go down, ${V("b")} go up`,`${nw(`${V("n")} + 1`)} terms · the coefficients are symmetrical`)])}
+<div class="sheet">
+${PAN("Pascal's triangle",picPascal()+EG(nw(`(1 + 3${X1})⁴`),["row 4: 1, 4, 6, 4, 1",`${nw(`= 1 + 4(3${X1})`)} ${nw(`+ 6(3${X1})²`)} ${nw(`+ 4(3${X1})³ + (3${X1})⁴`)}`,`${nw(`= 1 + 12${X1} + 54${X2}`)} ${nw(`+ 108${X1}³ + 81${X1}⁴`)}`])+`<p class="anno">* each number is the sum of the two above it</p>`)}
+${PAN(`Expanding ${nw(`(${V("a")} + ${V("b")})<sup>${V("n")}</sup>`)}`,EG(`First 3 terms of ${nw(`(2${X1} − 3)⁵`)}, in descending powers of ${X1}`,[nw(`(2${X1})⁵ = 32${X1}⁵`),nw(`${BIN("5","1")}(2${X1})⁴(−3) = −240${X1}⁴`),nw(`${BIN("5","2")}(2${X1})³(−3)² = 720${X1}³`)])+`<p class="anno">* ${nw(`${V("b")} = −3`)}: the sign goes inside the bracket</p>`)}
+${PAN("One term: the general term",EG(`Coefficient of ${X1}³ in ${nw(`(1 − 2${X1})⁸`)}`,[nw(`${TRP} = ${BIN("8",V("r"))}(−2${X1})<sup>${V("r")}</sup>`),`${X1}³: ${nw(`${V("r")} = 3`)}`,nw(`${BIN("8","3")}(−2)³ = 56 × (−8) = −448`)])
+  +EG("The 5th term",[`${nw(`${V("r")} = 4`)} (the 1st term is ${nw(`${V("r")} = 0`)})`,nw(`${BIN("8","4")}(−2${X1})⁴ = 1120${X1}⁴`)]))}
+${PAN(`Term independent of ${X1}`,EG(nw(PAR(`${X2} + ${frac("1",X1)}`,"12")),[nw(`${TRP} = ${BIN("12",V("r"))}(${X2})<sup>12 − ${V("r")}</sup>(${X1}<sup>−1</sup>)<sup>${V("r")}</sup>`),nw(`= ${BIN("12",V("r"))}${X1}<sup>24 − 3${V("r")}</sup>`),nw(`24 − 3${V("r")} = 0, ${V("r")} = 8`),nw(`term = ${BIN("12","8")} = 495`)])+`<p class="anno">* independent of ${X1} means the power of ${X1} is 0</p>`)}
+${PAN("Two brackets multiplied",EG(`Coefficient of ${X2} in ${nw(`(2 + ${X1})(1 − 2${X1})⁵`)}`,[nw(`(1 − 2${X1})⁵ = 1 − 10${X1} + 40${X2} + …`),`${X2} comes from ${nw(`2 × 40${X2}`)} and ${nw(`${X1} × (−10${X1})`)}`,nw("80 − 10 = 70")])+`<p class="anno">* only multiply the pairs that make the power you want</p>`)}
+${MIST([[nw(`${BIN(V("n"),V("r"))} = ${frac(`${V("n")}!`,`${V("r")}!`)}`),nw(frac(`${V("n")}!`,`${V("r")}! (${V("n")} − ${V("r")})!`))],[`5th term uses ${nw(BIN(V("n"),"5"))}`,`${nw(`${V("r")} = 4`)}: the 1st term is ${nw(`${V("r")} = 0`)}`],[`in ${nw(`(2${X1} − 3)⁵`)}, ${nw(`(2${X1})³ = 2${X1}³`)}`,nw(`(2${X1})³ = 8${X1}³`)],[`coefficient of ${X1}³ = ${nw(`−448${X1}³`)}`,`coefficient −448, term ${nw(`−448${X1}³`)}`]])}
+</div>`,
+
+amLogs:`${MUST([FB("blue","Index form ⇔ log form",nw(`${V("y")} = ${V("a")}<sup>${X1}</sup> ⇔ ${X1} = ${LOGA(V("a"))} ${V("y")}`),"the log is the power"),FB("amber","When is a log defined?",nw(`${V("a")} &gt; 0, ${V("a")} ≠ 1, ${V("y")} &gt; 0`),"base and inside both positive"),FB("green","Change of base",nw(`${LOGA(V("a"))} ${V("b")} = ${frac(`lg ${V("b")}`,`lg ${V("a")}`)}`),"lg = log base 10 · ln = log base e")])}
+<div class="sheet">
+${PAN("Laws of logs",STEPS([[nw(`${LOGA(V("a"))} ${X1} + ${LOGA(V("a"))} ${V("y")} = ${LOGA(V("a"))} ${V("xy")}`),"product"],[nw(`${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")} = ${LOGA(V("a"))} ${frac(X1,V("y"))}`),"quotient"],[nw(`${LOGA(V("a"))} ${X1}<sup>${V("r")}</sup> = ${V("r")} ${LOGA(V("a"))} ${X1}`),"power"]])
+  +FACTS("Special values",[["",[nw(`${LOGA(V("a"))} ${V("a")} = 1`),nw(`${LOGA(V("a"))} 1 = 0`),nw(`${V("a")}<sup>${LOGA(V("a"))} ${V("b")}</sup> = ${V("b")}`)]]])+`<p class="anno">* the laws only work when every log has the same base</p>`)}
+${PAN("Exponential equations",EG(nw(`2<sup>${X1} + 1</sup> = 32`),[nw(`2<sup>${X1} + 1</sup> = 2⁵`),nw(`${X1} + 1 = 5, ${X1} = 4`)])
+  +EG(nw(`3<sup>${X1}</sup> = 20`),["20 isn't a power of 3, so take lg",nw(`${X1} lg 3 = lg 20`),nw(`${X1} = ${frac("lg 20","lg 3")} = 2.73`)]))}
+${PAN(`Substitute ${nw(`${V("u")} = ${V("a")}<sup>${X1}</sup>`)}`,EG(nw(`2<sup>2${X1}</sup> − 6(2<sup>${X1}</sup>) + 8 = 0`),[`let ${nw(`${V("u")} = 2<sup>${X1}</sup>`)}: ${nw(`${V("u")}² − 6${V("u")} + 8 = 0`)}`,nw(`(${V("u")} − 2)(${V("u")} − 4) = 0`),`${nw(`2<sup>${X1}</sup> = 2`)} or ${nw(`2<sup>${X1}</sup> = 4`)}`,nw(`${X1} = 1 or ${X1} = 2`)])+`<p class="anno">* ${nw(`2<sup>2${X1}</sup> = (2<sup>${X1}</sup>)² = ${V("u")}²`)}: let ${V("u")} be the smaller power</p>`)}
+${PAN("Log equations",EG(nw(`lg(${X1} + 3) + lg ${X1} = 1`),[nw(`lg ${X1}(${X1} + 3) = 1`),nw(`${X1}(${X1} + 3) = 10¹`),nw(`${X2} + 3${X1} − 10 = 0`),nw(`(${X1} + 5)(${X1} − 2) = 0`),`${nw(`${X1} = 2`)} (reject −5: ${nw("lg(−5)")} is undefined)`])+`<p class="anno">* check every answer in every log</p>`)}
+${PAN("The graphs",picExpLog()+STEPS([[nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`),`through (0, 1), never touches the ${X1}-axis`],[nw(`${V("y")} = ${LOGA(V("a"))} ${X1}`),`through (1, 0), never touches the ${V("y")}-axis`]])+`<p class="anno">* they are mirror images in the line ${nw(`${V("y")} = ${X1}`)}</p>`)}
+${MIST([[`${nw(`${LOGA(V("a"))}(${X1} − ${V("y")})`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`,`only ${nw(`${LOGA(V("a"))} ${frac(X1,V("y"))}`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`],[nw(`lg ${X1}³ = (lg ${X1})³`),nw(`lg ${X1}³ = 3 lg ${X1}`)],[nw(`${LOGA("2")} ${X1} + ${LOGA("4")} ${X1} = ${LOGA("2")} ${X2}`),`same base first: ${nw(`${LOGA("4")} ${X1} = ${frac("1","2")}${LOGA("2")} ${X1}`)}`],[`${nw(`2<sup>${X1}</sup> = 10`)}, so ${nw(`${X1} = ${frac("10","2")}`)}`,nw(`${X1} = ${frac("lg 10","lg 2")} = 3.32`)],["keep a root that puts a negative inside a log","reject it, and say why"]])}
+</div>`,
+
+amCoord:`${MUST([FB("blue","Line",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"a gradient and one point"),FB("amber","Circle",`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})²`)}<br>${nw(`= ${V("r")}²`)}`,`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`),FB("green","General form",nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)} · radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`)])}
+<div class="sheet">
+${PAN("Perpendicular bisector",picPerpBis()+EG("A(1, 2), B(5, 6)",[nw("midpoint M = (3, 4)"),nw(`${V("m")}<sub>AB</sub> = ${frac("6 − 2","5 − 1")} = 1`),`perpendicular: ${nw(`${V("m")} = −1`)}`,nw(`${V("y")} − 4 = −1(${X1} − 3)`),nw(`${V("y")} = −${X1} + 7`)])+`<p class="anno">* through the midpoint, with the perpendicular gradient · basics: <a href="#sheet/coordinate-geometry">E-Math coordinate geometry</a></p>`)}
+${PAN("Area from the corners",EG("A(−4, 3), B(3, 5), C(2, −5)",["anticlockwise: A, C, B, back to A",nw(`${frac("1","2")}${MX([["−4","2","3","−4"],["3","−5","5","3"]],"det")}`),nw("↘: (−4)(−5) + (2)(5) + (3)(3) = 39"),nw("↗: (3)(2) + (−5)(3) + (5)(−4) = −29"),nw(`area = ${frac("1","2")}(39 − (−29)) = 34 units²`)])+`<p class="anno">* clockwise gives a negative answer, so go anticlockwise</p>`)}
+${PAN("Circles",STEPS([[nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),"centre (−3, 2), radius 4"]])
+  +EG(nw(`${X2} + ${V("y")}² − 6${X1} + 4${V("y")} − 12 = 0`),[nw(`${V("g")} = −3, ${V("f")} = 2, ${V("c")} = −12`),nw("centre = (3, −2)"),nw(`radius = ${SQRT("(−3)² + 2² − (−12)")} = 5`)])+`<p class="anno">* first divide so ${X2} and ${V("y")}² have 1 in front, and make the right side 0</p>`)}
+${PAN("Tangent to a circle",picTangent()+EG("Tangent at P(6, 2) to the circle above",[nw(`${V("m")}<sub>CP</sub> = ${frac("2 − (−2)","6 − 3")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,nw(`${V("y")} − 2 = −${frac("3","4")}(${X1} − 6)`),nw(`4${V("y")} = −3${X1} + 26`)])
+  +STEPS(["line meets circle: substitute the line into the circle",`touches once (a tangent): ${nw(`${V("b")}² − 4${V("ac")} = 0`)}`]))}
+${MIST([["perpendicular bisector through A","through the midpoint of AB"],["shoelace corners in any order","anticlockwise, and end where you started"],[`${nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)}: centre (3, −2), radius 16`,"centre (−3, 2), radius 4"],["tangent gradient = radius gradient",`perpendicular: ${nw(`−${frac("1",`${V("m")}<sub>radius</sub>`)}`)}`]])}
+</div>`,
+
+amLinLaw:`${MUST([FB("blue","Straight-line form",nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`),`${V("Y")} up the side, ${V("X")} along the bottom`),FB("amber","The rule",`${V("Y")} and ${V("X")}: variables only`,`${V("m")} and ${V("c")}: numbers only`),FB("green",nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`),nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`),`plot lg ${V("y")} against lg ${X1}`)])}
+<div class="sheet">
+${PAN("Make it straight",`<table><tr><th>Equation</th><th>Plot</th><th>${V("m")}</th><th>${V("c")}</th></tr>
+  <tr><td>${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}</td><td>lg ${V("y")} against lg ${X1}</td><td>${V("n")}</td><td>${nw(`lg ${V("a")}`)}</td></tr>
+  <tr><td>${nw(`${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup>`)}</td><td>lg ${V("y")} against ${X1}</td><td>${nw(`lg ${V("b")}`)}</td><td>${nw(`lg ${V("a")}`)}</td></tr>
+  <tr><td>${nw(`${V("y")} = ${V("a")}e<sup>${V("b")}${X1}</sup>`)}</td><td>ln ${V("y")} against ${X1}</td><td>${V("b")}</td><td>${nw(`ln ${V("a")}`)}</td></tr>
+  <tr><td>${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1}`)}</td><td>${frac(V("y"),X1)} against ${X1}</td><td>${V("a")}</td><td>${V("b")}</td></tr></table>`
+  +EG(nw(`${V("y")} = 3${X1}${V("y")} − 5${X1}`),[`÷ ${X1}: ${nw(`${frac(V("y"),X1)} = 3${V("y")} − 5`)}`,nw(`${V("Y")} = ${frac(V("y"),X1)}, ${V("X")} = ${V("y")}, ${V("m")} = 3, ${V("c")} = −5`)]))}
+${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)])+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("c")} off</p>`)}
+${PAN("From a table of data",picLinLaw()+STEPS([`① make a table of ${V("X")} and ${V("Y")} first`,"② plot them and draw the line of best fit","③ gradient: 2 points on your line, far apart",`④ change back: ${nw(`lg ${V("a")} = ${V("c")}`)}, so ${nw(`${V("a")} = 10<sup>${V("c")}</sup>`)}`])+`<p class="anno">* a point well off the line is the wrong reading: read the right value off the line</p>`)}
+${MIST([[`plot ${V("y")} against ${X1} when it says lg ${V("y")} against ${X1}`,`make the ${V("X")}, ${V("Y")} table first`],["gradient from 2 points in the table","2 points on your line, far apart"],[`stop at ${nw(`lg ${V("a")} = 0.48`)}`,nw(`${V("a")} = 10<sup>0.48</sup> = 3.02`)],[nw(`lg(${V("a")}${X1}<sup>${V("n")}</sup>) = lg ${V("a")} × ${V("n")} lg ${X1}`),`the logs add: ${nw(`lg ${V("a")} + ${V("n")} lg ${X1}`)}`]])}
+</div>`,
+
+amTrigId:`${MUST([FB("blue","3 basic identities",`${nw(`sin²${V("A")} + cos²${V("A")} = 1`)} · ${nw(`1 + tan²${V("A")} = sec²${V("A")}`)} · ${nw(`1 + cot²${V("A")} = cosec²${V("A")}`)}`,"all on the formula sheet"),FB("green","Find the range first",nw(`0° ≤ ${X1} ≤ 360°`),`so ${nw(`0° ≤ 2${X1} ≤ 720°`)}`),FB("amber","Double angle",nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`),`${nw(`cos 2${V("A")} = 1 − 2 sin²${V("A")}`)} ${nw(`= 2 cos²${V("A")} − 1`)}`)])}
+<div class="sheet">
+${PAN("Solve a basic equation",quadPic()+STEPS(["① ASTC: which quadrants, from the sign","② basic angle α from the positive value",`③ use ${nw("α")}, ${nw("180° − α")}, ${nw("180° + α")}, ${nw("360° − α")}`])
+  +EG(`${nw(`cos ${X1} = −0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw("α = cos⁻¹ 0.5 = 60°"),"cos is negative: Quadrants 2 and 3",nw(`${X1} = 180° − 60° = 120°`),nw(`${X1} = 180° + 60° = 240°`)]))}
+${PAN(`${nw(`sin(${V("a")}${X1} + ${V("b")}) = ${V("k")}`)}: range first`,EG(`${nw(`sin 2${X1} = 0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw(`0° ≤ 2${X1} ≤ 720°`),`${nw("α = 30°")}: ${nw(`2${X1} = 30°, 150°`)}`,`go round again ${nw("(+ 360°)")}: ${nw(`2${X1} = 390°, 510°`)}`,nw(`${X1} = 15°, 75°, 195°, 255°`)])+`<p class="anno">* sin and cos repeat every 360°, tan every 180°</p>`)}
+${PAN("Use an identity first",EG(`${nw(`2 cos²${X1} + 3 sin ${X1} = 3`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`swap cos²: ${nw(`2(1 − sin²${X1}) + 3 sin ${X1} = 3`)}`,nw(`2 sin²${X1} − 3 sin ${X1} + 1 = 0`),nw(`(2 sin ${X1} − 1)(sin ${X1} − 1) = 0`),`${nw(`sin ${X1} = ${frac("1","2")}`)} or ${nw(`sin ${X1} = 1`)}`,nw(`${X1} = 30°, 90°, 150°`)])
+  +EG(`${nw(`sin ${X1} cos ${X1} = sin ${X1}`)}: factorise, never ÷`,[nw(`sin ${X1}(cos ${X1} − 1) = 0`),`${nw(`sin ${X1} = 0`)} or ${nw(`cos ${X1} = 1`)}`,nw(`${X1} = 0°, 180°, 360°`)]))}
+${PAN("Addition formulae: exact values",EG("sin 75° without a calculator",[nw("sin 75° = sin(45° + 30°)"),`${nw("= sin 45° cos 30°")} ${nw("+ cos 45° sin 30°")}`,`${nw(`= ${frac(SQRT("2"),"2")} × ${frac(SQRT("3"),"2")}`)} ${nw(`+ ${frac(SQRT("2"),"2")} × ${frac("1","2")}`)}`,nw(`= ${frac(`${SQRT("6")} + ${SQRT("2")}`,"4")}`)])+`<p class="anno">* the addition and double angle formulae are on the <a href="#sheet/amath-formula-sheet">formula sheet</a></p>`)}
+${PAN("Proving identities",STEPS(["① start with the side that looks harder","② simplify it with the identities","③ end with “= RHS”: go from one side to the other"])
+  +EG(`Prove ${nw(`${frac(`1 − cos 2${V("A")}`,`sin 2${V("A")}`)} = tan ${V("A")}`)}`,[nw(`LHS = ${frac(`1 − (1 − 2 sin²${V("A")})`,`2 sin ${V("A")} cos ${V("A")}`)}`),nw(`= ${frac(`2 sin²${V("A")}`,`2 sin ${V("A")} cos ${V("A")}`)}`),nw(`= ${frac(`sin ${V("A")}`,`cos ${V("A")}`)}`),nw(`= tan ${V("A")} = RHS`)])+`<p class="anno">* ${nw(`${V("a")} sin θ + ${V("b")} cos θ`)}? Use the <a href="#sheet/r-formula">R-formula</a></p>`)}
+${MIST([[nw("cos⁻¹(−0.5) = −60°"),`${nw("120°")}: cos⁻¹ gives 0° to 180°`],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`],[nw(`sin 2${V("A")} = 2 sin ${V("A")}`),nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)],[`${nw(`cos(${V("A")} + ${V("B")})`)} ${nw(`= cos ${V("A")} + cos ${V("B")}`)}`,`${nw(`cos ${V("A")} cos ${V("B")}`)} ${nw(`− sin ${V("A")} sin ${V("B")}`)}`]])}
+</div>`
+};
+Object.assign(SHEETS,SHEETS7);
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
@@ -3846,7 +3950,9 @@ const STHUMB={
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
   "command-words":()=>FT("“Hence…”"),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
-  "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol
+  "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
+  "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
+  "coordinate-geometry-circles":picTangent, "linear-law":picLinLaw, "trig-identities-equations":()=>FT(nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`),1)
 };
 SHEETLIST.push(
   {id:"simultaneous-equations",levels:["sec2"],ord:1,chapter:"Algebra",title:"Simultaneous equations & linear graphs",sheet:"s2Simul",aid:null,kw:"elimination substitution graphical solve two equations"},
@@ -3865,7 +3971,13 @@ SHEETLIST.push(
   {id:"further-trigonometry",levels:["emath"],chapter:"Further Trigonometry",title:"Sine rule, cosine rule & area",sheet:"emTrig2",aid:null,kw:"sine rule cosine rule half ab sin c obtuse angle trigonometry"},
   {id:"bearings-elevation-3d",levels:["emath"],chapter:"Applications of Trigonometry",title:"Bearings, elevation & 3D",sheet:"emTrigApp",aid:null,kw:"bearings angle of elevation depression 3d shortest distance trigonometry"},
   {id:"arc-length-sector-area",levels:["emath"],chapter:"Arc Length & Radians",title:"Arc length, sector area & radians",sheet:"emArcs",aid:null,kw:"radian arc sector segment circle perimeter"},
-  {id:"vectors",levels:["emath"],chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"}
+  {id:"vectors",levels:["emath"],chapter:"Vectors",title:"Vectors",sheet:"emVectors",aid:null,kw:"column vector magnitude position vector parallel collinear ratio"},
+  {id:"polynomials-partial-fractions",levels:["amath"],ord:4,chapter:"Polynomials",title:"Polynomials & partial fractions",sheet:"amPoly",aid:null,kw:"remainder theorem factor theorem cubic long division sum difference of cubes partial fractions"},
+  {id:"binomial-theorem",levels:["amath"],ord:5,chapter:"Binomial Theorem",title:"Binomial theorem",sheet:"amBinom",aid:null,kw:"binomial expansion pascal triangle ncr general term independent of x"},
+  {id:"exponentials-logarithms",levels:["amath"],ord:6,chapter:"Exponentials & Logarithms",title:"Exponentials & logarithms",sheet:"amLogs",aid:null,kw:"log lg ln laws of logarithms change of base exponential equations indices"},
+  {id:"coordinate-geometry-circles",levels:["amath"],ord:7,chapter:"Coordinate Geometry",title:"Coordinate geometry: lines & circles",sheet:"amCoord",aid:null,kw:"perpendicular bisector shoelace area circle centre radius tangent equation of a circle"},
+  {id:"linear-law",levels:["amath"],ord:8,chapter:"Linear Law",title:"Linear law",sheet:"amLinLaw",aid:null,kw:"straight line graphs lg y against lg x line of best fit Y = mX + c"},
+  {id:"trig-identities-equations",levels:["amath"],ord:10,chapter:"Trigonometry",title:"Trig identities & equations",sheet:"amTrigId",aid:null,kw:"addition formulae double angle prove identities solve trigonometric equations principal values"}
 );
 
 const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn"), printBtn=$("#printBtn");
