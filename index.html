@@ -297,6 +297,8 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:0 0 20px}
 .lgrid div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.45}
 .lgrid b{display:block;margin-bottom:2px}
+.lres{margin:0 0 22px;padding-left:20px;line-height:1.5}
+.lres li{margin:0 0 6px}
 .sheetend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:14px 0 6px;margin:4px 0 0;color:var(--muted);font-size:15px}
 .sheetend a{color:var(--accent);font-weight:700;text-decoration:none}
 .printfoot{display:none}
@@ -3677,7 +3679,7 @@ const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
 function sheetRow(s,skip){ return h("a",{class:"srow",href:"#sheet/"+s.id,"data-q":(s.chapter+" "+s.title).toLowerCase()},
   `${s.chapter.toLowerCase()===s.title.toLowerCase()?"":`<span class="chap">${s.chapter}</span>`}<b>${s.title}</b><span class="tags">${s.tag?`<span class="tag lvl">${s.tag}</span>`:s.levels.filter(l=>l!==skip).map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${s.aid?`<span class="tag aidtag">Interactive</span>`:""}</span>`); }
-function renderHome(){
+function renderHome(keep){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
   backBtn.style.display="none"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
@@ -3695,12 +3697,12 @@ function renderHome(){
   const chips=h("div",{class:"chips",role:"group","aria-label":"Choose level"});
   [{id:"all",name:"All"},...used.map(l=>({id:l.id,name:SHORT[l.id]}))].forEach(l=>{
     const c=h("button",{class:"chip","aria-pressed":String(homeFilter===l.id)},l.name);
-    c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome()};
+    c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome(true)};
     chips.append(c);
   });
   body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div><p class="tabnote">${VIEWNOTE[v]}</p>`);
   if(v!=="exam") body.append(chips);
-  body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(); });
+  body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(true); });
   const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
   if(v==="sheets"){
     LEVELS.forEach(l=>{
@@ -3733,7 +3735,7 @@ function renderHome(){
     res.innerHTML=`<h3>${hits.length?"Results":"Nothing matches. Try another word."}</h3>`;
     if(hits.length){ const grid=h("div",{class:"scards"}); hits.forEach(r=>grid.append(r)); res.append(grid); }
     res.hidden=false; body.hidden=true; };
-  window.scrollTo(0,0);
+  if(!keep) window.scrollTo(0,0);
 }
 function sheetCard(s,skip){
   const tags=(s.tag?[s.tag]:s.levels.filter(l=>l!==skip).map(l=>SHORT[l])).map(x=>`<span class="tag lvl">${x}</span>`).join("")+(s.aid?`<span class="tag aidtag">Interactive</span>`:"");
@@ -3756,6 +3758,8 @@ function renderLessons(){
       <div><b>School-style practice</b>We use questions from real school papers, and do short mock tests in class before WAs and exams.</div>
       <div><b>Weak spots come back</b>I mark and go through their homework. Whatever they struggle with comes back again in later practice until it’s solid.</div>
     </div>
+    <h3>Recent results</h3>
+    <ul class="lres"><li>4 of my 5 Sec 4s got A1 for maths in their prelims this year.</li><li>Over the past year, 4 of my students went from C6 or lower in a school test to A1 later on.</li><li>One of my Sec 2s failed a WA in Term 3 and got A1 for EOY.</li></ul>
     <div class="lcard"><h3>Ask about a slot</h3><p>My slots are limited, so just WhatsApp me with the level, school, ${nw("E-Math")} or ${nw("A-Math")}, and which days work for you. New students can start with a free 1-hour trial lesson.</p><div class="acts">${waBtn()}</div><div class="waqr" hidden><div id="waQr"></div><span>On a computer? Scan this with your phone.</span></div></div>
   </div>`;
   if(waURL()&&matchMedia("(min-width:900px)").matches) loadQR().then(()=>{ const q=qrcode(0,"M"); q.addData(waURL()); q.make(); const box=$("#waQr"); if(box){ box.innerHTML=q.createSvgTag(4,2); box.parentElement.hidden=false; } }).catch(()=>{});
