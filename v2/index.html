@@ -331,9 +331,9 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 }
 @media (max-width:520px){
   .big{font-size:18px;line-height:1.5}
+  .panelc{overflow-x:auto}
   .panelc td.anno{white-space:normal}
   .cmini{width:84px;min-width:84px}
-  .panelc td:first-child:has(.cmini){width:88px;padding:4px}
   .panelc table{font-size:15px}
   .panelc th,.panelc td{padding:6px 5px}
   body{font-size:16px}
@@ -2475,7 +2475,7 @@ function addNumBox(row){
   if(+r.min>=0) b.inputMode="decimal";
   b.setAttribute("aria-label",(r.getAttribute("aria-label")||$("label",row)?.textContent||"value")+" — type a number");
   const u=document.createElement("span"); u.className="unit";
-  w.append(b,u); out.after(w);
+  w.append(b,u); out.after(w); out.style.display="none";
   const shown=()=>numOf(out.textContent);
   row._sync=()=>{
     if(document.activeElement!==b){const v=shown(); const t=isNaN(v)?"":String(v); if(b.value!==t) b.value=t;}
