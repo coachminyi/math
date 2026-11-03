@@ -187,6 +187,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 8px}
 .pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
+.pill.act{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);border-radius:12px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.pill.act:hover{filter:brightness(1.08)}
+.pill.act[aria-pressed="true"],.pill.act.sec{background:var(--card);color:var(--accent);border:1.5px solid var(--accent);box-shadow:none}
+.pill.act[aria-pressed="true"]{background:var(--blue-fill)}
+.stab .sn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:12px;font-weight:700;margin-right:6px;vertical-align:1px;line-height:1}
+.stab[aria-selected="true"] .sn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.nxrow{display:flex;justify-content:flex-end;margin-top:8px}
+.nextstep{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:0 14px;min-height:40px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.nextstep:hover{background:var(--blue-fill)}
 .plbl{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .pillrow[data-pk]>.plbl{flex-basis:100%;align-self:auto;margin:0 0 -3px}
 .steptabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:2px 0 14px}
@@ -953,14 +962,14 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
-  const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
+  const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
   panel.innerHTML=`${jump}${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
-      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
+      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill act${b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label)?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox"><p class="steptext"></p></div>`}
+    ${flat?"":`<div class="box exbox"><p class="steptext"></p>${jump?`<div class="nxrow"><button class="nextstep" type="button"></button></div>`:""}</div>`}
     <div class="box robox"><div class="readout"></div></div>
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
@@ -977,7 +986,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
     cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length?[...c.children].some(x=>x.style.display!=="none"):c.textContent.trim()))?"":"none";
     if(flat){const ex=typeof def.explain==="function"?def.explain(st):(def.explain||[]); $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
-    else $(".steptext",panel).innerHTML=def.steps[st.step].t(st);
+    else { $(".steptext",panel).innerHTML=def.steps[st.step].t(st); const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1]; nx.parentNode.style.display=n?"":"none"; if(n) nx.innerHTML=`Next: ${n.name} →`; } }
   };
   const go=i=>{st.step=i; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
@@ -987,6 +996,8 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
   (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._reset=true; draw();}));
   if(jb) jb.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j); if(b.scrollIntoView&&jb.scrollWidth>jb.clientWidth) b.scrollIntoView({block:"nearest",inline:"center"});});
+  const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>{ if(st.step>=def.steps.length-1) return; stopAnim(); go(st.step+1);
+    const b=jb&&jb.querySelector(`[data-j="${st.step}"]`); if(b&&jb.scrollWidth>jb.clientWidth) jb.scrollTo({left:b.offsetLeft-(jb.clientWidth-b.offsetWidth)/2,behavior:"smooth"}); };
   if(def.drag) dragger(svg,(id,p)=>{stopAnim(); def.drag(id,p,st); draw();});
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
