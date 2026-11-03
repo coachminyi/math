@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Maths Hub">
+<meta name="apple-mobile-web-app-title" content="Minyi Maths">
 <meta name="theme-color" content="#f7f5ef">
 <meta name="description" content="Free maths cheatsheets and interactive aids for Sec 1–4 Maths, E-Math and A-Math, by Coach Minyi (Jurong East).">
 <link rel="manifest" href="manifest.webmanifest">
@@ -189,6 +189,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .frac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15}
 .frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
 .frac>span:last-child{padding:0 3px}
+.gloss{list-style:none;margin:0;padding:0}
+.gloss li{padding:8px 0;border-bottom:1px dashed var(--grid2);line-height:1.45}
+.gloss li:last-child{border-bottom:0}
+.gloss .gw{font-weight:700}
+.gloss .ge{display:block;font-size:15.5px;margin-top:3px}
+.gloss .ge::before{content:"e.g. ";color:var(--muted);font-size:13px}
+.gloss .glv{display:inline-block;margin-left:6px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 6px;vertical-align:1px}
 s.cancel{text-decoration-color:var(--red);text-decoration-thickness:2px}
 i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,serif;font-size:1.05em}
 
@@ -536,7 +543,7 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 <header class="bar"><div class="wrap">
   <button class="back" id="back" aria-label="Back">‹</button>
   <a class="brand wide-only" href="#" id="brand">Coach Minyi's Maths Hub</a>
-  <nav class="topnav wide-only" aria-label="Sections"><a href="#sheets" data-n="sheets">Cheatsheets</a><a href="#exam" data-n="exam">Formulas</a><a href="#play" data-n="play">Interactives</a><a href="#lessons" data-n="lessons">Tuition</a></nav>
+  <nav class="topnav wide-only" aria-label="Sections"><a href="#sheets" data-n="sheets">Cheatsheets</a><a href="#exam" data-n="exam">Exam kit</a><a href="#play" data-n="play">Interactives</a><a href="#lessons" data-n="lessons">Tuition</a></nav>
   <div class="ttl" id="ttl" title="Home" role="button" tabindex="0"><h1 id="title">Coach Minyi's Maths Hub</h1><div class="crumb" id="crumb"></div></div>
   <button class="ibtn phone-only" id="zoomBtn" hidden aria-label="Bigger diagram" title="Bigger diagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
   <button class="ibtn" id="share" hidden aria-label="Copy link" title="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg><span class="lbl">Copy link</span></button>
@@ -3105,8 +3112,7 @@ const LEN_F=nw(SQRT(`(${XY(X1)})² + (${XY(V("y"))})²`));
 const GRAD_F=nw(frac(XY(V("y")),XY(X1)));
 const SHOE=`<span class="mx det" style="grid-template-columns:repeat(5,auto)">${[X1,V("y")].map(c=>[1,2,3].map(i=>`<span>${c}${"₀₁₂₃"[i]}</span>`).join("")+`<span>…</span><span>${c}₁</span>`).join("")}</span>`;
 const SHEETS3={
-emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam paper"),FB("red","Not given",`the red boxes`,"memorise these"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
-<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Maths formula list.</p>
+emFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Maths formula list. Not on here? It's on <a href="#sheet/emath-memorise">E-Math formulas to memorise</a>.</p>
 <div class="sheet">
   <div class="panelc pg"><h4>Given in the exam</h4>
     <div class="fpaper">
@@ -3129,8 +3135,11 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${FD(`Standard deviation = ${nw(SQRT(`${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − ${PAR(frac("Σ"+V("fx"),"Σ"+V("f")),"2")}`))}`)}
     </div>
   </div>
-
-  <div class="panelc pn"><h4>Not given: numbers &amp; algebra</h4>
+</div>`,
+emMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a>.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>numbers &amp; algebra</h4>
     <ul class="steps fml">
       ${GRP("Expansion","expansion")}
       ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
@@ -3150,7 +3159,7 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 
-  <div class="panelc pn"><h4>Not given: geometry &amp; measurement</h4>
+  <div class="panelc pn"><h4>geometry &amp; measurement</h4>
     <ul class="steps fml">
       ${GRP("Pythagoras","pythagoras")}
       ${FL(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)+FNOTE(`${V("c")} = hypotenuse`))}
@@ -3186,7 +3195,7 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 
-  <div class="panelc pn"><h4>Not given: statistics &amp; probability</h4>
+  <div class="panelc pn"><h4>statistics &amp; probability</h4>
     <ul class="steps fml">
       ${GRP("Spread","measures-of-spread")}
       ${FL(`Interquartile range = ${nw(`${V("Q")}₃ − ${V("Q")}₁`)}`)}
@@ -3200,8 +3209,7 @@ emFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
   </div>
 </div>`,
 
-amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam paper"),FB("red","Not given",`the red boxes`,"memorise these"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
-<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Additional Maths formula list.</p>
+amFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Additional Maths formula list. Not on here? It's on <a href="#sheet/amath-memorise">A-Math formulas to memorise</a>.</p>
 <div class="sheet">
   <div class="panelc pg"><h4>Given in the exam</h4>
     <div class="fpaper">
@@ -3231,8 +3239,11 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
       ${FD(nw(`${V("Δ")} = ${frac("1","2")}${V("bc")} sin ${V("A")}`))}
     </div>
   </div>
-
-  <div class="panelc pn"><h4>Not given: algebra</h4>
+</div>`,
+amMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/amath-formula-sheet">A-Math formula sheet</a>.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>algebra</h4>
     <ul class="steps fml">
       ${GRP("Discriminant","discriminant")}
       ${FMAP(null,[[nw(`${V("b")}² − 4${V("ac")} &gt; 0`),"2 real and distinct roots"],[nw(`${V("b")}² − 4${V("ac")} = 0`),"2 equal roots"],[nw(`${V("b")}² − 4${V("ac")} &lt; 0`),"no real roots"]])}
@@ -3260,7 +3271,7 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 
-  <div class="panelc pn"><h4>Not given: trigonometry</h4>
+  <div class="panelc pn"><h4>trigonometry</h4>
     <ul class="steps fml">
       ${GRP("The six ratios","trig-ratios-any-angle")}
       ${FLB("",nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`),nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`))}
@@ -3277,7 +3288,7 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 
-  <div class="panelc pn"><h4>Not given: coordinate geometry</h4>
+  <div class="panelc pn"><h4>coordinate geometry</h4>
     <ul class="steps fml">
       ${GRP("Lines","coordinate-geometry-circles")}
       ${FL(`Midpoint = ${nw(PAR(`${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")}`))}`)}
@@ -3298,7 +3309,7 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 
-  <div class="panelc pn"><h4>Not given: calculus</h4>
+  <div class="panelc pn"><h4>calculus</h4>
     <ul class="steps fml">
       ${GRP("Differentiation","differentiation-rules")}
       ${FMAP([V("y"),dydx],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${V("n")}${X1}<sup>${V("n")} − 1</sup>`)],[nw(`sin ${X1}`),nw(`cos ${X1}`)],[nw(`cos ${X1}`),nw(`−sin ${X1}`)],[nw(`tan ${X1}`),nw(`sec²${X1}`)],[nw(`e<sup>${X1}</sup>`),nw(`e<sup>${X1}</sup>`)],[nw(`ln ${X1}`),nw(frac("1",X1))]])}
@@ -3325,6 +3336,7 @@ amFormula:`${MUST([FB("green","Given",`the green box`,"printed in your exam pape
     </ul>
   </div>
 </div>`,
+
 cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise"),FB("amber",`<span class="m">π</span>`,`calculator value`,"or 3.142, unless it says 'in terms of π'"),FB("red","Working",`always show it`,"missing working loses marks")])}
 <div class="sheet">
   <div class="panelc"><h4>They say → you do</h4>
@@ -3383,9 +3395,12 @@ cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the qu
 };
 Object.assign(SHEETS,SHEETS3);
 SHEETLIST.push(
-  {id:"emath-formula-sheet",levels:["emath"],chapter:"Given in the exam + what to memorise",title:"E-Math formula sheet",sheet:"emFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
-  {id:"amath-formula-sheet",levels:["amath"],chapter:"Given in the exam + what to memorise",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given memorise not given"},
-  {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"skills",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"}
+  {id:"emath-formula-sheet",levels:["emath"],chapter:"Printed in your exam paper",title:"E-Math formula sheet",sheet:"emFormula",aid:null,exam:true,group:"formula",kw:"formula list given exam"},
+  {id:"amath-formula-sheet",levels:["amath"],chapter:"Printed in your exam paper",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given exam"},
+  {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
+  {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
+  {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
+  {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"}
 );
 function SV(vb,inner){return `<svg viewBox="${vb}" class="lsp" aria-hidden="true">${inner}</svg>`;}
 function TX(x,y,t,o=""){return `<text x="${x}" y="${y}"${/font-size=/.test(o)?"":` font-size="7"`}${/text-anchor=/.test(o)?"":` text-anchor="middle"`}${/fill=/.test(o)?"":` fill="var(--ink)"`} ${o}>${t}</text>`;}
@@ -3896,7 +3911,7 @@ ${PAN("Change the units",EG("72 km/h in m/s",[nw(`72 km/h = ${frac("72 km","1 h"
 ${MIST([[`average speed = ${nw(`${frac("40 + 80","2")} = 60`)}`,"total distance ÷ total time = 50 km/h"],["45 min : 2 h = 45 : 2",`same units first: ${nw("45 : 120 = 3 : 8")}`],[`72 km/h = ${nw("72 × 1000 = 72 000 m/s")}`,`change the bottom ${nw("too: ÷ (60 × 60)")}<br>→ ${nw("20 m/s")}`]])}
 </div>`,
 
-s1Percent:`${MUST([FB("blue","% of",nw(`80% of 500 = ${frac("80","100")} × 500`),"= 400"),FB("amber","Percentage change",nw(`${frac("change","original")} × 100%`),"change = new − original"),FB("green","Reverse %","find 1% first","after +20%, the new price is 120%")])}
+s1Percent:`${MUST([FB("blue","% of",nw(`80% of 500 = ${frac("80","100")} × 500`),"= 400"),FB("amber","Percentage change",nw(`${frac("change","original")} × 100%`),`change = ${nw("new − original")}`),FB("green","Reverse %","find 1% first","after +20%, the new price is 120%")])}
 <div class="sheet">
 ${PAN("As a percentage",STEPS([[nw(`${frac("18","24")} × 100% = 75%`),"18 out of 24"]]))}
 ${PAN("Percentage change",`<p class="big">${nw(`${frac("change","original")} × 100%`)}</p>`+EG("A price goes from $40 to $46. Find the percentage increase.",[nw("change = $46 − $40 = $6"),nw(`percentage increase = ${frac("6","40")} × 100%`),nw("= 15%")]))}
@@ -4450,6 +4465,8 @@ function picTanSec(){ const B='font-weight="700"';
 function picMidpt(){ const B='font-weight="700"', ch=(x,y)=>`<path d="M${x-2.5} ${y-2.5} L${x} ${y} L${x-2.5} ${y+2.5}" fill="none" stroke="var(--blue)" stroke-width="1.1"/>`, tk=(x,y,n)=>{ let s=""; for(let i=0;i<n;i++){ const o=(i-(n-1)/2)*2.4; s+=LN(x+o-1.5,y+2.6,x+o+1.5,y-2.6,`stroke="var(--red)" stroke-width="1"`); } return s; };
   return SV("0 0 90 66",PG("40,8 10,56 80,56")+LN(25,32,60,32,`stroke="var(--blue)" stroke-width="1.8"`)+ch(44,32)+ch(47,56)+DOT(25,32,"var(--ink)")+DOT(60,32,"var(--ink)")
     +tk(32.5,20,1)+tk(17.5,44,1)+tk(50,20,2)+tk(70,44,2)+TX(40,5.5,"A",B)+TX(6,62,"B",B)+TX(84,62,"C",B)+TX(21,31,"M",`${B} text-anchor="end"`)+TX(64,31,"N",`${B} text-anchor="start"`)); }
+const GW=(w,m,e,lv)=>`<li><span class="gw">${w}</span>: ${m}${lv?`<span class="glv">${lv}</span>`:""}${e?`<span class="ge">${e}</span>`:""}</li>`;
+const GLS=a=>`<ul class="gloss">${a.join("")}</ul>`;
 const SHEETS8={
 emFuncGraphs:`${MUST([FB("blue",nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`),`6 shapes: ${nw(`${V("n")} = 3, 2, 1, 0, −1, −2`)}`,`${nw(`${V("k")} &lt; 0`)} flips it in the ${X1}-axis`),FB("amber",nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`crosses the ${V("y")}-axis at ${V("k")}`,`${nw(`${V("a")} &gt; 1`)}: growth · ${nw(`0 &lt; ${V("a")} &lt; 1`)}: decay`),FB("green","Solve off the graph",nw(`f(${X1}) = ${V("k")}`),`draw ${nw(`${V("y")} = ${V("k")}`)}, read the ${X1} values`)])}
 <div class="sheet">
@@ -4524,6 +4541,74 @@ ${PAN("Prove 4 points lie on a circle",STEPS(["show ONE of these:",["opposite an
 ${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN ∥ BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(midpoint theorem)`])+`<p class="anno">* both points must be midpoints of 2 sides of the <b>same</b> triangle</p>`)}
 ${PAN("Prove a tangent, or parallel lines",STEPS([["show the angle between the line and the radius is 90°","then it's a tangent (converse of tan ⊥ rad)"],["show a pair of alternate angles are equal","then the lines are parallel (converse of alt. ∠s)"]]))}
 ${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in same seg.) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of cyclic quad.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
+</div>`,
+glossary:`${MUST([FB("blue","Expression",nw(`2${X1} + 1`),"no = sign: you simplify it"),FB("amber","Equation",nw(`2${X1} + 1 = 7`),`only true when ${nw(`${X1} = 3`)}: you solve it`),FB("green","Identity",nw(`2(${X1} + 1) ≡ 2${X1} + 2`),`true for every ${X1}`)])}
+<div class="sheet">
+${PAN("Algebra words",GLS([
+  GW("Term",`one part of an expression: the ${nw("+ and − signs")} split it up`,`${nw(`<span class="k-blue">3${X2}</span> <span class="k-amber">− 5${X1}</span> <span class="k-green">+ 7</span>`)} has 3 terms`),
+  GW("Coefficient","the number in front of a letter",`in ${nw(`3${X2} − 5${X1} + 7`)}, the coefficient of ${X1} is <span class="k-red">−5</span>`),
+  GW("Constant","a term with no letter in it",`the <span class="k-green">7</span> in ${nw(`3${X2} − 5${X1} + 7`)}`),
+  GW("Like terms","the same letters with the same powers",`${nw(`3${X1}`)} and ${nw(`−5${X1}`)} are like terms, ${nw(`3${X1}`)} and ${nw(`3${X2}`)} aren't`),
+  GW("Expand","multiply out the brackets",nw(`(${X1} + 2)(${X1} + 3) = ${X2} + 5${X1} + 6`)),
+  GW("Factorise","put it back into brackets",nw(`${X2} + 5${X1} + 6 = (${X1} + 2)(${X1} + 3)`)),
+  GW("Factor","goes in exactly, with nothing left over",`${nw(`(${X1} − 2)`)} is a factor of ${nw(`${X2} − 4`)}`),
+  GW("Formula","a rule that links quantities",nw(`${V("A")} = π${V("r")}²`)),
+  GW("Subject","the letter on its own on one side",`in ${nw(`${V("v")} = ${V("u")} + ${V("at")}`)}, ${V("v")} is the subject`),
+  GW("Substitute","put a number in place of a letter",`${nw(`${X1} = 2`)} into ${nw(`3${X1} + 1`)}: ${nw("3(2) + 1 = 7")}`),
+  GW("Solve","find the value(s) that make it true",`${nw(`2${X1} + 1 = 7`)}, so ${nw(`${X1} = 3`)}`),
+  GW("Root or solution","a value that makes the equation true",`${nw(`${X2} − 4 = 0`)} has roots ${nw(`${X1} = 2`)} and ${nw(`${X1} = −2`)}`),
+  GW("Inequality","uses &lt;, &gt;, ≤ or ≥ instead of =",`${nw(`2${X1} + 1 &gt; 7`)}, so ${nw(`${X1} &gt; 3`)}`),
+  GW("Base and index","the index (or power) is the small number on top",`in 2<sup>5</sup>, the base is 2 and the index is 5`),
+  GW("Reciprocal","1 divided by it",`the reciprocal of 4 is ${frac("1","4")}, and of ${X1} is ${frac("1",X1)}`),
+  GW("Surd","a root that isn't a whole number",`${SQRT("2")} is a surd, but ${nw(`${SQRT("9")} = 3`)} isn't`,"Sec 3–4")
+]))}
+${PAN("A-Math: polynomial words",GLS([
+  GW("Polynomial",`terms like ${nw(`${V("a")}${X1}<sup>${V("n")}</sup>`)}, where ${V("n")} is 0, 1, 2, 3 …`,`${nw(`4${X1}³ + 7${X2} − 1`)} is one, ${nw(`${X1}<sup>${frac("1","2")}</sup> + ${X1}<sup>−3</sup>`)} isn't`),
+  GW("Degree","the highest power",`${nw(`4${X1}³ + 7${X2} − 1`)} has degree 3`),
+  GW("Linear, quadratic, cubic","degree 1, 2 and 3",`${nw(`10${X1} + 9`)}, then ${nw(`3${X2} − 1`)}, then ${nw(`4${X1}³ + 7${X2} − 1`)}`),
+  GW("Quotient and remainder","the answer to a division, and what's left over",`${nw("17 ÷ 5 = 3")} remainder 2`)
+]))}
+${PAN("Graph words",GLS([
+  GW("Coordinates",`${nw(`(${X1}, ${V("y")})`)}: across first, then up`,`(3, −2) is 3 to the right and 2 down`),
+  GW("Origin","the point (0, 0), where the axes cross",""),
+  GW("Gradient",`how steep a line is: ${nw(frac("rise","run"))}. Positive goes up to the right`,""),
+  GW(`${X1}-intercept`,`where the graph cuts the ${X1}-axis, so ${nw(`${V("y")} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${X1} = 3`)}`),
+  GW(`${V("y")}-intercept`,`where it cuts the ${V("y")}-axis, so ${nw(`${X1} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${V("y")} = −6`)}`),
+  GW("Turning point","where a curve turns round: its max or min point",`${nw(`${V("y")} = (${X1} − 1)² + 2`)} turns at (1, 2)`),
+  GW("Line of symmetry","the mirror line of a graph",`${nw(`${V("y")} = ${X2}`)} is symmetrical about ${nw(`${X1} = 0`)}`),
+  GW("Asymptote","a line the graph gets closer and closer to, but never touches",`${nw(`${V("y")} = ${frac("1",X1)}`)} never touches ${nw(`${X1} = 0`)} or ${nw(`${V("y")} = 0`)}`),
+  GW("Tangent","a line that touches the curve at one point, with the same gradient as the curve there",""),
+  GW("Normal","the line at 90° to the tangent, through the same point","","A-Math"),
+  GW("Stationary point","where the gradient is 0",nw(`${frac(`d${V("y")}`,`d${X1}`)} = 0`),"A-Math"),
+  GW("Parallel","they never meet: same gradient",`${nw(`${V("y")} = 2${X1} + 1`)} and ${nw(`${V("y")} = 2${X1} − 5`)}`),
+  GW("Perpendicular","they meet at 90°: the gradients multiply to −1",`gradients 2 and ${nw(`−${frac("1","2")}`)}`)
+]))}
+${PAN("Shape words",GLS([
+  GW("Vertex","a corner (more than one: vertices)",`a triangle has 3 vertices`),
+  GW("Diagonal","a line joining 2 corners that aren't next to each other",""),
+  GW("Regular polygon","all sides equal and all angles equal",`a square`),
+  GW("Bisect","cut into 2 equal halves",`a perpendicular bisector cuts a line in half at 90°`),
+  GW("Hypotenuse","the longest side of a right-angled triangle, opposite the right angle",""),
+  GW("Opposite and adjacent","for an angle θ: the opposite side faces it, the adjacent side is next to it (and isn't the hypotenuse)",""),
+  GW("Included angle","the angle between the 2 sides you're using",`in ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}, ${V("C")} is between sides ${V("a")} and ${V("b")}`),
+  GW("Congruent","same shape and same size",""),
+  GW("Similar","same shape, different size: equal angles, and the sides in the same ratio",""),
+  GW("Chord","a line joining 2 points on a circle",`a diameter is a chord through the centre`),
+  GW("Arc","part of the edge of a circle",""),
+  GW("Sector","a slice of a circle, like a slice of pizza",""),
+  GW("Segment","the part of a circle cut off by a chord",""),
+  GW("Cross-section","the shape you see when you slice straight through",`a prism has the same cross-section all the way along`)
+]))}
+${PAN("Data and chance words",GLS([
+  GW("Mean","add up all the values, then divide by how many there are",`2, 3, 5, 8, 9: mean ${nw(`= ${frac("27","5")} = 5.4`)}`),
+  GW("Median","the middle value, once they're in order",`2, 3, <span class="k-blue">5</span>, 8, 9: median 5`),
+  GW("Mode","the value that comes up most often",`2, <span class="k-blue">3</span>, <span class="k-blue">3</span>, 8: mode 3`),
+  GW("Range","largest − smallest",`2, 3, 5, 8, 9: range ${nw("= 9 − 2 = 7")}`),
+  GW("Frequency","how many times something happens",""),
+  GW("Outlier","a value far away from the rest",""),
+  GW("Independent","one doesn't change the chance of the other",`throwing 2 dice`),
+  GW("Mutually exclusive","they can't both happen",`getting a 2 and a 5 on one throw of a die`)
+]))}
 </div>`
 };
 Object.assign(SHEETS,SHEETS8);
@@ -4546,7 +4631,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
@@ -4637,8 +4722,8 @@ const waURL=()=>{ const u=(CONTACT.wa||"").trim(); return /^https:\/\/wa\.me\/(m
 const WA_ICON=`<svg viewBox="0 0 24 24" aria-hidden="true" class="waic"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>`;
 const waBtn=()=>waURL()?`<a class="pill wa" href="${waURL()}" target="_blank" rel="noopener">${WA_ICON}Chat on WhatsApp</a>`:`<span class="pill wa" aria-disabled="true">${WA_ICON}WhatsApp link coming soon</span>`;
 const AVATAR=(cls="")=>`<img class="avatar ${cls}" src="avatar.png" alt="Coach Minyi" width="256" height="256" loading="lazy">`;
-const VIEWS=[["sheets","Cheatsheets"],["exam","Formulas"],["play","Interactives"]];
-const VIEWNOTE={sheets:"One page per chapter, with what you need to know and the mistakes people usually make.",exam:"The E-Math and A-Math formula sheets, and what words like “hence” and “show that” want from you.",play:"Drag things around and see why the rule works."};
+const VIEWS=[["sheets","Cheatsheets"],["exam","Exam kit"],["play","Interactives"]];
+const VIEWNOTE={sheets:"One page per chapter, with what you need to know and the mistakes people usually make.",exam:"The official formula sheets, the formulas you have to memorise, and a few tips.",play:"Drag things around and see why the rule works."};
 const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
 let homeView="sheets"; try{ const v=localStorage.getItem("hubHome2"); if(VIEWS.some(([k])=>k===v)) homeView=v; }catch(e){}
 const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome2",v)}catch(e){} };
@@ -4679,7 +4764,7 @@ function renderHome(keep){
       list.forEach(s=>grid.append(sheetCard(s,l.id))); sec.append(grid); body.append(sec);
     });
   } else if(v==="exam"){
-    [["formula","Formula sheets"],["skills","Exam skills"]].forEach(([g,name])=>{
+    [["formula","Formula sheets"],["memorise","Memorise these"],["tips","Tips"]].forEach(([g,name])=>{
       const list=homeItems("exam").filter(s=>s.group===g); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${name}</h3>`), grid=h("div",{class:"scards"});
       list.forEach(s=>grid.append(sheetCard(s))); sec.append(grid); body.append(sec);
@@ -4766,7 +4851,7 @@ function renderTopic(t,tab,prm){
   }
   window.scrollTo(0,0);
 }
-const sheetEnd=exam=>`<div class="sheetend"><a class="pill sm" href="${exam?"#exam":"#sheets"}">← ${exam?"Formulas":"All cheatsheets"}</a><button class="pill sm" type="button" data-print>Print / save as PDF</button></div>`;
+const sheetEnd=exam=>`<div class="sheetend"><a class="pill sm" href="${exam?"#exam":"#sheets"}">← ${exam?"Exam kit":"All cheatsheets"}</a><button class="pill sm" type="button" data-print>Print / save as PDF</button></div>`;
 function bindPrint(){ app.querySelectorAll("[data-print]").forEach(b=>b.onclick=printSheet); }
 function fillPrintFoot(withQR){
   const url=topicLink(), pf=$("#printFoot"); let qr="";
@@ -4805,7 +4890,7 @@ function digest(root){
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
-  titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:`Exam skills · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
+  titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:s.group==="memorise"?`${SHORT[s.levels[0]]} · Memorise`:`Exam kit · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
