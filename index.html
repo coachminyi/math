@@ -193,9 +193,22 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .pill.act[aria-pressed="true"]{background:var(--blue-fill)}
 .stab .sn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:12px;font-weight:700;margin-right:6px;vertical-align:1px;line-height:1}
 .stab[aria-selected="true"] .sn{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.nxrow{display:flex;justify-content:flex-end;margin-top:8px}
+.nxrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}
+.stepof{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+.prevstep{background:none;border:0;color:var(--muted);font:inherit;font-size:15px;font-weight:600;min-height:40px;padding:0 4px;cursor:pointer}
+.prevstep:hover{color:var(--ink)}
+.nextstep.go{background:var(--accent);color:var(--accent-ink);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.nextstep.go:hover{background:var(--accent);filter:brightness(1.08)}
+.steptabs .stab{color:var(--ink)}
+.steptabs .stab[aria-selected="true"]{color:var(--accent)}
 .nextstep{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:0 14px;min-height:40px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .nextstep:hover{background:var(--blue-fill)}
+.dohint{margin:6px 0 0;font-size:15px;font-weight:600;color:var(--accent)}
+.panel>.flathint{order:-2;padding:10px 14px;border-left:4px solid var(--accent)}
+.flathint p{margin:0;font-size:17px}
+@keyframes hnudge{0%,100%{stroke-opacity:0;stroke-width:.4}50%{stroke-opacity:.6;stroke-width:1.6}}
+svg.nudge circle.nudgeme{stroke:var(--accent);animation:hnudge 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){svg.nudge circle.nudgeme{animation:none;stroke-opacity:.45;stroke-width:.8}}
 .plbl{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .pillrow[data-pk]>.plbl{flex-basis:100%;align-self:auto;margin:0 0 -3px}
 .steptabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:2px 0 14px}
@@ -451,6 +464,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .key{order:2}
   .panel>.box.dock{order:3}
   .panel>.exwrap,.panel>.explain{order:4}
+  .panel>.flathint{order:1}
   .robox{order:5}
   .panel>.hint{order:6}
   .panel>.sheetlink{order:7}
@@ -689,7 +703,7 @@ const TOPICS = [
   {id:"pythagoras-squares", strand:"geo", levels:["sec2"], chapter:"Pythagoras' theorem",
    title:"Pythagoras: squares on the sides", blurb:"The 2 smaller squares fill the big one exactly. Then: is it right-angled?", play:"pythSq", sheet:"s2Pyth", sheetTitle:"Pythagoras' theorem"},
   {id:"pointy-third", strand:"geo", levels:["sec2"], chapter:"Volume & surface area",
-   title:"Why a cone is one-third of a cylinder", blurb:"3 cones of water fill the cylinder. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
+   title:"Why a cone is one-third of a cylinder", blurb:"A cube cuts into 3 pyramids, so pointy solids get ⅓. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
   {id:"venn-regions", strand:"alg", levels:["emath"], chapter:"Set Language & Notation",
    title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Then read a shaded diagram.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
@@ -963,13 +977,13 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   stage.append(svg);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
   const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
-  panel.innerHTML=`${jump}${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
+  panel.innerHTML=`${jump}${flat?`<div class="box flathint" hidden></div><div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
-      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill act${b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label)?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
+      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox"><p class="steptext"></p>${jump?`<div class="nxrow"><button class="nextstep" type="button"></button></div>`:""}</div>`}
+    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<p class="steptext"></p><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}</div>`}
     <div class="box robox"><div class="readout"></div></div>
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
@@ -981,24 +995,33 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     (def.pills||[]).forEach(p=>{const row=$(`[data-pk="${p.k}"]`,cbox); row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))); row.style.display=(p.show&&!p.show(st))?"none":"";});
     if(jb) jb.querySelectorAll("[data-j]").forEach(b=>{const on=+b.dataset.j===st.step; b.setAttribute("aria-pressed",String(on)); b.setAttribute("aria-selected",String(on));});
     (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st)));});
-    svg.innerHTML=""; def.draw(svg,st); if(def.kbd) kbdMark(svg,def.kbd,st); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width); bumpText(svg); bumpHits(svg); layoutFracs(svg);
+    svg.innerHTML=""; def.draw(svg,st); if(def.kbd) kbdMark(svg,def.kbd,st); if(svg.classList.contains("nudge")){ const hc=svg.querySelectorAll("circle[data-drag]"); if(hc.length<=3) hc.forEach(c=>c.classList.add("nudgeme")); } const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width); bumpText(svg); bumpHits(svg); layoutFracs(svg);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
     cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length?[...c.children].some(x=>x.style.display!=="none"):c.textContent.trim()))?"":"none";
-    if(flat){const ex=typeof def.explain==="function"?def.explain(st):(def.explain||[]); $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
-    else { $(".steptext",panel).innerHTML=def.steps[st.step].t(st); const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1]; nx.parentNode.style.display=n?"":"none"; if(n) nx.innerHTML=`Next: ${n.name} →`; } }
+    if(flat){const ex0=typeof def.explain==="function"?def.explain(st):(def.explain||[]), fh=$(".flathint",panel); let ex=ex0;
+      const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
+      $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
+    else { const stx=$(".steptext",panel); stx.innerHTML=def.steps[st.step].t(st);
+      const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
+      const mb=mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||/^[①-⑨]/.test(lt))&&!said;
+      dh.hidden=!dshow; if(dshow) dh.innerHTML=`↓ Press <b>${mb.innerHTML}</b>`;
+      const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1]; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=n?"":"none"; if(n) nx.innerHTML=`Next: ${n.name} →`; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
+        nx.classList.toggle("go",!mains.length||!!st._acted); } }
   };
-  const go=i=>{st.step=i; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
+  const go=i=>{st.step=i; st._acted=false; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._reset=true; draw();}));
   const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
-  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._reset=true; draw();}));
+  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._acted=true; st._reset=true; draw();}));
   if(jb) jb.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j); if(b.scrollIntoView&&jb.scrollWidth>jb.clientWidth) b.scrollIntoView({block:"nearest",inline:"center"});});
-  const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>{ if(st.step>=def.steps.length-1) return; stopAnim(); go(st.step+1);
+  const stepTo=i=>{ if(i<0||i>=def.steps.length) return; stopAnim(); go(i);
     const b=jb&&jb.querySelector(`[data-j="${st.step}"]`); if(b&&jb.scrollWidth>jb.clientWidth) jb.scrollTo({left:b.offsetLeft-(jb.clientWidth-b.offsetWidth)/2,behavior:"smooth"}); };
-  if(def.drag) dragger(svg,(id,p)=>{stopAnim(); def.drag(id,p,st); draw();});
+  const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>stepTo(st.step+1);
+  const pvb=$(".prevstep",panel); if(pvb) pvb.onclick=()=>stepTo(st.step-1);
+  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p)=>{svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st); draw();}); }
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
@@ -2697,11 +2720,11 @@ TOPICS.push({id:"prob-dice-tree", strand:"stats", levels:["emath"], chapter:"Pro
    title:"Two dice & tree diagrams", blurb:"Light up the cells for two dice. Then multiply along the branches of a tree.", play:"probAid", sheet:"probability", sheetTitle:"Probability"});
 const balanceEq=(()=>{
   const EQS=[
-    {id:"e1",sol:7,tilt:1,L:{x:1,u:5},R:{u:12},st:[{mv:[["L","u",5,"amber","+ 5","− 5"]]}],ln:["x {a+ 5} = 12","x = 12 {a− 5}","x = 7"],ck:["7 + 5 = 12 ✓"]},
-    {id:"e2",sol:6,tilt:1,L:{x:3},R:{u:18},st:[{dv:3}],ln:["{g3}x = 18","x = 18 {g÷ 3}","x = 6"],ck:["3(6) = 18 ✓"]},
-    {id:"e3",sol:4,tilt:1,L:{x:2,u:3},R:{u:11},st:[{mv:[["L","u",3,"amber","+ 3","− 3"]]},{dv:2}],ln:["2x {a+ 3} = 11","2x = 11 {a− 3}","{g2}x = 8","x = 8 {g÷ 2}","x = 4"],ck:["2(4) + 3 = 11 ✓"]},
-    {id:"e4",sol:-4,tilt:0,L:{nx:3},R:{u:12},st:[{dv:-3}],ln:["{g−3}x = 12","x = 12 {g÷ (−3)}","x = −4"],ck:["−3(−4) = 12 ✓"]},
-    {id:"e5",sol:4,tilt:0,L:{x:5,nu:4},R:{x:2,u:8},st:[{mv:[["L","nu",4,"amber","− 4","+ 4"],["R","x",2,"blue","2x","− 2x"]]},{dv:3}],ln:["5x {a− 4} = {b2x} + 8","5x {b− 2x} = 8 {a+ 4}","{g3}x = 12","x = 12 {g÷ 3}","x = 4"],ck:["5(4) − 4 = 16","2(4) + 8 = 16 ✓"]}
+    {id:"e1",sol:7,tilt:1,L:{x:1,u:5},R:{u:12},st:[{mv:[["L","u",5,"amber","+ 5","− 5"]]}],ln:["x {a+ 5} = 12","x = 12 {a− 5}","x = 7"],bs:["x {a+ 5} {a− 5} = 12 {a− 5}"],ck:["7 + 5 = 12 ✓"]},
+    {id:"e2",sol:6,tilt:1,L:{x:3},R:{u:18},st:[{dv:3}],ln:["{g3}x = 18","x = 18 {g÷ 3}","x = 6"],bs:["{g3}x {g÷ 3} = 18 {g÷ 3}"],ck:["3(6) = 18 ✓"]},
+    {id:"e3",sol:4,tilt:1,L:{x:2,u:3},R:{u:11},st:[{mv:[["L","u",3,"amber","+ 3","− 3"]]},{dv:2}],ln:["2x {a+ 3} = 11","2x = 11 {a− 3}","{g2}x = 8","x = 8 {g÷ 2}","x = 4"],bs:["2x {a+ 3} {a− 3} = 11 {a− 3}","{g2}x {g÷ 2} = 8 {g÷ 2}"],ck:["2(4) + 3 = 11 ✓"]},
+    {id:"e4",sol:-4,tilt:0,L:{nx:3},R:{u:12},st:[{dv:-3}],ln:["{g−3}x = 12","x = 12 {g÷ (−3)}","x = −4"],bs:["{g−3}x {g÷ (−3)} = 12 {g÷ (−3)}"],ck:["−3(−4) = 12 ✓"]},
+    {id:"e5",sol:4,tilt:0,L:{x:5,nu:4},R:{x:2,u:8},st:[{mv:[["L","nu",4,"amber","− 4","+ 4"],["R","x",2,"blue","2x","− 2x"]]},{dv:3}],ln:["5x {a− 4} = {b2x} + 8","5x {b− 2x} = 8 {a+ 4}","{g3}x = 12","x = 12 {g÷ 3}","x = 4"],bs:["5x {a− 4} {a+ 4} {b− 2x} = {b2x} + 8 {a+ 4} {b− 2x}","{g3}x {g÷ 3} = 12 {g÷ 3}"],ck:["5(4) − 4 = 16","2(4) + 8 = 16 ✓"]}
   ];
   const CK={a:"amber",b:"blue",g:"green"}, KO=["x","nx","u","nu"], PX={L:36,R:104}, PT=66, CY=27, DUR={mv:1800,mv2:3000,dv:2400};
   const sm=v=>v*v*(3-2*v), fr=(T,w)=>!w?0:sm(clamp((T-w[0])/(w[1]-w[0]),0,1)), lerp=(a,b,f)=>a+(b-a)*f;
@@ -2735,13 +2758,13 @@ const balanceEq=(()=>{
     const alive=(P,k)=>its.filter(it=>it.pan===P&&!it.gone&&(!k||it.k2===k));
     E.st.forEach((S,j)=>{
       if(S.mv){ const W=.92/S.mv.length;
-        S.mv.forEach(([F,kd,n,col,b,a],i)=>{ const w0=j+.08+i*W, D=F==="L"?"R":"L";
-          alive(F,kd).slice(-n).forEach(it=>{ it.gone=[w0,w0+.2*W]; it.gs=j; });
-          if(kd==="u"||kd==="x") alive(D,kd).slice(-n).forEach(it=>{ it.gone=[w0+.7*W,w0+.95*W]; it.gs=j; });
-          else for(let q=0;q<n;q++) mk(D,kd.slice(1),[w0+.7*W,w0+.95*W]);
-          chips.push({j,F,D,col,b,a,t:[w0,w0+.2*W,w0+.25*W,w0+.7*W,w0+.75*W,w0+W]}); }); }
+        S.mv.forEach(([F,kd,n,col,b,a],i)=>{ const w0=j+.08+i*W, D=F==="L"?"R":"L", xo=[w0+.08*W,w0+.3*W], go=[w0+.42*W,w0+.64*W];
+          alive(F,kd).slice(-n).forEach(it=>{ it.gone=go; it.xo=xo; it.gs=j; });
+          if(kd==="u"||kd==="x") alive(D,kd).slice(-n).forEach(it=>{ it.gone=go; it.xo=xo; it.gs=j; });
+          else for(let q=0;q<n;q++) mk(D,kd.slice(1),go);
+          chips.push({j,F,D,col,b,a,t:[w0,w0+.1*W,w0+.3*W,w0+.64*W,w0+.86*W,w0+W]}); }); }
       else { const k=Math.abs(S.dv);
-        ["L","R"].forEach(P=>{ const tb=j+(P==="L"?0:.56), A=alive(P), G=layG(A,k);
+        ["L","R"].forEach(P=>{ const tb=j, A=alive(P), G=layG(A,k);
           A.forEach((it,i)=>{ it.grp=G.P[it.id]; it.mv=[tb+.04,tb+.18];
             if(i%k) { it.gone=[tb+.22,tb+.34]; it.gs=j; }
             else if(S.dv<0){ it.flip=[tb+.34,tb+.42]; it.k2=it.k[0]==="n"?it.k.slice(1):"n"+it.k; } });
@@ -2776,7 +2799,7 @@ const balanceEq=(()=>{
   const drawScale=(svg,s)=>{ const E=eqOf(s), B=build(E), T=TT(s), j=Math.max(0,s.n-1);
     const st=B.its.map(it=>{ const bF=it.born?fr(T,it.born):1, gF=fr(T,it.gone), gh=it.gone?1-fr(T,[it.gs+1,it.gs+1.12]):0, mvF=fr(T,it.mv);
       const P=it.mv?[lerp(it.home[0],it.grp[0],mvF),lerp(it.home[1],it.grp[1],mvF)]:it.home, k=it.flip&&T>=(it.flip[0]+it.flip[1])/2?it.k2:it.k;
-      return {it,P,k,so:bF*(1-gF),go:gF*gh,gF,flipF:it.flip?fr(T,it.flip):0}; });
+      return {it,P,k,so:bF*(1-gF),go:gF*gh,gF,flipF:it.flip?fr(T,it.flip):0,xF:it.xo?fr(T,it.xo):0}; });
     let d=0; if(E.tilt){ const w={L:0,R:0}; st.forEach(o=>{ w[o.it.pan]+=(o.k[o.k.length-1]==="x"?E.sol:1)*(o.k[0]==="n"?-1:1)*o.so; }); d=clamp((w.R-w.L)/4,-1,1)*3.5; }
     const dy={L:-d,R:d};
     S_(svg,"path",{d:"M58 92 H82 L76 87 H64 Z",fill:"var(--grid2)",stroke:"var(--muted)","stroke-width":.6});
@@ -2788,10 +2811,11 @@ const balanceEq=(()=>{
     B.frames.forEach(f=>{ const o=fr(T,f.t); if(o<.02) return; const kept=f.g===0, solid=kept&&fr(T,f.keep)>.5, y=PT+dy[f.pan];
       S_(svg,"rect",{x:(PX[f.pan]+f.x).toFixed(2),y:(y-f.h-1.2).toFixed(2),width:f.w.toFixed(2),height:(f.h+1.2).toFixed(2),rx:1.6,fill:solid?"var(--green-fill)":"none",stroke:GR,"stroke-width":solid?.9:.6,"stroke-dasharray":solid?"none":"1.6 1.2",opacity:o.toFixed(3)}); });
     st.forEach(o=>{ const bx=PX[o.it.pan]+o.P[0], by=PT+dy[o.it.pan]-o.P[1];
-      item(svg,bx,by,o.it.k,o.go,true); item(svg,bx,by-10*o.gF,o.k,o.so,false); });
-    B.chips.forEach(c=>{ const a=fr(T,[c.t[0],c.t[1]]), f=fr(T,[c.t[2],c.t[3]]), z=1-fr(T,[c.t[4],c.t[5]]); if(T<c.t[0]||a*z<.02) return;
-      const x=lerp(PX[c.F],PX[c.D],f), y=CY-4*10*f*(1-f)-(1-a)*4; chipAt(svg,x,y,f<.5?c.b:c.a,c.col,a*z); });
-    const li=!s.n?0:s._p<1?2*j:2*j+1, L=eqLine(svg,E.ln[li],70,100,6.6);
+      item(svg,bx,by,o.it.k,o.go,true); const yy=by-10*o.gF; item(svg,bx,yy,o.k,o.so,false);
+      const xo=o.xF*o.so; if(xo>.02){ const g=svgEl("g",{opacity:xo.toFixed(3),stroke:"var(--red)","stroke-width":1.1,"stroke-linecap":"round"}); g.append(svgEl("line",{x1:bx-4.2,y1:yy-8.4,x2:bx+4.2,y2:yy+.4}),svgEl("line",{x1:bx+4.2,y1:yy-8.4,x2:bx-4.2,y2:yy+.4})); svg.append(g); } });
+    B.chips.forEach(c=>{ const a=fr(T,[c.t[0],c.t[1]]), z=1-fr(T,[c.t[4],c.t[5]]); if(T<c.t[0]||a*z<.02) return;
+      ["L","R"].forEach(P=>chipAt(svg,PX[P],CY-(1-a)*4,c.a,c.col,a*z)); });
+    const li=!s.n?0:s._p<.5?2*j:-1, lt=li<0?E.bs[j]:E.ln[li], L=eqLine(svg,lt,70,100,lt.replace(/\{[abg]|\}/g,"").length>22?5.4:6.6);
     if(s.n){ const S=E.st[j], lc=B.chips.filter(c=>c.j===j).pop(), o=fr(T,[lc.t[3],lc.t[3]+.08]); if(o>.02){ const parts=S.mv?S.mv.map(m=>[m[3],m[5]]):[["green","÷ "+opT(S.dv)]];
       const g=svgEl("g",{opacity:o.toFixed(3)}); svg.append(g); let x=0; const els=[];
       parts.forEach(([c,t],i)=>{ if(i){ const a=piece(g,0,7.5,"and",5.6,"var(--muted)",{"font-weight":400}); els.push([a,a._w]); } const e=piece(g,0,7.5,t,5.8,`var(--${c})`); els.push([e,e._w]); });
@@ -2822,9 +2846,12 @@ const balanceEq=(()=>{
   const thr=(S)=>S.mv?S.mv.map(q=>({c:q[3],b:q[4],a:q[5],dv:0})):[{c:"green",b:"× "+opT(S.dv),a:"÷ "+opT(S.dv),dv:S.dv}];
   const tbox=q=>FB(q.c,`Throw ${xh(q.b)} over`,nw(`${xh(q.b)} → ${xh(q.a)}`),q.dv?nw(xh(`${N(q.dv)}x means ${N(q.dv)} × x`)):"flip + ↔ −");
   const ckbox=E=>FB("ink","Check",nw(E.ck[0]),E.ck[1]?nw(E.ck[1]):"");
+  const both=(E,j)=>{ const S=E.st[j]; if(S.dv) return S.dv<0?`${nw(xh(N(S.dv)+"x"))} means ${nw(xh(N(S.dv)+" × x"))}, so ${kc("green",nw("÷ "+opT(S.dv)))} on both pans.`:`Share both pans into ${S.dv} equal groups, keep one: ${kc("green",nw("÷ "+S.dv))} on both pans.`;
+    return `${S.mv.map(q=>kc(q[3],nw(xh(q[5])))).join(" and ")} on both pans: the scale stays balanced.`; };
   const btns=[];
-  EQS.forEach(E=>E.st.forEach((S,i)=>{ const q=thr(S); btns.push({label:`▶ Throw ${q.map(o=>nw(xh(o.b))).join(" and ")} over`,show:s=>s.eq===E.id&&s.n===i,
-    fn:(s,anim)=>{ s.n=i+1; s._p=0; anim(S.dv?DUR.dv:S.mv.length>1?DUR.mv2:DUR.mv,p=>{ s._p=p; }); }}); }));
+  EQS.forEach(E=>E.st.forEach((S,i)=>{ const q=thr(S), go=(s,anim)=>{ s.n=i+1; s._p=0; anim(S.dv?DUR.dv:S.mv.length>1?DUR.mv2:DUR.mv,p=>{ s._p=p; }); };
+    btns.push({label:`▶ ${q.map(o=>nw(xh(o.a))).join(" and ")} on both pans`,show:s=>s.step===0&&s.eq===E.id&&s.n===i,fn:go});
+    btns.push({label:`▶ Throw ${q.map(o=>nw(xh(o.b))).join(" and ")} over`,show:s=>s.step===1&&s.eq===E.id&&s.n===i,fn:go}); }));
   btns.push({label:"↺ Start again",show:s=>s.n>0,fn:s=>{ s.n=0; s._p=1; }});
   return aid({
     init:{eq:"e1",n:0,_p:1}, jump:true, vb:"0 0 140 104", label:"Balance scale: throw a term over the = and flip it", link:["n"],
@@ -2832,11 +2859,11 @@ const balanceEq=(()=>{
     buttons:btns,
     fix:s=>{ s.n=clamp(Math.round(s.n)||0,0,eqOf(s).st.length); s._p=1; },
     steps:[{name:"Balance",set:{_p:1},t:s=>{ const E=eqOf(s);
-        if(!s.n) return `Each bag is ${X1} and each block is 1${E.tilt?"":`. Red means negative`}. The scale balances: both pans are equal.<br>Goal: one bag on its own. Throw a term over.`;
-        return `${say(E,s.n-1)}<br>${why(E,s.n-1)}`; }},
-      {name:"Throw and flip",set:{_p:1},t:s=>{ const E=eqOf(s);
-        if(!s.n) return `Throw a term over the = and flip it: ${nw("+ ↔ −")}, ${nw("× ↔ ÷")}.<br>Each colour shows where a term went.`;
-        return `${say(E,s.n-1)}<br>Each colour shows where the term went.`; }}],
+        if(!s.n) return `Each bag is ${X1} and each block is 1${E.tilt?"":`. Red means negative`}. Both pans are equal.<br>Goal: one bag on its own. Do the <b>same to both pans</b>.`;
+        return `${both(E,s.n-1)}<br>${lnHTML(E.bs[s.n-1])}`; }},
+      {name:"Shortcut: throw and flip",set:{_p:1},t:s=>{ const E=eqOf(s);
+        if(!s.n) return `Shortcut: skip the both-pans line.<br>Throw a term over the = and flip it: ${nw("+ ↔ −")}, ${nw("× ↔ ÷")}.`;
+        return `${say(E,s.n-1)}<br>Same as doing it to both pans, one line shorter.`; }}],
     draw(svg,s){ if(s.step===1) drawWork(svg,s); else drawScale(svg,s); },
     key(s){ const E=eqOf(s), last=s.n===E.st.length;
       if(s.step===1){ const bx=[]; for(let k=0;k<s.n;k++) thr(E.st[k]).forEach(q=>bx.push(tbox(q)));
@@ -2844,8 +2871,8 @@ const balanceEq=(()=>{
         if(last) bx.push(ckbox(E)); return FORMS(bx); }
       if(!s.n){ const ks=KO.filter(k=>E.L[k]||E.R[k]), nm={x:["blue","1 bag",X1],nx:["red","1 red bag",nw("−"+X1)],u:["amber","1 block","1"],nu:["red","1 red block","−1"]};
         return FORMS([...ks.map(k=>FB(nm[k][0],nm[k][1],nm[k][2],"")),FB("green","Goal",nw(`${X1} = ?`),"bag on its own",null,ks.length===3?"wide":"")],true); }
-      const j=s.n-1, bx=thr(E.st[j]).map(tbox);
-      bx.push(FB("ink",last?"Solution":"Collect",lnHTML(E.ln[2*j+2]),"",lnHTML(E.ln[2*j+1])));
+      const j=s.n-1, S0=E.st[j], bx=[FB(S0.dv?"green":S0.mv[0][3],"Both pans",lnHTML(E.bs[j]),"same to both sides",null,"wide")];
+      bx.push(FB("ink",last?"Solution":"Collect",lnHTML(E.ln[2*j+2]),""));
       if(last) bx.push(ckbox(E)); return FORMS(bx); }
   });
 })();
@@ -2990,35 +3017,67 @@ const ptPour=s=>{ const f=s.f||0, q=clamp((f-.25)/.55,0,1), mv=f<.1?0:f<.25?(f-.
 const ptT3=s=>{ const cone=s.sh==="cone", L=25, by=cone?84:86, per=cone?2*PI*s.r:4*s.a, dw=cone?2*s.r:s.a*(1+PT3[0])+2;
   const k=Math.min((150-L-6)/(dw+per),(cone?70:72)/(s.h+(cone?.6*s.r:PT3[1]*s.a))), by2=Math.min(by,50+(s.h*k)/2+(cone?0:PT3[1]*s.a*k/2)); return {cone,L,by:by2,per,k,xs:L+dw*k}; };
 const ptName=s=>s.sh==="cone"?["cone","cylinder","cones"]:["pyramid","prism","pyramids"];
+const m3=(A,B)=>A.map(r=>[0,1,2].map(j=>r[0]*B[0][j]+r[1]*B[1][j]+r[2]*B[2][j])), mv3=(M,p)=>M.map(r=>r[0]*p[0]+r[1]*p[1]+r[2]*p[2]);
+const R3={x:t=>[[1,0,0],[0,Math.cos(t),-Math.sin(t)],[0,Math.sin(t),Math.cos(t)]],y:t=>[[Math.cos(t),0,Math.sin(t)],[0,1,0],[-Math.sin(t),0,Math.cos(t)]],z:t=>[[Math.cos(t),-Math.sin(t),0],[Math.sin(t),Math.cos(t),0],[0,0,1]]};
+const aa3=M=>{ const th=Math.acos(clamp((M[0][0]+M[1][1]+M[2][2]-1)/2,-1,1)); if(th<1e-6) return {a:[0,1,0],th:0}; const s=2*Math.sin(th); return {a:[(M[2][1]-M[1][2])/s,(M[0][2]-M[2][0])/s,(M[1][0]-M[0][1])/s],th}; };
+const rot3=(v,a,t)=>{ const c=Math.cos(t), s=Math.sin(t), d=a[0]*v[0]+a[1]*v[1]+a[2]*v[2], x=[a[1]*v[2]-a[2]*v[1],a[2]*v[0]-a[0]*v[2],a[0]*v[1]-a[1]*v[0]]; return [0,1,2].map(i=>v[i]*c+x[i]*s+a[i]*d*(1-c)); };
+const PT3P=[{q:[[0,0,0],[0,1,0],[0,1,1],[0,0,1]],d:[-1,0,0],c:"blue",M:m3(R3.y(-PI/2),R3.z(PI/2)),sx:-1.45},
+  {q:[[0,0,0],[1,0,0],[1,0,1],[0,0,1]],d:[0,-1,0],c:"amber",M:[[1,0,0],[0,1,0],[0,0,1]],sx:0},
+  {q:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],d:[0,0,1],c:"green",M:m3(R3.y(PI/2),R3.x(PI/2)),sx:1.45}];
+PT3P.forEach(P=>{ const A=[1,1,0], cen=[0,1,2].map(j=>(P.q.reduce((s,p)=>s+p[j],0)/4)*.75+A[j]*.25), B=P.q.map(p=>mv3(P.M,p)), mn=[0,1,2].map(j=>Math.min(...B.map(p=>p[j])));
+  P.cen=cen; P.aa=aa3(P.M); const Mc=mv3(P.M,cen); P.cf=[Mc[0]+P.sx-mn[0],Mc[1]-mn[1],Mc[2]-mn[2]]; });
+function ptCube3(svg,e){ const s1=clamp(e,0,1), s2=clamp(e-1,0,1), e1=s1*s1*(3-2*s1), e2=s2*s2*(3-2*s2), k=40+(31-40)*e2, Wx=.55+(.71-.55)*e2, Wy=.47+(.66-.47)*e2;
+  const VW=[PT3[0],PT3[1],-1], AP=[1,1,0];
+  const pj=p=>[75+k*(p[0]+PT3[0]*p[2]-Wx),50-k*(p[1]+PT3[1]*p[2]-Wy)], sub=(a,b)=>a.map((v,i)=>v-b[i]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], LT=[-.35,.8,-.5];
+  const Ps=PT3P.map((P,i)=>{ const off=P.d.map(v=>v*.55), C0=P.cen.map((v,j)=>v+off[j]);
+    const mv=p=>{ const pe=p.map((v,j)=>v+off[j]*e1); if(e2<=0) return pe; const r=rot3(sub(pe,C0),P.aa.a,P.aa.th*e2); return r.map((v,j)=>v+C0[j]+(P.cf[j]-C0[j])*e2); };
+    const Q=P.q.map(mv), A=mv(AP), C=[0,1,2].map(j=>(Q.reduce((s,p)=>s+p[j],0)/4)*.75+A[j]*.25);
+    const F=[Q].concat(Q.map((p,j)=>[A,p,Q[(j+1)%4]])).map(f=>{ let n=cr(sub(f[1],f[0]),sub(f[2],f[0])); const m=[0,1,2].map(j=>f.reduce((s,p)=>s+p[j],0)/f.length); if(dot(n,sub(m,C))<0) n=n.map(v=>-v); const L=Math.hypot(...n)||1; n=n.map(v=>v/L); return {f,n,vis:dot(n,VW)>1e-6}; });
+    return {i,P,A,C,F,dd:dot(C,VW)}; }).sort((a,b)=>a.dd-b.dd);
+  const poly=(f,a)=>S_(svg,"polygon",Object.assign({points:f.map(p=>pj(p).map(v=>v.toFixed(2)).join(",")).join(" "),"stroke-linejoin":"round"},a));
+  Ps.forEach(({P,F,A})=>{ const col=`var(--${P.c})`;
+    F.filter(x=>!x.vis).forEach(x=>x.f.forEach((p,j)=>seg(svg,pj(p),pj(x.f[(j+1)%x.f.length]),{stroke:col,"stroke-width":.5,"stroke-dasharray":"1.4 1.2",opacity:.7})));
+    F.filter(x=>x.vis).forEach(x=>{ poly(x.f,{fill:`var(--${P.c}-fill)`,stroke:col,"stroke-width":.9});
+      const dk=.22*(1-Math.max(0,dot(x.n,LT))); if(dk>.01) poly(x.f,{fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"}); });
+    if(e1>.05&&e2<.5) S_(svg,"circle",{cx:pj(A)[0],cy:pj(A)[1],r:1.3,fill:"var(--ink)"}); });
+  if(e1>.6) Ps.forEach(({i,P,C,A})=>{ const c=e2>.5?pj(A):pj(C); lab(svg,[c[0],c[1]+(e2>.5?-3:2.4)],String(i+1),{"font-size":7,"font-weight":700,fill:`var(--${P.c})`}); });
+  if(e2>.95){ lab(svg,pj([.5,0,0]),"a",{"font-size":4.4,"font-weight":700,"font-style":"italic",dy:5.6}); lab(svg,pj([1,.5,0]),"a",{"font-size":4.4,"font-weight":700,"font-style":"italic",dx:-2.2,dy:1.6,"text-anchor":"end"}); } if(e2>.95) lab(svg,[75,50+k*Wy+15],"3 identical pyramids",{"font-size":4.4,"font-weight":700,fill:"var(--ink)"});
+  if(e1<.05){ const T=(p,t,a={})=>lab(svg,pj(p),t,Object.assign({"font-size":4.4,"font-weight":700,"font-style":"italic"},a));
+    T([.5,0,0],"a",{dy:5.6}); T([1,.5,0],"a",{dx:2.4,dy:1.6,"text-anchor":"start"}); T([1,0,.5],"a",{dx:2.6,dy:2.6,"text-anchor":"start"}); }
+}
 const pointyThird=aid({
-  init:{sh:"cone",r:3,a:6,h:4,n:0,f:0,u:0}, jump:true, vb:"0 0 150 100", label:"Cone and cylinder, pyramid and prism", link:["n","u"],
-  pills:[{k:"sh",label:"Pick a pair",opts:[["cone","<span>Cone &amp; cylinder</span>"],["pyr","<span>Pyramid &amp; prism</span>"]],on:s=>{s.n=0;s.f=0;s.u=0;}}],
-  sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:s=>s.step>0&&s.sh==="cone"},
-    {k:"a",label:"side",min:1,max:10,step:1,f:v=>N(v)+" cm",show:s=>s.step>0&&s.sh==="pyr"},
-    {k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:s=>s.step>0}],
-  buttons:[{label:"▶ Pour 3 times",show:s=>s.step===0,fn:(s,anim)=>{s.n=0;s.f=0; anim(5400,p=>{ if(p>=1){s.n=3;s.f=0;return;} const t=p*3; s.n=Math.floor(t); s.f=t-s.n; });}},
-    {label:"Empty",show:s=>s.step===0,fn:s=>{s.n=0;s.f=0;}},
-    {label:"▶ Unroll",show:s=>s.step===2,fn:(s,anim)=>{s.u=0; anim(1800,p=>{s.u=p;});}}],
-  fix:s=>{s.n=clamp(Math.round(s.n),0,3); s.f=0; s.u=clamp(s.u,0,1);},
+  init:{sh:"cone",r:3,a:6,h:4,n:0,f:0,u:0,e:0}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids; cone and cylinder, pyramid and prism", link:["n","u","e"],
+  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["cone","<span>Cone &amp; cylinder</span>"],["pyr","<span>Pyramid &amp; prism</span>"]],on:s=>{s.n=0;s.f=0;s.u=0;}}],
+  sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="cone"},
+    {k:"a",label:"side",min:1,max:10,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="pyr"},
+    {k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:s=>s.step>1}],
+  buttons:[{label:"▶ Pull apart",show:s=>s.step===0&&s.e<2,fn:(s,anim)=>{const e0=s.e; anim(1700*(2-e0)+200,p=>{s.e=e0+(2-e0)*p;});}},
+    {label:"↺ Put back",show:s=>s.step===0&&s.e>0,fn:(s,anim)=>{const e0=s.e; anim(900*e0+200,p=>{s.e=e0*(1-p);});}},
+    {label:"▶ Pour one",show:s=>s.step===1&&s.n<3,fn:(s,anim)=>{const n0=s.n; anim(1900,p=>{ if(p>=1){s.n=n0+1;s.f=0;return;} s.n=n0; s.f=p; });}},
+    {label:"↺ Empty",show:s=>s.step===1&&s.n>0,fn:s=>{s.n=0;s.f=0;}},
+    {label:"▶ Unroll",show:s=>s.step===3,fn:(s,anim)=>{s.u=0; anim(1800,p=>{s.u=p;});}}],
+  fix:s=>{s.n=clamp(Math.round(s.n),0,3); s.f=0; s.u=clamp(s.u,0,1); s.e=clamp(+s.e||0,0,2);},
   steps:[
-    {name:"Pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} of water fill the ${c}</b>.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`Same base, same height. Pour ${ps} of water
- into the ${c}.<br>How many ${ps} fill it?`;}},
+    {name:"3 pyramids make a cube",t:s=>s.e>=2?`<b>3 identical pyramids</b> make the cube. Each has the cube's base and height.<br>So 1 pyramid = ${frac("1","3")} × base area × height.`:`Cut a cube from one corner: how many pyramids?<br>Press <b>▶ Pull apart</b>.`},
+    {name:"Check: pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} fill the ${c}</b>, just like the cube.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`${s.sh==="cone"?"A cone is a round pyramid":`Same base, same height as the ${c}`}, so it should be ${frac("1","3")} too.<br>Check: press <b>▶ Pour one</b> until the ${c} is full.`;}},
     {name:"Base area × height",set:{f:0},t:s=>`Every solid: <b>${nw(`${V("V")} = base area × height`)}</b>.<br>Pointy top (cone, pyramid)? Put ${frac("1","3")} in front.`},
     {name:"Toilet paper",set:{f:0},t:s=>`Surface area = 2 × base area + toilet paper.<br>${s.sh==="cone"?"Unroll":"Unfold"} it: a rectangle, ${nw("perimeter × height")}. <a href="#toilet-paper">Try it →</a>`}
 
   ],
   draw(svg,s){ const cone=s.sh==="cone", [pn,cn]=ptName(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4},a));
-    if(s.step===0){ const P=ptPour(s), Hs=48, by=86, ty=by-Hs, hx=30+(66-30)*P.e, hy=ty-(ty-10)*P.e, cx2=110, CR=20, PA=32, ph=PA/2;
+    if(s.step===0){ ptCube3(svg,s.e); return; }
+    if(s.step===1){ const P=ptPour(s), Hs=48, by=86, ty=by-Hs, hx=30+(66-30)*P.e, hy=ty-(ty-10)*P.e, cx2=110, CR=20, PA=32, ph=PA/2;
       [ty,by].forEach(y=>seg(svg,[10,y],[cx2-(cone?CR:ph),y],{stroke:RD,"stroke-width":.6,"stroke-dasharray":"1.6 1.4",opacity:1-P.e}));
       if(cone) ptCyl(svg,cx2,by,CR,Hs,{water:P.lvl}); else ptBox(svg,ptPj([cx2+ph*PT3[0],by-ph*PT3[1]],1),PA,Hs,{water:P.lvl});
-      [1,2].forEach(i=>{ const y=by-Hs*i/3; if(cone) S_(svg,"path",{d:`M${cx2-CR} ${y} A${CR} ${.3*CR} 0 0 0 ${cx2+CR} ${y}`,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); else seg(svg,[cx2-ph,y],[cx2+ph,y],{stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); });
-      [1,2,3].forEach(i=>T([cx2+(cone?CR:ph)*.5,by-Hs*(i-.5)/3+2.2],String(i),{"font-size":7,"font-weight":700,fill:P.cnt>=i?AMB:"var(--muted)",opacity:P.cnt>=i?1:.55}));
+      [1,2].forEach(i=>{ if(P.cnt<i) return; const y=by-Hs*i/3; if(cone) S_(svg,"path",{d:`M${cx2-CR} ${y} A${CR} ${.3*CR} 0 0 0 ${cx2+CR} ${y}`,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); else seg(svg,[cx2-ph,y],[cx2+ph,y],{stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); });
+      [1,2,3].forEach(i=>{ if(P.cnt>=i) T([cx2+(cone?CR:ph)*.5,by-Hs*(i-.5)/3+2.2],String(i),{"font-size":7,"font-weight":700,fill:AMB}); });
       if(P.q>0&&P.q<1){ const rx=hx+(cone?CR:ph*(1+PT3[0])), ry=hy-(cone?0:ph*PT3[1]), ly=by-Hs*P.lvl; S_(svg,"path",{d:`M${rx} ${ry} Q${cx2-5} ${hy-6} ${cx2-6} ${hy+12} L${cx2-6} ${ly}`
 ,fill:"none",stroke:BL,"stroke-width":1.8,"stroke-opacity":.6,"stroke-linecap":"round"}); }
       if(cone) ptInvCone(svg,hx,hy,CR,Hs,P.cone); else ptInvPyr(svg,ptPj([hx,hy+Hs],1),PA,Hs,P.cone);
       T([30,96],pn,{fill:AMB,"font-weight":700,opacity:1-P.e}); T([cx2,98],cn,{"font-weight":700});
       return; }
-    if(s.step===1){ const by=cone?78:80, G=20, k=cone?Math.min(10,(150-G-8)/(4*s.r),(by-10)/(s.h+.3*s.r),30/s.r):Math.min(10,(150-G-8)/(2*s.a*(1+PT3[0])),(by-8)/(s.h+PT3[1]*s.a/2),(84-by)/(PT3[1]*s.a/2));
+    if(s.step===2){ const by=cone?78:80, G=20, k=cone?Math.min(10,(150-G-8)/(4*s.r),(by-10)/(s.h+.3*s.r),30/s.r):Math.min(10,(150-G-8)/(2*s.a*(1+PT3[0])),(by-8)/(s.h+PT3[1]*s.a/2),(84-by)/(PT3[1]*s.a/2));
       if(cone){ const R=s.r*k, H=s.h*k, cL=75-G/2-R, cR=75+G/2+R;
         const c1=ptCone(svg,cL,by,R,H,{base:"var(--blue-fill)",fill:"var(--amber-fill)",op:.75,col:AMB}); const c2=ptCyl(svg,cR,by,R,H,{base:"var(--blue-fill)",fill:"var(--muted)",op:.12});
         [cL,cR].forEach(x=>{ seg(svg,[x,by],[x,by-H],{stroke:RD,"stroke-width":.8,"stroke-dasharray":"1.6 1.2"}); seg(svg,[x,by],[x+R,by],{stroke:"var(--ink)","stroke-width":.9}); S_(svg,"circle",{cx:x,cy:by,r:.8,fill:"var(--ink)"}); T([x+R/2,by+c1.ry+5.2],`r = ${N(s.r)}`,{"font-weight":700}); });
@@ -3048,13 +3107,17 @@ const pointyThird=aid({
     if(s.u>.55&&H>9&&W>36) T([xs+W/2,by-H/2+1.6],"toilet paper",{fill:GR,"font-weight":700});
     handle(svg,xs+W,by-H/2,"u",GR);
   },
-  drag(id,p,s){ if(id!=="u"||s.step!==2) return; const {per,k,xs}=ptT3(s);
+  drag(id,p,s){ if(id!=="u"||s.step!==3) return; const {per,k,xs}=ptT3(s);
     s.u=clamp(snap((p.x-xs)/(per*k),.05),0,1); },
   key(s){ const cone=s.sh==="cone", [pn,cn,ps]=ptName(s), R=s.r, A=s.a, h=s.h, t3=frac("1","3");
-    if(s.step===0){ const c=ptPour(s).cnt;
+    if(s.step===0){ const VA=V("a");
+      return FORMS([FB("ink","Cube",nw(`${VA} × ${VA} × ${VA}`),"= 3 identical pyramids"),
+        FB("blue","Each pyramid",nw(`base = ${VA} × ${VA}`),nw(`height = ${VA}`)),
+        FB("green","So 1 pyramid",nw(`= ${t3} × ${VA} × ${VA} × ${VA}`),nw(`= ${t3} × base area × height`))]); }
+    if(s.step===1){ const c=ptPour(s).cnt;
       return FORMS([FB("amber",`${ps} poured`,String(c),c===3?`${cn} full ✓`:c===0?`${cn} empty`:nw(`${cn} ${frac(String(c),"3")} full`)),
-        FB("ink",`1 ${pn}`,nw(`${t3} of the ${cn}`),"same base, same height")]); }
-    if(s.step===1){ const ba=cone?R*R:A*A, bT=cone?nw(`π(${N(R)})² = ${ptPi(ba)}`):nw(`${N(A)} × ${N(A)} = ${N(ba)}`), bS=cone?ptPi(ba):N(ba);
+        FB("ink",`1 ${pn}`,c===3?nw(`${t3} of the ${cn}`):"?",c===3?"same base, same height":"pour to find out")]); }
+    if(s.step===2){ const ba=cone?R*R:A*A, bT=cone?nw(`π(${N(R)})² = ${ptPi(ba)}`):nw(`${N(A)} × ${N(A)} = ${N(ba)}`), bS=cone?ptPi(ba):N(ba);
       const vC=ba*h, vP=ba*h/3, dC=cone?PI*vC:vC, dP=cone?PI*vP:vP;
       const res=(c,d)=>cone?nw(`= ${ptPi(c)}`)+" "+nw(`= ${ptS3(d)} cm³`)+" "+nw("(3 s.f.)"):nw(`= ${ptNum(d)} cm³`)+ptRs(d);
       return KHEAD(`<span class="k-blue">base area = ${bT} cm²</span>`)+FORMS([
@@ -4387,7 +4450,7 @@ const quadProof=(()=>{
   return aid({
     init:{ex:0,k:0}, vb:"0 0 10 10", label:"Completing the square on ax² + bx + c = 0, next to a worked example", link:["k"],
     pills:[{k:"ex",label:"Example",opts:E.map((e,i)=>[i,`<span>${e.p}</span>`])}],
-    buttons:NM.map((n,i)=>({label:`<span>${n}</span>`,pressed:s=>s.k===i,fn:s=>{s.k=i; s._go=1;}})),
+    buttons:[{label:"Next step ▶",show:s=>s.k<NM.length-1,fn:s=>{s.k++; s._go=1;}},...NM.map((n,i)=>({label:`<span>${n}</span>`,pill:true,pressed:s=>s.k===i,fn:s=>{s.k=i; s._go=1;}}))],
     fix:s=>{s.k=clamp(Math.round(s.k)||0,0,7);},
     steps:[{t:()=>""}],
     draw(svg,s){ const st=svg.parentNode; if(!st) return; st.classList.add("qpst");
@@ -4676,6 +4739,16 @@ const centreProof=aid({
   readout:capProof
 });
 const TPL=[[0,0],[6,0],[6,2],[2,2],[2,5],[0,5]], TPS=[6,2,4,3,2,5], TPCUM=[0,6,8,12,15,17], TPC=i=>i%2?AMB:GR, TPF=i=>i%2?"var(--amber-fill)":"var(--green-fill)";
+const TPSH={
+  L:{nm:"L",pts:TPL,sides:TPS,ar:18,ar2:()=>nw("2 × (12 + 6)"),hb:5,wb:6,
+    lb:[[[3,0],0,5.6,"middle"],[[6,1],-1.8,1.6,"end"],[[4,2],0,-2,"middle"],[[2,3.5],1.8,1.6,"start"],[[1,5],0,-2,"middle",1],[[0,2.5],-1.8,1.6,"end"]],
+    inner:[[[3,1],"12"],[[1,3.5],"6"]],split:[[0,2],[2,2]]},
+  tri:{nm:"triangle",pts:[[0,0],[4,0],[0,3]],sides:[4,5,3],ar:6,ar2:()=>nw(`2 × ${frac("1","2")} × 4 × 3`),hb:3,wb:4,
+    lb:[[[2,0],0,5.6,"middle"],[[2,1.5],1.8,-1.4,"start",1],[[0,1.5],-1.8,1.6,"end"]],inner:[[[1.25,.9],"6"]]},
+  trap:{nm:"trapezium",pts:[[0,0],[6,0],[3,4],[0,4]],sides:[6,5,3,4],ar:18,ar2:()=>nw(`2 × ${frac("1","2")}(3 + 6) × 4`),hb:4,wb:6,
+    lb:[[[3,0],0,5.6,"middle"],[[4.5,2],2.2,1.2,"start"],[[1.5,4],0,-2,"middle",1],[[0,2],-1.8,1.6,"end"]],inner:[[[2.2,1.8],"18"]]}};
+Object.values(TPSH).forEach(o=>{ o.per=o.sides.reduce((a,b)=>a+b,0); o.cum=o.sides.map((_,i)=>o.sides.slice(0,i).reduce((a,b)=>a+b,0)); });
+const tpShape=s=>s.step===2?(TPSH[s.ps]||TPSH.L):TPSH.L;
 const tpS3=v=>{const r=+(+v).toPrecision(3), e=Math.floor(Math.log10(Math.abs(r))); return e>=2?String(r):r.toFixed(2-e);};
 const tpPi=c=>c===0?"0":(c===1?"":N(c))+"π";
 const tpNC=s=>s.step===1?{closed:2,open:1,pipe:0}[s.cl]:2;
@@ -4690,6 +4763,10 @@ function tpCyl(svg,s,u,live){ const g=tpCylG(s), {R,H,ry,x0,x1,cx,ty,by,xs,per}=
   S_(svg,"path",{d:`M${x0} ${by} A${R} ${ry} 0 0 0 ${x1} ${by}`,fill:"none",stroke:AMB,"stroke-width":1.2});
   seg(svg,[x0,ty],[x0,by],{"stroke-width":.8}); seg(svg,[x1,ty],[x1,by],{"stroke-width":.8});
   S_(svg,"ellipse",{cx,cy:ty,rx:R,ry,fill:n===2?"var(--blue-fill)":"none",stroke:AMB,"stroke-width":1.2});
+  if(u>0){ const a1=2*PI*Math.min(u,1), m=Math.max(2,Math.ceil(60*u)); let d=""; for(let i=0;i<=m;i++){ const a=a1*i/m; d+=(i?"L":"M")+(cx+R*Math.sin(a)).toFixed(2)+" "+(ty+ry*Math.cos(a)).toFixed(2); }
+    seg(svg,[cx,ty+ry],[cx,by+ry],{stroke:RD,"stroke-width":.9,"stroke-dasharray":"1.6 1.2"});
+    S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":2.6,"stroke-linecap":"round","stroke-linejoin":"round"});
+    if(u<1) S_(svg,"circle",{cx:cx+R*Math.sin(a1),cy:ty+ry*Math.cos(a1),r:1.7,fill:AMB}); }
   seg(svg,[cx,ty],[x1,ty],{"stroke-width":.9}); S_(svg,"circle",{cx,cy:ty,r:.9,fill:"var(--ink)"});
   T([cx+R/2,ty-ry-2],`r = ${N(s.r)}`);
   seg(svg,[x0-4,ty],[x0-4,by],{stroke:RD,"stroke-width":.9}); [ty,by].forEach(y=>seg(svg,[x0-5.5,y],[x0-2.5,y],{stroke:RD,"stroke-width":.9}));
@@ -4698,41 +4775,43 @@ function tpCyl(svg,s,u,live){ const g=tpCylG(s), {R,H,ry,x0,x1,cx,ty,by,xs,per}=
   const W=per*u;
   if(u<1) S_(svg,"rect",{x:xs,y:ty,width:per,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
   if(W>.05){ S_(svg,"rect",{x:xs,y:ty,width:W,height:H,fill:"var(--green-fill)",stroke:"none"});
-    seg(svg,[xs,ty],[xs+W,ty],{stroke:AMB,"stroke-width":1.2}); seg(svg,[xs,by],[xs+W,by],{stroke:AMB,"stroke-width":1.2});
+    seg(svg,[xs,ty],[xs+W,ty],{stroke:AMB,"stroke-width":2.6,"stroke-linecap":"round"}); seg(svg,[xs,by],[xs+W,by],{stroke:AMB,"stroke-width":1.2});
+    if(u<1) S_(svg,"circle",{cx:xs+W,cy:ty,r:1.7,fill:AMB});
+    if(W>24) T([xs+W/2,ty-2.6],"circumference",{fill:AMB,"font-size":3.8});
     seg(svg,[xs,ty],[xs,by],{stroke:RD,"stroke-width":1}); seg(svg,[xs+W,ty],[xs+W,by],{stroke:RD,"stroke-width":1}); }
   if(u>.55){ T([xs+W/2,by+6.5],`2πr = 2π(${N(s.r)})`,{fill:AMB}); if(H>6) T([xs+W+1.6,(ty+by)/2+1.6],"h",{fill:RD,"text-anchor":"start","font-style":"italic"});
     if(H>9) T([xs+W/2,(ty+by)/2+1.6],"toilet paper",{fill:GR}); }
   if(live) handle(svg,xs+W,by,"u",GR); }
-const tpPrG=s=>{ const k=Math.min(5.9,82/(5+1.32*s.L)), dx=.42*s.L*k, dy=.32*s.L*k, top=Math.max(8+dy,10), tot=top+5*k+9+s.L*k+12, sh=(111-tot)/2, sx=(150-22*k-6)/2;
-  return {k,dx,dy,ox:sx,oy:sh+top+5*k,sx,sy:sh+top+5*k+9}; };
-function tpPrism(svg,s,u,live){ const {k,dx,dy,ox,oy,sx,sy}=tpPrG(s), P=([x,y],z=0)=>[ox+k*x+dx*z,oy-k*y-dy*z], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":4.4,"font-weight":700},a));
-  const pl=i=>clamp((u*22-TPCUM[i])/TPS[i],0,1), D={stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.2"}, poly=(Q,a)=>S_(svg,"polygon",Object.assign({points:Q.map(p=>p.map(v=>+v.toFixed(2)).join(",")).join(" ")},a));
-  seg(svg,P(TPL[0],1),P(TPL[1],1),D); seg(svg,P(TPL[5],1),P(TPL[0],1),D); seg(svg,P(TPL[0]),P(TPL[0],1),D);
-  [1,2,3,4].forEach(i=>poly([P(TPL[i]),P(TPL[i+1]),P(TPL[i+1],1),P(TPL[i],1)],{fill:TPF(i),"fill-opacity":1-pl(i),stroke:"var(--ink)","stroke-width":.7,"stroke-linejoin":"round"}));
-  poly(TPL.map(p=>P(p)),{fill:"var(--blue-fill)",stroke:"none"});
-  seg(svg,P([0,2]),P([2,2]),{stroke:BL,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"});
-  T(P([3,1]),"12",{fill:BL,dy:1.6}); T(P([1,3.5]),"6",{fill:BL,dy:1.6});
-  TPL.forEach((p,i)=>{ const q=TPL[(i+1)%6], f=pl(i); seg(svg,P(p),P(q),{stroke:TPC(i),"stroke-width":f>0&&f<1?2.4:1.4,"stroke-linecap":"round"}); });
-  const LB=[[[3,0],0,5.6,"middle"],[[6,1],-1.8,1.6,"end"],[[4,2],0,-2,"middle"],[[2,3.5],1.8,1.6,"start"],[[1,5],0,-2,"middle"],[[0,2.5],-1.8,1.6,"end"]];
-  LB.forEach(([m,ddx,ddy,an],i)=>{ const Q=P(m,i===4?1:0); T([Q[0]+ddx,Q[1]+ddy],String(TPS[i]),{fill:TPC(i),"text-anchor":an}); });
-  const E0=P(TPL[1]), E1=P(TPL[1],1); seg(svg,E0,E1,{stroke:RD,"stroke-width":1.3});
+const tpPrG=s=>{ const S=tpShape(s), k=Math.min(5.9,82/(S.hb+1.32*s.L)), dx=.42*s.L*k, dy=.32*s.L*k, top=Math.max(8+dy,10), tot=top+S.hb*k+9+s.L*k+12, sh=(111-tot)/2, sx=(150-S.per*k-6)/2;
+  return {S,k,dx,dy,ox:sx,oy:sh+top+S.hb*k,sx,sy:sh+top+S.hb*k+9}; };
+function tpPrism(svg,s,u,live){ const {S,k,dx,dy,ox,oy,sx,sy}=tpPrG(s), V=S.pts, n=V.length, per=S.per, P=([x,y],z=0)=>[ox+k*x+dx*z,oy-k*y-dy*z], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":4.4,"font-weight":700},a));
+  const pl=i=>clamp((u*per-S.cum[i])/S.sides[i],0,1), D={stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.2"}, poly=(Q,a)=>S_(svg,"polygon",Object.assign({points:Q.map(p=>p.map(v=>+v.toFixed(2)).join(",")).join(" ")},a));
+  seg(svg,P(V[0],1),P(V[1],1),D); seg(svg,P(V[n-1],1),P(V[0],1),D); seg(svg,P(V[0]),P(V[0],1),D);
+  for(let i=1;i<n-1;i++) poly([P(V[i]),P(V[i+1]),P(V[i+1],1),P(V[i],1)],{fill:TPF(i),"fill-opacity":1-pl(i),stroke:"var(--ink)","stroke-width":.7,"stroke-linejoin":"round"});
+  poly(V.map(p=>P(p)),{fill:"var(--blue-fill)",stroke:"none"});
+  if(S.split) seg(svg,P(S.split[0]),P(S.split[1]),{stroke:BL,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"});
+  S.inner.forEach(([m,t])=>T(P(m),t,{fill:BL,dy:1.6}));
+  V.forEach((p,i)=>{ const q=V[(i+1)%n], f=pl(i); seg(svg,P(p),P(q),{stroke:TPC(i),"stroke-width":f>0&&f<1?2.4:1.4,"stroke-linecap":"round"}); });
+  S.lb.forEach(([m,ddx,ddy,an,back],i)=>{ const Q=P(m,back?1:0); T([Q[0]+ddx,Q[1]+ddy],String(S.sides[i]),{fill:TPC(i),"text-anchor":an}); });
+  const E0=P(V[1]), E1=P(V[1],1); seg(svg,E0,E1,{stroke:RD,"stroke-width":1.3});
   T([(E0[0]+E1[0])/2+2.4,(E0[1]+E1[1])/2+5],`length = ${N(s.L)}`,{fill:RD,"text-anchor":"start"});
-  const H=s.L*k, W=22*k*u;
-  if(u<1) S_(svg,"rect",{x:sx,y:sy,width:22*k,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
-  TPS.forEach((w,i)=>{ const f=pl(i); if(f<=0) return; const x=sx+k*TPCUM[i];
+  const H=s.L*k, W=per*k*u;
+  if(u<1) S_(svg,"rect",{x:sx,y:sy,width:per*k,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
+  S.sides.forEach((w,i)=>{ const f=pl(i); if(f<=0) return; const x=sx+k*S.cum[i];
     S_(svg,"rect",{x,y:sy,width:k*w*f,height:H,fill:TPF(i),stroke:TPC(i),"stroke-width":.8});
     if(f>.5) T([x+k*w/2,sy+H+5.6],String(w),{fill:TPC(i)}); });
   if(W>.05){ seg(svg,[sx,sy],[sx,sy+H],{stroke:RD,"stroke-width":1.1}); seg(svg,[sx+W,sy],[sx+W,sy+H],{stroke:RD,"stroke-width":1.1});
     T([sx+W+1.6,sy+H/2+1.6],N(s.L),{fill:RD,"text-anchor":"start"}); }
-  if(u>=1){ T([sx+11*k,sy+H+12],"perimeter = 22",{fill:"var(--ink)"}); if(H>9) T([sx+11*k,sy+H/2+1.6],"toilet paper",{fill:"var(--ink)"}); }
+  if(u>=1){ T([sx+per*k/2,sy+H+12],`perimeter = ${per}`,{fill:"var(--ink)"}); if(H>9) T([sx+per*k/2,sy+H/2+1.6],"toilet paper",{fill:"var(--ink)"}); }
   if(live) handle(svg,sx+W,sy+H,"u",GR); }
 const tpLines=s=>{ if(s.q==="cyl"){ const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h;
     return [`surface = ${kc("blue","2 circles")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue",`2π(${r})²`)} + ${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${kc("blue",tpPi(c))} + ${kc("green",tpPi(t))} = ${tpPi(c+t)}`),nw(`= ${tpS3(PI*(c+t))} cm² (3 s.f.)`)]; }
   const t=22*s.L;
   return [`${kc("blue","base area")} = ${nw("6 × 2 + 2 × 3")} ${nw(`= ${kc("blue","18")} cm²`)}`,`perimeter = ${nw(TPS.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + "))} ${nw("= 22 cm")}`,`surface = ${kc("blue","2 × base area")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue","2 × 18")} + ${kc("green",`22 × ${kc("red",N(s.L))}`)}`),nw(`= ${kc("blue","36")} + ${kc("green",N(t))} = ${N(36+t)} cm²`)]; };
 const toiletPaper=aid({
-  init:{r:4,h:10,L:6,u:-1,cl:"closed",q:"cyl",ln:-1}, jump:true, vb:"0 0 150 112", label:"A cylinder and an L-shaped prism unrolled into toilet paper", link:["u","ln"],
+  init:{r:4,h:10,L:6,u:-1,cl:"closed",q:"cyl",ln:-1,ps:"L"}, jump:true, vb:"0 0 150 112", label:"A cylinder and prisms unrolled into toilet paper", link:["u","ln"],
   pills:[{k:"cl",label:"The tin is",show:s=>s.step===1,opts:[["closed","<span>Closed (2 circles)</span>"],["open","<span>Open at the top (1 circle)</span>"],["pipe","<span>A pipe (no circles)</span>"]]},
+    {k:"ps",label:"Prism",show:s=>s.step===2,opts:[["L","<span>L-shape</span>"],["tri","<span>Triangle</span>"],["trap","<span>Trapezium</span>"]],on:s=>{s.u=0;}},
     {k:"q",label:"Question",show:s=>s.step===3,opts:[["cyl","<span>Cylinder</span>"],["prism","<span>L-shaped prism</span>"]],on:s=>{s.ln=1;}}],
   sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:tpCylOn},{k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:tpCylOn},
     {k:"L",label:"length",min:2,max:8,step:1,f:v=>N(v)+" cm",show:s=>!tpCylOn(s)}],
@@ -4741,7 +4820,7 @@ const toiletPaper=aid({
     {label:"Start again",show:s=>s.step===3&&s.ln>1,fn:s=>{s.ln=1;}}],
   fix:s=>{ if(s.u>=0) s.u=clamp(s.u,0,1); if(s.ln>=0) s.ln=clamp(Math.round(s.ln),1,tpLines(s).length); },
   steps:[
-    {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Unroll it: a rectangle, ${nw(`2π${V("r")}`)} long and ${V("h")} tall.`},
+    {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Unroll it: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
     {name:"Open or closed?",set:tpSet({u:1}),t:()=>`Read the question: closed, open, or a pipe?<br>Count only the circles that are there.`},
     {name:"Any prism",set:tpSet({u:0}),t:()=>`Unroll the sides into one strip: ${nw("perimeter × length")}.<br>“Height” = the length between the 2 ends, even lying down.`},
     {name:"Exam style",set:tpSet({ln:1}),t:s=>s.q==="cyl"?`A closed cylinder has radius ${N(s.r)} cm and height ${N(s.h)} cm.<br>Find its total surface area.`:`This prism has the L-shaped end shown and length ${N(s.L)} cm.<br>Find its total surface area.`}
@@ -4749,14 +4828,14 @@ const toiletPaper=aid({
   draw(svg,s){ if(s.step===3){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
     if(s.step===2) tpPrism(svg,s,s.u,true); else tpCyl(svg,s,s.u,true); },
   drag(id,p,s){ if(id!=="u"||s.step===3) return;
-    if(s.step===2){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.sx)/(22*g.k),.01),0,1); }
+    if(s.step===2){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.sx)/(g.S.per*g.k),.01),0,1); }
     else { const g=tpCylG(s); s.u=clamp(snap((p.x-g.xs)/g.per,.02),0,1); } },
   key(s){ if(s.step===3) return EG(null,tpLines(s).slice(0,s.ln));
-    if(s.step===2){ const t=22*s.L;
-      return FORMS([FB("ink","Perimeter of the L",nw(`${TPS.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + ")} = 22 cm`),"","","wide"),
-        FB("blue","2 × base area",nw("2 × (12 + 6)"),nw("= 36 cm²")),
-        FB("green","Toilet paper",nw(`22 × ${kc("red",N(s.L))}`),nw(`= ${N(t)} cm²`)),
-        FB("ink","Surface area",nw(`36 + ${N(t)}`),nw(`= ${N(36+t)} cm²`))],true); }
+    if(s.step===2){ const S=tpShape(s), t=S.per*s.L, b2=2*S.ar;
+      return FORMS([FB("ink",`Perimeter of the ${S.nm}`,nw(`${S.sides.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + ")} = ${S.per} cm`),"","","wide"),
+        FB("blue","2 × base area",S.ar2(),nw(`= ${b2} cm²`)),
+        FB("green","Toilet paper",nw(`${S.per} × ${kc("red",N(s.L))}`),nw(`= ${N(t)} cm²`)),
+        FB("ink","Surface area",nw(`${b2} + ${N(t)}`),nw(`= ${N(b2+t)} cm²`))],true); }
     const n=tpNC(s), r=N(s.r), c=n*s.r*s.r, t=2*s.r*s.h, tot=c+t;
     return FORMS([FB("blue",n===2?"2 circles":n===1?"1 circle":"No circles",n===2?nw(`2 × π(${r})²`):n===1?nw(`π(${r})²`):"none",nw(`= ${tpPi(c)}`)),
       FB("green","Toilet paper",nw(`${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${tpPi(t)}`),nw(`2π${V("r")} × ${V("h")}`)),
