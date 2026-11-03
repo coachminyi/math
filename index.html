@@ -190,6 +190,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .frac>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
 .frac>span:last-child{padding:0 3px}
 .vtab{overflow-x:auto;margin:2px 0}
+.khint{font-weight:400;color:var(--muted);font-size:.72em}
 .vtab table{border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
 .vtab th,.vtab td{border:1px solid var(--grid2);padding:3px 7px;text-align:center;white-space:nowrap}
 .vtab th{color:var(--muted);font-weight:700}
@@ -1580,7 +1581,7 @@ const explainBox=lines=>`<div class="box explain"><ul>${lines.map(l=>`<li>${l}</
 const PB=v=>v<0?`(${N(v)})`:N(v), PM=v=>`(${N(v)})`;
 const eqv=v=>Math.abs(v*100-Math.round(v*100))<1e-6?`= ${N(v,2)}`:`≈ ${N(v,2)}`;
 const RD="var(--red)", GR="var(--green)", AMB="var(--amber)", BL="var(--blue)";
-const MS=t=>`<span class="m">${t}</span>`;
+const MS=t=>`<span class="m">${t}</span>`, kc=(c,t)=>`<span class="k-${c}">${t}</span>`;
 function asy(g,B,ax,v,t){ const a={stroke:RD,"stroke-dasharray":"2.2 1.6","stroke-width":1.1};
   if(ax==="x"){ g.line(v,B.y0,v,B.y1,a); if(t) g.text(v,B.y1,t,{dx:v<=B.x0+(B.x1-B.x0)*.6?1.6:-1.6,dy:12,"text-anchor":v<=B.x0+(B.x1-B.x0)*.6?"start":"end",fill:RD,"font-size":3.9,"font-weight":700}); }
   else { g.line(B.x0,v,B.x1,v,a); if(t) g.text(B.x1,v,t,{dx:-1,dy:-1.8,"text-anchor":"end",fill:RD,"font-size":3.9,"font-weight":700}); } }
@@ -1598,13 +1599,13 @@ function crossings(hf,a,b,n=1600){ const out=[], push=x=>{ if(!out.some(r=>Math.
   return out.map(r=>Math.abs(r-Math.round(r))<1e-7?Math.round(r):r).sort((p,q)=>p-q); }
 function eqAid(cfg){
   const C=cfg.curves, B=cfg.box, cv=s=>C.find(c=>c.id===s.cv)||C[0], xr=c=>c.xr||cfg.xr;
-  const xsOf=c=>{const [a,b,d]=xr(c), o=[]; for(let x=a;x<=b+1e-9;x+=d) o.push(+x.toFixed(4)); return o.filter(x=>!(c.bad&&c.bad(x)));};
-  const tabs=[{name:"Plot it",t:()=>`Slide ${X1}: each ${X1} gives one ${V("y")}, so one dot.<br>Then <b>join the dots</b>. That's the graph.`},
+  const xsOf=c=>{const [a,b,d]=xr(c), o=[]; for(let x=a;x<=b+1e-9;x+=d) o.push(+x.toFixed(4)); return o;};
+  const tabs=[{name:"Plot it",t:s=>`Slide ${X1}: each ${X1} gives one ${V("y")}, so one dot.<br>${cv(s).joinT||cfg.joinT||"Then join the dots with <b>one smooth curve</b> (no ruler)."}`},
     {name:"Test a point",t:()=>`Drag the dot. It turns <b class="k-green">green</b> when it makes the equation true.<br>The graph is every point that works.`}];
   const hasWhy=cfg.why!==false; if(hasWhy) tabs.push({name:cfg.whyName||"Why this shape?",t:s=>{const w=(cv(s).why||[])[s.wq]||(cv(s).why||[])[0]; return w?w.t:"";}});
   const W=hasWhy?2:-9, X0=tabs.length; (cfg.extra||[]).forEach(e=>tabs.push(e));
   const ext=s=>s.step>=X0?tabs[s.step]:null;
-  const buttons=[{label:"▶ Plot them all",show:s=>s.step===0,fn:(s,anim)=>{const xs=xsOf(cv(s)); s.joined=0; s._pts=[]; anim(xs.length*300,p=>{s.x=xs[Math.min(xs.length-1,Math.floor(p*xs.length))]; if(p>=1) s.joined=1;});}},
+  const buttons=[{label:"▶ Plot them all",show:s=>s.step===0,fn:(s,anim)=>{const xs=xsOf(cv(s)); s.joined=0; s._pts=[]; anim(xs.length*300,p=>{s.x=xs[clamp(Math.floor(Math.max(0,p)*xs.length),0,xs.length-1)]; if(p>=1) s.joined=1;});}},
     {label:"Join the dots",show:s=>s.step===0,pressed:s=>!!s.joined,fn:s=>{s.joined=s.joined?0:1;}},
     {label:"Clear",show:s=>s.step<2,fn:s=>{s._pts=[];s._hits=[];s.joined=0;}}];
   C.forEach(c=>(c.why||[]).forEach((w,i)=>{ if(c.why.length>1) buttons.push({label:w.b,show:s=>s.step===W&&s.cv===c.id,pressed:s=>s.wq===i,fn:s=>{s.wq=i;}}); }));
@@ -1613,10 +1614,10 @@ function eqAid(cfg){
   const Fof=c=>x=>(c.bad&&c.bad(x))?NaN:c.f(x);
   return aid({
     init:Object.assign({cv:C[0].id,x:1,px:2,py:3,wq:0,joined:0,_pts:[],_hits:[]},cfg.init||{}),
-    jump:true, vb:cfg.vb||"0 0 140 120", label:cfg.label,
+    jump:true, vb:cfg.vb||"0 0 140 120", label:cfg.label, link:["wq","px","py",...(cfg.link||[])],
     pills:[{k:"cv",label:cfg.pillLabel||"Sample equations",opts:C.map(c=>[c.id,`<span>${c.pill}</span>`]),show:s=>!(cfg.hidePill||[]).includes(s.step),on:s=>{s._pts=[];s._hits=[];s.joined=0;s.wq=0;fit(s);}},...(cfg.pills||[])],
     sliders:[{k:"x",label:X1,min:cfg.xr[0],max:cfg.xr[1],step:cfg.xr[2],show:s=>s.step===0,minf:s=>xr(cv(s))[0],maxf:s=>xr(cv(s))[1]},...(cfg.sliders||[])],
-    buttons, fix:fit,
+    buttons, fix:s=>{const [a,b]=xr(cv(s)); s.x=clamp(s.x,a,b);},
     steps:tabs.map(t=>({name:t.name,t:t.t,set:t.set})),
     draw(svg,s){
       const c=cv(s), g=graph(svg,B), F=Fof(c), inB=y=>isFinite(y)&&y>=B.y0-1e-9&&y<=B.y1+1e-9, E=ext(s);
@@ -1633,7 +1634,7 @@ function eqAid(cfg){
         g.dot(x,0,AMB,1.4); return; }
       if(s.step===1){ const fy=F(s.px), on=isFinite(fy)&&Math.abs(s.py-fy)<1e-9;
         if(on&&!s._hits.some(([a,b])=>Math.abs(a-s.px)<1e-9&&Math.abs(b-s.py)<1e-9)) s._hits.push([s.px,s.py]);
-        if(s._hits.length>=3) g.plot(F,{stroke:GR,"stroke-width":1,"stroke-opacity":.6});
+        g.plot(F,s._hits.length>=3?{stroke:GR,"stroke-width":1,"stroke-opacity":.6}:{stroke:BL,"stroke-width":1.2,"stroke-opacity":.4});
         s._hits.forEach(([a,b])=>g.dot(a,b,GR,1.5));
         const col=on?GR:RD, dash={stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5};
         g.line(s.px,0,s.px,s.py,dash); g.line(0,s.py,s.px,s.py,dash);
@@ -1646,13 +1647,13 @@ function eqAid(cfg){
         if(isFinite(fy)&&fy>=B.y0&&fy<=B.y1&&Math.abs(y-fy)<(B.y1-B.y0)*.045) yy=fy; s.py=yy; }
       else if(cfg.drag) cfg.drag(id,p,s,B); },
     key(s){ const c=cv(s), E=ext(s); if(E) return E.key(s,c,B);
-      const H=KHEAD(c.eq);
+      const H=KHEAD((s.step===W&&c.eqW?c.eqW:c.eq)+(c.hint?` <span class="khint">${c.hint}</span>`:""));
       if(s.step===0){ const x=s.x, bad=c.bad&&c.bad(x);
         return H+FORMS([FB("amber","Put in",nw(`${X1} = ${N(x)}`),""),
           bad?FB("red","Get",nw(`${V("y")} = ${c.sub(x)}`),`✗ ${bad}`):FB("blue","Get",nw(`${V("y")} = ${c.sub(x)}${c.plain?"":" "+eqv(c.f(x))}`),c.note||`dot at ${nw(`(${N(x)}, ${N(c.f(x),2)})`)}`)],true); }
       if(s.step===1){ const fy=Fof(c)(s.px), on=isFinite(fy)&&Math.abs(s.py-fy)<1e-9;
-        return H+FORMS([FB("blue","Left side",nw(`${V("y")} = ${N(s.py,2)}`),""),
-          FB("amber","Right side",nw(`${c.sub(s.px)}${isFinite(fy)&&!c.plain?" "+eqv(fy):""}`),isFinite(fy)?"":`✗ ${c.bad(s.px)}`),
+        return H+FORMS([FB("blue",`Left side: ${V("y")}`,nw(`${V("y")} = ${N(s.py,2)}`),""),
+          FB("amber",`Right side: ${c.eq.replace(`${V("y")} = `,"")}`,nw(`${c.sub(s.px)}${isFinite(fy)&&!c.plain?" "+eqv(fy):""}`),isFinite(fy)?"":`✗ ${c.bad(s.px)}`),
           FB(on?"green":"red",on?"✓ On the graph":"✗ Not on the graph",on?"both sides are equal":isFinite(fy)?nw(`${N(s.py,2)} ≠ ${N(fy,2)}`):"no point at this x",`points found: ${s._hits.length}`,null,"wide")],true); }
       const w=(c.why||[])[s.wq]||(c.why||[])[0], wb=w&&w.key?w.key(s):[]; if(wb.length===1) wb[0]=wb[0].replace('class="formbox ','class="formbox wide '); return H+(wb.length?FORMS(wb,true):""); },
     readout(s){ const E=ext(s); if(E) return E.readout?E.readout(s,cv(s)):"";
@@ -1661,20 +1662,24 @@ function eqAid(cfg){
   });
 }
 const BXL={l:14,t:4,w:112,h:112,x0:-5,x1:5,y0:-5,y1:5,xs:1,xl:2,ys:1,yl:2};
-const lineWhy=(m,c,run,mT,t)=>[{b:"",t:t||`Every step along goes up by the same amount, so the dots line up.<br><b>${V("m")}</b> = how steep, <b>${V("c")}</b> = where it cuts the ${V("y")}-axis.`,
+const f2=v=>(v<-0.0049?"−":"")+Math.abs(v).toFixed(2), gslope=(F,x)=>(F(x+1e-5)-F(x-1e-5))/2e-5;
+const MC=`${V("y")} = ${kc("amber",V("m"))}${X1} + ${kc("red",V("c"))}`;
+const stepWord=(m,run)=>m===0?"no change":`${m>0?"up":"down"} ${N(Math.abs(m*run))}`;
+const lineWhy=(m,c,run,mT,t)=>[{b:"",t:t||`Every ${N(run)} along, ${V("y")} goes ${stepWord(m,run)}. Same step every time, so it's straight.<br>In ${nw(MC)}: ${kc("amber",V("m"))} = how steep and which way, ${kc("red",V("c"))} = where it cuts the ${V("y")}-axis.`,
   draw:(g,s,F)=>{ for(let k=-2;k<=1;k++){ const x1=k*run, x2=(k+1)*run, y1=F(x1), y2=F(x2); g.line(x1,y1,x2,y1,{stroke:AMB,"stroke-width":1}); g.line(x2,y1,x2,y2,{stroke:GR,"stroke-width":1});
       if(k===0){ g.text((x1+x2)/2,y1,N(run),{dy:m>=0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.9,"font-weight":700}); if(m!==0) g.text(x2,(y1+y2)/2,N(m*run),{dx:1.6,dy:1.3,fill:GR,"font-size":3.9,"font-weight":700}); } }
     gpt(g,0,c,`(0, ${N(c)})`,RD,{dx:-2.6,"text-anchor":"end",dy:m>0?-2.4:4.6}); },
-  key:()=>[FB("amber",`${V("m")} = gradient`,mT,m===0?"flat: no up or down":`along ${N(run)}, ${m>0?"up":"down"} ${N(Math.abs(m*run))}`),FB("red",`${V("c")} = ${V("y")}-intercept`,N(c),`${nw(`${X1} = 0`)} gives ${nw(`${V("y")} = ${N(c)}`)}`)]}];
+  key:()=>[FB("amber",`${V("m")} = gradient`,mT,m===0?"flat: no up or down":`along ${N(run)}, ${stepWord(m,run)}`),FB("red",`${V("c")} = ${V("y")}-intercept`,N(c),`${nw(`${X1} = 0`)} gives ${nw(`${V("y")} = ${N(c)}`)}`)]}];
 const LINES=[
-  {id:"l1",pill:`${V("y")} = 2${X1} + 1`,eq:`${V("y")} = 2${X1} + 1`,f:x=>2*x+1,sub:x=>`2${PM(x)} + 1`,xr:[-3,2,1],why:lineWhy(2,1,1,"2")},
-  {id:"l2",pill:`${V("y")} = −${X1} + 3`,eq:`${V("y")} = −${X1} + 3`,f:x=>-x+3,sub:x=>`−${PM(x)} + 3`,xr:[-2,5,1],why:lineWhy(-1,3,1,"−1")},
-  {id:"l3",pill:`${V("y")} = ${frac("1","2")}${X1} − 2`,eq:`${V("y")} = ${frac("1","2")}${X1} − 2`,f:x=>x/2-2,sub:x=>`${frac("1","2")}${PM(x)} − 2`,xr:[-4,5,1],why:lineWhy(.5,-2,2,frac("1","2"))},
-  {id:"l4",pill:`${V("y")} = 3`,eq:`${V("y")} = 3`,f:()=>3,sub:()=>"3",plain:true,note:`no ${X1} in it, so ${V("y")} is always 3`,xr:[-4,4,1],why:lineWhy(0,3,1,"0",`There's no ${X1} in it, so ${V("y")} = 3 for every ${X1}.<br>That's a flat line.`)}
+  {id:"l1",pill:`${V("y")} = 2${X1} + 1`,eq:`${V("y")} = 2${X1} + 1`,eqW:`${V("y")} = ${kc("amber","2")}${X1} ${kc("red","+ 1")}`,f:x=>2*x+1,sub:x=>`2${PM(x)} + 1`,xr:[-3,2,1],why:lineWhy(2,1,1,"2")},
+  {id:"l2",pill:`${V("y")} = −${X1} + 3`,eq:`${V("y")} = −${X1} + 3`,eqW:`${V("y")} = ${kc("amber","−")}${X1} ${kc("red","+ 3")}`,f:x=>-x+3,sub:x=>`−${PM(x)} + 3`,xr:[-2,5,1],why:lineWhy(-1,3,1,"−1")},
+  {id:"l3",pill:`${V("y")} = ${frac("1","2")}${X1} − 2`,eq:`${V("y")} = ${frac("1","2")}${X1} − 2`,eqW:`${V("y")} = ${kc("amber",frac("1","2"))}${X1} ${kc("red","− 2")}`,f:x=>x/2-2,sub:x=>`${frac("1","2")}${PM(x)} − 2`,xr:[-4,5,1],why:lineWhy(.5,-2,2,frac("1","2"))},
+  {id:"l4",pill:`${V("y")} = 3`,eq:`${V("y")} = 3`,eqW:`${V("y")} = ${kc("red","3")}`,f:()=>3,sub:()=>"3",plain:true,note:`no ${X1} in it, so ${V("y")} is always 3`,xr:[-4,4,1],why:lineWhy(0,3,1,"0",`There's no ${X1} in it, so ${V("y")} = 3 for every ${X1}: a flat line.<br>Gradient ${kc("amber",V("m"))} = 0, and it cuts the ${V("y")}-axis at ${kc("red","3")}.`)}
 ];
 const L1f=x=>x+1, L2f=x=>-x+5;
 const eqLines=eqAid({label:"Straight-line graph: plot points, test points, gradient and intercept",box:BXL,curves:LINES,xr:[-4,5,1],whyName:"Why straight?",hidePill:[3,4],
-  init:{m:2,c:1,qx:-2,qy:4},
+  joinT:"Then join the dots with <b>a ruler</b>. That's the graph.",
+  init:{m:2,c:1,qx:-2,qy:4}, link:["qx","qy"],
   sliders:[{k:"m",label:V("m"),min:-3,max:3,step:.5,show:s=>s.step===3},{k:"c",label:V("c"),min:-4,max:4,step:1,show:s=>s.step===3}],
   drag(id,p,s,B){ if(id!=="q") return; const [x,y]=ginv(B,p); s.qx=clamp(snap(x,.5),-5,5); let yy=snap(y,.5); if(Math.abs(y-L1f(s.qx))<.4) yy=L1f(s.qx); else if(Math.abs(y-L2f(s.qx))<.4) yy=L2f(s.qx); s.qy=clamp(yy,-5,5); },
   extra:[
@@ -1683,8 +1688,8 @@ const eqLines=eqAid({label:"Straight-line graph: plot points, test points, gradi
        if(s.m!==0){ g.line(0,s.c,1,s.c,{stroke:AMB,"stroke-width":1.1}); g.line(1,s.c,1,s.c+s.m,{stroke:GR,"stroke-width":1.1});
          g.text(.5,s.c,"1",{dy:s.m>0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.9,"font-weight":700}); g.text(1,s.c+s.m/2,N(s.m),{dx:1.6,dy:1.3,fill:GR,"font-size":3.9,"font-weight":700}); }
        gpt(g,0,s.c,`(0, ${N(s.c)})`,RD,{dx:-2.6,"text-anchor":"end",dy:s.m>0?-2.4:4.6}); },
-     key:s=>KHEAD(nw(`${V("y")} = ${poly([[s.m,X1],[s.c,""]])||"0"}`))+FORMS([FB("amber",V("m"),N(s.m),s.m>0?"uphill":s.m<0?"downhill":"flat"),FB("red",V("c"),N(s.c),`cuts the ${V("y")}-axis at ${nw(`(0, ${N(s.c)})`)}`)],true)},
-    {name:"Two lines",t:()=>`Drag the dot. It's on a line when it fits that line's equation.<br>The point that fits <b>both</b> solves the simultaneous equations.`,
+     key:s=>KHEAD(nw(`${V("y")} = ${poly([[s.m,X1],[s.c,""]])||"0"}`))+FORMS([FB("amber",V("m"),N(s.m),s.m>0?`along 1, up ${N(s.m)}`:s.m<0?`along 1, down ${N(-s.m)}`:"flat: no up or down"),FB("red",V("c"),N(s.c),`cuts the ${V("y")}-axis at ${nw(`(0, ${N(s.c)})`)}`)],true)},
+    {name:"Two lines (Sec 2)",t:()=>`Drag the dot onto both lines.<br>The point on both solves ${nw(`${V("y")} = ${X1} + 1`)} and ${nw(`${V("y")} = −${X1} + 5`)} together.`,
      draw:(g,s,svg)=>{ g.line(-5,L1f(-5),5,L1f(5),{stroke:BL,"stroke-width":1.2}); g.line(-5,L2f(-5),5,L2f(5),{stroke:AMB,"stroke-width":1.2});
        g.text(-4.7,L1f(-4.7),"y = x + 1",{dy:-2,"font-size":3.9,fill:BL,"font-style":"italic","font-weight":700});
        g.text(2.6,L2f(2.6),"y = −x + 5",{dx:2.2,dy:-1,"font-size":3.9,fill:AMB,"font-style":"italic","font-weight":700});
@@ -1695,77 +1700,89 @@ const eqLines=eqAid({label:"Straight-line graph: plot points, test points, gradi
      key:s=>{ const o1=Math.abs(s.qy-L1f(s.qx))<1e-9, o2=Math.abs(s.qy-L2f(s.qx))<1e-9;
        return FORMS([FB(o1?"green":"red",nw(`${V("y")} = ${X1} + 1`),nw(`${N(s.qy)} ${o1?"=":"≠"} ${N(s.qx)} + 1`),o1?"✓ on this line":"✗ not on it"),
          FB(o2?"green":"red",nw(`${V("y")} = −${X1} + 5`),nw(`${N(s.qy)} ${o2?"=":"≠"} −${PM(s.qx)} + 5`),o2?"✓ on this line":"✗ not on it"),
-         FB(o1&&o2?"green":"amber",o1&&o2?"✓ Works for both":"Works for both?",o1&&o2?nw(`${X1} = ${N(s.qx)}, ${V("y")} = ${N(s.qy)}`):"not yet",o1&&o2?"that's the answer to the simultaneous equations":"find where the lines cross",null,"wide")],true); }}
+         FB(o1&&o2?"green":"amber",o1&&o2?"✓ Works for both":"Works for both?",o1&&o2?nw(`${X1} = ${N(s.qx)}, ${V("y")} = ${N(s.qy)}`):"not yet",o1&&o2?"so this is the solution of the simultaneous equations":"find where the lines cross",null,"wide")],true); }}
   ]});
 const BXQ={l:12,t:4,w:124,h:112,x0:-4,x1:5,y0:-6,y1:12,xs:1,xl:1,ys:1,yl:2};
 const wMirror=(h,ds,ex)=>({b:"Why symmetrical?",t:`Points the same distance either side of ${nw(`${X1} = ${N(h)}`)} get the same ${V("y")}.<br>So the two sides are mirror images.`,
   draw:(g,s,F,B)=>{ g.line(h,B.y0,h,B.y1,{stroke:GR,"stroke-dasharray":"2 1.5","stroke-width":.9}); pairs(g,F,h,ds); },
   key:()=>[FB("green","Line of symmetry",nw(`${X1} = ${N(h)}`),ex)]});
-const wRoots=(r1,r2,work)=>({b:`Cuts the ${X1}-axis?`,t:`On the ${X1}-axis, ${V("y")} = 0.<br>So put ${V("y")} = 0 and solve.`,
+const wRoots=(r1,r2,work,note)=>({b:`Cuts the ${X1}-axis?`,t:`On the ${X1}-axis, ${V("y")} = 0.<br>So put ${V("y")} = 0 and solve.`,
   draw:g=>{ gpt(g,r1,0,`(${N(r1)}, 0)`,RD,{dx:0,"text-anchor":"middle",dy:10.5}); gpt(g,r2,0,`(${N(r2)}, 0)`,RD,{dx:0,"text-anchor":"middle",dy:10.5}); },
-  key:()=>[FB("red",`${V("y")} = 0`,nw(work),`${nw(`${X1} = ${N(r1)}`)} or ${nw(`${X1} = ${N(r2)}`)}`)]});
-const wTurn=(h,k,min,work)=>({b:"Turning point",t:`The turning point sits on the line of symmetry.<br>Put that ${X1} in to get ${V("y")}.`,
+  key:()=>[FB("red",`${V("y")} = 0`,work.map(w=>nw(w)).join("<br>"),`${nw(`${X1} = ${N(r1)}`)} or ${nw(`${X1} = ${N(r2)}`)}${note?` (${note})`:""}`)]});
+const wTurn=(h,k,min,work)=>({b:"Turning point",t:`The turning point is the ${min?"bottom of the ∪":"top of the ∩"}, on the line of symmetry ${nw(`${X1} = ${N(h)}`)}.<br>Put ${nw(`${X1} = ${N(h)}`)} in: ${nw(`${V("y")} = ${N(k)}`)}.`,
   draw:g=>gpt(g,h,k,`${min?"min":"max"} (${N(h)}, ${N(k)})`,GR,{dy:min?5:-2.6}),
   key:()=>[FB("green",min?"Minimum point":"Maximum point",nw(`(${N(h)}, ${N(k)})`),work)]});
+const wYint=(c,work)=>({b:`Cuts the ${V("y")}-axis?`,t:`On the ${V("y")}-axis, ${X1} = 0.<br>Put ${X1} = 0 in: ${nw(work)}.`,
+  draw:g=>gpt(g,0,c,`(0, ${N(c)})`,AMB,{dy:-2.4}),
+  key:()=>[FB("amber",nw(`${X1} = 0`),nw(work),`cuts the ${V("y")}-axis at ${nw(`(0, ${N(c)})`)}`)]});
 const wNeverNeg={b:"Never negative?",t:`A square is never negative.<br>So no part of the graph goes below the ${X1}-axis.`,draw:(g,s,F,B)=>shadeBelow(g,B,"nothing here"),
   key:()=>[FB("red",`${X2} is never negative`,nw("(−3)² = 9"),`so nothing is below the ${X1}-axis`)]};
 const QUADS2=[
   {id:"q1",pill:`${V("y")} = ${X2}`,eq:`${V("y")} = ${X2}`,f:x=>x*x,sub:x=>`${PB(x)}²`,xr:[-3,3,1],why:[wMirror(0,[1,2,3],nw("(−2)² = 2² = 4")),wNeverNeg,wTurn(0,0,true,`${nw(`${X1} = 0`)} gives the smallest ${V("y")}`)]},
-  {id:"q2",pill:`${V("y")} = ${X2} − 4`,eq:`${V("y")} = ${X2} − 4`,f:x=>x*x-4,sub:x=>`${PB(x)}² − 4`,xr:[-3,3,1],why:[wRoots(-2,2,`${X2} − 4 = 0`),wMirror(0,[1,3],nw("(−1)² − 4 = 1² − 4")),wTurn(0,-4,true,nw(`${V("y")} = 0² − 4 = −4`))]},
-  {id:"q3",pill:`${V("y")} = ${X2} − 2${X1} − 3`,eq:`${V("y")} = ${X2} − 2${X1} − 3`,f:x=>x*x-2*x-3,sub:x=>`${PB(x)}² − 2${PM(x)} − 3`,xr:[-2,4,1],why:[wRoots(-1,3,`(${X1} + 1)(${X1} − 3) = 0`),wMirror(1,[1,2,3],`halfway between −1 and 3`),wTurn(1,-4,true,nw(`${V("y")} = 1² − 2(1) − 3 = −4`))]},
-  {id:"q4",pill:`${V("y")} = −${X2} + 4`,eq:`${V("y")} = −${X2} + 4`,f:x=>-x*x+4,sub:x=>`−${PB(x)}² + 4`,xr:[-3,3,1],why:[{b:"Why upside down?",t:`The minus makes −${X2} zero or negative.<br>So the curve is an ∩ shape, with a maximum point.`,draw:g=>gpt(g,3,-5,"−(3)² + 4 = −5",RD,{dx:-2.6,"text-anchor":"end",dy:-2.6}),key:()=>[FB("red",`−${X2} is never positive`,nw("−(3)² = −9"),"so the curve is ∩, not ∪")]},wRoots(-2,2,`−${X2} + 4 = 0`),wTurn(0,4,false,nw(`${V("y")} = −0² + 4 = 4`))]}
+  {id:"q2",pill:`${V("y")} = ${X2} − 4`,eq:`${V("y")} = ${X2} − 4`,f:x=>x*x-4,sub:x=>`${PB(x)}² − 4`,xr:[-3,3,1],why:[wRoots(-2,2,[`${X2} − 4 = 0`,`${X2} = 4`],"both square to 4"),wMirror(0,[1,3],nw("(−1)² − 4 = 1² − 4")),wTurn(0,-4,true,nw(`${V("y")} = 0² − 4 = −4`))]},
+  {id:"q3",pill:`${V("y")} = ${X2} − 2${X1} − 3`,eq:`${V("y")} = ${X2} − 2${X1} − 3`,f:x=>x*x-2*x-3,sub:x=>`${PB(x)}² − 2${PM(x)} − 3`,xr:[-2,4,1],why:[wRoots(-1,3,[`${X2} − 2${X1} − 3 = 0`,`(${X1} + 1)(${X1} − 3) = 0`]),wYint(-3,`${V("y")} = 0² − 2(0) − 3 = −3`),wMirror(1,[1,2,3],`halfway between −1 and 3`),wTurn(1,-4,true,nw(`${V("y")} = 1² − 2(1) − 3 = −4`))]},
+  {id:"q4",pill:`${V("y")} = −${X2} + 4`,eq:`${V("y")} = −${X2} + 4`,f:x=>-x*x+4,sub:x=>`−${PB(x)}² + 4`,xr:[-3,3,1],why:[{b:"Why upside down?",t:`${nw(`${V("y")} = 4 − ${X2}`)}: the further ${X1} is from 0, the more you take away from 4.<br>So ${V("y")} is biggest (4) at ${X1} = 0, and the curve is an ∩.`,draw:g=>gpt(g,-3,-5,"(−3, −5)",RD,{dx:0,"text-anchor":"middle",dy:5.2}),key:()=>[FB("red","Square first, then the minus",nw("−(−3)² + 4 = −9 + 4 = −5"),"the further from 0, the lower it goes")]},wRoots(-2,2,[`−${X2} + 4 = 0`,`${X2} = 4`],"both square to 4"),wTurn(0,4,false,nw(`${V("y")} = −0² + 4 = 4`))]}
 ];
 const eqQuad=eqAid({label:"Quadratic graph from a table of values",box:BXQ,curves:QUADS2,xr:[-3,4,1],init:{px:2,py:2}});
 const BXP={l:12,t:4,w:124,h:112,x0:-4,x1:4,y0:-6,y1:8,xs:.5,xl:1,ys:1,yl:2};
-const w0x=b=>({b:`Can ${X1} be 0?`,t:`Put ${X1} = 0 in: ${V("y")} = ${b}, and you can't divide by 0.<br>So the curve never touches the ${V("y")}-axis.`,
-  draw:(g,s,F,B)=>asy(g,B,"x",0,"never touches"),key:()=>[FB("red",nw(`${X1} = 0`),nw(`${V("y")} = ${b}`),"can't divide by 0, so no point")]});
-const w0y=(rd,ex)=>({b:`Can ${V("y")} be 0?`,t:`1 ÷ any number is never 0.<br>So the curve never touches the ${X1}-axis either.`,
-  draw:(g,s,F,B)=>asy(g,B,"y",0,"never touches"),key:()=>[FB("red",nw(`${V("y")} = 0`),nw(ex),rd)]});
-const wExp=(bs,nm)=>[{b:`${X1} = 0`,t:`Anything to the power 0 is 1.<br>So the curve always crosses the ${V("y")}-axis at 1.`,draw:g=>gpt(g,0,1,"(0, 1)",GR,{dy:5}),key:()=>[FB("green",nw(`${X1} = 0`),nw(`${bs}<sup>0</sup> = 1`),`so it passes through ${nw("(0, 1)")}`)]},
-  {b:"Can it be 0?",t:`${nm} to any power is always positive.<br>So it gets closer and closer to the ${X1}-axis, but never touches it.`,draw:(g,s,F,B)=>{shadeBelow(g,B,"nothing here"); asy(g,B,"y",0,"never touches");},key:()=>[FB("red","Never 0 or negative",nw(`${bs}<sup>−10</sup> ≈ ${N(Math.pow(bs==="2"?2:Math.E,-10),5)}`),`it only gets closer to the ${X1}-axis`)]},
-  ...(bs==="2"?[{b:`${X1} negative`,t:`A negative power makes a fraction.<br>Each step to the left halves ${V("y")}.`,draw:g=>{[-1,-2,-3].forEach(x=>g.dot(x,Math.pow(2,x),AMB,1.8)); g.text(-1,.5,"{1/2}",{dx:1.6,dy:-1.8,fill:AMB,"font-size":3.9,"font-weight":700});},key:()=>[FB("amber",`${X1} negative`,`${nw(`2<sup>−1</sup> = ${frac("1","2")}`)}<br>${nw(`2<sup>−2</sup> = ${frac("1","4")}`)}`,"halves every step to the left")]}]:[])];
+const w0x=b=>({b:`Can ${X1} be 0?`,t:`Put ${X1} = 0 in: ${V("y")} = ${b}, and you can't divide by 0.<br>So the ${V("y")}-axis (${X1} = 0) is an <b>asymptote</b>: the curve never meets it.`,
+  draw:(g,s,F,B)=>asy(g,B,"x",0,"asymptote"),key:()=>[FB("red",nw(`${X1} = 0`),nw(`${V("y")} = ${b}`),"can't divide by 0, so no point")]});
+const w0y=fr=>({b:`Can ${V("y")} be 0?`,t:`${fr} is never 0, whatever ${X1} is.<br>So the ${X1}-axis (${V("y")} = 0) is an <b>asymptote</b> too.`,
+  draw:(g,s,F,B)=>asy(g,B,"y",0,"asymptote"),key:()=>[FB("red",nw(`${V("y")} = 0`),nw(`${fr} = 0`),`no ${X1} makes this true`)]});
+const wExp=(bs,two)=>{ const zero={b:`${X1} = 0`,t:`Any number (not 0) to the power 0 is 1.<br>So ${nw(`${V("y")} = ${bs}<sup>${X1}</sup>`)} crosses the ${V("y")}-axis at (0, 1).`,draw:g=>gpt(g,0,1,"(0, 1)",GR,{dy:5}),key:()=>[FB("green",nw(`${X1} = 0`),nw(`${bs}<sup>0</sup> = 1`),`so it passes through ${nw("(0, 1)")}`)]};
+  const neg={b:`${X1} negative`,t:`A negative power makes a fraction.<br>Each step to the left halves ${V("y")}.`,draw:g=>{[-1,-2,-3].forEach(x=>g.dot(x,Math.pow(2,x),AMB,1.8)); g.text(-1,.5,"{1/2}",{dx:1.6,dy:-1.8,fill:AMB,"font-size":3.9,"font-weight":700});},key:()=>[FB("amber",`${X1} negative`,`${nw(`2<sup>−1</sup> = ${frac("1","2")}`)}<br>${nw(`2<sup>−2</sup> = ${frac("1","4")}`)}`,"halves every step to the left")]};
+  const y0={b:`Can ${V("y")} be 0?`,t:two?`Going left, ${V("y")} halves each step: 1, ${frac("1","2")}, ${frac("1","4")}, …<br>Halving never reaches 0, so the ${X1}-axis is an <b>asymptote</b>.`:`Going left, ${V("y")} keeps getting divided by e (about 2.7).<br>That never reaches 0, so the ${X1}-axis is an <b>asymptote</b>.`,
+    draw:(g,s,F,B)=>{shadeBelow(g,B,"nothing here"); asy(g,B,"y",0,"asymptote");},
+    key:()=>[FB("red","Never 0 or negative",two?nw(`2<sup>−10</sup> = ${frac("1","1024")}`):nw("e<sup>−10</sup> ≈ 0.0000454"),"tiny, but not 0")]};
+  return two?[zero,neg,y0]:[zero,y0]; };
+const JOIN0=`Join them with smooth curves, but <b>never across ${X1} = 0</b>: there's no point there.`;
 const POWS=[
-  {id:"pm1",pill:`${V("y")} = ${frac("1",X1)}`,eq:`${V("y")} = ${frac("1",X1)}`,f:x=>1/x,bad:x=>Math.abs(x)<1e-9?"can't divide by 0":null,sub:x=>frac("1",N(x)),xr:[-4,4,.5],
-   why:[w0x(frac("1","0")),w0y("1 ÷ any number is never 0",`${frac("1",X1)} = 0`),
-     {b:`${X1} close to 0`,t:`The smaller ${X1} gets, the bigger ${V("y")} gets.<br>So the curve shoots up next to the ${V("y")}-axis.`,draw:g=>[1,.5,.25,.125].forEach(x=>g.dot(x,1/x,AMB,1.8)),key:()=>[FB("amber","Smaller x, bigger y",`${nw(`${X1} = 0.5 → ${V("y")} = 2`)}<br>${nw(`${X1} = 0.25 → ${V("y")} = 4`)}<br>${nw(`${X1} = 0.01 → ${V("y")} = 100`)}`,"it never reaches the axis")]},
-     {b:`${X1} negative`,t:`1 ÷ a negative number is negative.<br>So the other branch is in the bottom-left corner.`,draw:g=>{ g.plot(x=>x<0?1/x:NaN,{stroke:AMB,"stroke-width":2}); gpt(g,-2,-.5,"(−2, −0.5)",AMB,{dy:5}); },key:()=>[FB("amber",`${X1} negative`,nw(`${frac("1","−2")} = −0.5`),"so this branch is below the x-axis")]}]},
-  {id:"pm2",pill:`${V("y")} = ${frac("1",X2)}`,eq:`${V("y")} = ${frac("1",X2)}`,f:x=>1/(x*x),bad:x=>Math.abs(x)<1e-9?"can't divide by 0":null,sub:x=>frac("1",`${PB(x)}²`),xr:[-3,3,.5],
-   why:[w0x(frac("1","0²")),{b:"Why both above?",t:`${X2} is never negative, so ${V("y")} is always positive.<br>Both branches are above the ${X1}-axis, like mirror images.`,draw:(g,s,F)=>pairs(g,F,0,[.5,1,2]),key:()=>[FB("green",`${X2} is never negative`,nw("(−2)² = 2² = 4"),`so ${V("y")} is always positive`)]},w0y("1 ÷ any number is never 0",`${frac("1",X2)} = 0`)]},
+  {id:"pm1",pill:`${V("y")} = ${frac("1",X1)}`,eq:`${V("y")} = ${frac("1",X1)}`,f:x=>1/x,bad:x=>Math.abs(x)<1e-9?"can't divide by 0":null,sub:x=>frac("1",N(x)),xr:[-4,4,.5],joinT:JOIN0,
+   why:[w0x(frac("1","0")),w0y(frac("1",X1)),
+     {b:`${X1} close to 0`,t:`The closer ${X1} gets to 0 (${X1} positive), the bigger ${V("y")} gets.<br>So it shoots up beside the ${V("y")}-axis, and down on the left side.`,draw:g=>[.5,.25,.125].forEach(x=>g.dot(x,1/x,AMB,1.9)),key:()=>[FB("amber",`Closer to 0, bigger ${V("y")}`,`${nw(`${X1} = 0.5 → ${V("y")} = 2`)}<br>${nw(`${X1} = 0.25 → ${V("y")} = 4`)}<br>${nw(`${X1} = 0.125 → ${V("y")} = 8`)}`,`${nw(`${X1} = 0.01`)} gives 100: way off the top`)]},
+     {b:`${X1} negative`,t:`1 ÷ a negative number is negative.<br>So the other branch is in the bottom-left corner.`,draw:g=>{ g.plot(x=>x<0?1/x:NaN,{stroke:AMB,"stroke-width":2}); gpt(g,-2,-.5,"(−2, −0.5)",AMB,{dy:5}); },key:()=>[FB("amber",`${X1} negative`,nw(`${frac("1","−2")} = −0.5`),`so this branch is below the ${X1}-axis`)]}]},
+  {id:"pm2",pill:`${V("y")} = ${frac("1",X2)}`,eq:`${V("y")} = ${frac("1",X2)}`,f:x=>1/(x*x),bad:x=>Math.abs(x)<1e-9?"can't divide by 0":null,sub:x=>frac("1",`${PB(x)}²`),xr:[-3,3,.5],joinT:JOIN0,
+   why:[w0x(frac("1","0²")),{b:"Why both above?",t:`${X2} is always positive here (${X1} can't be 0), so ${V("y")} is always positive.<br>Both branches are above the ${X1}-axis, like mirror images.`,draw:(g,s,F)=>pairs(g,F,0,[.5,1,2]),key:()=>[FB("green",`${X1} = −2 and ${X1} = 2`,nw(`${frac("1","(−2)²")} = ${frac("1","2²")} = ${frac("1","4")}`),`same ${V("y")}, both above the ${X1}-axis`)]},w0y(frac("1",X2))]},
   {id:"p3",pill:`${V("y")} = ${X1}³`,eq:`${V("y")} = ${X1}³`,f:x=>x**3,sub:x=>`${PB(x)}³`,xr:[-2,2,.5],
-   why:[{b:`${X1} negative`,t:`A negative number cubed stays negative.<br>So the left side goes down, not up like ${X2}.`,draw:g=>{ g.plot(x=>x<0?x**3:NaN,{stroke:AMB,"stroke-width":2}); gpt(g,-1.5,-3.375,"(−1.5, −3.375)",AMB,{dy:5}); },key:()=>[FB("amber","Negative cubed",nw("(−2)³ = −8"),`but ${nw("(−2)² = 4")}`)]},
-     {b:"Through (0, 0)",t:`Put ${X1} = 0 in: 0³ = 0.<br>So it passes through the origin, and flattens out there.`,draw:g=>gpt(g,0,0,"(0, 0)",GR,{dx:-2.6,"text-anchor":"end",dy:-2.6}),key:()=>[FB("green",nw(`${X1} = 0`),nw("0³ = 0"),"it passes through the origin")]}]},
-  {id:"pe",pill:`${V("y")} = 2<sup>${X1}</sup>`,eq:`${V("y")} = 2<sup>${X1}</sup>`,f:x=>Math.pow(2,x),sub:x=>`2<sup>${N(x)}</sup>`,xr:[-3,3,.5],why:wExp("2","2")}
+   why:[{b:`${X1} negative`,t:`A negative number cubed stays negative.<br>So the left side goes down, not up like ${X2}.`,draw:g=>{ g.plot(x=>x<0?x**3:NaN,{stroke:AMB,"stroke-width":2}); gpt(g,-1.5,-3.375,"(−1.5, −3.375)",AMB,{dy:5}); },key:()=>[FB("amber","Negative cubed",nw("(−1.5)³ = −3.375"),`but ${nw("(−1.5)² = 2.25")}`)]},
+     {b:"At (0, 0)",t:`0³ = 0, so it goes through (0, 0). Near 0, ${X1}³ is tiny (0.5³ = 0.125), so it's flat there.<br>But it keeps going up: (0, 0) is <b>not</b> a turning point.`,draw:g=>gpt(g,0,0,"(0, 0)",GR,{dx:-2.6,"text-anchor":"end",dy:-2.6}),key:()=>[FB("green",nw(`${X1} = 0`),nw("0³ = 0"),"flat at (0, 0), but not a turning point")]}]},
+  {id:"pe",pill:`${V("y")} = 2<sup>${X1}</sup>`,eq:`${V("y")} = 2<sup>${X1}</sup>`,f:x=>Math.pow(2,x),sub:x=>`2<sup>${N(x)}</sup>`,xr:[-3,3,.5],why:wExp("2",true)}
 ];
-const SH6={3:"through O, one bend each side",2:"∪ with its lowest point at O",1:"a straight line through O",0:"a flat line","-1":"2 branches in opposite corners","-2":`2 branches, both above the ${X1}-axis`};
+const sh6=(n,a)=>({3:"through O, flat there, no turning point",2:a>0?"∪ with its lowest point at O":"∩ with its highest point at O",1:"a straight line through O",0:"a flat line","-1":"2 branches in opposite corners","-2":`2 branches, both ${a>0?"above":"below"} the ${X1}-axis`})[n];
 const powEq=(a,n)=>{const A=a===1?"":a===-1?"−":N(a); if(n===0) return `${V("y")} = ${N(a)}`; if(n===1) return `${V("y")} = ${A}${X1}`; if(n>1) return `${V("y")} = ${A}${X1}${n===2?"²":"³"}`; return `${V("y")} = ${a<0?"−":""}${frac(N(Math.abs(a)),n===-1?X1:X2)}`;};
+const riseT=v=>{const r=Math.round(v*10)/10, ap=Math.abs(v-r)>1e-6?"≈ ":""; return v<0?`down ${ap}${N(-r,1)}`:`rise ${ap}${N(r,1)}`;};
+const gRun=m=>Math.abs(m)>4?.5:Math.abs(m)>2?1:2;
 const pcv=s=>POWS.find(c=>c.id===s.cv)||POWS[0];
 const eqPower=eqAid({label:"Power and exponential graphs",box:BXP,curves:POWS,xr:[-4,4,.5],hidePill:[3],init:{n:-1,a:1,gx:1},
   sliders:[{k:"n",label:V("n"),min:-2,max:3,step:1,show:s=>s.step===3},{k:"a",label:V("a"),min:-3,max:3,step:.5,show:s=>s.step===3,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},
     {k:"gx",label:X1,min:-4,max:4,step:.5,show:s=>s.step===4,minf:s=>pcv(s).xr[0],maxf:s=>pcv(s).xr[1]}],
   extra:[
-    {name:"6 shapes",t:()=>`Change ${V("n")} to see the 6 shapes.<br>A negative ${V("a")} flips the graph upside down.`,
+    {name:"6 shapes",t:()=>`Change ${V("n")} to see the 6 shapes of ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}.<br>A negative ${V("a")} flips the graph upside down.`,
      draw:(g,s,svg,F,c,B)=>{ const f=x=>s.n<0&&Math.abs(x)<1e-9?NaN:s.a*Math.pow(x,s.n); if(s.n<0){ g.line(0,B.y0,0,B.y1,{stroke:RD,"stroke-dasharray":"2.2 1.6","stroke-width":.8}); g.line(B.x0,0,B.x1,0,{stroke:RD,"stroke-dasharray":"2.2 1.6","stroke-width":.8}); } g.plot(f,{"stroke-width":1.4}); },
-     key:s=>KHEAD(nw(powEq(s.a,s.n)))+FORMS([FB("blue","Shape",nw(`${V("n")} = ${N(s.n)}`),SH6[s.n]),FB(s.a>0?"green":"red",nw(`${V("a")} ${s.a>0?"&gt;":"&lt;"} 0`),s.a>0?"this way up":"flipped upside down")],true)},
-    {name:"Gradient",t:()=>`The green line is the <b>tangent</b>: it just touches the curve.<br>Gradient = rise ÷ run, read off the tangent.`,
+     key:s=>KPAIR(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`,nw(powEq(s.a,s.n)),"Here")+FORMS([FB("blue","Shape",nw(`${V("n")} = ${N(s.n)}`),(s.n<0?`${nw(`${X1}<sup>${N(s.n)}</sup> = ${frac("1",s.n===-1?X1:X2)}`)}: `:"")+sh6(s.n,s.a)),FB(s.a>0?"green":"red",nw(`${V("a")} ${s.a>0?"&gt;":"&lt;"} 0`),s.a>0?"this way up":"flipped upside down")],true)},
+    {name:"Gradient",t:()=>`The green line is the <b>tangent</b>: it just touches the curve here.<br>Gradient = rise ÷ run, read off a big triangle on the tangent.`,
      draw:(g,s,svg,F,c,B)=>{ g.plot(F,{"stroke-width":1.2}); const x=s.gx, y=F(x); if(!isFinite(y)){ asy(g,B,"x",x,"no point here"); return; }
-       const h=1e-5, m=(F(x+h)-F(x-h))/(2*h); g.line(x-4,y-4*m,x+4,y+4*m,{stroke:GR,"stroke-width":1.1});
-       g.line(x-1,y-m,x+1,y-m,{stroke:AMB,"stroke-width":1}); g.line(x+1,y-m,x+1,y+m,{stroke:GR,"stroke-width":1,"stroke-dasharray":"1.4 1"});
-       g.text(x,y-m,"run 2",{dy:m>=0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.8,"font-weight":700});
-       g.text(x+1,y,`rise ${N(2*m,2)}`,{dx:1.6,dy:1.3,fill:GR,"font-size":3.8,"font-weight":700}); g.dot(x,y,"var(--accent)",2); },
-     key:(s,c)=>{ const F=x=>(c.bad&&c.bad(x))?NaN:c.f(x), x=s.gx, y=F(x); if(!isFinite(y)) return KHEAD(c.eq)+FORMS([FB("red","At",nw(`${X1} = ${N(x)}`),"no point here, so no tangent")],true);
-       const m=(F(x+1e-5)-F(x-1e-5))/2e-5; return KHEAD(c.eq)+FORMS([FB("amber","At",nw(`(${N(x)}, ${N(y,2)})`),""),FB("green","Gradient",nw(`${frac(`${N(2*m,2)}`,"2")} ${eqv(m)}`),"rise ÷ run on the tangent")],true); }}
+       const m=gslope(F,x), run=gRun(m), h=run/2; g.line(x-4,y-4*m,x+4,y+4*m,{stroke:GR,"stroke-width":1.1});
+       g.line(x-h,y-m*h,x+h,y-m*h,{stroke:AMB,"stroke-width":1}); g.line(x+h,y-m*h,x+h,y+m*h,{stroke:GR,"stroke-width":1,"stroke-dasharray":"1.4 1"});
+       g.text(x,y-m*h,`run ${N(run)}`,{dy:m>=0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.8,"font-weight":700});
+       g.text(x+h,y,riseT(m*run),{dx:1.6,dy:1.3,fill:GR,"font-size":3.8,"font-weight":700}); g.dot(x,y,"var(--accent)",2); },
+     key:(s,c)=>{ const F=x=>(c.bad&&c.bad(x))?NaN:c.f(x), x=s.gx, y=F(x); if(!isFinite(y)) return KHEAD(c.eq)+FORMS([FB("red","At",nw(`${X1} = ${N(x)}`),"no point here, so no tangent",null,"wide")],true);
+       const m=gslope(F,x), run=gRun(m), rise=m*run, R=Math.round(rise*10)/10, ex=Math.abs(rise-R)<1e-6;
+       return KHEAD(c.eq)+FORMS([FB("amber","At",nw(`(${N(x)}, ${N(y,2)})`),""),FB("green","Gradient",nw(`${frac(N(R,1),N(run))} ${ex?"=":"≈"} ${N(R/run,2)}`),rise<0?"it goes down, so the gradient is negative":"rise ÷ run, read off the tangent",null,"wide")],true); }}
   ]});
 const BXE={l:14,t:4,w:112,h:112,x0:-3,x1:5,y0:-3,y1:5,xs:.5,xl:1,ys:.5,yl:1};
-const wLog=(bs,lg,bT)=>[{b:`${X1} ≤ 0?`,t:`${V("y")} = ${lg} means ${bT}<sup>${V("y")}</sup> = ${X1}, and ${bT} to any power is positive.<br>So ${X1} must be positive: nothing on the left.`,
-    draw:(g,s,F,B)=>{shadeLeft(g,B,"nothing here"); asy(g,B,"x",0,"never touches");},key:()=>[FB("red",`${X1} must be positive`,nw(`${bT}<sup>${V("y")}</sup> = ${X1}`),`${bT} to any power is never 0 or negative`)]},
-  {b:`${X1} = 1`,t:`${bT}<sup>0</sup> = 1, so ${lg.replace(X1,"1")} = 0.<br>Every log graph passes through (1, 0).`,draw:g=>gpt(g,1,0,"(1, 0)",GR,{dy:5}),key:()=>[FB("green",nw(`${X1} = 1`),nw(`${lg.replace(X1,"1")} = 0`),`because ${nw(`${bT}<sup>0</sup> = 1`)}`)]},
-  bs===2?{b:"Double x",t:`Doubling ${X1} adds 1 to ${V("y")}.<br>So it keeps going up, but more and more slowly.`,draw:g=>[[1,0],[2,1],[4,2]].forEach(([x,y])=>gpt(g,x,y,`(${x}, ${y})`,AMB,{dy:y?-2.4:5})),key:()=>[FB("amber",`Double ${X1}, add 1`,`${nw(`log<sub>2</sub> 2 = 1`)}<br>${nw(`log<sub>2</sub> 4 = 2`)}`,"it climbs more and more slowly")]}
-   :{b:`${X1} = e`,t:`e¹ = e, so ln e = 1.<br>e ≈ 2.718, so the curve reaches 1 at about ${X1} = 2.7.`,draw:g=>gpt(g,Math.E,1,"(e, 1)",AMB),key:()=>[FB("amber",nw(`${X1} = ${MS("e")}`),nw("ln e = 1"),"e ≈ 2.718")]}];
+const wLog=(bs,lg,bT)=>{ const out=[{b:`Can ${X1} be 0 or less?`,t:`${nw(`${V("y")} = ${lg}`)} means ${nw(`${bT}<sup>${V("y")}</sup> = ${X1}`)}, and ${bT} to any power is positive.<br>So ${X1} must be positive, and the ${V("y")}-axis is an <b>asymptote</b>.`,
+    draw:(g,s,F,B)=>{shadeLeft(g,B,"nothing here"); asy(g,B,"x",0,"asymptote");},key:()=>[FB("red",`${X1} must be positive`,nw(`${bT}<sup>${V("y")}</sup> = ${X1}`),`${bT} to any power is never 0 or negative`)]},
+  {b:`${X1} = 1`,t:`${bT}<sup>0</sup> = 1, so ${lg.replace(X1,"1")} = 0.<br>That's why ${nw(`${V("y")} = ${lg}`)} passes through (1, 0).`,draw:g=>gpt(g,1,0,"(1, 0)",GR,{dy:5}),key:()=>[FB("green",nw(`${X1} = 1`),nw(`${lg.replace(X1,"1")} = 0`),`because ${nw(`${bT}<sup>0</sup> = 1`)}`)]}];
+  if(bs===2) out.push({b:`Double ${X1}`,t:`Doubling ${X1} adds 1 to ${V("y")}.<br>So it keeps going up, but more and more slowly.`,draw:g=>[[1,0],[2,1],[4,2]].forEach(([x,y])=>gpt(g,x,y,`(${x}, ${y})`,AMB,{dy:y?-2.4:5})),key:()=>[FB("amber",`Double ${X1}, add 1`,`${nw(`log<sub>2</sub> 2 = 1`)}<br>${nw(`log<sub>2</sub> 4 = 2`)}`,"it climbs more and more slowly")]},
+    {b:`Halve ${X1}`,t:`Halving ${X1} takes 1 off ${V("y")}: ${nw(`log<sub>2</sub> ${frac("1","2")} = −1`)}, ${nw(`log<sub>2</sub> ${frac("1","4")} = −2`)}.<br>So it dives down beside the ${V("y")}-axis.`,draw:g=>[[.5,-1],[.25,-2]].forEach(([x,y])=>gpt(g,x,y,`(${x}, ${y})`,AMB)),key:()=>[FB("amber",`Halve ${X1}, take 1 off`,`${nw(`log<sub>2</sub> ${frac("1","2")} = −1`)}<br>${nw(`log<sub>2</sub> ${frac("1","4")} = −2`)}`,`it dives down beside the ${V("y")}-axis`)]});
+  else out.push({b:`${X1} = e`,t:`e¹ = e, so ln e = 1.<br>e ≈ 2.718, so the curve reaches 1 at about ${X1} = 2.7.`,draw:g=>gpt(g,Math.E,1,"(e, 1)",AMB),key:()=>[FB("amber",nw(`${X1} = ${MS("e")}`),nw("ln e = 1"),"e ≈ 2.718")]});
+  return out; };
 const EXPS=[
-  {id:"e2",base:2,pill:`${V("y")} = 2<sup>${X1}</sup>`,eq:`${V("y")} = 2<sup>${X1}</sup>`,f:x=>Math.pow(2,x),sub:x=>`2<sup>${N(x)}</sup>`,xr:[-3,2,.5],why:wExp("2","2")},
-  {id:"ee",base:Math.E,pill:`${V("y")} = e<sup>${X1}</sup>`,eq:`${V("y")} = e<sup>${X1}</sup>`,f:x=>Math.exp(x),sub:x=>`e<sup>${N(x)}</sup>`,xr:[-3,1.5,.5],why:wExp("e","e")},
-  {id:"l2",base:2,pill:`${V("y")} = log<sub>2</sub> ${X1}`,eq:`${V("y")} = log<sub>2</sub> ${X1}`,f:x=>Math.log2(x),bad:x=>x<=0?"2 to any power is never 0 or negative":null,sub:x=>`log<sub>2</sub> ${PB(x)}`,xr:[0,5,.5],why:wLog(2,`log<sub>2</sub> ${X1}`,"2")},
-  {id:"le",base:Math.E,pill:`${V("y")} = ln ${X1}`,eq:`${V("y")} = ln ${X1}`,f:x=>Math.log(x),bad:x=>x<=0?"e to any power is never 0 or negative":null,sub:x=>`ln ${PB(x)}`,xr:[0,5,.5],why:wLog(Math.E,`ln ${X1}`,"e")}
+  {id:"e2",base:2,pill:`${V("y")} = 2<sup>${X1}</sup>`,eq:`${V("y")} = 2<sup>${X1}</sup>`,f:x=>Math.pow(2,x),sub:x=>`2<sup>${N(x)}</sup>`,xr:[-3,2,.5],why:wExp("2",true)},
+  {id:"ee",base:Math.E,pill:`${V("y")} = e<sup>${X1}</sup>`,eq:`${V("y")} = e<sup>${X1}</sup>`,hint:"(e ≈ 2.718)",f:x=>Math.exp(x),sub:x=>`e<sup>${N(x)}</sup>`,xr:[-3,1.5,.5],why:wExp("e",false)},
+  {id:"l2",base:2,pill:`${V("y")} = log<sub>2</sub> ${X1}`,eq:`${V("y")} = log<sub>2</sub> ${X1}`,f:x=>Math.log2(x),bad:x=>Math.abs(x)<1e-9?"no power of 2 makes 0":x<0?"no power of 2 makes a negative number":null,sub:x=>`log<sub>2</sub> ${PB(x)}`,xr:[0,5,.5],why:wLog(2,`log<sub>2</sub> ${X1}`,"2")},
+  {id:"le",base:Math.E,pill:`${V("y")} = ln ${X1}`,eq:`${V("y")} = ln ${X1}`,hint:"(e ≈ 2.718)",f:x=>Math.log(x),bad:x=>Math.abs(x)<1e-9?"no power of e makes 0":x<0?"no power of e makes a negative number":null,sub:x=>`ln ${PB(x)}`,xr:[0,5,.5],why:wLog(Math.E,`ln ${X1}`,"e")}
 ];
 const ecv=s=>EXPS.find(c=>c.id===s.cv)||EXPS[0];
 const eqExpLog=eqAid({label:"Exponential and logarithm graphs",box:BXE,curves:EXPS,xr:[-3,5,.5],init:{t:1},
@@ -1782,10 +1799,12 @@ const BXS={l:12,t:4,w:124,h:112,x0:-3,x1:5,y0:-6,y1:12,xs:1,xl:1,ys:1,yl:2};
 const BXS3={l:12,t:4,w:124,h:112,x0:-3,x1:3,y0:-10,y1:10,xs:.5,xl:1,ys:1,yl:2};
 const QCf=x=>x*x-2*x-3, CCf=x=>x**3-4*x, QCL=`${X2} − 2${X1} − 3`, CCL=`${X1}³ − 4${X1}`;
 const SOLV=[
-  {id:"a0",pill:nw(`${QCL} = 0`),eq:`${QCL} = 0`,f:QCf,cL:QCL,ln:()=>0,lL:"0",B:BXS,work:["the left side is already the curve",`the right side is 0, so draw ${nw(`${V("y")} = 0`)}: the ${X1}-axis`]},
-  {id:"a2",pill:nw(`${QCL} = 2`),eq:`${QCL} = 2`,f:QCf,cL:QCL,ln:()=>2,lL:"2",B:BXS,work:["the left side is already the curve",`so draw ${nw(`${V("y")} = 2`)}`]},
-  {id:"a3",pill:nw(`${X2} − 3${X1} − 1 = 0`),eq:`${X2} − 3${X1} − 1 = 0`,f:QCf,cL:QCL,ln:x=>x-2,lL:`${X1} − 2`,B:BXS,work:["split it so the curve appears:",nw(`${QCL} − ${X1} + 2 = 0`),nw(`${QCL} = ${X1} − 2`)]},
-  {id:"c1",pill:nw(`${X1}³ − 5${X1} + 1 = 0`),eq:`${X1}³ − 5${X1} + 1 = 0`,f:CCf,cL:CCL,ln:x=>x-1,lL:`${X1} − 1`,B:BXS3,work:["split it so the curve appears:",nw(`${CCL} − ${X1} + 1 = 0`),nw(`${CCL} = ${X1} − 1`)]}
+  {id:"a0",pill:nw(`${QCL} = 0`),eq:`${QCL} = 0`,f:QCf,cL:QCL,ln:()=>0,lL:"0",lRd:`that's the ${X1}-axis: already there`,noDraw:true,B:BXS,work:["the left side is already the curve",`the right side is 0, and ${nw(`${V("y")} = 0`)} is the ${X1}-axis`]},
+  {id:"a2",pill:nw(`${QCL} = 2`),eq:`${QCL} = 2`,f:QCf,cL:QCL,ln:()=>2,lL:"2",lRd:"you draw this one",B:BXS,work:["the left side is already the curve"]},
+  {id:"a3",pill:nw(`${X2} − 3${X1} − 1 = 0`),eq:`${X2} − 3${X1} − 1 = 0`,f:QCf,cL:QCL,ln:x=>x-2,lL:`${X1} − 2`,lRd:"you draw this one",B:BXS,
+   work:[`you want the curve ${nw(QCL)} in it, so split ${nw(`−3${X1}`)} into ${nw(`−2${X1} − ${X1}`)} and −1 into ${nw("−3 + 2")}:`,nw(`${QCL} − ${X1} + 2 = 0`),`move ${nw(`− ${X1} + 2`)} to the other side:`,nw(`${QCL} = ${X1} − 2`)]},
+  {id:"c1",pill:nw(`${X1}³ − 5${X1} + 1 = 0`),eq:`${X1}³ − 5${X1} + 1 = 0`,f:CCf,cL:CCL,ln:x=>x-1,lL:`${X1} − 1`,lRd:"you draw this one",B:BXS3,
+   work:[`you want the curve ${nw(CCL)} in it, so split ${nw(`−5${X1}`)} into ${nw(`−4${X1} − ${X1}`)}:`,nw(`${CCL} − ${X1} + 1 = 0`),`move ${nw(`− ${X1} + 1`)} to the other side:`,nw(`${CCL} = ${X1} − 1`)]}
 ];
 const CURV2=[{id:"q",f:QCf,cL:QCL,B:BXS},{id:"c",f:CCf,cL:CCL,B:BXS3}];
 const scv=s=>SOLV.find(p=>p.id===s.pr)||SOLV[0], kcv=s=>CURV2.find(c=>c.id===s.kc)||CURV2[0];
@@ -1794,8 +1813,8 @@ const solveLine=aid({
   init:{pr:"a3",kc:"q",k:2}, jump:true, label:"Solve an equation by drawing a straight line on the graph",
   pills:[{k:"pr",label:"Solve",opts:SOLV.map(p=>[p.id,p.pill]),show:s=>s.step===0},{k:"kc",label:"Curve",opts:[["q",nw(`${V("y")} = ${QCL}`)],["c",nw(`${V("y")} = ${CCL}`)]],show:s=>s.step===1,on:s=>{const B=kcv(s).B; s.k=clamp(s.k,B.y0,B.y1);}}],
   sliders:[{k:"k",label:V("k"),min:-10,max:12,step:.5,show:s=>s.step===1,minf:s=>kcv(s).B.y0,maxf:s=>kcv(s).B.y1}],
-  steps:[{name:"Draw a line",t:()=>`Split the equation so the curve appears on one side.<br>The other side is the line to draw. The answers are where they cross.`},
-    {name:"How many answers?",t:()=>`Drag the line ${nw(`${V("y")} = ${V("k")}`)} up and down.<br>Number of answers = number of times it meets the curve.`}],
+  steps:[{name:"Draw a line",t:()=>`Split the equation so the curve appears on one side.<br>The other side is the line to draw. The solutions are where they cross.`},
+    {name:"How many solutions?",t:()=>`Drag the line ${nw(`${V("y")} = ${V("k")}`)} up and down.<br>Number of solutions = number of points where it meets the curve.`}],
   draw(svg,s){
     if(s.step===0){ const P=scv(s), g=graph(svg,P.B), rs=crossings(x=>P.f(x)-P.ln(x),P.B.x0,P.B.x1);
       g.plot(P.f,{"stroke-width":1.2}); g.plot(P.ln,{stroke:GR,"stroke-width":1.3});
@@ -1804,26 +1823,29 @@ const solveLine=aid({
     const K=kcv(s), g=graph(svg,K.B), rs=crossings(x=>K.f(x)-s.k,K.B.x0,K.B.x1);
     g.plot(K.f,{"stroke-width":1.2}); g.line(K.B.x0,s.k,K.B.x1,s.k,{stroke:GR,"stroke-width":1.3});
     rs.forEach(r=>{ g.line(r,0,r,s.k,{stroke:RD,"stroke-dasharray":"1.4 1.2","stroke-width":.7}); g.dot(r,s.k,RD,1.9); });
-    g.text(K.B.x1,s.k,`y = ${N(s.k)}`,{dx:-1,dy:-1.8,"text-anchor":"end",fill:GR,"font-size":3.9,"font-style":"italic","font-weight":700});
-    ringHandle(svg,g.X(K.B.x0+(K.B.x1-K.B.x0)*.12),g.Y(s.k),"k",false); },
+    const yk=g.Y(s.k); g.text(K.B.x1,s.k,`y = ${N(s.k)}`,{dx:-3,dy:-1.8,"text-anchor":"end",fill:GR,"font-size":3.9,"font-style":"italic","font-weight":700});
+    S_(svg,"rect",{x:135,y:yk-5.5,width:4.2,height:11,rx:2,fill:GR,"pointer-events":"none"}); S_(svg,"line",{x1:136.2,x2:138,y1:yk-1.4,y2:yk-1.4,stroke:"var(--card)","stroke-width":.6,"pointer-events":"none"}); S_(svg,"line",{x1:136.2,x2:138,y1:yk+1.4,y2:yk+1.4,stroke:"var(--card)","stroke-width":.6,"pointer-events":"none"});
+    svg.append(svgEl("circle",{cx:137,cy:yk,r:7,fill:"transparent","data-drag":"k",style:"cursor:grab"})); },
   drag(id,p,s){ if(id==="k"){ const B=kcv(s).B, [,y]=ginv(B,p); s.k=clamp(snap(y,.5),B.y0,B.y1); } },
   key(s){
     if(s.step===0){ const P=scv(s), rs=crossings(x=>P.f(x)-P.ln(x),P.B.x0,P.B.x1);
-      return FORMS([FB("amber","Solve",nw(P.eq),""),FB("blue","The curve",nw(`${V("y")} = ${P.cL}`),"already drawn"),FB("green","The line",nw(`${V("y")} = ${P.lL}`),"you draw this one"),FB("red","Answers",ansTxt(rs),"the x's where they cross",null,"wide")],true); }
-    const K=kcv(s), n=crossings(x=>K.f(x)-s.k,K.B.x0,K.B.x1).length;
-    return FORMS([FB(n?"green":"red",nw(`${K.cL} = ${N(s.k)}`),`${n} answer${n===1?"":"s"}`,n===0?"the line misses the curve":`the line meets the curve ${n===1?"once":n===2?"twice":"3 times"}`,null,"wide")],true); },
-  readout(s){ if(s.step!==0) return ""; const P=scv(s); return `<div class="wk">${[nw(P.eq),...P.work,`draw ${nw(`${V("y")} = ${P.lL}`)}`].map(l=>`<div>${l}</div>`).join("")}</div>`; }
+      return FORMS([FB("amber","Solve",nw(P.eq),""),FB("blue","The curve",nw(`${V("y")} = ${P.cL}`),"the question gives you this"),FB("green","The line",nw(`${V("y")} = ${P.lL}`),P.lRd),FB("red","Solutions",ansTxt(rs),`the ${X1}-coordinates where they cross`,null,"wide")],true); }
+    const K=kcv(s), rs=crossings(x=>K.f(x)-s.k,K.B.x0,K.B.x1), n=rs.length, touch=rs.some(r=>Math.abs(gslope(K.f,r))<1e-4);
+    const rd=n===0?"the line misses the curve":n===1&&touch?`it just touches the curve at the turning point: ${ansTxt(rs)}`:`the line meets the curve ${n===1?"once":n===2?"twice":"3 times"}: ${ansTxt(rs)}`;
+    return FORMS([FB(n?"green":"red",nw(`${K.cL} = ${N(s.k)}`),`${n} solution${n===1?"":"s"}`,rd,null,"wide")],true); },
+  readout(s){ if(s.step!==0) return ""; const P=scv(s); return `<div class="wk">${[nw(P.eq),...P.work,...(P.noDraw?[]:[`draw ${nw(`${V("y")} = ${P.lL}`)}`])].map(l=>`<div>${l}</div>`).join("")}</div>`; }
 });
 const BXC={l:14,t:4,w:112,h:112,x0:-5,x1:9,y0:-6,y1:8,xs:1,xl:2,ys:1,yl:2};
 const circLat=s=>{const o=[]; for(let dx=-s.r;dx<=s.r;dx++){const d2=s.r*s.r-dx*dx, dy=Math.round(Math.sqrt(d2)); if(dy*dy===d2){o.push([dx,dy]); if(dy) o.push([dx,-dy]);}} return o;};
 const cP=s=>{const t=s.th*Math.PI/180; return [s.a+s.r*Math.cos(t),s.b+s.r*Math.sin(t)];};
 const r2=v=>+(+v).toFixed(2), sqP=v=>`${PB(r2(v))}²`, brN=(v,c)=>`(${N(v)} ${c<0?"+":"−"} ${N(Math.abs(c))})`;
+const cSign=s=>s.a===0?`${X2} on its own means the centre has ${nw(`${X1} = 0`)}.`:s.a<0?`${nw(`(${X1} + ${N(-s.a)})²`)} is ${nw(`(${X1} − (${N(s.a)}))²`)}, so the centre has ${nw(`${X1} = ${N(s.a)}`)}.`:`${nw(`(${X1} − ${N(s.a)})²`)} means the centre has ${nw(`${X1} = ${N(s.a)}`)}.`;
 const circleEq=aid({
   init:{a:2,b:1,r:5,th:53.13010235415598,qx:6,qy:5}, jump:true, label:"Circle: every point is r away from the centre", link:["th","qx","qy"],
   sliders:[{k:"a",label:V("a"),min:-3,max:5,step:1,show:s=>s.step===2},{k:"b",label:V("b"),min:-3,max:4,step:1,show:s=>s.step===2},{k:"r",label:V("r"),min:1,max:6,step:1,show:s=>s.step===2}],
-  steps:[{name:"On the circle",t:()=>`Every point on the circle is ${V("r")} away from the centre.<br>Pythagoras on the triangle gives the equation.`},
-    {name:"Test a point",t:()=>`Put the point into the left side and compare it with ${V("r")}².<br>Less: inside. Equal: on the circle. More: outside.`},
-    {name:"Centre & radius",t:()=>`Change the centre and the radius.<br>Watch the signs: ${nw(`(${X1} − 2)²`)} means the centre has ${nw(`${X1} = 2`)}.`}],
+  steps:[{name:"On the circle",t:s=>`Drag P round the circle. It's always ${N(s.r)} away from the centre C.<br>So across² + up² = ${N(s.r)}² = ${N(s.r*s.r)}, wherever P is.`},
+    {name:"Test a point",t:s=>`Drag the dot. Put it into the left side and compare with ${N(s.r*s.r)}.<br>Less: inside. Equal: on the circle. More: outside.`},
+    {name:"Centre & radius",t:s=>`Change the centre and the radius.<br>Watch the signs: ${cSign(s)}`}],
   draw(svg,s){ const g=graph(svg,BXC);
     g.add("circle",{cx:g.X(s.a),cy:g.Y(s.b),r:g.X(s.a+s.r)-g.X(s.a),fill:"none",stroke:BL,"stroke-width":1.2});
     g.dot(s.a,s.b,"var(--ink)",1.6); g.text(s.a,s.b,`C(${N(s.a)}, ${N(s.b)})`,{dx:-2,dy:s.step===0&&cP(s)[1]<s.b?-2.4:5,"text-anchor":"end","font-size":3.9,"font-weight":700});
@@ -1842,27 +1864,27 @@ const circleEq=aid({
     g.line(s.a,s.b,s.a+s.r,s.b,{stroke:RD,"stroke-width":1.2}); g.text(s.a+s.r/2,s.b,`r = ${N(s.r)}`,{dy:-1.8,"text-anchor":"middle",fill:RD,"font-size":3.9,"font-weight":700}); },
   drag(id,p,s){ const [x,y]=ginv(BXC,p);
     if(id==="p"){ const th=Math.atan2(y-s.b,x-s.a)*180/Math.PI; let best=null,bd=7; circLat(s).forEach(([dx,dy])=>{const t=Math.atan2(dy,dx)*180/Math.PI, d=Math.abs(((th-t+540)%360)-180); if(d<bd){bd=d;best=t;}}); s.th=best!=null?best:Math.round(th); }
-    if(id==="q"){ s.qx=clamp(snap(x,.5),BXC.x0,BXC.x1); s.qy=clamp(snap(y,.5),BXC.y0,BXC.y1); } },
-  key(s){ const eq=KHEAD(nw(`${br(s.a)}² + ${br(s.b,V("y"))}² = ${N(s.r*s.r)}`));
+    if(id==="q"){ let qx=clamp(snap(x,.5),BXC.x0,BXC.x1), qy=clamp(snap(y,.5),BXC.y0,BXC.y1), bd=.6; circLat(s).forEach(([dx,dy])=>{const u=s.a+dx, v=s.b+dy, d=Math.hypot(u-x,v-y); if(d<bd){bd=d;qx=u;qy=v;}}); s.qx=qx; s.qy=qy; } },
+  key(s){ const live=nw(`${br(s.a)}² + ${br(s.b,V("y"))}² = ${N(s.r*s.r)}`), eq=KHEAD(live);
     if(s.step===0){ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b, lat=Math.abs(dx-Math.round(dx))<1e-6&&Math.abs(dy-Math.round(dy))<1e-6;
-      return eq+FORMS([FB("amber",`Across: ${X1} − ${V("a")}`,nw(`${N(r2(px))} − ${PB(s.a)} = ${N(r2(dx))}`),""),FB("green",`Up: ${V("y")} − ${V("b")}`,nw(`${N(r2(py))} − ${PB(s.b)} = ${N(r2(dy))}`),""),
-        FB("blue","Pythagoras",nw(`${sqP(dx)} + ${sqP(dy)} ${lat?"=":"≈"} ${N(s.r*s.r)}`),`= ${V("r")}² for every point on the circle`,null,"wide")],true); }
+      return eq+FORMS([FB("amber",`Across: ${X1} − ${PB(s.a)}`,nw(`${N(r2(px))} − ${PB(s.a)} = ${N(r2(dx))}`),""),FB("green",`Up: ${V("y")} − ${PB(s.b)}`,nw(`${N(r2(py))} − ${PB(s.b)} = ${N(r2(dy))}`),""),
+        FB("blue","Pythagoras",nw(`${sqP(dx)} + ${sqP(dy)} ${lat?"=":"≈"} ${N(s.r*s.r)}`),`wherever P is, it comes to ${N(s.r*s.r)} = ${V("r")}²`,null,"wide")],true); }
     if(s.step===1){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1;
       return eq+FORMS([FB("amber","Put the point in",nw(`${brN(s.qx,s.a)}² + ${brN(s.qy,s.b)}² = ${N(d2,2)}`),"",null,"wide"),
         FB(st===0?"green":st<0?"blue":"red",st===0?"✓ On the circle":st<0?"Inside":"Outside",nw(`${N(d2,2)} ${st===0?"=":st<0?"&lt;":"&gt;"} ${N(R2)}`),`compared with ${V("r")}² = ${N(R2)}`,null,"wide")],true); }
-    return eq+FORMS([FB("blue","Centre",nw(`(${N(s.a)}, ${N(s.b)})`),"flip the signs in the brackets"),FB("red","Radius",nw(`${SQRT(N(s.r*s.r))} = ${N(s.r)}`),"square root of the right side"),
-      FB("amber","Expanded",nw(`${poly([[1,X2],[1,V("y")+"²"],[-2*s.a,X1],[-2*s.b,V("y")],[s.a*s.a+s.b*s.b-s.r*s.r,""]])} = 0`),"the general form",null,"wide")],true); }
+    return KPAIR(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`,live,"Here")+FORMS([FB("blue","Centre",nw(`(${N(s.a)}, ${N(s.b)})`),`${nw(`(${V("a")}, ${V("b")})`)}: flip the signs in the brackets`),FB("red","Radius",nw(`${SQRT(N(s.r*s.r))} = ${N(s.r)}`),"square root of the right side"),
+      FB("amber","Multiplied out",nw(`${poly([[1,X2],[1,V("y")+"²"],[-2*s.a,X1],[-2*s.b,V("y")],[s.a*s.a+s.b*s.b-s.r*s.r,""]])} = 0`),`centre from here: half each ${X1} and ${V("y")} coefficient, then flip the sign`,null,"wide")],true); }
 });
 const LLX=[1,2,3,4,5];
 const niceTop=v=>[5,10,20,25,50,100,150,200,250,300,400,500,600,800,1000,1200].find(x=>x>=v)||Math.ceil(v/100)*100;
 const llY=s=>x=>s.fm==="pow"?s.a*Math.pow(x,s.n):s.a*Math.pow(s.b,x);
-const kc=(c,t)=>`<span class="k-${c}">${t}</span>`;
 const linLawAid=aid({
   init:{fm:"pow",a:2,n:1.5,b:2}, vb:"0 0 140 176", label:"Linear law: a curve becomes a straight line",
   pills:[{k:"fm",label:"Equation",opts:[["pow",`<span>${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup></span>`],["exp",`<span>${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup></span>`]]}],
   sliders:[{k:"a",label:V("a"),min:1,max:4,step:.5},{k:"n",label:V("n"),min:.5,max:2.5,step:.5,show:s=>s.fm==="pow"},{k:"b",label:V("b"),min:1.5,max:3,step:.5,show:s=>s.fm==="exp"}],
   steps:[{t:()=>""}],
-  explain:[`Top: the curve. Bottom: the same points after taking lg. They make a <b>straight line</b>.`,`Its gradient and ${V("Y")}-intercept give you the constants.`],
+  explain:s=>s.fm==="pow"?[`Top: the curve. Bottom: lg ${V("y")} against lg ${X1} (${V("Y")} = lg ${V("y")}, ${V("X")} = lg ${X1}). It's a <b>straight line</b>.`,`Its gradient ${V("m")} and ${V("Y")}-intercept ${V("C")} give you ${V("n")} and ${V("a")}.`]
+    :[`Top: the curve. Bottom: lg ${V("y")} against ${X1} (only ${V("y")} is logged: ${V("X")} = ${X1}). It's a <b>straight line</b>.`,`Its gradient ${V("m")} and ${V("Y")}-intercept ${V("C")} give you ${V("b")} and ${V("a")}.`],
   draw(svg,s){ const f=llY(s), ys=LLX.map(f), top=niceTop(Math.max(...ys)*1.05), pw=s.fm==="pow";
     const g1=graph(svg,{l:16,t:4,w:118,h:70,x0:0,x1:6,y0:0,y1:top,xs:1,xl:1,ys:top/10,yl:top/5});
     g1.plot(f,{stroke:BL,"stroke-width":1,"stroke-dasharray":"2 1.4"},.05,6); LLX.forEach((x,i)=>g1.dot(x,ys[i],RD,1.6));
@@ -1870,18 +1892,21 @@ const linLawAid=aid({
     const X=pw?LLX.map(x=>Math.log10(x)):LLX, Y=ys.map(y=>Math.log10(y)), m=pw?s.n:Math.log10(s.b), C=Math.log10(s.a);
     const B2=pw?{l:16,t:98,w:118,h:72,x0:0,x1:.8,y0:-.2,y1:3.2,xs:.1,xl:.2,ys:.2,yl:1,xn:"lg x",yn:"lg y"}:{l:16,t:98,w:118,h:72,x0:0,x1:6,y0:-.2,y1:3.2,xs:1,xl:1,ys:.2,yl:1,yn:"lg y"};
     const g2=graph(svg,B2); g2.line(B2.x0,C,B2.x1,C+m*B2.x1,{stroke:GR,"stroke-width":1.2});
-    const xa=X[0], xb=X[4]; g2.line(xa,C+m*xa,xb,C+m*xa,{stroke:AMB,"stroke-width":.9}); g2.line(xb,C+m*xa,xb,C+m*xb,{stroke:AMB,"stroke-width":.9,"stroke-dasharray":"1.4 1"});
-    g2.text(xb,C+m*(xa+xb)/2,`m = ${N(m,2)}`,{dx:-1.6,"text-anchor":"end",fill:AMB,"font-size":3.9,"font-weight":700});
-    X.forEach((x,i)=>g2.dot(x,Y[i],RD,1.6)); gpt(g2,0,C,`C = ${N(C,2)}`,GR,{dy:-2.6});
+    const xa=X[0], xb=X[4], run=xb-xa, rise=m*run; g2.line(xa,C+m*xa,xb,C+m*xa,{stroke:AMB,"stroke-width":.9}); g2.line(xb,C+m*xa,xb,C+m*xb,{stroke:AMB,"stroke-width":.9,"stroke-dasharray":"1.4 1"});
+    g2.text((xa+xb)/2,C+m*xa,`run ${pw?f2(run):N(run)}`,{dy:4.4,"text-anchor":"middle",fill:AMB,"font-size":3.8,"font-weight":700});
+    g2.text(xb,C+m*xa+rise/2,`rise ${f2(rise)}`,{dx:-1.6,dy:1.3,"text-anchor":"end",fill:AMB,"font-size":3.8,"font-weight":700});
+    X.forEach((x,i)=>g2.dot(x,Y[i],RD,1.6)); gpt(g2,0,C,`C ≈ ${f2(C)}`,GR,{dy:-2.6});
     lab(svg,[133,106],pw?"lg y against lg x":"lg y against x",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"}); },
-  key(s){ const pw=s.fm==="pow", m=pw?s.n:Math.log10(s.b), C=Math.log10(s.a), back=(v,o)=>Math.abs(Math.pow(10,r2(v))-o)<1e-9?"=":"≈";
+  key(s){ const pw=s.fm==="pow", m=pw?s.n:Math.log10(s.b), C=Math.log10(s.a), run=pw?Math.log10(5):4, rise=m*run, cEx=Math.abs(C-r2(C))<1e-9, mEx=Math.abs(m-r2(m))<1e-9;
     const r1=pw?nw(`${kc("blue","lg "+V("y"))} = ${kc("amber",V("n"))} ${kc("green","lg "+X1)} + ${kc("red","lg "+V("a"))}`):nw(`${kc("blue","lg "+V("y"))} = ${kc("amber","(lg "+V("b")+")")}${kc("green",X1)} + ${kc("red","lg "+V("a"))}`);
     const r2r=nw(`${kc("blue",V("Y"))} = ${kc("amber",V("m"))}${kc("green",V("X"))} + ${kc("red",V("C"))}`);
-    return KHEAD(pw?`${V("y")} = ${N(s.a)}${X1}<sup>${N(s.n)}</sup>`:`${V("y")} = ${N(s.a)}(${N(s.b)})<sup>${X1}</sup>`)+`<div class="row">take lg: ${r1}</div><div class="row">${r2r}</div>`
-      +FORMS([FB("amber","Gradient",nw(pw?`${V("m")} = ${V("n")} = ${N(s.n)}`:`${V("m")} = lg ${V("b")} = ${N(m,2)}`),pw?"":`so ${nw(`${V("b")} = 10<sup>${N(m,2)}</sup> ${back(m,s.b)} ${N(s.b)}`)}`),
-        FB("red",`${V("Y")}-intercept`,nw(`${V("C")} = lg ${V("a")} = ${N(C,2)}`),`so ${nw(`${V("a")} = 10<sup>${N(C,2)}</sup> ${back(C,s.a)} ${N(s.a)}`)}`)],true); },
+    return KHEAD(pw?`${V("y")} = ${N(s.a)}${X1}<sup>${N(s.n)}</sup>`:`${V("y")} = ${N(s.a)}(${N(s.b)})<sup>${X1}</sup>`)
+      +`<div class="row">take lg of both sides: ${r1}</div><div class="row">${r2r}, with ${kc("blue",`${V("Y")} = lg ${V("y")}`)} and ${kc("green",`${V("X")} = ${pw?"lg "+X1:X1}`)}</div>`
+      +FORMS([FB("amber","Gradient",nw(`${V("m")} = ${frac(f2(rise),pw?f2(run):N(run))} ${mEx?"=":"≈"} ${pw?N(s.n):f2(m)}`),pw?`so ${nw(`${V("n")} = ${N(s.n)}`)}`:`so ${nw(`${V("b")} = 10<sup>${f2(m)}</sup> ≈ ${Math.pow(10,r2(m)).toPrecision(3)}`)}`),
+        FB("red",`${V("Y")}-intercept`,nw(`${V("C")} = lg ${V("a")} ${cEx?"=":"≈"} ${f2(C)}`),`so ${nw(`${V("a")} = 10<sup>${f2(C)}</sup> ${cEx?"=":"≈"} ${Math.pow(10,r2(C)).toPrecision(3)}`)}`)],true)
+      +`<div class="row hint">${V("Y")}-axis doesn't start at ${V("X")} = 0? Put a point on the line in: ${nw(`${V("C")} = ${V("Y")} − ${V("m")}${V("X")}`)}</div>`; },
   readout(s){ const f=llY(s), pw=s.fm==="pow", row=(h,fn)=>`<tr><th>${h}</th>${LLX.map(x=>`<td>${fn(x)}</td>`).join("")}</tr>`;
-    return `<div class="vtab"><table>${row(X1,x=>x)}${row(V("y"),x=>N(f(x),2))}${pw?row("lg "+X1,x=>N(Math.log10(x),2)):""}${row("lg "+V("y"),x=>N(Math.log10(f(x)),2))}</table></div>`; }
+    return `<div class="vtab"><table>${row(X1,x=>x)}${row(V("y"),x=>N(f(x),2))}${pw?row("lg "+X1,x=>f2(Math.log10(x))):""}${row("lg "+V("y"),x=>f2(Math.log10(f(x))))}</table></div>`; }
 });
 const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid};
 
@@ -4796,7 +4821,7 @@ const GLS=a=>`<ul class="gloss">${a.join("")}</ul>`;
 const SHEETS8={
 emFuncGraphs:`${MUST([FB("blue",nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`),`6 shapes: ${nw(`${V("n")} = 3, 2, 1, 0, −1, −2`)}`,`${nw(`${V("k")} &lt; 0`)} flips it in the ${X1}-axis`),FB("amber",nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`crosses the ${V("y")}-axis at ${V("k")}`,`${nw(`${V("a")} &gt; 1`)}: growth · ${nw(`0 &lt; ${V("a")} &lt; 1`)}: decay`),FB("green","Solve off the graph",nw(`f(${X1}) = ${V("k")}`),`draw ${nw(`${V("y")} = ${V("k")}`)}, read the ${X1} values`)])}
 <div class="sheet">
-${PAN(`The 6 shapes of ${nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`)}`,PICS(PIC(null,picSix(3),nw(`${V("n")} = 3`),"through O, one bend each side"),PIC(null,picSix(2),nw(`${V("n")} = 2`),"∪ with its lowest point at O"),PIC(null,picSix(1),nw(`${V("n")} = 1`),"a straight line through O"),PIC(null,picSix(0),nw(`${V("n")} = 0`),"a flat line"),PIC(null,picSix(-1),nw(`${V("n")} = −1`),"2 branches in opposite corners"),PIC(null,picSix(-2),nw(`${V("n")} = −2`),`2 branches, both above the ${X1}-axis`))+`<p class="anno">* drawn for ${nw(`${V("k")} &gt; 0`)} · ${nw(`${V("k")} &lt; 0`)} flips the shape upside down</p>`)}
+${PAN(`The 6 shapes of ${nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`)}`,PICS(PIC(null,picSix(3),nw(`${V("n")} = 3`),"through O, flat there, no turning point"),PIC(null,picSix(2),nw(`${V("n")} = 2`),"∪ with its lowest point at O"),PIC(null,picSix(1),nw(`${V("n")} = 1`),"a straight line through O"),PIC(null,picSix(0),nw(`${V("n")} = 0`),"a flat line"),PIC(null,picSix(-1),nw(`${V("n")} = −1`),"2 branches in opposite corners"),PIC(null,picSix(-2),nw(`${V("n")} = −2`),`2 branches, both above the ${X1}-axis`))+`<p class="anno">* drawn for ${nw(`${V("k")} &gt; 0`)} · ${nw(`${V("k")} &lt; 0`)} flips the shape upside down</p>`)}
 ${PAN(`Find ${V("k")} or ${V("n")} from a point`,EG(`${nw(`${V("y")} = ${V("k")}${X2}`)} passes through (2, 12). Find ${V("k")}.`,[nw(`12 = ${V("k")}(2)²`),nw(`12 = 4${V("k")}`),nw(`${V("k")} = 3`)])+EG(`${nw(`${V("y")} = 2${X1}<sup>${V("n")}</sup>`)} passes through (3, 54). Find ${V("n")}.`,[nw(`54 = 2(3)<sup>${V("n")}</sup>`),nw(`3<sup>${V("n")}</sup> = 27 = 3³`),nw(`${V("n")} = 3`)])+`<p class="anno">* a negative ${X1}? keep the bracket: ${nw("(−3)² = 9")}, but ${nw("−3² = −9")}</p>`)}
 ${PAN("Exponential graphs",picExpGD()+STEPS([[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`at ${nw(`${X1} = 0`)}, ${nw(`${V("y")} = ${V("k")}`)}`],[`never touches the ${X1}-axis`,"it only gets closer"],[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup> + ${V("b")}`),`crosses the ${V("y")}-axis at ${nw(`${V("k")} + ${V("b")}`)}`]])
   +EG(`${nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`)} passes through (0, 5) and (2, 45). Find ${V("k")} and ${V("a")}.`,[`${nw(`${X1} = 0`)}: ${nw(`5 = ${V("k")}${V("a")}⁰`)}, so ${nw(`${V("k")} = 5`)}`,`${nw(`${X1} = 2`)}: ${nw(`45 = 5${V("a")}²`)}`,nw(`${V("a")}² = 9`),`${nw(`${V("a")} = 3`)} (${V("a")} is positive)`]))}
