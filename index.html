@@ -184,6 +184,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pill.sm{min-height:40px;padding:0 12px;font-size:15px;font-weight:400}
 .plbl{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.pillrow[data-pk]>.plbl{flex-basis:100%;align-self:auto;margin:0 0 -3px}
+.steptabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:2px 0 14px}
+.steptabs::-webkit-scrollbar{display:none}
+.stab{flex:none;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;padding:6px 14px 8px;min-height:44px;font-size:16px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+.stab:hover{color:var(--ink)}
+.stab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.stab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.panel>.exwrap,.panel>.exbox,.panel>.explain{order:-1}
+.exwrap:empty{display:none}
 .lim{display:inline-flex;flex-direction:column;font-size:.68em;line-height:1.05;vertical-align:middle;margin-left:1px}
 .lim sub,.lim sup{vertical-align:baseline;font-size:1em}
 .frac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15}
@@ -404,10 +413,20 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .key{padding:6px 8px 8px}
   .forms:not(.tight){grid-template-columns:repeat(2,minmax(0,1fr))}
   .forms:not(.tight)>.formbox:last-child:nth-child(odd){grid-column:1/-1}
-  .panel{gap:10px}
-  .panel>.box.dock{order:-2}
-  .panel>.box.robox{order:-1}
-  .play>.box.dock{position:sticky;bottom:0;bottom:env(safe-area-inset-bottom,0px);z-index:4;box-shadow:0 -6px 18px rgba(0,0,0,.14)}
+  .panel{display:contents}
+  .panel>.exbox{order:1}
+  .key{order:2}
+  .panel>.box.dock{order:3}
+  .panel>.exwrap,.panel>.explain{order:4}
+  .robox{order:5}
+  .panel>.hint{order:6}
+  .panel>.sheetlink{order:7}
+  .play>.box.dock{order:8}
+  .exbox,.exwrap>.box,.panel>.explain{padding:10px 14px}
+  .steptabs{margin:0 -16px 10px;padding:0 34px 0 16px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 30px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 30px),transparent)}
+  .stab{font-size:15px;padding:6px 11px 8px;min-height:42px}
+  .play>.box.dock{position:sticky;bottom:0;bottom:env(safe-area-inset-bottom,0px);z-index:4;box-shadow:0 -6px 18px rgba(0,0,0,.14);margin:0 -16px;border-radius:16px 16px 0 0;border-left:0;border-right:0;padding-left:16px;padding-right:16px}
+  .play>.box.dock .pillrow[data-pk]{margin:0 -16px 6px;padding-left:16px}
   .box.dock{padding:8px 12px 10px}
   .dock .ctrl{margin:2px 0;gap:6px}
   .dock .ctrl label{font-size:18px}
@@ -416,10 +435,14 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .dock input[type=range]::-moz-range-thumb{width:24px;height:24px}
   .dock .stp{width:36px;height:36px;font-size:20px}
   .dock .numbox{min-height:36px;width:4em;font-size:16px}
-  .dock .pillrow{display:inline-flex;margin:0 6px 4px 0;gap:6px;vertical-align:top}
+  .dock .pillrow{gap:6px;margin:0 0 6px}
+  .dock .pillrow[data-pk]{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -12px 6px;padding:1px 34px 1px 12px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 30px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 30px),transparent)}
+  .dock .pillrow[data-pk]::-webkit-scrollbar{display:none}
+  .dock .pillrow[data-pk]>*{flex:none}
+  .dock .pillrow[data-pk]>.plbl{flex-basis:auto;align-self:center;margin:0 2px 0 0;font-size:11px}
   .dock .pill{min-height:34px;padding:0 9px;font-size:14.5px}
   .dock .pill.sm{min-height:32px}
-  .steptext{font-size:18px;min-height:0}
+  .steptext{font-size:17px;min-height:0;margin:0}
   .keybox{font-size:calc(15*var(--k))}
   .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
   .forms{gap:calc(8*var(--k))}
@@ -454,9 +477,13 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
 @media (max-width:899px) and (orientation:landscape) and (max-height:520px){
   .play{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-areas:"s k" "s p";gap:10px}
   .stage{grid-area:s;align-self:start}
-  .stage svg,.stage.tall svg,.stage.zoomed svg{max-height:calc(100vh - var(--barh,56px) - 26px);max-height:calc(100svh - var(--barh,56px) - 26px)}
+  .stage svg,.stage.tall svg,.stage.zoomed svg{max-height:calc(100vh - var(--barh,56px) - 66px);max-height:calc(100svh - var(--barh,56px) - 66px)}
+  .tabs,.steptabs{display:inline-flex;vertical-align:bottom;max-width:100%}
+  .tabs{margin-right:14px}
+  .steptabs{margin:0 0 6px;border-bottom:0}
+  .tab,.stab{min-height:34px}
   .key{grid-area:k}
-  .panel{grid-area:p}
+  .panel{grid-area:p;display:flex}
   .tabs{padding:6px 0}
 }
 @media (max-width:520px){
@@ -479,6 +506,19 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .wrongright{grid-template-columns:1fr}
   .stage svg{max-height:32vh;max-height:32svh}
 }
+@media (min-width:600px) and (max-width:899px) and (max-aspect-ratio:3/4){
+  .stage svg{max-height:46vh;max-height:46svh}
+  .stage.tall svg{max-height:52vh;max-height:52svh}
+}
+@media (min-width:900px) and (orientation:portrait){
+  :root:not([data-present]) .play{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"s s" "k p";gap:16px}
+  :root:not([data-present]) .left{display:contents}
+  :root:not([data-present]) .stage{grid-area:s}
+  :root:not([data-present]) .stage svg{max-height:46vh}
+  :root:not([data-present]) .key{grid-area:k;align-self:start}
+  :root:not([data-present]) .panel{grid-area:p}
+}
+html[data-present] .stab{font-size:20px}
 html[data-present] .bar,html[data-present] .tabs,html[data-present] footer,html[data-present] .hint,html[data-present] .sheetlink{display:none}
 html[data-present] body{font-size:20px}
 html[data-present] .wrap{max-width:none;padding:0 20px}
@@ -827,25 +867,24 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
-  const jump=def.jump&&def.steps.length>1?`<div class="pillrow jump">${def.steps.map((s,i)=>`<button class="pill sm" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
-  panel.innerHTML=`${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
+  const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}">${s.name}</button>`).join("")}</div>`:"";
+  panel.innerHTML=`${jump}${flat?`<div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
-      ${jump}
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box"><p class="steptext"></p></div>`}
+    ${flat?"":`<div class="box exbox"><p class="steptext"></p></div>`}
     <div class="box robox"><div class="readout"></div></div>
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
-  const ro=$(".readout",panel), cbox=$(".box.dock",panel);
+  const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
   const draw=()=>{
     (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
       if(s.minf){const mn=s.minf(st); if(+inp.min!==mn){inp.min=mn;} if(st[s.k]<mn) st[s.k]=mn;}
       if(s.maxf){const mx=s.maxf(st); if(+inp.max!==mx){inp.max=mx;} if(st[s.k]>mx) st[s.k]=mx;}
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
     (def.pills||[]).forEach(p=>{const row=$(`[data-pk="${p.k}"]`,cbox); row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))); row.style.display=(p.show&&!p.show(st))?"none":"";});
-    cbox.querySelectorAll("[data-j]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.j===st.step)));
+    if(jb) jb.querySelectorAll("[data-j]").forEach(b=>{const on=+b.dataset.j===st.step; b.setAttribute("aria-pressed",String(on)); b.setAttribute("aria-selected",String(on));});
     (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st)));});
     svg.innerHTML=""; def.draw(svg,st); const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width); bumpText(svg); bumpHits(svg); layoutFracs(svg);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
@@ -861,7 +900,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
   (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._reset=true; draw();}));
-  cbox.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j);});
+  if(jb) jb.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j); if(b.scrollIntoView&&jb.scrollWidth>jb.clientWidth) b.scrollIntoView({block:"nearest",inline:"center"});});
   if(def.drag) dragger(svg,(id,p)=>{stopAnim(); def.drag(id,p,st); draw();});
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
   if(prm){
@@ -986,7 +1025,7 @@ const trigEq=s=>`${V("y")} = ${s.a===1?"":s.a===-1?CS("blue","−"):CS("blue",N(
 const trigGen=s=>`${V("y")} = ${CV("blue","a")} ${s.fn} ${CV("amber","b")}${X1}${s.fn==="tan"?"":` + ${CV("green","c")}`}`;
 const trigGraphs=aid({
   init:{fn:"sin",a:1,b:1,c:0,u:"deg"}, label:"Trig graph with a, b, c sliders",
-  pills:[{k:"fn",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",opts:[["deg","degrees"],["rad","radians"]]}],
+  pills:[{k:"fn",label:"Graph",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",label:"Angles in",opts:[["deg","degrees"],["rad","radians"]]}],
   sliders:[{k:"a",label:CS("blue","a"),min:-3,max:3,step:.5,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},{k:"b",label:CS("amber","b"),min:1,max:4,step:1},{k:"c",label:CS("green","c"),min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
   steps:[
     {set:{fn:"sin",a:1,b:1,c:0}, t:()=>`${V("y")} = sin ${X1}: <b>1 full wave</b> from 0° to 360°.<br>Max 1, min −1.`},
@@ -1007,7 +1046,7 @@ const trigGraphs=aid({
       [s.c+amp,s.c-amp].forEach(y=>g.line(0,y,360,y,{stroke:"var(--green)","stroke-dasharray":"1 1.5","stroke-width":.5}));
     }
     g.plot(x=>s.a*F(rad(s.b*x))+(s.fn==="tan"?0:s.c),{stroke:"var(--blue)","stroke-width":1.3},0,360,720);
-    lab(svg,[16,10],trigEq(s).replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.6,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    lab(svg,[20,10],trigEq(s).replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.6,"font-style":"italic",fill:"var(--blue)","font-weight":700});
   },
   explain:[`${CV("blue","a")} = height · ${CV("amber","b")} = waves in 360° · ${CV("green","c")} = up or down.`,`Grey dotted curve = the basic graph. Negative ${CV("blue","a")} flips it.`],
   key(s){const amp=Math.abs(s.a), head=KPAIR(trigGen(s),trigEq(s),"This graph"), P=fx(angTxt(s,s.fn==="tan"?180:360)), B=CV("amber","b");
@@ -1036,8 +1075,8 @@ const nearCPS=a=>{a=norm(a); const d=x=>Math.min(Math.abs(x-a),360-Math.abs(x-a)
 const unitCircle=aid({
   init:{th:150,all:0,sv:"off"}, label:"Unit circle with 16 special-angle dots and a draggable point P", link:["th"],
   fix:s=>{s.th=nearCPS(s.th);},
-  pills:[{k:"all",opts:[[0,"This angle only"],[1,"Show all 4 quadrants"]]},
-    {k:"sv",opts:[["off","Solve: off"],["sin",SOLVE.sin.lbl],["cos",SOLVE.cos.lbl],["tan",SOLVE.tan.lbl]],on:s=>{if(s.sv!=="off"){const S=SOLVE[s.sv]; s.th=qAng(S.qs[0],S.al);}}}],
+  pills:[{k:"all",label:"Show",opts:[[0,"This angle only"],[1,"All 4 quadrants"]]},
+    {k:"sv",label:"Solve",opts:[["off","off"],["sin",SOLVE.sin.lbl],["cos",SOLVE.cos.lbl],["tan",SOLVE.tan.lbl]],on:s=>{if(s.sv!=="off"){const S=SOLVE[s.sv]; s.th=qAng(S.qs[0],S.al);}}}],
   explain:[`Tap any dot, or drag P.`,`Radius = 1<br><span class="k-blue">sin θ = ${frac("opp","1")} = <b>height</b></span><br><span class="k-amber">cos θ = ${frac("adj","1")} = <b>base</b></span>`],
   steps:[{t:()=>""}],
   draw(svg,s){
@@ -1114,7 +1153,7 @@ const rFormula=aid({
   buttons:[{label:"Show a worked solve",fn:s=>{s.step=s.step===5?4:5},pressed:s=>s.step===5},
     {label:`Why tan ${AL} = ${frac(V("b"),V("a"))}?`,fn:s=>{s.step=s.step===6?4:6},pressed:s=>s.step===6}],
   explain:[`2 dashed waves add up to <b>ONE</b> blue wave.`,`${V("R")} = how tall (hypotenuse) · ${AL} = how far shifted.`],
-  pills:[{k:"mode",opts:[["cos","a cos θ + b sin θ"],["sin","a sin θ + b cos θ"]]}],
+  pills:[{k:"mode",label:"Form",opts:[["cos","a cos θ + b sin θ"],["sin","a sin θ + b cos θ"]]}],
   sliders:[{k:"a",label:CS("amber","a"),min:1,max:6,step:.5},{k:"b",label:CS("green","b"),min:1,max:6,step:.5}],
   steps:[
     {set:{mode:"cos",a:3,b:4}, t:s=>`Two waves: <span class="k-amber">${s.mode==="cos"?`${N(s.a)} cos θ`:`${N(s.a)} sin θ`}</span> and <span class="k-green">${s.mode==="cos"?`${N(s.b)} sin θ`:`${N(s.b)} cos θ`}</span>.`},
@@ -1347,7 +1386,7 @@ const strip=s=>String(s).replace(/<[^>]+>/g,"");
 const tangentAid=aid({
   init:{cv:"cubic",x:-1.5,nm:"tan"}, vb:"0 0 140 208", label:"Curve with a tangent you can slide, gradient graph below",
   explain:[`Drag <b>P</b>. Flat tangent = <span class="k-amber"><b>stationary point</b></span>.`,`<span class="k-green"><b>Green</b></span> axis = going up · <span class="k-red"><b>red</b></span> = going down.`],
-  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x={cubic:-1.5,quad:-.5,cube:-1}[s.cv]}},{k:"nm",opts:[["tan","Tangent"],["nor","Normal"]]}],
+  pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x={cubic:-1.5,quad:-.5,cube:-1}[s.cv]}},{k:"nm",label:"Line",opts:[["tan","Tangent"],["nor","Normal"]]}],
   sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.05}],
   buttons:[{label:"Jump to a stationary point",fn:s=>{const L=TC[s.cv].st; const nx=L.find(v=>v>s.x+1e-9); s.x=nx!==undefined?nx:L[0];}}],
   steps:[{t:()=>""}],
@@ -1376,7 +1415,7 @@ const tangentAid=aid({
       b.push(FB("red","Max, min or inflexion?",`${KIND[k]} ${shapeIcon(k,"var(--ink)")}`,`${D2Y} = ${N(d2)} · signs ${L} 0 ${R2}`));}
     else b.push(FB(c,"The curve is…",w,m>0?`${DY} &gt; 0 → increasing`:`${DY} &lt; 0 → decreasing`));
     const nor=s.nm==="nor", mm=nor?(z?null:-1/m):m, cc=mm===null?null:y0-mm*x;
-    const gen=nor?`${V("y")} − ${V("y")}₁ = −${frac("1",V("m"))}(${X1} − ${X1}₁)`:`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`;
+    const gen=nor?`${nw(`${V("y")} − ${V("y")}₁`)} = ${nw(`−${frac("1",V("m"))}(${X1} − ${X1}₁)`)}`:`${nw(`${V("y")} − ${V("y")}₁`)} = ${nw(`${V("m")}(${X1} − ${X1}₁)`)}`;
     const lineEq=(m,c)=>Math.abs(m)<1e-9?`${V("y")} = ${niceN(c)}`:`${V("y")} = ${Math.abs(m-1)<1e-9?"":Math.abs(m+1)<1e-9?"−":niceN(m)}${X1}${Math.abs(c)<1e-9?"":(c<0?" − ":" + ")+niceN(Math.abs(c))}`;
     const eq=mm===null?`${X1} = ${N(x)}`:lineEq(mm,cc);
     const rd=mm===null?"flat tangent → vertical normal":`${V("m")} = ${nor?`−1 ÷ ${niceN(m)} = `:""}${niceN(mm)} · P (${N(x)}, ${niceN(y0)})`;
@@ -5201,6 +5240,7 @@ function renderTopic(t,tab,prm){
     left.append(stage,key); wrap.append(left,panel); app.append(wrap);
     cur.stage=stage;
     PLAYS[t.play].mount(stage,panel,key,prm||new URLSearchParams());
+    const stabs=panel.querySelector(".steptabs"); if(stabs) wrap.before(stabs);
     if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
     placeDock();
   } else {
@@ -5388,7 +5428,7 @@ new MutationObserver(()=>document.querySelectorAll(".ctrl").forEach(row=>{addNum
 
 let fitQ=0;
 function fitStage(){fitQ=0; const left=document.querySelector(".left"), st=document.querySelector(".stage"), svg=st&&st.querySelector(":scope>svg"); if(!svg||!left) return;
-  if(innerWidth<900){svg.style.maxHeight=""; return;}
+  if(innerWidth<900||(innerHeight>innerWidth&&!document.documentElement.hasAttribute("data-present"))){svg.style.maxHeight=""; return;}
   const top=left.getBoundingClientRect().top+scrollY, other=left.getBoundingClientRect().height-svg.getBoundingClientRect().height;
   const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px") svg.style.maxHeight=m+"px";}
 const fitSoon=()=>{if(!fitQ) fitQ=requestAnimationFrame(fitStage)};
