@@ -9,10 +9,13 @@ self.addEventListener("activate",e=>{
 self.addEventListener("fetch",e=>{
   const r=e.request;
   if(r.method!=="GET"||new URL(r.url).origin!==self.location.origin) return;
-  e.respondWith(
-    fetch(r).then(res=>{
-      if(res.ok){ const copy=res.clone(); caches.open(CACHE).then(c=>c.put(r,copy)); }
-      return res;
-    }).catch(()=>caches.match(r,{ignoreSearch:true}).then(m=>m||caches.match("./index.html")))
-  );
+  const net=fetch(r).then(res=>{
+    if(res.ok){ const copy=res.clone(); return caches.open(CACHE).then(c=>c.put(r,copy)).then(()=>res,()=>res); }
+    return res;
+  });
+  e.waitUntil(net.catch(()=>{}));
+  e.respondWith(new Promise(done=>{
+    const t=setTimeout(()=>caches.match(r,{ignoreSearch:true}).then(m=>{ if(m) done(m); }),3000);
+    net.then(res=>{ clearTimeout(t); done(res); },()=>{ clearTimeout(t); done(caches.match(r,{ignoreSearch:true}).then(m=>m||caches.match("./index.html"))); });
+  }));
 });
