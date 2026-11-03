@@ -3638,8 +3638,14 @@ amMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam 
       ${GRP("Discriminant","discriminant")}
       ${FMAP(null,[[nw(`${V("b")}² − 4${V("ac")} &gt; 0`),"2 real and distinct roots"],[nw(`${V("b")}² − 4${V("ac")} = 0`),"2 equal roots"],[nw(`${V("b")}² − 4${V("ac")} &lt; 0`),"no real roots"]])}
       ${FLB("Always positive",`${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
+      ${GRP("Quadratic inequalities","simultaneous-inequalities")}
+      ${FMAP(null,[[nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &gt; 0`),`${nw(`${X1} &lt; ${V("p")}`)} or ${nw(`${X1} &gt; ${V("q")}`)}`],[nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &lt; 0`),nw(`${V("p")} &lt; ${X1} &lt; ${V("q")}`)]])}
       ${GRP("Completing the square","completing-the-square")}
       ${FL(nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)+FNOTE(`turning point ${nw(`(${V("h")}, ${V("k")})`)}`))}
+      ${GRP("Surds","surds")}
+      ${FL(nw(`${SQRT(V("a"))} × ${SQRT(V("b"))} = ${SQRT(V("ab"))}`))}
+      ${FL(nw(`${frac(SQRT(V("a")),SQRT(V("b")))} = ${SQRT(frac(V("a"),V("b")))}`))}
+      ${FLB("Conjugates",nw(`(${V("a")} + ${SQRT(V("b"))})(${V("a")} − ${SQRT(V("b"))}) = ${V("a")}² − ${V("b")}`))}
       ${GRP("Polynomials","polynomials-partial-fractions")}
       ${FLB("Remainder theorem",`${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)} leaves remainder ${nw(`f(${V("a")})`)}`)}
       ${FLB("Factor theorem",`${nw(`(${X1} − ${V("a")})`)} is a factor ⇔ ${nw(`f(${V("a")}) = 0`)}`)}
@@ -5002,6 +5008,77 @@ ${PAN("Data and chance words",GLS([
 </div>`
 };
 Object.assign(SHEETS,SHEETS8);
+function picSimCirc(){ const X=x=>65+5.5*x, Y=y=>42-5.5*y, B='font-weight="700"';
+  return SVW("0 0 130 86",ARW(X(-6.6),Y(0),X(7.2),Y(0),"var(--ink)",1)+ARW(X(0),Y(-7.2),X(0),Y(7.2),"var(--ink)",1)+TX(X(7.2)+1,Y(0)+8,IT("x"))+TX(X(0)+4,Y(7.2)+4,IT("y"),`text-anchor="start"`)
+    +`<circle cx="${X(0)}" cy="${Y(0)}" r="${(5.5*Math.sqrt(34)).toFixed(1)}" fill="none" stroke="var(--blue)" stroke-width="1.8"/>`+LN(X(-5.5),Y(-7.5),X(7.5),Y(5.5),`stroke="var(--amber)" stroke-width="1.8"`)
+    +DOT(X(5),Y(3))+DOT(X(-3),Y(-5))+TX(98,30,"(5, 3)",`${B} font-size="6.5" text-anchor="start" fill="var(--red)"`)+TX(37,72,"(−3, −5)",`${B} font-size="6.5" text-anchor="end" fill="var(--red)"`)
+    +TX(4,14,`${IT("x")}² + ${IT("y")}² = 34`,`${B} font-size="6.5" text-anchor="start" fill="var(--blue)"`)+TX(108,7,`${IT("y")} = ${IT("x")} − 2`,`${B} font-size="6.5" text-anchor="end" fill="var(--amber)"`)); }
+function qIn(sg,A,B){ const Yc=X=>38-0.0622*(X-30)*(X-60), seg=(a,b)=>{ let d=""; for(let i=0;i<=24;i++){ const X=a+(b-a)*i/24; d+=(i?"L":"M")+X.toFixed(1)+" "+Yc(X).toFixed(1); } return d; }, G='fill="none" stroke="var(--green)" stroke-width="3.2"';
+  let s=ARW(4,38,88,38,"var(--ink)",1)+TX(88,49,IT("x"),`text-anchor="end" font-size="8.5"`)+`<path d="${seg(18,72)}" fill="none" stroke="var(--blue)" stroke-width="1.6"/>`;
+  s+=sg==="gt"?`<path d="${seg(18,30)}" ${G}/><path d="${seg(60,72)}" ${G}/>`+LN(6,38,30,38,`stroke="var(--green)" stroke-width="3"`)+LN(60,38,82,38,`stroke="var(--green)" stroke-width="3"`)
+    :`<path d="${seg(30,60)}" ${G}/>`+LN(30,38,60,38,`stroke="var(--green)" stroke-width="3"`);
+  return SV("0 0 92 62",s+DOT(30,38,"var(--ink)")+DOT(60,38,"var(--ink)")+(A||TX(27,49,IT("p"),`text-anchor="end" font-weight="700" font-size="9"`))+(B||TX(63,49,IT("q"),`text-anchor="start" font-weight="700" font-size="9"`))); }
+function nlOut(a,b,open){ const y=16, X=v=>15+13*(v-a+1); let s=`<svg viewBox="0 0 120 34" class="nlp" aria-hidden="true"><line x1="4" y1="${y}" x2="116" y2="${y}" stroke="var(--ink)"/>`;
+  for(let v=a-1;v<=b+1;v++){ const e=v===a||v===b; s+=`<line x1="${X(v)}" y1="${y-3}" x2="${X(v)}" y2="${y+3}" stroke="var(--ink)"/><text x="${X(v)}" y="${y+14}" font-size="8.5" text-anchor="middle" fill="${e?"var(--blue)":"var(--ink)"}"${e?` font-weight="700"`:""}>${v<0?"−"+(-v):v}</text>`; }
+  s+=`<line x1="${X(a)}" y1="${y}" x2="6" y2="${y}" stroke="var(--blue)" stroke-width="3"/><path d="M11 11 L4 16 L11 21" fill="none" stroke="var(--blue)" stroke-width="2"/><line x1="${X(b)}" y1="${y}" x2="114" y2="${y}" stroke="var(--blue)" stroke-width="3"/><path d="M109 11 L116 16 L109 21" fill="none" stroke="var(--blue)" stroke-width="2"/>`;
+  [a,b].forEach(v=>{ s+=`<circle cx="${X(v)}" cy="${y}" r="4" fill="${open?"var(--card)":"var(--blue)"}" stroke="var(--blue)" stroke-width="2"/>`; });
+  return s+"</svg>"; }
+function picRectSurd(){ return `<div style="display:grid;grid-template-columns:auto 1fr;gap:6px 8px;align-items:center;max-width:300px;margin:8px auto 10px"><div style="font-size:15px;font-weight:700;text-align:right">${nw(`(2 + ${SQRT("3")}) cm`)}</div><div style="border:2px solid var(--blue);background:var(--blue-fill);height:84px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;padding:0 6px;text-align:center"><div>area<br>${nw(`(11 + 5${SQRT("3")}) cm²`)}</div></div><div></div><div style="text-align:center;font-size:15px;font-weight:700;color:var(--red)">length = ?</div></div>`; }
+const SHEETS9={
+amSurds:`${MUST([FB("blue","Multiply",nw(`${SQRT(V("a"))} × ${SQRT(V("b"))} = ${SQRT(V("ab"))}`),nw(`${SQRT(V("a"))} × ${SQRT(V("a"))} = ${V("a")}`)),FB("amber","Rationalise","× the conjugate",`${nw(`2 + ${SQRT("3")}`)} pairs with ${nw(`2 − ${SQRT("3")}`)}`),FB("green","Equality of surds",nw(`${V("m")} + ${V("n")}${SQRT(V("k"))} = ${V("p")} + ${V("q")}${SQRT(V("k"))}`),`${nw(`${V("m")} = ${V("p")}`)} and ${nw(`${V("n")} = ${V("q")}`)}`)])}
+<div class="sheet">
+${PAN("What's a surd?",`<p>A root that isn't a whole number.</p>`+FACTS("",[["surds",[SQRT("2"),SQRT("5"),SQRT("5","3")]],["not surds",[nw(`${SQRT("9")} = 3`),nw(`${SQRT("8","3")} = 2`)]],["as a power",[nw(`${SQRT(X1)} = ${X1}<sup>${frac("1","2")}</sup>`),nw(`${frac("1",SQRT(X1))} = ${X1}<sup>−${frac("1","2")}</sup>`)]]]))}
+${PAN("Simplify, add and subtract",EG(`Simplify ${nw(SQRT("72"))}: take out the <b>largest</b> square factor`,[nw(`${SQRT("72")} = ${SQRT("36")} × ${SQRT("2")}`),nw(`= 6${SQRT("2")}`)])
+  +FACTS("Square factors to look for",[["",["4","9","16","25","36","49","64","81","100"]]])
+  +EG(`Only <b>like</b> surds add: make them match first`,[nw(`2${SQRT("12")} + ${SQRT("27")} − ${SQRT("3")}`),nw(`= 2(2${SQRT("3")}) + 3${SQRT("3")} − ${SQRT("3")}`),nw(`= 4${SQRT("3")} + 3${SQRT("3")} − ${SQRT("3")}`),nw(`= 6${SQRT("3")}`)])
+  +`<p class="anno">* ${nw(`${SQRT("2")} + ${SQRT("3")}`)} can't be simplified</p>`)}
+${PAN("Multiply and expand",EG("Expand like any brackets",[nw(`(3 + ${SQRT("2")})(1 − ${SQRT("2")})`),nw(`= 3 − 3${SQRT("2")} + ${SQRT("2")} − 2`),nw(`= 1 − 2${SQRT("2")}`)])
+  +EG("Square the number <b>and</b> the surd",[nw(`(2${SQRT("3")} + 1)²`),nw(`= (2${SQRT("3")})² + 2(2${SQRT("3")})(1) + 1²`),nw(`= 12 + 4${SQRT("3")} + 1`),nw(`= 13 + 4${SQRT("3")}`)])
+  +EG("Conjugates: the surd disappears",[nw(`(2 + ${SQRT("3")})(2 − ${SQRT("3")})`),nw(`= 2² − (${SQRT("3")})²`),nw("= 4 − 3"),nw("= 1")]))}
+${PAN("Rationalise the denominator",STEPS(["one surd in the denominator: multiply by that surd","two terms: multiply by the conjugate (flip the middle sign)","do it to the numerator <b>and</b> the denominator"])
+  +EG("One surd",[nw(`${frac("6",SQRT("3"))} = ${frac(`6 × ${SQRT("3")}`,`${SQRT("3")} × ${SQRT("3")}`)}`),nw(`= ${frac(`6${SQRT("3")}`,"3")}`),nw(`= 2${SQRT("3")}`)])
+  +EG("Two terms: use the conjugate",[nw(`${frac("5",`2 + ${SQRT("3")}`)} = ${frac(`5(2 − ${SQRT("3")})`,`(2 + ${SQRT("3")})(2 − ${SQRT("3")})`)}`),nw(`= ${frac(`10 − 5${SQRT("3")}`,"4 − 3")}`),nw(`= 10 − 5${SQRT("3")}`)])
+  +EG("A negative denominator changes <b>every</b> sign",[nw(frac(`2 + ${SQRT("3")}`,`${SQRT("3")} − 2`)),nw(`= ${frac(`(2 + ${SQRT("3")})(${SQRT("3")} + 2)`,`(${SQRT("3")} − 2)(${SQRT("3")} + 2)`)}`),nw(`= ${frac(`7 + 4${SQRT("3")}`,"3 − 4")}`),nw(`= ${frac(`7 + 4${SQRT("3")}`,"−1")}`),nw(`= −7 − 4${SQRT("3")}`)]))}
+${PAN("Equality of surds",STEPS(["① simplify both sides first",`② compare: rational part = rational part, ${SQRT(V("k"))} part = ${SQRT(V("k"))} part`])
+  +EG(`${nw(`${V("a")} + ${V("b")}${SQRT("2")} = 3 + ${SQRT("8")}`)}. Find ${V("a")} and ${V("b")}.`,[nw(`${SQRT("8")} = ${SQRT("4")} × ${SQRT("2")} = 2${SQRT("2")}`),nw(`${V("a")} + ${V("b")}${SQRT("2")} = 3 + 2${SQRT("2")}`),`${nw(`${V("a")} = 3`)}, ${nw(`${V("b")} = 2`)}`])
+  +EG(`Find ${nw(SQRT(`7 + 4${SQRT("3")}`))} in the form ${nw(`${V("m")} + ${V("n")}${SQRT("3")}`)}, where ${V("m")} and ${V("n")} are positive integers. Square both sides, then compare.`,[nw(`7 + 4${SQRT("3")} = (${V("m")} + ${V("n")}${SQRT("3")})²`),nw(`= ${V("m")}² + 3${V("n")}² + 2${V("mn")}${SQRT("3")}`),`rational parts: ${nw(`${V("m")}² + 3${V("n")}² = 7`)}`,`${SQRT("3")} parts: ${nw(`2${V("mn")} = 4`)}, so ${nw(`${V("mn")} = 2`)}`,`try ${nw(`${V("m")} = 2`)}, ${nw(`${V("n")} = 1`)}: ${nw("4 + 3 = 7")} ✓`,`<b>${nw(`${SQRT(`7 + 4${SQRT("3")}`)} = 2 + ${SQRT("3")}`)}</b>`]))}
+${PAN("Solve a surd equation",STEPS(["① get the root on its own","② square both sides: the <b>whole</b> side","③ solve","④ check every answer in the <b>original</b> equation"])
+  +EG(`Solve ${nw(`${SQRT(`${X1} + 9`)} − ${X1} = 3`)}`,[nw(`${SQRT(`${X1} + 9`)} = ${X1} + 3`),nw(`${X1} + 9 = (${X1} + 3)²`),nw(`${X1} + 9 = ${X2} + 6${X1} + 9`),nw(`${X2} + 5${X1} = 0`),nw(`${X1}(${X1} + 5) = 0`),`${nw(`${X1} = 0`)} or ${nw(`${X1} = −5`)}`,`check ${nw(`${X1} = 0`)}: ${nw(`${SQRT("9")} − 0 = 3`)} ✓`,`check ${nw(`${X1} = −5`)}: ${nw(`${SQRT("4")} + 5 = 7 ≠ 3`)}`,`<b>${nw(`${X1} = 0`)}</b> (rej ${nw(`${X1} = −5`)})`])
+  +`<p class="anno">* a square root is never negative, so ${nw(`${X1} + 3`)} can't be −2</p>`)}
+${PAN("Shapes with surds",picRectSurd()+EG(`A rectangle has area ${nw(`(11 + 5${SQRT("3")}) cm²`)} and breadth ${nw(`(2 + ${SQRT("3")}) cm`)}. Without using a calculator, find its length in the form ${nw(`(${V("a")} + ${V("b")}${SQRT("3")}) cm`)}, where ${V("a")} and ${V("b")} are integers.`,[nw(`length = ${frac(`11 + 5${SQRT("3")}`,`2 + ${SQRT("3")}`)}`),nw(`= ${frac(`(11 + 5${SQRT("3")})(2 − ${SQRT("3")})`,`(2 + ${SQRT("3")})(2 − ${SQRT("3")})`)}`),nw(`= ${frac(`22 − 11${SQRT("3")} + 10${SQRT("3")} − 15`,"4 − 3")}`),`<b>${nw(`= (7 − ${SQRT("3")}) cm`)}</b>`]))}
+${MIST([[nw(`3${SQRT("5")} + 2${SQRT("3")} = 5${SQRT("8")}`),`only like surds add:<br>${nw(`3${SQRT("5")} + 2${SQRT("3")}`)} is already simplest`],
+  [nw(`${SQRT("48")} = 2${SQRT("12")}`),`take out the <b>largest</b> square:<br>${nw(`${SQRT("48")} = 4${SQRT("3")}`)}`],
+  [nw(`(3${SQRT("2")})² = 6`),`square the 3 too:<br>${nw(`(3${SQRT("2")})² = 9 × 2 = 18`)}`],
+  ["multiplying only the denominator by the conjugate","multiply the numerator <b>and</b> the denominator"],
+  [nw(`${frac(`7 + 4${SQRT("3")}`,"−1")} = 7 + 4${SQRT("3")}`),`every sign changes:<br>${nw(`−7 − 4${SQRT("3")}`)}`],
+  ["keeping every answer without checking","check each one in the original equation<br>reject the ones that fail"],
+  [nw(`(2${SQRT(`${X1} + 3`)})² = 2(${X1} + 3)`),`square the 2 too:<br>${nw(`4(${X1} + 3)`)}`]])}
+</div>`,
+
+amEqIneq:`${MUST([FB("blue","Linear + non-linear","substitute",`make ${X1} or ${V("y")} the subject of the <b>linear</b> one first`),FB("amber","Answers come in pairs",nw(`(${X1}, ${V("y")})`),`put each ${X1} into the linear equation`),FB("green","Quadratic inequality","sketch it",`${nw("&gt; 0")}: above the ${X1}-axis · ${nw("&lt; 0")}: below`)])}
+<div class="sheet">
+${PAN("One linear, one non-linear",STEPS([`① make ${X1} or ${V("y")} the subject of the linear equation`,"② substitute it into the other one","③ collect every term on one side and solve",`④ put each answer into the <b>linear</b> equation to get its partner`])
+  +picSimCirc()+EG("The answers are where the graphs meet",[EQN(nw(`${X1} − ${V("y")} = 2`),"①"),EQN(nw(`${X2} + ${V("y")}² = 34`),"②"),`From ①: ${nw(`${X1} = ${V("y")} + 2`)}`,`Sub into ②: ${nw(`(${V("y")} + 2)² + ${V("y")}² = 34`)}`,nw(`2${V("y")}² + 4${V("y")} + 4 = 34`),nw(`2${V("y")}² + 4${V("y")} − 30 = 0`),nw(`${V("y")}² + 2${V("y")} − 15 = 0`),nw(`(${V("y")} + 5)(${V("y")} − 3) = 0`),`${nw(`${V("y")} = −5`)} or ${nw(`${V("y")} = 3`)}`,`${nw(`${V("y")} = −5`)}: ${nw(`${X1} = −5 + 2 = −3`)}`,`${nw(`${V("y")} = 3`)}: ${nw(`${X1} = 3 + 2 = 5`)}`,`<b>(−3, −5)</b> and <b>(5, 3)</b>`]))}
+${PAN("Fractions? Clear them first",EG(`Multiply <b>every</b> term by ${V("xy")}`,[EQN(nw(`${frac("2",X1)} + ${frac("1",V("y"))} = 3`),"①"),EQN(nw(`${X1} + ${V("y")} = 2`),"②"),EQN(`① × ${V("xy")}: ${nw(`2${V("y")} + ${X1} = 3${V("xy")}`)}`,"③"),`From ②: ${nw(`${V("y")} = 2 − ${X1}`)}`,`Sub into ③: ${nw(`2(2 − ${X1}) + ${X1} = 3${X1}(2 − ${X1})`)}`,nw(`4 − ${X1} = 6${X1} − 3${X2}`),nw(`3${X2} − 7${X1} + 4 = 0`),nw(`(3${X1} − 4)(${X1} − 1) = 0`),`${nw(`${X1} = ${frac("4","3")}`)} or ${nw(`${X1} = 1`)}`,`${nw(`${X1} = ${frac("4","3")}`)}: ${nw(`${V("y")} = 2 − ${frac("4","3")} = ${frac("2","3")}`)}`,`${nw(`${X1} = 1`)}: ${nw(`${V("y")} = 2 − 1 = 1`)}`,`<b>(${frac("4","3")}, ${frac("2","3")})</b> and <b>(1, 1)</b>`]))}
+${PAN("Quadratic inequalities",STEPS(["① bring every term to the left, so the right side is 0","② factorise (quadratic formula if it won't factorise)","③ sketch the curve, then read off the range of values"])
+  +PICS(PIC(null,qIn("gt"),nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &gt; 0`),`above the ${X1}-axis:<br>${nw(`${X1} &lt; ${V("p")}`)} or ${nw(`${X1} &gt; ${V("q")}`)}`),PIC(null,qIn("lt"),nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &lt; 0`),`below the ${X1}-axis:<br>${nw(`${V("p")} &lt; ${X1} &lt; ${V("q")}`)}`))
+  +EG(`Solve ${nw(`2${X2} + 7${X1} &gt; −3`)}`,[nw(`2${X2} + 7${X1} + 3 &gt; 0`),nw(`(2${X1} + 1)(${X1} + 3) &gt; 0`),`roots: ${nw(`${X1} = −3`)} and ${nw(`${X1} = −${frac("1","2")}`)}`,`${nw("&gt; 0")} means above the ${X1}-axis: outside the roots`,`<b>${nw(`${X1} &lt; −3`)} or ${nw(`${X1} &gt; −${frac("1","2")}`)}</b>`])
+  +qIn("gt",TX(27,49,"−3",`text-anchor="end" font-weight="700" font-size="8.5"`),TX(65.5,49.5,"−",`text-anchor="middle" font-weight="700" font-size="8.5"`)+SFR(73,47,"1","2")).replace('class="lsp"','class="lsp" style="max-width:200px"'))}
+${PAN(`${nw(`${V("a")} &lt; 0`)}? Multiply by −1 first`,EG(`Solve ${nw(`−${X2} + ${X1} + 6 &lt; 0`)}`,[`× (−1), the sign flips: ${nw(`${X2} − ${X1} − 6 &gt; 0`)}`,nw(`(${X1} + 2)(${X1} − 3) &gt; 0`),`roots: ${nw(`${X1} = −2`)} and ${nw(`${X1} = 3`)}`,`<b>${nw(`${X1} &lt; −2`)} or ${nw(`${X1} &gt; 3`)}</b>`]))}
+${PAN("On a number line",nlOut(-2,3,true)+`<p class="anno" style="text-align:center">${nw(`${X1} &lt; −2`)} or ${nw(`${X1} &gt; 3`)}: open dots, −2 and 3 don't count</p>`+nline2(-2,3,false,false)+`<p class="anno" style="text-align:center">${nw(`−2 ≤ ${X1} ≤ 3`)}: filled dots, −2 and 3 count</p>`)}
+${PAN("Key words → an inequality",`<table><tr><th>Key words</th><th>${nw(`${V("b")}² − 4${V("ac")}`)}</th></tr><tr><td>two real and distinct roots · cuts at two points</td><td>${nw("&gt; 0")}</td></tr><tr><td>real and equal roots · meets at one point · tangent</td><td>${nw("= 0")}</td></tr><tr><td>no real roots · does not meet</td><td>${nw("&lt; 0")}</td></tr><tr><td>real roots · meets</td><td>${nw("≥ 0")}</td></tr></table>`
+  +EG(`${nw(`${X2} + ${V("k")}${X1} + ${V("k")} + 3 = 0`)} has real roots. Find the range of values of ${V("k")}.`,[`real roots: ${nw(`${V("b")}² − 4${V("ac")} ≥ 0`)}`,nw(`${V("k")}² − 4(1)(${V("k")} + 3) ≥ 0`),nw(`${V("k")}² − 4${V("k")} − 12 ≥ 0`),nw(`(${V("k")} + 2)(${V("k")} − 6) ≥ 0`),`${nw("≥ 0")}: outside the roots, and the roots count`,`<b>${nw(`${V("k")} ≤ −2`)} or ${nw(`${V("k")} ≥ 6`)}</b>`])
+  +PLAYLINK("#sheet/discriminant","Discriminant sheet"))}
+${MIST([[`mixing the pairs: ${nw("(5, −5)")}`,`each ${X1} with its own ${V("y")}:<br>${nw("(5, 3)")} and ${nw("(−3, −5)")}`],
+  [`${nw(`${frac("2",X1)} + ${frac("1",V("y"))} = 3`)} → ${nw(`2${V("y")} + ${X1} = 3`)}`,`× ${V("xy")} on <b>every</b> term:<br>${nw(`2${V("y")} + ${X1} = 3${V("xy")}`)}`],
+  [`${nw(`(${X1} + 1)(${X1} − 6) &gt; 0`)} → ${nw(`${X1} &lt; −1`)} and ${nw(`${X1} &gt; 6`)}`,`outside the roots is <b>or</b>:<br>${nw(`${X1} &lt; −1`)} or ${nw(`${X1} &gt; 6`)}`],
+  [`${nw(`−${X2} + ${X1} + 6 &lt; 0`)} → ${nw(`${X2} − ${X1} − 6 &lt; 0`)}`,`× (−1) flips the sign:<br>${nw(`${X2} − ${X1} − 6 &gt; 0`)}`],
+  [`${nw(`${X2} &gt; 9`)} → ${nw(`${X1} &gt; 3`)}`,`${nw(`(${X1} + 3)(${X1} − 3) &gt; 0`)}<br>${nw(`${X1} &lt; −3`)} or ${nw(`${X1} &gt; 3`)}`],
+  [`${nw(`${X2} &lt; 4${X1}`)} → ${nw(`${X1} &lt; 4`)}`,`don't divide by ${X1}:<br>${nw(`${X1}(${X1} − 4) &lt; 0`)}<br>${nw(`0 &lt; ${X1} &lt; 4`)}`],
+  [`"real roots" → ${nw(`${V("b")}² − 4${V("ac")} &gt; 0`)}`,`equal roots are real too:<br>${nw("≥ 0")}`]])}
+</div>`
+};
+Object.assign(SHEETS,SHEETS9);
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
@@ -5025,7 +5102,8 @@ const STHUMB={
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
-  "coordinate-geometry-circles":picTangent, "linear-law":picLinLaw, "trig-identities-equations":()=>FT(nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`),1)
+  "coordinate-geometry-circles":picTangent, "linear-law":picLinLaw, "trig-identities-equations":()=>FT(nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`),1),
+  "surds":()=>FT(nw(`${SQRT("72")} = 6${SQRT("2")}`)), "simultaneous-inequalities":picSimCirc
 };
 SHEETLIST.push(
   {id:"simultaneous-equations",levels:["sec2"],ord:1,chapter:"Algebra",title:"Simultaneous equations & linear graphs",sheet:"s2Simul",aid:null,kw:"elimination substitution graphical solve two equations"},
@@ -5054,7 +5132,9 @@ SHEETLIST.push(
   {id:"exponentials-logarithms",levels:["amath"],ord:6,chapter:"Exponentials & Logarithms",title:"Exponentials & logarithms",sheet:"amLogs",aid:"exp-log-graphs",kw:"log lg ln laws of logarithms change of base exponential equations indices"},
   {id:"coordinate-geometry-circles",levels:["amath"],ord:7,chapter:"Coordinate Geometry",title:"Coordinate geometry: lines & circles",sheet:"amCoord",aid:"circle-equation",kw:"perpendicular bisector shoelace area circle centre radius tangent equation of a circle"},
   {id:"linear-law",levels:["amath"],ord:8,chapter:"Linear Law",title:"Linear law",sheet:"amLinLaw",aid:"linear-law-graphs",kw:"straight line graphs lg y against lg x line of best fit Y = mX + C"},
-  {id:"trig-identities-equations",levels:["amath"],ord:10,chapter:"Trigonometry",title:"Trig identities & equations",sheet:"amTrigId",aid:null,kw:"addition formulae double angle prove identities solve trigonometric equations principal values"}
+  {id:"trig-identities-equations",levels:["amath"],ord:10,chapter:"Trigonometry",title:"Trig identities & equations",sheet:"amTrigId",aid:null,kw:"addition formulae double angle prove identities solve trigonometric equations principal values"},
+  {id:"simultaneous-inequalities",levels:["amath"],ord:2.5,chapter:"Equations & Inequalities",title:"Simultaneous equations & quadratic inequalities",sheet:"amEqIneq",aid:null,kw:"simultaneous equations linear non-linear substitution intersection line curve quadratic inequality range of values sketch number line key words real roots discriminant"},
+  {id:"surds",levels:["amath"],ord:3,chapter:"Surds",title:"Surds",sheet:"amSurds",aid:null,kw:"surd simplify rationalise rationalize denominator conjugate equality of surds square root equation extraneous reject without calculator"}
 );
 
 const app=$("#app"), titleEl=$("#title"), crumbEl=$("#crumb"), backBtn=$("#back"), shareBtn=$("#share"), qrBtn=$("#qrBtn"), presentBtn=$("#presentBtn"), zoomBtn=$("#zoomBtn"), printBtn=$("#printBtn");
