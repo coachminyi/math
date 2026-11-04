@@ -9344,7 +9344,109 @@ const QQ_HI={
 {t:"volumes of similar solids",g:R=>{ const [p,q]=R.pick([[1,2],[2,3],[3,4],[2,5],[3,5],[4,5],[1,3]]), s=R.int(1,4)*(p===1?2:1), H1=p*s, H2=q*s, t=p===1?R.int(3,9)*2:R.int(1,6), V1=p*p*p*t, V2=q*q*q*t, big=R.f()<.6, ms=R.f()<.35, [sh,u,lb]=ms?[R.pick(["statues","chocolate bunnies","metal figures"]),"g","mass"]:[R.pick(["cones","cylinders","bottles","cups"]),"cm³",V("V")];
   const qw=ms?`The ${big?"smaller":"larger"} one has a mass of ${nw(`${big?V1:V2} g`)}. Find the mass of the ${big?"larger":"smaller"} one.`:`The ${big?"smaller":"larger"} one has a volume of ${nw(`${big?V1:V2} cm³`)}. Find the volume of the ${big?"larger":"smaller"} one.`;
   const w=big?[qW(nw(`${lb} = ${V1} × ${PAR(frac(H2,H1),"3")}`),"cube the length ratio"),nw(`= ${V1} × ${p===1?q*q*q:frac(q*q*q,p*p*p)} = ${V2} ${u}`)]:[qW(nw(`${lb} = ${V2} × ${PAR(frac(H1,H2),"3")}`),"cube the length ratio"),nw(`= ${V2} × ${frac(p*p*p,q*q*q)} = ${V1} ${u}`)];
-  return {q:`Two similar ${sh} have heights ${nw(`${H1} cm`)} and ${nw(`${H2} cm`)}. ${qw}`,w,a:`${big?V2:V1} ${u}`,n:{p,q,s,H1,H2,V1,V2,big,ms}}; }}]
+  return {q:`Two similar ${sh} have heights ${nw(`${H1} cm`)} and ${nw(`${H2} cm`)}. ${qw}`,w,a:`${big?V2:V1} ${u}`,n:{p,q,s,H1,H2,V1,V2,big,ms}}; }}],
+"further-trigonometry":[
+{t:"sine rule",g:R=>{ const rd=Math.PI/180, sd=R.f()<.5;
+  if(sd){ const n=qTry(()=>{ const A=R.int(6,16)*5, B=R.int(6,20)*5, a=R.int(5,15); return {mode:"side",A,B,a}; },n=>n.A!==n.B&&180-n.A-n.B>=25,{mode:"side",A:40,B:65,a:8}), {A,B,a}=n, x=a*Math.sin(B*rd)/Math.sin(A*rd);
+    return {q:`In triangle ABC, ${nw(`angle A = ${A}°`)}, ${nw(`angle B = ${B}°`)} and ${nw(`BC = ${a} cm`)}. Find the length of AC, correct to 3 significant figures.`,
+      w:[qW(nw(`${frac("AC",`sin ${B}°`)} = ${frac(a,`sin ${A}°`)}`),"a side and its opposite angle"),nw(`AC = ${frac(`${a} sin ${B}°`,`sin ${A}°`)}`),nw(`= ${qR(x,5)} cm`),nw(`AC = ${qR(x,3)} cm (3 s.f.)`)],a:nw(`AC = ${qR(x,3)} cm (3 s.f.)`),n}; }
+  const n=qTry(()=>{ const A=R.int(35,80), a=R.int(6,14), b=R.int(3,13); return {mode:"angle",A,a,b}; },n=>n.b<n.a&&n.b*Math.sin(n.A*rd)/n.a>Math.sin(12*rd),{mode:"angle",A:50,a:9,b:7}), {A,a,b}=n, s=b*Math.sin(A*rd)/a, Bd=Math.asin(s)/rd;
+  return {q:`In triangle ABC, ${nw(`BC = ${a} cm`)}, ${nw(`AC = ${b} cm`)} and ${nw(`angle A = ${A}°`)}. Find angle B, correct to 1 decimal place.`,
+    w:[qW(nw(`${frac("sin B",b)} = ${frac(`sin ${A}°`,a)}`),"sines on top"),nw(`sin B = ${qR(s,5)}`),nw(`B = ${qD(Bd,1)}° (1 d.p.)`),`not ${nw(`${qD(180-Bd,1)}°`)}: ${nw(`${qD(180-Bd,1)}° + ${A}° &gt; 180°`)}`],a:nw(`B = ${qD(Bd,1)}° (1 d.p.)`),n}; }},
+{t:"cosine rule",g:R=>{ const rd=Math.PI/180, sd=R.f()<.5;
+  if(sd){ const n=qTry(()=>{ const b=R.int(4,12), c=R.int(4,12), A=R.int(7,28)*5; return {mode:"side",b,c,A}; },n=>n.b!==n.c&&n.A!==90,{mode:"side",b:7,c:8,A:65}), {b,c,A}=n, m=2*b*c*Math.cos(A*rd), s2=b*b+c*c-m, x=Math.sqrt(s2), ms=qR(m,5);
+    return {q:`In triangle ABC, ${nw(`AB = ${c} cm`)}, ${nw(`AC = ${b} cm`)} and ${nw(`angle A = ${A}°`)}. Find the length of BC, correct to 3 significant figures.`,
+      w:[qW(nw(`BC² = ${b}² + ${c}² − 2(${b})(${c}) cos ${A}°`),"2 sides and the angle between"),nw(`= ${b*b+c*c} − ${m<0?`(${ms})`:ms}`),nw(`= ${qR(s2,5)}`),nw(`BC = ${SQRT(qR(s2,5))}`),nw(`= ${qR(x,3)} cm (3 s.f.)`)],a:nw(`BC = ${qR(x,3)} cm (3 s.f.)`),n}; }
+  const n=qTry(()=>{ const p=R.int(3,12), q=R.int(4,14), r=R.int(5,16); return {mode:"angle",p,q,r}; },n=>n.p<n.q&&n.q<n.r&&n.r<n.p+n.q&&n.p*n.p+n.q*n.q!==n.r*n.r&&Math.abs((n.p*n.p+n.q*n.q-n.r*n.r)*1e4/(2*n.p*n.q)%1)>1e-9,{mode:"angle",p:5,q:7,r:10}), {p,q,r}=n, c=(p*p+q*q-r*r)/(2*p*q), th=Math.acos(c)/rd;
+  return {q:`A triangle has sides ${nw(`${p} cm`)}, ${nw(`${q} cm`)} and ${nw(`${r} cm`)}. Find its largest angle, correct to 1 decimal place.`,
+    w:[`it is opposite the longest side, ${r} cm`,nw(`cos θ = ${frac(`${p}² + ${q}² − ${r}²`,`2(${p})(${q})`)}`),nw(`= ${qR(c,5)}`),nw(`θ = ${qD(th,1)}° (1 d.p.)`)],a:`${nw(`${qD(th,1)}°`)} (1 d.p.)`,n}; }},
+{t:"area",g:R=>{ const rd=Math.PI/180, bk=R.f()<.4;
+  if(bk){ const n=qTry(()=>{ const a=R.int(4,12), b=R.int(5,14), s=R.pick([.2,.25,.3,.4,.45,.6,.7,.75,.8,.9]); return {mode:"angle",a,b,s,A:a*b*s/2}; },n=>n.a<n.b&&Number.isInteger(n.A*2)&&n.A>=3,{mode:"angle",a:5,b:10,s:.8,A:20}), {a,b,s,A}=n, th=Math.asin(s)/rd;
+    return {q:`A triangle has sides ${nw(`${a} cm`)} and ${nw(`${b} cm`)} with an angle θ between them. Its area is ${nw(`${qN(A)} cm²`)}. Find the 2 possible values of θ, correct to 1 decimal place.`,
+      w:[nw(`${frac("1","2")}(${a})(${b}) sin θ = ${qN(A)}`),nw(`sin θ = ${qN(s)}`),qW(nw(`θ = ${qD(th,1)}° or ${qD(180-th,1)}° (1 d.p.)`),"sin gives 2 angles")],a:`${nw(`θ = ${qD(th,1)}°`)} or ${nw(`${qD(180-th,1)}°`)} (1 d.p.)`,n}; }
+  const n=qTry(()=>{ const a=R.int(4,15), b=R.int(4,15), C=R.int(25,150); return {mode:"area",a,b,C}; },n=>n.a!==n.b&&n.C!==90,{mode:"area",a:6,b:9,C:50}), {a,b,C}=n, x=a*b*Math.sin(C*rd)/2;
+  return {q:`Two sides of a triangle are ${nw(`${a} cm`)} and ${nw(`${b} cm`)}, and the angle between them is ${C}°. Find the area of the triangle, correct to 3 significant figures.`,
+    w:[qW(nw(`area = ${frac("1","2")}(${a})(${b}) sin ${C}°`),"the angle between the 2 sides"),nw(`= ${qR(x,5)} cm²`),nw(`= ${qR(x,3)} cm² (3 s.f.)`)],a:nw(`${qR(x,3)} cm² (3 s.f.)`),n}; }}],
+"bearings-elevation-3d":[
+{t:"elevation and depression",g:R=>{ const rd=Math.PI/180;
+  if(R.f()<.5){ const d=R.int(4,12)*5, al=R.int(20,60), e=R.pick([1.5,1.6,1.7]), h=d*Math.tan(al*rd), H=e+h, n={mode:"elev",d,al,e};
+    return {q:`A student stands ${nw(`${d} m`)} from the foot of a tree. The student's eyes are ${nw(`${e} m`)} above the ground. The angle of elevation of the top of the tree from the student's eyes is ${al}°. Find the height of the tree, correct to 3 significant figures.`,
+      w:[nw(`tan ${al}° = ${frac(V("h"),d)}`),nw(`${V("h")} = ${d} tan ${al}° = ${qR(h,5)} m`),qW(nw(`height = ${e} + ${qR(h,5)}`),"add the eye level"),nw(`= ${qR(H,3)} m (3 s.f.)`)],a:`${nw(`${qR(H,3)} m`)} (3 s.f.)`,n}; }
+  const h=R.int(3,24)*5, al=R.int(15,65), x=h/Math.tan(al*rd), n={mode:"dep",h,al};
+  return {q:`From the top of a cliff ${nw(`${h} m`)} high, the angle of depression of a boat is ${al}°. Find the distance of the boat from the foot of the cliff, correct to 3 significant figures.`,
+    w:[qW(`angle of elevation of the top from the boat = ${nw(`${al}°`)}`,"depression = elevation"),nw(`tan ${al}° = ${frac(h,V("d"))}`),nw(`${V("d")} = ${h} ÷ tan ${al}°`),nw(`= ${qR(x,5)} m`),nw(`= ${qR(x,3)} m (3 s.f.)`)],a:`${nw(`${qR(x,3)} m`)} (3 s.f.)`,n}; }},
+{t:"two points, one tower",g:R=>{ const rd=Math.PI/180, n=qTry(()=>{ const h=R.int(4,16)*5, a=R.int(4,13)*5, b=R.int(3,12)*5; return {h,a,b}; },n=>n.a-n.b>=10,{h:50,a:45,b:30}), {h,a,b}=n, xb=h/Math.tan(a*rd), xa=h/Math.tan(b*rd);
+  return {q:`A tower is ${nw(`${h} m`)} tall. Points A and B are on level ground, on the same side of the tower and in a straight line with its foot. The angle of elevation of the top of the tower is ${b}° from A and ${a}° from B. Find AB, correct to 3 significant figures.`,
+    w:["B to the foot of the tower:",nw(`${h} ÷ tan ${a}° = ${qR(xb,5)} m`),"A to the foot of the tower:",nw(`${h} ÷ tan ${b}° = ${qR(xa,5)} m`),nw(`AB = ${qR(xa,5)} − ${qR(xb,5)}`),nw(`= ${qR(xa-xb,3)} m (3 s.f.)`)],a:nw(`AB = ${qR(xa-xb,3)} m (3 s.f.)`),n}; }},
+{t:"bearings journey",g:R=>{ const p=b=>String(b).padStart(3,"0")+"°", n=qTry(()=>{ const b1=R.int(4,16)*5, dl=R.int(8,30)*5, d1=R.int(5,20), d2=R.int(4,18); return {b1,b2:b1+dl,d1,d2}; },n=>n.b2-n.b1!==90&&n.d1!==n.d2,{b1:40,b2:120,d1:12,d2:8}), {b1,b2,d1,d2}=n, X=b1+180, B=X-b2, s2=d1*d1+d2*d2-2*d1*d2*Math.cos(B*Math.PI/180), x=Math.sqrt(s2);
+  return {q:`A ship sails ${nw(`${d1} km`)} from A to B on a bearing of ${p(b1)}, then ${nw(`${d2} km`)} from B to C on a bearing of ${p(b2)}. Find the distance AC, correct to 3 significant figures.`,
+    w:[`bearing of A from B: ${nw(`${p(b1)} + 180° = ${p(X)}`)}`,`angle at B: ${nw(`${p(X)} − ${p(b2)} = ${B}°`)}`,nw(`AC² = ${d1}² + ${d2}² − 2(${d1})(${d2}) cos ${B}°`),nw(`= ${qR(s2,5)}`),nw(`AC = ${qR(x,3)} km (3 s.f.)`)],a:nw(`AC = ${qR(x,3)} km (3 s.f.)`),n}; }},
+{t:"3D cuboid",g:R=>{ const n=qTry(()=>{ const [p,q,D]=R.pick([[4,3,5],[8,6,10],[12,5,13],[12,9,15],[15,8,17],[16,12,20],[24,7,25]]), h=R.int(3,15); return {p,q,D,h}; },n=>n.h!==n.D,{p:8,q:6,D:10,h:5}), {p,q,D,h}=n, th=Math.atan(h/D)*180/Math.PI;
+  return {q:`A cuboid has a base ${nw(`${p} cm`)} by ${nw(`${q} cm`)} and a height of ${nw(`${h} cm`)}. Find the angle between a long diagonal of the cuboid and its base, correct to 1 decimal place.`,
+    w:[qW(nw(`base diagonal = ${SQRT(`${p}² + ${q}²`)} = ${D} cm`),"the right-angled triangle"),nw(`tan θ = ${frac(h,D)}`),nw(`θ = ${qD(th,1)}° (1 d.p.)`)],a:`${nw(`θ = ${qD(th,1)}°`)} (1 d.p.)`,n}; }}],
+"arc-length-sector-area":[
+{t:"sector in degrees",g:R=>{ const n=qTry(()=>{ const r=R.int(4,15), t=R.int(5,32)*5, ar=R.f()<.5; return {mode:ar?"perimeter":"area",r,t}; },n=>n.t!==90&&n.t!==180&&n.t!==120&&n.t!==60,{mode:"perimeter",r:6,t:75}), {mode,r,t}=n, ft=frac(`${t}°`,"360°");
+  if(mode==="perimeter"){ const s=t/360*2*Math.PI*r, P=2*r+s;
+    return {q:`A sector of a circle has radius ${nw(`${r} cm`)} and angle ${t}°. Find the perimeter of the sector, correct to 3 significant figures.`,
+      w:[nw(`arc = ${ft} × 2π(${r})`),qW(nw(`= ${qR(s,4)} cm`),"keep it for the perimeter"),qW(nw(`perimeter = ${r} + ${r} + ${qR(s,4)}`),"the 2 radii + the arc"),nw(`= ${qR(P,3)} cm (3 s.f.)`)],a:`${nw(`${qR(P,3)} cm`)} (3 s.f.)`,n}; }
+  const A=t/360*Math.PI*r*r;
+  return {q:`A sector of a circle has radius ${nw(`${r} cm`)} and angle ${t}°. Find the area of the sector, correct to 3 significant figures.`,
+    w:[nw(`sector = ${ft} × π(${r})²`),nw(`= ${qR(A,5)} cm²`),nw(`= ${qR(A,3)} cm² (3 s.f.)`)],a:`${nw(`${qR(A,3)} cm²`)} (3 s.f.)`,n}; }},
+{t:"degrees and radians",g:R=>{
+  if(R.f()<.5){ const D=R.pick([20,40,50,70,80,100,110,140,150,160,200,210,225,240,250,270,300,315,330]), g=qGcd(D,180), p=D/g, q=180/g, x=D*Math.PI/180, n={mode:"d2r",D};
+    return {q:`Convert ${D}° to radians, correct to 3 significant figures.`,w:[qW(nw(`${D}° = ${D} × ${frac("π","180°")} = ${frac(p===1?"π":p+"π",q)}`),"degrees to radians"),nw(`= ${qR(x,5)}`),nw(`= ${qR(x,3)} rad (3 s.f.)`)],a:`${nw(`${qR(x,3)} rad`)} (3 s.f.)`,n}; }
+  const t=qTry(()=>R.int(3,28),v=>v!==10&&v!==20,12)/10, d=t*180/Math.PI, n={mode:"r2d",t};
+  return {q:`Convert ${qN(t)} radians to degrees, correct to 1 decimal place.`,w:[qW(nw(`${qN(t)} rad = ${qN(t)} × ${frac("180°","π")}`),"radians to degrees"),nw(`= ${qR(d,5)}°`),nw(`= ${qD(d,1)}° (1 d.p.)`)],a:`${nw(`${qD(d,1)}°`)} (1 d.p.)`,n}; }},
+{t:"arc and area in radians",g:R=>{
+  if(R.f()<.5){ const n=qTry(()=>({mode:"fwd",r:R.int(3,12),t:R.int(3,25)/10}),n=>n.t%1!==0,{mode:"fwd",r:5,t:1.2}), {r,t}=n, s=r*t, A=r*r*t/2;
+    return {q:`A sector of a circle has radius ${nw(`${r} cm`)} and angle ${qN(t)} radians. Find its arc length and its area.`,
+      w:[qW(nw(`${V("s")} = ${r} × ${qN(t)} = ${qN(s)} cm`),nw(`${V("s")} = ${V("r")}θ`)),qW(nw(`area = ${frac("1","2")} × ${r}² × ${qN(t)} = ${qN(A)} cm²`),nw(`${frac("1","2")}${V("r")}²θ`))],a:`${nw(`arc = ${qN(s)} cm`)}, ${nw(`area = ${qN(A)} cm²`)}`,n}; }
+  const n=qTry(()=>({mode:"back",r:R.pick([2,4,6,8,10]),t:R.int(4,25)/10}),n=>n.t!==1&&n.t!==2,{mode:"back",r:4,t:3}), {r,t}=n, h=r*r/2, A=h*t;
+  return {q:`A sector of a circle has radius ${nw(`${r} cm`)} and area ${nw(`${qN(A)} cm²`)}. Find the angle of the sector in radians.`,
+    w:[nw(`${frac("1","2")} × ${r}² × θ = ${qN(A)}`),nw(`${h}θ = ${qN(A)}`),qW(nw(`θ = ${qN(A)} ÷ ${h} = ${qN(t)} rad`),"× flips to ÷")],a:nw(`θ = ${qN(t)} rad`),n}; }},
+{t:"segment",g:R=>{ const r=R.int(4,12), t=qTry(()=>R.int(6,26),v=>v!==10&&v!==20,14)/10, S=r*r*t/2, T=r*r*Math.sin(t)/2, n={r,t};
+  return {q:`A sector of a circle has radius ${nw(`${r} cm`)} and angle ${qN(t)} radians. Find the area of the segment cut off by the chord, correct to 3 significant figures.`,
+    w:["calculator in RAD",nw(`sector = ${frac("1","2")}(${r})²(${qN(t)}) = ${qN(S)}`),nw(`triangle = ${frac("1","2")}(${r})² sin ${qN(t)} = ${qR(T,5)}`),qW(nw(`segment = ${qN(S)} − ${qR(T,5)}`),"sector − triangle"),nw(`= ${qR(S-T,3)} cm² (3 s.f.)`)],a:`${nw(`${qR(S-T,3)} cm²`)} (3 s.f.)`,n}; }}],
+"functions-graphs":[
+{t:"find k or n",g:R=>{ const VK=V("k"), VNn=V("n");
+  if(R.f()<.5){ const n=qTry(()=>({mode:"k",p:R.pick([2,3]),x:R.pick([2,3,4,-2,-3]),k:R.nz(-5,5)}),n=>Math.abs(n.k)>1&&Math.abs(n.x**n.p)<=64,{mode:"k",p:2,x:2,k:3}), {p,x,k}=n, c=x**p, y=k*c;
+    return {q:`The curve ${nw(`${VY} = ${VK}${qP("x",p)}`)} passes through ${nw(`(${qN(x)}, ${qN(y)}).`)} Find ${VK}.`,
+      w:[qW(nw(`${qN(y)} = ${VK}(${qN(x)})${"⁰¹²³"[p]}`),x<0?"keep the bracket":"put the point in"),nw(`${qN(y)} = ${qN(c)}${VK}`),nw(`${VK} = ${qN(y)} ÷ ${qB(c)} = ${qN(k)}`)],a:nw(`${VK} = ${qN(k)}`),n}; }
+  const n=qTry(()=>({mode:"n",c:R.int(2,5),b:R.int(2,5),p:R.int(2,4)}),n=>n.b**n.p<=256&&n.p!==n.c&&n.p!==n.b,{mode:"n",c:2,b:3,p:3}), {c,b,p}=n, y=c*b**p;
+  return {q:`The curve ${nw(`${VY} = ${c}${X1}<sup>${VNn}</sup>`)} passes through ${nw(`(${b}, ${y}).`)} Find ${VNn}.`,
+    w:[nw(`${y} = ${c}(${b})<sup>${VNn}</sup>`),nw(`${b}<sup>${VNn}</sup> = ${y} ÷ ${c} = ${b**p} = ${qP(String(b),p)}`),nw(`${VNn} = ${p}`)],a:nw(`${VNn} = ${p}`),n}; }},
+{t:"exponential: find k and a",g:R=>{ const VK=V("k"), VA=V("a"), n=qTry(()=>({k:R.int(2,6),a:R.int(2,5),m:R.int(2,3)}),n=>n.k*n.a**n.m<=500&&n.a!==n.k,{k:5,a:3,m:2}), {k,a,m}=n, y=k*a**m;
+  return {q:`The curve ${nw(`${VY} = ${VK}${VA}<sup>${X1}</sup>`)} passes through ${nw(`(0, ${k})`)} and ${nw(`(${m}, ${y}).`)} Find ${VK} and ${VA}.`,
+    w:[`${nw(`${X1} = 0`)}: ${nw(`${k} = ${VK}${VA}⁰`)}, so ${nw(`${VK} = ${k}`)}`,`${nw(`${X1} = ${m}`)}: ${nw(`${y} = ${k}${qP(VA,m)}`)}`,nw(`${qP(VA,m)} = ${y} ÷ ${k} = ${a**m}`),`${nw(`${VA} = ${a}`)} (${VA} is positive)`],a:`${nw(`${VK} = ${k}`)}, ${nw(`${VA} = ${a}`)}`,n}; }},
+{t:"growth and decay",g:R=>{ const n=qTry(()=>({up:R.f()<.4,P:R.int(4,19)*500,r:R.pick([3,4,5,6,8,10,12,15,20]),t:R.int(2,5)}),n=>n.P*Math.pow(n.up?1+n.r/100:1-n.r/100,n.t)<9999,{up:false,P:6500,r:12,t:3}), {up,P,r,t}=n, m=up?100+r:100-r, ms=qN(m/100), x=P*Math.pow(m/100,t), fl=+x.toFixed(6), VV=V("V");
+  const w=[up?`every year it goes up ${r}%: ${nw(`× ${ms}`)}`:`every year it keeps ${m}%: ${nw(`× ${ms}`)}`,nw(`${VV} = ${P}(${ms})<sup>${V("t")}</sup>`),nw(`= ${P}(${ms})${"⁰¹²³⁴⁵"[t]}`)];
+  if(Math.abs(fl*100-Math.round(fl*100))>1e-7) w.push(nw(`= ${qN(fl)}`)); w.push(nw(`= $${qD(fl,2)}`));
+  return {q:up?`A painting is worth $${P}. Its value goes up by ${r}% every year. Find its value after ${t} years, correct to the nearest cent.`:`A machine is worth $${P}. It loses ${r}% of its value every year. Find its value after ${t} years, correct to the nearest cent.`,w,a:`$${qD(fl,2)}`,n}; }},
+{t:"which line to draw",g:R=>{ const n=qTry(()=>({cub:R.f()<.35,b:R.nz(-6,6),c:R.nz(-6,6),b2:R.nz(-6,6),c2:R.nz(-6,6)}),n=>n.b!==n.b2,{cub:false,b:-2,c:-3,b2:-3,c2:-1}), {cub,b,c,b2,c2}=n, L=cub?qP("x",3):X2, cv=qJ(L,qT(b,X1),c), ln=qJ(qT(b-b2,X1),c-c2), eq=nw(`${qJ(L,qT(b2,X1),c2)} = 0`);
+  return {q:`The curve ${nw(`${VY} = ${cv}`)} is drawn. Find the equation of the straight line you draw to solve ${nw(`${qJ(L,qT(b2,X1),c2)} = 0.`)}`,
+    w:[eq,`split it so the curve appears: ${nw(`${qJ(cv,qT(b2-b,X1),c2-c)} = 0`)}`,nw(`${cv} = ${ln}`),`draw ${nw(`${VY} = ${ln}`)}`],a:nw(`${VY} = ${ln}`),n}; }}],
+"applications-of-integration":[
+{t:"area under a curve",g:R=>{ const tm=(c,p)=>{ const g=qGcd(c,p), u=c/g, d=p/g; return d===1?qT(u,qP("x",p)):(u<0?"−":"")+frac(qT(Math.abs(u),qP("x",p)),d); }, I=(l,u)=>`∫${AR_LIM(l,u)}`;
+  const ev=(cs,X)=>qJ(...cs.map(([c,p])=>c?qF(c*X**p,p):"")), tot=(cs,l,u)=>cs.reduce((s,[c,p])=>s+c*(u**p-l**p)*6/p,0);
+  if(R.f()<.5){ const n=qTry(()=>{ const a=R.int(1,3), b=R.int(-3,3), c=R.int(1,6), l=R.int(0,2), u=l+R.int(1,3); return {mode:"above",a,b,c,l,u}; },n=>n.b*n.b-4*n.a*n.c<0&&n.u>=2,{mode:"above",a:1,b:0,c:1,l:1,u:3}),
+    {a,b,c,l,u}=n, cs=[[a,3],[b,2],[c,1]], A=tot(cs,l,u), poly=qJ(qT(a,X2),qT(b,X1),c), pr=qJ(...cs.map(([k,p])=>k?tm(k,p):""));
+    return {q:`Find the area under the curve ${nw(`${VY} = ${poly}`)} from ${nw(`${X1} = ${l}`)} to ${nw(`${X1} = ${u}.`)}`,
+      w:[nw(`${V("A")} = ${I(l,u)} (${poly}) d${X1}`),nw(`= [${pr}]${AR_LIM(l,u)}`),nw(l?`= (${ev(cs,u)}) − (${ev(cs,l)})`:`= ${ev(cs,u)}`),nw(`= ${qF(A,6)} units²`)],a:nw(`${qF(A,6)} units²`),n}; }
+  const n=qTry(()=>{ const p=R.int(0,3), q=p+R.int(2,5); return {mode:"below",p,q}; },n=>true,{mode:"below",p:1,q:3}), {p,q}=n, b=-(p+q), c=p*q, cs=[[1,3],[b,2],[c,1]], A=tot(cs,p,q), poly=qJ(X2,qT(b,X1),c), pr=qJ(...cs.map(([k,e])=>k?tm(k,e):""));
+  return {q:`Find the area enclosed by the curve ${nw(`${VY} = ${poly}`)} and the ${nw(`${X1}-axis.`)}`,
+    w:[`meet the ${nw(`${X1}-axis:`)} ${nw(`${p?`(${qJ(X1,-p)})`:X1}(${qJ(X1,-q)}) = 0`)}, so ${nw(`${X1} = ${p}`)} or ${q}`,nw(`${I(p,q)} (${poly}) d${X1}`),nw(`= [${pr}]${AR_LIM(p,q)}`),nw(p?`= (${ev(cs,q)}) − (${ev(cs,p)})`:`= ${ev(cs,q)}`),nw(`= ${qF(A,6)}`),qW(nw(`area = ${qF(-A,6)} units²`),"below the axis: its size")],a:nw(`${qF(-A,6)} units²`),n}; }},
+{t:"curve and line",g:R=>{ const n=qTry(()=>{ const b=R.int(3,7), m=R.nz(-2,6); return {b,m,d:b-m}; },n=>n.d>=2&&n.d<=6,{b:4,m:1,d:3}), {b,m,d}=n, I=`∫${AR_LIM(0,d)}`, up=qJ(qT(b,X1),"−"+X2), lo=qT(m,X1), A=d*d*d;
+  return {q:`Find the area enclosed by the curve ${nw(`${VY} = ${up}`)} and the line ${nw(`${VY} = ${lo}.`)}`,
+    w:[`meet: ${nw(`${up} = ${lo}`)}`,`${nw(`${X1}(${qJ(d,"−"+X1)}) = 0`)}, so ${nw(`${X1} = 0`)} or ${d}`,`upper − lower: ${nw(`${I} (${up} − ${m<0?`(${lo})`:lo}) d${X1}`)}`,nw(`= ${I} (${qJ(qT(d,X1),"−"+X2)}) d${X1}`),nw(`= [${qF(d,2)===String(d/2)?qT(d/2,X2):frac(qT(d,X2),2)} − ${frac(qP("x",3),3)}]${AR_LIM(0,d)}`),nw(`= ${qF(d*d*d,2)} − ${qF(d*d*d,3)} = ${qF(A,6)} units²`)],a:nw(`${qF(A,6)} units²`),n}; }},
+{t:"definite integral rules",g:R=>{ const n=qTry(()=>{ const a=R.pick([0,2,3]), b=a+R.int(2,5), v=R.nz(-9,12), k=R.int(2,5), c=R.int(1,5), mode=R.pick(["swap","k","c","kc"]); return {a,b,v,k,c,mode}; },n=>Math.abs(n.v)!==1&&n.c!==n.v,{a:1,b:4,v:7,k:3,c:2,mode:"c"}), {a,b,v,k,c,mode}=n, fx=`f(${X1})`, I=(l,u)=>`∫${AR_LIM(l,u)}`;
+  const given=`Given that ${nw(`${I(a,b)} ${fx} d${X1} = ${qN(v)}`)}, find`;
+  if(mode==="swap") return {q:`${given} ${nw(`${I(b,a)} ${fx} d${X1}.`)}`,w:[qW(nw(`${I(b,a)} ${fx} d${X1} = −${I(a,b)} ${fx} d${X1}`),"swap the limits: change the sign"),nw(`= ${qN(-v)}`)],a:nw(qN(-v)),n};
+  if(mode==="k") return {q:`${given} ${nw(`${I(a,b)} ${k}${fx} d${X1}.`)}`,w:[qW(nw(`${I(a,b)} ${k}${fx} d${X1} = ${k}${I(a,b)} ${fx} d${X1}`),"the number comes out"),nw(`= ${k} × ${qB(v)} = ${qN(k*v)}`)],a:nw(qN(k*v)),n};
+  const kk=mode==="kc"?k:1, h=kk*v+c*(b-a);
+  return {q:`${given} ${nw(`${I(a,b)} [${kk>1?kk:""}${fx} + ${c}] d${X1}.`)}`,w:[nw(`${I(a,b)} [${kk>1?kk:""}${fx} + ${c}] d${X1} = ${kk>1?`${kk} × ${qB(v)}`:qN(v)} + [${qT(c,X1)}]${AR_LIM(a,b)}`),nw(`= ${qN(kk*v)} + ${c*(b-a)} = ${qN(h)}`)],a:nw(qN(h)),n}; }},
+{t:"unknown limit",g:R=>{ const VK=V("k"), n=qTry(()=>{ const k=R.int(1,6), r=-R.int(1,8); return {k,r,b:-(k+r),c:-k*r}; },n=>n.b!==0,{k:2,r:-3,b:1,c:6}), {k,r,b,c}=n;
+  return {q:`${nw(`∫${AR_LIM(0,VK)} (${qJ(qT(2,X1),b)}) d${X1} = ${c}`)}, where ${nw(`${VK} &gt; 0`)}. Find ${VK}.`,
+    w:[nw(`[${qJ(X2,qT(b,X1))}]${AR_LIM(0,VK)} = ${c}`),nw(`${qJ(VK+"²",qT(b,VK))} = ${c}`),nw(`${qJ(VK+"²",qT(b,VK),-c)} = 0`),nw(`(${qJ(VK,-r)})(${qJ(VK,-k)}) = 0`),`${nw(`${VK} = ${k}`)} (reject ${qN(r)}: ${nw(`${VK} &gt; 0`)})`],a:nw(`${VK} = ${k}`),n}; }}]
 };
 let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
 function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
