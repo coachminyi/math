@@ -643,6 +643,13 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
 .clines .cwhy{display:block;color:var(--ink);font-size:15px;line-height:1.4;margin-top:2px}
 .clines .cfine{display:inline-block;vertical-align:middle;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--line);color:var(--muted);font-size:14px;font-weight:700;line-height:22px}
 .cdgo-p{text-align:center;margin:18px 0}
+.ccard.cqk .cq{text-align:left;font-size:20px}
+.ccard .cqh{margin:14px 0 0;color:var(--muted);font-size:15px}
+.ccard .cqw{text-align:left}
+.ccard .cqw .steps{font-size:19px}
+.ccard .cqw .steps li .tagop{font-size:14px}
+.ccard .cqa{margin:12px 0 0;padding:10px 14px;border-radius:10px;background:var(--green-fill);font-weight:700}
+.ccard .cqc{margin:8px 0 0;color:var(--muted);font-size:15px}
 .cdgo{min-height:54px;padding:0 22px;font-size:18px;font-weight:700;text-decoration:none}
 html[data-present] .cdeck{max-width:1100px}
 html[data-present] .ccard{font-size:40px;padding:28px}
@@ -651,6 +658,8 @@ html[data-present] .ccard .cask,html[data-present] .ccard .cgrp,html[data-presen
 html[data-present] .ctop .stepof{font-size:18px}
 html[data-present] .cacts .cbtn{min-height:64px;font-size:24px}
 html[data-present] .cend{font-size:44px}
+html[data-present] .ccard.cqk .cq,html[data-present] .ccard .cqw .steps{font-size:34px}
+html[data-present] .ccard .cqh,html[data-present] .ccard .cqc,html[data-present] .ccard .cqw .steps li .tagop{font-size:22px}
 html[data-present] .ccard .cspl,html[data-present] .ccard .cspi{font-size:24px}
 html[data-present] .ccard .cspq{font-size:32px}
 html[data-present] .clines .cln{font-size:36px;min-height:72px;padding:12px 20px}
@@ -1333,6 +1342,23 @@ const cs2=v=>v===1?"":N(v)+" ";
 const rLeft=s=>s.mode==="cos"?`${cs2(s.a)}cos θ + ${cs2(s.b)}sin θ`:`${cs2(s.a)}sin θ + ${cs2(s.b)}cos θ`;
 const rRight=(s,I)=>s.mode==="cos"?`${I.Rs.split(" = ")[0]} cos(θ − ${N(I.al)}°)`:`${I.Rs.split(" = ")[0]} sin(θ + ${N(I.al)}°)`;
 const nw=t=>`<span class="nw">${t}</span>`;
+const qRand=seed=>{ let a=seed|0; const f=()=>{ a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };
+  const R={f, int:(lo,hi)=>lo+Math.floor(f()*(hi-lo+1)), pick:arr=>arr[Math.floor(f()*arr.length)], sign:()=>f()<.5?-1:1,
+    nz:(lo,hi)=>{ const z=lo<=0&&hi>=0, n=R.int(lo,hi-(z?1:0)); return z&&n>=0?n+1:n; },
+    shuf:arr=>{ const b=arr.slice(); for(let i=b.length-1;i>0;i--){ const j=Math.floor(f()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; } };
+  return R; };
+const qN=n=>{ if(typeof n!=="number") return String(n); const v=+n.toPrecision(12); return v<0?"−"+String(-v):String(v||0); };
+const qT=(c,v="")=>{ if(/^[A-Za-z]+$/.test(v)) v=V(v); if(c===0) return ""; if(!v) return qN(c); return c===1?v:c===-1?"−"+v:qN(c)+v; };
+const qJ=(...t)=>{ const a=t.map(x=>typeof x==="number"?(x?qN(x):""):String(x||"")).filter(Boolean); return a.length?a.map((x,i)=>!i?x:x[0]==="−"?" − "+x.slice(1):" + "+x).join(""):"0"; };
+const qB=n=>n<0?`(${qN(n)})`:qN(n);
+const qGcd=(a,b)=>{ a=Math.abs(a); b=Math.abs(b); while(b) [a,b]=[b,a%b]; return a; };
+const qLcm=(a,b)=>Math.abs(a*b)/qGcd(a,b);
+const qF=(p,q)=>{ if(!q) return "NaN"; const g=qGcd(p,q)||1, s=p&&(p<0)!==(q<0)?"−":"", a=Math.abs(p)/g, b=Math.abs(q)/g; return b===1?s+a:s+frac(a,b); };
+const qSh=(x,d)=>{ const [m,e]=x.toExponential().split("e"); return Number(m+"e"+(+e+d)); };
+const qD=(x,d)=>{ const r=qSh(Math.round(qSh(Math.abs(x),d)),-d); return (x<0&&r?"−":"")+r.toFixed(Math.max(d,0)); };
+const qR=(x,s)=>{ if(!x) return "0"; const a=Math.abs(x); let d=s-1-+a.toExponential().split("e")[1]; if(qSh(Math.round(qSh(a,d)),-d)>=Math.pow(10,s-d)) d--; return qD(x,d); };
+const qP=(v,n)=>{ if(/^[A-Za-z]+$/.test(v)) v=V(v); return n===1?v:n>=2&&n<=9&&n%1===0?v+"⁰¹²³⁴⁵⁶⁷⁸⁹"[n]:`${v}<sup>${qN(n)}</sup>`; };
+const qW=(line,tag)=>`${line} <span class="tagop">${tag}</span>`;
 const rGen=s=>s.mode==="cos"?`${nw(`${CV("amber","a")} cos θ + ${CV("green","b")} sin θ`)} = ${nw(`${CV("blue","R")} cos(θ − ${AL})`)}`:`${nw(`${CV("amber","a")} sin θ + ${CV("green","b")} cos θ`)} = ${nw(`${CV("blue","R")} sin(θ + ${AL})`)}`;
 const rSpecC=(s,I)=>{const A=s.a===1?"":CS("amber",N(s.a))+" ", B=s.b===1?"":CS("green",N(s.b))+" ", R=CS("blue",RT(I.Rs.split(" = ")[0])), al=CS("red",N(I.al)+"°");
   return s.mode==="cos"?`${nw(`${A}cos θ + ${B}sin θ`)} = ${nw(`${R} cos(θ − ${al})`)}`:`${nw(`${A}sin θ + ${B}cos θ`)} = ${nw(`${R} sin(θ + ${al})`)}`;};
@@ -9042,6 +9068,57 @@ const SPOTS_HI={
 {q:`Solve ${nw(`${SQRT(`${X1} + 7`)} = ${X1} − 5`)}.`,w:[nw(`${X1} + 7 = (${X1} − 5)²`),nw(`${X2} − 11${X1} + 18 = 0`),nw(`(${X1} − 9)(${X1} − 2) = 0`),nw(`${X1} = 9 or ${X1} = 2`)],bad:3,fix:`${nw(`${X1} = 9`)}, reject ${nw(`${X1} = 2`)}: ${nw(`${SQRT("9")} ≠ 2 − 5`)}`,why:`check each answer in the original equation`},
 {q:`Solve ${nw(`2${SQRT(`${X1} + 3`)} = ${SQRT(`${X1} + 15`)}`)}.`,w:[nw(`(2${SQRT(`${X1} + 3`)})² = ${X1} + 15`),nw(`2(${X1} + 3) = ${X1} + 15`),nw(`2${X1} + 6 = ${X1} + 15`),nw(`${X1} = 15 − 6 = 9`)],bad:1,fix:nw(`4(${X1} + 3) = ${X1} + 15`),why:`square the 2 too: ${nw("2² = 4")}`}]
 };
+const qTry=(make,ok,fb)=>{ for(let i=0;i<50;i++){ const n=make(); if(ok(n)) return n; } return fb; };
+const QQ_LO={
+"linear-equations":[
+{t:"x on both sides",g:R=>{ const n=qTry(()=>{ const a=R.int(2,9), c=R.int(1,9), x=R.nz(-6,9), b=R.nz(-9,9); return {a,b,c,d:(a-c)*x+b,x}; },n=>Math.abs(n.a-n.c)>=2&&n.d&&Math.abs(n.d)<=40,{a:5,b:-7,c:2,d:8,x:5}), {a,b,c,d,x}=n, e=a-c, r=d-b, eq=nw(`${qJ(qT(a,X1),b)} = ${qJ(qT(c,X1),d)}`);
+  return {q:`Solve ${eq}.`,w:[eq,qW(nw(`${qJ(qT(a,X1),qT(-c,X1))} = ${qJ(d,-b)}`),`throw ${nw(qT(c,X1))} and ${nw(qN(b))} over: flip`),qW(nw(`${qT(e,X1)} = ${qN(r)}`),"collect"),qW(nw(`${X1} = ${qN(r)} ÷ ${qB(e)} = ${qN(x)}`),`× ${qB(e)} flips to ÷ ${qB(e)}`)],a:nw(`${X1} = ${qN(x)}`),n}; }},
+{t:"brackets",g:R=>{ const n=qTry(()=>{ const p=R.int(2,5), q=R.int(1,3), r=R.nz(-6,6), s=R.int(2,6), x=R.nz(-5,8); return {p,q,r,s,t:((p*q-s)*x+p*r)/s,x}; },n=>Math.abs(n.p*n.q-n.s)>=2&&n.p!==n.s&&Number.isInteger(n.t)&&n.t&&Math.abs(n.t)<=9,{p:2,q:3,r:-1,s:4,t:2,x:5}), {p,q,r,s,t,x}=n, e=p*q-s, h=s*t-p*r, eq=nw(`${p}(${qJ(qT(q,X1),r)}) = ${s}(${qJ(X1,t)})`);
+  return {q:`Solve ${eq}.`,w:[eq,qW(nw(`${qJ(qT(p*q,X1),p*r)} = ${qJ(qT(s,X1),s*t)}`),"expand"),qW(nw(`${qJ(qT(p*q,X1),qT(-s,X1))} = ${qJ(s*t,-p*r)}`),"throw over: flip"),qW(nw(`${qT(e,X1)} = ${qN(h)}`),"collect"),qW(nw(`${X1} = ${qN(h)} ÷ ${qB(e)} = ${qN(x)}`),`× ${qB(e)} flips to ÷ ${qB(e)}`)],a:nw(`${X1} = ${qN(x)}`),n}; }},
+{t:"fractions",g:R=>{ const n=qTry(()=>{ const [m,k]=R.pick([[2,3],[3,4],[2,5],[3,5],[4,5],[3,2],[4,3],[5,2],[5,3],[5,4]]), a=R.int(1,4), x=R.nz(-6,9), c=R.nz(-6,6); return {m,k,a,b:(m*c-(k*a-m)*x)/k,c,x}; },n=>Math.abs(n.k*n.a-n.m)>=2&&Number.isInteger(n.b)&&n.b&&Math.abs(n.b)<=9,{m:3,k:4,a:2,b:-3,c:1,x:3}), {m,k,a,b,c,x}=n, L=m*k, e=k*a-m, h=m*c-k*b, eq=nw(`${frac(qJ(qT(a,X1),b),m)} = ${frac(qJ(X1,c),k)}`);
+  return {q:`Solve ${eq}.`,w:[eq,qW(nw(`${k}(${qJ(qT(a,X1),b)}) = ${m}(${qJ(X1,c)})`),`× ${L}`),qW(`${nw(`${L} ÷ ${m} = ${k}`)} and ${nw(`${L} ÷ ${k} = ${m}`)}`,"the new numbers in front"),qW(nw(`${qJ(qT(k*a,X1),k*b)} = ${qJ(qT(m,X1),m*c)}`),"expand"),qW(nw(`${qJ(qT(k*a,X1),qT(-m,X1))} = ${qJ(m*c,-k*b)}`),"throw over: flip"),nw(`${qT(e,X1)} = ${qN(h)}`),nw(`${X1} = ${qN(h)} ÷ ${qB(e)} = ${qN(x)}`)],a:nw(`${X1} = ${qN(x)}`),n}; }}],
+"simultaneous-equations":[
+{t:"elimination",g:R=>{ const n=qTry(()=>{ const x=R.nz(-5,6), y=R.nz(-5,6), a1=R.int(1,5), a2=R.int(1,5), b1=R.nz(-5,5), b2=R.nz(-5,5); return {a1,b1,c1:a1*x+b1*y,a2,b2,c2:a2*x+b2*y,x,y}; },n=>n.a1*n.b2!==n.a2*n.b1&&qLcm(n.b1,n.b2)<=12&&Math.abs(n.c1)<=40&&Math.abs(n.c2)<=40,{a1:2,b1:3,c1:13,a2:3,b2:-2,c2:0,x:2,y:3}),
+  {a1,b1,c1,a2,b2,c2,x,y}=n, L=qLcm(b1,b2), k1=L/Math.abs(b1), k2=L/Math.abs(b2), E=(a,b,c)=>nw(`${qJ(qT(a,X1),qT(b,VY))} = ${qN(c)}`), w=[EQN(E(a1,b1,c1),"①"),EQN(E(a2,b2,c2),"②")];
+  let P="①", Q="②"; if(k1>1){ P="③"; w.push(EQN(`① × ${k1}: ${E(k1*a1,k1*b1,k1*c1)}`,P)); } if(k2>1){ Q=k1>1?"④":"③"; w.push(EQN(`② × ${k2}: ${E(k2*a2,k2*b2,k2*c2)}`,Q)); }
+  const u=k1*a1, v=k2*a2, ru=k1*c1, rv=k2*c2, same=(b1>0)===(b2>0), [lb,e,r]=!same?[`${P} + ${Q}`,u+v,ru+rv]:u>v?[`${P} − ${Q}`,u-v,ru-rv]:[`${Q} − ${P}`,v-u,rv-ru];
+  w.push(`${lb}: ${nw(`${qT(e,X1)} = ${qN(r)}`)}`); if(e!==1) w.push(nw(`${X1} = ${qN(x)}`));
+  w.push(`Sub ${nw(`${X1} = ${qN(x)}`)} into ①: ${nw(`${qJ(a1===1?qN(x):`${a1}(${qN(x)})`,qT(b1,VY))} = ${qN(c1)}`)}`,nw(`${qT(b1,VY)} = ${qN(c1-a1*x)}`)); if(b1!==1) w.push(nw(`${VY} = ${qN(y)}`)); w.push(`${nw(`${X1} = ${qN(x)}`)}, ${nw(`${VY} = ${qN(y)}`)}`);
+  return {q:`Solve the simultaneous equations<br>${E(a1,b1,c1)}<br>${E(a2,b2,c2)}`,w,a:`${nw(`${X1} = ${qN(x)}`)}, ${nw(`${VY} = ${qN(y)}`)}`,k:`MENU 5 1 2: key in ${nw(`${a1}, ${qN(b1)}, ${qN(c1)}`)} and ${nw(`${a2}, ${qN(b2)}, ${qN(c2)}`)}`,n}; }},
+{t:"substitution",g:R=>{ const n=qTry(()=>{ const p=R.nz(-4,4), q=R.nz(-6,6), a=R.int(1,5), b=R.nz(-4,4), x=R.nz(-5,6), y=p*x+q; return {p,q,a,b,c:a*x+b*y,x,y}; },n=>n.a+n.b*n.p>=1&&n.y&&Math.abs(n.c)<=50&&Math.abs(n.y)<=20,{p:2,q:-1,a:3,b:1,c:14,x:3,y:5}),
+  {p,q,a,b,c,x,y}=n, e=a+b*p, ln=qJ(qT(p,X1),q), w=[EQN(nw(`${VY} = ${ln}`),"①"),EQN(nw(`${qJ(qT(a,X1),qT(b,VY))} = ${qN(c)}`),"②"),`Sub ① into ②: ${nw(`${qJ(qT(a,X1),qT(b,`(${ln})`))} = ${qN(c)}`)}`];
+  if(b!==1) w.push(nw(`${qJ(qT(a,X1),qT(b*p,X1),b*q)} = ${qN(c)}`)); w.push(nw(`${qJ(qT(e,X1),b*q)} = ${qN(c)}`),nw(`${qT(e,X1)} = ${qN(c-b*q)}`)); if(e!==1) w.push(nw(`${X1} = ${qN(x)}`));
+  w.push(`Sub ${nw(`${X1} = ${qN(x)}`)} into ①: ${nw(`${VY} = ${qJ(p===1?qN(x):p===-1?`−(${qN(x)})`:`${qN(p)}(${qN(x)})`,q)} = ${qN(y)}`)}`,`${nw(`${X1} = ${qN(x)}`)}, ${nw(`${VY} = ${qN(y)}`)}`);
+  return {q:`Solve the simultaneous equations<br>${nw(`${VY} = ${ln}`)}<br>${nw(`${qJ(qT(a,X1),qT(b,VY))} = ${qN(c)}`)}`,w,a:`${nw(`${X1} = ${qN(x)}`)}, ${nw(`${VY} = ${qN(y)}`)}`,n}; }},
+{t:"word problem",g:R=>{ const A=R.int(6,15), C=R.int(3,A-2), na=R.int(2,9), nc=R.int(2,9), N=na+nc, T=A*na+C*nc, va=V("a"), vc=V("c");
+  return {q:`A group of ${N} people buys tickets. Adult tickets cost $${A} each and child tickets cost $${C} each. The group pays $${T} in total. How many adults and how many children are there?`,
+    w:[`let ${va} = number of adults, ${vc} = number of children`,EQN(nw(`${va} + ${vc} = ${N}`),"①"),EQN(nw(`${A}${va} + ${C}${vc} = ${T}`),"②"),EQN(`From ①: ${nw(`${vc} = ${N} − ${va}`)}`,"③"),`Sub ③ into ②: ${nw(`${A}${va} + ${C}(${N} − ${va}) = ${T}`)}`,nw(`${A}${va} + ${C*N} − ${C}${va} = ${T}`),nw(`${qT(A-C,va)} = ${T-C*N}`),nw(`${va} = ${na}`),`Sub ${nw(`${va} = ${na}`)} into ③: ${nw(`${vc} = ${N} − ${na} = ${nc}`)}`,`${na} adults and ${nc} children`],
+    a:`${na} adults and ${nc} children`,n:{A,C,N,T,na,nc}}; }}]
+};
+const QQ_HI={
+"quadratic-equations":[
+{t:"factorise",g:R=>{ const v=R.int(0,2), n=qTry(()=>{ const p=v===2?R.pick([2,3]):1, s=R.nz(-7,7), r=R.nz(-7,7); return {p,s,r,a:p,b:-(p*r+s),c:s*r}; },n=>n.b&&(n.p===1?n.s!==n.r:n.s%n.p!==0)&&Math.abs(n.c)<=40,{p:1,s:-2,r:-3,a:1,b:5,c:6}),
+  {p,s,r,a,b,c}=n, mv=p===1&&R.f()<.4, eq=nw(`${qJ(qT(a,X2),qT(b,X1),c)} = 0`), f1=qJ(qT(p,X1),-s), f2=qJ(X1,-r), w=[mv?qW(eq,"make it = 0"):eq,qW(nw(`(${f1})(${f2}) = 0`),"cross method")];
+  if(p>1) w.push(`${nw(`${f1} = 0`)} or ${nw(`${f2} = 0`)}`); w.push(`${nw(`${X1} = ${qF(s,p)}`)} or ${nw(`${X1} = ${qN(r)}`)}`);
+  return {q:`Solve ${mv?nw(`${qJ(X2,qT(b,X1))} = ${qN(-c)}`):eq}.`,w,a:`${nw(`${X1} = ${qF(s,p)}`)} or ${nw(`${X1} = ${qN(r)}`)}`,k:`MENU 5 2 2: key in ${nw(`${a}, ${qN(b)}, ${qN(c)}`)}`,n}; }},
+{t:"quadratic formula",g:R=>{ const n=qTry(()=>{ const a=R.int(1,3), b=R.nz(-7,7), c=R.nz(-7,7), D=b*b-4*a*c; return {a,b,c,D}; },n=>n.D>0&&Math.sqrt(n.D)%1!==0&&Math.min(...[1,-1].map(s=>Math.abs((-n.b+s*Math.sqrt(n.D))/(2*n.a))))>=.05,{a:2,b:-3,c:-4,D:41}),
+  {a,b,c,D}=n, r1=(-b+Math.sqrt(D))/(2*a), r2=(-b-Math.sqrt(D))/(2*a), eq=nw(`${qJ(qT(a,X2),qT(b,X1),c)} = 0`), ans=`${nw(`${X1} = ${qD(r1,2)}`)} or ${nw(`${X1} = ${qD(r2,2)}`)}`;
+  return {q:`Solve ${eq}, giving your answers correct to 2 decimal places.`,w:[qW(`① ${nw(`${V("a")} = ${a}`)}, ${nw(`${V("b")} = ${qN(b)}`)}, ${nw(`${V("c")} = ${qN(c)}`)}`,"signs included!"),`② ${nw(`${X1} = ${frac(`${b<0?`−(${qN(b)})`:`−${b}`} ± ${SQRT(`${b<0?`(${qN(b)})`:b}² − 4(${a})(${qN(c)})`)}`,`2(${a})`)}`)}`,`③ ${nw(`${X1} = ${frac(`${qN(-b)} ± ${SQRT(D)}`,2*a)}`)}`,`④ ${nw(`${X1} = ${qD(r1,4)}…`)} or ${nw(`${X1} = ${qD(r2,4)}…`)}`,`${ans} (2 d.p.)`],
+    a:`${ans} (2 d.p.)`,k:`MENU 5 2 2: key in ${nw(`${a}, ${qN(b)}, ${qN(c)}`)}`,n}; }},
+{t:"word problem",g:R=>{ const wd=R.int(3,12), k=R.int(1,7), A=wd*(wd+k), ln=R.f()<.5, w=[`width ${X1} cm, length ${nw(`(${X1} + ${k}) cm`)}`,nw(`${X1}(${X1} + ${k}) = ${A}`),nw(`${qJ(X2,qT(k,X1),-A)} = 0`),nw(`(${X1} + ${wd+k})(${X1} − ${wd}) = 0`),`width = ${wd} cm (reject −${wd+k}: a length can't be negative)`];
+  if(ln) w.push(nw(`length = ${wd} + ${k} = ${wd+k} cm`));
+  return {q:`A rectangle is ${k} cm longer than it is wide. Its area is ${A} cm². Find its ${ln?"length":"width"}.`,w,a:`${ln?wd+k:wd} cm`,n:{wd,k,A,ln}}; }}],
+"differentiation-rules":[
+{t:"term by term",g:R=>{ const m=R.pick([3,4]), c3=R.nz(-6,6), c2=R.nz(-9,9), c1=R.nz(-9,9), c0=R.nz(-9,9), DY=frac("d"+VY,"d"+X1), y=qJ(qT(c3,qP("x",m)),qT(c2,X2),qT(c1,X1),c0), d=qJ(qT(m*c3,qP("x",m-1)),qT(2*c2,X1),c1);
+  return {q:`Given that ${nw(`${VY} = ${y}`)}, find ${DY}.`,w:[nw(`${VY} = ${y}`),qW(nw(`${DY} = ${d}`),`the ${qN(c0)} becomes 0`)],a:nw(`${DY} = ${d}`),n:{m,c3,c2,c1,c0}}; }},
+{t:"rewrite first",g:R=>{ const m=R.pick([2,3]), c=R.nz(-5,5), k=R.nz(-8,8), p=R.int(1,3), DY=frac("d"+VY,"d"+X1), y=qJ(qT(c,qP("x",m)),(k<0?"−":"")+frac(Math.abs(k),qP("x",p))), d=qJ(qT(c*m,qP("x",m-1)),(p*k>0?"−":"")+frac(Math.abs(p*k),qP("x",p+1)));
+  return {q:`Given that ${nw(`${VY} = ${y}`)}, find ${DY}.`,w:[nw(`${VY} = ${y}`),qW(nw(`${VY} = ${qJ(qT(c,qP("x",m)),qT(k,qP("x",-p)))}`),"rewrite first"),qW(nw(`${DY} = ${qJ(qT(c*m,qP("x",m-1)),qT(-p*k,qP("x",-p-1)))}`),"power down, then power − 1"),nw(`= ${d}`)],a:nw(`${DY} = ${d}`),n:{m,c,k,p}}; }},
+{t:"chain rule",g:R=>{ const sq=R.f()<.4, a=R.int(2,5), b=R.nz(-7,7), p=R.int(2,6), DY=frac("d"+VY,"d"+X1), u=`(${qJ(qT(a,sq?X2:X1),b)})`, du=sq?qT(2*a,X1):String(a), d=sq?`${qT(p*2*a,X1)}${qP(u,p-1)}`:`${p*a}${qP(u,p-1)}`;
+  return {q:`Given that ${nw(`${VY} = ${qP(u,p)}`)}, find ${DY}.`,w:[nw(`${VY} = ${qP(u,p)}`),qW(nw(`${DY} = ${p}${qP(u,p-1)} × ${du}`),"peel and multiply"),nw(`= ${d}`)],a:nw(`${DY} = ${d}`),n:{sq,a,b,p}}; }},
+{t:"gradient at a point",g:R=>{ const n=qTry(()=>{ const c3=R.nz(-3,3), c2=R.nz(-6,6), c1=R.nz(-9,9), c0=R.nz(-9,9), x=R.nz(-3,3); return {c3,c2,c1,c0,x,G:3*c3*x*x+2*c2*x+c1}; },n=>n.G!==0&&Math.abs(n.G)<=99,{c3:1,c2:-4,c1:3,c0:-2,x:2,G:-1}),
+  {c3,c2,c1,c0,x,G}=n, DY=frac("d"+VY,"d"+X1);
+  return {q:`Find the gradient of the curve ${nw(`${VY} = ${qJ(qT(c3,qP("x",3)),qT(c2,X2),qT(c1,X1),c0)}`)} at the point where ${nw(`${X1} = ${qN(x)}`)}.`,w:[nw(`${DY} = ${qJ(qT(3*c3,X2),qT(2*c2,X1),c1)}`),`At ${nw(`${X1} = ${qN(x)}`)}: ${nw(`${DY} = ${qJ(`${qN(3*c3)}(${qN(x)})²`,`${qN(2*c2)}(${qN(x)})`,c1)} = ${qN(G)}`)}`],a:`gradient = ${qN(G)}`,n}; }}]
+};
 let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
 function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
 function cdLn(c){ const S=cdS, p=S.pk, sh=S.shown, ok=sh&&p===c.bad;
@@ -9075,6 +9152,18 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     if(fx){ if(fx[2]){ const m=fx[2](r); if(m){ r.top=r.g.n; r.main=m; } } else r.drop=1; }
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
   return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`})); }
+function qqMk(id){ return QQ_LO[id]||QQ_HI[id]||[]; }
+function qqSeed(){ return 1+Math.floor(Math.random()*999999); }
+function qqNums(h){ return String(h).replace(/<[^>]*>/g," ").match(/−?\d+(?:\.\d+)?/g)||[]; }
+function qqGen(m,R,seen){ let c; for(let i=0;i<20;i++){ c=m.g(R); const qn=qqNums(c.q), an=qqNums(c.a); if(!seen.includes(c.q)&&!(an.length&&an.every(x=>qn.includes(x)))) break; } return c; }
+function qqDeal(ts,seed){ const S=cdS, R=qRand(seed), mk=qqMk(S.id), seen=[];
+  if(!ts){ const o=R.shuf(mk.map((x,i)=>i)); ts=[0,1,2,3,4].map(i=>o[i%o.length]); cur.cards="quick/"+S.id+"/"+seed; }
+  S.cards=ts.map(t=>{ const c=qqGen(mk[t],R,seen); seen.push(c.q); return Object.assign({t},c); }); cdStart(S.cards.map((x,i)=>i),true); }
+function qqCard(S){ const c=S.cards[S.deck[S.i]];
+  return `<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p></div><div class="ccard cqk"><div class="cq">${c.q}</div>${S.shown?`<div class="cbk cqw"><ul class="steps">${c.w.map(l=>`<li>${l}</li>`).join("")}</ul><p class="cqa">Answer: ${c.a}</p>${c.k?`<p class="cqc">Check: ${c.k}</p>`:""}</div>`:`<p class="cqh">Work it out on paper first.</p>`}</div>
+    <div class="cacts">${S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ I got it</button><button class="pill act sec cbtn" type="button" data-c="no">Not yet</button>`:`<button class="pill act cbtn" type="button" data-c="show">Show the working →</button>`}</div>`; }
+function qqEnd(S,n){ return `<p class="cend">You got ${S.got} of ${S.deck.length}</p><div class="cacts"><button class="pill act cbtn" type="button" data-c="new">5 new questions →</button>${n?`<button class="pill cbtn" type="button" data-c="miss">Try the ${n} I missed</button>`:""}<a class="pill cbtn" href="${S.back}">← Back to the cheatsheet</a></div>`; }
+function qqFit(){ alignEq(app); cdFit(); alignEq(app); }
 function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
 function cdOv(el){ if(el.scrollWidth>el.clientWidth+1) return true; if(!el.classList.contains("cln")) return false; const r=el.getBoundingClientRect().right-parseFloat(getComputedStyle(el).paddingRight); return [...el.querySelectorAll(".nw, .cfine")].some(n=>n.getBoundingClientRect().right>r+.5); }
 function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li, .ccard .cln").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
@@ -9082,18 +9171,19 @@ function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccar
   const wr=u=>u.some(e=>{ const h=e.getBoundingClientRect().height; e.style.whiteSpace="nowrap"; const n=e.getBoundingClientRect().height; e.style.whiteSpace=""; return h>n+3; });
   app.querySelectorAll(".ccard .cbk li, .ccard .x, .ccard .ok").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
     const f0=li.style.fontSize; let fs=parseFloat(getComputedStyle(li).fontSize); const lo=Math.max(16,fs*.7); while(fs>lo&&wr(u)){ fs-=1; li.style.fontSize=fs+"px"; } if(wr(u)) li.style.fontSize=f0; }); }
-function cdStart(set,foc){ const d=set.slice(); if(cdShuf) for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+function cdStart(set,foc){ const d=set.slice(); if(cdShuf&&cdS.kind!=="quick") for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
   Object.assign(cdS,{set,deck:d,i:0,shown:false,missed:[],got:0}); cdDraw(foc); }
-function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", box=app.querySelector(".cdeck");
-  if(S.i>=S.deck.length){ cdSave(); const n=S.missed.length;
-    box.innerHTML=`<p class="cend">You ${mist?"spotted":"knew"} ${S.got} of ${S.deck.length}</p><div class="cacts">${n?`<button class="pill act cbtn" type="button" data-c="miss">Try the ${n} you missed</button>`:""}<button class="pill ${n?"":"act "}cbtn" type="button" data-c="again">Start again</button><a class="pill cbtn" href="${S.back}">← Back to the ${mist?"cheatsheet":"formulas"}</a></div>`;
+function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", qk=S.kind==="quick", box=app.querySelector(".cdeck");
+  if(S.i>=S.deck.length){ if(!qk) cdSave(); const n=S.missed.length;
+    box.innerHTML=qk?qqEnd(S,n):`<p class="cend">You ${mist?"spotted":"knew"} ${S.got} of ${S.deck.length}</p><div class="cacts">${n?`<button class="pill act cbtn" type="button" data-c="miss">Try the ${n} you missed</button>`:""}<button class="pill ${n?"":"act "}cbtn" type="button" data-c="again">Start again</button><a class="pill cbtn" href="${S.back}">← Back to the ${mist?"cheatsheet":"formulas"}</a></div>`;
   } else { const c=S.cards[S.deck[S.i]];
-    box.innerHTML=`<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p>${S.i||S.shown?"":`<button class="pill sm" type="button" data-c="shuf" aria-pressed="${cdShuf}">Shuffle</button>`}</div>
+    box.innerHTML=qk?qqCard(S):`<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p>${S.i||S.shown?"":`<button class="pill sm" type="button" data-c="shuf" aria-pressed="${cdShuf}">Shuffle</button>`}</div>
       <div class="ccard${mist?" cspot":" cmemo"}">${mist?cdLn(c):c.f+(S.shown?c.b:"")}</div>
       <div class="cacts">${mist?(S.shown?`<button class="pill act cbtn" type="button" data-c="next">${S.i+1<S.deck.length?"Next →":"See my score →"}</button>`:""):S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
-  if(mist) digest(box); cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
+  if(mist||qk) digest(box); if(qk) qqFit(); else cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
   if(box.getBoundingClientRect().top<0) window.scrollTo(0,0); else if(S.shown) box.querySelector(".cacts").scrollIntoView({block:"nearest"}); }
 function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; const S=cdS, c=b.dataset.c;
+  if(S.kind==="quick"&&(c==="new"||c==="miss")){ qqDeal(c==="miss"?S.missed.map(i=>S.cards[i].t):null,qqSeed()); return; }
   if(c==="show"){ S.shown=true; cdDraw(true); }
   else if(c==="ln"){ if(S.shown) return; const n=+b.dataset.n; S.pk=n; S.shown=true; if(n===S.cards[S.deck[S.i]].bad) S.got++; else S.missed.push(S.deck[S.i]); cdDraw(true); }
   else if(c==="next"){ S.i++; S.shown=false; cdDraw(true); }
@@ -9101,16 +9191,17 @@ function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; 
   else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
-function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
-  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
-  const cards=kind==="mist"?cdSpot(s.id):cdMemo(s.sheet); if(!cards.length) return false;
-  const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
+function renderCards(kind,id,seed){ if(kind==="mist"&&!cdMistOn) return false;
+  const s=kind==="mist"||kind==="quick"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
+  const cards=kind==="mist"?cdSpot(s.id):kind==="quick"?qqMk(s.id):cdMemo(s.sheet); if(!cards.length) return false;
+  const name=kind==="mist"?"Spot the mistake":kind==="quick"?"Try 5 questions":"Flashcards", key=kind+"/"+id;
   document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
   cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:"#sheet/"+s.id}; setPage("cards"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
-  cdS={kind,key,cards,back:"#sheet/"+s.id}; cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
+  cdS={kind,key,cards,id:s.id,back:"#sheet/"+s.id}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(seed||"")?+seed:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
+  if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, h=app.querySelector(".sheeth"), e=app.querySelector(".sheetend"); if(h) h.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); }
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
     if(p) p.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); return; }
   if(!cdMistOn) return;
@@ -9118,13 +9209,13 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   const pn=w[w.length-1].closest(".panelc")||w[w.length-1]; pn.insertAdjacentHTML(pn===w[w.length-1]?"afterend":"beforeend",PLAYLINK("#cards/mist/"+s.id,"Spot the mistake"));
   if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
-addEventListener("resize",()=>{ if(cur&&cur.cards) cdFit(); });
+addEventListener("resize",()=>{ if(cur&&cur.cards){ if(cdS&&cdS.kind==="quick") qqFit(); else cdFit(); } });
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
     if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
-  if(parts[0]==="cards"&&renderCards(parts[1],parts[2])) return;
+  if(parts[0]==="cards"&&renderCards(parts[1],parts[2],parts[3])) return;
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
