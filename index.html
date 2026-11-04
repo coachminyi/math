@@ -6716,6 +6716,247 @@ amFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Addi
     </div>
   </div>
 </div>`,
+s1Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">Every formula and angle fact from the Sec 1 cheatsheets, in one place.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>numbers &amp; algebra</h4>
+    <ul class="steps fml">
+      ${GRP("Primes, HCF and LCM","primes-hcf-lcm")}
+      ${FL(`Prime number = exactly 2 factors`+FNOTE(`1 and itself, 1 is NOT prime`))}
+      ${FL(`Primes under 30 = 2, 3, 5, 7, 11, 13, 17, 19, 23, 29`)}
+      ${FL(`HCF = only what they have in common`+FNOTE("the biggest number that divides both"))}
+      ${FL(`LCM = every base, highest power`+FNOTE("the smallest number both divide into"))}
+      ${FL(`Square root${nw(" → ")}halve every power`)}
+      ${FL(`Cube root${nw(" → ")}divide every power by 3`)}
+      ${FL(`Perfect square${nw(" → ")}every power even`)}
+      ${FL(`Answer bigger than the numbers${nw(" → ")}LCM`)}
+      ${FL(`Answer smaller than the numbers${nw(" → ")}HCF`)}
+      ${GRP("Integers","integers")}
+      ${FL(nw("(−) × (−) = +")+FNOTE(`same signs, the same for ÷`))}
+      ${FL(nw("(+) × (−) = −")+FNOTE(`different signs, the same for ÷`))}
+      ${FL(`Minus a negative = plus`+FNOTE(nw("4 − (−6) = 4 + 6 = 10")))}
+      ${FL(`Order of operations = ${nw("brackets, powers")}, then ${nw("× ÷, then + −")}`+FNOTE("left to right at the same level"))}
+      ${FL(nw("(−2)² = 4"))}
+      ${FL(nw("−2² = −4")+FNOTE("square first, then the minus"))}
+      ${FL(`Rational number = can be written as a fraction of two integers`)}
+      ${FL(`Irrational number = the decimals never end and never repeat`+FNOTE(`${SQRT("2")}, π`))}
+      ${FL(`Real numbers = rational and irrational`)}
+      ${GRP("Approximation","approximation")}
+      ${FL(`Decimal places = count after the point`)}
+      ${FL(`Significant figures = start at the first non-zero digit`)}
+      ${FL(`s.f.: zeros between digits${nw(" → ")}count`)}
+      ${FL(`s.f.: zeros in front${nw(" → ")}don't count`)}
+      ${FL(`s.f.: a zero at the end, after the point${nw(" → ")}counts`)}
+      ${FL(`Next digit 5 or more${nw(" → ")}round up`)}
+      ${FL(`Next digit less than 5${nw(" → ")}keep`)}
+      ${FL(`Estimate${nw(" → ")}round every number to 1 s.f.`)}
+      ${FL(`Estimate a square root${nw(" → ")}use the nearest square number`)}
+      ${GRP("Basic algebra","basic-algebra")}
+      ${FL(`Like terms = only the same letters and powers`+FNOTE(nw(`3${X1} + 5${X1} = 8${X1}`)))}
+      ${FL(`${nw(`${V("a")}(${V("b")} + ${V("c")})`)} = ${nw(`${V("ab")} + ${V("ac")}`)}`+FNOTE(`every term in the bracket, the number keeps its sign`))}
+      ${FL(`${nw(`${V("ab")} + ${V("ac")}`)} = ${nw(`${V("a")}(${V("b")} + ${V("c")})`)}`+FNOTE("take out the common factor"))}
+      ${GRP("Linear equations","linear-equations")}
+      ${FL(`Throw a term over the equals sign${nw(" → ")}flip it: ${nw("+ ↔ −")} and ${nw("× ↔ ÷")}`+FNOTE(`${nw("+ 7")} becomes ${nw("− 7")}, ${nw("× 3")} becomes ${nw("÷ 3")}`))}
+      ${FL(`Brackets${nw(" → ")}expand first`+FNOTE(`then ${X1} terms on one side`))}
+      ${FL(`Fractions${nw(" → ")}× by the LCM of the bottoms`+FNOTE("every fraction disappears"))}
+      ${GRP("Ratio, rate and speed","ratio-rate-speed")}
+      ${FL(`Ratio in its simplest form = same units, whole numbers`)}
+      ${FL(`Speed = ${nw(frac("distance","time"))}`)}
+      ${FL(`Average speed = ${nw(frac("total distance","total time"))}`+FNOTE("not the average of the two speeds"))}
+      ${FL(`${nw("72 km/h")} = ${nw(frac("72 km","1 h"))}`+FNOTE("change the top and the bottom separately"))}
+      ${GRP("Percentage","percentage")}
+      ${FL(nw(`80% of 500 = ${frac("80","100")} × 500`))}
+      ${FL(`Percentage change = ${nw(`${frac("change","original")} × 100%`)}`+FNOTE(`change = ${nw("new − original")}`))}
+      ${FL(`Reverse percentage${nw(" → ")}find 1% first`+FNOTE("after +20%, the new price is 120%"))}
+      ${FL(`20% off${nw(" → ")}${nw("× 0.8")}`)}
+      ${FL(`10% service charge${nw(" → ")}${nw("× 1.1")}`)}
+      ${FL(`9% GST${nw(" → ")}${nw("× 1.09")}`)}
+      ${GRP("Number patterns","number-patterns")}
+      ${FL(`Linear sequence${nw(" → ")}same difference each time`+FNOTE("5, 8, 11, 14: + 3 each"))}
+      ${FL(`${V("n")}th term${nw(" → ")}difference first, then plus or minus to reach the 1st term`)}
+      ${FL(`Is it a term?${nw(" → ")}${V("n")} must be a positive integer`)}
+      ${FLB("Square numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}²`))}
+      ${FLB("Cube numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}³`))}
+      ${FLB("Triangle numbers",nw(`T<sub>${V("n")}</sub> = ${frac(`${V("n")}(${V("n")} + 1)`,"2")}`))}
+      ${GRP("Linear graphs","linear-graphs")}
+      ${FL(`Gradient = ${nw(frac("rise","run"))} = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}`+FNOTE(`uphill: positive, downhill: negative`))}
+      ${FL(`Straight line: ${nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)}`+FNOTE(`${V("m")} = gradient, ${V("c")} = the ${V("y")}-intercept`))}
+      ${FL(`Flat line: ${nw(`${V("y")} = ${V("k")}`)}`+FNOTE(`horizontal, gradient is 0`))}
+      ${FL(`Upright line: ${nw(`${X1} = ${V("k")}`)}`+FNOTE("vertical"))}
+      ${FL(`Gradients of parallel lines = the same`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>geometry &amp; measurement</h4>
+    <ul class="steps fml">
+      ${GRP("Angles and parallel lines","angles-parallel-lines")}
+      ${FL(`Angles on a straight line = 180°`+FNOTE(nw("(adj. ∠s on a str. line)")))}
+      ${FL(`Angles at a point = 360°`+FNOTE(nw("(∠s at a pt.)")))}
+      ${FL(`Vertically opposite angles${nw(" → ")}equal`+FNOTE(nw("(vert. opp. ∠s)")))}
+      ${FL(`Acute angle${nw(" → ")}less than 90°`)}
+      ${FL(`Right angle${nw(" → ")}exactly 90°`)}
+      ${FL(`Obtuse angle${nw(" → ")}between 90° and 180°`)}
+      ${FL(`Reflex angle${nw(" → ")}between 180° and 360°`)}
+      ${FL(`Complementary angles${nw(" → ")}add to 90°`)}
+      ${FL(`Supplementary angles${nw(" → ")}add to 180°`)}
+      ${FL(`Corresponding angles${nw(" → ")}equal`+FNOTE(nw("(corr. ∠s, AB &#47;&#47; CD)")))}
+      ${FL(`Alternate angles${nw(" → ")}equal`+FNOTE(nw("(alt. ∠s, AB &#47;&#47; CD)")))}
+      ${FL(`Interior angles${nw(" → ")}add to 180°`+FNOTE(nw("(int. ∠s, AB &#47;&#47; CD)")))}
+      ${FLB("ZCF",nw("Z = alternate"),nw("C = interior"),nw("F = corresponding"))}
+      ${GRP("Triangles and polygons","polygons")}
+      ${FL(`Angle sum of a triangle = 180°`+FNOTE(nw("(∠ sum of △)")))}
+      ${FL(`Exterior angle of a triangle = ${nw("the 2 opposite")} ${nw("interior angles added")}`+FNOTE(nw("(ext. ∠ of △)")))}
+      ${FL(`Isosceles triangle${nw(" → ")}2 equal sides, 2 equal base angles`+FNOTE(nw("(base ∠s of isos. △)")))}
+      ${FL(`Equilateral triangle${nw(" → ")}3 equal sides, every angle 60°`)}
+      ${FL(`Angle sum of a quadrilateral = 360°`+FNOTE(nw("(∠ sum of quad.)")))}
+      ${FL(`Parallelogram${nw(" → ")}opposite sides parallel and equal, opposite angles equal`)}
+      ${FL(`Rectangle${nw(" → ")}4 right angles, opposite sides equal, diagonals equal`)}
+      ${FL(`Rhombus${nw(" → ")}4 equal sides, diagonals cross at 90°`)}
+      ${FL(`Square${nw(" → ")}4 equal sides, 4 right angles`)}
+      ${FL(`Trapezium${nw(" → ")}1 pair of parallel sides`)}
+      ${FL(`Kite${nw(" → ")}2 pairs of equal sides next to each other, diagonals cross at 90°`)}
+      ${FL(`Sum of interior angles of a polygon = ${nw(`(${V("n")} − 2) × 180°`)}`+FNOTE(`${V("n")} = number of sides`))}
+      ${FL(`Sum of exterior angles of a polygon = 360°`+FNOTE(nw("(sum of ext. ∠s of polygon)")))}
+      ${FL(`Each exterior angle of a regular polygon = ${nw(`360° ÷ ${V("n")}`)}`+FNOTE("use it first: much easier than interior"))}
+      ${FL(`Each interior angle of a regular polygon = ${nw("180° − exterior angle")}`+FNOTE(nw("(adj. ∠s on a str. line)")))}
+      ${GRP("Perimeter and area","perimeter-area")}
+      ${FL(`Area of a triangle = ${nw(`${frac("1","2")} × base × height`)}`)}
+      ${FL(`Area of a parallelogram = ${nw("base × height")}`+FNOTE("the height meets the base at 90°, not the slanted side"))}
+      ${FL(`Area of a trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")}) × ${V("h")}`)}`+FNOTE(nw(`${V("a")}, ${V("b")} = the parallel sides`)))}
+      ${FL(`Diameter: ${nw(`${V("d")} = 2${V("r")}`)}`)}
+      ${FL(`Circumference of a circle = ${nw(`2π${V("r")}`)}`)}
+      ${FL(`Area of a circle = ${nw(`π${V("r")}²`)}`)}
+      ${FL(`Perimeter of a semicircle = ${nw(`π${V("r")} + 2${V("r")}`)}`+FNOTE("the curved edge + the straight edge"))}
+      ${FL(nw("1 m = 100 cm"))}
+      ${FL(nw("1 km = 1000 m"))}
+      ${FL(nw("1 m² = 10 000 cm²"))}
+      ${FL(nw("1 m³ = 1 000 000 cm³"))}
+      ${FL(nw("1 litre = 1000 cm³"))}
+      ${GRP("Volume and surface area","volume-surface-area-1")}
+      ${FL(`Volume of a prism = ${nw("base area × height")}`+FNOTE(`a prism lying down: its "height" is the length`))}
+      ${FL(`Surface area of a prism = ${nw("2 × base area")} ${nw("+ perimeter of base × height")}`+FNOTE(`${nw("perimeter of base × height")}: the toilet paper`))}
+      ${FL(`Volume of a cuboid = ${nw(V("lbh"))}`)}
+      ${FL(`Surface area of a cuboid = ${nw(`2${V("lb")} + 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`)}
+      ${FL(`Volume of a cylinder = ${nw(`π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Surface area of a closed cylinder = ${nw(`2π${V("r")}² + 2π${V("r")} × ${V("h")}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>statistics</h4>
+    <ul class="steps fml">
+      ${GRP("Charts and data","data-handling")}
+      ${FL(`Bar chart${nw(" → ")}compare groups`+FNOTE("gaps between the bars"))}
+      ${FL(`Pie chart angle = ${nw(`${frac("part","total")} × 360°`)}`+FNOTE("the angles add to 360°"))}
+      ${FL(`Line graph${nw(" → ")}change over time`+FNOTE("time goes along the bottom"))}
+      ${FL(`Pictogram${nw(" → ")}always read the key`)}
+    </ul>
+  </div>
+</div>`,
+s2Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">Every formula from the Sec 2 cheatsheets, in one place.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>numbers &amp; algebra</h4>
+    <ul class="steps fml">
+      ${GRP("Simultaneous equations","simultaneous-equations")}
+      ${FL(`Elimination${nw(" → ")}make one letter's numbers match`+FNOTE(`same signs: subtract, opposite signs: add`))}
+      ${FL(`Substitution${nw(" → ")}best when one letter is on its own`+FNOTE("put it into the other one, in brackets"))}
+      ${FL(`Same gradient, different ${V("c")}${nw(" → ")}parallel lines, no solution`)}
+      ${FL(`Same gradient, same ${V("c")}${nw(" → ")}the same line, infinitely many solutions`)}
+      ${GRP("Linear inequalities","linear-inequalities")}
+      ${FL(`× or ÷ by a negative${nw(" → ")}flip the sign`+FNOTE(`${nw(`−2${X1} ≤ 8`)}${nw(" → ")}${nw(`${X1} ≥ −4`)}`))}
+      ${FL(`Filled circle ●${nw(" → ")}≤ or ≥`+FNOTE("that number counts"))}
+      ${FL(`Open circle ○${nw(" → ")}&lt; or &gt;`)}
+      ${FL(`At least${nw(" → ")}≥`)}
+      ${FL(`At most${nw(" → ")}≤`)}
+      ${FL(`More than${nw(" → ")}&gt;`)}
+      ${FL(`Less than${nw(" → ")}&lt;`)}
+      ${FL(`Not more than${nw(" → ")}≤`)}
+      ${GRP("Expansion","expansion")}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}`)}
+      ${FL(`Middle term = ${nw("2 × first term × last term")}`+FNOTE("signs included"))}
+      ${GRP("Factorising quadratics","factorisation")}
+      ${FL(`Common factor${nw(" → ")}always look for it first`)}
+      ${FL(`Count the terms: 2 terms${nw(" → ")}${nw(`${V("a")}² − ${V("b")}²`)}`)}
+      ${FL(`Count the terms: 3 terms${nw(" → ")}cross method`)}
+      ${FL(`Count the terms: 4 terms${nw(" → ")}grouping`)}
+      ${FL(`${nw(`${V("a")}² − ${V("b")}²`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`+FNOTE("difference of squares"))}
+      ${GRP("Algebraic fractions","algebraic-fractions")}
+      ${FL(`Simplify${nw(" → ")}factorise, then cancel factors`+FNOTE("never cancel terms"))}
+      ${FL(`Add or subtract${nw(" → ")}same denominator first`+FNOTE("use the LCM of the bottoms"))}
+      ${FL(`Divide${nw(" → ")}× by the flip`+FNOTE("Keep, Change, Flip"))}
+      ${GRP("Quadratic equations and graphs","quadratic-equations-graphs")}
+      ${FL(`Solve a quadratic${nw(" → ")}make one side 0, then factorise`+FNOTE(`never ÷ by ${X1}`))}
+      ${FLB(`If ${nw("A × B = 0")}`,nw("A = 0 or B = 0"))}
+      ${FL(`${nw(`+${X2}`)} graph${nw(" → ")}∪ shape, minimum point`)}
+      ${FL(`${nw(`−${X2}`)} graph${nw(" → ")}∩ shape, maximum point`)}
+      ${FL(`Roots = where the graph cuts the ${X1}-axis`)}
+      ${FL(`Turning point${nw(" → ")}halfway between the roots`)}
+      ${GRP("Proportion and map scales","proportion")}
+      ${FL(`Direct proportion: ${nw(`${V("y")} = ${V("k")}${X1}`)}`+FNOTE(`${X1} doubles, ${V("y")} doubles`))}
+      ${FL(`Inverse proportion: ${nw(`${V("y")} = ${frac(V("k"),X1)}`)}`+FNOTE(`${X1} doubles, ${V("y")} halves`))}
+      ${FL(`Direct proportion graph${nw(" → ")}a straight line through (0, 0)`)}
+      ${FL(`Inverse proportion graph${nw(" → ")}a curve that never touches the axes`)}
+      ${FL(`Map scale ${nw(`1 : ${V("n")}`)}${nw(" → ")}1 cm on the map is ${V("n")} cm for real`)}
+      ${FL(`Area on a map${nw(" → ")}square the scale`)}
+      ${FL(`cm to km${nw(" → ")}${nw("÷ 100 000")}`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>geometry &amp; measurement</h4>
+    <ul class="steps fml">
+      ${GRP("Congruence and similarity","congruence-similarity")}
+      ${FL(`Congruent${nw(" → ")}same shape and same size`+FNOTE("all sides and angles equal"))}
+      ${FL(`Similar${nw(" → ")}same shape, sides in the same ratio`+FNOTE("the angles are equal"))}
+      ${FL(`Scale factor more than 1${nw(" → ")}bigger`)}
+      ${FL(`Scale factor less than 1${nw(" → ")}smaller`)}
+      ${GRP("Pythagoras","pythagoras")}
+      ${FL(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)+FNOTE(`${V("c")} = hypotenuse, opposite the right angle`))}
+      ${FL(`Find the long side${nw(" → ")}add the squares, then square root`)}
+      ${FL(`Find a short side${nw(" → ")}subtract the squares, then square root`)}
+      ${FL(`Whole-number triangles${nw(" → ")}${nw("3, 4, 5")}; ${nw("5, 12, 13")}; ${nw("8, 15, 17")}; ${nw("7, 24, 25")}`+FNOTE("and their multiples"))}
+      ${GRP("TOA CAH SOH","trigonometry-sec2")}
+      ${FL(nw(`tan θ = ${frac("opp","adj")}`))}
+      ${FL(nw(`cos θ = ${frac("adj","hyp")}`))}
+      ${FL(nw(`sin θ = ${frac("opp","hyp")}`))}
+      ${FL(`hyp${nw(" → ")}the longest side, opposite the right angle`)}
+      ${FL(`opp${nw(" → ")}opposite θ`)}
+      ${FL(`adj${nw(" → ")}next to θ (not the hyp)`)}
+      ${GRP("Pyramids, cones and spheres","volume-surface-area-2")}
+      ${FL(`Volume of a pyramid = ${nw(`${frac("1","3")} × base area × height`)}`)}
+      ${FL(`Volume of a cone = ${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Curved surface area of a cone = ${nw(`π${V("rl")}`)}`+FNOTE(nw(`${V("l")} = slant height`)))}
+      ${FL(`Volume of a sphere = ${nw(`${frac("4","3")}π${V("r")}³`)}`)}
+      ${FL(`Surface area of a sphere = ${nw(`4π${V("r")}²`)}`)}
+      ${FL(`Curved surface area of a hemisphere = ${nw(`2π${V("r")}²`)}`)}
+      ${FL(`Surface area of a solid hemisphere = ${nw(`3π${V("r")}²`)}`+FNOTE("+ the flat circle"))}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>statistics &amp; probability</h4>
+    <ul class="steps fml">
+      ${GRP("Data diagrams","data-sec2")}
+      ${FL(`Dot diagram${nw(" → ")}one dot per value`+FNOTE("the tallest stack is the mode"))}
+      ${FL(`Histogram${nw(" → ")}bars touch, equal class widths`)}
+      ${FL(`Stem-and-leaf${nw(" → ")}stem is the tens, leaf is the ones`+FNOTE("always give a key"))}
+      ${FL(`${nw(`10 &lt; ${X1} ≤ 20`)}${nw(" → ")}includes 20 but not 10`)}
+      ${FL(`Describe a distribution${nw(" → ")}range, cluster, outlier`)}
+      ${GRP("Mean, median and mode","averages")}
+      ${FL(`Mean = ${nw("total ÷ how many")}`)}
+      ${FL(`Mean from a table = ${nw(frac(`total of ${V("fx")}`,`total of ${V("f")}`))}`)}
+      ${FL(`Median = the middle value, after ordering`)}
+      ${FL(`Median position = ${nw(frac(`${V("n")} + 1`,"2"))}`)}
+      ${FL(`Mode = the most common value`+FNOTE("there can be more than one"))}
+      ${FL(`Average to use with an outlier = the median`)}
+      ${GRP("Probability","probability-sec2")}
+      ${FL(`Probability = ${nw(frac("ways it can happen","total outcomes"))}`+FNOTE("outcomes equally likely"))}
+      ${FL(nw("P(not A) = 1 − P(A)"))}
+      ${FL(`Probability of an impossible event = 0`)}
+      ${FL(`Probability of a certain event = 1`)}
+    </ul>
+  </div>
+</div>`,
 amMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/amath-formula-sheet">A-Math formula sheet</a>.</p>
 <div class="sheet">
@@ -6881,6 +7122,8 @@ SHEETLIST.push(
   {id:"amath-formula-sheet",levels:["amath"],chapter:"Printed in your exam paper",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given exam"},
   {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
+  {id:"sec1-memorise",levels:["sec1"],chapter:"Formulas and angle facts",title:"Sec 1 formulas to memorise",sheet:"s1Memo",aid:null,exam:true,group:"memorise",kw:"formula memorise remember angle properties reasons parallel lines polygon"},
+  {id:"sec2-memorise",levels:["sec2"],chapter:"Formulas and key facts",title:"Sec 2 formulas to memorise",sheet:"s2Memo",aid:null,exam:true,group:"memorise",kw:"formula memorise remember pythagoras toa cah soh volume proportion"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
   {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"}
 );
@@ -8189,7 +8432,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
@@ -8561,7 +8804,7 @@ function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; 
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
 function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
-  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath")?sheetOf(id+"-memorise"):null; if(!s) return false;
+  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
   const cards=kind==="mist"?cdMist(s.sheet):cdMemo(s.sheet); if(!cards.length) return false;
   const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
   document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
