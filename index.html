@@ -607,6 +607,35 @@ html[data-present] .readout{font-size:22px}
 html[data-present] .keybox{font-size:21px}
 .exitp{display:none;position:fixed;bottom:16px;right:16px;z-index:9;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;height:44px;padding:0 16px;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
 html[data-present] .exitp{display:inline-flex;align-items:center}
+.cdeck{max-width:640px;margin:0 auto;padding:14px 0 28px}
+.ctop{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;margin:0 0 8px}
+.ctop .stepof{font-size:14px;margin:0}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 16px;font-size:22px;line-height:1.45}
+.ccard .cask{margin:0 0 8px;color:var(--red);font-size:15px;font-weight:700}
+.ccard .wrongright{grid-template-columns:1fr;margin:0}
+.ccard .wrongright+.wrongright{margin-top:12px}
+.ccard .wrongright div{font-size:inherit;padding:12px 14px}
+.ccard .cgrp{margin:0 0 6px;color:var(--muted);font-size:15px;font-weight:700;text-align:center}
+.ccard .cq{text-align:center}
+.ccard .clb{display:block;color:var(--muted);font-size:15px;font-weight:400}
+.ccard .cbk{border-top:1px solid var(--line);margin-top:14px;padding-top:8px;text-align:center}
+.ccard .cbk .steps{font-size:inherit;margin:0}
+.ccard .cbk li{justify-content:center}
+.ccard .cbk .lbl,.ccard .cbk .fnote,.ccard .cbk .fmap .h{font-size:15px}
+.ccard .cbk .go{font-size:15px}
+.cacts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:16px 0 0}
+.cacts .cbtn{min-height:52px;padding:0 18px;font-size:18px;font-weight:700;text-decoration:none}
+.cacts .cyes,.cacts .cyes+.cbtn{flex:1 1 0;max-width:240px;padding:0 10px;justify-content:center}
+.cacts a.cbtn{color:var(--ink)}
+.cacts .cyes{background:var(--green);border-color:var(--green)}
+.cend{text-align:center;font-size:30px;font-weight:700;margin:28px 0 8px}
+html[data-present] .cdeck{max-width:1100px}
+html[data-present] .ccard{font-size:40px;padding:28px}
+html[data-present] .ccard .cbk .go{font-size:20px}
+html[data-present] .ccard .cask,html[data-present] .ccard .cgrp,html[data-present] .ccard .clb,html[data-present] .ccard .cbk .lbl,html[data-present] .ccard .cbk .fnote,html[data-present] .ccard .cbk .fmap .h{font-size:22px}
+html[data-present] .ctop .stepof{font-size:18px}
+html[data-present] .cacts .cbtn{min-height:64px;font-size:24px}
+html[data-present] .cend{font-size:44px}
 .modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .modal[hidden]{display:none}
 .mbox{background:var(--card);color:var(--ink);border-radius:16px;padding:20px;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow)}
@@ -8426,7 +8455,7 @@ function renderTopic(t,tab,prm){
     placeDock();
   } else {
     app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${(cur.sheet&&cur.sheet.title)||t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]+sheetEnd());
-    digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
+    digest(app); cdLinks(t.sheet); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   }
   window.scrollTo(0,0);
 }
@@ -8473,15 +8502,84 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
-  digest(app); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
+  digest(app); cdLinks(s.sheet); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
+let cdS=null, cdShuf=false, cdFrom="";
+function cdDom(key){ const d=document.createElement("div"); d.innerHTML=SHEETS[key]||""; digest(d); return d; }
+function cdMist(key){ return [...cdDom(key).querySelectorAll(".wrongright .x")].filter(x=>x.nextElementSibling&&x.nextElementSibling.matches(".ok"))
+  .map(x=>({f:`<p class="cask">What's wrong here?</p><div class="wrongright"><div class="x">${x.innerHTML}</div></div>`,b:`<div class="wrongright"><div class="ok">${x.nextElementSibling.innerHTML}</div></div>`})); }
+function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
+  const tx=x=>{ const d=document.createElement("div"); if(typeof x==="string") d.innerHTML=x; else d.append(x); return d.textContent.replace(/\s+/g," ").trim(); };
+  const upto=(q,n,i)=>{ const r=document.createRange(); r.setStart(q,0); r.setEnd(n,i); const s=document.createElement("span"); s.append(r.cloneContents()); return s.innerHTML; };
+  const texts=q=>{ const w=document.createTreeWalker(q,NodeFilter.SHOW_TEXT), a=[]; let n; while((n=w.nextNode())) if(!n.parentElement.closest(".frac, sup, sub, svg, .lim, .mx, .fnote")) a.push(n); return a; };
+  cdDom(key).querySelectorAll("ul.fml > li").forEach(li=>{
+    if(li.classList.contains("grp")){ const a=li.querySelector(".go"); g={n:li.firstElementChild.innerHTML,a:a?a.outerHTML:""}; prev=null; return; }
+    const q=li.cloneNode(true), lb=[...q.children].find(c=>c.matches(".lbl")); if(lb) lb.remove();
+    const it=li.matches(".frow, .fmap")?q.firstElementChild:q, ts=it?texts(it):[], k=ts.findIndex(n=>n.nodeValue.includes("=")), r={g,li,it,ts,k,prev,lb:lb?lb.innerHTML:""};
+    r.left=k<0?"":upto(it,ts[k],ts[k].nodeValue.indexOf("=")); r.lt=tx(r.left); r.plain=!r.lt||/^[A-Za-zα-ω]$/.test(r.lt);
+    r.top=r.plain?"":g.n; r.main=r.plain?`${g.n} ?`:`${r.lb?`<span class="clb">${r.lb}</span>`:""}${r.left} = ?`;
+    rows.push(r); prev=li.matches(".frow, .fmap")?null:r; });
+  const dups=()=>{ const c={}; rows.forEach(r=>{ r.key=(r.top+"|"+r.main).replace(/\s+/g," "); c[r.key]=(c[r.key]||0)+1; }); return rows.filter(r=>c[r.key]>1); };
+  dups().forEach(r=>{ const ar=r.ts.find(n=>n.nodeValue.includes(" → "));
+    const m=r.lb?`${r.lb} ?`:ar?`${upto(r.it,ar,ar.nodeValue.indexOf(" → "))} → ?`:r.lt?`${r.left} = ?`
+      :r.prev&&!r.prev.plain&&r.li.matches(".frow")?`${r.prev.li.innerHTML}<span class="clb">${[...r.it.parentNode.children].map(c=>tx(c.cloneNode(true)).split(" ")[0]+" ?").join(" ")}</span>`:"";
+    if(m){ r.main=m; r.top=r.g.n; } });
+  dups().forEach(r=>{ if(r.k<0) return;
+    for(const n of r.ts.slice(r.k)){ const v=n.nodeValue, st=n===r.ts[r.k]?v.indexOf("=")+1:0, m=/[A-Za-z]{2,}/.exec(v.slice(st)); if(m){ r.main=`${upto(r.it,n,st+m.index+m[0].length)} … ?`; break; } } });
+  const at=(r,c,n)=>{ let i=0; for(const t of r.ts){ let p=-1; while((p=t.nodeValue.indexOf(c,p+1))>=0) if(++i===n) return upto(r.it,t,p); } return ""; };
+  const FIX=[["Coordinates",/^y = mx \+ c/,r=>r.left&&`<span class="clb">Straight line</span>${r.left} = ?`],["Polynomials",/^Remainder theorem/,r=>r.lb&&`${r.lb} ?`],["Exponentials and logs",/⇔/,r=>(h=>h&&`${h} = ?`)(at(r,"=",2))],
+    ["The six ratios",/^Exact values/,null],["Graphs",/ or /,null],["R-formula",/^R = /,r=>r.left&&`${r.left} = ?`],["Uses",/: minimum/,r=>(h=>h&&`${h} → ?`)(at(r,":",1))]];
+  rows.forEach((r,i)=>{ const t=tx(r.li.cloneNode(true)), fx=FIX.find(([g,re])=>tx(r.g.n)===g&&re.test(t));
+    if(fx){ if(fx[2]){ const m=fx[2](r); if(m){ r.top=r.g.n; r.main=m; } } else r.drop=1; }
+    else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
+  return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`})); }
+function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
+function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
+  while(el.scrollWidth>el.clientWidth+1&&fs>15){ fs-=1; el.style.fontSize=fs+"px"; } });
+  const wr=u=>u.some(e=>{ const h=e.getBoundingClientRect().height; e.style.whiteSpace="nowrap"; const n=e.getBoundingClientRect().height; e.style.whiteSpace=""; return h>n+3; });
+  app.querySelectorAll(".ccard .cbk li, .ccard .x, .ccard .ok").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
+    const f0=li.style.fontSize; let fs=parseFloat(getComputedStyle(li).fontSize); const lo=Math.max(16,fs*.7); while(fs>lo&&wr(u)){ fs-=1; li.style.fontSize=fs+"px"; } if(wr(u)) li.style.fontSize=f0; }); }
+function cdStart(set,foc){ const d=set.slice(); if(cdShuf) for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+  Object.assign(cdS,{set,deck:d,i:0,shown:false,missed:[],got:0}); cdDraw(foc); }
+function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", box=app.querySelector(".cdeck");
+  if(S.i>=S.deck.length){ cdSave(); const n=S.missed.length;
+    box.innerHTML=`<p class="cend">You ${mist?"spotted":"knew"} ${S.got} of ${S.deck.length}</p><div class="cacts">${n?`<button class="pill act cbtn" type="button" data-c="miss">Try the ${n} you missed</button>`:""}<button class="pill ${n?"":"act "}cbtn" type="button" data-c="again">Start again</button><a class="pill cbtn" href="${S.back}">← Back to the ${mist?"cheatsheet":"formulas"}</a></div>`;
+  } else { const c=S.cards[S.deck[S.i]];
+    box.innerHTML=`<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p>${S.i||S.shown?"":`<button class="pill sm" type="button" data-c="shuf" aria-pressed="${cdShuf}">Shuffle</button>`}</div>
+      <div class="ccard${mist?"":" cmemo"}">${c.f}${S.shown?c.b:""}</div>
+      <div class="cacts">${S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
+  cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
+  if(box.getBoundingClientRect().top<0) window.scrollTo(0,0); else if(S.shown) box.querySelector(".cacts").scrollIntoView({block:"nearest"}); }
+function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; const S=cdS, c=b.dataset.c;
+  if(c==="show"){ S.shown=true; cdDraw(true); }
+  else if(c==="yes"||c==="no"){ if(c==="yes") S.got++; else S.missed.push(S.deck[S.i]); S.i++; S.shown=false; cdDraw(true); }
+  else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
+  else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
+  else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
+function renderCards(kind,id){
+  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath")?sheetOf(id+"-memorise"):null; if(!s) return false;
+  const cards=kind==="mist"?cdMist(s.sheet):cdMemo(s.sheet); if(!cards.length) return false;
+  const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
+  document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
+  backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
+  cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:"#sheet/"+s.id}; setPage("cards"); setNav(s.exam?"exam":"sheets");
+  app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
+  cdS={kind,key,cards,back:"#sheet/"+s.id}; cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
+function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
+  if(s.group==="memorise"){ const p=app.querySelector("p.tiny"); if(p) p.insertAdjacentHTML("afterend",PLAYLINK("#cards/memo/"+s.levels[0],"Flashcards")); return; }
+  const w=app.querySelectorAll(".wrongright"); if(app.querySelectorAll(".wrongright .x").length<2) return;
+  const pn=w[w.length-1].closest(".panelc")||w[w.length-1]; pn.insertAdjacentHTML(pn===w[w.length-1]?"afterend":"beforeend",PLAYLINK("#cards/mist/"+s.id,"Spot the mistake"));
+  if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
+addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
+addEventListener("resize",()=>{ if(cur&&cur.cards) cdFit(); });
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
     if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
+  if(parts[0]==="cards"&&renderCards(parts[1],parts[2])) return;
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
@@ -8491,12 +8589,13 @@ function route(){
 function topicLink(){
   const base=location.href.split("#")[0]; if(!cur) return base;
   if(cur.lessons) return base+"#lessons";
+  if(cur.cards) return base+"#cards/"+cur.cards;
   if(!cur.t) return cur.sheet?base+"#sheet/"+cur.sheet.id:base;
   let hsh="#"+cur.t.id+(cur.tab==="sheet"?"/sheet":"");
   if(cur.tab==="play"&&cur.state){ const p=new URLSearchParams(); Object.entries(cur.state()).forEach(([k,v])=>p.set(k,String(v))); const q=p.toString(); if(q) hsh+="?"+q; }
   return base+hsh;
 }
-backBtn.onclick=()=>{ location.hash=""; };
+backBtn.onclick=()=>{ location.hash=(cur&&cur.back)||""; };
 $("#ttl").onclick=()=>{ if(location.hash.replace(/^#/,"")) location.hash=""; else window.scrollTo(0,0); };
 $("#ttl").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#ttl").click(); } };
 shareBtn.onclick=async()=>{
