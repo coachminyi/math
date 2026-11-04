@@ -826,6 +826,22 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .mzll .mb{justify-self:center}
 .mzabs{display:inline-flex;align-items:center;border-left:1.5px solid currentColor;border-right:1.5px solid currentColor;padding:0 3px;margin:0 2px;vertical-align:middle}
 .cbk .fnote{display:block;margin-top:2px}
+.mzbody{position:relative}
+.mzc.cov .mzbody{cursor:pointer;min-height:60px}
+.mzc.cov .mzbody>*{filter:blur(7px);opacity:.5;user-select:none;-webkit-user-select:none;pointer-events:none}
+.mzc.cov .mzbody::after{content:"Tap to show";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--card);border:1.5px solid var(--c);color:var(--ink);border-radius:999px;padding:7px 16px;font-weight:700;font-size:15px;white-space:nowrap}
+.mzc.known:not(.kshow) .mzbody{display:none}
+.mzc.known{border-style:dashed}
+.mzc.known .mzt b::before{content:"✓";width:auto;height:auto;border-radius:0;background:none;color:var(--green);font-weight:800;font-size:14px}
+.mzact{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
+.mzc.known:not(.kshow) .mzact{margin-top:0;padding-top:2px;border-top:0}
+.pill.mzb{min-height:38px;padding:0 12px;font-size:14px}
+.pill.mzkn[aria-pressed="true"]{background:var(--green-fill);border-color:var(--green);color:var(--ink);font-weight:700}
+.pill.mzfc{margin-left:auto;text-decoration:none;color:var(--accent);font-weight:700}
+.mzbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:-12px 0 24px}
+.mzcount{font-size:15px;color:var(--muted);margin-right:auto}
+.mzcount b{color:var(--green);font-size:17px}
+.mztb.dsc td:last-child svg{width:72px;height:auto;display:block}
 @media (max-width:440px){
   .mzc{padding:10px 12px 12px}
   .mzrow{grid-template-columns:minmax(0,42%) minmax(0,1fr);column-gap:10px}
@@ -833,7 +849,10 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   .mzhero{font-size:18px}
 }
 @media print{
-  .mznav,.mzup{display:none!important}
+  .mznav,.mzup,.mzact,.mzbar{display:none!important}
+  .mzc.known .mzbody{display:block!important}
+  .mzc.cov .mzbody>*{filter:none!important;opacity:1!important}
+  .mzc.cov .mzbody::after{display:none}
   .mzc{border-color:#bbb}
   .mzc,.mzhero,.mzt b,.mztb th,.mzch,.mzfb,.mzlad .bx,.mzt b::before,.mzsteps li::before,.mzord span b,.mzpt,.mzbx{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .mzsh{break-after:avoid}
@@ -8575,7 +8594,9 @@ ${MIST([[`mixing the pairs: ${nw("(5, −5)")}`,`each ${X1} with its own ${V("y"
 </div>`
 };
 Object.assign(SHEETS,SHEETS9);
-const ZC=(c,t,sid,body)=>`<div class="mzc c-${c}"><div class="mzt"><b>${t}</b>${sid?`<a class="mzgo" href="#sheet/${sid}">cheatsheet →</a>`:""}</div>${body}</div>`;
+const zSlug=t=>t.replace(/&amp;/g,"and").replace(/<[^>]+>/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const ZC=(c,t,sid,body,deck)=>{ const ids=(sid||"").split("|").filter(Boolean); return `<div class="mzc c-${c}" data-k="${zSlug(t)}" data-deck="${deck||ids.map(x=>"s:"+x).join(",")}"><div class="mzt"><b>${t}</b>${ids[0]?`<a class="mzgo" href="#sheet/${ids[0]}">cheatsheet →</a>`:""}</div><div class="mzbody">${body}</div><div class="mzact"></div></div>`; };
+const mzIn=(c,d)=>(d||"").split(",").some(x=>x&&(x==="s:"+c.sid||x==="g:"+c.grp));
 const ZS=(t,cards)=>`<section class="mzsec"><h3 class="mzsh">${t}</h3><div class="mzg">${cards.join("")}</div></section>`;
 const ZR=(pic,lines,cls)=>`<div class="mzrow${cls?" "+cls:""}"><div class="mzp">${pic}</div><div class="mzl">${lines.join("")}</div></div>`;
 const ZX=t=>`<span class="mzx">${t}</span>`;
@@ -8646,12 +8667,18 @@ function zTree(){ const R="var(--red)", B="var(--blue)", L=(a,b,c,d)=>LN(a,b,c,d
     +O(124,19,"RR")+O(124,51,"RB")+O(124,75,"BR")+O(124,107,"BB")
     +SF(28,36,"3","5",R)+SF(28,84,"2","5",B)+SF(84,12,"2","4",R)+SF(84,50,"2","4",B)+SF(84,70,"3","4",R)+SF(84,108,"1","4",B)); }
 const zMap=()=>picMapSq().replace(">× 50 000<",">1 : 50 000<");
+function zDT(){ const X=t=>14+10*t, Y=d=>50-3.4*d, P=[[0,0],[3,6],[5,6],[8,12]];
+  return SV("0 0 100 62",LN(14,50,98,50)+LN(14,50,14,4)+`<polyline points="${P.map(([t,d])=>X(t)+","+Y(d)).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`
+    +TX(56,59,"time",'font-size="7" fill="var(--muted)"')+TX(8,28,"distance",'font-size="7" fill="var(--muted)" transform="rotate(-90 8 28)"')+TX(X(4),Y(6)-4,"flat",'font-size="7" fill="var(--muted)" font-weight="700"')); }
+function zST(){ const X=t=>14+6*t, Y=v=>50-3.3*v, P=[[0,0],[4,12],[10,12],[14,0]], pts=P.map(([t,v])=>X(t)+","+Y(v)).join(" ");
+  return SV("0 0 106 62",`<polygon points="${pts}" fill="var(--green-fill)"/>`+LN(14,50,102,50)+LN(14,50,14,4)+`<polyline points="${pts}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`
+    +TX(56,36,"area",'font-size="7.5" fill="var(--green)" font-weight="700"')+TX(56,59,"time",'font-size="7" fill="var(--muted)"')+TX(8,28,"speed",'font-size="7" fill="var(--muted)" transform="rotate(-90 8 28)"')); }
 const zPad=(s,t,b)=>s.replace(/viewBox="([-\d.]+) ([-\d.]+) ([\d.]+) ([\d.]+)"/,(m,x,y,w,hh)=>`viewBox="${x} ${+y-t} ${w} ${+hh+t+b}"`);
 function zCirc(){ return SV("0 0 70 64",`<circle cx="35" cy="32" r="25" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="2.4"/>`+LN(10,32,60,32,`stroke="var(--amber)" stroke-width="1.8"`)+LN(35,32,47.5,10.3,`stroke="var(--red)" stroke-width="1.8"`)+DOT(35,32,"var(--ink)")
   +TX(22,42,IT("d"),`fill="var(--amber)" font-weight="700" font-size="8.5"`)+TX(45,25,IT("r"),`fill="var(--red)" font-weight="700" font-size="8.5" text-anchor="start"`)); }
 const ZMUST=`<div class="mzmust">${MUST([FB("red","Memorise these",`learn them by heart`),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}</div>`;
 const ZMUST2=`<div class="mzmust">${MUST([FB("red","Not given",`memorise these`,"they're not on your formula sheet"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}</div>`;
-const ZNAV=`<details class="mznav"><summary>Jump to a topic</summary><div class="mzng"></div></details>`;
+const ZNAV=`<details class="mznav"><summary>Jump to a topic</summary><div class="mzng"></div></details><div class="mzbar"></div>`;
 const ZPLUS=ZK("green","+"), ZMIN=ZK("red","−");
 const ZSIGN=ZTB(["×","+","−"],[["+",ZPLUS,ZMIN],["−",ZMIN,ZPLUS]],"sg");
 const ZRAIN=rainbow(110,31,27,[[20,"5"],[38,"−2","var(--ink)"],[50,"("],[58,RX],[69,"+"],[80,"1"],[87,")"]],[[40,58,1,6,"","var(--blue)"],[36,80,1,13,"","var(--green)"]]);
@@ -8864,23 +8891,34 @@ ZC("amber","Completing the square","completing-the-square",
   +ZX(`half of ${V("p")} goes in the bracket`)
   +ZF("e.g.",nw(`${X2} + 6${X1} + 1 = (${X1} + 3)² − 9 + 1`))+ZF("",nw(`= (${X1} + 3)² − 8`))),
 ZC("purple","Indices","indices",
-  ZTB(null,[[`Multiply${ZX("add the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)],[`Divide${ZX("subtract the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)],[`Bracket${ZX("multiply the powers")}`,nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)],[`Power 0`,nw(`${V("a")}<sup>0</sup> = 1`)],[`Negative power${ZX("1 over")}`,nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)]])),
+  ZTB(null,[[`Multiply${ZX("add the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)],[`Divide${ZX("subtract the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)],[`Bracket${ZX("multiply the powers")}`,nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)],[`Power 0`,nw(`${V("a")}<sup>0</sup> = 1`)],[`Negative power${ZX("1 over")}`,nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)],[`Fraction power${ZX("a root")}`,nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`)],["",nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`)],[`Bracket of a product`,nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`)]])),
+ZC("teal","Standard form","standard-form",
+  ZH(nw(`${V("A")} × 10<sup>${V("n")}</sup>`),nw(`1 ≤ ${V("A")} &lt; 10`))
+  +ZCH([nw("345 000 = 3.45 × 10⁵"),nw("0.00072 = 7.2 × 10<sup>−4</sup>")])
+  +ZX(`10 or more: ${V("n")} is positive<br>less than 1: ${V("n")} is negative`)),
 ZC("red","Money &amp; rates","interest",
   ZH(nw(`Simple interest = ${frac(V("PRT"),"100")}`),`${V("P")} = amount borrowed or saved<br>${V("R")} = % rate per year<br>${V("T")} = number of years`)
   +ZF("Percentage change",nw(`= ${frac("change","original")} × 100%`))
-  +ZF("Average speed",nw(`= ${frac("total distance","total time")}`)))
+  +ZF("Average speed",nw(`= ${frac("total distance","total time")}`))),
+ZC("purple","Distance–time &amp; speed–time graphs","speed-time-graphs",
+  ZR(zDT(),[ZF("Distance–time",""),ZF("Gradient","= speed"),ZX("flat: not moving")])
+  +ZR(zST(),[ZF("Speed–time",""),ZF("Gradient","= acceleration"),ZF("Area","= distance travelled")]))
 ])}
 ${ZS("Geometry &amp; measurement",[
-ZC("green","Right-angled triangles","pythagoras",
+ZC("green","Right-angled triangles","pythagoras|trigonometry-sec2",
   ZR(picRight("pyth"),[ZF("Pythagoras",""),ZF("",nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)),ZX(`${V("c")} = hypotenuse`)])
   +ZR(picRight("trig"),[ZSUB("TOA CAH SOH"),...ZTOA])),
 ZC("red","Obtuse angles","further-trigonometry",
-  ZR(zObt(),[ZF("",nw("sin(180° − θ) = sin θ"),ZK("green","same height")),ZF("",nw("cos(180° − θ) = −cos θ"),ZK("red","the other side: minus"))],"st")),
+  ZR(zObt(),[ZF("",nw("sin(180° − θ) = sin θ"),ZK("green","same height")),ZF("",nw("cos(180° − θ) = −cos θ"),ZK("red","the other side: minus"))],"st")
+  +ZF("e.g.",nw("sin θ = 0.6"))+ZF("",`${nw("θ = 36.9°")} or ${nw("θ = 180° − 36.9° = 143.1°")}`)+ZX("sin is positive in Quadrants 1 and 2, so 2 answers")),
+ZC("blue","Bearings","bearings-elevation-3d",
+  ZR(picBearing(),[ZF("Bearing","from North, clockwise"),ZX(nw("3 figures: 065°"))])
+  +ZF("Bearing of A from B",`${nw("= 065° + 180°")} ${nw("= 245°")}`)+ZX("add 180°, or take away 180° if the bearing is more than 180°")),
 ZC("blue","Area","perimeter-area",
   ZR(picShape("trap"),[ZF("Trapezium",nw(`= ${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`))])
   +ZR(picShape("para"),[ZF("Parallelogram",nw(`= base × ${V("h")}`))])
   +ZR(zCirc(),[ZF("Circle area",nw(`= π${V("r")}²`)),ZF(ZK("blue","Circumference"),nw(`= 2π${V("r")}`))])),
-ZC("amber","Volume &amp; surface area","volume-surface-area-1",
+ZC("amber","Volume &amp; surface area","volume-surface-area-1|volume-surface-area-2",
   ZPRISM
   +ZR(picSolid("cyl"),[ZF("Cylinder volume",nw(`= π${V("r")}²${V("h")}`)),ZF("Curved surface area",nw(`= 2π${V("rh")}`))])
   +ZR(picSolid("pyr"),[ZF("Pyramid volume",nw(`= ${frac("1","3")} × base area × ${V("h")}`))])),
@@ -8888,14 +8926,33 @@ ZC("purple","Arcs &amp; sectors","arc-length-sector-area",
   ZR(zPad(picSector(),0,5),[ZF("Arc length",nw(`= ${frac("θ","360°")} × 2π${V("r")}`)),ZF("Sector area",nw(`= ${frac("θ","360°")} × π${V("r")}²`))])
   +ZCH([nw("π radians = 180°")])),
 ZC("teal","Polygons","polygons",
-  ZR(picPolyPattern(),[ZF("Interior angles add to",nw(`(${V("n")} − 2) × 180°`)),ZX(`${V("n")} = number of sides`),ZF("Exterior angles add to","360°")],"st")),
+  ZR(picPolyPattern(),[ZF("Interior angles add to",nw(`(${V("n")} − 2) × 180°`)),ZX(`${V("n")} = number of sides`),ZF("Exterior angles add to","360°")],"st")
+  +ZF("Regular polygon, each exterior ∠",nw(`= ${frac("360°",V("n"))}`))+ZTIP("Tip:","use the exterior angle first. It's much easier than the interior.")),
+ZC("teal","Circle properties","circle-properties",
+  ZT([[cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),`∠ at centre = ${nw("2 × ∠")} at circumference`,ZRS("(∠ at centre = 2∠ at circ.)")],
+    [cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]}),"Angles in the same segment are equal",ZRS("(∠s in same seg.)")],
+    [cmini({p:{A:180,B:0,P:60},l:["AB","AP","BP"],o:1,rt:"P"}),"Angle in a semicircle = 90°",ZRS("(rt. ∠ in semicircle)")],
+    [cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]}),"Cyclic quad: opposite angles add to 180°",ZRS("(∠s in opp. segments are supp.)")],
+    [cmini({p:{P:60},l:["OP"],o:1,tan:"P",rt:"P"}),"Tangent ⊥ radius",ZRS("(tan ⊥ rad)")],
+    [cmini({p:{},o:1,ext:1}),"2 tangents from an outside point are equal",ZRS("(tangents from ext. pt.)")],
+    [cmini({p:{A:200,B:340},l:["AB","OM"],o:1,mid:1}),"Line from centre ⊥ chord cuts the chord in half",ZRS("(⊥ from centre bisects chord)")],
+    [cmini({p:{A:150,B:30,C:210,D:330},l:["AB","CD"],o:1,perp:["AB","CD"]}),"Equal chords are the same distance from the centre",ZRS("(equal chords, equidistant from centre)")]],"two")),
 ZC("red","Similar shapes","congruence-similarity",
   ZR(picGridRatio(),[ZF("Area ratio",nw("= (length ratio)²"))],"st")+ZR(picCubeRatio(),[ZF("Volume ratio",nw("= (length ratio)³"))],"st")),
+ZC("amber","Congruence &amp; similarity tests","congruence-similarity-sec3",
+  ZSUB("Congruent: same shape, same size")
+  +ZTB(null,[["SSS","3 pairs of equal sides"],["SAS","2 pairs of sides and the angle <b>between</b> them"],["ASA, AAS","2 angles and a <b>matching</b> side"],["RHS","right angle, hypotenuse and one other side"]])
+  +ZW("ASS and AAA are not tests")
+  +ZSUB("Similar: same shape")
+  +ZTB(null,[["AA","2 pairs of equal angles"],["SSS","3 pairs of sides in the same ratio"],["SAS","2 pairs of sides in the same ratio, and the angle between them equal"]])),
 ZC("blue","Coordinates","coordinate-geometry",
   ZR(picRunRise(),[ZF("Gradient",nw(`= ${GRAD_F}`)),ZX(`AB: ${nw(`${frac("4 − 1","5 − 1")} = ${frac("3","4")}`)}`),ZF("Length",nw(`= ${LEN_F}`)),ZX(`AB: ${nw(`${SQRT("(5 − 1)² + (4 − 1)²")} = 5`)}`)],"st")
   +ZH(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`),`${V("m")} = gradient, ${V("c")} = ${V("y")}-intercept`)),
 ZC("green","Vectors","vectors",
-  ZR(zVec(),[ZF("Magnitude",""),ZF("",nw(`<span class="mzabs">${MX([[X1],[V("y")]])}</span> = ${SQRT(`${X2} + ${V("y")}²`)}`)),ZF("e.g.",nw(`<span class="mzabs">${MX([["4"],["3"]])}</span> = ${SQRT("4² + 3²")} = 5`))]))
+  ZR(zVec(),[ZF("Magnitude",""),ZF("",nw(`<span class="mzabs">${MX([[X1],[V("y")]])}</span> = ${SQRT(`${X2} + ${V("y")}²`)}`)),ZF("e.g.",nw(`<span class="mzabs">${MX([["4"],["3"]])}</span> = ${SQRT("4² + 3²")} = 5`))])
+  +ZSUB("Vector rules")
+  +ZR(picOAB(),[ZF("",nw(`${VEC("AB")} = ${VEC("OB")} − ${VEC("OA")}`)),ZF("",nw(`= ${BV("b")} − ${BV("a")}`)),ZF("",nw(`${VEC("OA")} + ${VEC("AB")} = ${VEC("OB")}`))],"st")
+  +ZF("Parallel",nw(`${BV("p")} = ${V("k")}${BV("q")}`),"plus a shared point: collinear"))
 ])}
 ${ZS("Statistics &amp; probability",[
 ZC("amber","Spread","measures-of-spread",
@@ -8915,7 +8972,10 @@ ${ZS("Algebra",[
 ZC("blue","Discriminant","discriminant",
   ZTB([nw(`${V("b")}² − 4${V("ac")}`),"roots",""],[[nw("&gt; 0"),"2 real and distinct",miniQ(2)],[nw("= 0"),"2 equal",miniQ(1)],[nw("&lt; 0"),"no real roots",miniQ(0)]],"dsc")
   +ZTIP("Real roots",`→ ${nw(`${V("b")}² − 4${V("ac")} ≥ 0`)} (equal roots are real too)`)
-  +ZR(picAlwaysPos(),[ZF("Always positive",""),ZF("",nw(`${V("a")} &gt; 0`)),ZF("",`and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)])),
+  +ZR(picAlwaysPos(),[ZF("Always positive",""),ZF("",nw(`${V("a")} &gt; 0`)),ZF("",`and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)])
+  +ZF("Always negative",`${nw(`${V("a")} &lt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)
+  +ZSUB("Line meets curve: sub the line into the curve first")
+  +ZTB([nw(`${V("b")}² − 4${V("ac")}`),"the line …",""],[[nw("&gt; 0"),"meets the curve at 2 points",miniLC(2)],[nw("= 0"),"is a tangent: touches once",miniLC(1)],[nw("&lt; 0"),"doesn't meet the curve",miniLC(0)]],"dsc")),
 ZC("green","Quadratic inequalities","simultaneous-inequalities",
   ZX(`roots ${V("p")} and ${V("q")}, with ${nw(`${V("p")} &lt; ${V("q")}`)}`)
   +ZR(qIn("gt"),[ZF("",nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &gt; 0`)),ZF("",`${nw(`${X1} &lt; ${V("p")}`)} or ${nw(`${X1} &gt; ${V("q")}`)}`),ZX("outside the roots")])
@@ -8931,11 +8991,11 @@ ZC("red","Polynomials","polynomials-partial-fractions",
   ZVS([["Remainder theorem",`${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)}<br>leaves remainder ${nw(`f(${V("a")})`)}`],["Factor theorem",`${nw(`(${X1} − ${V("a")})`)} is a factor<br>means ${nw(`f(${V("a")}) = 0`)}`]])
   +ZSUB("Sum and difference of cubes")
   +ZF("",`${nw(`${V("a")}³ + ${V("b")}³`)} ${nw(`= (${V("a")} + ${V("b")})(${V("a")}² − ${V("ab")} + ${V("b")}²)`)}`)
-  +ZF("",`${nw(`${V("a")}³ − ${V("b")}³`)} ${nw(`= (${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`)),
+  +ZF("",`${nw(`${V("a")}³ − ${V("b")}³`)} ${nw(`= (${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`),"g:Polynomials"),
 ZC("teal","Partial fractions","polynomials-partial-fractions",
   ZVS([["Two different linear factors",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`],
     ["A repeated factor",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`],
-    [`A factor ${nw(`${X2} + ${V("c")}²`)} that won't factorise`,`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`]],"one pf")),
+    [`A factor ${nw(`${X2} + ${V("c")}²`)} that won't factorise`,`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`]],"one pf"),"g:Partial fractions"),
 ZC("blue","Binomial","binomial-theorem",
   ZH(nw(`${V("T")}<sub>${V("r")} + 1</sub> = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`),"the general term")
   +ZX(`it sits inside the expansion on your formula sheet: it is the ${nw(`(${V("r")} + 1)`)}th term, not the ${V("r")}th`)),
@@ -8948,12 +9008,12 @@ ZC("green","Exponentials &amp; logs","exponentials-logarithms",
 ${ZS("Trigonometry",[
 ZC("purple","The six ratios","trig-ratios-any-angle",
   ZTB(null,[[nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`),nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`)],[nw(`sec ${V("A")} = ${frac("1","cos "+V("A"))}`),nw(`cosec ${V("A")} = ${frac("1","sin "+V("A"))}`)]],"pairs")
-  +`<div class="mzf" style="text-align:center">${nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`)}</div>`),
+  +`<div class="mzf" style="text-align:center">${nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`)}</div>`,"g:The six ratios"),
 ZC("teal","Exact values &amp; ASTC","trig-ratios-any-angle",
   ZTB(["","0°","30°","45°","60°","90°"],[["rad","0",frac("π","6"),frac("π","4"),frac("π","3"),frac("π","2")],["sin","0",frac("1","2"),frac("1",SQRT("2")),frac(SQRT("3"),"2"),"1"],["cos","1",frac(SQRT("3"),"2"),frac("1",SQRT("2")),frac("1","2"),"0"],["tan","0",frac("1",SQRT("3")),"1",SQRT("3"),"—"]],"ev")
   +ZX("tan 90° is undefined")
   +ZSUB("ASTC: which ratios are positive")
-  +ZR(zAstc(),[],"st sm")),
+  +ZR(zAstc(),[],"st sm"),"g:Exact values"),
 ZC("red","Trig graphs","trig-graphs",
   ZR(zWave(),[],"st")
   +ZF("",`${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)} or ${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}`)
@@ -8962,16 +9022,18 @@ ZC("red","Trig graphs","trig-graphs",
   +ZF(nw(`${V("y")} = ${V("a")} tan ${V("b")}${X1} + ${V("c")}`),`period = ${nw(frac("180°",V("b")))}`)),
 ZC("amber","R-formula","r-formula",
   ZH(`${nw(`${V("a")} cos θ + ${V("b")} sin θ`)} ${nw(`= ${V("R")} cos(θ − α)`)}`)
-  +ZR(zRTri(),[ZF("",nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)),ZF("",nw(`tan α = ${frac(V("b"),V("a"))}`))]))
+  +ZR(zRTri(),[ZF("",nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)),ZF("",nw(`tan α = ${frac(V("b"),V("a"))}`))])
+  +ZVS([["Max",nw(V("R"))+ZX(nw("when θ − α = 0°"))],["Min",nw(`−${V("R")}`)+ZX(nw("when θ − α = 180°"))]])
+  +ZX(`${nw(`${V("R")} &gt; 0`)}, α acute`))
 ])}
 ${ZS("Coordinate geometry",[
 ZC("blue","Lines","coordinate-geometry-circles",
   ZF("Midpoint",nw(`= ${PAR(`${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")}`)}`))
   +ZF("Gradient",nw(`= ${GRAD_F}`))+ZF("Length",nw(`= ${LEN_F}`))
-  +ZT([[zParPerp("par"),"Parallel",nw(`${V("m")}₁ = ${V("m")}₂`)],[zParPerp("perp"),"Perpendicular",nw(`${V("m")}₁${V("m")}₂ = −1`)]],"two")),
+  +ZT([[zParPerp("par"),"Parallel",nw(`${V("m")}₁ = ${V("m")}₂`)],[zParPerp("perp"),"Perpendicular",nw(`${V("m")}₁${V("m")}₂ = −1`)]],"two"),"g:Lines"),
 ZC("green","Circles","coordinate-geometry-circles",
   ZR(zPad(picCircAxes(),5,0),[ZF("",nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)),ZX(`centre ${nw("(−3, 2)")}, radius 4`)])
-  +ZVS([[nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`),`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`],[nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)}, radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`]],"one")),
+  +ZVS([[nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`),`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`],[nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)}, radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`]],"one"),"g:Circles"),
 ZC("teal","Area from the corners","coordinate-geometry-circles",
   ZR(picShoe(),[ZX("go round the shape and repeat the first corner")],"st")
   +ZF("Area",nw(`= ${frac("1","2")}${SHOE}`))
@@ -8979,7 +9041,7 @@ ZC("teal","Area from the corners","coordinate-geometry-circles",
   +ZSUB("Example: the triangle above")
   +ZF(ZK("blue","↘"),nw("(−4)(−5) + 2(5) + 3(3) = 39"))
   +ZF(ZK("amber","↗"),nw("3(2) + (−5)(3) + 5(−4) = −29"))
-  +ZF("Area",nw(`= ${frac("1","2")}|39 − (−29)| = 34`)+" units²")),
+  +ZF("Area",nw(`= ${frac("1","2")}|39 − (−29)| = 34`)+" units²"),"g:Area of a shape from its corners"),
 ZC("purple","Linear law","linear-law",
   `<div class="mzll"><span class="mb fb-blue">${V("Y")}</span><span>=</span><span class="mb fb-amber">${V("m")}</span><span class="mb fb-green">${V("X")}</span><span>+</span><span class="mb fb-red">${V("c")}</span><span class="mb fb-blue">lg ${V("y")}</span><span>=</span><span class="mb fb-amber">${V("n")}</span><span class="mb fb-green">lg ${X1}</span><span>+</span><span class="mb fb-red">lg ${V("a")}</span></div>`
   +ZX(`e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}: plot ${nw(`${V("Y")} = lg ${V("y")}`)} against ${nw(`${V("X")} = lg ${X1}`)}`)
@@ -8987,23 +9049,69 @@ ZC("purple","Linear law","linear-law",
 ])}
 ${ZS("Calculus",[
 ZC("red","Differentiation","differentiation-rules",
-  ZTB([V("y"),dydx],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${V("n")}${X1}<sup>${V("n")} − 1</sup>`)],[nw(`sin ${X1}`),nw(`cos ${X1}`)],[nw(`cos ${X1}`),nw(`−sin ${X1}`)],[nw(`tan ${X1}`),nw(`sec²${X1}`)],[nw(`e<sup>${X1}</sup>`),nw(`e<sup>${X1}</sup>`)],[nw(`ln ${X1}`),nw(frac("1",X1))]],"dif")
+  ZTB([V("y"),dydx],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${V("n")}${X1}<sup>${V("n")} − 1</sup>`)],[nw(`sin ${X1}`),nw(`cos ${X1}`)],[nw(`cos ${X1}`),nw(`−sin ${X1}`)],[nw(`tan ${X1}`),nw(`sec²${X1}`)],[nw(`e<sup>${X1}</sup>`),nw(`e<sup>${X1}</sup>`)],[nw(`ln ${X1}`),nw(frac("1",X1))]],"dif")+ZW(`trig rules: ${X1} in radians`)
   +ZVS([["Product rule",nw(`${frac("d","d"+X1)}(${V("uv")}) = ${V("u")}${dd(V("v"),X1)} + ${V("v")}${dd(V("u"),X1)}`)],["Quotient rule",nw(`${frac("d","d"+X1)}${PAR(frac(V("u"),V("v")))} = ${frac(`${V("v")}${dd(V("u"),X1)} − ${V("u")}${dd(V("v"),X1)}`,V("v")+"²")}`)],["Chain rule",nw(`${dd(V("y"),X1)} = ${dd(V("y"),V("u"))} × ${dd(V("u"),X1)}`)]],"one")),
 ZC("amber","Uses of differentiation","differentiation-uses",
   ZF(`Tangent at ${nw(`(${X1}₁, ${V("y")}₁)`)}`,"")+ZF("",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`))
   +ZF("Normal gradient",nw(`= −${frac("1",V("m"))}`))
   +ZF("Stationary point",nw(`${dydx} = 0`))
   +ZT([[zUM("min"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`),"minimum"],[zUM("max"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &lt; 0`),"maximum"]],"two")
+  +ZVS([["Increasing",`${nw(`${dydx} &gt; 0`)} ${SLP("+")}`],["Decreasing",`${nw(`${dydx} &lt; 0`)} ${SLP("−")}`]])
   +ZF("Rates of change","")+ZF("",nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`))),
 ZC("green","Integration","integration",
-  ZTB([nw(`f(${X1})`),nw(`∫ f(${X1}) d${X1}`)],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)+ZX(nw(`${V("n")} ≠ −1`))],[nw(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup>`),nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`)],[nw(`sin ${X1}`),nw(`−cos ${X1} + ${V("c")}`)],[nw(`cos ${X1}`),nw(`sin ${X1} + ${V("c")}`)],[nw(`sec²${X1}`),nw(`tan ${X1} + ${V("c")}`)],[nw(`e<sup>${V("a")}${X1} + ${V("b")}</sup>`),nw(`${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`)]],"dif")
+  ZTB([nw(`f(${X1})`),nw(`∫ f(${X1}) d${X1}`)],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)+ZX(nw(`${V("n")} ≠ −1`))],[nw(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup>`),nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`)+ZX(nw(`${V("n")} ≠ −1`))],[nw(`sin ${X1}`),nw(`−cos ${X1} + ${V("c")}`)],[nw(`cos ${X1}`),nw(`sin ${X1} + ${V("c")}`)],[nw(`sec²${X1}`),nw(`tan ${X1} + ${V("c")}`)],[nw(`e<sup>${V("a")}${X1} + ${V("b")}</sup>`),nw(`${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`)],[nw(`sin(${V("a")}${X1} + ${V("b")})`),`${nw(`−${frac("1",V("a"))} cos(${V("a")}${X1} + ${V("b")})`)} ${nw(`+ ${V("c")}`)}`],[nw(`cos(${V("a")}${X1} + ${V("b")})`),`${nw(`${frac("1",V("a"))} sin(${V("a")}${X1} + ${V("b")})`)} ${nw(`+ ${V("c")}`)}`],[nw(`sec²(${V("a")}${X1} + ${V("b")})`),`${nw(`${frac("1",V("a"))} tan(${V("a")}${X1} + ${V("b")})`)} ${nw(`+ ${V("c")}`)}`],[nw(frac("1",X1)),nw(`ln ${X1} + ${V("c")}`)],[nw(frac("1",`${V("a")}${X1} + ${V("b")}`)),`${nw(`${frac("1",V("a"))} ln(${V("a")}${X1} + ${V("b")})`)} ${nw(`+ ${V("c")}`)}`]],"dif")+ZW(`trig: ${X1} in radians`)
   +ZF("Definite",nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`))),
+ZC("teal","Area under a curve","applications-of-integration",
+  ZR(picAreaUnder(),[ZF("Area",nw(`= ∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> ${V("y")} d${X1}`)),ZX(`${V("a")}, ${V("b")}: the ${X1}-values at the 2 ends`)],"st")
+  +ZW(`below the ${X1}-axis the integral is negative: area = its size, and split at every root`)
+  +ZF("Curve and line",nw(`= ∫ (upper − lower) d${X1}`),"limits: where they meet")),
 ZC("blue","Kinematics","kinematics",
   ZLAD
-  +ZVS([["Differentiate",`${nw(`${V("v")} = ${dd(V("s"),V("t"))}`)}<br>${nw(`${V("a")} = ${dd(V("v"),V("t"))}`)}`],["Integrate",`${nw(`${V("s")} = ∫${V("v")} d${V("t")}`)}<br>${nw(`${V("v")} = ∫${V("a")} d${V("t")}`)}`]]))
+  +ZVS([["Differentiate",`${nw(`${V("v")} = ${dd(V("s"),V("t"))}`)}<br>${nw(`${V("a")} = ${dd(V("v"),V("t"))}`)}`],["Integrate",`${nw(`${V("s")} = ∫${V("v")} d${V("t")}`)}<br>${nw(`${V("v")} = ∫${V("a")} d${V("t")}`)}`]])
+  +ZTB(null,[["At rest / turns round",nw(`${V("v")} = 0`)],["Max or min velocity",nw(`${V("a")} = 0`)],["Initially",nw(`${V("t")} = 0`)],["Distance travelled",`split the journey where ${nw(`${V("v")} = 0`)}, add the parts as positive numbers`]])
+  +ZW("distance ≠ displacement"))
 ])}`
 };
 Object.assign(SHEETS,SHEETS10);
+SHEETS.emMemoFC+=`<ul class="steps fml">${GRP("Standard form","standard-form")}${FL(`Standard form = ${nw(`${V("A")} × 10<sup>${V("n")}</sup>`)}`+FNOTE(nw(`1 ≤ ${V("A")} &lt; 10`)))}
+${GRP("Indices","indices")}${FL(nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`))}${FL(nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`))}${FL(nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`))}
+${GRP("Speed–time graphs","speed-time-graphs")}${FL("Gradient of a distance–time graph = speed")}${FL("Gradient of a speed–time graph = acceleration")}${FL("Area under a speed–time graph = distance travelled")}
+${GRP("Bearings","bearings-elevation-3d")}${FL(`Bearing${nw(" → ")}from North, clockwise, 3 figures`)}${FL(`Bearing of A from B = ${nw("bearing of B from A ± 180°")}`)}
+${GRP("Polygons","polygons")}${FL(`Each exterior angle of a regular polygon = ${nw(frac("360°",V("n")))}`)}
+${GRP("Circle properties","circle-properties")}${FL(`Angle at centre = ${nw("2 × angle at circumference")}`+FNOTE("(∠ at centre = 2∠ at circ.)"))}${FL("Angle in a semicircle = 90°"+FNOTE("(rt. ∠ in semicircle)"))}${FL(`Angles in the same segment${nw(" → ")}equal`+FNOTE("(∠s in same seg.)"))}${FL(`Cyclic quadrilateral, opposite angles${nw(" → ")}add to 180°`+FNOTE("(∠s in opp. segments are supp.)"))}${FL(`Tangent and radius${nw(" → ")}meet at 90°`+FNOTE("(tan ⊥ rad)"))}${FL(`2 tangents from an outside point${nw(" → ")}equal`+FNOTE("(tangents from ext. pt.)"))}${FL(`Line from the centre ⊥ chord${nw(" → ")}cuts the chord in half`+FNOTE("(⊥ from centre bisects chord)"))}${FL(`Equal chords${nw(" → ")}the same distance from the centre`+FNOTE("(equal chords, equidistant from centre)"))}
+${GRP("Congruence and similarity tests","congruence-similarity-sec3")}${FL("Congruence tests = SSS, SAS, ASA, AAS, RHS"+FNOTE("ASS and AAA are not tests"))}${FL("Similarity tests = AA, SSS, SAS"+FNOTE("sides in the same ratio"))}
+${GRP("Vectors","vectors")}${FL(nw(`${VEC("AB")} = ${VEC("OB")} − ${VEC("OA")}`))}${FL(nw(`${VEC("OA")} + ${VEC("AB")} = ${VEC("OB")}`))}${FL(`Parallel vectors: ${nw(`${BV("p")} = ${V("k")}${BV("q")}`)}`+FNOTE("plus a shared point: collinear"))}</ul>`;
+SHEETS.amMemoFC+=`<ul class="steps fml">${GRP("Line meets curve","discriminant")}${FL(`Line meets the curve at 2 points${nw(" → ")}${nw(`${V("b")}² − 4${V("ac")} &gt; 0`)}`)}${FL(`Line is a tangent${nw(" → ")}${nw(`${V("b")}² − 4${V("ac")} = 0`)}`)}${FL(`Line doesn't meet the curve${nw(" → ")}${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}${FL(`Always negative${nw(" → ")}${nw(`${V("a")} &lt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}
+${GRP("Exact values","trig-ratios-any-angle")}${[["sin 30°",frac("1","2")],["sin 45°",frac("1",SQRT("2"))],["sin 60°",frac(SQRT("3"),"2")],["cos 30°",frac(SQRT("3"),"2")],["cos 45°",frac("1",SQRT("2"))],["cos 60°",frac("1","2")],["tan 30°",frac("1",SQRT("3"))],["tan 45°","1"],["tan 60°",SQRT("3")]].map(([a,b])=>FL(nw(`${a} = ${b}`))).join("")}
+${GRP("Differentiation","differentiation-rules")}${FL("Angle unit for trig calculus = radians")}
+${GRP("Uses","differentiation-uses")}${FL(`Increasing${nw(" → ")}${nw(`${dydx} &gt; 0`)}`)}${FL(`Decreasing${nw(" → ")}${nw(`${dydx} &lt; 0`)}`)}
+${GRP("Integration","integration")}${FL(nw(`∫sin(${V("a")}${X1} + ${V("b")}) d${X1} = −${frac("1",V("a"))} cos(${V("a")}${X1} + ${V("b")}) + ${V("c")}`))}${FL(nw(`∫cos(${V("a")}${X1} + ${V("b")}) d${X1} = ${frac("1",V("a"))} sin(${V("a")}${X1} + ${V("b")}) + ${V("c")}`))}${FL(nw(`∫sec²(${V("a")}${X1} + ${V("b")}) d${X1} = ${frac("1",V("a"))} tan(${V("a")}${X1} + ${V("b")}) + ${V("c")}`))}${FL(nw(`∫${frac("1",X1)} d${X1} = ln ${X1} + ${V("c")}`))}${FL(nw(`∫${frac("1",`${V("a")}${X1} + ${V("b")}`)} d${X1} = ${frac("1",V("a"))} ln(${V("a")}${X1} + ${V("b")}) + ${V("c")}`))}
+${GRP("Area under a curve","applications-of-integration")}${FL(nw(`Area = ∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> ${V("y")} d${X1}`))}${FL(`Area below the ${X1}-axis = the size of the integral`+FNOTE("the integral comes out negative"))}${FL(`Area between a curve and a line = ${nw(`∫ (upper − lower) d${X1}`)}`)}
+${GRP("Kinematics","kinematics")}${FL(`At rest: ${nw(`${V("v")} = 0`)}`)}${FL(`Max or min velocity: ${nw(`${V("a")} = 0`)}`)}${FL(`Initially: ${nw(`${V("t")} = 0`)}`)}${FL("Distance travelled = add the parts as positive numbers"+FNOTE(`split the journey where ${nw(`${V("v")} = 0`)}`))}
+${GRP("R-formula","r-formula")}${FL(`Max of ${nw(`${V("R")} cos(θ − α)`)} = ${V("R")}`)}${FL(`Min of ${nw(`${V("R")} cos(θ − α)`)} = −${V("R")}`)}</ul>`;
+function mzKn(){ try{ return JSON.parse(localStorage.getItem("hubKnown")||"{}")||{}; }catch(e){ return {}; } }
+function mzKnSave(m){ try{ localStorage.setItem("hubKnown",JSON.stringify(m)); }catch(e){} }
+function mzRe(){ app.querySelectorAll(".mzg").forEach(g=>{ g._n=0; }); mzLay(); }
+function mzCov(c,on){ c.classList.toggle("cov",on); const b=c.querySelector('[data-a="cov"]'); if(b){ b.textContent=on?"Uncover":"Cover"; b.setAttribute("aria-pressed",on); } }
+function mzBar(){ const b=app.querySelector(".mzbar"); if(!b) return; const cs=[...app.querySelectorAll(".mzc")], k=cs.filter(c=>c.classList.contains("known")).length;
+  const cov=cs.length>0&&cs.every(c=>c.classList.contains("cov")||(c.classList.contains("known")&&!c.classList.contains("kshow"))), sh=cs.some(c=>c.classList.contains("kshow"));
+  b.innerHTML=`<span class="mzcount"><b>${k}</b> of ${cs.length} cards known</span><button class="pill sm" type="button" data-a="covall" aria-pressed="${cov}">${cov?"Uncover all":"Cover all"}</button>${k?`<button class="pill sm" type="button" data-a="showkn" aria-pressed="${sh}">${sh?"Hide known":"Show known"}</button>`:""}`; }
+function mzClick(e){ const b=e.target.closest("[data-a]");
+  if(b&&b.closest(".mzact")){ const c=b.closest(".mzc");
+    if(b.dataset.a==="cov") mzCov(c,!c.classList.contains("cov"));
+    if(b.dataset.a==="kn"){ const m=mzKn(), on=!m[c.dataset.key]; if(on) m[c.dataset.key]=1; else delete m[c.dataset.key]; mzKnSave(m);
+      c.classList.toggle("known",on); c.classList.remove("kshow"); b.textContent=on?"✓ Known":"I know this"; b.setAttribute("aria-pressed",on); if(on) mzCov(c,false); mzRe(); }
+    mzBar(); return; }
+  if(b&&b.closest(".mzbar")){ const cs=[...app.querySelectorAll(".mzc")], on=b.getAttribute("aria-pressed")!=="true";
+    if(b.dataset.a==="covall") cs.forEach(c=>mzCov(c,on));
+    if(b.dataset.a==="showkn"){ cs.forEach(c=>{ if(c.classList.contains("known")) c.classList.toggle("kshow",on); }); mzRe(); }
+    mzBar(); return; }
+  const cb=e.target.closest(".mzc.cov .mzbody"); if(cb) mzCov(cb.closest(".mzc"),false); }
+function mzAct(s){ const cs=[...app.querySelectorAll(".mzc")]; if(!cs.length) return; if(!mzAct.on){ app.addEventListener("click",mzClick); mzAct.on=1; }
+  const rows=cdMemo(s.sheet), kn=mzKn(), lvl=s.levels[0];
+  cs.forEach(c=>{ const key=s.id+":"+c.dataset.k, n=rows.filter(x=>mzIn(x,c.dataset.deck)).length; c.dataset.key=key; c.classList.toggle("known",!!kn[key]);
+    c.querySelector(".mzact").innerHTML=`<button class="pill sm mzb" type="button" data-a="cov" aria-pressed="false">Cover</button><button class="pill sm mzb mzkn" type="button" data-a="kn" aria-pressed="${!!kn[key]}">${kn[key]?"✓ Known":"I know this"}</button>${n?`<a class="pill sm mzb mzfc" href="#cards/memo/${lvl}/${c.dataset.k}">${n} flashcard${n>1?"s":""} →</a>`:""}`; });
+  mzBar(); const m=/^cards\/memo\/[^/]+\/(.+)$/.exec(cdFrom||""); if(m){ const c=app.querySelector(`.mzc[data-k="${m[1]}"]`); if(c) setTimeout(()=>c.scrollIntoView({block:"start"}),80); } }
 function mzNav(){ const nav=app.querySelector(".mznav"); if(!nav) return; const cards=[]; let h="";
   app.querySelectorAll(".mzsec").forEach(sec=>{ const cs=[...sec.querySelectorAll(".mzc")]; h+=`<div class="mznh">${sec.querySelector(".mzsh").innerHTML}</div><div class="mznc">${cs.map(c=>{ cards.push(c); return `<button class="pill sm mzj" type="button" data-mz="${cards.length-1}">${c.querySelector(".mzt b").innerHTML}</button>`; }).join("")}</div>`; });
   nav.querySelector(".mzng").innerHTML=h; if(innerWidth>=900) nav.open=true;
@@ -9357,7 +9465,7 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
-  digest(app); cdLinks(s.sheet); fitMust(); mzNav(); mzLay(); bindPrint(); fillPrintFoot(!!window.qrcode);
+  digest(app); cdLinks(s.sheet); fitMust(); mzNav(); mzAct(s); mzLay(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
@@ -9647,7 +9755,7 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
   const upto=(q,n,i)=>{ const r=document.createRange(); r.setStart(q,0); r.setEnd(n,i); const s=document.createElement("span"); s.append(r.cloneContents()); return s.innerHTML; };
   const texts=q=>{ const w=document.createTreeWalker(q,NodeFilter.SHOW_TEXT), a=[]; let n; while((n=w.nextNode())) if(!n.parentElement.closest(".frac, sup, sub, svg, .lim, .mx, .fnote")) a.push(n); return a; };
   cdDom(SHEETS[key+"FC"]?key+"FC":key).querySelectorAll("ul.fml > li").forEach(li=>{
-    if(li.classList.contains("grp")){ const a=li.querySelector(".go"); g={n:li.firstElementChild.innerHTML,a:a?a.outerHTML:""}; prev=null; return; }
+    if(li.classList.contains("grp")){ const a=li.querySelector(".go"); g={n:li.firstElementChild.innerHTML,a:a?a.outerHTML:"",s:a?a.getAttribute("href").replace("#sheet/",""):""}; prev=null; return; }
     const q=li.cloneNode(true), lb=[...q.children].find(c=>c.matches(".lbl")); if(lb) lb.remove();
     const it=li.matches(".frow, .fmap")?q.firstElementChild:q, ts=it?texts(it):[], k=ts.findIndex(n=>n.nodeValue.includes("=")), r={g,li,it,ts,k,prev,lb:lb?lb.innerHTML:""};
     r.left=k<0?"":upto(it,ts[k],ts[k].nodeValue.indexOf("=")); r.lt=tx(r.left); r.plain=!r.lt||/^[A-Za-zα-ω]$/.test(r.lt);
@@ -9666,7 +9774,7 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
   rows.forEach((r,i)=>{ const t=tx(r.li.cloneNode(true)), fx=FIX.find(([g,re])=>tx(r.g.n)===g&&re.test(t));
     if(fx){ if(fx[2]){ const m=fx[2](r); if(m){ r.top=r.g.n; r.main=m; } } else r.drop=1; }
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
-  return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`})); }
+  return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`,sid:r.g.s,grp:tx(r.g.n)})); }
 function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
 function cdOv(el){ if(el.scrollWidth>el.clientWidth+1) return true; if(!el.classList.contains("cln")) return false; const r=el.getBoundingClientRect().right-parseFloat(getComputedStyle(el).paddingRight); return [...el.querySelectorAll(".nw, .cfine")].some(n=>n.getBoundingClientRect().right>r+.5); }
 function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li, .ccard .cln").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
@@ -9693,11 +9801,12 @@ function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; 
   else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
-function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
+function renderCards(kind,id,sub){ if(kind==="mist"&&!cdMistOn) return false;
   const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
-  const cards=kind==="mist"?cdSpot(s.id):cdMemo(s.sheet); if(!cards.length) return false;
-  const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
-  document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
+  let cards=kind==="mist"?cdSpot(s.id):cdMemo(s.sheet), subT=""; if(!cards.length) return false;
+  if(kind==="memo"&&sub){ const el=cdDom(s.sheet).querySelector(`.mzc[data-k="${sub}"]`), f=el?cards.filter(c=>mzIn(c,el.dataset.deck)):[]; if(f.length){ cards=f; subT=el.querySelector(".mzt b").textContent; } else sub=""; }
+  const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id+(sub?"/"+sub:"");
+  document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=subT?`${s.title} · ${subT}`:s.title;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
   cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:"#sheet/"+s.id}; setPage("cards"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
@@ -9716,7 +9825,7 @@ function route(){
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
     if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
-  if(parts[0]==="cards"&&renderCards(parts[1],parts[2])) return;
+  if(parts[0]==="cards"&&renderCards(parts[1],parts[2],parts[3])) return;
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
