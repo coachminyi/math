@@ -9180,7 +9180,85 @@ const QQ_HI={
   return {q:`Find the range of values of ${K} for which ${nw(eq)} has ${wd}.`,w:[`${nw(`${V("a")} = ${a}`)}, ${nw(`${V("b")} = ${qN(b)}`)}, ${nw(`${V("c")} = ${K}`)}`,qW(nw(`${qB(b)}² − 4(${a})(${K}) ${s} 0`),`${wd} → ${s} 0`),nw(`${B} − ${A}${K} ${s} 0`),qW(nw(`${B} ${s} ${A}${K}`),`throw ${nw(`−${A}${K}`)} over: flip`),nw(`${A}${K} ${o} ${B}`),nw(`${K} ${o} ${qF(B,A)}`)],a:nw(`${K} ${o} ${qF(B,A)}`),n}; }},
 {t:"tangent",g:R=>{ const K=V("k"), n=qTry(()=>{ const m=R.nz(-3,3), p=R.nz(-6,6), q=R.nz(-8,8), B=p-m; return {m,p,q,B,k:q-B*B/4}; },n=>n.B!==0&&n.B%2===0&&n.k!==0&&n.k!==n.q,{m:1,p:-3,q:5,B:-4,k:1}), {m,p,q,B,k}=n, cv=qJ(X2,qT(p,X1),q), ln=qJ(qT(m,X1),K), c4=4*q-B*B;
   return {q:`The line ${nw(`${VY} = ${ln}`)} is a tangent to the curve ${nw(`${VY} = ${cv}.`)} Find the value of ${nw(`${K}.`)}`,
-    w:[nw(`${cv} = ${ln}`),qW(nw(`${qJ(X2,qT(B,X1),`(${qN(q)} − ${K})`)} = 0`),`${V("a")} = 1, ${V("b")} = ${qN(B)}, ${V("c")} = ${qN(q)} − ${K}`),qW(nw(`${qB(B)}² − 4(1)(${qN(q)} − ${K}) = 0`),"tangent → = 0"),nw(`${qJ(B*B,-4*q,`4${K}`)} = 0`),qW(nw(`4${K} = ${qN(c4)}`),"throw over: flip"),nw(`${K} = ${qN(c4)} ÷ 4 = ${qN(k)}`)],a:nw(`${K} = ${qN(k)}`),n}; }}]
+    w:[nw(`${cv} = ${ln}`),qW(nw(`${qJ(X2,qT(B,X1),`(${qN(q)} − ${K})`)} = 0`),`${V("a")} = 1, ${V("b")} = ${qN(B)}, ${V("c")} = ${qN(q)} − ${K}`),qW(nw(`${qB(B)}² − 4(1)(${qN(q)} − ${K}) = 0`),"tangent → = 0"),nw(`${qJ(B*B,-4*q,`4${K}`)} = 0`),qW(nw(`4${K} = ${qN(c4)}`),"throw over: flip"),nw(`${K} = ${qN(c4)} ÷ 4 = ${qN(k)}`)],a:nw(`${K} = ${qN(k)}`),n}; }}],
+"measures-of-spread":[
+{t:"quartiles from a list",g:R=>{ const N0=R.pick([7,8,9,10,11]), d=[]; let v=R.int(2,12); for(let i=0;i<N0;i++){ d.push(v); v+=R.int(1,5); }
+  const sh=R.shuf(d), md=a=>a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2, h=Math.floor(N0/2), lo=d.slice(0,h), up=d.slice(N0-h), M=md(d), q1=md(lo), q3=md(up), ord=k=>k+"th";
+  const ml=N0%2?`${nw(`median = ${M}`)}, the ${ord((N0+1)/2)} value`:nw(`median = ${frac(`${d[h-1]} + ${d[h]}`,2)} = ${qN(M)}`), ql=(lb,Q,a,q)=>[`${lb} half: ${a.join(", ")}`,nw(a.length%2?`${Q} = ${q}`:`${Q} = ${frac(`${a[a.length/2-1]} + ${a[a.length/2]}`,2)} = ${qN(q)}`)], l1=ql("lower","Q1",lo,q1), l3=ql("upper","Q3",up,q3);
+  return {q:`Here are the marks of ${N0} students in a quiz:<br>${sh.join(", ")}.<br>Find the median and the interquartile range.`,w:[`in order: ${d.join(", ")} (${N0} values)`,ml,...l1,...l3,nw(`IQR = ${qN(q3)} − ${qN(q1)} = ${qN(q3-q1)}`)],a:`${nw(`median = ${qN(M)}`)}, ${nw(`IQR = ${qN(q3-q1)}`)}`,n:{d}}; }},
+{t:"mean and standard deviation",g:R=>{ const [ctx,x0,lx,lf]=R.pick([["the number of goals a team scored in each of its matches",0,"Goals","Matches"],["the number of children in each family on a street",1,"Children","Families"],["the number of books each student read last month",0,"Books","Students"]]);
+  const n=qTry(()=>{ const f=[0,1,2,3,4].map(()=>R.int(1,9)), S=f.reduce((a,b)=>a+b,0), fx=f.reduce((a,b,i)=>a+b*(x0+i),0), fx2=f.reduce((a,b,i)=>a+b*(x0+i)*(x0+i),0), sd=Math.sqrt(fx2/S-(fx/S)**2); return {f,x0,S,fx,fx2,sd}; },
+    n=>n.S>=12&&n.S<=40&&(n.fx*100)%n.S===0&&Math.abs(n.sd*1e4-Math.round(n.sd*1e4))>1e-6,{f:[3,7,5,4,1],x0:0,S:20,fx:33,fx2:85,sd:Math.sqrt(85/20-1.65*1.65)}), {f,S,fx,fx2,sd}=n, xs=f.map((a,i)=>x0+i), mean=fx/S, mS=qN(mean), FX=V("f")+V("x");
+  const tb=`<div class="vtab"><table><tr><th>${lx}</th>${xs.map(x=>`<td>${x}</td>`).join("")}</tr><tr><th>${lf}</th>${f.map(x=>`<td>${x}</td>`).join("")}</tr></table></div>`;
+  const tw=`<div class="vtab"><table><tr><th>${X1}</th>${xs.map(x=>`<td>${x}</td>`).join("")}<td>total</td></tr><tr><th>${V("f")}</th>${f.map(x=>`<td>${x}</td>`).join("")}<td>${S}</td></tr><tr><th>${FX}</th>${f.map((a,i)=>`<td>${a*xs[i]}</td>`).join("")}<td>${fx}</td></tr><tr><th>${FX}²</th>${f.map((a,i)=>`<td>${a*xs[i]*xs[i]}</td>`).join("")}<td>${fx2}</td></tr></table></div>`;
+  return {q:`The table shows ${ctx}.${tb}Find the mean and the standard deviation.`,w:[tw,nw(`mean = ${frac("Σ"+FX,"Σ"+V("f"))} = ${frac(fx,S)} = ${mS}`),nw(`SD = ${SQRT(`${frac("Σ"+FX+"²","Σ"+V("f"))} − mean²`)}`),nw(`= ${SQRT(`${frac(fx2,S)} − ${mS}²`)}`),`${nw(`= ${qD(sd,4)}…`)} ${nw(`= ${qR(sd,3)} (3 s.f.)`)}`],
+    a:`${nw(`mean = ${mS}`)}, ${nw(`SD = ${qR(sd,3)} (3 s.f.)`)}`,k:`MENU 3 1: ${lx.toLowerCase()} in the ${X1} column, ${lf.toLowerCase()} in FREQ, then read ${nw(`${V("x̄")} and σ${V("x")}`)}`,n:{f,x0}}; }},
+{t:"compare two sets",g:R=>{ const mn=R.f()<.4, [av,sp,avL,spL]=mn?["mean","standard deviation","mean","standard deviation"]:["median","interquartile range","median","interquartile range"];
+  const a1=R.int(40,75), a2=qTry(()=>R.int(40,75),v=>Math.abs(v-a1)>=3,a1+6), s1=R.int(6,20), s2=qTry(()=>R.int(6,20),v=>Math.abs(v-s1)>=2,s1+4), hi=a2>a1?"B":"A", lo=hi==="A"?"B":"A", A={A:a1,B:a2}, S={A:s1,B:s2}, cs=s1<s2?"A":"B", cl=cs==="A"?"B":"A";
+  return {q:`The test marks of Class A have a ${av} of ${a1} and ${mn?"a":"an"} ${sp} of ${s1}. For Class B, the ${av} is ${a2} and the ${sp} is ${s2}. Make two comparisons between the marks of the two classes.`,
+    w:[`Class ${hi}'s ${avL} (${A[hi]}) is higher than Class ${lo}'s (${A[lo]}).`,`So generally, Class ${hi} did better.`,`Class ${cs}'s ${spL} (${S[cs]}) is smaller than Class ${cl}'s (${S[cl]}).`,`So Class ${cs}'s marks are more consistent (smaller spread).`],
+    a:`Class ${hi} generally did better. Class ${cs}'s marks are more consistent.`,n:{mn,a1,a2,s1,s2}}; }}],
+"probability":[
+{t:"two dice",g:R=>{ const W=t=>6-Math.abs(t-7), gt=R.f()<.4, k=gt?R.int(7,10):R.pick([3,4,5,6,7,8,9,10,11]), ts=gt?[11,12,10,9,8].filter(t=>t>k).sort((a,b)=>a-b):[k], ways=ts.reduce((s,t)=>s+W(t),0), lb=gt?`total &gt; ${k}`:`total = ${k}`, P=`P(${lb})`;
+  const pr=[]; for(let i=1;i<=6;i++) if(k-i>=1&&k-i<=6) pr.push(nw(`(${i}, ${k-i})`));
+  const w=[qW(nw(`6 × 6 = 36`),"equally likely outcomes")];
+  if(gt) w.push(`totals ${ts.join(", ").replace(/, (\d+)$/," or $1")}: ${nw(`${ts.map(W).join(" + ")} = ${ways}`)} ways`); else w.push(`${nw(`total = ${k}`)}: ${pr.join(", ")}`,`${ways} ways`);
+  w.push(nw(`${P} = ${frac(ways,36)} = ${qF(ways,36)}`));
+  return {q:`Two fair six-sided dice are thrown. Find the probability that the total is ${gt?`more than ${k}`:k}.`,w,a:nw(`${P} = ${qF(ways,36)}`),n:{gt,k}}; }},
+{t:"without replacement",g:R=>{ const r=R.int(2,7), b=qTry(()=>R.int(2,7),v=>v!==r,r+1), T=r+b, ask=R.pick(["both red","both blue","one of each","same colour"]), f=frac, pRR=[r,T,r-1,T-1], pBB=[b,T,b-1,T-1], pRB=[r,T,b,T-1], pBR=[b,T,r,T-1];
+  const pt=p=>`${f(p[0],p[1])} × ${f(p[2],p[3])}`, nu=p=>p[0]*p[2], D=T*(T-1), P=`P(${ask})`, w=[];
+  let num;
+  if(ask==="both red"||ask==="both blue"){ const p=ask==="both red"?pRR:pBB; num=nu(p); w.push(qW(nw(`${P} = ${pt(p)}`),"along the branch: ×")); }
+  else{ const [p1,p2]=ask==="one of each"?[pRB,pBR]:[pRR,pBB]; num=nu(p1)+nu(p2); w.push(qW(nw(`${P} = ${pt(p1)} + ${pt(p2)}`),"two branches: +"),nw(`= ${f(nu(p1),D)} + ${f(nu(p2),D)}`)); }
+  w.push(nw(`= ${qF(num,D)}`));
+  return {q:`A bag has ${r} red balls and ${b} blue balls. Two balls are taken at random, one after the other, without replacement. Find the probability that ${ask==="one of each"?"there is one of each colour":ask==="same colour"?"both balls are the same colour":`both balls are ${ask.slice(5)}`}.`,w,a:nw(`${P} = ${qF(num,D)}`),n:{r,b,ask}}; }},
+{t:"at least one",g:R=>{ const r=R.int(2,6), b=qTry(()=>R.int(3,8),v=>v!==r,r+2), T=r+b, D=T*(T-1), nb=b*(b-1);
+  return {q:`A bag has ${r} red balls and ${b} blue balls. Two balls are taken at random without replacement. Find the probability that at least one ball is red.`,
+    w:[qW(nw(`P(at least one red) = 1 − P(no red)`),"faster than adding every case"),nw(`P(no red) = P(both blue)`),nw(`= ${frac(b,T)} × ${frac(b-1,T-1)} = ${qF(nb,D)}`),nw(`P(at least one red) = 1 − ${qF(nb,D)}`),nw(`= ${qF(D-nb,D)}`)],a:nw(`P(at least one red) = ${qF(D-nb,D)}`),n:{r,b}}; }},
+{t:"unknown number",g:R=>{ const n=qTry(()=>{ const x=R.int(2,12), b=R.int(2,9), g=qGcd(x,x+b); return {x,b,p:x/g,q:(x+b)/g}; },n=>n.p>1&&n.q-n.p<=4&&n.x!==n.b,{x:8,b:4,p:2,q:3}), {x,b,p,q}=n, e=q-p, vn=V("n");
+  const w=[nw(`${frac(vn,`${vn} + ${b}`)} = ${frac(p,q)}`),nw(`${q}${vn} = ${p}(${vn} + ${b})`),nw(`${q}${vn} = ${p}${vn} + ${p*b}`)];
+  if(e===1) w.push(nw(`${vn} = ${p*b}`)); else w.push(qW(nw(`${e}${vn} = ${p*b}`),`throw ${nw(`${p}${vn}`)} over: flip`),qW(nw(`${vn} = ${p*b} ÷ ${e} = ${x}`),`× ${e} flips to ÷ ${e}`));
+  return {q:`A bag has ${vn} red balls and ${b} blue balls. A ball is taken at random. The probability that it is red is ${nw(`${frac(p,q)}.`)} Find ${vn}.`,w,a:nw(`${vn} = ${x}`),n:{b,p,q}}; }}],
+"matrices":[
+{t:"add and scalar multiple",g:R=>{ const A=[[R.nz(-5,9),R.nz(-5,9)],[R.nz(-5,9),R.nz(-5,9)]], B=[[R.nz(-5,9),R.nz(-5,9)],[R.nz(-5,9),R.nz(-5,9)]], k=R.int(2,4), sg=R.sign(), M=m=>MX(m.map(r=>r.map(qN))), kA=A.map(r=>r.map(v=>k*v)), Z=kA.map((r,i)=>r.map((v,j)=>v+sg*B[i][j])), op=sg>0?"+":"−";
+  return {q:`${nw(`A = ${M(A)}`)} and ${nw(`B = ${M(B)}`)}. Find ${nw(`${k}A ${op} B.`)}`,w:[qW(nw(`${k}A = ${M(kA)}`),"multiply every element"),nw(`${k}A ${op} B = ${MX(kA.map((r,i)=>r.map((v,j)=>`${qN(v)} ${op} ${qB(B[i][j])}`)))}`),nw(`= ${M(Z)}`)],a:nw(`${k}A ${op} B = ${M(Z)}`),n:{A,B,k,sg}}; }},
+{t:"multiply",g:R=>{ const sq=R.f()<.5, A=[[R.nz(-3,6),R.nz(-3,6)],[R.nz(-3,6),R.nz(-3,6)]], B=sq?[[R.nz(-3,6),R.nz(-3,6)],[R.nz(-3,6),R.nz(-3,6)]]:[[R.nz(-3,6)],[R.nz(-3,6)]], c=B[0].length, M=m=>MX(m.map(r=>r.map(qN)));
+  const pr=A.map(r=>B[0].map((x,j)=>`${qN(r[0])}×${qB(B[0][j])} + ${qB(r[1])}×${qB(B[1][j])}`)), Z=A.map(r=>B[0].map((x,j)=>r[0]*B[0][j]+r[1]*B[1][j]));
+  return {q:`${nw(`A = ${M(A)}`)} and ${nw(`B = ${M(B)}`)}. Find AB.`,w:[qW(nw(`(2 × 2)(2 × ${c}) → 2 × ${c}`),"inner numbers match"),nw(`AB = ${MX(pr)}`),nw(`= ${M(Z)}`)],a:nw(`AB = ${M(Z)}`),n:{A,B}}; }},
+{t:"real information",g:R=>{ const [i1,i2]=R.pick([["pens","files"],["cups","plates"],["shirts","caps"],["burgers","drinks"]]), [d1,d2]=R.pick([["Monday","Tuesday"],["Saturday","Sunday"]]), S=qTry(()=>[[R.int(2,9)*5,R.int(2,9)*5],[R.int(2,9)*5,R.int(2,9)*5]],m=>m[0][0]!==m[1][0]&&m[0][1]!==m[1][1],[[40,25],[30,35]]), p1=R.int(2,9), p2=qTry(()=>R.int(2,9),v=>v!==p1,p1+1), t=S.map(r=>r[0]*p1+r[1]*p2);
+  return {q:`A shop sells ${S[0][0]} ${i1} and ${S[0][1]} ${i2} on ${d1}, and ${S[1][0]} ${i1} and ${S[1][1]} ${i2} on ${d2}. ${i1[0].toUpperCase()+i1.slice(1)} cost $${p1} each and ${i2} cost $${p2} each.<br>Evaluate ${nw(`${MX(S.map(r=>r.map(String)))}${MX([[p1],[p2]])}`)} and state what each element of the answer represents.`,
+    w:[`Sales ${nw(MX(S.map(r=>r.map(String))))} × prices ${nw(MX([[p1],[p2]]))}`,nw(`= ${MX(S.map(r=>[`${r[0]*p1} + ${r[1]*p2}`]))} = ${MX(t.map(v=>[v]))}`),`Meaning: <b>$${t[0]}</b> is the total amount the shop collected from selling ${i1} and ${i2} on ${d1}.`,`<b>$${t[1]}</b> is the total amount collected on ${d2}.`],
+    a:`${nw(MX(t.map(v=>[v])))}: $${t[0]} collected on ${d1} and $${t[1]} on ${d2}`,n:{S,p1,p2,d1,d2}}; }}],
+"coordinate-geometry":[
+{t:"length and gradient",g:R=>{ const tr=R.f()<.5, n=qTry(()=>{ const [a,b]=tr?R.pick([[3,4],[4,3],[6,8],[8,6],[5,12],[12,5]]):[R.int(1,7),R.int(1,7)], dx=a, dy=b*R.sign(), x1=R.int(-5,6), y1=R.int(-5,6); return {x1,y1,x2:x1+dx,y2:y1+dy,dx,dy}; },
+    n=>Math.abs(n.dx)!==Math.abs(n.dy)&&(tr||Math.sqrt(n.dx*n.dx+n.dy*n.dy)%1!==0)&&Math.abs(n.x2)<=12&&Math.abs(n.y2)<=12&&n.x1&&n.y1&&n.x2&&n.y2,{x1:1,y1:1,x2:5,y2:4,dx:4,dy:3}), {x1,y1,x2,y2,dx,dy}=n, S=dx*dx+dy*dy, L=Math.sqrt(S), ex=L%1===0;
+  const m0=frac(qN(dy),qN(dx)), mS=qF(dy,dx), ln=ex?`${L} units`:`${qR(L,3)} units (3 s.f.)`;
+  const w=[qW(nw(`run = ${qN(x2)} − ${qB(x1)} = ${qN(dx)}`),`the ${X1}'s`),qW(nw(`rise = ${qN(y2)} − ${qB(y1)} = ${qN(dy)}`),`the ${VY}'s`),qW(nw(`AB = ${SQRT(`${qB(dx)}² + ${qB(dy)}²`)}${ex?` = ${L}`:` = ${SQRT(S)}`}`),"Pythagoras")];
+  if(!ex) w.push(`${nw(`= ${qD(L,4)}…`)} ${nw(`= ${ln}`)}`);
+  w.push(qW(nw(`${V("m")} = ${m0}${m0===mS?"":` = ${mS}`}`),"rise over run"));
+  return {q:`A is the point ${nw(`(${qN(x1)}, ${qN(y1)})`)} and B is the point ${nw(`(${qN(x2)}, ${qN(y2)}).`)} Find<br>(a) the length of AB${ex?"":", correct to 3 significant figures"},<br>(b) the gradient of AB.`,w,a:`${nw(`(a) AB = ${ln}`)} ${nw(`(b) gradient = ${mS}`)}`,n}; }},
+{t:"line through two points",g:R=>{ const n=qTry(()=>{ const m=R.nz(-4,4), c=R.nz(-9,9), x1=R.nz(-4,5), x2=R.nz(-4,6); return {m,c,x1,y1:m*x1+c,x2,y2:m*x2+c}; },n=>n.x2!==n.x1&&Math.abs(n.y1)<=15&&Math.abs(n.y2)<=15&&n.y1!==0&&n.y2!==0,{m:2,c:-1,x1:2,y1:3,x2:6,y2:11}), {m,c,x1,y1,x2,y2}=n, vc=V("c");
+  const mx=x=>m===1?qN(x):m===-1?(x>0?`−${x}`:`−(${qN(x)})`):`${qN(m)}(${qN(x)})`, eq=nw(`${VY} = ${qJ(qT(m,X1),c)}`);
+  return {q:`Find the equation of the line passing through ${nw(`(${qN(x1)}, ${qN(y1)})`)} and ${nw(`(${qN(x2)}, ${qN(y2)}).`)}`,
+    w:[nw(`${V("m")} = ${frac(`${qN(y2)} − ${qB(y1)}`,`${qN(x2)} − ${qB(x1)}`)} = ${qN(m)}`),nw(`${VY} = ${qJ(qT(m,X1),vc)}`),`put in ${nw(`(${qN(x1)}, ${qN(y1)})`)}: ${nw(`${qN(y1)} = ${mx(x1)} + ${vc}`)}`,nw(`${vc} = ${qN(c)}`),eq],a:eq,n}; }},
+{t:"perpendicular line",g:R=>{ const n=qTry(()=>{ const m0=R.pick([2,3,4,5,-2,-3,-4,-5]), c0=R.nz(-9,9), k=R.nz(-2,2), y0=R.nz(-6,8); return {m0,c0,x0:m0*k,y0,k,c:y0+k}; },n=>n.c!==0&&n.k!==n.y0&&Math.abs(n.x0)<=10,{m0:2,c0:3,x0:4,y0:5,k:2,c:7}), {m0,c0,x0,y0,k,c}=n, vc=V("c");
+  const mp=(m0>0?"−":"")+frac(1,Math.abs(m0)), eq=nw(`${VY} = ${qJ(mp+X1,c)}`);
+  return {q:`Find the equation of the line perpendicular to ${nw(`${VY} = ${qJ(qT(m0,X1),c0)}`)} that passes through ${nw(`(${qN(x0)}, ${qN(y0)}).`)}`,
+    w:[nw(`gradient = ${qN(m0)}`),qW(nw(`perpendicular gradient = ${mp}`),"flip it, then change the sign"),nw(`${VY} = ${qJ(mp+X1,vc)}`),`put in ${nw(`(${qN(x0)}, ${qN(y0)})`)}: ${nw(`${qN(y0)} = ${mp}(${qN(x0)}) + ${vc}`)}`,nw(`${qN(y0)} = ${qJ(-k,vc)}`),nw(`${vc} = ${qN(c)}`),eq],a:eq,n}; }},
+{t:"where two lines meet",g:R=>{ const n=qTry(()=>{ const m1=R.nz(-4,4), m2=R.nz(-4,4), x=R.nz(-4,5), y=R.nz(-6,8); return {m1,m2,x,y,c1:y-m1*x,c2:y-m2*x}; },n=>n.m1!==n.m2&&n.c1&&n.c2&&Math.abs(n.c1)<=15&&Math.abs(n.c2)<=15,{m1:1,m2:-1,x:2,y:3,c1:1,c2:5}), {m1,m2,x,y,c1,c2}=n, e=m1-m2, r=c2-c1;
+  const L1=qJ(qT(m1,X1),c1), L2=qJ(qT(m2,X1),c2), mx=m1===1?qN(x):m1===-1?(x>0?`−${x}`:`−(${qN(x)})`):`${qN(m1)}(${qN(x)})`, w=[qW(nw(`${L1} = ${L2}`),`same ${VY}`),qW(nw(`${qJ(qT(m1,X1),qT(-m2,X1))} = ${qJ(c2,-c1)}`),"throw over: flip"),nw(`${qT(e,X1)} = ${qN(r)}`)];
+  if(e!==1) w.push(qW(nw(`${X1} = ${qN(r)} ÷ ${qB(e)} = ${qN(x)}`),`× ${qB(e)} flips to ÷ ${qB(e)}`));
+  w.push(`Sub ${nw(`${X1} = ${qN(x)}`)}: ${nw(`${VY} = ${qJ(mx,c1)} = ${qN(y)}`)}`,`they meet at ${nw(`(${qN(x)}, ${qN(y)})`)}`);
+  return {q:`Find the coordinates of the point where the lines ${nw(`${VY} = ${L1}`)} and ${nw(`${VY} = ${L2}`)} meet.`,w,a:nw(`(${qN(x)}, ${qN(y)})`),n}; }}],
+"congruence-similarity-sec3":[
+{t:"areas of similar figures",g:R=>{ const [p,q]=R.pick([[1,2],[2,3],[3,4],[2,5],[3,5],[4,5],[1,3]]), s=R.int(1,4), L1=p*s, L2=q*s, t=R.int(2,6)*(p===1?2:1), A1=p*p*t, A2=q*q*t, big=R.f()<.6, sh=R.pick(["triangles","pentagons","tiles","logos"]), rt=R.f()<.3;
+  const g=rt?`lengths in the ratio ${nw(`${p} : ${q}`)}`:`corresponding sides ${nw(`${L1} cm`)} and ${nw(`${L2} cm`)}`, a=big?A2:A1;
+  const w=big?[nw(`${frac("big area",A1)} = ${PAR(frac(rt?q:L2,rt?p:L1),"2")}`),nw(`big area = ${A1} × ${p===1?q*q:frac(q*q,p*p)} = ${A2} cm²`)]:[nw(`${frac("small area",A2)} = ${PAR(frac(rt?p:L1,rt?q:L2),"2")}`),nw(`small area = ${A2} × ${frac(p*p,q*q)} = ${A1} cm²`)];
+  return {q:`Two similar ${sh} have ${g}. The ${big?"smaller":"larger"} one has an area of ${nw(`${big?A1:A2} cm²`)}. Find the area of the ${big?"larger":"smaller"} one.`,w,a:`${a} cm²`,n:{p,q,s,rt,A1,A2,big}}; }},
+{t:"volumes of similar solids",g:R=>{ const [p,q]=R.pick([[1,2],[2,3],[3,4],[2,5],[3,5],[4,5],[1,3]]), s=R.int(1,4)*(p===1?2:1), H1=p*s, H2=q*s, t=p===1?R.int(3,9)*2:R.int(1,6), V1=p*p*p*t, V2=q*q*q*t, big=R.f()<.6, ms=R.f()<.35, [sh,u,lb]=ms?[R.pick(["statues","chocolate bunnies","metal figures"]),"g","mass"]:[R.pick(["cones","cylinders","bottles","cups"]),"cm³",V("V")];
+  const qw=ms?`The ${big?"smaller":"larger"} one has a mass of ${nw(`${big?V1:V2} g`)}. Find the mass of the ${big?"larger":"smaller"} one.`:`The ${big?"smaller":"larger"} one has a volume of ${nw(`${big?V1:V2} cm³`)}. Find the volume of the ${big?"larger":"smaller"} one.`;
+  const w=big?[qW(nw(`${lb} = ${V1} × ${PAR(frac(H2,H1),"3")}`),"cube the length ratio"),nw(`= ${V1} × ${p===1?q*q*q:frac(q*q*q,p*p*p)} = ${V2} ${u}`)]:[qW(nw(`${lb} = ${V2} × ${PAR(frac(H1,H2),"3")}`),"cube the length ratio"),nw(`= ${V2} × ${frac(p*p*p,q*q*q)} = ${V1} ${u}`)];
+  return {q:`Two similar ${sh} have heights ${nw(`${H1} cm`)} and ${nw(`${H2} cm`)}. ${qw}`,w,a:`${big?V2:V1} ${u}`,n:{p,q,s,H1,H2,V1,V2,big,ms}}; }}]
 };
 let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
 function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
