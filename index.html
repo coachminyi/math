@@ -4748,40 +4748,47 @@ const TPSH={
   trap:{nm:"trapezium",pts:[[0,0],[6,0],[3,4],[0,4]],sides:[6,5,3,4],ar:18,ar2:()=>nw(`2 × ${frac("1","2")}(3 + 6) × 4`),hb:4,wb:6,
     lb:[[[3,0],0,5.6,"middle"],[[4.5,2],2.2,1.2,"start"],[[1.5,4],0,-2,"middle",1],[[0,2],-1.8,1.6,"end"]],inner:[[[2.2,1.8],"18"]]}};
 Object.values(TPSH).forEach(o=>{ o.per=o.sides.reduce((a,b)=>a+b,0); o.cum=o.sides.map((_,i)=>o.sides.slice(0,i).reduce((a,b)=>a+b,0)); });
-const tpShape=s=>s.step===2?(TPSH[s.ps]||TPSH.L):TPSH.L;
+const tpShape=s=>s.step===1?(TPSH[s.ps]||TPSH.L):TPSH.L;
 const tpS3=v=>{const r=+(+v).toPrecision(3), e=Math.floor(Math.log10(Math.abs(r))); return e>=2?String(r):r.toFixed(2-e);};
 const tpPi=c=>c===0?"0":(c===1?"":N(c))+"π";
-const tpNC=s=>s.step===1?{closed:2,open:1,pipe:0}[s.cl]:2;
 const tpSet=o=>s=>{ const f=s._f; s._f=1; if(f) return o; const r={}; for(const k in o) if(s[k]<0) r[k]=o[k]; return r; };
-const tpCylOn=s=>s.step<2||(s.step===3&&s.q==="cyl");
-const tpCylG=s=>{ const k=Math.min(10,115/(s.r*(2+2*PI)),90/(s.h+.6*s.r)), R=s.r*k, H=s.h*k, ry=.3*R, Wt=25+2*R+5+2*PI*R+8, x0=(150-Wt)/2+25, ty=(112-(H+2*ry+16))/2+8+ry;
-  return {k,R,H,ry,x0,x1:x0+2*R,cx:x0+R,ty,by:ty+H,xs:x0+2*R+5,per:2*PI*R}; };
-function tpCyl(svg,s,u,live){ const g=tpCylG(s), {R,H,ry,x0,x1,cx,ty,by,xs,per}=g, n=tpNC(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4,"font-weight":700},a));
-  if(n>=1) S_(svg,"ellipse",{cx,cy:by,rx:R,ry,fill:"var(--blue-fill)",stroke:"none"});
-  S_(svg,"path",{d:`M${x0} ${ty} V${by} A${R} ${ry} 0 0 0 ${x1} ${by} V${ty} A${R} ${ry} 0 0 0 ${x0} ${ty} Z`,fill:"var(--green-fill)","fill-opacity":1-u,stroke:"none"});
-  S_(svg,"path",{d:`M${x0} ${by} A${R} ${ry} 0 0 1 ${x1} ${by}`,fill:"none",stroke:AMB,"stroke-width":u>=1?1.2:.6,"stroke-dasharray":u>=1?"none":"1.6 1.2"});
-  S_(svg,"path",{d:`M${x0} ${by} A${R} ${ry} 0 0 0 ${x1} ${by}`,fill:"none",stroke:AMB,"stroke-width":1.2});
-  seg(svg,[x0,ty],[x0,by],{"stroke-width":.8}); seg(svg,[x1,ty],[x1,by],{"stroke-width":.8});
-  S_(svg,"ellipse",{cx,cy:ty,rx:R,ry,fill:n===2?"var(--blue-fill)":"none",stroke:AMB,"stroke-width":1.2});
-  if(u>0){ const a1=2*PI*Math.min(u,1), m=Math.max(2,Math.ceil(60*u)); let d=""; for(let i=0;i<=m;i++){ const a=a1*i/m; d+=(i?"L":"M")+(cx+R*Math.sin(a)).toFixed(2)+" "+(ty+ry*Math.cos(a)).toFixed(2); }
-    seg(svg,[cx,ty+ry],[cx,by+ry],{stroke:RD,"stroke-width":.9,"stroke-dasharray":"1.6 1.2"});
-    S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":2.6,"stroke-linecap":"round","stroke-linejoin":"round"});
-    if(u<1) S_(svg,"circle",{cx:cx+R*Math.sin(a1),cy:ty+ry*Math.cos(a1),r:1.7,fill:AMB}); }
-  seg(svg,[cx,ty],[x1,ty],{"stroke-width":.9}); S_(svg,"circle",{cx,cy:ty,r:.9,fill:"var(--ink)"});
-  T([cx+R/2,ty-ry-2],`r = ${N(s.r)}`);
-  seg(svg,[x0-4,ty],[x0-4,by],{stroke:RD,"stroke-width":.9}); [ty,by].forEach(y=>seg(svg,[x0-5.5,y],[x0-2.5,y],{stroke:RD,"stroke-width":.9}));
-  T([x0-6,(ty+by)/2+1.6],`h = ${N(s.h)}`,{fill:RD,"text-anchor":"end"});
-  T([cx,by+ry+6.5],n===2?"2 circles":n===1?"1 circle":"no circles",{fill:BL});
-  const W=per*u;
-  if(u<1) S_(svg,"rect",{x:xs,y:ty,width:per,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
-  if(W>.05){ S_(svg,"rect",{x:xs,y:ty,width:W,height:H,fill:"var(--green-fill)",stroke:"none"});
-    seg(svg,[xs,ty],[xs+W,ty],{stroke:AMB,"stroke-width":2.6,"stroke-linecap":"round"}); seg(svg,[xs,by],[xs+W,by],{stroke:AMB,"stroke-width":1.2});
-    if(u<1) S_(svg,"circle",{cx:xs+W,cy:ty,r:1.7,fill:AMB});
-    if(W>24) T([xs+W/2,ty-2.6],"circumference",{fill:AMB,"font-size":3.8});
-    seg(svg,[xs,ty],[xs,by],{stroke:RD,"stroke-width":1}); seg(svg,[xs+W,ty],[xs+W,by],{stroke:RD,"stroke-width":1}); }
-  if(u>.55){ T([xs+W/2,by+6.5],`2πr = 2π(${N(s.r)})`,{fill:AMB}); if(H>6) T([xs+W+1.6,(ty+by)/2+1.6],"h",{fill:RD,"text-anchor":"start","font-style":"italic"});
-    if(H>9) T([xs+W/2,(ty+by)/2+1.6],"toilet paper",{fill:GR}); }
-  if(live) handle(svg,xs+W,by,"u",GR); }
+const tpCylOn=s=>s.step===0||(s.step===2&&s.q==="cyl");
+const tpCylG=s=>{ const k=Math.min(10,120/((1+2*PI)*s.r),91/(s.h+1.8*s.r)), R=s.r*k, H=s.h*k, ry=.3*R, D=2*ry+2.5, W=(1+2*PI)*R+30, cx=(150-W)/2+25+R, tot=H+2*D+2*ry+12, ty=(112-tot)/2+D+ry+5.5;
+  return {k,R,H,ry,D,cx,ty,by:ty+H,per:2*PI*R}; };
+function tpCyl(svg,s,u,live){ const {R,H,ry,D,cx,ty,by,per}=tpCylG(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4,"font-weight":700},a)), pt=q=>q.map(v=>v.toFixed(2)).join(",");
+  const e0=clamp(u/.15,0,1), e=D*e0*e0*(3-2*e0), ph=2*PI*u, B=Math.max(0,2*PI-ph), c0=cx+R*ph, fy=ty+ry, fb=by+ry, W=R*ph;
+  const P=(b,top)=>[c0+R*Math.sin(b),(top?ty:by)+ry*Math.cos(b)];
+  if(u<1) S_(svg,"rect",{x:cx,y:fy,width:per,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
+  S_(svg,"ellipse",{cx,cy:by+e,rx:R,ry,fill:"var(--blue-fill)",stroke:AMB,"stroke-width":1});
+  const n=B>1e-6?Math.max(2,Math.ceil(48*B/(2*PI))):0;
+  const gr=svgEl("linearGradient",{id:"tpSh",gradientUnits:"userSpaceOnUse",x1:c0-R,y1:0,x2:c0+R,y2:0}), dfs=svgEl("defs",{});
+  for(let i=0;i<=12;i++){ const t=i/12, c=Math.sqrt(Math.max(0,1-(2*t-1)**2)); gr.append(svgEl("stop",{offset:t.toFixed(3),"stop-color":"var(--ink)","stop-opacity":(.2*(1-c)).toFixed(3)})); }
+  dfs.append(gr); svg.append(dfs);
+  const band=(a,b)=>{ const m=Math.max(1,Math.ceil(n*(b-a)/B)), top=[], bot=[]; for(let i=0;i<=m;i++){ const t=a+(b-a)*i/m; top.push(P(t,1)); bot.push(P(t,0)); } return top.concat(bot.reverse()).map(pt).join(" "); };
+  const rimB=(a,b)=>{ const m=Math.max(1,Math.ceil(n*(b-a)/B)); let d=""; for(let i=0;i<=m;i++) d+=(i?"L":"M")+pt(P(a+(b-a)*i/m,0)).replace(","," "); S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":1.2}); };
+  const edge=b=>seg(svg,P(b,0),P(b,1),Object.assign({stroke:RD,"stroke-width":1},u<.001?{"stroke-dasharray":"1.6 1.2"}:{}));
+  if(n&&B>PI/2){ const pts=band(PI/2,Math.min(B,1.5*PI)); S_(svg,"polygon",{points:pts,fill:"var(--green-fill)",stroke:"none"}); S_(svg,"polygon",{points:pts,fill:"var(--ink)","fill-opacity":.3,stroke:"none"}); }
+  if(Math.cos(B)<=0) edge(B);
+  const FR=n?[[0,Math.min(B,PI/2)]].concat(B>1.5*PI?[[1.5*PI,B]]:[]):[];
+  FR.forEach(([a,b])=>{ const pts=band(a,b); S_(svg,"polygon",{points:pts,fill:"var(--green-fill)",stroke:"var(--green-fill)","stroke-width":.3,"stroke-linejoin":"round"}); S_(svg,"polygon",{points:pts,fill:"url(#tpSh)",stroke:"none"}); rimB(a,b); });
+  [PI/2,1.5*PI].forEach(b=>{ if(b<B) seg(svg,P(b,0),P(b,1),{"stroke-width":.6}); });
+  if(Math.cos(B)>0) edge(B);
+  if(W>.05){ S_(svg,"rect",{x:cx,y:fy,width:W,height:H,fill:"var(--green-fill)",stroke:"none"});
+    seg(svg,[cx,fb],[c0,fb],{stroke:AMB,"stroke-width":1.2}); seg(svg,[cx,fy],[cx,fb],{stroke:RD,"stroke-width":1}); }
+  let d=`M${cx.toFixed(2)} ${fy.toFixed(2)}`; for(let i=0;i<=n;i++) d+="L"+pt(P(n?B*i/n:0,1)).replace(","," ");
+  S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":u>0?2.2:1.2,"stroke-linecap":"round","stroke-linejoin":"round"});
+  S_(svg,"ellipse",{cx,cy:ty-e,rx:R,ry,fill:"var(--blue-fill)",stroke:AMB,"stroke-width":1.2});
+  seg(svg,[cx,ty-e],[cx+R,ty-e],{"stroke-width":.9}); S_(svg,"circle",{cx,cy:ty-e,r:.9,fill:"var(--ink)"});
+  T([cx+R/2,ty-e-ry-2],`r = ${N(s.r)}`);
+  if(u<.2){ const x=cx-R-4; seg(svg,[x,ty],[x,by],{stroke:RD,"stroke-width":.9}); [ty,by].forEach(y=>seg(svg,[x-1.5,y],[x+1.5,y],{stroke:RD,"stroke-width":.9}));
+    T([x-2,(ty+by)/2+1.6],`h = ${N(s.h)}`,{fill:RD,"text-anchor":"end"}); }
+  else T([cx-2,(fy+fb)/2+1.6],`h = ${N(s.h)}`,{fill:RD,"text-anchor":"end"});
+  T([cx,by+D+ry+6.5],"2 circles",{fill:BL});
+  const mn=B>=1.5*PI?-1:B>PI?Math.sin(B):0, rimL=c0+R*mn, m=cx+W/2;
+  if(W>30&&m+15<rimL-1) T([m,fy-2.6],"circumference",{fill:AMB,"font-size":3.8});
+  if(u>.55){ const lx=Math.max(m,cx+R+20); if(lx+16<c0-2) T([lx,fb+6.5],`2πr = 2π(${N(s.r)})`,{fill:AMB});
+    if(H>9&&W/2>17) T([m,(fy+fb)/2+1.6],"toilet paper",{fill:GR}); }
+  if(live) handle(svg,c0,fb,"u",GR); }
 const tpPrG=s=>{ const S=tpShape(s), k=Math.min(5.9,82/(S.hb+1.32*s.L)), dx=.42*s.L*k, dy=.32*s.L*k, top=Math.max(8+dy,10), tot=top+S.hb*k+9+s.L*k+12, sh=(111-tot)/2, sx=(150-S.per*k-6)/2;
   return {S,k,dx,dy,ox:sx,oy:sh+top+S.hb*k,sx,sy:sh+top+S.hb*k+9}; };
 function tpPrism(svg,s,u,live){ const {S,k,dx,dy,ox,oy,sx,sy}=tpPrG(s), V=S.pts, n=V.length, per=S.per, P=([x,y],z=0)=>[ox+k*x+dx*z,oy-k*y-dy*z], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":4.4,"font-weight":700},a));
@@ -4809,35 +4816,33 @@ const tpLines=s=>{ if(s.q==="cyl"){ const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h;
   const t=22*s.L;
   return [`${kc("blue","base area")} = ${nw("6 × 2 + 2 × 3")} ${nw(`= ${kc("blue","18")} cm²`)}`,`perimeter = ${nw(TPS.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + "))} ${nw("= 22 cm")}`,`surface = ${kc("blue","2 × base area")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue","2 × 18")} + ${kc("green",`22 × ${kc("red",N(s.L))}`)}`),nw(`= ${kc("blue","36")} + ${kc("green",N(t))} = ${N(36+t)} cm²`)]; };
 const toiletPaper=aid({
-  init:{r:4,h:10,L:6,u:-1,cl:"closed",q:"cyl",ln:-1,ps:"L"}, jump:true, vb:"0 0 150 112", label:"A cylinder and prisms unrolled into toilet paper", link:["u","ln"],
-  pills:[{k:"cl",label:"The tin is",show:s=>s.step===1,opts:[["closed","<span>Closed (2 circles)</span>"],["open","<span>Open at the top (1 circle)</span>"],["pipe","<span>A pipe (no circles)</span>"]]},
-    {k:"ps",label:"Prism",show:s=>s.step===2,opts:[["L","<span>L-shape</span>"],["tri","<span>Triangle</span>"],["trap","<span>Trapezium</span>"]],on:s=>{s.u=0;}},
-    {k:"q",label:"Question",show:s=>s.step===3,opts:[["cyl","<span>Cylinder</span>"],["prism","<span>L-shaped prism</span>"]],on:s=>{s.ln=1;}}],
+  init:{r:4,h:10,L:6,u:-1,q:"cyl",ln:-1,ps:"L"}, jump:true, vb:"0 0 150 112", label:"A cylinder and prisms unrolled into toilet paper", link:["u","ln"],
+  pills:[{k:"ps",label:"Prism",show:s=>s.step===1,opts:[["L","<span>L-shape</span>"],["tri","<span>Triangle</span>"],["trap","<span>Trapezium</span>"]],on:s=>{s.u=0;}},
+    {k:"q",label:"Question",show:s=>s.step===2,opts:[["cyl","<span>Cylinder</span>"],["prism","<span>L-shaped prism</span>"]],on:s=>{s.ln=1;}}],
   sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:tpCylOn},{k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:tpCylOn},
     {k:"L",label:"length",min:2,max:8,step:1,f:v=>N(v)+" cm",show:s=>!tpCylOn(s)}],
-  buttons:[{label:"▶ Unroll",show:s=>s.step<3,fn:(s,anim)=>{s.u=0; anim(s.step===2?4400:1800,p=>{s.u=p;});}},
-    {label:"Next line ▶",show:s=>s.step===3&&s.ln<tpLines(s).length,fn:s=>{s.ln++;}},
-    {label:"Start again",show:s=>s.step===3&&s.ln>1,fn:s=>{s.ln=1;}}],
+  buttons:[{label:"▶ Unroll",show:s=>s.step<2,fn:(s,anim)=>{s.u=0; anim(s.step===1?4400:3200,p=>{s.u=p;});}},
+    {label:"Next line ▶",show:s=>s.step===2&&s.ln<tpLines(s).length,fn:s=>{s.ln++;}},
+    {label:"Start again",show:s=>s.step===2&&s.ln>1,fn:s=>{s.ln=1;}}],
   fix:s=>{ if(s.u>=0) s.u=clamp(s.u,0,1); if(s.ln>=0) s.ln=clamp(Math.round(s.ln),1,tpLines(s).length); },
   steps:[
     {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Unroll it: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
-    {name:"Open or closed?",set:tpSet({u:1}),t:()=>`Read the question: closed, open, or a pipe?<br>Count only the circles that are there.`},
     {name:"Any prism",set:tpSet({u:0}),t:()=>`Unroll the sides into one strip: ${nw("perimeter × length")}.<br>“Height” = the length between the 2 ends, even lying down.`},
     {name:"Exam style",set:tpSet({ln:1}),t:s=>s.q==="cyl"?`A closed cylinder has radius ${N(s.r)} cm and height ${N(s.h)} cm.<br>Find its total surface area.`:`This prism has the L-shaped end shown and length ${N(s.L)} cm.<br>Find its total surface area.`}
   ],
-  draw(svg,s){ if(s.step===3){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
-    if(s.step===2) tpPrism(svg,s,s.u,true); else tpCyl(svg,s,s.u,true); },
-  drag(id,p,s){ if(id!=="u"||s.step===3) return;
-    if(s.step===2){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.sx)/(g.S.per*g.k),.01),0,1); }
-    else { const g=tpCylG(s); s.u=clamp(snap((p.x-g.xs)/g.per,.02),0,1); } },
-  key(s){ if(s.step===3) return EG(null,tpLines(s).slice(0,s.ln));
-    if(s.step===2){ const S=tpShape(s), t=S.per*s.L, b2=2*S.ar;
+  draw(svg,s){ if(s.step===2){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
+    if(s.step===1) tpPrism(svg,s,s.u,true); else tpCyl(svg,s,s.u,true); },
+  drag(id,p,s){ if(id!=="u"||s.step===2) return;
+    if(s.step===1){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.sx)/(g.S.per*g.k),.01),0,1); }
+    else { const g=tpCylG(s); s.u=clamp(snap((p.x-g.cx)/g.per,.01),0,1); } },
+  key(s){ if(s.step===2) return EG(null,tpLines(s).slice(0,s.ln));
+    if(s.step===1){ const S=tpShape(s), t=S.per*s.L, b2=2*S.ar;
       return FORMS([FB("ink",`Perimeter of the ${S.nm}`,nw(`${S.sides.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + ")} = ${S.per} cm`),"","","wide"),
         FB("blue","2 × base area",S.ar2(),nw(`= ${b2} cm²`)),
         FB("green","Toilet paper",nw(`${S.per} × ${kc("red",N(s.L))}`),nw(`= ${N(t)} cm²`)),
         FB("ink","Surface area",nw(`${b2} + ${N(t)}`),nw(`= ${N(b2+t)} cm²`))],true); }
-    const n=tpNC(s), r=N(s.r), c=n*s.r*s.r, t=2*s.r*s.h, tot=c+t;
-    return FORMS([FB("blue",n===2?"2 circles":n===1?"1 circle":"No circles",n===2?nw(`2 × π(${r})²`):n===1?nw(`π(${r})²`):"none",nw(`= ${tpPi(c)}`)),
+    const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h, tot=c+t;
+    return FORMS([FB("blue","2 circles",nw(`2 × π(${r})²`),nw(`= ${tpPi(c)}`)),
       FB("green","Toilet paper",nw(`${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${tpPi(t)}`),nw(`2π${V("r")} × ${V("h")}`)),
       FB("ink","Surface area",nw(`${tpPi(c)} + ${tpPi(t)}`),nw(`= ${tpPi(tot)}`)+" "+nw(`= ${tpS3(PI*tot)} cm²`)+" "+nw("(3 s.f.)"))],true); }
 });
