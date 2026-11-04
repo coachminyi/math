@@ -629,6 +629,19 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
 .cacts a.cbtn{color:var(--ink)}
 .cacts .cyes{background:var(--green);border-color:var(--green)}
 .cend{text-align:center;font-size:30px;font-weight:700;margin:28px 0 8px}
+.ccard .cspl{margin:0 0 2px;color:var(--muted);font-size:14px;font-weight:700}
+.ccard .cspq{font-size:19px;line-height:1.5}
+.ccard .cspi{margin:16px 0 8px;font-size:16px;font-weight:700}
+.ccard .cspi.cyay{color:var(--green)}
+.ccard .cspi.cnay{color:var(--red)}
+.clines{display:flex;flex-direction:column;gap:10px}
+.clines .cln{display:block;width:100%;min-height:52px;margin:0;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;line-height:1.45;text-align:left}
+.clines button.cln{cursor:pointer;box-shadow:0 2px 0 var(--line)}
+.clines button.cln:hover{border-color:var(--blue)}
+.clines .cln.cbad{color:var(--red);border-color:var(--red)}
+.clines .cln.cfix{color:var(--green);border-color:var(--green);margin-top:-4px}
+.clines .cwhy{display:block;color:var(--ink);font-size:15px;line-height:1.4;margin-top:2px}
+.clines .cfine{display:inline-block;vertical-align:middle;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--line);color:var(--muted);font-size:14px;font-weight:700;line-height:22px}
 .cdgo-p{text-align:center;margin:18px 0}
 .cdgo{min-height:54px;padding:0 22px;font-size:18px;font-weight:700;text-decoration:none}
 html[data-present] .cdeck{max-width:1100px}
@@ -638,6 +651,11 @@ html[data-present] .ccard .cask,html[data-present] .ccard .cgrp,html[data-presen
 html[data-present] .ctop .stepof{font-size:18px}
 html[data-present] .cacts .cbtn{min-height:64px;font-size:24px}
 html[data-present] .cend{font-size:44px}
+html[data-present] .ccard .cspl,html[data-present] .ccard .cspi{font-size:24px}
+html[data-present] .ccard .cspq{font-size:32px}
+html[data-present] .clines .cln{font-size:36px;min-height:72px;padding:12px 20px}
+html[data-present] .clines .cwhy{font-size:24px}
+html[data-present] .clines .cfine{font-size:20px;line-height:32px;padding:0 12px}
 .modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .modal[hidden]{display:none}
 .mbox{background:var(--card);color:var(--ink);border-radius:16px;padding:20px;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow)}
@@ -6716,6 +6734,247 @@ amFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Addi
     </div>
   </div>
 </div>`,
+s1Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">Every formula and angle fact from the Sec 1 cheatsheets, in one place.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>numbers &amp; algebra</h4>
+    <ul class="steps fml">
+      ${GRP("Primes, HCF and LCM","primes-hcf-lcm")}
+      ${FL(`Prime number = exactly 2 factors`+FNOTE(`1 and itself, 1 is NOT prime`))}
+      ${FL(`Primes under 30 = 2, 3, 5, 7, 11, 13, 17, 19, 23, 29`)}
+      ${FL(`HCF = only what they have in common`+FNOTE("the biggest number that divides both"))}
+      ${FL(`LCM = every base, highest power`+FNOTE("the smallest number both divide into"))}
+      ${FL(`Square root${nw(" → ")}halve every power`)}
+      ${FL(`Cube root${nw(" → ")}divide every power by 3`)}
+      ${FL(`Perfect square${nw(" → ")}every power even`)}
+      ${FL(`Answer bigger than the numbers${nw(" → ")}LCM`)}
+      ${FL(`Answer smaller than the numbers${nw(" → ")}HCF`)}
+      ${GRP("Integers","integers")}
+      ${FL(nw("(−) × (−) = +")+FNOTE(`same signs, the same for ÷`))}
+      ${FL(nw("(+) × (−) = −")+FNOTE(`different signs, the same for ÷`))}
+      ${FL(`Minus a negative = plus`+FNOTE(nw("4 − (−6) = 4 + 6 = 10")))}
+      ${FL(`Order of operations = ${nw("brackets, powers")}, ${nw("then × ÷")}, ${nw("then + −")}&nbsp;<span class="fnote">left to right at the same level</span>`)}
+      ${FL(nw("(−2)² = 4"))}
+      ${FL(nw("−2² = −4")+FNOTE("square first, then the minus"))}
+      ${FL(`Rational number = can be written as a fraction of two integers`)}
+      ${FL(`Irrational number = the decimals never end and never repeat`+FNOTE(`${SQRT("2")}, π`))}
+      ${FL(`Real numbers = rational and irrational`)}
+      ${GRP("Approximation","approximation")}
+      ${FL(`Decimal places = count after the point`)}
+      ${FL(`Significant figures = start at the first non-zero digit`)}
+      ${FL(`s.f.: zeros between digits${nw(" → ")}count`)}
+      ${FL(`s.f.: zeros in front${nw(" → ")}don't count`)}
+      ${FL(`s.f.: a zero at the end, after the point${nw(" → ")}counts`)}
+      ${FL(`Next digit 5 or more${nw(" → ")}round up`)}
+      ${FL(`Next digit less than 5${nw(" → ")}keep`)}
+      ${FL(`Estimate${nw(" → ")}round every number to 1 s.f.`)}
+      ${FL(`Estimate a square root${nw(" → ")}use the nearest square number`)}
+      ${GRP("Basic algebra","basic-algebra")}
+      ${FL(`Like terms = only the same letters and powers`+FNOTE(nw(`3${X1} + 5${X1} = 8${X1}`)))}
+      ${FL(`${nw(`${V("a")}(${V("b")} + ${V("c")})`)} = ${nw(`${V("ab")} + ${V("ac")}`)}`+FNOTE(`every term in the bracket, the number keeps its sign`))}
+      ${FL(`${nw(`${V("ab")} + ${V("ac")}`)} = ${nw(`${V("a")}(${V("b")} + ${V("c")})`)}`+FNOTE("take out the common factor"))}
+      ${GRP("Linear equations","linear-equations")}
+      ${FL(`Throw a term over the equals sign${nw(" → ")}flip it: ${nw("+ ↔ −")} ${nw("and × ↔ ÷")}&nbsp;<span class="fnote">${nw("+ 7 becomes − 7")} ${nw("and × 3 becomes ÷ 3")}</span>`)}
+      ${FL(`Brackets${nw(" → ")}expand first`+FNOTE(`then ${X1} terms on one side`))}
+      ${FL(`Fractions${nw(" → ")}× by the LCM of the bottoms`+FNOTE("every fraction disappears"))}
+      ${GRP("Ratio, rate and speed","ratio-rate-speed")}
+      ${FL(`Ratio in its simplest form = same units, whole numbers`)}
+      ${FL(`Speed = ${nw(frac("distance","time"))}`)}
+      ${FL(`Average speed = ${nw(frac("total distance","total time"))}`+FNOTE("not the average of the two speeds"))}
+      ${FL(`${nw("72 km/h")} = ${nw(frac("72 km","1 h"))}`+FNOTE("change the top and the bottom separately"))}
+      ${GRP("Percentage","percentage")}
+      ${FL(nw(`80% of 500 = ${frac("80","100")} × 500`))}
+      ${FL(`Percentage change = ${nw(`${frac("change","original")} × 100%`)}`+FNOTE(`change = ${nw("new − original")}`))}
+      ${FL(`Reverse percentage${nw(" → ")}find 1% first`+FNOTE("after +20%, the new price is 120%"))}
+      ${FL(`20% off${nw(" → ")}${nw("× 0.8")}`)}
+      ${FL(`10% service charge${nw(" → ")}${nw("× 1.1")}`)}
+      ${FL(`9% GST${nw(" → ")}${nw("× 1.09")}`)}
+      ${GRP("Number patterns","number-patterns")}
+      ${FL(`Linear sequence${nw(" → ")}same difference each time`+FNOTE("5, 8, 11, 14: + 3 each"))}
+      ${FL(`${V("n")}th term${nw(" → ")}difference first, then plus or minus to reach the 1st term`)}
+      ${FL(`Is it a term?${nw(" → ")}${V("n")} must be a positive integer`)}
+      ${FLB("Square numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}²`))}
+      ${FLB("Cube numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}³`))}
+      ${FLB("Triangle numbers",nw(`T<sub>${V("n")}</sub> = ${frac(`${V("n")}(${V("n")} + 1)`,"2")}`))}
+      ${GRP("Linear graphs","linear-graphs")}
+      ${FL(`Gradient = ${nw(frac("rise","run"))} = ${nw(frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`))}`+FNOTE(`uphill: positive, downhill: negative`))}
+      ${FL(`Straight line: ${nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`)}`+FNOTE(`${V("m")} = gradient, ${V("c")} = the ${V("y")}-intercept`))}
+      ${FL(`Flat line: ${nw(`${V("y")} = ${V("k")}`)}`+FNOTE(`horizontal, gradient is 0`))}
+      ${FL(`Upright line: ${nw(`${X1} = ${V("k")}`)}`+FNOTE("vertical"))}
+      ${FL(`Gradients of parallel lines = the same`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>geometry &amp; measurement</h4>
+    <ul class="steps fml">
+      ${GRP("Angles and parallel lines","angles-parallel-lines")}
+      ${FL(`Angles on a straight line = 180°`+FNOTE(nw("(adj. ∠s on a str. line)")))}
+      ${FL(`Angles at a point = 360°`+FNOTE(nw("(∠s at a pt.)")))}
+      ${FL(`Vertically opposite angles${nw(" → ")}equal`+FNOTE(nw("(vert. opp. ∠s)")))}
+      ${FL(`Acute angle${nw(" → ")}less than 90°`)}
+      ${FL(`Right angle${nw(" → ")}exactly 90°`)}
+      ${FL(`Obtuse angle${nw(" → ")}between 90° and 180°`)}
+      ${FL(`Reflex angle${nw(" → ")}between 180° and 360°`)}
+      ${FL(`Complementary angles${nw(" → ")}add to 90°`)}
+      ${FL(`Supplementary angles${nw(" → ")}add to 180°`)}
+      ${FL(`Corresponding angles${nw(" → ")}equal`+FNOTE(nw("(corr. ∠s, AB &#47;&#47; CD)")))}
+      ${FL(`Alternate angles${nw(" → ")}equal`+FNOTE(nw("(alt. ∠s, AB &#47;&#47; CD)")))}
+      ${FL(`Interior angles${nw(" → ")}add to 180°`+FNOTE(nw("(int. ∠s, AB &#47;&#47; CD)")))}
+      ${FLB("ZCF",nw("Z = alternate"),nw("C = interior"),nw("F = corresponding"))}
+      ${GRP("Triangles and polygons","polygons")}
+      ${FL(`Angle sum of a triangle = 180°`+FNOTE(nw("(∠ sum of △)")))}
+      ${FL(`Exterior angle of a triangle = ${nw("the 2 opposite")} ${nw("interior angles added")}`+FNOTE(nw("(ext. ∠ of △)")))}
+      ${FL(`Isosceles triangle${nw(" → ")}2 equal sides, 2 equal base angles`+FNOTE(nw("(base ∠s of isos. △)")))}
+      ${FL(`Equilateral triangle${nw(" → ")}3 equal sides, every angle 60°`)}
+      ${FL(`Angle sum of a quadrilateral = 360°`+FNOTE(nw("(∠ sum of quad.)")))}
+      ${FL(`Parallelogram${nw(" → ")}opposite sides parallel and equal, opposite angles equal`)}
+      ${FL(`Rectangle${nw(" → ")}4 right angles, opposite sides equal, diagonals equal`)}
+      ${FL(`Rhombus${nw(" → ")}4 equal sides, diagonals cross at 90°`)}
+      ${FL(`Square${nw(" → ")}4 equal sides, 4 right angles`)}
+      ${FL(`Trapezium${nw(" → ")}1 pair of parallel sides`)}
+      ${FL(`Kite${nw(" → ")}2 pairs of equal sides next to each other, diagonals cross at 90°`)}
+      ${FL(`Sum of interior angles of a polygon = ${nw(`(${V("n")} − 2) × 180°`)}`+FNOTE(`${V("n")} = number of sides`))}
+      ${FL(`Sum of exterior angles of a polygon = 360°`+FNOTE(nw("(sum of ext. ∠s of polygon)")))}
+      ${FL(`Each exterior angle of a regular polygon = ${nw(`360° ÷ ${V("n")}`)}`+FNOTE("use it first: much easier than interior"))}
+      ${FL(`Each interior angle of a regular polygon = ${nw("180° − exterior angle")}`+FNOTE(nw("(adj. ∠s on a str. line)")))}
+      ${GRP("Perimeter and area","perimeter-area")}
+      ${FL(`Area of a triangle = ${nw(`${frac("1","2")} × base × height`)}`)}
+      ${FL(`Area of a parallelogram = ${nw("base × height")}`+FNOTE("the height meets the base at 90°, not the slanted side"))}
+      ${FL(`Area of a trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")}) × ${V("h")}`)}`+FNOTE(nw(`${V("a")}, ${V("b")} = the parallel sides`)))}
+      ${FL(`Diameter: ${nw(`${V("d")} = 2${V("r")}`)}`)}
+      ${FL(`Circumference of a circle = ${nw(`2π${V("r")}`)}`)}
+      ${FL(`Area of a circle = ${nw(`π${V("r")}²`)}`)}
+      ${FL(`Perimeter of a semicircle = ${nw(`π${V("r")} + 2${V("r")}`)}`+FNOTE(`the curved edge ${nw("+ the straight edge")}`))}
+      ${FL(nw("1 m = 100 cm"))}
+      ${FL(nw("1 km = 1000 m"))}
+      ${FL(nw("1 m² = 10 000 cm²"))}
+      ${FL(nw("1 m³ = 1 000 000 cm³"))}
+      ${FL(nw("1 litre = 1000 cm³"))}
+      ${GRP("Volume and surface area","volume-surface-area-1")}
+      ${FL(`Volume of a prism = ${nw("base area × height")}`+FNOTE(`a prism lying down: its "height" is the length`))}
+      ${FL(`Surface area of a prism = ${nw("2 × base area")} ${nw("+ perimeter of base × height")}`+FNOTE(`${nw("perimeter of base × height")}: the toilet paper`))}
+      ${FL(`Volume of a cuboid = ${nw(V("lbh"))}`)}
+      ${FL(`Surface area of a cuboid = ${nw(`2${V("lb")} + 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`)}
+      ${FL(`Volume of a cylinder = ${nw(`π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Surface area of a closed cylinder = ${nw(`2π${V("r")}² + 2π${V("r")} × ${V("h")}`)}`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>statistics</h4>
+    <ul class="steps fml">
+      ${GRP("Charts and data","data-handling")}
+      ${FL(`Bar chart${nw(" → ")}compare groups`+FNOTE("gaps between the bars"))}
+      ${FL(`Pie chart angle = ${nw(`${frac("part","total")} × 360°`)}`+FNOTE("the angles add to 360°"))}
+      ${FL(`Line graph${nw(" → ")}change over time`+FNOTE("time goes along the bottom"))}
+      ${FL(`Pictogram${nw(" → ")}always read the key`)}
+    </ul>
+  </div>
+</div>`,
+s2Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+<p class="tiny" style="margin:0 0 14px">Every formula from the Sec 2 cheatsheets, in one place.</p>
+<div class="sheet">
+  <div class="panelc pn"><h4>numbers &amp; algebra</h4>
+    <ul class="steps fml">
+      ${GRP("Simultaneous equations","simultaneous-equations")}
+      ${FL(`Elimination${nw(" → ")}make one letter's numbers match`+FNOTE(`same signs: subtract, opposite signs: add`))}
+      ${FL(`Substitution${nw(" → ")}best when one letter is on its own`+FNOTE("put it into the other one, in brackets"))}
+      ${FL(`Same gradient, different ${V("c")}${nw(" → ")}parallel lines, no solution`)}
+      ${FL(`Same gradient, same ${V("c")}${nw(" → ")}the same line, infinitely many solutions`)}
+      ${GRP("Linear inequalities","linear-inequalities")}
+      ${FL(`× or ÷ by a negative${nw(" → ")}flip the sign`+FNOTE(`${nw(`−2${X1} ≤ 8`)}${nw(" → ")}${nw(`${X1} ≥ −4`)}`))}
+      ${FL(`Filled circle ●${nw(" → ")}≤ or ≥`+FNOTE("that number counts"))}
+      ${FL(`Open circle ○${nw(" → ")}&lt; or &gt;`)}
+      ${FL(`At least${nw(" → ")}≥`)}
+      ${FL(`At most${nw(" → ")}≤`)}
+      ${FL(`More than${nw(" → ")}&gt;`)}
+      ${FL(`Less than${nw(" → ")}&lt;`)}
+      ${FL(`Not more than${nw(" → ")}≤`)}
+      ${GRP("Expansion","expansion")}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
+      ${FL(`${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}`)}
+      ${FL(`Middle term = ${nw("2 × first term × last term")}`+FNOTE("signs included"))}
+      ${GRP("Factorising quadratics","factorisation")}
+      ${FL(`Common factor${nw(" → ")}always look for it first`)}
+      ${FL(`Count the terms: 2 terms${nw(" → ")}${nw(`${V("a")}² − ${V("b")}²`)}`)}
+      ${FL(`Count the terms: 3 terms${nw(" → ")}cross method`)}
+      ${FL(`Count the terms: 4 terms${nw(" → ")}grouping`)}
+      ${FL(`${nw(`${V("a")}² − ${V("b")}²`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`+FNOTE("difference of squares"))}
+      ${GRP("Algebraic fractions","algebraic-fractions")}
+      ${FL(`Simplify${nw(" → ")}factorise, then cancel factors`+FNOTE("never cancel terms"))}
+      ${FL(`Add or subtract${nw(" → ")}same denominator first`+FNOTE("use the LCM of the bottoms"))}
+      ${FL(`Divide${nw(" → ")}× by the flip`+FNOTE("Keep, Change, Flip"))}
+      ${GRP("Quadratic equations and graphs","quadratic-equations-graphs")}
+      ${FL(`Solve a quadratic${nw(" → ")}make one side 0, then factorise`+FNOTE(nw(`never ÷ by ${X1}`)))}
+      ${FLB(`If ${nw("A × B = 0")}`,nw("A = 0 or B = 0"))}
+      ${FL(`${nw(`+${X2}`)} graph${nw(" → ")}∪ shape, minimum point`)}
+      ${FL(`${nw(`−${X2}`)} graph${nw(" → ")}∩ shape, maximum point`)}
+      ${FL(`Roots = where the graph cuts the ${X1}-axis`)}
+      ${FL(`Turning point${nw(" → ")}halfway between the roots`)}
+      ${GRP("Proportion and map scales","proportion")}
+      ${FL(`Direct proportion: ${nw(`${V("y")} = ${V("k")}${X1}`)}`+FNOTE(`${X1} doubles, ${V("y")} doubles`))}
+      ${FL(`Inverse proportion: ${nw(`${V("y")} = ${frac(V("k"),X1)}`)}`+FNOTE(`${X1} doubles, ${V("y")} halves`))}
+      ${FL(`Direct proportion graph${nw(" → ")}a straight line through (0, 0)`)}
+      ${FL(`Inverse proportion graph${nw(" → ")}a curve that never touches the axes`)}
+      ${FL(`Map scale ${nw(`1 : ${V("n")}`)}${nw(" → ")}1 cm on the map is ${V("n")} cm for real`)}
+      ${FL(`Area on a map${nw(" → ")}square the scale`)}
+      ${FL(`cm to km${nw(" → ")}${nw("÷ 100 000")}`)}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>geometry &amp; measurement</h4>
+    <ul class="steps fml">
+      ${GRP("Congruence and similarity","congruence-similarity")}
+      ${FL(`Congruent${nw(" → ")}same shape and same size`+FNOTE("all sides and angles equal"))}
+      ${FL(`Similar${nw(" → ")}same shape, sides in the same ratio`+FNOTE("the angles are equal"))}
+      ${FL(`Scale factor more than 1${nw(" → ")}bigger`)}
+      ${FL(`Scale factor less than 1${nw(" → ")}smaller`)}
+      ${GRP("Pythagoras","pythagoras")}
+      ${FL(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)+FNOTE(`${V("c")} = hypotenuse, opposite the right angle`))}
+      ${FL(`Find the long side${nw(" → ")}add the squares, then square root`)}
+      ${FL(`Find a short side${nw(" → ")}subtract the squares, then square root`)}
+      ${FL(`Whole-number triangles${nw(" → ")}${nw("3, 4, 5")}; ${nw("5, 12, 13")}; ${nw("8, 15, 17")}; ${nw("7, 24, 25")}`+FNOTE("and their multiples"))}
+      ${GRP("TOA CAH SOH","trigonometry-sec2")}
+      ${FL(nw(`tan θ = ${frac("opp","adj")}`))}
+      ${FL(nw(`cos θ = ${frac("adj","hyp")}`))}
+      ${FL(nw(`sin θ = ${frac("opp","hyp")}`))}
+      ${FL(`hyp${nw(" → ")}the longest side, opposite the right angle`)}
+      ${FL(`opp${nw(" → ")}opposite θ`)}
+      ${FL(`adj${nw(" → ")}next to θ (not the hyp)`)}
+      ${GRP("Pyramids, cones and spheres","volume-surface-area-2")}
+      ${FL(`Volume of a pyramid = ${nw(`${frac("1","3")} × base area × height`)}`)}
+      ${FL(`Volume of a cone = ${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`)}
+      ${FL(`Curved surface area of a cone = ${nw(`π${V("rl")}`)}`+FNOTE(nw(`${V("l")} = slant height`)))}
+      ${FL(`Volume of a sphere = ${nw(`${frac("4","3")}π${V("r")}³`)}`)}
+      ${FL(`Surface area of a sphere = ${nw(`4π${V("r")}²`)}`)}
+      ${FL(`Curved surface area of a hemisphere = ${nw(`2π${V("r")}²`)}`)}
+      ${FL(`Surface area of a solid hemisphere = ${nw(`3π${V("r")}²`)}`+FNOTE(nw("+ the flat circle")))}
+    </ul>
+  </div>
+
+  <div class="panelc pn"><h4>statistics &amp; probability</h4>
+    <ul class="steps fml">
+      ${GRP("Data diagrams","data-sec2")}
+      ${FL(`Dot diagram${nw(" → ")}one dot per value`+FNOTE("the tallest stack is the mode"))}
+      ${FL(`Histogram${nw(" → ")}bars touch, equal class widths`)}
+      ${FL(`Stem-and-leaf${nw(" → ")}stem is the tens, leaf is the ones`+FNOTE("always give a key"))}
+      ${FL(`${nw(`10 &lt; ${X1} ≤ 20`)}${nw(" → ")}includes 20 but not 10`)}
+      ${FL(`Describe a distribution${nw(" → ")}range, cluster, outlier`)}
+      ${GRP("Mean, median and mode","averages")}
+      ${FL(`Mean = ${nw("total ÷ how many")}`)}
+      ${FL(`Mean from a table = ${nw(frac(`total of ${V("fx")}`,`total of ${V("f")}`))}`)}
+      ${FL(`Median = the middle value, after ordering`)}
+      ${FL(`Median position = ${nw(frac(`${V("n")} + 1`,"2"))}`)}
+      ${FL(`Mode = the most common value`+FNOTE("there can be more than one"))}
+      ${FL(`Average to use with an outlier = the median`)}
+      ${GRP("Probability","probability-sec2")}
+      ${FL(`Probability = ${nw(frac("ways it can happen","total outcomes"))}`+FNOTE("outcomes equally likely"))}
+      ${FL(nw("P(not A) = 1 − P(A)"))}
+      ${FL(`Probability of an impossible event = 0`)}
+      ${FL(`Probability of a certain event = 1`)}
+    </ul>
+  </div>
+</div>`,
 amMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/amath-formula-sheet">A-Math formula sheet</a>.</p>
 <div class="sheet">
@@ -6879,6 +7138,8 @@ Object.assign(SHEETS,SHEETS3);
 SHEETLIST.push(
   {id:"emath-formula-sheet",levels:["emath"],chapter:"Printed in your exam paper",title:"E-Math formula sheet",sheet:"emFormula",aid:null,exam:true,group:"formula",kw:"formula list given exam"},
   {id:"amath-formula-sheet",levels:["amath"],chapter:"Printed in your exam paper",title:"A-Math formula sheet",sheet:"amFormula",aid:null,exam:true,group:"formula",kw:"formula list given exam"},
+  {id:"sec1-memorise",levels:["sec1"],chapter:"Formulas and angle facts",title:"Sec 1 formulas to memorise",sheet:"s1Memo",aid:null,exam:true,group:"memorise",kw:"formula memorise remember angle properties reasons parallel lines polygon"},
+  {id:"sec2-memorise",levels:["sec2"],chapter:"Formulas and key facts",title:"Sec 2 formulas to memorise",sheet:"s2Memo",aid:null,exam:true,group:"memorise",kw:"formula memorise remember pythagoras toa cah soh volume proportion"},
   {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
@@ -8189,7 +8450,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
@@ -8508,7 +8769,284 @@ function renderSheetOnly(s){
   window.scrollTo(0,0);
 }
 
-let cdS=null, cdShuf=false, cdFrom="", cdMistOn=false;
+const SPOTS_LO={
+"expansion":[
+{q:`Expand and simplify ${nw(`(2${X1} + 3)² − 4${X2}`)}.`,w:[nw(`(2${X1} + 3)² = 4${X2} + 9`),nw(`(2${X1} + 3)² − 4${X2} = 4${X2} + 9 − 4${X2}`),nw(`= 9`)],bad:0,fix:nw(`(2${X1} + 3)² = 4${X2} + 12${X1} + 9`),why:`don't forget the middle term: ${nw(`2 × 2${X1} × 3`)}`},
+{q:`Solve ${nw(`${X1}(${X1} + 2) − (${X1} − 3)² = 11`)}.`,w:[nw(`${X1}(${X1} + 2) = ${X2} + 2${X1}`),nw(`(${X1} − 3)² = ${X2} − 9`),nw(`${X2} + 2${X1} − (${X2} − 9) = 11`),nw(`2${X1} + 9 = 11`),nw(`${X1} = 2 ÷ 2 = 1`)],bad:1,fix:nw(`(${X1} − 3)² = ${X2} − 6${X1} + 9`),why:`don't forget the middle term: ${nw(`−6${X1}`)}`}],
+"linear-inequalities":[
+{q:`Solve ${nw(`5 − 3${X1} < 17`)}.`,w:[nw(`5 − 3${X1} < 17`),nw(`−3${X1} < 12`),nw(`${X1} < 12 ÷ (−3)`),nw(`${X1} < −4`)],bad:2,fix:nw(`${X1} > 12 ÷ (−3)`),why:`÷ by a negative: flip the sign`},
+{q:`Find the smallest integer ${X1} such that ${nw(`5${X1} + 3 > 2${X1} + 18`)}.`,w:[nw(`5${X1} − 2${X1} > 18 − 3`),nw(`3${X1} > 15`),nw(`${X1} > 5`),`smallest integer ${nw(`${X1} = 5`)}`],bad:3,fix:`smallest integer ${nw(`${X1} = 6`)}`,why:`${nw(`${X1} > 5`)}: 5 itself is not allowed`}],
+"command-words":[
+{q:`A rectangle is ${nw(`(${X1} + 4) cm`)} long and ${nw(`${X1} cm`)} wide. Its perimeter is 30 cm. Show that ${nw(`${X1} = 5.5`)}.`,w:[nw(`${X1} = 5.5`),nw(`length = 5.5 + 4 = 9.5 cm`),nw(`2(9.5) + 2(5.5) = 30 ✓`)],bad:0,fix:nw(`2(${X1} + 4) + 2${X1} = 30`),why:`start from the question; end on their answer`},
+{q:`A square has an area of 72 cm². Find its perimeter.`,w:[nw(`side² = 72`),nw(`side = ${SQRT("72")} = 8.49 cm`),nw(`4 × 8.49 = 33.96`),nw(`= 34.0 cm (3 s.f.)`)],bad:1,fix:nw(`side = ${SQRT("72")} = 8.4852…`),why:`keep the full value; round only at the end`},
+{q:`In a right-angled triangle, the side opposite ${V("θ")} is 7 cm and the side next to it is 3 cm. Find ${V("θ")}, correct to 1 decimal place.`,w:[nw(`tan ${V("θ")} = ${frac("7","3")}`),nw(`${V("θ")} = tan⁻¹ 2.333…`),nw(`${V("θ")} = 66.80°`)],bad:2,fix:nw(`${V("θ")} = 66.8° (1 d.p.)`),why:`angles to 1 d.p. at the end`},
+{q:`(a) Factorise ${nw(`${X2} − 7${X1} + 12`)}. (b) Hence solve ${nw(`${X2} − 7${X1} + 12 = 0`)}.`,w:[`(a) ${nw(`(${X1} − 3)(${X1} − 4)`)}`,`(b) MENU 5 2 2`,nw(`${X1} = 3 or ${X1} = 4`)],bad:1,fix:`(b) ${nw(`(${X1} − 3)(${X1} − 4) = 0`)}`,why:`"Hence": use the part before`},
+{q:`Solve ${nw(`9${X1} − 4 = 2`)}, giving the exact value of ${X1}.`,w:[nw(`9${X1} = 2 + 4 = 6`),nw(`${X1} = 6 ÷ 9`),nw(`${X1} = 0.667`)],bad:2,fix:nw(`${X1} = ${frac("6","9")} = ${frac("2","3")}`),why:`exact value: keep the fraction, no decimals`}],
+"primes-hcf-lcm":[
+{q:`Find the sum of all the prime numbers less than 12.`,w:[`a prime has exactly 2 factors`,nw(`primes: 1, 2, 3, 5, 7, 11`),nw(`1 + 2 + 3 + 5 + 7 + 11 = 29`)],bad:1,fix:nw(`primes: 2, 3, 5, 7, 11`),why:`1 has only one factor, so it is not prime`},
+{q:`Find the HCF of 72 and 60.`,w:[nw(`72 = 2³ × 3²`),nw(`60 = 2² × 3 × 5`),nw(`HCF = 2³ × 3²`),nw(`= 72`)],bad:2,fix:nw(`HCF = 2² × 3 = 12`),why:`HCF: only what they have in common`},
+{q:`Write 180 as a product of its prime factors.`,w:[nw(`180 = 2 × 90`),nw(`= 2 × 2 × 45`),nw(`180 = 2² × 45`)],bad:2,fix:nw(`180 = 2² × 3² × 5`),why:`keep going until every factor is prime`}],
+"integers":[
+{q:`Work out ${nw(`−3² + 2 × 7`)}.`,w:[nw(`2 × 7 = 14`),nw(`−3² = 9`),nw(`−3² + 2 × 7 = 9 + 14 = 23`)],bad:1,fix:nw(`−3² = −9`),why:`square first, then the minus`},
+{q:`At noon the temperature is 5 °C. At midnight it is −7 °C. Find the drop in temperature.`,w:[nw(`drop = 5 − (−7)`),nw(`= 5 − 7`),nw(`= −2 °C`)],bad:1,fix:nw(`= 5 + 7 = 12 °C`),why:`minus a negative = plus`},
+{q:`Arrange in ascending order: ${nw("−5, 3, −1, 0, −8")}.`,w:[nw(`0 < 3`),nw(`−1 < −5 < −8`),nw(`−1, −5, −8, 0, 3`)],bad:1,fix:nw(`−8 < −5 < −1`),why:`further left on the number line is smaller`},
+{q:`Work out ${nw(`15 − 3 × 4 + 2²`)}.`,w:[nw(`2² = 4`),nw(`15 − 3 × 4 = 12 × 4 = 48`),nw(`48 + 4 = 52`)],bad:1,fix:nw(`15 − 3 × 4 = 15 − 12 = 3`),why:`× before −`}],
+"approximation":[
+{q:`Work out ${nw("247 × 186")}, correct to 2 significant figures.`,w:[nw(`247 × 186 = 45 942`),`2 s.f.: ${nw("45 | 942")}, next digit 9: round up`,nw(`= 46 (2 s.f.)`)],bad:2,fix:nw(`= 46 000 (2 s.f.)`),why:`fill with zeros: keep the size`},
+{q:`Round 0.006 285 to 3 significant figures.`,w:[`3 s.f.: count ${nw("0, 0, 0")}`,`${nw("0.00 | 6 285")}: next digit 6, round up`,nw(`= 0.01 (3 s.f.)`)],bad:0,fix:`3 s.f.: count ${nw("6, 2, 8")}`,why:`zeros in front don't count`},
+{q:`Work out ${nw(SQRT("8.976"))}, correct to 3 significant figures.`,w:[nw(`${SQRT("8.976")} = 2.995 99…`),`3 s.f.: ${nw("2.99 | 599")}, round up`,nw(`= 3 (3 s.f.)`)],bad:2,fix:nw(`= 3.00 (3 s.f.)`),why:`3 s.f. means 3 figures: keep the zeros`},
+{q:`A circle has a circumference of 18 cm. Find its area.`,w:[nw(`2π${V("r")} = 18`),nw(`${V("r")} = 18 ÷ 2π = 2.86`),nw(`area = π(2.86)² = 25.69…`),nw(`= 25.7 cm² (3 s.f.)`)],bad:1,fix:nw(`${V("r")} = 18 ÷ 2π = 2.8647…`),why:`round only the final answer`}],
+"basic-algebra":[
+{q:`Simplify ${nw(`5${V("a")} + 2${V("b")} − 3${V("a")} + ${V("b")}`)}.`,w:[nw(`5${V("a")} − 3${V("a")} = 2${V("a")}`),nw(`2${V("b")} + ${V("b")} = 3${V("b")}`),nw(`2${V("a")} + 3${V("b")} = 5${V("ab")}`)],bad:2,fix:`answer: ${nw(`2${V("a")} + 3${V("b")}`)}`,why:`different letters stay apart`},
+{q:`Expand and simplify ${nw(`3(${X1} + 2) − 2(${X1} − 4)`)}.`,w:[nw(`3(${X1} + 2) = 3${X1} + 6`),nw(`−2(${X1} − 4) = −2${X1} − 8`),nw(`3${X1} + 6 − 2${X1} − 8 = ${X1} − 2`)],bad:1,fix:nw(`−2(${X1} − 4) = −2${X1} + 8`),why:`the −2 keeps its sign: ${nw("−2 × −4 = +8")}`},
+{q:`Simplify ${nw(`3${X1} × 4${X1} − 5${X1}`)}.`,w:[`numbers: ${nw("3 × 4 = 12")}`,`letters: ${nw(`${X1} × ${X1} = 2${X1}`)}`,nw(`3${X1} × 4${X1} = 24${X1}`),nw(`24${X1} − 5${X1} = 19${X1}`)],bad:1,fix:`letters: ${nw(`${X1} × ${X1} = ${X2}`)}`,why:`${nw(`${X1} × ${X1}`)} is ${X2}, not ${nw(`2${X1}`)}`},
+{q:`Given ${nw(`${V("a")} = 4`)} and ${nw(`${V("b")} = −3`)}, find ${nw(`2${V("b")}² − ${V("ab")}`)}.`,w:[nw(`${V("ab")} = (4)(−3) = −12`),nw(`${V("b")}² = −3² = −9`),nw(`2${V("b")}² − ${V("ab")} = 2(−9) − (−12)`),nw(`= −18 + 12 = −6`)],bad:1,fix:nw(`${V("b")}² = (−3)² = 9`),why:`use brackets: ${nw("(−3)² = 9")}`}],
+"angles-parallel-lines":[
+{q:`${nw("AB &#47;&#47; CD")}. A line cuts AB at P and CD at Q. ${nw("∠BPQ = 64°")}. Find ∠PQD and ∠PQC.`,w:[`∠BPQ and ∠PQD are interior angles`,`${nw("∠PQD = ∠BPQ = 64°")} ${nw("(int. ∠s, AB &#47;&#47; CD)")}`,`${nw("∠PQC = 180° − 64° = 116°")} ${nw("(adj. ∠s on a str. line)")}`],bad:1,fix:`${nw("∠PQD = 180° − 64° = 116°")} ${nw("(int. ∠s, AB &#47;&#47; CD)")}`,why:`interior angles add to 180°`},
+{q:`${nw("PQ &#47;&#47; RS")}. A line cuts PQ at X and RS at Y. ${nw("∠PXY = 52°")}. Find ∠XYS and ∠XYR, giving reasons.`,w:[`${nw("∠PXY = 52°")} (given)`,`${nw("∠XYS = 52°")} ${nw("(alt. ∠s)")}`,`${nw("∠XYR = 180° − 52° = 128°")} ${nw("(adj. ∠s on a str. line)")}`],bad:1,fix:`${nw("∠XYS = 52°")} ${nw("(alt. ∠s, PQ &#47;&#47; RS)")}`,why:`name the parallel lines in the reason`}],
+"polygons":[
+{q:`In △ABC, ${nw("∠A = 48°")} and ${nw("∠B = 67°")}. BC is extended to D and ${nw(`∠ACD = ${X1}°`)}. Find ${X1}.`,w:[`${X1}° is the exterior angle at C`,nw(`${X1} = 180 − 48 − 67`),nw(`${X1} = 65`)],bad:1,fix:nw(`${X1} = 48 + 67 = 115`),why:`exterior angle = the 2 opposite interior angles added`},
+{q:`A pentagon has angles ${nw("100°, 120°, 95°, 110°")} and ${nw(`${X1}°`)}. Find ${X1}.`,w:[nw("100° + 120° + 95° + 110° = 425°"),nw("sum = 5 × 180° = 900°"),nw(`${X1} = 900 − 425 = 475`)],bad:1,fix:nw("sum = (5 − 2) × 180°"),why:`${nw(`(${V("n")} − 2) × 180°`)}, not ${nw(`${V("n")} × 180°`)}`},
+{q:`A rhombus has sides of 5 cm. Its perpendicular height is 4 cm. Find its area.`,w:[`all 4 sides are 5 cm`,`so it is a square`,nw("area = 5 × 5 = 25 cm²")],bad:1,fix:`so it is a parallelogram: ${nw("base × height")}`,why:`a square only if its angles are 90°`}],
+"ratio-rate-speed":[
+{q:`A cyclist rides 30 km at 15 km/h, then another 30 km at 10 km/h. Find the average speed for the whole journey.`,w:[`speeds: 15 km/h, 10 km/h`,nw(`average = ${frac("15 + 10","2")}`),nw(`= 12.5 km/h`)],bad:1,fix:nw(`average = 60 ÷ 5 = 12`),why:`total distance ÷ total time: 60 km ÷ 5 h`},
+{q:`Ali takes 50 min to finish a task. Ben takes 1.5 h. Find the ratio of Ali's time to Ben's time in its simplest form.`,w:[nw(`Ali : Ben = 50 min : 1.5 h`),nw(`= 50 : 1.5`),nw(`= 500 : 15`),nw(`= 100 : 3`)],bad:1,fix:nw(`= 50 : 90`),why:`same units first: 1.5 h = 90 min`},
+{q:`Convert 54 km/h to m/s.`,w:[nw(`54 km/h = ${frac("54 km","1 h")}`),nw(`= ${frac("54 × 1000 m","1 s")}`),nw(`= 54 000 m/s`)],bad:1,fix:nw(`= ${frac("54 × 1000 m","60 × 60 s")}`),why:`change the bottom too: 1 h = 60 × 60 s`}],
+"percentage":[
+{q:`A $50 bag's price goes up by 20%. In a sale, the new price is then cut by 20%. Find the sale price.`,w:[nw(`+20%: $50 × 1.2 = $60`),`−20% cancels +20%`,nw(`sale price = $50`)],bad:1,fix:nw(`−20%: $60 × 0.8 = $48`),why:`the 20% off is of $60, not $50`},
+{q:`After a 25% discount, a jacket costs $120. Find the original price.`,w:[`$120 is the price after 25% off`,nw(`$120 + 25% of $120`),nw(`= $120 + $30 = $150`)],bad:1,fix:nw(`75% = $120`),why:`$120 is 75% of the original`},
+{q:`A school's enrolment fell from 1250 to 1000. Find the percentage decrease.`,w:[nw(`1250 − 1000 = 250`),nw(`${frac("250","1000")} × 100% = 25%`),`the percentage decrease is 25%`],bad:1,fix:nw(`${frac("250","1250")} × 100% = 20%`),why:`÷ the original value`}],
+"number-patterns":[
+{q:`Find the ${V("n")}th term of 5, 11, 17, 23, … Hence find the 10th term.`,w:[`difference = 6`,nw(`${Tn} = ${V("n")} + 6`),nw(`T<sub>10</sub> = 10 + 6 = 16`)],bad:1,fix:nw(`${Tn} = 6${V("n")} − 1`),why:`the difference goes in front of ${V("n")}`},
+{q:`${nw(`${Tn} = 5${V("n")} − 2`)}. Is 120 a term of the sequence?`,w:[nw(`5${V("n")} − 2 = 120`),nw(`5${V("n")} = 122`),nw(`${V("n")} = 24.4`),`so 120 is the 24th term`],bad:3,fix:`120 is not a term`,why:`${V("n")} must be a positive integer`}],
+"linear-graphs":[
+{q:`Find the gradient of the line through ${nw("(1, 2)")} and ${nw("(3, 10)")}.`,w:[nw(`rise = 10 − 2 = 8`),nw(`run = 3 − 1 = 2`),nw(`gradient = ${frac("2","8")} = ${frac("1","4")}`)],bad:2,fix:nw(`gradient = ${frac("8","2")} = 4`),why:`rise ÷ run`},
+{q:`Line L is ${nw(`3${VY} = 9${X1} + 6`)}. Write down the gradient of a line parallel to L.`,w:[nw(`L: 3${VY} = 9${X1} + 6`),`gradient = 9`,`parallel: same gradient, 9`],bad:1,fix:`${nw(`${VY} = 3${X1} + 2`)}: gradient 3`,why:`make ${VY} the subject first`},
+{q:`A line is parallel to ${nw(`${VY} = 3`)} and passes through ${nw("(2, −5)")}. Write down its equation.`,w:[`${nw(`${VY} = 3`)} is a vertical line`,`so the new line is vertical too`,nw(`${X1} = 2`)],bad:0,fix:`${nw(`${VY} = 3`)} is a flat line`,why:`${nw(`${VY} = 3`)} is flat; ${nw(`${X1} = 3`)} is vertical`}],
+"perimeter-area":[
+{q:`A parallelogram has a base of 9 cm, slanted sides of 5 cm and a perpendicular height of 4 cm. Find its area.`,w:[nw(`area = base × height`),nw(`= 9 × 5`),nw(`= 45 cm²`)],bad:1,fix:nw(`= 9 × 4 = 36 cm²`),why:`the height meets the base at 90°`},
+{q:`A table top has an area of 2.5 m². Express this in cm².`,w:[nw(`1 m = 100 cm`),nw(`1 m² = 100 cm²`),nw(`2.5 × 100 = 250 cm²`)],bad:1,fix:nw(`1 m² = 10 000 cm²`),why:`square the 100 too: ${nw("100 × 100")}`},
+{q:`A semicircle has a diameter of 10 cm. Find its perimeter.`,w:[nw(`${V("r")} = 10 ÷ 2 = 5 cm`),nw(`perimeter = π(5)`),nw(`= 15.7 cm (3 s.f.)`)],bad:1,fix:nw(`perimeter = π(5) + 10`),why:`add the straight edge: ${nw(`π${V("r")} + 2${V("r")}`)}`}],
+"volume-surface-area-1":[
+{q:`A closed cylinder has radius 3 cm and height 8 cm. Find its total surface area, in terms of π.`,w:[nw(`toilet paper = 2π(3) × 8`),nw(`= 48π`),nw(`total = 48π cm²`)],bad:2,fix:nw(`total = 2π(3)² + 48π`),why:`add the 2 circles: ${nw(`2π${V("r")}²`)}`},
+{q:`A cylinder has a diameter of 10 cm and a height of 6 cm. Find its volume, in terms of π.`,w:[nw(`V = base area × height`),nw(`${V("r")} = 10 cm`),nw(`V = π(10)² × 6`),nw(`= 600π cm³`)],bad:1,fix:nw(`${V("r")} = 10 ÷ 2 = 5 cm`),why:`halve the diameter first`},
+{q:`A prism has a triangular base with base 6 cm and height 5 cm. The prism is 9 cm long. Find its volume.`,w:[nw(`base area = ${frac("1","2")} × 6 × 5 = 15`),nw(`V = base area × length`),nw(`= 15 × 9 = 135 cm²`)],bad:2,fix:nw(`= 15 × 9 = 135 cm³`),why:`volume is in cm³`}],
+"data-handling":[
+{q:`In a class of 40, 14 students chose basketball. Find the angle of the basketball sector in a pie chart.`,w:[`basketball: 14 out of 40`,nw(`${frac("14","40")} × 100% = 35%`),nw(`angle = 35°`)],bad:2,fix:nw(`angle = ${frac("14","40")} × 360°`),why:`fraction × 360°`},
+{q:`In a pictogram, one symbol stands for 6 books. Monday has 4½ symbols and Tuesday has 3 symbols. How many more books were borrowed on Monday?`,w:[`Monday: 4.5 symbols`,`Tuesday: 3 symbols`,nw(`4.5 − 3 = 1.5 books`)],bad:2,fix:nw(`(4.5 − 3) × 6 = 9 books`),why:`× by the key`},
+{q:`A classroom's temperature was recorded every hour from 8 a.m. to 2 p.m. Bar graph or line graph? Explain.`,w:[`A line graph.`,`It is clearer.`],bad:1,fix:`It shows the change over time.`,why:`say why, not just "clearer"`}],
+"simultaneous-equations":[
+{q:`Solve ${nw(`${X1} + 2${VY} = 9`)} and ${nw(`3${X1} − 2${VY} = 11`)}.`,w:[EQN(nw(`${X1} + 2${VY} = 9`),"①"),EQN(nw(`3${X1} − 2${VY} = 11`),"②"),nw(`4${X1} = 20`),nw(`${X1} = 5`),`Sub ${nw(`${X1} = 5`)} into ①: ${nw(`${VY} = 2`)}`],bad:2,fix:`① + ②: ${nw(`4${X1} = 20`)}`,why:`say what you did: ① + ②`},
+{q:`Solve ${nw(`2${X1} + 3${VY} = 12`)} and ${nw(`5${X1} − 3${VY} = 9`)}.`,w:[EQN(nw(`2${X1} + 3${VY} = 12`),"①"),EQN(nw(`5${X1} − 3${VY} = 9`),"②"),`① − ②: ${nw(`−3${X1} = 3`)}`,nw(`${X1} = 3 ÷ (−3) = −1`)],bad:2,fix:`① + ②: ${nw(`7${X1} = 21`)}`,why:`opposite signs: add`},
+{q:`Solve the simultaneous equations ${nw(`${X1} + ${VY} = 11`)} and ${nw(`${X1} − ${VY} = 3`)}.`,w:[EQN(nw(`${X1} + ${VY} = 11`),"①"),EQN(nw(`${X1} − ${VY} = 3`),"②"),`① + ②: ${nw(`2${X1} = 14`)}`,nw(`${X1} = 7`),`answer: ${nw(`${X1} = 7`)}`],bad:4,fix:`Sub ${nw(`${X1} = 7`)} into ①: ${nw(`${VY} = 4`)}`,why:`find both and write both`},
+{q:`Solve ${nw(`3${X1} + 2${VY} = 13`)} and ${nw(`${X1} + 4${VY} = 11`)}.`,w:[EQN(nw(`3${X1} + 2${VY} = 13`),"①"),EQN(nw(`${X1} + 4${VY} = 11`),"②"),`① × 2: ${nw(`6${X1} + 4${VY} = 13`)} ③`,`③ − ②: ${nw(`5${X1} = 2`)}`,nw(`${X1} = 0.4`)],bad:2,fix:`① × 2: ${nw(`6${X1} + 4${VY} = 26`)} ③`,why:`× EVERY term, the right side too`}],
+"algebraic-fractions":[
+{q:`Simplify ${nw(frac(`${X2} + 3${X1}`,`${X2} − 9`))}.`,w:[nw(`= ${frac(`3${X1}`,"−9")}`),nw(`= ${frac(X1,"−3")}`),nw(`= −${frac(X1,"3")}`)],bad:0,fix:nw(`= ${frac(`${X1}(${X1} + 3)`,`(${X1} + 3)(${X1} − 3)`)}`),why:`only cancel factors, never terms`},
+{q:`Express ${nw(`${frac("3",X1)} + ${frac("2",`${X1} + 1`)}`)} as a single fraction.`,w:[nw(`= ${frac("3 + 2",`${X1} + (${X1} + 1)`)}`),nw(`= ${frac("5",`${X1} + ${X1} + 1`)}`),nw(`= ${frac("5",`2${X1} + 1`)}`)],bad:0,fix:nw(`= ${frac(`3(${X1} + 1) + 2${X1}`,`${X1}(${X1} + 1)`)}`),why:`same denominator first`},
+{q:`Express ${nw(`${frac(`${X1} + 2`,"3")} − ${frac(`${X1} − 4`,"2")}`)} as a single fraction.`,w:[nw(`= ${frac(`2(${X1} + 2) − 3(${X1} − 4)`,"6")}`),nw(`= ${frac(`2${X1} + 4 − 3${X1} − 12`,"6")}`),nw(`= ${frac(`−${X1} − 8`,"6")}`)],bad:1,fix:nw(`= ${frac(`2${X1} + 4 − 3${X1} + 12`,"6")}`),why:`the −3 keeps its sign: ${nw("−3 × −4 = +12")}`}],
+"quadratic-equations-graphs":[
+{q:`Solve ${nw(`3${X2} = 12${X1}`)}.`,w:[nw(`3${X2} = 12${X1}`),nw(`3${X1} = 12`),nw(`${X1} = 4`)],bad:1,fix:nw(`3${X1}(${X1} − 4) = 0`),why:`never ÷ by ${X1}: make it = 0, factorise`},
+{q:`Solve ${nw(`${X2} + 3${X1} − 18 = 0`)}.`,w:[nw(`${X2} + 3${X1} − 18 = 0`),nw(`(${X1} + 6)(${X1} − 3) = 0`),nw(`${X1} = 6 or ${X1} = −3`)],bad:2,fix:nw(`${X1} = −6 or ${X1} = 3`),why:`${nw(`${X1} + 6 = 0`)} gives ${nw(`${X1} = −6`)}`},
+{q:`A rectangle is ${nw(`(${X1} + 2) cm`)} long and ${nw(`${X1} cm`)} wide. Its area is 48 cm². Find ${X1}.`,w:[nw(`${X1}(${X1} + 2) = 48`),nw(`${X2} + 2${X1} − 48 = 0`),nw(`(${X1} + 8)(${X1} − 6) = 0`),nw(`${X1} = −8 or ${X1} = 6`)],bad:3,fix:`${nw(`${X1} = 6`)} (reject ${nw(`${X1} = −8`)})`,why:`a length can't be negative: reject it, say why`}],
+"proportion":[
+{q:`6 painters take 10 days to paint a hall. How long would 4 painters take?`,w:[`let ${V("d")} = days, ${V("w")} = painters`,nw(`${V("d")} = ${V("k")}${V("w")}`),nw(`10 = ${V("k")}(6), so ${V("k")} = ${frac("5","3")}`),nw(`${V("d")} = ${frac("5","3")} × 4 = 6.67 days`)],bad:1,fix:nw(`${V("d")} = ${frac(V("k"),V("w"))}`),why:`inverse: fewer painters, more days`},
+{q:`A map has a scale of 1 : 20 000. A park covers 8 cm² on the map. Find its actual area in km².`,w:[nw(`1 cm = 20 000 cm`),nw(`= 0.2 km`),nw(`1 cm² = 0.2 km²`),nw(`8 cm² = 8 × 0.2 = 1.6 km²`)],bad:2,fix:nw(`1 cm² = 0.2² = 0.04 km²`),why:`area: square the scale`},
+{q:`A map has a scale of 1 : 40 000. A road is 6.5 cm long on the map. Find its actual length in km.`,w:[nw(`1 cm = 40 000 cm`),nw(`6.5 × 40 000 = 260 000 cm`),nw(`= 260 000 km`)],bad:2,fix:nw(`= 2.6 km`),why:`cm to km: ÷ 100 000`}],
+"congruence-similarity":[
+{q:`△ABC is similar to △XZY. ${nw("AB = 5 cm")}, ${nw("AC = 6 cm")} and ${nw("XZ = 10 cm")}. Find XY.`,w:[`XZ matches AC`,nw(`scale factor = 10 ÷ 6 = ${frac("5","3")}`),nw(`XY = 5 × ${frac("5","3")} = 8.33 cm`)],bad:0,fix:`XZ matches AB (A with X, B with Z)`,why:`match by the letter order`},
+{q:`A map has a scale of 1 : 25 000. A lake covers 12 cm² on the map. Find its actual area in km².`,w:[nw(`1 cm : 25 000 cm`),nw(`= 0.25 km`),nw(`1 cm² : 0.25 km²`),nw(`12 cm² : 12 × 0.25 = 3 km²`)],bad:2,fix:nw(`1 cm² : 0.0625 km²`),why:`square both sides: ${nw("0.25² = 0.0625")}`},
+{q:`△PQR is similar to △LMN. ${nw("PQ = 4 cm")} and ${nw("LM = 6 cm")}. Are the triangles congruent? Explain.`,w:[`The triangles are similar.`,`Similar = same size.`,`So they are congruent.`],bad:1,fix:`Similar can be any size.`,why:`same size is congruent; here ${nw("LM ≠ PQ")}`}],
+"pythagoras":[
+{q:`A right-angled triangle has shorter sides of 9 cm and 12 cm. Find the length of the hypotenuse, ${V("c")}.`,w:[`${V("c")} is opposite the right angle`,nw(`${V("c")} = 9 + 12`),nw(`= 21 cm`)],bad:1,fix:nw(`${V("c")}² = 9² + 12² = 225`),why:`square them: ${nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)}`},
+{q:`A 6.5 m ladder leans against a wall. Its foot is 2.5 m from the wall. How high up the wall does it reach?`,w:[`the ladder is the hypotenuse`,nw(`${V("h")}² = 6.5² + 2.5²`),nw(`= 48.5`),nw(`${V("h")} = ${SQRT("48.5")} = 6.96 m (3 s.f.)`)],bad:1,fix:nw(`${V("h")}² = 6.5² − 2.5² = 36`),why:`a short side: subtract the squares`},
+{q:`A right-angled triangle has shorter sides of 4 cm and 6 cm. Find the length of the hypotenuse, ${V("c")}.`,w:[nw(`${V("c")}² = 4² + 6²`),nw(`= 16 + 36 = 52`),nw(`${V("c")} = 52 cm`)],bad:2,fix:nw(`${V("c")} = ${SQRT("52")} = 7.21 cm`),why:`don't forget the square root`}],
+"trigonometry-sec2":[
+{q:`A right-angled triangle has a hypotenuse of 12 cm and an angle of 30°. Find ${X1}, the side opposite the 30°.`,w:[`hyp 12, find opp: SOH`,nw(`${X1} = 12 sin 30°`),nw(`= 12 × (−0.988)`),nw(`= −11.9 cm`)],bad:2,fix:nw(`= 12 × 0.5 = 6 cm`),why:`calculator not in degrees: check for D`},
+{q:`In △ABC, ${nw("∠B = 90°")}, ${nw("∠A = 35°")} and ${nw("BC = 8 cm")}. Find AB.`,w:[`opp = AB, adj = BC`,nw(`tan 35° = ${frac("AB","8")}`),nw(`AB = 8 tan 35° = 5.60 cm`)],bad:0,fix:`opp = BC, adj = AB`,why:`label from ∠A, the angle you're using`},
+{q:`In a right-angled triangle, the side opposite 52° is 9 cm. Find ${X1}, the side next to 52°.`,w:[`opp 9, find adj: TOA`,nw(`tan 52° = ${frac("9",X1)}`),nw(`${X1} = 9 tan 52°`),nw(`= 11.5 cm (3 s.f.)`)],bad:2,fix:nw(`${X1} = ${frac("9","tan 52°")} = 7.03 cm`),why:`${X1} is on the bottom: ÷ by tan 52°`}],
+"volume-surface-area-2":[
+{q:`A cone has radius 6 cm, height 8 cm and slant height 10 cm. Find its volume, in terms of π.`,w:[nw(`V = ${frac("1","3")}π${V("r")}²${V("h")}`),nw(`= ${frac("1","3")}π(6)²(10)`),nw(`= 120π cm³`)],bad:1,fix:nw(`= ${frac("1","3")}π(6)²(8) = 96π cm³`),why:`use the vertical height, not the slant`},
+{q:`A pyramid has a square base of side 6 cm and a height of 10 cm. Find its volume.`,w:[nw(`base area = 6 × 6 = 36 cm²`),nw(`V = 36 × 10`),nw(`= 360 cm³`)],bad:1,fix:nw(`V = ${frac("1","3")} × 36 × 10`),why:`pointy top: × ${frac("1","3")}`},
+{q:`A solid hemisphere has radius 4 cm. Find its total surface area, in terms of π.`,w:[nw(`${V("r")} = 4 cm`),nw(`curved = 2π(4)² = 32π`),nw(`total = 32π cm²`)],bad:2,fix:nw(`total = 32π + π(4)²`),why:`add the flat circle: ${nw(`3π${V("r")}²`)}`}],
+"data-sec2":[
+{q:`Class A's median score is 62. Class B's median score is 55. Compare the two classes.`,w:[`A's median is higher.`,`So generally, Class A did better.`],bad:0,fix:`A's median 62 > B's 55.`,why:`no numbers, no mark: give both medians`},
+{q:`Draw a stem-and-leaf diagram for: 23, 31, 28, 35, 22, 30, 27, 38, 33.`,w:[nw("2 | 2 3 7 8"),nw("3 | 1 5 0 8 3"),`Key: ${nw("2 | 3")} means 23`],bad:1,fix:nw("3 | 0 1 3 5 8"),why:`put the leaves in order`}],
+"averages":[
+{q:`Find the median of 8, 3, 12, 5, 9, 4, 10.`,w:[`7 values: the middle is the 4th`,nw("8, 3, 12, 5, 9, 4, 10"),`median = 4th value = 5`],bad:1,fix:nw("3, 4, 5, 8, 9, 10, 12"),why:`order the values first`},
+{q:`Pocket money ($): 40, 45, 50, 55, 300. Which average better represents the data? Explain.`,w:[nw(`mean = 490 ÷ 5 = $98`),nw(`median = $50`),`Median: it is better.`],bad:2,fix:`Median: 300 is extreme.`,why:`300 affects the mean ($98), not the median`},
+{q:`20 students were asked how many pets they have. 6 have 1, 9 have 2, 3 have 3 and 2 have 4. Find the mean.`,w:[`number of pets: 1, 2, 3, 4`,nw(`mean = ${frac("1 + 2 + 3 + 4","4")}`),nw(`= 2.5`)],bad:1,fix:nw(`mean = ${frac("6 + 18 + 9 + 8","20")}`),why:`total of ${V("fx")} ÷ total of ${V("f")}`},
+{q:`Find the median of 2, 4, 5, 5, 6, 7, 8, 9, 9, 10, 12.`,w:[`11 values, already in order`,nw(`position = ${frac("11","2")} = 5.5`),`between the 5th and 6th: ${nw(`${frac("6 + 7","2")} = 6.5`)}`],bad:1,fix:nw(`position = ${frac("11 + 1","2")} = 6`),why:`position ${nw(frac(`${V("n")} + 1`,"2"))}`}],
+"probability-sec2":[
+{q:`A bag has 3 red balls and 7 blue balls. One ball is taken at random. Find P(blue).`,w:[`blue: 7 balls`,`total: 3 + 7 = 10 balls`,nw(`P(blue) = ${frac("7","3")}`)],bad:2,fix:nw(`P(blue) = ${frac("7","10")}`),why:`÷ by the total: never more than 1`},
+{q:`A bag has 4 red, 6 blue and 5 green balls. One ball is taken at random. Find P(not red).`,w:[nw(`total = 4 + 6 + 5 = 15`),`not red = blue`,nw(`P(not red) = ${frac("6","15")} = ${frac("2","5")}`)],bad:1,fix:`not red: blue and green`,why:`everything that isn't red: ${nw("6 + 5 = 11")}`},
+{q:`Cards numbered 1 to 12 are shuffled. One is picked at random. Find P(a multiple of 3), in its simplest form.`,w:[`multiples of 3: ${nw("3, 6, 9, 12")}`,`4 out of 12`,nw(`P = ${frac("4","12")}`)],bad:2,fix:nw(`P = ${frac("4","12")} = ${frac("1","3")}`),why:`simplify the fraction`}],
+"linear-equations":[
+{q:`Solve ${nw(`5${X1} + 3 = 2${X1} + 21`)}.`,w:[nw(`5${X1} + 3 = 2${X1} + 21`),nw(`5${X1} − 2${X1} = 21 − 3`),nw(`3${X1} = 18`),nw(`${X1} = 18 − 3 = 15`)],bad:3,fix:nw(`${X1} = 18 ÷ 3 = 6`),why:`${nw(`× 3`)} flips to ${nw(`÷ 3`)}, not ${nw(`− 3`)}`},
+{q:`Solve ${nw(`${frac(`${X1} + 4`,"4")} − ${frac(X1,"6")} = 2`)}.`,w:[nw(`${frac(`${X1} + 4`,"4")} − ${frac(X1,"6")} = 2`),`× 12: ${nw(`${X1} + 48 − 2${X1} = 24`)}`,nw(`−${X1} = 24 − 48 = −24`),nw(`${X1} = −24 ÷ (−1) = 24`)],bad:1,fix:`× 12: ${nw(`3(${X1} + 4) − 2${X1} = 24`)}`,why:`${nw("12 ÷ 4 = 3")}: the new number in front`},
+{q:`Solve ${nw(`2(2${X1} + 5) = ${X1} − 8`)}.`,w:[nw(`2(2${X1} + 5) = ${X1} − 8`),nw(`4${X1} + 10 = ${X1} − 8`),nw(`4${X1} − ${X1} = −8 + 10`),nw(`3${X1} = 2`),nw(`${X1} = 2 ÷ 3 = ${frac("2","3")}`)],bad:2,fix:nw(`4${X1} − ${X1} = −8 − 10`),why:`${nw("+ 10")} thrown over the = flips to ${nw("− 10")}`},
+{q:`Solve ${nw(`7 − 3${X1} = 19`)}. Then find the value of ${nw(`2${X1} + 5`)}.`,w:[nw(`7 − 3${X1} = 19`),nw(`−3${X1} = 19 − 7 = 12`),nw(`${X1} = 12 ÷ 3 = 4`),nw(`2${X1} + 5 = 2(4) + 5 = 13`)],bad:2,fix:nw(`${X1} = 12 ÷ (−3) = −4`),why:`${nw(`−3${X1}`)} means ${nw(`−3 × ${X1}`)}, so ÷ by ${nw("−3")}`}],
+"factorisation":[
+{q:`Factorise completely ${nw(`2${X2} − 50`)}.`,w:[nw(`2${X2} − 50 = 2(${X2} − 25)`),nw(`= 2(${X2} − 5²)`),nw(`= 2(${X1} − 5)²`)],bad:2,fix:nw(`= 2(${X1} + 5)(${X1} − 5)`),why:`difference of two squares: one +, one −`},
+{q:`Factorise completely ${nw(`6${X2} + 9${X1}`)}.`,w:[`HCF of ${nw(`6${X2}`)} and ${nw(`9${X1}`)}: ${nw("3")}`,nw(`6${X2} + 9${X1} = 3(2${X2} + 3${X1})`),`check: ${nw(`3(2${X2} + 3${X1}) = 6${X2} + 9${X1}`)}`],bad:0,fix:`HCF of ${nw(`6${X2}`)} and ${nw(`9${X1}`)}: ${nw(`3${X1}`)}`,why:`both terms have an ${X1}, so take it out too`},
+{q:`Factorise completely ${nw(`2${X2} − 4${X1} − 30`)}.`,w:[nw(`2${X2} − 4${X1} − 30 = 2(${X2} − 2${X1} − 15)`),nw(`${X2} − 2${X1} − 15 = (${X1} + 5)(${X1} − 3)`),nw(`2${X2} − 4${X1} − 30 = 2(${X1} + 5)(${X1} − 3)`)],bad:1,fix:nw(`${X2} − 2${X1} − 15 = (${X1} − 5)(${X1} + 3)`),why:`expand back: the middle must be ${nw(`−2${X1}`)}`}]
+};
+const SPOTS_HI={
+"completing-the-square":[
+{q:`Express ${nw(`3${X2} + 12${X1} − 5`)} in the form ${nw(`${V("a")}(${X1} + ${V("h")})² + ${V("k")}`)}.`,w:[nw(`3${X2} + 12${X1} − 5 = 3(${X2} + 4${X1}) − 5`),nw(`= 3[(${X1} + 2)² − 4] − 5`),nw(`= 3(${X1} + 2)² − 4 − 5`),nw(`= 3(${X1} + 2)² − 9`)],bad:2,fix:nw(`= 3(${X1} + 2)² − 12 − 5`),why:`× 3 into the [ ], so ${nw("−4")} becomes ${nw("−12")}`}],
+"quadratic-graphs":[
+{q:`For ${nw(`${VY} = (${X1} − 3)² + 2`)}, state the turning point and the line of symmetry.`,w:[`${nw(`${V("a")} = 1 &gt; 0`)}: U-shaped, minimum point`,`turning point ${nw("(−3, 2)")}`,`minimum value of ${nw(`${VY} = 2`)}`,`line of symmetry ${nw(`${X1} = −3`)}`],bad:1,fix:`turning point ${nw("(3, 2)")}`,why:`the sign in the bracket flips: ${nw(`(${X1} − 3)`)} → 3`},
+{q:`Sketch ${nw(`${VY} = (${X1} + 2)(${X1} − 4)`)}: find where it cuts the ${X1}-axis and its turning point.`,w:[`${nw(`${VY} = 0`)}: ${nw(`(${X1} + 2)(${X1} − 4) = 0`)}`,`cuts the ${X1}-axis at ${nw(`${X1} = 2`)} and ${nw(`${X1} = −4`)}`,`halfway: ${nw(`${X1} = ${frac("2 + (−4)","2")} = −1`)}`,`${nw(`${VY} = (−1 + 2)(−1 − 4) = −5`)}: ${nw("(−1, −5)")}`],bad:1,fix:`cuts the ${X1}-axis at ${nw(`${X1} = −2`)} and ${nw(`${X1} = 4`)}`,why:`the sign flips: ${nw(`(${X1} + 2)`)} gives −2`}],
+"speed-time-graphs":[
+{q:`A car slows steadily from 20 m/s to 8 m/s in 4 s. Describe its motion in these 4 s.`,w:[nw("change in speed = 8 − 20 = −12 m/s"),nw("gradient = −12 ÷ 4 = −3 m/s²"),`The car has an acceleration of ${nw("3 m/s²")}.`],bad:2,fix:`The car has a retardation of ${nw("3 m/s²")}.`,why:`slowing down: say retardation, a positive number`},
+{q:`A bus speeds up from rest to 10 m/s in 4 s, keeps 10 m/s for 12 s, then slows to a stop in 4 s. Find its average speed.`,w:[`distance ${nw(`= ${frac("1","2")} × (12 + 20) × 10`)}`,nw("= 160 m"),`average speed ${nw(`= ${frac("0 + 10 + 0","3")}`)}`,nw("= 3.33 m/s (3 s.f.)")],bad:2,fix:`average speed ${nw(`= ${frac("160","20")} = 8 m/s`)}`,why:`total distance ÷ total time, not the speeds`}],
+"circle-properties":[
+{q:`A, P, B and Q lie on a circle. P and Q are on opposite sides of AB, and ${nw("∠APB = 72°")}. Find ∠AQB.`,w:[`P and Q are on opposite sides of chord AB`,`${nw("∠AQB = ∠APB")} (∠s in same seg.)`,nw("= 72°")],bad:1,fix:nw("∠AQB = 180° − 72°"),why:`opposite sides: the two angles add to 180°`}],
+"discriminant":[
+{q:`The line ${nw(`${VY} = 2${X1} + ${V("k")}`)} is a tangent to ${nw(`${VY} = ${X2} − 4${X1} + 7`)}. Find ${V("k")}.`,w:[nw(`${X2} − 4${X1} + 7 = 2${X1} + ${V("k")}`),nw(`${X2} − 6${X1} + (7 − ${V("k")}) = 0`),nw(`${V("a")} = 1, ${V("b")} = −6, ${V("c")} = ${V("k")}`),nw(`(−6)² − 4(1)(${V("k")}) = 0`),nw(`36 − 4${V("k")} = 0 → ${V("k")} = 9`)],bad:2,fix:nw(`${V("a")} = 1, ${V("b")} = −6, ${V("c")} = 7 − ${V("k")}`),why:`read ${V("c")} after it's = 0, not from the line`}],
+"trig-ratios-any-angle":[
+{q:`Solve ${nw("sin θ = −0.5")} for ${nw("0° ≤ θ ≤ 360°")}.`,w:[nw("α = sin⁻¹(−0.5) = −30°"),`sin is negative → Quadrants 3, 4`,nw("θ = 180° + (−30°) = 150°"),nw("or θ = 360° − (−30°) = 390°")],bad:0,fix:nw("α = sin⁻¹ 0.5 = 30°"),why:`basic angle from the positive value, then ASTC`}],
+"trig-graphs":[
+{q:`For ${nw(`${VY} = 3 cos 4${X1} + 1`)}, find the amplitude, the period and the greatest and least values.`,w:[`amplitude = 3, midline ${nw(`${VY} = 1`)}`,`greatest ${nw("= 1 + 3 = 4")}, least ${nw("= 1 − 3 = −2")}`,nw("period = 4 × 360° = 1440°"),`quarter points every ${nw("1440° ÷ 4 = 360°")}`],bad:2,fix:nw("period = 360° ÷ 4 = 90°"),why:`${V("b")} waves in 360°: period ${nw(`= 360° ÷ ${V("b")}`)}`},
+{q:`State the period and the amplitude of ${nw(`${VY} = tan 2${X1}`)}.`,w:[nw(`${VY} = tan 2${X1}: ${V("b")} = 2`),nw("period = 180° ÷ 2 = 90°"),nw("amplitude = 1"),`asymptotes at ${nw(`${X1} = 45°, 135°, …`)}`],bad:2,fix:`tan has no amplitude`,why:`tan has no greatest value, so no amplitude`}],
+"r-formula":[
+{q:`Express ${nw("2 sin θ + 5 cos θ")} in the form ${nw(`${V("R")} sin(θ + α)`)}, where α is acute.`,w:[nw(`${V("R")} = ${SQRT("2² + 5²")} = ${SQRT("29")}`),nw(`tan α = ${frac("2","5")}`),nw("α = 21.80°"),nw(`2 sin θ + 5 cos θ = ${SQRT("29")} sin(θ + 21.80°)`)],bad:1,fix:nw(`tan α = ${frac("5","2")}`),why:`match: ${nw(`${V("R")} cos α = 2`)}, ${nw(`${V("R")} sin α = 5`)}`}],
+"differentiation-rules":[
+{q:`Find the gradient of ${nw(`${VY} = ${frac("4",X2)}`)} at ${nw(`${X1} = 2`)}.`,w:[nw(`${VY} = ${frac("4",X2)}`),nw(`${frac(`d${VY}`,`d${X1}`)} = ${frac("4",`2${X1}`)} = ${frac("2",X1)}`),nw(`at ${X1} = 2: ${frac(`d${VY}`,`d${X1}`)} = ${frac("2","2")} = 1`),`gradient = 1`],bad:1,fix:nw(`${frac(`d${VY}`,`d${X1}`)} = −8${X1}<sup>−3</sup> = −${frac("8",`${X1}³`)}`),why:`change to ${nw(`4${X1}<sup>−2</sup>`)} first, never differentiate the bottom`}],
+"integration":[
+{q:`Evaluate ${nw(`∫<span class="lim"><sup>2</sup><sub>1</sub></span> (2${X1} − 1)³ d${X1}`)}.`,w:[nw(`∫<span class="lim"><sup>2</sup><sub>1</sub></span> (2${X1} − 1)³ d${X1} = [${frac(`(2${X1} − 1)⁴`,"4")}]<span class="lim"><sup>2</sup><sub>1</sub></span>`),nw(`= ${frac("3⁴","4")} − ${frac("1⁴","4")}`),nw(`= ${frac("81","4")} − ${frac("1","4")} = 20`)],bad:0,fix:nw(`∫<span class="lim"><sup>2</sup><sub>1</sub></span> (2${X1} − 1)³ d${X1} = [${frac(`(2${X1} − 1)⁴`,"4 × 2")}]<span class="lim"><sup>2</sup><sub>1</sub></span>`),why:`divide by 2 too, the number in front of ${X1}`},
+{q:`A curve has ${nw(`${frac(`d${VY}`,`d${X1}`)} = 2 sin ${X1}`)} and passes through ${nw("(0, 5)")}. Find its equation.`,w:[nw(`${VY} = ∫ 2 sin ${X1} d${X1}`),nw(`= 2 cos ${X1} + ${V("c")}`),`${nw("(0, 5)")}: ${nw(`5 = 2 cos 0 + ${V("c")}`)}, so ${nw(`${V("c")} = 3`)}`,nw(`${VY} = 2 cos ${X1} + 3`)],bad:1,fix:nw(`= −2 cos ${X1} + ${V("c")}`),why:`${nw(`∫ sin ${X1} d${X1} = −cos ${X1} + ${V("c")}`)}`}],
+"quadratic-equations":[
+{q:`Solve ${nw(`3${X2} = 12${X1}`)}.`,w:[nw(`3${X2} = 12${X1}`),`÷ 3: ${nw(`${X2} = 4${X1}`)}`,`÷ ${X1}: ${nw(`${X1} = 4`)}`],bad:2,fix:`${nw(`${X1}(${X1} − 4) = 0`)}, so ${nw(`${X1} = 0`)} or ${nw(`${X1} = 4`)}`,why:`make it = 0 and factorise: never ÷ by ${X1}`},
+{q:`Solve ${nw(`(${X1} − 1)(${X1} + 4) = 6`)}.`,w:[nw(`(${X1} − 1)(${X1} + 4) = 6`),`${nw(`${X1} − 1 = 6`)} or ${nw(`${X1} + 4 = 6`)}`,`${nw(`${X1} = 7`)} or ${nw(`${X1} = 2`)}`],bad:1,fix:`${nw(`${X2} + 3${X1} − 4 = 6`)}, so ${nw(`${X2} + 3${X1} − 10 = 0`)}`,why:`expand, make it = 0 first`}],
+"indices":[
+{q:`Solve ${nw(`3² × 3⁴ = 9<sup>${X1}</sup>`)}.`,w:[nw(`3² × 3⁴ = 9<sup>${X1}</sup>`),nw(`9⁶ = 9<sup>${X1}</sup>`),nw(`${X1} = 6`)],bad:1,fix:nw(`3⁶ = 9<sup>${X1}</sup>`),why:`same base: add the powers, the base stays 3`},
+{q:`Simplify ${nw(`(3${X2})³ ÷ 9${X1}⁴`)}.`,w:[nw(`(3${X2})³ = 3${X1}⁶`),`numbers: ${nw(`3 ÷ 9 = ${frac("1","3")}`)}`,`${X1}: ${nw(`${X1}<sup>6 + (−4)</sup> = ${X2}`)}`,`answer: ${nw(`${frac("1","3")}${X2}`)}`],bad:0,fix:nw(`(3${X2})³ = 27${X1}⁶`),why:`cube everything in the bracket: ${nw("3³ = 27")}`},
+{q:`Evaluate ${nw("5<sup>−2</sup> + 5⁰")}.`,w:[nw("5⁰ = 1"),nw("5<sup>−2</sup> = −25"),nw("5<sup>−2</sup> + 5⁰ = −25 + 1 = −24")],bad:1,fix:nw(`5<sup>−2</sup> = ${frac("1","5²")} = ${frac("1","25")}`),why:`negative power = flip it, not a negative number`}],
+"standard-form":[
+{q:`Calculate ${nw("(6 × 10⁴) × (5 × 10³)")}. Give your answer in standard form.`,w:[`numbers: ${nw("6 × 5 = 30")}`,`powers: ${nw("10⁴ × 10³ = 10<sup>4 + 3</sup> = 10⁷")}`,`answer: ${nw("30 × 10⁷")}`],bad:2,fix:`answer: ${nw("3 × 10⁸")}`,why:`${V("A")} must be under 10: ${nw("30 × 10⁷ = 3 × 10⁸")}`},
+{q:`Calculate ${nw("(2 × 10<sup>−5</sup>) ÷ (4 × 10<sup>−2</sup>)")}. Give your answer in standard form.`,w:[`numbers: ${nw("2 ÷ 4 = 0.5")}`,`powers: ${nw("10<sup>−5 + 2</sup>")}`,nw("= 10<sup>−3</sup>"),`answer: ${nw("0.5 × 10<sup>−3</sup>")}`],bad:3,fix:`answer: ${nw("5 × 10<sup>−4</sup>")}`,why:`${V("A")} must be at least 1: move the point`}],
+"interest":[
+{q:`$3000 is invested at 4.8% per year compound interest, compounded monthly. Find the amount after 3 years.`,w:[nw(`${V("A")} = ${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`),nw(`${V("r")} = 4.8, ${V("n")} = 3`),nw("A = 3000(1.048)³"),nw("= $3453.07")],bad:1,fix:nw(`${V("r")} = 4.8 ÷ 12 = 0.4, ${V("n")} = 3 × 12 = 36`),why:`monthly: ${nw(`${V("r")} ÷ 12`)} and ${nw(`${V("n")} × 12`)}`},
+{q:`$4000 is invested at 2.5% per year compound interest for 3 years. Find the interest earned.`,w:[nw("A = 4000(1.025)³"),nw("= $4307.56"),nw("interest = $4307.56")],bad:2,fix:`${nw("interest = 4307.56 − 4000")} ${nw("= $307.56")}`,why:`interest = ${nw(`${V("A")} − ${V("P")}`)}, not the amount`}],
+"sets":[
+{q:`A = {2, 4, 6, 8} and B = {1, 2, 3, 4}. Find A ∪ B and ${nw("n(A ∩ B)")}.`,w:[nw("A ∪ B = {1, 2, 3, 4, 6, 8}"),nw("A ∩ B = {1, 2, 3, 4, 6, 8}"),nw("n(A ∩ B) = 6")],bad:1,fix:nw("A ∩ B = {2, 4}"),why:`∩ is only what they share`},
+{q:`P = {3, 5, 7}. Write ∈, ∉ or ⊂ in each blank: 5 ▢ P, {5, 7} ▢ P, 9 ▢ P.`,w:[nw("5 ⊂ P"),nw("{5, 7} ⊂ P"),nw("9 ∉ P")],bad:0,fix:nw("5 ∈ P"),why:`an element takes ∈; ⊂ is for a set`}],
+"measures-of-spread":[
+{q:`The cumulative frequency curve shows the marks (out of 100) of 80 students. Find the lower quartile.`,w:[`total frequency ${nw(`${V("N")} = 80`)}`,`Q1: across from ${nw(`${frac("1","4")} × 100 = 25`)}`,`drop down, read Q1 on the marks axis`],bad:1,fix:`Q1: across from ${nw(`${frac("1","4")} × 80 = 20`)}`,why:`${frac("1","4")} of ${V("N")}, on the cumulative frequency axis`},
+{q:`Team A's times: mean 12.4 s, standard deviation 0.3 s. Team B's: mean 12.4 s, standard deviation 0.9 s. Compare the two teams.`,w:[`Same mean: 12.4 s.`,`B's SD (0.9 s) is bigger than A's (0.3 s).`,`B is more consistent.`],bad:2,fix:`A is more consistent.`,why:`bigger SD = more spread out, less consistent`},
+{q:`Class A: median 62, IQR 15. Class B: median 70, IQR 9. Compare the marks of the two classes.`,w:[`Class B did better.`,`Class B's IQR (9) is smaller than Class A's (15).`,`So Class B's marks are more consistent.`],bad:0,fix:`B's median 70 &gt; A's 62`,why:`no numbers, no mark: give both medians`}],
+"probability":[
+{q:`A bag has 4 red and 3 green balls. Two are taken without replacement. Find P(both green).`,w:[nw(`P(1st green) = ${frac("3","7")}`),nw(`P(2nd green) = ${frac("3","7")}`),nw(`P(both green) = ${frac("3","7")} × ${frac("3","7")} = ${frac("9","49")}`)],bad:1,fix:nw(`P(2nd green) = ${frac("2","6")}`),why:`not put back: the top and the bottom drop by 1`},
+{q:`A card is drawn from 20 cards numbered 1 to 20. Find P(the number is even or a multiple of 5).`,w:[nw(`P(even) = ${frac("10","20")}`),nw(`P(multiple of 5) = ${frac("4","20")}`),nw(`P = ${frac("10","20")} + ${frac("4","20")} = ${frac("7","10")}`)],bad:2,fix:nw(`P = ${frac("12","20")} = ${frac("3","5")}`),why:`10 and 20 are both: 12 numbers, not 14`}],
+"matrices":[
+{q:`${nw(`A = ${MX([["1","2"],["3","0"]])}`)} and ${nw(`B = ${MX([["2","1"],["4","5"]])}`)}. Find ${nw("A + B")} and AB.`,w:[nw(`A + B = ${MX([["3","3"],["7","5"]])}`),nw(`AB = ${MX([["1 × 2","2 × 1"],["3 × 4","0 × 5"]])}`),nw(`= ${MX([["2","2"],["12","0"]])}`)],bad:1,fix:nw(`AB = ${MX([["2 + 8","1 + 10"],["6 + 0","3 + 0"]])} = ${MX([["10","11"],["6","3"]])}`),why:`row × column, then add`},
+{q:`${nw(`A = ${MX([["2","1"],["0","3"]])}`)} and ${nw(`B = ${MX([["1","0"],["4","1"]])}`)}. Find AB and BA.`,w:[nw(`AB = ${MX([["2 + 4","0 + 1"],["0 + 12","0 + 3"]])}`),nw(`= ${MX([["6","1"],["12","3"]])}`),nw(`BA = AB = ${MX([["6","1"],["12","3"]])}`)],bad:2,fix:nw(`BA = ${MX([["2 + 0","1 + 0"],["8 + 0","4 + 3"]])} = ${MX([["2","1"],["8","7"]])}`),why:`order matters: work out BA on its own`}],
+"coordinate-geometry":[
+{q:`Find the gradient of the line ${nw(`3${VY} = 12${X1} + 5`)}, then the equation of the parallel line through ${nw("(1, 2)")}.`,w:[nw(`3${VY} = 12${X1} + 5`),`gradient ${nw(`${V("m")} = 12`)}`,`parallel: ${nw(`${VY} = 12${X1} + ${V("c")}`)}`,`${nw("(1, 2)")}: ${nw(`2 = 12(1) + ${V("c")}`)}, ${nw(`${V("c")} = −10`)}`],bad:1,fix:`${nw(`${VY} = 4${X1} + ${frac("5","3")}`)}, so ${nw(`${V("m")} = 4`)}`,why:`get ${VY} alone first, then read ${V("m")}`},
+{q:`Line L has gradient ${nw(`−${frac("2","5")}`)}. Find the equation of the line perpendicular to L through ${nw("(2, 3)")}.`,w:[`perpendicular gradient ${nw(`= −${frac("5","2")}`)}`,nw(`${VY} = −${frac("5","2")}${X1} + ${V("c")}`),`${nw("(2, 3)")}: ${nw(`3 = −${frac("5","2")}(2) + ${V("c")}`)}, ${nw(`${V("c")} = 8`)}`,nw(`${VY} = −${frac("5","2")}${X1} + 8`)],bad:0,fix:`perpendicular gradient ${nw(`= ${frac("5","2")}`)}`,why:`flip it, then change the sign`},
+{q:`A(1, 2) and B(15, 9). P is on AB with ${nw("AP : PB = 3 : 4")}. Find P.`,w:[`run ${nw("= 15 − 1 = 14")}, rise ${nw("= 9 − 2 = 7")}`,`${nw("AP : PB = 3 : 4")}, so scale by ${nw(frac("3","4"))}`,`${nw(`× ${frac("3","4")}`)}: 10.5 across, 5.25 up`,nw("P = (11.5, 7.25)")],bad:1,fix:`${nw("AP : AB = 3 : 7")}, so scale by ${nw(frac("3","7"))}`,why:`÷ the whole: ${nw("3 + 4 = 7")} parts`},
+{q:`A(0, 0), B(8, 0) and C(3, 4). Find the area of triangle ABC.`,w:[`base ${nw("AB = 8 − 0 = 8")}`,nw(`AC = ${SQRT("3² + 4²")} = 5`),`height = AC = 5`,`area ${nw(`= ${frac("1","2")} × 8 × 5 = 20 units²`)}`],bad:2,fix:`height = 4 − 0 = 4 (C to the ${X1}-axis)`,why:`the height is perpendicular to the base`}],
+"congruence-similarity-sec3":[
+{q:`In △PQR and △XYZ, ${nw("PQ = XY")}, ${nw("QR = YZ")} and ${nw("∠PRQ = ∠XZY")}. Is △PQR ≡ △XYZ?`,w:[`${nw("PQ = XY")} (given)`,`${nw("QR = YZ")} (given)`,`${nw("∠PRQ = ∠XZY")} (given)`,`${nw("△PQR ≡ △XYZ")} (SAS)`],bad:3,fix:`no test fits: this is ASS`,why:`for SAS the angle must be between the 2 sides`},
+{q:`Two similar triangles have matching sides 4 cm and 6 cm. The smaller one has area 24 cm². Find the area of the larger one.`,w:[`length ratio ${nw("= 4 : 6 = 2 : 3")}`,`area ratio ${nw("= 2 : 3")}`,`big area ${nw(`= 24 × ${frac("3","2")}`)}`,nw("= 36 cm²")],bad:1,fix:`area ratio ${nw("= 2² : 3² = 4 : 9")}`,why:`area: square the length ratio`},
+{q:`In △ABC, D is on AB and E is on AC, with ${nw("DE ∥ BC")}. ${nw("AD : DB = 3 : 2")} and ${nw("BC = 15 cm")}. Find DE.`,w:[`△ADE is similar to △ABC (AA)`,nw(`${frac("DE","BC")} = ${frac("AD","DB")} = ${frac("3","2")}`),nw(`DE = ${frac("3","2")} × 15 = 22.5 cm`)],bad:1,fix:nw(`${frac("DE","BC")} = ${frac("AD","AB")} = ${frac("3","5")}`),why:`use the whole side: ${nw("AD : AB = 3 : 5")}`},
+{q:`Two similar triangles have areas 20 cm² and 45 cm². The smaller one has perimeter 18 cm. Find the perimeter of the larger one.`,w:[`area ratio ${nw("= 20 : 45 = 4 : 9")}`,`length ratio ${nw("= 2 : 3")}`,`perimeter ratio ${nw("= 2² : 3² = 4 : 9")}`,`big perimeter ${nw(`= 18 × ${frac("9","4")} = 40.5 cm`)}`],bad:2,fix:`perimeter ratio ${nw("= 2 : 3")}`,why:`perimeter is a length: keep the length ratio`}],
+"further-trigonometry":[
+{q:`Given ${nw("cos 40° = 0.766")}, find cos 140° without a calculator.`,w:[nw("140° = 180° − 40°"),nw("cos 140° = cos 40°"),nw("= 0.766")],bad:1,fix:nw("cos 140° = −cos 40°"),why:nw("cos(180° − θ) = −cos θ")},
+{q:`A triangle has sides 8 cm and 6 cm and area 18 cm². Find all possible values of θ, the angle between these sides.`,w:[nw(`${frac("1","2")}(8)(6) sin θ = 18`),nw("sin θ = 0.75"),nw("θ = 48.6° (1 d.p.)")],bad:2,fix:`${nw("θ = 48.6°")} or ${nw("180° − 48.6° = 131.4°")}`,why:`sin gives 2 angles: keep both unless one can't fit`},
+{q:`In △PQR, ${nw("PQ = 5 cm")}, ${nw("PR = 8 cm")} and ${nw("∠P = 60°")}. Find QR.`,w:[nw("QR² = 5² + 8² − 2(5)(8) cos 60°"),nw("= (25 + 64 − 80) cos 60°"),nw("= 9 × 0.5 = 4.5"),nw(`QR = ${SQRT("4.5")} = 2.12 cm`)],bad:1,fix:nw("= 89 − 40 = 49"),why:`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first, then subtract`},
+{q:`In △ABC, ${nw("AC = 7 cm")}, ${nw("AB = 10 cm")} and ${nw("∠A = 70°")}. Find BC, then ∠B.`,w:[nw("BC² = 7² + 10² − 2(7)(10) cos 70°"),`${nw("BC = 10.056")} ${nw("= 10.1 cm (3 s.f.)")}`,nw(`${frac("sin B","7")} = ${frac("sin 70°","10.1")}`),nw("B = 40.6° (1 d.p.)")],bad:2,fix:nw(`${frac("sin B","7")} = ${frac("sin 70°","10.056")}`),why:`keep 5 s.f. in working: use 10.056`}],
+"bearings-elevation-3d":[
+{q:`From the top of a 40 m cliff, the angle of depression of a boat is 25°. How far is the boat from the foot of the cliff?`,w:[`∠ with the cliff = 25°`,nw(`tan 25° = ${frac(V("d"),"40")}`),nw(`${V("d")} = 40 tan 25° = 18.7 m (3 s.f.)`)],bad:0,fix:`∠ at the boat = 25°`,why:`depression is from the horizontal: alt. ∠s`},
+{q:`Town B is 6 km east and 8 km north of Town A. Find the bearing of B from A.`,w:[`angle from North: ${nw(`tan θ = ${frac("6","8")}`)}`,nw("θ = 36.9° (1 d.p.)"),nw("bearing = 36.9°")],bad:2,fix:nw("bearing = 036.9°"),why:`3 figures before the point: put a 0 in front`},
+{q:`Q is on a bearing of 072° from P. R is on a bearing of 160° from Q. Find ∠PQR.`,w:[`at Q, face North`,`bearing of P from Q = 072°`,nw("∠PQR = 160° − 72° = 88°")],bad:1,fix:`bearing of P from Q = 252°`,why:`going back: ${nw("072° + 180° = 252°")}`},
+{q:`A boy stands 25 m from a flagpole. His eyes are 1.5 m above the ground. The angle of elevation of the top is 32°. Find the height of the flagpole.`,w:[nw(`tan 32° = ${frac(V("h"),"25")}`),nw(`${V("h")} = 25 tan 32° = 15.622 m`),`height of flagpole ${nw("= 15.6 m (3 s.f.)")}`],bad:2,fix:`height ${nw("= 1.5 + 15.622")} ${nw("= 17.1 m (3 s.f.)")}`,why:`add the eye level at the end`}],
+"arc-length-sector-area":[
+{q:`A sector has radius 8 cm and angle 40°. Find its perimeter.`,w:[nw(`${V("s")} = ${V("rθ")} = 8 × 40 = 320 cm`),`perimeter ${nw("= 8 + 8 + 320")}`,nw("= 336 cm")],bad:0,fix:nw(`${V("s")} = 8 × ${frac("2π","9")} = 5.585 cm`),why:`${nw(`${V("s")} = ${V("rθ")}`)} needs θ in radians: ${nw(`40° = ${frac("2π","9")}`)}`},
+{q:`A sector has radius 5 cm and angle 1.2 rad. Find the area of the segment.`,w:[`segment = sector − triangle`,`sector ${nw(`= ${frac("1","2")}(5)²(1.2) = 15`)}`,`triangle ${nw(`= ${frac("1","2")}(5)² sin 1.2 = 0.262`)}`,`segment ${nw("= 15 − 0.262 = 14.7 cm²")}`],bad:2,fix:`triangle ${nw(`= ${frac("1","2")}(5)² sin 1.2 = 11.650`)}`,why:`θ is in radians: calculator in RAD`},
+{q:`A sector has radius 6 cm and angle 1.5 rad. Find its perimeter.`,w:[`θ is in radians: use ${nw(`${V("s")} = ${V("rθ")}`)}`,nw(`${V("s")} = 6 × 1.5 = 9 cm`),nw("perimeter = 9 cm")],bad:2,fix:nw("perimeter = 6 + 6 + 9 = 21 cm"),why:`add the 2 radii: ${nw(`2${V("r")} + ${V("s")}`)}`},
+{q:`A circle has radius 10 cm. The minor sector has angle 0.8 rad. Find the perimeter of the major sector.`,w:[`minor angle = 0.8 rad`,`major arc ${nw("= 10 × 0.8 = 8 cm")}`,`perimeter ${nw("= 10 + 10 + 8 = 28 cm")}`],bad:1,fix:`major arc ${nw("= 10(2π − 0.8) = 54.832 cm")}`,why:`major arc: use ${nw("2π − θ")}`}],
+"functions-graphs":[
+{q:`Sketch ${nw(`${VY} = ${frac("6",X1)}`)}.`,w:[nw(`${VY} = 6${X1}<sup>−1</sup>: ${V("n")} = −1, ${V("k")} = 6`),`it passes through ${nw("(1, 6)")} and ${nw("(−1, −6)")}`,`draw one curve through O`],bad:2,fix:`2 separate branches`,why:`${nw(`${X1} = 0`)} isn't allowed: it never touches the ${VY}-axis`},
+{q:`${nw(`${VY} = ${V("k")}${X2}`)} passes through ${nw("(−3, 36)")}. Find ${V("k")}.`,w:[nw(`36 = ${V("k")}(−3)²`),nw(`36 = −9${V("k")}`),nw(`${V("k")} = 36 ÷ (−9) = −4`)],bad:1,fix:nw(`36 = 9${V("k")}`),why:`keep the bracket: ${nw("(−3)² = 9")}`},
+{q:`Sketch ${nw(`${VY} = 3(4)<sup>${X1}</sup>`)}. Where does it cross the ${VY}-axis?`,w:[nw(`${V("k")} = 3, ${V("a")} = 4`),nw(`${V("a")} &gt; 1`)+`: growth`,`crosses the ${VY}-axis at ${nw("(0, 4)")}`],bad:2,fix:`${nw(`${X1} = 0`)}: ${nw("3(4)⁰ = 3")}, so ${nw("(0, 3)")}`,why:`any number to the power 0 is 1`},
+{q:`Draw the graph of ${nw(`${VY} = ${X2} − 2${X1}`)} for ${nw(`−1 ≤ ${X1} ≤ 3`)}.`,w:[`${nw(`${X1}: −1, 0, 1, 2, 3`)} → ${nw(`${VY}: 3, 0, −1, 0, 3`)}`,`plot each point with a small ×`,`join them with a ruler`],bad:2,fix:`one smooth curve`,why:`one smooth curve, no corners`},
+{q:`Use the graph of ${nw(`${VY} = ${X2}`)} to estimate the gradient at ${nw(`${X1} = 2`)}.`,w:[`the point: ${nw("(2, 4)")}`,`on the curve: ${nw("(3, 9)")}`,`gradient ${nw(`= ${frac("9 − 4","3 − 2")} = 5`)}`],bad:1,fix:`on the tangent: ${nw("(3, 8)")}`,why:`draw the tangent at ${nw("(2, 4)")}, use 2 points on it`},
+{q:`A cyclist's distance–time graph rises from ${nw(`${V("t")} = 0`)} to ${nw(`${V("t")} = 10`)} min, then is flat until ${nw(`${V("t")} = 25`)} min. Describe the motion.`,w:[`0 to 10 min: moving away`,`10 to 25 min: the graph is flat`,`So: constant speed`],bad:2,fix:`So: not moving`,why:`flat on a distance–time graph = not moving`}],
+"applications-of-integration":[
+{q:`Find the area enclosed by ${nw(`${VY} = ${X2} − 2${X1} − 3`)} and the ${X1}-axis.`,w:[`${nw(`(${X1} + 1)(${X1} − 3) = 0`)}, ${nw(`${X1} = −1 or 3`)}`,nw(`∫<span class="lim"><sup>3</sup><sub>−1</sub></span> (${X2} − 2${X1} − 3) d${X1} = [${frac(`${X1}³`,"3")} − ${X2} − 3${X1}]<span class="lim"><sup>3</sup><sub>−1</sub></span>`),nw(`= −9 − ${frac("5","3")} = −${frac("32","3")}`),`area ${nw(`= −${frac("32","3")} units²`)}`],bad:3,fix:`below the axis: area ${nw(`= ${frac("32","3")} units²`)}`,why:`below the axis: the area is the size, never negative`},
+{q:`Find the total area between ${nw(`${VY} = ${X2} − 4${X1}`)}, the ${X1}-axis, ${nw(`${X1} = 0`)} and ${nw(`${X1} = 6`)}.`,w:[nw(`∫<span class="lim"><sup>6</sup><sub>0</sub></span> (${X2} − 4${X1}) d${X1} = [${frac(`${X1}³`,"3")} − 2${X2}]<span class="lim"><sup>6</sup><sub>0</sub></span>`),nw("= (72 − 72) − 0 = 0"),`area = 0 units²`],bad:2,fix:`root at ${nw(`${X1} = 4`)}: area ${nw(`= ${frac("32","3")} + ${frac("32","3")} = ${frac("64","3")}`)}`,why:`split at the root, add the sizes`},
+{q:`Find the area between ${nw(`${VY} = 6${X1} − ${X2}`)} and ${nw(`${VY} = 2${X1}`)}.`,w:[`meet: ${nw(`6${X1} − ${X2} = 2${X1}`)}, so ${nw(`${X1} = 0`)} or 4`,nw(`∫<span class="lim"><sup>4</sup><sub>0</sub></span> (2${X1} − (6${X1} − ${X2})) d${X1}`),nw(`= ∫<span class="lim"><sup>4</sup><sub>0</sub></span> (${X2} − 4${X1}) d${X1}`),nw(`= ${frac("64","3")} − 32 = −${frac("32","3")}`)],bad:1,fix:nw(`∫<span class="lim"><sup>4</sup><sub>0</sub></span> (6${X1} − ${X2} − 2${X1}) d${X1}`),why:`upper minus lower: ${nw(`6${X1} − ${X2}`)} is on top`},
+{q:`Find the area between ${nw(`${VY} = ${X2}`)} (${nw(`${X1} ≥ 0`)}), the ${VY}-axis, ${nw(`${VY} = 4`)} and ${nw(`${VY} = 9`)}.`,w:[`along the ${VY}-axis: from ${nw(`${VY} = 4`)} to ${nw(`${VY} = 9`)}`,nw(`A = ∫<span class="lim"><sup>9</sup><sub>4</sub></span> ${VY} d${VY}`),nw(`= [${frac(`${VY}²`,"2")}]<span class="lim"><sup>9</sup><sub>4</sub></span>`),nw(`= ${frac("81","2")} − 8 = ${frac("65","2")} units²`)],bad:1,fix:nw(`${X1} = ${VY}<sup>${frac("1","2")}</sup>, so A = ∫<span class="lim"><sup>9</sup><sub>4</sub></span> ${VY}<sup>${frac("1","2")}</sup> d${VY}`),why:`${nw(`∫ ${X1} d${VY}`)}: make ${X1} the subject first`},
+{q:`${nw(`${VY} = ${X2}`)}. The tangent at P(2, 4) meets the ${X1}-axis at R. Find the area between the curve, the tangent and the ${X1}-axis.`,w:[`tangent: ${nw(`${VY} − 4 = 4(${X1} − 2)`)}, so ${nw(`${VY} = 4${X1} − 4`)}`,`${nw("R = (0, 0)")}, on the curve`,`triangle ${nw(`= ${frac("1","2")} × 2 × 4 = 4`)}`,`under the curve: ${nw(`∫<span class="lim"><sup>2</sup><sub>0</sub></span> ${X2} d${X1} = ${frac("8","3")}`)}`],bad:1,fix:`${nw(`4${X1} − 4 = 0`)}: ${nw("R = (1, 0)")}`,why:`R is on the tangent: put ${nw(`${VY} = 0`)} in the line`},
+{q:`Show that ${nw(`${frac("d",`d${X1}`)}(${X1}e<sup>${X1}</sup>) = ${X1}e<sup>${X1}</sup> + e<sup>${X1}</sup>`)}. Hence find ${nw(`∫ ${X1}e<sup>${X1}</sup> d${X1}`)}.`,w:[`product rule: ${nw(`${V("u")} = ${X1}`)}, ${nw(`${V("v")} = e<sup>${X1}</sup>`)}`,nw(`${frac("d",`d${X1}`)}(${X1}e<sup>${X1}</sup>) = (1)e<sup>${X1}</sup> + (e<sup>${X1}</sup>)${X1}`),nw(`∫ ${X1}e<sup>${X1}</sup> d${X1} = ${frac(X2,"2")}e<sup>${X1}</sup> + ${V("c")}`)],bad:2,fix:nw(`∫ ${X1}e<sup>${X1}</sup> d${X1} = ${X1}e<sup>${X1}</sup> − e<sup>${X1}</sup> + ${V("c")}`),why:`use the part before: ${nw(`∫ (${X1}e<sup>${X1}</sup> + e<sup>${X1}</sup>) d${X1} = ${X1}e<sup>${X1}</sup> + ${V("c")}`)}`}],
+"proofs-plane-geometry":[
+{q:`∠ABC = ∠EDF and ∠BAC = ∠DEF. Complete the proof that the triangles are similar, and write the equal ratios.`,w:[`${nw("∠ABC = ∠EDF")} (given)`,`${nw("∠BAC = ∠DEF")} (given)`,`△ABC is similar to △DEF (AA)`,`so ${nw(`${frac("AB","DE")} = ${frac("BC","EF")}`)} (similar △s)`],bad:2,fix:`△ABC is similar to △EDF (AA)`,why:`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`},
+{q:`Line PQ cuts AB at X and CD at Y, with A and D on opposite sides of PQ. ${nw("∠AXY = ∠XYD = 70°")}. Show that AB ∥ CD.`,w:[`${nw("∠AXY = 70°")} and ${nw("∠XYD = 70°")} (given)`,`so ${nw("∠AXY = ∠XYD")}`,`AB ∥ CD (from the diagram)`],bad:2,fix:`AB ∥ CD (converse of alt. ∠s)`,why:`a diagram is not a reason: use the equal alt. ∠s`},
+{q:`O is the centre of a circle. OM is perpendicular to the chord AB at M. Prove that ${nw("AM = MB")}.`,w:[`${nw("OA = OB")} (radii)`,`${nw("OM = OM")} (common side)`,`${nw("AM = MB")} (⊥ from centre bisects chord)`,`${nw("△OAM ≡ △OBM")} (SSS)`,`so ${nw("AM = MB")}`],bad:2,fix:`${nw("∠OMA = ∠OMB = 90°")} (given), so ${nw("△OAM ≡ △OBM")} (RHS)`,why:`you can't use what you're proving: use RHS`},
+{q:`A, B, C and D lie on a circle, in that order. ${nw("∠ABC = 108°")}. Find ∠ADC.`,w:[`B and D are on opposite sides of AC`,`${nw("∠ADC = ∠ABC")} (∠s in same seg.)`,nw("= 108°")],bad:1,fix:nw("∠ADC = 180° − 108°"),why:`opp. ∠s of cyclic quad. add to 180°`},
+{q:`In △PQR, X is the midpoint of PQ. Y is on PR with ${nw("PY = 5 cm")} and ${nw("YR = 7 cm")}. Is ${nw(`XY = ${frac("1","2")}QR`)}? Explain.`,w:[`${nw("PX = XQ")} (given)`,`${nw(`XY = ${frac("1","2")}QR`)} (midpoint theorem)`,`Yes, ${nw(`XY = ${frac("1","2")}QR`)}.`],bad:1,fix:`Y isn't a midpoint: ${nw("5 ≠ 7")}`,why:`both must be midpoints of 2 sides of the triangle`},
+{q:`TA is a tangent at A to the circle with centre O. B is another point on the circle, with ${nw("∠AOB = 120°")} and ${nw("∠ATB = 70°")}. Find ∠OBT.`,w:[`${nw("∠OAT = 90°")} (tan ⊥ rad)`,`the angles of OATB add to 360°`,`${nw("∠OBT = 90°")} (tan ⊥ rad)`],bad:2,fix:`${nw("∠OBT = 360° − 90° − 120° − 70°")} ${nw("= 80°")}`,why:`tan ⊥ rad only at the point of contact, A`}],
+"vectors":[
+{q:`${nw(`${VEC("OA")} = ${CVEC("2","5")}`)} and ${nw(`${VEC("OB")} = ${CVEC("7","1")}`)}. Find ${VEC("AB")}.`,w:[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),nw(`= ${CVEC("2","5")} − ${CVEC("7","1")}`),nw(`= ${CVEC("−5","4")}`)],bad:0,fix:nw(`${VEC("AB")} = ${VEC("OB")} − ${VEC("OA")}`),why:`end minus start: ${nw(`${VEC("OB")} − ${VEC("OA")}`)}`},
+{q:`${nw(`${BV("p")} = ${CVEC("−3","7")}`)}. Find ${nw(`|${BV("p")}|`)}.`,w:[nw(`|${BV("p")}| = ${SQRT("(−3)² + 7²")}`),nw(`= ${SQRT("−9 + 49")}`),nw(`= ${SQRT("40")} = 6.32 (3 s.f.)`)],bad:1,fix:nw(`= ${SQRT("9 + 49")}`),why:`${nw("(−3)² = 9")}: a square is never negative`},
+{q:`${nw(`|${CVEC(X1,"5")}| = 13`)}. Find the possible values of ${X1}.`,w:[nw(`${SQRT(`${X2} + 5²`)} = 13`),nw(`${X2} + 25 = 169`),nw(`${X2} = 144`),nw(`${X1} = 12`)],bad:3,fix:nw(`${X1} = ±12`),why:`a square root has 2 answers: ±`},
+{q:`${nw(`${VEC("OA")} = ${BV("a")}`)} and ${nw(`${VEC("OB")} = ${BV("b")}`)}. P is on AB with ${nw("AP : PB = 2 : 3")}. Express ${VEC("OP")} in terms of ${BV("a")} and ${BV("b")}.`,w:[nw(`${VEC("AB")} = ${BV("b")} − ${BV("a")}`),nw(`${VEC("AP")} = ${frac("2","3")}(${BV("b")} − ${BV("a")})`),nw(`${VEC("OP")} = ${BV("a")} + ${frac("2","3")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("1","3")}${BV("a")} + ${frac("2","3")}${BV("b")}`)],bad:1,fix:nw(`${VEC("AP")} = ${frac("2","5")}(${BV("b")} − ${BV("a")})`),why:`÷ the total parts: ${nw("2 + 3 = 5")}`},
+{q:`${nw(`${VEC("PQ")} = 3${BV("a")} − ${BV("b")}`)} and ${nw(`${VEC("PR")} = 9${BV("a")} − 3${BV("b")}`)}. Show that P, Q and R are collinear.`,w:[nw(`${VEC("PR")} = 3(3${BV("a")} − ${BV("b")})`),nw(`${VEC("PR")} = 3${VEC("PQ")}`),`PR ∥ PQ, so collinear.`],bad:2,fix:`PR ∥ PQ and P is common: collinear`,why:`say the shared point too`}],
+"polynomials-partial-fractions":[
+{q:`${nw(`f(${X1}) = ${X1}³ − 2${X2} + 4${X1} + 1`)}. Find the remainder when f(${X1}) is divided by ${nw(`${X2} − 1`)}.`,w:[nw(`${X2} − 1 = (${X1} − 1)(${X1} + 1)`),nw(`f(${X1}) = (${X1} − 1)(${X1} + 1)Q(${X1}) + ${V("R")}`),`${nw(`${X1} = 1`)}: ${nw(`${V("R")} = 1 − 2 + 4 + 1 = 4`)}`,`remainder = 4`],bad:1,fix:nw(`f(${X1}) = (${X1} − 1)(${X1} + 1)Q(${X1}) + ${V("a")}${X1} + ${V("b")}`),why:`÷ a quadratic: the remainder can be ${nw(`${V("a")}${X1} + ${V("b")}`)}`},
+{q:`Factorise completely ${nw(`f(${X1}) = ${X1}³ + ${X2} − 10${X1} + 8`)}.`,w:[`${nw("f(1) = 1 + 1 − 10 + 8 = 0")}, so ${nw(`(${X1} − 1)`)} is a factor`,nw(`f(${X1}) = (${X1} − 1)(${X2} + ${V("b")}${X1} − 8)`),`compare ${X2}: ${nw(`${V("b")} − 1 = 1`)}, so ${nw(`${V("b")} = 2`)}`,nw(`f(${X1}) = (${X1} − 1)(${X2} + 2${X1} − 8)`)],bad:3,fix:nw(`f(${X1}) = (${X1} − 1)(${X1} + 4)(${X1} − 2)`),why:`completely: factorise the quadratic too`},
+{q:`Express ${nw(frac(`2${X1} + 7`,`(${X1} + 2)²`))} in partial fractions.`,w:[nw(`${frac(`2${X1} + 7`,`(${X1} + 2)²`)} = ${frac(V("B"),`(${X1} + 2)²`)}`),nw(`2${X1} + 7 = ${V("B")}`),`${nw(`${X1} = −2`)}: ${nw(`${V("B")} = 3`)}`,nw(`= ${frac("3",`(${X1} + 2)²`)}`)],bad:0,fix:nw(`${frac(`2${X1} + 7`,`(${X1} + 2)²`)} = ${frac(V("A"),`${X1} + 2`)} + ${frac(V("B"),`(${X1} + 2)²`)}`),why:`repeated factor: write both the A and B terms`},
+{q:`Express ${nw(frac(`${X2} + 3${X1} + 4`,`(${X1} + 1)(${X1} + 2)`))} in partial fractions.`,w:[nw(`(${X1} + 1)(${X1} + 2) = ${X2} + 3${X1} + 2`),nw(`${frac(`${X2} + 3${X1} + 4`,`(${X1} + 1)(${X1} + 2)`)} = ${frac(V("A"),`${X1} + 1`)} + ${frac(V("B"),`${X1} + 2`)}`),`${nw(`${X1} = −1`)}: ${nw(`${V("A")} = 2`)}; ${nw(`${X1} = −2`)}: ${nw(`${V("B")} = −2`)}`,nw(`= ${frac("2",`${X1} + 1`)} − ${frac("2",`${X1} + 2`)}`)],bad:1,fix:nw(`= 1 + ${frac("2",`(${X1} + 1)(${X1} + 2)`)}`),why:`improper: long division first`}],
+"binomial-theorem":[
+{q:`Find the coefficient of ${X1}³ in ${nw(`(1 + ${X1})⁷`)} without a calculator.`,w:[`coefficient ${nw(`= ${BIN("7","3")}`)}`,nw(`= ${frac("7!","3!")}`),nw("= 7 × 6 × 5 × 4 = 840")],bad:1,fix:nw(`= ${frac("7!","3! 4!")} = 35`),why:`divide by ${nw(`${V("r")}!`)} and ${nw(`(${V("n")} − ${V("r")})!`)}`},
+{q:`Find the 4th term in the expansion of ${nw(`(1 + 2${X1})⁹`)} in ascending powers of ${X1}.`,w:[nw(`${TRP} = ${BIN("9",V("r"))}(2${X1})<sup>${V("r")}</sup>`),`4th term: ${nw(`${V("r")} = 4`)}`,nw(`${BIN("9","4")}(2${X1})⁴ = 126 × 16${X1}⁴`),nw(`= 2016${X1}⁴`)],bad:1,fix:`4th term: ${nw(`${V("r")} = 3`)}`,why:`the 1st term is ${nw(`${V("r")} = 0`)}, so ${nw(`${V("r")} = 3`)}`},
+{q:`Find the coefficient of ${X1}³ in ${nw(`(2${X1} − 1)⁵`)}.`,w:[nw(`${TRP} = ${BIN("5",V("r"))}(2${X1})<sup>5 − ${V("r")}</sup>(−1)<sup>${V("r")}</sup>`),`${X1}³: ${nw(`5 − ${V("r")} = 3`)}, ${nw(`${V("r")} = 2`)}`,nw(`${BIN("5","2")}(2${X1})³(−1)² = 10 × 2${X1}³ × 1`),`coefficient = 20`],bad:2,fix:nw(`${BIN("5","2")}(2${X1})³(−1)² = 10 × 8${X1}³ × 1`),why:`${nw(`(2${X1})³ = 8${X1}³`)}: cube the 2 too`},
+{q:`Find the coefficient of ${X2} in ${nw(`(1 − 3${X1})⁶`)}.`,w:[nw(`${TRP} = ${BIN("6",V("r"))}(−3${X1})<sup>${V("r")}</sup>`),`${X2}: ${nw(`${V("r")} = 2`)}`,nw(`${BIN("6","2")}(−3${X1})² = 15 × 9${X2} = 135${X2}`),`coefficient of ${X2} ${nw(`= 135${X2}`)}`],bad:3,fix:`coefficient of ${X2} = 135`,why:`the coefficient is the number only, no ${X1}`}],
+"exponentials-logarithms":[
+{q:`Solve ${nw(`lg(2${X1} + 5) − lg(${X1} − 1) = 1`)}.`,w:[nw(`lg(2${X1} + 5) − lg(${X1} − 1) = 1`),nw(`lg[(2${X1} + 5) − (${X1} − 1)] = 1`),nw(`${X1} + 6 = 10¹`),nw(`${X1} = 4`)],bad:1,fix:nw(`lg ${frac(`2${X1} + 5`,`${X1} − 1`)} = 1`),why:`− between the logs means ÷ inside`},
+{q:`Given ${nw(`lg ${V("p")} = 2`)}, find the value of ${nw(`lg ${V("p")}³ + lg 10${V("p")}`)}.`,w:[nw(`lg ${V("p")}³ = (lg ${V("p")})³`),nw("= 2³ = 8"),nw(`lg 10${V("p")} = lg 10 + lg ${V("p")} = 1 + 2 = 3`),nw(`lg ${V("p")}³ + lg 10${V("p")} = 8 + 3 = 11`)],bad:0,fix:nw(`lg ${V("p")}³ = 3 lg ${V("p")}`),why:`the power comes down in front: ${nw(`3 lg ${V("p")}`)}`},
+{q:`Solve ${nw(`${LOGA("3")} ${X1} + ${LOGA("9")} ${X1} = 6`)}.`,w:[nw(`${LOGA("3")} ${X1} + ${LOGA("9")} ${X1} = ${LOGA("3")} ${X2}`),`${nw(`${LOGA("3")} ${X2} = 6`)}, so ${nw(`${X2} = 3⁶ = 729`)}`,nw(`${X1} = 27`)],bad:0,fix:nw(`${LOGA("3")} ${X1} + ${LOGA("9")} ${X1} = ${LOGA("3")} ${X1} + ${frac("1","2")}${LOGA("3")} ${X1}`),why:`same base first: ${nw(`${LOGA("9")} ${X1} = ${frac("1","2")}${LOGA("3")} ${X1}`)}`},
+{q:`Solve ${nw(`3<sup>${X1}</sup> = 15`)}.`,w:[nw(`3<sup>${X1}</sup> = 15`),nw(`${X1} = ${frac("15","3")}`),nw(`${X1} = 5`)],bad:1,fix:nw(`${X1} = ${frac("lg 15","lg 3")} = 2.46 (3 s.f.)`),why:`${X1} is a power: take lg of both sides`},
+{q:`Solve ${nw(`lg ${X1} + lg(${X1} − 3) = 1`)}.`,w:[nw(`lg[${X1}(${X1} − 3)] = 1`),nw(`${X2} − 3${X1} − 10 = 0`),nw(`(${X1} − 5)(${X1} + 2) = 0`),`${nw(`${X1} = 5`)} or ${nw(`${X1} = −2`)}`],bad:3,fix:`${nw(`${X1} = 5`)} (reject −2: ${nw("lg(−2)")} is undefined)`,why:`check every answer in every log`}],
+"coordinate-geometry-circles":[
+{q:`A(2, 1) and B(6, 9). Find the equation of the perpendicular bisector of AB.`,w:[nw(`${V("m")}<sub>AB</sub> = ${frac("9 − 1","6 − 2")} = 2`),`perpendicular: ${nw(`${V("m")} = −${frac("1","2")}`)}`,nw(`${VY} − 1 = −${frac("1","2")}(${X1} − 2)`),nw(`${VY} = −${frac("1","2")}${X1} + 2`)],bad:2,fix:`midpoint ${nw("(4, 5)")}: ${nw(`${VY} − 5 = −${frac("1","2")}(${X1} − 4)`)}`,why:`through the midpoint of AB, not through A`},
+{q:`Find the area of the triangle with corners P(1, 1), Q(5, 2) and R(2, 6).`,w:[`go round P, R, Q, P`,`${CS("blue","↘")}${nw(": (1)(6) + (2)(2) + (5)(1) = 15")}`,`${CS("amber","↗")}${nw(": (1)(2) + (6)(5) + (2)(1) = 34")}`,nw(`area = ${frac("1","2")}(15 − 34) = −9.5 units²`)],bad:0,fix:`anticlockwise: P, Q, R, P`,why:`anticlockwise, and end where you started`},
+{q:`The circle ${nw(`(${X1} − 4)² + (${VY} + 1)² = 25`)} passes through (7, 3). Find the other end of the diameter through (7, 3).`,w:[nw("centre = (−4, 1)"),nw(`radius = ${SQRT("25")} = 5`),`other end ${nw("= (2(−4) − 7, 2(1) − 3)")}`,nw("= (−15, −1)")],bad:0,fix:nw("centre = (4, −1)"),why:`centre: flip the signs in the brackets`},
+{q:`Find the equation of the tangent to ${nw(`${X2} + ${VY}² − 4${X1} + 2${VY} − 20 = 0`)} at P(5, 3).`,w:[nw("centre C = (2, −1)"),nw(`${V("m")}<sub>CP</sub> = ${frac("3 − (−1)","5 − 2")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = ${frac("4","3")}`)}`,nw(`${VY} − 3 = ${frac("4","3")}(${X1} − 5)`)],bad:2,fix:`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,why:`tangent ⊥ radius: ${nw(`−1 ÷ ${V("m")}<sub>radius</sub>`)}`}],
+"linear-law":[
+{q:`${nw(`${VY} = ${V("ab")}<sup>${X1}</sup>`)}. Data: ${nw(`${X1} = 1, 2, 3`)}; ${nw(`${VY} = 6, 18, 54`)}. Draw lg ${VY} against ${X1}.`,w:[nw(`lg ${VY} = (lg ${V("b")})${X1} + lg ${V("a")}`),nw(`${V("Y")} = lg ${VY}, ${V("X")} = ${X1}`),`plot ${nw("(1, 6)")}, ${nw("(2, 18)")}, ${nw("(3, 54)")}`,`draw the line of best fit`],bad:2,fix:`plot ${nw("(1, 0.778)")}, ${nw("(2, 1.26)")}, ${nw("(3, 1.73)")}`,why:`make the ${V("X")}, ${V("Y")} table first: ${nw(`${V("Y")} = lg ${VY}`)}`},
+{q:`${nw(`${VY} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}. Table: lg ${X1} = 0.2, 0.4, 0.6, 0.8; lg ${VY} = 1.10, 1.52, 1.86, 2.34. Your line of best fit passes through (0, 0.70) and (1.0, 2.70). Find ${V("n")}.`,w:[nw(`lg ${VY} = ${V("n")} lg ${X1} + lg ${V("a")}`),`gradient ${nw(`= ${V("n")}`)}`,nw(`${V("n")} = ${frac("1.52 − 1.10","0.4 − 0.2")}`),nw("= 2.1")],bad:2,fix:nw(`${V("n")} = ${frac("2.70 − 0.70","1.0 − 0")} = 2`),why:`2 points on your line, far apart`},
+{q:`For ${nw(`${VY} = ${V("ab")}<sup>${X1}</sup>`)}, the line of lg ${VY} against ${X1} has gradient 0.3 and meets the lg ${VY} axis at 0.85. Find ${V("a")} and ${V("b")}.`,w:[nw(`lg ${VY} = (lg ${V("b")})${X1} + lg ${V("a")}`),`${nw(`lg ${V("b")} = 0.3`)}, so ${nw(`${V("b")} = 10<sup>0.3</sup> = 2.00`)}`,`${nw(`lg ${V("a")} = 0.85`)}, so ${nw(`${V("a")} = 0.85`)}`],bad:2,fix:`${nw(`lg ${V("a")} = 0.85`)}, so ${nw(`${V("a")} = 10<sup>0.85</sup> = 7.08`)}`,why:`change back: ${nw(`${V("a")} = 10<sup>${V("C")}</sup>`)}`},
+{q:`${nw(`${VY} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}. Write it in the form ${nw(`${V("Y")} = ${V("mX")} + ${V("C")}`)}.`,w:[nw(`lg ${VY} = lg(${V("a")}${X1}<sup>${V("n")}</sup>)`),nw(`lg ${VY} = lg ${V("a")} × ${V("n")} lg ${X1}`),nw(`${V("Y")} = lg ${VY}, ${V("X")} = lg ${X1}`),nw(`${V("m")} = ${V("n")} lg ${V("a")}, ${V("C")} = 0`)],bad:1,fix:nw(`lg ${VY} = lg ${V("a")} + ${V("n")} lg ${X1}`),why:`lg of a product: the logs add`}],
+"trig-identities-equations":[
+{q:`Solve ${nw(`2 cos ${X1} + 1 = 0`)} for ${nw(`0° ≤ ${X1} ≤ 360°`)}.`,w:[nw(`cos ${X1} = −0.5`),nw(`${X1} = cos⁻¹(−0.5) = −60°`),`out of range: ${nw(`${X1} = −60° + 360° = 300°`)}`],bad:1,fix:`basic angle ${nw("α = cos⁻¹ 0.5 = 60°")}`,why:`basic angle from the positive value: never −60°`},
+{q:`Solve ${nw(`tan 2${X1} = 1`)} for ${nw(`0° ≤ ${X1} ≤ 360°`)}.`,w:[nw(`0° ≤ 2${X1} ≤ 360°`),`${nw("α = 45°")}, tan positive → Q1, Q3`,nw(`2${X1} = 45°, 225°`),nw(`${X1} = 22.5°, 112.5°`)],bad:0,fix:nw(`0° ≤ 2${X1} ≤ 720°`),why:`double the range too`},
+{q:`Solve ${nw(`2 sin ${X1} cos ${X1} = sin ${X1}`)} for ${nw(`0° ≤ ${X1} ≤ 360°`)}.`,w:[nw(`2 sin ${X1} cos ${X1} = sin ${X1}`),`÷ ${nw(`sin ${X1}`)}: ${nw(`2 cos ${X1} = 1`)}`,nw(`cos ${X1} = 0.5`),nw(`${X1} = 60°, 300°`)],bad:1,fix:nw(`sin ${X1}(2 cos ${X1} − 1) = 0`),why:`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`},
+{q:`Prove that ${nw(`${frac(`sin 2${V("A")}`,`1 + cos 2${V("A")}`)} = tan ${V("A")}`)}.`,w:[nw(`LHS = ${frac(`sin 2${V("A")}`,`1 + cos 2${V("A")}`)}`),nw(`= ${frac(`2 sin ${V("A")}`,`1 + 2 cos²${V("A")} − 1`)}`),nw(`= ${frac(`2 sin ${V("A")}`,`2 cos²${V("A")}`)}`),nw(`= ${frac(`sin ${V("A")}`,`cos²${V("A")}`)}`)],bad:1,fix:nw(`= ${frac(`2 sin ${V("A")} cos ${V("A")}`,`1 + 2 cos²${V("A")} − 1`)}`),why:nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)},
+{q:`Find the exact value of cos 75°.`,w:[nw("cos 75° = cos(45° + 30°)"),nw("= cos 45° + cos 30°"),nw(`= ${frac(SQRT("2"),"2")} + ${frac(SQRT("3"),"2")}`),nw(`= ${frac(`${SQRT("2")} + ${SQRT("3")}`,"2")}`)],bad:1,fix:`${nw("= cos 45° cos 30°")} ${nw("− sin 45° sin 30°")}`,why:`${nw(`cos(${V("A")} + ${V("B")})`)} ${nw(`= cos ${V("A")} cos ${V("B")} − sin ${V("A")} sin ${V("B")}`)}`}],
+"simultaneous-inequalities":[
+{q:`Solve<br>${nw(`${X1} − ${VY} = 3 ——— ①`)}<br>${nw(`${X2} + ${VY}² = 29 ——— ②`)}`,w:[`From ①: ${nw(`${X1} = ${VY} + 3`)}`,`Sub into ②: ${nw(`(${VY} + 3)² + ${VY}² = 29`)}`,`${nw(`${VY}² + 3${VY} − 10 = 0`)}, ${nw(`(${VY} + 5)(${VY} − 2) = 0`)}`,`${nw(`${VY} = −5`)}: ${nw(`${X1} = −2`)}; ${nw(`${VY} = 2`)}: ${nw(`${X1} = 5`)}`,`${nw("(5, −5)")} and ${nw("(−2, 2)")}`],bad:4,fix:`${nw("(−2, −5)")} and ${nw("(5, 2)")}`,why:`each ${X1} with its own ${VY}`},
+{q:`Solve<br>${nw(`${frac("3",X1)} + ${frac("2",VY)} = 1 ——— ①`)}<br>${nw(`${X1} − ${VY} = 2 ——— ②`)}`,w:[`① × ${V("xy")}: ${nw(`3${VY} + 2${X1} = 1`)}`,`From ②: ${nw(`${X1} = ${VY} + 2`)}`,`Sub: ${nw(`3${VY} + 2(${VY} + 2) = 1`)}`,`${nw(`5${VY} = −3`)}, ${nw(`${VY} = −0.6`)}, ${nw(`${X1} = 1.4`)}`],bad:0,fix:`① × ${V("xy")}: ${nw(`3${VY} + 2${X1} = ${V("xy")}`)}`,why:`× ${V("xy")} on every term, the right side too`},
+{q:`Solve ${nw(`(${X1} + 2)(${X1} − 5) &gt; 0`)}.`,w:[`roots: ${nw(`${X1} = −2`)} and ${nw(`${X1} = 5`)}`,`&gt; 0: above the ${X1}-axis, outside the roots`,`${nw(`${X1} &lt; −2`)} and ${nw(`${X1} &gt; 5`)}`],bad:2,fix:`${nw(`${X1} &lt; −2`)} or ${nw(`${X1} &gt; 5`)}`,why:`outside the roots is or: no ${X1} is both`},
+{q:`Solve ${nw(`−${X2} + 2${X1} + 8 &gt; 0`)}.`,w:[`× (−1): ${nw(`${X2} − 2${X1} − 8 &gt; 0`)}`,nw(`(${X1} − 4)(${X1} + 2) &gt; 0`),`roots: ${nw(`${X1} = −2`)} and ${nw(`${X1} = 4`)}`,`${nw(`${X1} &lt; −2`)} or ${nw(`${X1} &gt; 4`)}`],bad:0,fix:`× (−1), the sign flips: ${nw(`${X2} − 2${X1} − 8 &lt; 0`)}`,why:`× (−1) flips the inequality sign`},
+{q:`Solve ${nw(`${X2} − 25 &gt; 0`)} and show it on a number line.`,w:[nw(`${X2} &gt; 25`),nw(`${X1} &gt; 5`),`number line: open dot at 5, arrow to the right`],bad:1,fix:`${nw(`(${X1} + 5)(${X1} − 5) &gt; 0`)}, so ${nw(`${X1} &lt; −5`)} or ${nw(`${X1} &gt; 5`)}`,why:`factorise: ${nw(`${X1} &lt; −5`)} works too`},
+{q:`Solve ${nw(`3${X2} &lt; 12${X1}`)}.`,w:[nw(`3${X2} &lt; 12${X1}`),`÷ 3: ${nw(`${X2} &lt; 4${X1}`)}`,`÷ ${X1}: ${nw(`${X1} &lt; 4`)}`],bad:2,fix:`${nw(`${X1}(${X1} − 4) &lt; 0`)}, so ${nw(`0 &lt; ${X1} &lt; 4`)}`,why:`don't ÷ by ${X1}: it could be negative or 0`},
+{q:`${nw(`${X2} + ${V("k")}${X1} + 4 = 0`)} has real roots. Find the range of values of ${V("k")}.`,w:[nw(`${V("a")} = 1, ${V("b")} = ${V("k")}, ${V("c")} = 4`),`real roots: ${nw(`${V("k")}² − 4(1)(4) &gt; 0`)}`,nw(`(${V("k")} + 4)(${V("k")} − 4) &gt; 0`),`${nw(`${V("k")} &lt; −4`)} or ${nw(`${V("k")} &gt; 4`)}`],bad:1,fix:`real roots: ${nw(`${V("k")}² − 4(1)(4) ≥ 0`)}`,why:`equal roots are real too: ≥ 0`}],
+"surds":[
+{q:`Simplify ${nw(`${SQRT("45")} + ${SQRT("12")}`)}.`,w:[nw(`${SQRT("45")} = 3${SQRT("5")}`),nw(`${SQRT("12")} = 2${SQRT("3")}`),nw(`${SQRT("45")} + ${SQRT("12")} = 5${SQRT("8")}`),nw(`5${SQRT("8")} = 10${SQRT("2")}`)],bad:2,fix:nw(`${SQRT("45")} + ${SQRT("12")} = 3${SQRT("5")} + 2${SQRT("3")}`),why:`only like surds add: this is already simplest`},
+{q:`Write ${nw(`${SQRT("75")} + ${SQRT("48")}`)} in its simplest form.`,w:[nw(`${SQRT("75")} = 5${SQRT("3")}`),nw(`${SQRT("48")} = 2${SQRT("12")}`),nw(`${SQRT("75")} + ${SQRT("48")} = 5${SQRT("3")} + 2${SQRT("12")}`)],bad:1,fix:nw(`${SQRT("48")} = 4${SQRT("3")}`),why:`take out the largest square: 16`},
+{q:`Expand and simplify ${nw(`(3${SQRT("2")} − 1)²`)}.`,w:[nw(`(${V("a")} − ${V("b")})² = ${V("a")}² − 2${V("ab")} + ${V("b")}²`),nw(`= (3${SQRT("2")})² − 2(3${SQRT("2")})(1) + 1²`),nw(`= 6 − 6${SQRT("2")} + 1`),nw(`= 7 − 6${SQRT("2")}`)],bad:2,fix:nw(`= 18 − 6${SQRT("2")} + 1`),why:`square the 3 too: ${nw("9 × 2 = 18")}`},
+{q:`Express ${nw(frac("4",`3 − ${SQRT("5")}`))} in the form ${nw(`${V("a")} + ${V("b")}${SQRT("5")}`)}.`,w:[nw(`${frac("4",`3 − ${SQRT("5")}`)} = ${frac("4",`(3 − ${SQRT("5")})(3 + ${SQRT("5")})`)}`),nw(`= ${frac("4","9 − 5")}`),nw(`= 1`)],bad:0,fix:nw(`${frac("4",`3 − ${SQRT("5")}`)} = ${frac(`4(3 + ${SQRT("5")})`,`(3 − ${SQRT("5")})(3 + ${SQRT("5")})`)}`),why:`multiply the top and the bottom by ${nw(`3 + ${SQRT("5")}`)}`},
+{q:`Express ${nw(frac(`3 + ${SQRT("2")}`,`1 − ${SQRT("2")}`))} in the form ${nw(`${V("a")} + ${V("b")}${SQRT("2")}`)}.`,w:[nw(`= ${frac(`(3 + ${SQRT("2")})(1 + ${SQRT("2")})`,`(1 − ${SQRT("2")})(1 + ${SQRT("2")})`)}`),nw(`= ${frac(`5 + 4${SQRT("2")}`,"1 − 2")} = ${frac(`5 + 4${SQRT("2")}`,"−1")}`),nw(`= 5 + 4${SQRT("2")}`)],bad:2,fix:nw(`= −5 − 4${SQRT("2")}`),why:`÷ by ${nw("−1")}: every sign changes`},
+{q:`Solve ${nw(`${SQRT(`${X1} + 7`)} = ${X1} − 5`)}.`,w:[nw(`${X1} + 7 = (${X1} − 5)²`),nw(`${X2} − 11${X1} + 18 = 0`),nw(`(${X1} − 9)(${X1} − 2) = 0`),nw(`${X1} = 9 or ${X1} = 2`)],bad:3,fix:`${nw(`${X1} = 9`)}, reject ${nw(`${X1} = 2`)}: ${nw(`${SQRT("9")} ≠ 2 − 5`)}`,why:`check each answer in the original equation`},
+{q:`Solve ${nw(`2${SQRT(`${X1} + 3`)} = ${SQRT(`${X1} + 15`)}`)}.`,w:[nw(`(2${SQRT(`${X1} + 3`)})² = ${X1} + 15`),nw(`2(${X1} + 3) = ${X1} + 15`),nw(`2${X1} + 6 = ${X1} + 15`),nw(`${X1} = 15 − 6 = 9`)],bad:1,fix:nw(`4(${X1} + 3) = ${X1} + 15`),why:`square the 2 too: ${nw("2² = 4")}`}]
+};
+let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
+function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
+function cdLn(c){ const S=cdS, p=S.pk, sh=S.shown, ok=sh&&p===c.bad;
+  return `<p class="cspl">Question</p><div class="cspq">${c.q}</div><p class="cspi${sh?(ok?" cyay":" cnay"):""}">${sh?(ok?"✓ You spotted it":"✗ Not that one"):"Tap the wrong line"}</p><div class="clines">${c.w.map((l,i)=>!sh?`<button class="cln" type="button" data-c="ln" data-n="${i}">${l}</button>`
+    :i===c.bad?`<div class="cln cbad">✗&nbsp;${l}</div><div class="cln cfix">✓&nbsp;${c.fix}<span class="cwhy">${c.why}</span></div>`:`<div class="cln">${l}${i===p?`<span class="cfine">fine</span>`:""}</div>`).join("")}</div>`; }
 function cdDom(key){ const d=document.createElement("div"); d.innerHTML=SHEETS[key]||""; digest(d); return d; }
 function cdMist(key){ return [...cdDom(key).querySelectorAll(".wrongright .x")].filter(x=>x.nextElementSibling&&x.nextElementSibling.matches(".ok"))
   .map(x=>({f:`<p class="cask">What's wrong here?</p><div class="wrongright"><div class="x">${x.innerHTML}</div></div>`,b:`<div class="wrongright"><div class="ok">${x.nextElementSibling.innerHTML}</div></div>`})); }
@@ -8538,8 +9076,9 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
   return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`})); }
 function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
-function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
-  while(el.scrollWidth>el.clientWidth+1&&fs>15){ fs-=1; el.style.fontSize=fs+"px"; } });
+function cdOv(el){ if(el.scrollWidth>el.clientWidth+1) return true; if(!el.classList.contains("cln")) return false; const r=el.getBoundingClientRect().right-parseFloat(getComputedStyle(el).paddingRight); return [...el.querySelectorAll(".nw, .cfine")].some(n=>n.getBoundingClientRect().right>r+.5); }
+function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li, .ccard .cln").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
+  while(cdOv(el)&&fs>15){ fs-=1; el.style.fontSize=fs+"px"; } });
   const wr=u=>u.some(e=>{ const h=e.getBoundingClientRect().height; e.style.whiteSpace="nowrap"; const n=e.getBoundingClientRect().height; e.style.whiteSpace=""; return h>n+3; });
   app.querySelectorAll(".ccard .cbk li, .ccard .x, .ccard .ok").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
     const f0=li.style.fontSize; let fs=parseFloat(getComputedStyle(li).fontSize); const lo=Math.max(16,fs*.7); while(fs>lo&&wr(u)){ fs-=1; li.style.fontSize=fs+"px"; } if(wr(u)) li.style.fontSize=f0; }); }
@@ -8550,19 +9089,21 @@ function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", box=app.querySelector("
     box.innerHTML=`<p class="cend">You ${mist?"spotted":"knew"} ${S.got} of ${S.deck.length}</p><div class="cacts">${n?`<button class="pill act cbtn" type="button" data-c="miss">Try the ${n} you missed</button>`:""}<button class="pill ${n?"":"act "}cbtn" type="button" data-c="again">Start again</button><a class="pill cbtn" href="${S.back}">← Back to the ${mist?"cheatsheet":"formulas"}</a></div>`;
   } else { const c=S.cards[S.deck[S.i]];
     box.innerHTML=`<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p>${S.i||S.shown?"":`<button class="pill sm" type="button" data-c="shuf" aria-pressed="${cdShuf}">Shuffle</button>`}</div>
-      <div class="ccard${mist?"":" cmemo"}">${c.f}${S.shown?c.b:""}</div>
-      <div class="cacts">${S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
-  cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
+      <div class="ccard${mist?" cspot":" cmemo"}">${mist?cdLn(c):c.f+(S.shown?c.b:"")}</div>
+      <div class="cacts">${mist?(S.shown?`<button class="pill act cbtn" type="button" data-c="next">${S.i+1<S.deck.length?"Next →":"See my score →"}</button>`:""):S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
+  if(mist) digest(box); cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
   if(box.getBoundingClientRect().top<0) window.scrollTo(0,0); else if(S.shown) box.querySelector(".cacts").scrollIntoView({block:"nearest"}); }
 function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; const S=cdS, c=b.dataset.c;
   if(c==="show"){ S.shown=true; cdDraw(true); }
+  else if(c==="ln"){ if(S.shown) return; const n=+b.dataset.n; S.pk=n; S.shown=true; if(n===S.cards[S.deck[S.i]].bad) S.got++; else S.missed.push(S.deck[S.i]); cdDraw(true); }
+  else if(c==="next"){ S.i++; S.shown=false; cdDraw(true); }
   else if(c==="yes"||c==="no"){ if(c==="yes") S.got++; else S.missed.push(S.deck[S.i]); S.i++; S.shown=false; cdDraw(true); }
   else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
 function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
-  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath")?sheetOf(id+"-memorise"):null; if(!s) return false;
-  const cards=kind==="mist"?cdMist(s.sheet):cdMemo(s.sheet); if(!cards.length) return false;
+  const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
+  const cards=kind==="mist"?cdSpot(s.id):cdMemo(s.sheet); if(!cards.length) return false;
   const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
   document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
@@ -8573,7 +9114,7 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
     if(p) p.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); return; }
   if(!cdMistOn) return;
-  const w=app.querySelectorAll(".wrongright"); if(app.querySelectorAll(".wrongright .x").length<2) return;
+  const w=app.querySelectorAll(".wrongright"); if(!w.length||!cdSpot(s.id).length) return;
   const pn=w[w.length-1].closest(".panelc")||w[w.length-1]; pn.insertAdjacentHTML(pn===w[w.length-1]?"afterend":"beforeend",PLAYLINK("#cards/mist/"+s.id,"Spot the mistake"));
   if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
