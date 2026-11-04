@@ -9453,7 +9453,7 @@ const WA_ICON=`<svg viewBox="0 0 24 24" aria-hidden="true" class="waic"><path fi
 const waBtn=()=>waURL()?`<a class="pill wa" href="${waURL()}" target="_blank" rel="noopener">${WA_ICON}Chat on WhatsApp</a>`:`<span class="pill wa" aria-disabled="true">${WA_ICON}WhatsApp link coming soon</span>`;
 const AVATAR=(cls="")=>`<img class="avatar ${cls}" src="avatar.png" alt="Coach Minyi" width="256" height="256" loading="lazy">`;
 const VIEWS=[["sheets","Cheatsheets"],["exam","Exam kit"],["play","Interactives"]];
-const VIEWNOTE={sheets:"One page per chapter, with what you need to know and the mistakes people usually make.",exam:"The official formula sheets, the formulas you have to memorise, and a few tips.",play:"Drag things around and see why the rule works."};
+const VIEWNOTE={exam:"The official formula sheets, the formulas you have to memorise, and a few tips.",play:"Drag things around and see why the rule works."};
 const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
 let homeView="sheets"; try{ const v=localStorage.getItem("hubHome2"); if(VIEWS.some(([k])=>k===v)) homeView=v; }catch(e){}
 const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome2",v)}catch(e){} };
@@ -9483,7 +9483,7 @@ function renderHome(keep){
     c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome(true)};
     chips.append(c);
   });
-  body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div><p class="tabnote">${VIEWNOTE[v]}</p>`);
+  body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div>${VIEWNOTE[v]?`<p class="tabnote">${VIEWNOTE[v]}</p>`:""}`);
   body.append(chips);
   body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(true); });
   const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
