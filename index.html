@@ -8521,7 +8521,7 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     r.left=k<0?"":upto(it,ts[k],ts[k].nodeValue.indexOf("=")); r.lt=tx(r.left); r.plain=!r.lt||/^[A-Za-zα-ω]$/.test(r.lt);
     r.top=r.plain?"":g.n; r.main=r.plain?`${g.n} ?`:`${r.lb?`<span class="clb">${r.lb}</span>`:""}${r.left} = ?`;
     rows.push(r); prev=li.matches(".frow, .fmap")?null:r; });
-  const dups=()=>{ const c={}; rows.forEach(r=>{ r.key=tx(r.top+"|"+r.main); c[r.key]=(c[r.key]||0)+1; }); return rows.filter(r=>c[r.key]>1); };
+  const dups=()=>{ const c={}; rows.forEach(r=>{ r.key=(r.top+"|"+r.main).replace(/\s+/g," "); c[r.key]=(c[r.key]||0)+1; }); return rows.filter(r=>c[r.key]>1); };
   dups().forEach(r=>{ const ar=r.ts.find(n=>n.nodeValue.includes(" → "));
     const m=r.lb?`${r.lb} ?`:ar?`${upto(r.it,ar,ar.nodeValue.indexOf(" → "))} → ?`:r.lt?`${r.left} = ?`
       :r.prev&&!r.prev.plain&&r.li.matches(".frow")?`${r.prev.li.innerHTML}<span class="clb">${[...r.it.parentNode.children].map(c=>tx(c.cloneNode(true)).split(" ")[0]+" ?").join(" ")}</span>`:"";
