@@ -416,6 +416,17 @@ section.level[hidden]{display:none}
 :root{--purple:#7b3fb8;--purple-fill:#ece1f8;--teal:#00808a;--teal-fill:#d2eef0}
 :root[data-theme="dark"]{--purple:#c49bff;--purple-fill:#3a2a52;--teal:#4fd0d8;--teal-fill:#113c40}
 .fb-purple{--fc:var(--purple);--fb:var(--purple-fill)} .fb-teal{--fc:var(--teal);--fb:var(--teal-fill)}
+.kseq{white-space:normal}
+.kst{display:inline-block;white-space:nowrap}
+.kar{margin:0 4px;color:var(--muted);font-weight:700}
+.kc{display:inline-block;min-width:30px;margin:2px 2px;padding:1px 7px;border-radius:7px;background:var(--key-bg);color:var(--key-ink);border-bottom:3px solid var(--key-edge);font-family:inherit;font-size:14.5px;font-weight:700;line-height:1.55;text-align:center;vertical-align:middle;cursor:default}
+.kscr{display:inline-block;margin:2px 2px;padding:0 7px;border-radius:4px;background:var(--scr-bg);color:var(--scr-ink);border:1px solid var(--scr-line);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;line-height:1.6;vertical-align:middle;white-space:nowrap}
+.kline{margin:6px 0 2px}
+.kwhen{margin:2px 0 4px;font-size:15.5px}
+.sfm .kc{min-width:24px;padding:0 5px;font-size:13px}
+:root{--key-bg:#3b3f47;--key-ink:#fff;--key-edge:#16181c;--scr-bg:#e3ead6;--scr-ink:#1d2618;--scr-line:#b3bf9f}
+:root[data-theme="dark"]{--key-bg:#5b606c;--key-ink:#fff;--key-edge:#2a2d34;--scr-bg:#26301f;--scr-ink:#d6ecc4;--scr-line:#475639}
+@media print{ .kc{background:#fff;color:#000;border:1px solid #000;border-bottom-width:3px} .kscr{background:#fff;color:#000;border-color:#000} .kar{color:#000} }
 .k-purple{color:var(--purple);font-weight:700} .k-teal{color:var(--teal);font-weight:700}
 .tag.curtag{color:var(--purple);border-color:var(--purple);background:var(--purple-fill)}
 .bar .crumb .tag.curtag{font-size:12px;padding:0 6px;margin-right:6px}
@@ -5097,6 +5108,9 @@ const MUST=boxes=>`<div class="must"><div class="musth">Must know</div>${FORMS(b
 const PIC=(href,inner,prop,reason)=>`<${href?`a href="${href}"`:"div"} class="piccard">${inner}<div class="pt">${prop}</div>${reason?`<div class="anno">${reason}</div>`:""}${href?`<div class="go">Try it →</div>`:""}</${href?"a":"div"}>`;
 const EQN=(eq,n)=>`<span class="eqn"><span>${eq}</span><i class="eqln"></i><span>${n}</span></span>`;
 const EG=(head,lines)=>`<div class="eg">${head?`<div class="egh">${head}</div>`:""}${lines.map(l=>`<div class="egl">${l}</div>`).join("")}</div>`;
+const KY=k=>`<kbd class="kc">${k}</kbd>`;
+const SCR=t=>`<span class="kscr">${t}</span>`;
+const KS=(...steps)=>`<span class="kseq">${steps.map((s,i)=>`<span class="kst">${i?`<span class="kar">→</span>`:""}${s[0]==="["?SCR(s.slice(1,-1)):s.split(" ").map(KY).join("")}</span>`).join(" ")}</span>`;
 const FACTS=(head,rows)=>`<div class="facts">${head?`<div class="fh">${head}</div>`:""}${rows.map(([l,xs])=>`<div class="fr${l?"":" nol"}">${l?`<span class="fl">${l}</span>`:""}<div class="fcs">${xs.map(x=>`<span class="fact">${x}</span>`).join("")}</div></div>`).join("")}</div>`;
 const PLAYLINK=(href,txt="Try it")=>`<p class="anno pl" style="text-align:center"><a class="pill sm playlink" href="${href}">${txt} →</a></p>`;
 const RX=`<tspan font-style="italic">x</tspan>`;
@@ -7132,6 +7146,65 @@ cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the qu
       <div class="ok">✓ ${frac("1","3")}</div>
     </div>
   </div>
+</div>`,
+calcGuide:`${MUST([FB("blue","Quadratic",KS("MENU 5 2 2"),"check both roots"),FB("amber","Simultaneous",KS("MENU 5 1 2"),"2 unknowns"),FB("green","Mean and SD",KS("MENU 3 1"),"statistics, 1 variable")])}
+<div class="sheet">
+  <div class="panelc"><h4>Before the exam: Deg or Rad?</h4>
+    <p class="kwhen">Deg for Sec 2 and E-Math trig, Rad only when an A-Math question uses radians</p>
+    ${EG("Which one is on? Type",[`${KS("sin 9 0 =")}`,`${SCR("1")} Deg ✓`,`${SCR("0.8939966636")} Rad`])}
+    <p class="anno">* wrong one? fix it in SETUP before the exam starts: ${KS("SHIFT MENU")}</p>
+  </div>
+
+  <div class="panelc"><h4>Check a quadratic equation</h4>
+    <p class="kwhen">After you've solved it by factorising or the formula</p>
+    <div class="kline">${KS("MENU 5 2 2")}</div>
+    ${EG(nw(`${X2} − ${X1} − 6 = 0`),[`type ${nw("1, −1, −6")}, ${KY("=")} after each`,`screen: ${SCR("3")} and ${SCR("−2")} ✓`])}
+    <p class="anno">* write the working first, then check with the calculator: the marks are for the working</p>
+  </div>
+
+  <div class="panelc"><h4>Check simultaneous equations</h4>
+    <p class="kwhen">2 equations, 2 unknowns</p>
+    <div class="kline">${KS("MENU 5 1 2")}</div>
+    ${EG(`${nw(`2${X1} + ${V("y")} = 7 ——— ①`)}<br>${nw(`${X1} − ${V("y")} = 2 ——— ②`)}`,[`type ①: ${nw("2, 1, 7")}`,`type ②: ${nw("1, −1, 2")}`,`screen: ${SCR("x = 3")} ${SCR("y = 1")} ✓`])}
+  </div>
+
+  <div class="panelc"><h4>Mean and standard deviation</h4>
+    <p class="kwhen">A list of values or a frequency table</p>
+    <ul class="steps">
+      <li>① ${KS("MENU 3 1")} (Statistics, 1-Variable)</li>
+      <li>② the ${X1} values (mid-values for groups) in the ${X1} column</li>
+      <li>③ the frequencies in the FREQ column</li>
+      <li>④ ${KS("AC","OPTN","[1-Variable Calc]")}, then read ${V("x̄")} (mean) and σ${V("x")} (SD)</li>
+    </ul>
+    ${EG(`${nw(`${X1}: 3, 5, 7`)} with frequencies ${nw("1, 6, 1")}`,[`screen: ${SCR("x̄ = 5")} ${SCR("σx = 1")}`])}
+    <p class="anno">* use σ${V("x")}, not s${V("x")} · no FREQ column? ${KS("SHIFT MENU","[Statistics]","[Frequency On]")}</p>
+  </div>
+
+  <div class="panelc"><h4>A-Math: check a cubic equation</h4>
+    <p class="kwhen">Find one root first, then factorise</p>
+    <div class="kline">${KS("MENU 5 2 3")}</div>
+    ${EG(`Solve ${nw(`${X1}³ − 6${X2} + 11${X1} − 6 = 0`)}`,[`type ${nw("1, −6, 11, −6")}`,`screen: ${SCR("1")} ${SCR("2")} ${SCR("3")}`,`${nw("f(1) = 1 − 6 + 11 − 6 = 0")}, so ${nw(`(${X1} − 1)`)} is a factor`,nw(`(${X1} − 1)(${X2} − 5${X1} + 6) = 0`),nw(`(${X1} − 1)(${X1} − 2)(${X1} − 3) = 0`)])}
+  </div>
+
+  <div class="panelc"><h4>A-Math: the number e</h4>
+    <p class="kwhen">When a question has e in it</p>
+    <div class="kline">${KS("SHIFT ln 1 =")} ${SCR("2.718281828")}</div>
+  </div>
+
+  <div class="panelc"><h4>Common calculator slips</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw("sin 90° = 0.8939966636")}: it's in Rad</div>
+      <div class="ok">✓ set Deg: ${nw("sin 90° = 1")}</div>
+      <div class="x">✗ typed ${nw("−3²")} for ${nw("(−3)²")}: gives ${nw("−9")}</div>
+      <div class="ok">✓ type the brackets: ${nw("(−3)² = 9")}</div>
+      <div class="x">✗ ${frac("2 + 4","3")} typed as ${nw("2 + 4 ÷ 3")}</div>
+      <div class="ok">✓ brackets round the top: ${nw("(2 + 4) ÷ 3 = 2")}</div>
+      <div class="x">✗ ${frac("12","2 × 3")} typed as ${nw("12 ÷ 2 × 3")}</div>
+      <div class="ok">✓ brackets round the bottom: ${nw("12 ÷ (2 × 3) = 2")}</div>
+      <div class="x">✗ round in the middle, then keep going</div>
+      <div class="ok">✓ keep the full calculator value; round only at the end</div>
+    </div>
+  </div>
 </div>`
 };
 Object.assign(SHEETS,SHEETS3);
@@ -7143,7 +7216,8 @@ SHEETLIST.push(
   {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
-  {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"}
+  {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"},
+  {id:"calculator-guide",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Casio fx-97SG X keys",title:"Calculator guide",sheet:"calcGuide",aid:null,exam:true,group:"tips",kw:"calculator casio fx-97SG X keys menu equation quadratic simultaneous statistics standard deviation mean fraction degree radian"}
 );
 function SV(vb,inner){return `<svg viewBox="${vb}" class="lsp" aria-hidden="true">${inner}</svg>`;}
 function TX(x,y,t,o=""){return `<text x="${x}" y="${y}"${/font-size=/.test(o)?"":` font-size="7"`}${/text-anchor=/.test(o)?"":` text-anchor="middle"`}${/fill=/.test(o)?"":` fill="var(--ink)"`} ${o}>${t}</text>`;}
@@ -8450,7 +8524,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
