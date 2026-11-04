@@ -705,7 +705,7 @@ const TOPICS = [
   {id:"pythagoras-squares", strand:"geo", levels:["sec2"], chapter:"Pythagoras' theorem",
    title:"Pythagoras: squares on the sides", blurb:"The 2 smaller squares fill the big one exactly. Then: is it right-angled?", play:"pythSq", sheet:"s2Pyth", sheetTitle:"Pythagoras' theorem"},
   {id:"pointy-third", strand:"geo", levels:["sec2"], chapter:"Volume & surface area",
-   title:"Why a cone is one-third of a cylinder", blurb:"A cube cuts into 3 pyramids, so pointy solids get ⅓. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
+   title:"Why a pyramid is one-third of a cuboid", blurb:"A cube cuts into 3 pyramids, so pointy solids get ⅓. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
   {id:"venn-regions", strand:"alg", levels:["emath"], chapter:"Set Language & Notation",
    title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Then read a shaded diagram.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
@@ -3016,7 +3016,7 @@ const ptRs=v=>Math.abs(v-Math.round(v))<1e-9?"":" "+nw("(3 s.f.)");
 
 const ptPour=s=>{ const f=s.f||0, q=clamp((f-.25)/.55,0,1), mv=f<.1?0:f<.25?(f-.1)/.15:f<.8?1:(1-f)/.2, e=mv*mv*(3-2*mv);
   const cone=s.n>=3?0:f===0?(s.n===0?1:0):f<.1?(s.n===0?1:f/.1):1-q, cnt=Math.min(3,s.n+(q>=1?1:0)); return {q,e,cone,cnt,lvl:Math.min(1,(s.n+q)/3)}; };
-const ptName=s=>s.sh==="cone"?["cone","cylinder","cones"]:["pyramid","prism","pyramids"];
+const ptName=s=>s.sh==="cone"?["cone","cylinder","cones"]:["pyramid","cuboid","pyramids"];
 const m3=(A,B)=>A.map(r=>[0,1,2].map(j=>r[0]*B[0][j]+r[1]*B[1][j]+r[2]*B[2][j])), mv3=(M,p)=>M.map(r=>r[0]*p[0]+r[1]*p[1]+r[2]*p[2]);
 const R3={x:t=>[[1,0,0],[0,Math.cos(t),-Math.sin(t)],[0,Math.sin(t),Math.cos(t)]],y:t=>[[Math.cos(t),0,Math.sin(t)],[0,1,0],[-Math.sin(t),0,Math.cos(t)]],z:t=>[[Math.cos(t),-Math.sin(t),0],[Math.sin(t),Math.cos(t),0],[0,0,1]]};
 const aa3=M=>{ const th=Math.acos(clamp((M[0][0]+M[1][1]+M[2][2]-1)/2,-1,1)); if(th<1e-6) return {a:[0,1,0],th:0}; const s=2*Math.sin(th); return {a:[(M[2][1]-M[1][2])/s,(M[0][2]-M[2][0])/s,(M[1][0]-M[0][1])/s],th}; };
@@ -3059,8 +3059,8 @@ function ptCubeF(svg,s){ const VW=[PT3[0],PT3[1],-1], AP=[1,1,0], allHome=ptAll(
   if(ptAll(s,ptAtRow)) lab(svg,[75,85.5],"3 identical pyramids",Object.assign({"font-size":4.4,"font-weight":700,fill:"var(--ink)"},NP));
 }
 const pointyThird=aid({
-  init:{sh:"cone",r:3,a:6,h:4,n:0,f:0,pp:[{x:0,y:0,t:0},{x:0,y:0,t:0},{x:0,y:0,t:0}],zo:[0,1,2]}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids you can drag apart; cone and cylinder, pyramid and prism", link:["n"],
-  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["cone","<span>Cone &amp; cylinder</span>"],["pyr","<span>Pyramid &amp; prism</span>"]],on:s=>{s.n=0;s.f=0;}}],
+  init:{sh:"pyr",r:3,a:6,h:4,n:0,f:0,pp:[{x:0,y:0,t:0},{x:0,y:0,t:0},{x:0,y:0,t:0}],zo:[0,1,2]}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids you can drag apart; pyramid and cuboid, cone and cylinder", link:["n"],
+  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["pyr","<span>Pyramid &amp; cuboid</span>"],["cone","<span>Cone &amp; cylinder</span>"]],on:s=>{s.n=0;s.f=0;}}],
   sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="cone"},
     {k:"a",label:"side",min:1,max:10,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="pyr"},
     {k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:s=>s.step>1}],
@@ -3632,7 +3632,7 @@ function icInfo(e){
   return {bases,T,c,R,neg,br,steps};
 }
 function icExpr(e,I,cur){
-  const out=[]; const src=cur==="br"||!I.br?e.terms:null, terms=src||I.T;
+  const out=[]; const src=!cur||cur==="br"||!I.br?e.terms:null, terms=src||I.T;
   terms.forEach((t,i)=>{ if(i) out.push(...icOp(t.op));
     const c=icR(t.c), body=[]; if(c[0]!==c[1]||!t.p.length) body.push(icG("n"+i,icNum(c,AMB)));
     t.p.forEach(([b,v])=>body.push(icG(b+i,icPow(b,icR(v),icCB[b],{one:cur===b}))));
@@ -3669,7 +3669,7 @@ const IC_LAB={br:"( )",n:"①",x:"②",y:"③",pos:"④"};
 function icDrawCollect(svg,s){
   const e=IC_EX.find(x=>x.id===s.ex)||IC_EX[0], I=icInfo(e), k=clamp(s.k,0,I.steps.length), cur=k?I.steps[k-1]:null, TS=icSet(svg);
   const fill={n:"var(--amber-fill)",x:"var(--blue-fill)",y:"var(--green-fill)",br:"var(--grid2)"}, ex=icExpr(e,I,cur), B0=TS.lay(ex,11), B=B0.w>152?TS.lay(ex,11*152/B0.w):B0, x0=(160-B.w)/2, hi={};
-  const terms=(cur==="br"||!I.br)?e.terms:I.T;
+  const terms=(!cur||cur==="br"||!I.br)?e.terms:I.T;
   if(cur==="n") terms.forEach((t,i)=>{ hi["n"+i]=fill.n; });
   if(cur==="br") terms.forEach((t,i)=>{ if(t.out) hi["br"+i]=fill.br; });
   if(cur==="x"||cur==="y") terms.forEach((t,i)=>{ if(t.p.some(([b])=>b===cur)) hi[cur+i]=fill[cur]; });
@@ -3713,7 +3713,7 @@ function icDrawFact(svg,s){
 }
 const icN4=f=>f.b**(f.a-f.s);
 const icFxPill=f=>`<span>${f.b}<sup>${icHtml(icE(f.a))}</sup> ${f.op} ${f.b}<sup>${icHtml(icE(f.s))}</sup></span>`;
-const IC_BT=[["br","Bracket first"],["n","① Numbers"],["x",`② ${X1}'s`],["y",`③ ${V("y")}'s`],["pos","④ Make powers positive"]];
+const IC_BT=[["br","▶ Bracket first"],["n","① Numbers"],["x",`② ${X1}'s`],["y",`③ ${V("y")}'s`],["pos","④ Make powers positive"]];
 const idxCollect=aid({
   init:{ex:"md",k:0,fx:"a",j:0}, jump:true, vb:"0 0 160 96", label:"Simplifying indices: collect the numbers, then each letter", link:["k","j"],
   pills:[{k:"ex",label:"Sample expressions",opts:IC_EX.map(e=>[e.id,`<span>${e.name}</span>`]),show:s=>s.step===0,on:s=>{s.k=0;}},
@@ -8214,7 +8214,7 @@ function thumbFor(t){
   const T={
    bearAid:`<line x1="30" y1="60" x2="30" y2="10" stroke="var(--ink)" stroke-width="2"/><path d="M30 4 L25.5 13 L34.5 13 Z" fill="var(--ink)"/><path d="M30 42 A18 18 0 0 1 41.6 46.2" fill="none" stroke="var(--amber)" stroke-width="3"/><line x1="30" y1="60" x2="62" y2="22" stroke="var(--blue)" stroke-width="2.5"/><circle cx="62" cy="22" r="4" fill="var(--blue)"/><text x="70" y="44" font-size="17" font-weight="700" fill="var(--amber)">040°</text>`,
 balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" y1="57" x2="60" y2="49" stroke="var(--muted)" stroke-width="2.5"/><line x1="28" y1="49" x2="92" y2="49" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="49" x2="28" y2="43" stroke="var(--muted)" stroke-width="2.5"/><line x1="92" y1="49" x2="92" y2="43" stroke="var(--muted)" stroke-width="2.5"/><rect x="4" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><rect x="68" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><path d="M9 41 H25 Q28 31 20.5 28 L23 23 H11 L13.5 28 Q6 31 9 41Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.5"/><rect x="29" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="40" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><path d="M40 26 C44 2 96 0 102 12" fill="none" stroke="var(--amber)" stroke-width="2.2"/><polygon points="102,17.5 98.4,10.8 105.2,11.2" fill="var(--amber)"/>`,
-   pointyThird:`<path d="M6 10 L24 56 L42 10" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><ellipse cx="24" cy="10" rx="18" ry="4.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="68" y="40" width="40" height="18" fill="var(--blue)" fill-opacity=".35"/><path d="M68 10 V58 A20 4.5 0 0 0 108 58 V10" fill="none" stroke="var(--ink)" stroke-width="1.5"/><ellipse cx="88" cy="10" rx="20" ry="4.5" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M68 42 H108 M68 26 H108" stroke="var(--muted)" stroke-dasharray="2 2"/><text x="88" y="54" font-size="11" font-weight="700" text-anchor="middle" fill="var(--amber)">1</text><text x="88" y="38" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">2</text><text x="88" y="22" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">3</text>`,
+   pointyThird:`<polygon points="6,14 36,14 25,56" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="36,14 44,8 25,56" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="36,14 44,8 25,56" fill="var(--ink)" fill-opacity=".12"/><polygon points="6,14 36,14 44,8 14,8" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="66,43.3 102,43.3 102,58 66,58" fill="var(--blue)" fill-opacity=".35"/><polygon points="102,43.3 110,37.3 110,52 102,58" fill="var(--blue)" fill-opacity=".25"/><path d="M66 14 V58 H102 V14 Z M102 14 L110 8 V52 L102 58 M66 14 L74 8 H110" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/><path d="M66 43.3 H102 M66 28.7 H102" stroke="var(--muted)" stroke-dasharray="2 2"/><text x="84" y="54.5" font-size="11" font-weight="700" text-anchor="middle" fill="var(--amber)">1</text><text x="84" y="40" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">2</text><text x="84" y="25.5" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">3</text>`,
    areaRect:`<rect x="10" y="56.6" width="25" height="3.4" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="35" y="46.5" width="25" height="13.5" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="35" y="56.6" width="25" height="3.4" fill="var(--blue-fill)" stroke="var(--blue)"/><rect x="60" y="29.6" width="25" height="30.4" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="60" y="46.5" width="25" height="13.5" fill="var(--blue-fill)" stroke="var(--blue)"/><rect x="85" y="6" width="25" height="54" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="85" y="29.6" width="25" height="30.4" fill="var(--blue-fill)" stroke="var(--blue)"/><path d="M10 60 L20 59.5 L30 57.8 L40 55.1 L50 51.4 L60 46.5 L70 40.6 L80 33.5 L90 25.4 L100 16.3 L110 6" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`,
    quadProof:`<text x="4" y="16" font-size="13" font-style="italic" fill="var(--ink)">ax²+bx+c=0</text><path d="M30 22 L30 30" stroke="var(--muted)" stroke-width="1.5"/><path d="M26 27 L30 32 L34 27" fill="none" stroke="var(--muted)" stroke-width="1.5"/><text x="4" y="47" font-size="13" font-style="italic" fill="var(--ink)">x =</text><text x="30" y="42" font-size="11" font-style="italic" fill="var(--amber)">−b ±</text><path d="M58 36 L61 34 L64 42 L68 31 L100 31" fill="none" stroke="var(--green)" stroke-width="1.2"/><text x="69" y="42" font-size="10" font-style="italic" fill="var(--green)">b²−4ac</text><line x1="30" y1="46" x2="102" y2="46" stroke="var(--ink)" stroke-width="1.2"/><text x="66" y="58" font-size="11" font-style="italic" text-anchor="middle" fill="var(--ink)">2a</text>`,
    zeroPow:`<path d="M4 8 H20 V26 H36 V44 H52 V62" fill="none" stroke="var(--ink)" stroke-width="2.5"/><text x="60" y="44" font-size="19" font-weight="700" fill="var(--green)">2<tspan font-size="12" dy="-8" fill="var(--blue)">0</tspan><tspan dy="8"> = 1</tspan></text><text x="26" y="18" font-size="12" font-weight="700" fill="var(--amber)">÷ 2</text>`,
