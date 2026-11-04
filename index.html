@@ -8533,8 +8533,8 @@ function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}
 function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
   while(el.scrollWidth>el.clientWidth+1&&fs>15){ fs-=1; el.style.fontSize=fs+"px"; } });
   const wr=u=>u.some(e=>{ const h=e.getBoundingClientRect().height; e.style.whiteSpace="nowrap"; const n=e.getBoundingClientRect().height; e.style.whiteSpace=""; return h>n+3; });
-  app.querySelectorAll(".ccard .cbk li").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
-    const f0=li.style.fontSize; let fs=parseFloat(getComputedStyle(li).fontSize); while(fs>16&&wr(u)){ fs-=1; li.style.fontSize=fs+"px"; } if(wr(u)) li.style.fontSize=f0; }); }
+  app.querySelectorAll(".ccard .cbk li, .ccard .x, .ccard .ok").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
+    const f0=li.style.fontSize; let fs=parseFloat(getComputedStyle(li).fontSize); const lo=Math.max(16,fs*.7); while(fs>lo&&wr(u)){ fs-=1; li.style.fontSize=fs+"px"; } if(wr(u)) li.style.fontSize=f0; }); }
 function cdStart(set,foc){ const d=set.slice(); if(cdShuf) for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
   Object.assign(cdS,{set,deck:d,i:0,shown:false,missed:[],got:0}); cdDraw(foc); }
 function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", box=app.querySelector(".cdeck");
