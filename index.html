@@ -629,6 +629,19 @@ html[data-present] .exitp{display:inline-flex;align-items:center}
 .cacts a.cbtn{color:var(--ink)}
 .cacts .cyes{background:var(--green);border-color:var(--green)}
 .cend{text-align:center;font-size:30px;font-weight:700;margin:28px 0 8px}
+.ccard .cspl{margin:0 0 2px;color:var(--muted);font-size:14px;font-weight:700}
+.ccard .cspq{font-size:19px;line-height:1.5}
+.ccard .cspi{margin:16px 0 8px;font-size:16px;font-weight:700}
+.ccard .cspi.cyay{color:var(--green)}
+.ccard .cspi.cnay{color:var(--red)}
+.clines{display:flex;flex-direction:column;gap:10px}
+.clines .cln{display:block;width:100%;min-height:52px;margin:0;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;line-height:1.45;text-align:left}
+.clines button.cln{cursor:pointer;box-shadow:0 2px 0 var(--line)}
+.clines button.cln:hover{border-color:var(--blue)}
+.clines .cln.cbad{color:var(--red);border-color:var(--red)}
+.clines .cln.cfix{color:var(--green);border-color:var(--green);margin-top:-4px}
+.clines .cwhy{display:block;color:var(--ink);font-size:15px;line-height:1.4;margin-top:2px}
+.clines .cfine{display:inline-block;vertical-align:middle;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--line);color:var(--muted);font-size:13px;font-weight:700;line-height:22px}
 .cdgo-p{text-align:center;margin:18px 0}
 .cdgo{min-height:54px;padding:0 22px;font-size:18px;font-weight:700;text-decoration:none}
 html[data-present] .cdeck{max-width:1100px}
@@ -638,6 +651,11 @@ html[data-present] .ccard .cask,html[data-present] .ccard .cgrp,html[data-presen
 html[data-present] .ctop .stepof{font-size:18px}
 html[data-present] .cacts .cbtn{min-height:64px;font-size:24px}
 html[data-present] .cend{font-size:44px}
+html[data-present] .ccard .cspl,html[data-present] .ccard .cspi{font-size:24px}
+html[data-present] .ccard .cspq{font-size:32px}
+html[data-present] .clines .cln{font-size:36px;min-height:72px;padding:12px 20px}
+html[data-present] .clines .cwhy{font-size:24px}
+html[data-present] .clines .cfine{font-size:20px;line-height:32px;padding:0 12px}
 .modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
 .modal[hidden]{display:none}
 .mbox{background:var(--card);color:var(--ink);border-radius:16px;padding:20px;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow)}
@@ -8508,7 +8526,32 @@ function renderSheetOnly(s){
   window.scrollTo(0,0);
 }
 
-let cdS=null, cdShuf=false, cdFrom="", cdMistOn=false;
+const SPOTS_LO={
+"linear-equations":[
+{q:`Solve ${nw(`5${X1} + 3 = 2${X1} + 21`)}.`,w:[nw(`5${X1} + 3 = 2${X1} + 21`),nw(`5${X1} − 2${X1} = 21 − 3`),nw(`3${X1} = 18`),nw(`${X1} = 18 − 3 = 15`)],bad:3,fix:nw(`${X1} = 18 ÷ 3 = 6`),why:`${nw(`× 3`)} flips to ${nw(`÷ 3`)}, not ${nw(`− 3`)}`},
+{q:`Solve ${nw(`${frac(`${X1} + 4`,"4")} − ${frac(X1,"6")} = 2`)}.`,w:[nw(`${frac(`${X1} + 4`,"4")} − ${frac(X1,"6")} = 2`),`× 12: ${nw(`${X1} + 48 − 2${X1} = 24`)}`,nw(`−${X1} = 24 − 48 = −24`),nw(`${X1} = −24 ÷ (−1) = 24`)],bad:1,fix:`× 12: ${nw(`3(${X1} + 4) − 2${X1} = 24`)}`,why:`${nw("12 ÷ 4 = 3")}: the new number in front`},
+{q:`Solve ${nw(`2(2${X1} + 5) = ${X1} − 8`)}.`,w:[nw(`2(2${X1} + 5) = ${X1} − 8`),nw(`4${X1} + 10 = ${X1} − 8`),nw(`4${X1} − ${X1} = −8 + 10`),nw(`3${X1} = 2`),nw(`${X1} = 2 ÷ 3 = ${frac("2","3")}`)],bad:2,fix:nw(`4${X1} − ${X1} = −8 − 10`),why:`${nw("+ 10")} thrown over the = flips to ${nw("− 10")}`},
+{q:`Solve ${nw(`7 − 3${X1} = 19`)}. Then find the value of ${nw(`2${X1} + 5`)}.`,w:[nw(`7 − 3${X1} = 19`),nw(`−3${X1} = 19 − 7 = 12`),nw(`${X1} = 12 ÷ 3 = 4`),nw(`2${X1} + 5 = 2(4) + 5 = 13`)],bad:2,fix:nw(`${X1} = 12 ÷ (−3) = −4`),why:`${nw(`−3${X1}`)} means ${nw(`−3 × ${X1}`)}, so ÷ by ${nw("−3")}`}],
+"factorisation":[
+{q:`Factorise completely ${nw(`2${X2} − 50`)}.`,w:[nw(`2${X2} − 50 = 2(${X2} − 25)`),nw(`= 2(${X2} − 5²)`),nw(`= 2(${X1} − 5)²`)],bad:2,fix:nw(`= 2(${X1} + 5)(${X1} − 5)`),why:`difference of two squares: one +, one −`},
+{q:`Factorise completely ${nw(`6${X2} + 9${X1}`)}.`,w:[`HCF of ${nw(`6${X2}`)} and ${nw(`9${X1}`)}: ${nw("3")}`,nw(`6${X2} + 9${X1} = 3(2${X2} + 3${X1})`),`check: ${nw(`3(2${X2} + 3${X1}) = 6${X2} + 9${X1}`)}`],bad:0,fix:`HCF of ${nw(`6${X2}`)} and ${nw(`9${X1}`)}: ${nw(`3${X1}`)}`,why:`both terms have an ${X1}, so take it out too`},
+{q:`Factorise completely ${nw(`2${X2} − 4${X1} − 30`)}.`,w:[nw(`2${X2} − 4${X1} − 30 = 2(${X2} − 2${X1} − 15)`),nw(`${X2} − 2${X1} − 15 = (${X1} + 5)(${X1} − 3)`),nw(`2${X2} − 4${X1} − 30 = 2(${X1} + 5)(${X1} − 3)`)],bad:1,fix:nw(`${X2} − 2${X1} − 15 = (${X1} − 5)(${X1} + 3)`),why:`expand back: the middle must be ${nw(`−2${X1}`)}`}]
+};
+const SPOTS_HI={
+"surds":[
+{q:`Simplify ${nw(`${SQRT("45")} + ${SQRT("12")}`)}.`,w:[nw(`${SQRT("45")} = 3${SQRT("5")}`),nw(`${SQRT("12")} = 2${SQRT("3")}`),nw(`${SQRT("45")} + ${SQRT("12")} = 5${SQRT("8")}`),nw(`5${SQRT("8")} = 10${SQRT("2")}`)],bad:2,fix:nw(`${SQRT("45")} + ${SQRT("12")} = 3${SQRT("5")} + 2${SQRT("3")}`),why:`only like surds add: this is already simplest`},
+{q:`Write ${nw(`${SQRT("75")} + ${SQRT("48")}`)} in its simplest form.`,w:[nw(`${SQRT("75")} = 5${SQRT("3")}`),nw(`${SQRT("48")} = 2${SQRT("12")}`),nw(`${SQRT("75")} + ${SQRT("48")} = 5${SQRT("3")} + 2${SQRT("12")}`)],bad:1,fix:nw(`${SQRT("48")} = 4${SQRT("3")}`),why:`take out the largest square: 16`},
+{q:`Expand and simplify ${nw(`(3${SQRT("2")} − 1)²`)}.`,w:[nw(`(${V("a")} − ${V("b")})² = ${V("a")}² − 2${V("ab")} + ${V("b")}²`),nw(`= (3${SQRT("2")})² − 2(3${SQRT("2")})(1) + 1²`),nw(`= 6 − 6${SQRT("2")} + 1`),nw(`= 7 − 6${SQRT("2")}`)],bad:2,fix:nw(`= 18 − 6${SQRT("2")} + 1`),why:`square the 3 too: ${nw("9 × 2 = 18")}`},
+{q:`Express ${nw(frac("4",`3 − ${SQRT("5")}`))} in the form ${nw(`${V("a")} + ${V("b")}${SQRT("5")}`)}.`,w:[nw(`${frac("4",`3 − ${SQRT("5")}`)} = ${frac("4",`(3 − ${SQRT("5")})(3 + ${SQRT("5")})`)}`),nw(`= ${frac("4","9 − 5")}`),nw(`= 1`)],bad:0,fix:nw(`${frac("4",`3 − ${SQRT("5")}`)} = ${frac(`4(3 + ${SQRT("5")})`,`(3 − ${SQRT("5")})(3 + ${SQRT("5")})`)}`),why:`multiply the top and the bottom by ${nw(`3 + ${SQRT("5")}`)}`},
+{q:`Express ${nw(frac(`3 + ${SQRT("2")}`,`1 − ${SQRT("2")}`))} in the form ${nw(`${V("a")} + ${V("b")}${SQRT("2")}`)}.`,w:[nw(`= ${frac(`(3 + ${SQRT("2")})(1 + ${SQRT("2")})`,`(1 − ${SQRT("2")})(1 + ${SQRT("2")})`)}`),nw(`= ${frac(`5 + 4${SQRT("2")}`,"1 − 2")} = ${frac(`5 + 4${SQRT("2")}`,"−1")}`),nw(`= 5 + 4${SQRT("2")}`)],bad:2,fix:nw(`= −5 − 4${SQRT("2")}`),why:`÷ by ${nw("−1")}: every sign changes`},
+{q:`Solve ${nw(`${SQRT(`${X1} + 7`)} = ${X1} − 5`)}.`,w:[nw(`${X1} + 7 = (${X1} − 5)²`),nw(`${X2} − 11${X1} + 18 = 0`),nw(`(${X1} − 9)(${X1} − 2) = 0`),nw(`${X1} = 9 or ${X1} = 2`)],bad:3,fix:`${nw(`${X1} = 9`)}, reject ${nw(`${X1} = 2`)}: ${nw(`${SQRT("9")} ≠ 2 − 5`)}`,why:`check each answer in the original equation`},
+{q:`Solve ${nw(`2${SQRT(`${X1} + 3`)} = ${SQRT(`${X1} + 15`)}`)}.`,w:[nw(`(2${SQRT(`${X1} + 3`)})² = ${X1} + 15`),nw(`2(${X1} + 3) = ${X1} + 15`),nw(`2${X1} + 6 = ${X1} + 15`),nw(`${X1} = 15 − 6 = 9`)],bad:1,fix:nw(`4(${X1} + 3) = ${X1} + 15`),why:`square the 2 too: ${nw("2² = 4")}`}]
+};
+let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
+function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
+function cdLn(c){ const S=cdS, p=S.pk, sh=S.shown, ok=sh&&p===c.bad;
+  return `<p class="cspl">Question</p><div class="cspq">${c.q}</div><p class="cspi${sh?(ok?" cyay":" cnay"):""}">${sh?(ok?"✓ You spotted it":"✗ Not that one"):"Tap the wrong line"}</p><div class="clines">${c.w.map((l,i)=>!sh?`<button class="cln" type="button" data-c="ln" data-n="${i}">${l}</button>`
+    :i===c.bad?`<div class="cln cbad">${nw("✗ "+l)}</div><div class="cln cfix">${nw("✓ "+c.fix)}<span class="cwhy">${c.why}</span></div>`:`<div class="cln">${l}${i===p?`<span class="cfine">fine</span>`:""}</div>`).join("")}</div>`; }
 function cdDom(key){ const d=document.createElement("div"); d.innerHTML=SHEETS[key]||""; digest(d); return d; }
 function cdMist(key){ return [...cdDom(key).querySelectorAll(".wrongright .x")].filter(x=>x.nextElementSibling&&x.nextElementSibling.matches(".ok"))
   .map(x=>({f:`<p class="cask">What's wrong here?</p><div class="wrongright"><div class="x">${x.innerHTML}</div></div>`,b:`<div class="wrongright"><div class="ok">${x.nextElementSibling.innerHTML}</div></div>`})); }
@@ -8538,7 +8581,7 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
   return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`})); }
 function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
-function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
+function cdFit(){ app.querySelectorAll(".ccard .x, .ccard .ok, .ccard .cq, .ccard .cbk li, .ccard .cln").forEach(el=>{ el.style.fontSize=""; let fs=parseFloat(getComputedStyle(el).fontSize);
   while(el.scrollWidth>el.clientWidth+1&&fs>15){ fs-=1; el.style.fontSize=fs+"px"; } });
   const wr=u=>u.some(e=>{ const h=e.getBoundingClientRect().height; e.style.whiteSpace="nowrap"; const n=e.getBoundingClientRect().height; e.style.whiteSpace=""; return h>n+3; });
   app.querySelectorAll(".ccard .cbk li, .ccard .x, .ccard .ok").forEach(li=>{ const u=li.querySelector(".fi")?[...li.querySelectorAll(".fi")]:[li]; if(!wr(u)) return;
@@ -8550,19 +8593,21 @@ function cdDraw(foc){ const S=cdS, mist=S.kind==="mist", box=app.querySelector("
     box.innerHTML=`<p class="cend">You ${mist?"spotted":"knew"} ${S.got} of ${S.deck.length}</p><div class="cacts">${n?`<button class="pill act cbtn" type="button" data-c="miss">Try the ${n} you missed</button>`:""}<button class="pill ${n?"":"act "}cbtn" type="button" data-c="again">Start again</button><a class="pill cbtn" href="${S.back}">← Back to the ${mist?"cheatsheet":"formulas"}</a></div>`;
   } else { const c=S.cards[S.deck[S.i]];
     box.innerHTML=`<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p>${S.i||S.shown?"":`<button class="pill sm" type="button" data-c="shuf" aria-pressed="${cdShuf}">Shuffle</button>`}</div>
-      <div class="ccard${mist?"":" cmemo"}">${c.f}${S.shown?c.b:""}</div>
-      <div class="cacts">${S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
-  cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
+      <div class="ccard${mist?" cspot":" cmemo"}">${mist?cdLn(c):c.f+(S.shown?c.b:"")}</div>
+      <div class="cacts">${mist?(S.shown?`<button class="pill act cbtn" type="button" data-c="next">${S.i+1<S.deck.length?"Next →":"See my score →"}</button>`:""):S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ ${mist?"I spotted it":"Knew it"}</button><button class="pill act sec cbtn" type="button" data-c="no">${mist?"✗ I missed it":"Not yet"}</button>`:`<button class="pill act cbtn" type="button" data-c="show">${mist?"Show the fix":"Show it"}</button>`}</div>`; }
+  if(mist) digest(box); cdFit(); const f=box.querySelector(".cacts .cbtn"); if(foc&&f) f.focus({preventScroll:true});
   if(box.getBoundingClientRect().top<0) window.scrollTo(0,0); else if(S.shown) box.querySelector(".cacts").scrollIntoView({block:"nearest"}); }
 function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; const S=cdS, c=b.dataset.c;
   if(c==="show"){ S.shown=true; cdDraw(true); }
+  else if(c==="ln"){ if(S.shown) return; const n=+b.dataset.n; S.pk=n; S.shown=true; if(n===S.cards[S.deck[S.i]].bad) S.got++; else S.missed.push(S.deck[S.i]); cdDraw(true); }
+  else if(c==="next"){ S.i++; S.shown=false; cdDraw(true); }
   else if(c==="yes"||c==="no"){ if(c==="yes") S.got++; else S.missed.push(S.deck[S.i]); S.i++; S.shown=false; cdDraw(true); }
   else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
 function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
   const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath")?sheetOf(id+"-memorise"):null; if(!s) return false;
-  const cards=kind==="mist"?cdMist(s.sheet):cdMemo(s.sheet); if(!cards.length) return false;
+  const cards=kind==="mist"?cdSpot(s.id):cdMemo(s.sheet); if(!cards.length) return false;
   const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
   document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=s.title;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
@@ -8573,7 +8618,7 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
     if(p) p.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); return; }
   if(!cdMistOn) return;
-  const w=app.querySelectorAll(".wrongright"); if(app.querySelectorAll(".wrongright .x").length<2) return;
+  const w=app.querySelectorAll(".wrongright"); if(!w.length||!cdSpot(s.id).length) return;
   const pn=w[w.length-1].closest(".panelc")||w[w.length-1]; pn.insertAdjacentHTML(pn===w[w.length-1]?"afterend":"beforeend",PLAYLINK("#cards/mist/"+s.id,"Spot the mistake"));
   if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
