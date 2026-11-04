@@ -886,6 +886,51 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   .mzg:not(.js){columns:3 300px;column-gap:12px}
   .mzg.js{gap:12px}
 }
+.formbox .eq{padding-right:3px}
+.pill.act.alt{background:var(--card);color:var(--accent);border:1.5px solid var(--accent);box-shadow:none}
+.nextstep .sn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:12px;font-weight:700;line-height:1}
+.pill.act .opc{display:inline-block;padding:0 5px;border-radius:6px;background:rgba(255,255,255,.24)}
+.pill.act.alt .opc,.pill.act.sec .opc,.pill.act[aria-pressed="true"] .opc{background:var(--blue-fill)}
+.hs[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.piccard .go{display:inline-flex;align-items:center;min-height:32px;padding:0 14px;margin-top:8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:14px}
+.playlink.cur{background:var(--purple-fill);color:var(--purple);border:1.5px solid var(--purple)}
+.note{border-left-color:var(--amber);background:var(--amber-fill)}
+.note b{color:var(--amber)}
+@media (min-width:521px){ .steps li .tagop{float:none;display:inline-block;margin-left:16px} }
+.piccards.two>.piccard:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:899px){
+  .piccards>.piccard:last-child:nth-child(odd){grid-column:1/-1}
+  .stage{box-shadow:var(--shadow),0 12px 12px -10px rgba(0,0,0,.28)}
+  .panel>.exwrap{order:1}
+  .dock .stp{width:40px;height:40px}
+  .dock .numbox{min-height:40px}
+  .dock .pill.act{min-height:40px}
+}
+@media (max-width:599px) and (orientation:portrait){
+  .stage.tall svg{max-height:40vh;max-height:40svh}
+  .stage.zoomed svg{max-height:62vh;max-height:62svh}
+}
+@media (max-width:599px) and (orientation:portrait) and (max-height:700px){
+  .stage svg{max-height:28vh;max-height:28svh}
+  .stage.tall svg{max-height:34vh;max-height:34svh}
+  .stage.zoomed svg{max-height:62vh;max-height:62svh}
+}
+@media (min-width:900px) and (orientation:portrait){ :root:not([data-present]) .stage svg{max-height:40vh} :root:not([data-present]) .play{grid-template-areas:"s s" "p k"} }
+@media (max-width:520px){
+  .wrongright{gap:0}
+  .wrongright div{border-radius:0}
+  .wrongright .x{border-radius:10px 10px 0 0;background:var(--red-fill);border-left:3px solid var(--red);margin-top:12px}
+  .wrongright .x:first-child{margin-top:0}
+  .wrongright .ok{border-radius:0 0 10px 10px;background:var(--green-fill);border-left:3px solid var(--green);border-top:0}
+}
+@media (max-width:440px){ .chips{gap:6px} .chip{padding:0 12px} }
+:root[data-theme="dark"] .panelc::before{border-color:rgba(255,255,255,.3)}
+:root[data-theme="dark"] .panelc:not(.pg):not(.pn)>h4{background:var(--card);color:var(--amber);border-color:var(--amber)}
+:root{--vn-shade:rgba(36,89,198,.32)}
+:root[data-theme="dark"]{--vn-shade:rgba(120,160,255,.38)}
+.sheet.js{columns:auto;display:flex;gap:18px;align-items:flex-start}
+.sheet.js>.scol{flex:1 1 0;min-width:0}
+@media print{ .piccard .go{display:none} .wrongright div{background:none} }
 </style>
 </head>
 <body>
@@ -1242,6 +1287,12 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     <div class="box robox"><div class="readout"></div></div>
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
+  const KSEL=".formbox, .khead, .kpair, .egl", kbSnap=()=>kb?[...kb.querySelectorAll(KSEL)].map(e=>e.textContent):null, portrait=()=>innerWidth<900&&innerHeight>innerWidth;
+  const showRes=(snap,first)=>{ if(!kb||!snap||!portrait()) return; let n=0; const wait=()=>{ if(st._anim&&n++<400){ requestAnimationFrame(wait); return; }
+    const bs=[...kb.querySelectorAll(KSEL)]; let tg=null; bs.forEach((e,i)=>{ if((i>=snap.length||e.textContent!==snap[i])&&!(first&&tg)) tg=e; }); if(!tg||!tg.isConnected) return;
+    const dk=document.querySelector(".play>.box.dock"), sr=stage.getBoundingClientRect(), dt=(dk?dk.getBoundingClientRect().top:innerHeight)-8, r=tg.getBoundingClientRect(), stuck=(parseFloat(getComputedStyle(stage).top)||56)+sr.height+8;
+    let dy=0; if(r.bottom>dt) dy=Math.min(r.bottom-dt,r.top-stuck); else if(r.top<sr.bottom+4) dy=r.top-sr.bottom-8;
+    if(Math.abs(dy)>4) window.scrollBy({top:dy,behavior:"smooth"}); }; requestAnimationFrame(wait); };
   const draw=()=>{
     (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
       if(s.minf){const mn=s.minf(st); if(+inp.min!==mn){inp.min=mn;} if(st[s.k]<mn) st[s.k]=mn;}
@@ -1254,29 +1305,33 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
     cbox.style.display=[...cbox.children].some(c=>c.style.display!=="none"&&(c.children.length?[...c.children].some(x=>x.style.display!=="none"):c.textContent.trim()))?"":"none";
+    const acts=[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true");
+    let solid=acts[0]; if(st._lastB!=null) solid=acts.find(b=>+b.dataset.b>st._lastB)||acts.find(b=>+b.dataset.b===st._lastB)||acts[0];
+    acts.forEach(b=>b.classList.toggle("alt",b!==solid)); cbox.querySelectorAll(".pill.act[aria-pressed='true'].alt").forEach(b=>b.classList.remove("alt"));
     if(flat){const ex0=typeof def.explain==="function"?def.explain(st):(def.explain||[]), fh=$(".flathint",panel); let ex=ex0;
       const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
       $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
     else { const stx=$(".steptext",panel); stx.innerHTML=def.steps[st.step].t(st);
       const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
-      const mb=mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||/^[①-⑨]/.test(lt))&&!said;
-      dh.hidden=!dshow; if(dshow) dh.innerHTML=`↓ Press <b>${mb.innerHTML}</b>`;
-      const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1]; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=n?"":"none"; if(n) nx.innerHTML=`Next: ${n.name} →`; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
+      const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||/^[①-⑨]/.test(lt))&&!said;
+      dh.hidden=!dshow; if(dshow) dh.innerHTML=`${/^(Slide|Drag|Tap|Move)\b/.test(stx.textContent.trim())?"↓ Or press":"↓ Press"} <b>${mb.innerHTML}</b>`;
+      const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1], done=!n&&cur&&cur.done; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=(n||done)?"":"none"; nx.innerHTML=n?`Next <span class="sn">${st.step+2}</span> ${n.name} →`:"Back to the cheatsheet →"; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
         nx.classList.toggle("go",!mains.length||!!st._acted); } }
   };
-  const go=i=>{st.step=i; st._acted=false; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
+  const go=i=>{st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
-    stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._reset=true; draw();}));
+    const snap=kbSnap(); stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._lastB=null; st._reset=true; draw(); showRes(snap,true);}));
   const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
-  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{stopAnim(); b.fn(st,animate); st._acted=true; st._reset=true; draw();}));
+  (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{const snap=kbSnap(); stopAnim(); b.fn(st,animate); st._acted=true; st._lastB=i; st._reset=true; draw(); showRes(snap);}));
   if(jb) jb.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j); if(b.scrollIntoView&&jb.scrollWidth>jb.clientWidth) b.scrollIntoView({block:"nearest",inline:"center"});});
   const stepTo=i=>{ if(i<0||i>=def.steps.length) return; stopAnim(); go(i);
-    const b=jb&&jb.querySelector(`[data-j="${st.step}"]`); if(b&&jb.scrollWidth>jb.clientWidth) jb.scrollTo({left:b.offsetLeft-(jb.clientWidth-b.offsetWidth)/2,behavior:"smooth"}); };
-  const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>stepTo(st.step+1);
+    const b=jb&&jb.querySelector(`[data-j="${st.step}"]`); if(b&&jb.scrollWidth>jb.clientWidth) jb.scrollTo({left:b.offsetLeft-(jb.clientWidth-b.offsetWidth)/2,behavior:"smooth"});
+    const ex=$(".exbox",panel); if(ex&&portrait()){ const sr=stage.getBoundingClientRect(), r=ex.getBoundingClientRect(); if(r.top<sr.bottom+4) window.scrollBy({top:r.top-sr.bottom-8,behavior:"smooth"}); } };
+  const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>{ if(st.step>=def.steps.length-1){ if(cur&&cur.done) location.hash=cur.done; } else stepTo(st.step+1); };
   const pvb=$(".prevstep",panel); if(pvb) pvb.onclick=()=>stepTo(st.step-1);
-  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } }); }
+  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{ if(start) st._snap=kbSnap(); svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } showRes(st._snap); st._snap=null; }); }
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
@@ -1453,7 +1508,7 @@ const unitCircle=aid({
   init:{th:150,all:0,sv:"off"}, label:"Unit circle with 16 special-angle dots and a draggable point P", link:["th"],
   fix:s=>{s.th=nearCPS(s.th);},
   pills:[{k:"all",label:"Show",opts:[[0,"This angle only"],[1,"All 4 quadrants"]]},
-    {k:"sv",label:"Solve",opts:[["off","off"],["sin",SOLVE.sin.lbl],["cos",SOLVE.cos.lbl],["tan",SOLVE.tan.lbl]],on:s=>{if(s.sv!=="off"){const S=SOLVE[s.sv]; s.th=qAng(S.qs[0],S.al);}}}],
+    {k:"sv",label:"Solve",opts:[["off","none"],["sin",SOLVE.sin.lbl],["cos",SOLVE.cos.lbl],["tan",SOLVE.tan.lbl]],on:s=>{if(s.sv!=="off"){const S=SOLVE[s.sv]; s.th=qAng(S.qs[0],S.al);}}}],
   explain:[`Tap any dot, or drag P.`,`Radius = 1<br><span class="k-blue">sin θ = ${frac("opp","1")} = <b>height</b></span><br><span class="k-amber">cos θ = ${frac("adj","1")} = <b>base</b></span>`],
   steps:[{t:()=>""}],
   draw(svg,s){
@@ -2492,7 +2547,7 @@ const vecAreas=(()=>{
     init:{p:2,q:6,ln:0}, jump:true, vb:"0 0 140 110", label:"Triangle OAB with draggable points for area ratios", link:["p","q","ln"],
     fix:s=>{s.p=clamp(Math.round(s.p),0,R.length-1); s.q=clamp(Math.round(s.q),0,R.length-1); s.ln=clamp(Math.round(s.ln),0,14);},
     buttons:[{label:"◀ Back",show:s=>s.step===3&&s.ln>0,fn:s=>{s.ln=Math.max(0,s.ln-1);}},
-      {label:"Next line ▶",show:s=>s.step===3&&s.ln<lines().length-1,fn:s=>{s.ln=Math.min(lines().length-1,s.ln+1);}},
+      {label:"▶ Next line",show:s=>s.step===3&&s.ln<lines().length-1,fn:s=>{s.ln=Math.min(lines().length-1,s.ln+1);}},
       {label:"↺ Start again",show:s=>s.step===3&&s.ln===lines().length-1,fn:s=>{s.ln=0;}}],
     steps:[
       {name:"Same height",t:()=>`<b>Same height</b>, so area ratio = base ratio.<br>Drag P along AB.`},
@@ -2586,10 +2641,11 @@ const apAt=(G,w)=>w==="T"?G.T:G.B;
 const apWB=(eq,why)=>FB("ink","Write it like this",eq,why,null,"apw");
 const apDeg=v=>v+"°", apXV=V("x");
 const angPar=aid({
-  init:{t:62,r1:20,r2:150,r3:245,v:62,th:62,q:"q1",sh:0}, jump:true, vb:"0 0 150 100", label:"Angle facts: straight line, at a point, vertically opposite and parallel lines", link:["t","r1","r2","r3","v","th"],
+  init:{t:62,r1:20,r2:150,r3:245,v:62,th:62,q:"q1",sh:0}, jump:true, vb:"0 0 150 100", label:"Angle facts: straight line, at a point, vertically opposite and parallel lines", link:["t","r1","r2","r3","v","th","sh"],
   fix:s=>{ s.t=clamp(Math.round(s.t),20,160); s.v=clamp(Math.round(s.v),25,155); s.th=clamp(Math.round(s.th),40,140); s.sh=s.sh?1:0;
     let r=[s.r1,s.r2,s.r3].map(a=>norm(Math.round(a))); if(!(norm(r[1]-r[0])>=50&&norm(r[2]-r[1])>=50&&norm(r[0]-r[2])>=50&&norm(r[1]-r[0])+norm(r[2]-r[1])+norm(r[0]-r[2])===360)) r=[20,150,245]; [s.r1,s.r2,s.r3]=r; },
-  pills:[{k:"q",label:"Sample questions",opts:[["q1","Q1"],["q2","Q2"],["q3","Q3"],["q4","Q4"]],show:s=>s.step===6,on:s=>{s.sh=0; s.th=apFQ[s.q].th;}},{k:"sh",label:"Working",opts:[[0,"Hide"],[1,"Show"]],show:s=>s.step===6}],
+  pills:[{k:"q",label:"Sample questions",opts:[["q1","Q1"],["q2","Q2"],["q3","Q3"],["q4","Q4"]],show:s=>s.step===6,on:s=>{s.sh=0; s.th=apFQ[s.q].th;}}],
+  buttons:[{label:"▶ Show working",show:s=>s.step===6&&!s.sh,fn:s=>{s.sh=1;}},{label:"Hide working",sec:true,show:s=>s.step===6&&!!s.sh,fn:s=>{s.sh=0;}}],
   steps:[
     {name:"Straight line", t:()=>`Angles on a straight line add up to <b>180°</b>.<br>Drag the dot.`},
     {name:"At a point", t:()=>`Angles at a point add up to <b>360°</b>.<br>Drag any dot.`},
@@ -2974,7 +3030,7 @@ const probAid=aid({
     {k:"out",label:"Find",opts:[["rr","RR"],["rb","RB"],["br","BR"],["bb","BB"],["one","one of each"]],show:s=>s.step>0}],
   sliders:[{k:"r",label:`<span class="k-red">Red</span>`,min:1,max:9,step:1,show:s=>s.step>0},{k:"b",label:`<span class="k-blue">Blue</span>`,min:1,max:9,step:1,show:s=>s.step>0}],
   steps:[{name:"Two dice",t:()=>`Each cell is one outcome: 6 × 6 = <b>36</b>, all equally likely.<br>Count the cells you want, put it over 36, simplify.`},
-    {name:"Replaced",t:()=>`With replacement: put back, so the 1st draw doesn't change the 2nd: <b>independent</b>.<br><b>Multiply</b> along the branches. Tap an end result.`},
+    {name:"Replaced",t:()=>`With replacement: the ball goes back, so the 2nd draw is just like the 1st (<b>independent</b>).<br><b>Multiply</b> along the branches. Tap an end result.`},
     {name:"Not replaced",t:()=>`Without replacement: one ball fewer for the 2nd draw.<br>The bottom drops by 1, and so does the top for the colour you took (<span class="k-amber"><b>amber</b></span>).`}],
   draw(svg,s){ if(s.step===0) pdDice(svg,s); else pdTreeDraw(svg,s); },
   drag(id,p,s){ const m=/^o(rr|rb|br|bb)$/.exec(id); if(m) s.out=m[1]; },
@@ -3122,7 +3178,7 @@ const balanceEq=(()=>{
     return `${S.mv.map(q=>kc(q[3],nw(xh(q[5])))).join(" and ")} on both pans: the scale stays balanced.`; };
   const btns=[];
   EQS.forEach(E=>E.st.forEach((S,i)=>{ const q=thr(S), go=(s,anim)=>{ s.n=i+1; s._p=0; anim(S.dv?DUR.dv:S.mv.length>1?DUR.mv2:DUR.mv,p=>{ s._p=p; }); };
-    btns.push({label:`▶ ${q.map(o=>nw(xh(o.a))).join(" and ")} on both pans`,show:s=>s.step===0&&s.eq===E.id&&s.n===i,fn:go});
+    btns.push({label:`▶ ${q.map(o=>`<span class="opc">${nw(xh(o.a))}</span>`).join(" and ")} on both pans`,show:s=>s.step===0&&s.eq===E.id&&s.n===i,fn:go});
     btns.push({label:`▶ Throw ${q.map(o=>nw(xh(o.b))).join(" and ")} over`,show:s=>s.step===1&&s.eq===E.id&&s.n===i,fn:go}); }));
   btns.push({label:"↺ Start again",show:s=>s.n>0,fn:s=>{ s.n=0; s._p=1; }});
   return aid({
@@ -3325,7 +3381,7 @@ function ptCubeF(svg,s){ const VW=[PT3[0],PT3[1],-1], AP=[1,1,0], allHome=ptAll(
     if(up){ const u=Q.reduce((b,p,j)=>Math.hypot(p[0]-A[0],p[2]-A[2])<Math.hypot(Q[b][0]-A[0],Q[b][2]-A[2])?j:b,0), nb=[(u+1)%4,(u+3)%4].sort((a,b)=>Q[a][2]-Q[b][2])[0];
       const m1=pj([0,1,2].map(j=>(Q[u][j]+Q[nb][j])/2)), m2=pj([0,1,2].map(j=>(Q[u][j]+A[j])/2)), cx=pj(C)[0], rt=m2[0]>cx;
       T(m1,"a",{dy:5.6}); T(m2,"a",{dx:rt?2.2:-2.2,dy:1.6,"text-anchor":rt?"start":"end"}); }
-    if(!home){ const c=up?pj(A):pj(C); lab(svg,[c[0],c[1]+(up?-3:2.4)],String(i+1),Object.assign({"font-size":7,"font-weight":700,fill:`var(--${P.c})`},NP)); } });
+    if(!home||ptAll(s,(s2,j)=>j===i||!ptHome(s2,j))){ const c=up?pj(A):pj(C); lab(svg,[c[0],c[1]+(up?-3:2.4)],String(i+1),Object.assign({"font-size":7,"font-weight":700,fill:`var(--${P.c})`},NP)); } });
   if(ptAll(s,ptAtRow)) lab(svg,[75,85.5],"3 identical pyramids",Object.assign({"font-size":4.4,"font-weight":700,fill:"var(--ink)"},NP));
 }
 const pointyThird=aid({
@@ -3355,7 +3411,7 @@ const pointyThird=aid({
     if(Math.hypot(g.x,g.y)<10) anim(350,q=>{ const e=ptSm(q); g.x=x0*(1-e); g.y=y0*(1-e); g.t=t0*(1-e); }); },
   steps:[
     {name:"3 pyramids make a cube",t:s=>ptAll(s,ptStand)?`<b>3 identical pyramids</b> make the cube. Each has the cube's base and height.<br>So 1 pyramid = ${frac("1","3")} × base area × height.`:ptAll(s,(s,i)=>!ptHome(s,i))?`Tap each pyramid to stand it on its square base.<br>Do they look the same?`:`Drag a pyramid out of the cube, or press <b>▶ Pull apart</b>.<br>Tap a pyramid to stand it on its square base.`},
-    {name:"Check: pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} fill the ${c}</b>, just like the cube.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`${s.sh==="cone"?"A cone is a round pyramid":`Same base, same height as the ${c}`}, so it should be ${frac("1","3")} too.<br>Check: press <b>▶ Pour one</b> until the ${c} is full.`;}},
+    {name:"Check: pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} fill the ${c}</b>, just like the cube.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`${s.sh==="cone"?"A cone is a round pyramid":`Same base, same height as the ${c}`}, so it should be ${frac("1","3")} of the ${c} too.<br>Check: press <b>▶ Pour one</b> until the ${c} is full.`;}},
     {name:"Base area × height",set:{f:0},t:s=>`Every solid: <b>${nw(`${V("V")} = base area × height`)}</b>.<br>Pointy top (cone, pyramid)? Put ${frac("1","3")} in front.`}
   ],
   draw(svg,s){ const cone=s.sh==="cone", [pn,cn]=ptName(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4},a));
@@ -3503,24 +3559,25 @@ function vnBuild(t){ const [parts,op]=VNB[t]||[[],""];
 }
 const vennAid=aid({
   init:{tg:"A ∩ B′",sh:0,chk:0,q:0,pick:-1,cs:"sub",t3:"A ∩ B"}, jump:true, vb:"0 0 140 100", label:"Venn diagram with regions to shade", link:["sh","chk","q"],
-  fix:s=>{s.sh=clamp(Math.round(s.sh),0,15); s.chk=s.chk?1:0; s.q=clamp(Math.round(s.q),0,VNQ.length-1);},
-  pills:[{k:"tg",label:"Shade",opts:VNT.map(t=>[t,t]),show:s=>s.step===0,on:s=>{s.sh=0;s.chk=0;}},
+  fix:s=>{s.sh=clamp(Math.round(s.sh),0,15); s.chk=clamp(Math.round(s.chk)||0,0,2); s.tries=s.chk; s.q=clamp(Math.round(s.q),0,VNQ.length-1);},
+  pills:[{k:"tg",label:"Shade",opts:VNT.map(t=>[t,t]),show:s=>s.step===0,on:s=>{s.sh=0;s.chk=0;s.tries=0;}},
     {k:"pick",label:"Which one?",opts:[[0,"?"],[1,"?"],[2,"?"]],show:s=>s.step===1},
     {k:"cs",label:"Case",opts:[["sub","B ⊂ A"],["dis","Disjoint"]],show:s=>s.step===2},
     {k:"t3",label:"Shade",opts:[["A ∩ B","A ∩ B"],["A ∪ B","A ∪ B"],["A ∩ B′","A ∩ B′"]],show:s=>s.step===2}],
-  buttons:[{label:"Check",fn:s=>{s.chk=1;},show:s=>s.step===0},{label:"Clear",fn:s=>{s.sh=0;s.chk=0;},show:s=>s.step===0},
-    {label:"Next one →",fn:s=>{s.q=(s.q+1)%VNQ.length;s.pick=-1;},show:s=>s.step===1}],
+  buttons:[{label:"Check",fn:s=>{ s.tries=(s.tries||0)+1; s.chk=(s.sh===VNS[s.tg]||s.tries>=2)?2:1; },show:s=>s.step===0},{label:"Clear",fn:s=>{s.sh=0;s.chk=0;s.tries=0;},show:s=>s.step===0},
+    {label:"Another one →",sec:true,fn:s=>{s.q=(s.q+1)%VNQ.length;s.pick=-1;},show:s=>s.step===1}],
   steps:[{name:"Tap to shade",t:()=>`Tap the parts to shade them, then press Check.<br>∩ = AND · ∪ = OR · ′ = NOT`},
     {name:"Read it",t:()=>`Which one matches the shading?`},
     {name:"Special cases",t:s=>s.cs==="sub"?`B is inside A, so some answers are just A or B.`:`No overlap, so A ∩ B is empty.`}],
   draw(svg,s){
     const top=(t,c)=>lab(svg,[VNX.x0+VNX.w,VNX.y0-4],t,{"text-anchor":"end","font-size":6.5,"font-weight":700,fill:c||"var(--ink)"});
     if(s.step===0){ const want=VNS[s.tg], f={};
-      VNK.forEach(k=>{ const on=s.sh&VNR[k], ok=want&VNR[k]; if(s.chk?ok:on) f[k]=s.chk?"var(--green-fill)":"var(--blue-fill)"; });
+      const rev=s.chk===2; VNK.forEach(k=>{ const on=s.sh&VNR[k], ok=want&VNR[k]; if(rev?ok:on) f[k]=rev?"var(--green-fill)":"var(--vn-shade)"; });
       const G=vnDraw(svg,"two",f);
-      if(s.chk){ const bad=VNK.filter(k=>(s.sh^want)&VNR[k]);
-        bad.forEach(k=>lab(svg,G.mk[k],"✗",{"font-size":8,"font-weight":700,fill:"var(--red)"}));
-        top(bad.length?`${s.tg}`:`✓ ${s.tg}`,bad.length?"var(--ink)":"var(--green)"); }
+      if(s.chk){ const extra=VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])), miss=VNK.filter(k=>!(s.sh&VNR[k])&&(want&VNR[k]));
+        extra.forEach(k=>lab(svg,G.mk[k],"✗",{"font-size":8,"font-weight":700,fill:"var(--red)"}));
+        if(!rev) miss.forEach(k=>lab(svg,G.mk[k],"?",{"font-size":8,"font-weight":700,fill:"var(--amber)"}));
+        top(extra.length+miss.length?`${s.tg}`:`✓ ${s.tg}`,extra.length+miss.length?"var(--ink)":"var(--green)"); }
       else top(`Shade ${s.tg}`);
       const hit=S_(svg,"rect",{x:VNX.x0,y:VNX.y0,width:VNX.w,height:VNX.h,fill:"transparent","data-drag":"t",style:"cursor:pointer"});
       hit.addEventListener("pointerdown",()=>{s._tap=1;});
@@ -3537,7 +3594,11 @@ const vennAid=aid({
   key(s){
     if(s.step===0){ const want=VNS[s.tg], bad=VNK.filter(k=>(s.sh^want)&VNR[k]).length;
       if(!s.chk) return FORMS([FB("blue","Shade",s.tg,VNW[s.tg],null,"wide")],true);
-      return KHEAD(bad?`<span class="k-red">✗ ${bad} ${bad===1?"part":"parts"} wrong.</span> The green is ${s.tg}:`:`<span class="k-green">✓ Correct!</span>`)+vnBuild(s.tg); }
+      if(!bad) return KHEAD(`<span class="k-green">✓ Correct!</span>`)+vnBuild(s.tg);
+      const ex=VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])).length, ms=bad-ex, pt=n=>`${n} ${n===1?"part":"parts"}`;
+      const what=[ex?`${pt(ex)} extra (✗)`:"",ms?`${pt(ms)} missing${s.chk===1?" (?)":""}`:""].filter(Boolean).join(", ");
+      if(s.chk===1) return FORMS([FB("red","Not yet",what,"fix it, then press Check again",null,"wide")],true);
+      return KHEAD(`<span class="k-red">✗ ${what}.</span> The green is ${s.tg}:`)+vnBuild(s.tg); }
     if(s.step===1){ const [ans,ch]=VNQ[s.q];
       if(s.pick<0) return FORMS([FB("ink","Read the shading","∩ AND · ∪ OR · ′ NOT","pick one of the 3 below",null,"wide")],true);
       const p=ch[s.pick];
@@ -4718,7 +4779,7 @@ const quadProof=(()=>{
   return aid({
     init:{ex:0,k:0}, vb:"0 0 10 10", label:"Completing the square on ax² + bx + c = 0, next to a worked example", link:["k"],
     pills:[{k:"ex",label:"Example",opts:E.map((e,i)=>[i,`<span>${e.p}</span>`])}],
-    buttons:[{label:"Next step ▶",show:s=>s.k<NM.length-1,fn:s=>{s.k++; s._go=1;}},...NM.map((n,i)=>({label:`<span>${n}</span>`,pill:true,pressed:s=>s.k===i,fn:s=>{s.k=i; s._go=1;}}))],
+    buttons:[{label:"▶ Next step",show:s=>s.k<NM.length-1,fn:s=>{s.k++; s._go=1;}},...NM.map((n,i)=>({label:`<span>${n}</span>`,pill:true,pressed:s=>s.k===i,fn:s=>{s.k=i; s._go=1;}}))],
     fix:s=>{s.k=clamp(Math.round(s.k)||0,0,7);},
     steps:[{t:()=>""}],
     draw(svg,s){ const st=svg.parentNode; if(!st) return; st.classList.add("qpst");
@@ -5096,12 +5157,12 @@ const toiletPaper=aid({
   sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:tpCylOn},{k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:tpCylOn},
     {k:"L",label:"length",min:2,max:8,step:1,f:v=>N(v)+" cm",show:s=>!tpCylOn(s)}],
   buttons:[{label:"▶ Unroll",show:s=>s.step<2,fn:(s,anim)=>{s.u=0; anim(s.step===1?4400:3200,p=>{s.u=p;});}},
-    {label:"Next line ▶",show:s=>s.step===2&&s.ln<tpLines(s).length,fn:s=>{s.ln++;}},
+    {label:"▶ Next line",show:s=>s.step===2&&s.ln<tpLines(s).length,fn:s=>{s.ln++;}},
     {label:"Start again",show:s=>s.step===2&&s.ln>1,fn:s=>{s.ln=1;}}],
   fix:s=>{ if(s.u>=0) s.u=clamp(s.u,0,1); if(s.ln>=0) s.ln=clamp(Math.round(s.ln),1,tpLines(s).length); },
   steps:[
-    {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Unroll it: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
-    {name:"Any prism",set:tpSet({u:0}),t:()=>`Unroll the sides into one strip: ${nw("perimeter × length")}.<br>Length = the distance between the 2 ends, even when the prism lies down.`},
+    {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Press <b>▶ Unroll</b> or drag the green dot: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
+    {name:"Any prism",set:tpSet({u:0}),t:()=>`Drag the green dot to unroll the sides into one strip: ${nw("perimeter × length")}.<br>Length = the distance between the 2 ends, even when the prism lies down.`},
     {name:"Exam style",set:tpSet({ln:1}),t:s=>s.q==="cyl"?`A closed cylinder has radius ${N(s.r)} cm and height ${N(s.h)} cm.<br>Find its total surface area.`:`This prism has the L-shaped end shown and length ${N(s.L)} cm.<br>Find its total surface area.`}
   ],
   draw(svg,s){ if(s.step===2){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
@@ -5306,7 +5367,7 @@ const KY=k=>`<kbd class="kc">${k}</kbd>`;
 const SCR=t=>`<span class="kscr">${t}</span>`;
 const KS=(...steps)=>`<span class="kseq">${steps.map((s,i)=>`<span class="kst">${i?`<span class="kar">→</span>`:""}${s[0]==="["?SCR(s.slice(1,-1)):s.split(" ").map(KY).join("")}</span>`).join(" ")}</span>`;
 const FACTS=(head,rows)=>`<div class="facts">${head?`<div class="fh">${head}</div>`:""}${rows.map(([l,xs])=>`<div class="fr${l?"":" nol"}">${l?`<span class="fl">${l}</span>`:""}<div class="fcs">${xs.map(x=>`<span class="fact">${x}</span>`).join("")}</div></div>`).join("")}</div>`;
-const PLAYLINK=(href,txt="Try it")=>`<p class="anno pl" style="text-align:center"><a class="pill sm playlink" href="${href}">${txt} →</a></p>`;
+const PLAYLINK=(href,txt="Try it")=>`<p class="anno pl" style="text-align:center"><a class="pill sm playlink${/^For the curious/.test(txt)?" cur":""}" href="${href}">${txt} →</a></p>`;
 const RX=`<tspan font-style="italic">x</tspan>`;
 function rainbow(vw,vh,y,toks,arcs){ let s=`<svg viewBox="0 0 ${vw} ${vh}" class="lsp" aria-hidden="true">`;
   arcs.forEach(([a,b,up,k,lab,c])=>{ const y0=up?y-10:y+4, yc=(y0+(up?-1:1)*k*4/3).toFixed(1), m=(a+b)/2, ya=y0+(up?-k:k);
@@ -5886,7 +5947,7 @@ rFormula:`${MUST([FB("blue",nw(`${CV("blue","R")} = ${SQRT(`${V("a")}² + ${V("b
 
 circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","same arc for both"),FB("blue","Angle in a semicircle","= 90°","diameter → right angle"),FB("green","Tangent ⊥ radius","= 90° at the point of contact","two tangents from a point are equal")])}
 <div class="sheet">
-  <div class="panelc"><h4>Angle properties <span class="anno">(tap a picture to drag it)</span></h4>
+  <div class="panelc"><h4>Angle properties <span class="anno">(tap a picture to try it)</span></h4>
     <div class="piccards">
       ${PIC("#circle-props?step=0",cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),`Angle at centre = ${nw("2 × angle")} at circumference`,"(∠ at centre = 2∠ at circ.)")}
       ${PIC("#circle-props?step=1",cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]}),"Angles in the same segment are equal","(∠s in same seg.)")}
@@ -9301,19 +9362,22 @@ function prmNum(prm,k,lo,hi,dflt){ if(!prm||!prm.has(k)) return dflt; const n=pa
 function remember(id){ try{ const r=JSON.parse(localStorage.getItem("hubRecent")||"[]").filter(x=>x!==id); r.unshift(id); localStorage.setItem("hubRecent",JSON.stringify(r.slice(0,3))); }catch(e){} }
 function recentTopics(){ try{ return JSON.parse(localStorage.getItem("hubRecent")||"[]").map(id=>TOPICS.find(t=>t.id===id)).filter(Boolean); }catch(e){ return []; } }
 function toast(msg){ let t=$("#toast"); if(!t){ t=h("div",{id:"toast",role:"status"}); document.body.append(t); } t.textContent=msg; t.classList.add("on"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("on"),1600); }
-function fitText(root,reset){ if(!root) return; if(reset) root._fit=null; const els=[...root.querySelectorAll(".formbox .eq, .khead")];
+function fitText(root,reset){ if(!root) return; if(reset) root._fit=null; const els=[...root.querySelectorAll(".formbox .eq, .khead")], isM=root.classList.contains("must");
+  if(isM&&reset) root.querySelectorAll(".formbox").forEach(b=>{ b.style.gridColumn=""; });
   const mem=(root._fit&&root._fit.length===els.length)?root._fit:(root._fit=new Array(els.length));
   els.forEach((el,i)=>{ el.style.fontSize=""; el.style.whiteSpace=""; const base=parseFloat(getComputedStyle(el).fontSize);
     let fs=(mem[i]&&mem[i]<base)?mem[i]:base; if(fs!==base) el.style.fontSize=fs+"px";
-    const min=Math.max(12,base*.72);
+    const min=Math.max(12,base*.72), bx=isM&&el.closest(".formbox");
+    if(bx&&!bx.style.gridColumn&&el.scrollWidth>el.clientWidth*1.12+1&&getComputedStyle(bx.parentElement).gridTemplateColumns.split(" ").length>1){ bx.style.gridColumn="1/-1"; fs=base; el.style.fontSize=""; }
     while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=1; el.style.fontSize=fs+"px"; }
+    if(bx&&!bx.style.gridColumn&&el.scrollWidth>el.clientWidth+1&&getComputedStyle(bx.parentElement).gridTemplateColumns.split(" ").length>1){ bx.style.gridColumn="1/-1"; fs=base; el.style.fontSize=""; while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=1; el.style.fontSize=fs+"px"; } }
     if(el.scrollWidth>el.clientWidth+1) el.style.whiteSpace="normal";
     mem[i]=fs; });
   root.querySelectorAll(".formbox .rd, .formbox .hd").forEach(el=>{ el.style.fontSize=""; el.style.whiteSpace="nowrap";
     if(el.scrollWidth<=el.clientWidth+1){ el.style.whiteSpace=""; return; }
     const base=parseFloat(getComputedStyle(el).fontSize), need=el.scrollWidth/el.clientWidth;
     if(need>1.18){ el.style.whiteSpace=""; return; }
-    let fs=base; const min=base*.85;
+    let fs=base; const min=isM&&el.classList.contains("rd")?Math.max(13,base*.85):base*.85;
     while(el.scrollWidth>el.clientWidth+1&&fs>min){ fs-=.5; el.style.fontSize=fs+"px"; }
     if(el.scrollWidth>el.clientWidth+1){ el.style.whiteSpace=""; el.style.fontSize=""; } }); }
 function settleKey(kb,reset){ if(!kb) return; const key=kb.closest(".key");
@@ -9348,7 +9412,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
    tangentAid:`<path d="M4 60 C30 -20 60 90 100 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="20" y1="22" x2="80" y2="22" stroke="var(--amber)" stroke-width="2"/>`,
    firstPrin:`<path d="M8 4 Q50 110 92 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="58.4" y1="54.9" x2="79.4" y2="54.9" stroke="var(--amber)" stroke-width="2.5"/><line x1="79.4" y1="54.9" x2="79.4" y2="40" stroke="var(--green)" stroke-width="2.5"/><line x1="79.4" y1="40" x2="79.4" y2="31" stroke="var(--red)" stroke-width="2.5"/><line x1="58.4" y1="54.9" x2="79.4" y2="31" stroke="var(--ink)" stroke-width="1.2"/><text x="84" y="60" font-size="13" fill="var(--muted)">h → 0</text>`,
    diffChord:`<path d="M8 4 Q50 110 92 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="52" y1="63.5" x2="95" y2="12.5" stroke="var(--amber)" stroke-width="2"/><circle cx="60.1" cy="53.9" r="4" fill="var(--accent)"/><circle cx="79.4" cy="31" r="4" fill="var(--amber)"/><text x="88" y="60" font-size="13" fill="var(--muted)">Q → P</text>`,
-   speedTime:`<path d="M6 58 L30 14 L70 14 L104 58 Z" fill="var(--blue-fill)"/><path d="M6 58 L30 14 L70 14 L104 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="58" x2="112" y2="58" stroke="var(--muted)"/><rect x="44" y="30" width="14" height="7" rx="2" fill="var(--red)"/>`,
+   speedTime:`<path d="M14 58 L34 16 L72 16 L102 58 Z" fill="var(--blue-fill)"/><path d="M14 58 L34 16 L72 16 L102 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M14 4 L14 58 L114 58" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M11 9 L14 4 L17 9 M109 55 L114 58 L109 61" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text x="3" y="14" font-size="11" font-style="italic" font-weight="700" fill="var(--ink)">v</text><text x="107" y="52" font-size="11" font-style="italic" font-weight="700" fill="var(--ink)">t</text>`,
    genTerm:`<rect x="2" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><rect x="28" y="2" width="22" height="13" rx="2" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="54" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><path d="M4 62 C30 6 58 70 104 22" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="62" y1="54" x2="112" y2="20" stroke="var(--green)" stroke-width="2"/>`,
    kinAid:`<path d="M6 40 Q30 -10 56 40 T106 40" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M6 40 Q30 -10 56 40 Z" fill="var(--blue-fill)"/><path d="M56 40 Q80 90 106 40 Z" fill="var(--red-fill)"/><line x1="4" y1="40" x2="112" y2="40" stroke="var(--muted)"/><circle cx="56" cy="8" r="4" fill="var(--green)"/>`,
    eqLines:`<line x1="8" y1="58" x2="112" y2="6" stroke="var(--blue)" stroke-width="2.5"/><path d="M34 45 H60 V32" fill="none" stroke="var(--amber)" stroke-width="2"/><circle cx="21" cy="51.5" r="3.5" fill="var(--accent)"/><circle cx="47" cy="38.5" r="3.5" fill="var(--accent)"/><circle cx="73" cy="25.5" r="3.5" fill="var(--accent)"/><circle cx="99" cy="12.5" r="3.5" fill="var(--accent)"/>`,
@@ -9420,7 +9484,7 @@ function renderHome(keep){
     chips.append(c);
   });
   body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div><p class="tabnote">${VIEWNOTE[v]}</p>`);
-  if(v!=="exam") body.append(chips);
+  body.append(chips);
   body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(true); });
   const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
   if(v==="sheets"){
@@ -9431,7 +9495,7 @@ function renderHome(keep){
     });
   } else if(v==="exam"){
     [["formula","Formula sheets"],["memorise","Memorise these"],["tips","Tips"]].forEach(([g,name])=>{
-      const list=homeItems("exam").filter(s=>s.group===g); if(!list.length) return;
+      const list=homeItems("exam").filter(s=>s.group===g&&fit(s)); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${name}</h3>`), grid=h("div",{class:"scards"});
       list.forEach(s=>grid.append(sheetCard(s))); sec.append(grid); body.append(sec);
     });
@@ -9460,7 +9524,7 @@ function renderHome(keep){
 }
 const CURTAG=`<span class="tag curtag">For the curious</span>`;
 function sheetCard(s,skip){
-  const tags=(s.tag?[s.tag]:s.levels.filter(l=>l!==skip).map(l=>SHORT[l])).map(x=>`<span class="tag lvl">${x}</span>`).join("")+(s.aid?`<span class="tag aidtag">Interactive</span>`:"");
+  const tags=(s.tag?[s.tag]:s.levels.filter(l=>l!==skip).map(l=>(skip?"also ":"")+SHORT[l])).map(x=>`<span class="tag lvl">${x}</span>`).join("")+(s.aid?`<span class="tag aidtag">+ Interactive</span>`:"");
   return h("a",{class:"scard",href:"#sheet/"+s.id},`<div class="sth">${sheetThumb(s)}</div><div class="stt"><b>${s.title}</b>${tags?`<span class="tags">${tags}</span>`:""}</div>`); }
 function topicCard(t){ return h("a",{class:"scard",href:"#"+t.id},`<div class="sth">${thumbFor(t)}</div><div class="stt"><b>${t.title}</b><span class="tags"><span class="tag aidtag">Interactive</span>${t.tier==="curious"?CURTAG:""}</span></div>`); }
 function sheetThumb(s){ const f=STHUMB[s.id]; if(f) return f(); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); return t?thumbFor(t):""; }
@@ -9498,11 +9562,12 @@ function renderTopic(t,tab,prm){
   if(tab==="play"&&!t.play) tab="sheet";
   const lvl=LEVELS.find(l=>l.id===(t.levels.includes(homeFilter)?homeFilter:t.levels[0]));
   const tSheet=sheetForTopic(t); document.title=(tab==="sheet"&&tSheet?tSheet.title:t.title)+" · Maths Hub";
-  titleEl.textContent=t.title; crumbEl.textContent=`${lvl.name} · ${t.chapter}`;
+  titleEl.textContent=tab==="sheet"&&tSheet?tSheet.title:t.title; crumbEl.textContent=`${lvl.name} · ${t.chapter}`;
   if(t.tier==="curious") crumbEl.insertAdjacentHTML("afterbegin",CURTAG);
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=(tab!=="play"); printBtn.hidden=(tab==="play");
   if(tab==="play") remember(t.id); setPage(tab==="play"?"play":"sheet"); setNav(tab==="play"?"play":"sheets");
-  cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t)};
+  const src=srcFrom&&srcFrom.topic===t.id?srcFrom:null;
+  cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t),back:src&&!(tab==="sheet"&&src.own)?src.hash:"",done:src?"#"+src.hash:(t.sheet?"#"+t.id+"/sheet":"")};
   app.innerHTML="";
   const tabs=h("div",{class:"tabs",role:"tablist"});
   [["play","Interactive",t.play],["sheet","Cheatsheet",t.sheet]].forEach(([k,name,has])=>{
@@ -9518,12 +9583,13 @@ function renderTopic(t,tab,prm){
     left.append(stage,key); wrap.append(left,panel); app.append(wrap);
     cur.stage=stage;
     PLAYS[t.play].mount(stage,panel,key,prm||new URLSearchParams());
-    const stabs=panel.querySelector(".steptabs"); if(stabs) wrap.before(stabs);
-    if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
+    const stabs=panel.querySelector(".steptabs"); if(stabs){ wrap.before(stabs); const sb=stabs.querySelector('[aria-selected="true"]'); if(sb&&stabs.scrollWidth>stabs.clientWidth) stabs.scrollLeft=Math.max(0,sb.offsetLeft-stabs.offsetLeft-(stabs.clientWidth-sb.offsetWidth)/2); }
+    if(src&&!src.own) panel.append(h("a",{class:"pill sheetlink",href:"#"+src.hash},`← Back to ${src.title}`));
+    else if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
     placeDock();
   } else {
-    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${(cur.sheet&&cur.sheet.title)||t.sheetTitle||t.chapter} — cheatsheet</h2>`+SHEETS[t.sheet]+sheetEnd());
-    digest(app); cdLinks(t.sheet); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
+    app.insertAdjacentHTML("beforeend",`<h2 class="sheeth">${(cur.sheet&&cur.sheet.title)||t.sheetTitle||t.chapter}</h2>`+SHEETS[t.sheet]+sheetEnd());
+    digest(app); cdLinks(t.sheet); fitMust(); sheetLay(); sheetBump(); bindPrint(); fillPrintFoot(!!window.qrcode);
   }
   window.scrollTo(0,0);
 }
@@ -9556,21 +9622,36 @@ function fitPaper(){ app.querySelectorAll(".fpaper .fd").forEach(el=>{ el.style.
 function digest(root){
   const brk=(sel,pats)=>root.querySelectorAll(sel).forEach(el=>{
     const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT), nodes=[]; let n; while((n=walker.nextNode())) nodes.push(n);
+    const star=el.matches(".anno")&&/^\s*\*/.test(el.textContent);
     nodes.forEach(t=>{ if(t.parentElement.closest(".nw, svg, .frac, .mx, sup, .lim")) return; let s=t.nodeValue; if(!pats.some(p=>s.includes(p))) return;
       const parts=s.split(/( · | → )/); if(parts.length<3) return; const frag=document.createDocumentFragment();
-      parts.forEach(pt=>{ if(pt===" · ") frag.append(document.createElement("br")); else if(pt===" → "){ frag.append(document.createElement("br")); frag.append(document.createTextNode("→ ")); } else if(pt) frag.append(document.createTextNode(pt)); });
+      parts.forEach((pt,k)=>{ if(pt===" · ") frag.append(document.createElement("br")); else if(pt===" → "){ frag.append(document.createElement("br")); frag.append(document.createTextNode("→ ")); } else if(pt) frag.append(document.createTextNode(star&&k>0&&parts[k-1]===" · "&&!/^\s*\*/.test(pt)?"* "+pt:pt)); });
       t.replaceWith(frag); }); });
   brk(".panelc .anno, .panelc td, .panelc .steps li, .panelc .wrongright div, .panelc .note, .must .formbox .rd, .must .formbox .eq, .piccard .pt, .piccard .anno",[" · "," → "]);
   root.querySelectorAll(".panelc > p:not(.anno):not(.big)").forEach(p=>{ p.innerHTML=p.innerHTML.replace(/\. (?=[A-Z0-9$])/g,".<br>"); });
 }
+function svgBump(sel,minPx,cap){ app.querySelectorAll(sel).forEach(svg=>{ if(svg.closest(".rt")||svg.classList.contains("ico")||svg.closest(".mzc")) return; const vb=svg.viewBox&&svg.viewBox.baseVal, r=svg.getBoundingClientRect(); if(!vb||!vb.width||!r.width) return;
+  const ppu=Math.min(r.width/vb.width,(r.height||r.width)/vb.height), min=minPx/ppu;
+  svg.querySelectorAll("text, tspan").forEach(t=>{ if(t.dataset.f0===undefined) t.dataset.f0=t.getAttribute("font-size")||""; const fs=parseFloat(t.dataset.f0); if(!fs) return; t.setAttribute("font-size",Math.max(fs,Math.min(min,fs*cap)).toFixed(2)); }); }); }
+const sheetBump=()=>svgBump(".panelc svg, .piccard svg",11.5,1.6);
+function sheetLay(){ app.querySelectorAll(".sheet").forEach(g=>{ if(!g._c) g._c=[...g.children]; if(g._c.some(c=>!c.matches(".panelc")||c.matches(".pg"))) return;
+  const W=g.getBoundingClientRect().width, two=innerWidth>=900&&W>=858;
+  if(!two){ if(g.classList.contains("js")){ g.classList.remove("js"); g.replaceChildren(...g._c); g._w=0; } return; }
+  if(g._w===W&&g.classList.contains("js")) return; g._w=W;
+  const cols=[0,1].map(()=>h("div",{class:"scol"})); g.classList.add("js"); g.replaceChildren(...cols); g._c.forEach(c=>cols[0].append(c));
+  const hs=g._c.map(c=>c.offsetHeight+18), t=[0,0]; g._c.forEach((c,i)=>{ const k=t[1]<t[0]-1?1:0; cols[k].append(c); t[k]+=hs[i]; }); }); }
+const sheetUnlay=()=>app.querySelectorAll(".sheet.js").forEach(g=>{ g.classList.remove("js"); g.replaceChildren(...g._c); g._w=0; });
+addEventListener("beforeprint",sheetUnlay);
+addEventListener("afterprint",()=>sheetLay());
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ app.querySelectorAll(".sheet").forEach(g=>{ g._w=0; }); sheetLay(); });
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
   titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:s.group==="memorise"?`${SHORT[s.levels[0]]} · Memorise`:`Exam kit · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
-  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
-  digest(app); cdLinks(s.sheet); fitMust(); mzNav(); mzAct(s); mzLay(); bindPrint(); fillPrintFoot(!!window.qrcode);
+  app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
+  digest(app); cdLinks(s.sheet); fitMust(); mzNav(); mzAct(s); mzLay(); sheetLay(); sheetBump(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
@@ -10840,9 +10921,16 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
 addEventListener("resize",()=>{ if(cur&&cur.cards){ if(cdS&&cdS.kind==="quick") qqFit(); else cdFit(); } });
+let srcFrom=null;
+function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURIComponent(old); }catch(e){} const op=old.replace(/^\//,"").split("/");
+  if(t&&srcFrom&&srcFrom.topic===t.id&&op[0]===t.id) return;
+  srcFrom=null; if(!t) return;
+  let s=null; if(op[0]==="sheet"&&op[1]) s=sheetOf(op[1]); else if(op[1]==="sheet"){ const ot=TOPICS.find(x=>x.id===op[0]); s=ot&&sheetForTopic(ot); }
+  if(s&&!s.exam) srcFrom={topic:t.id,hash:op.join("/"),title:s.title,own:(sheetForTopic(t)||{}).id===s.id}; }
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
+  const t0=TOPICS.find(x=>x.id===parts[0])||(parts[0]==="sheet"&&parts[1]&&(()=>{ const s=sheetOf(parts[1]); return s&&s.aid&&TOPICS.find(x=>x.id===s.aid); })())||null; noteSrc(t0);
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
     if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
   if(parts[0]==="cards"&&renderCards(parts[1],parts[2],parts[3])) return;
@@ -10976,7 +11064,7 @@ let fitQ=0;
 function fitStage(){fitQ=0; const left=document.querySelector(".left"), st=document.querySelector(".stage"), svg=st&&st.querySelector(":scope>svg"); if(!svg||!left) return;
   if(innerWidth<900||(innerHeight>innerWidth&&!document.documentElement.hasAttribute("data-present"))){svg.style.maxHeight=""; return;}
   const top=left.getBoundingClientRect().top+scrollY, other=left.getBoundingClientRect().height-svg.getBoundingClientRect().height;
-  const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px") svg.style.maxHeight=m+"px";}
+  const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px"){ svg.style.maxHeight=m+"px"; bumpText(svg); layoutFracs(svg); }}
 const fitSoon=()=>{if(!fitQ) fitQ=requestAnimationFrame(fitStage)};
 function placeDock(){
   const play=document.querySelector(".play"); if(!play) return;
@@ -10986,7 +11074,7 @@ function placeDock(){
   else if(dock.parentElement!==panel){ if(slot) slot.after(dock); else panel.prepend(dock); }
 }
 let lastW=innerWidth, rzQ=0;
-addEventListener("resize",()=>{ if(rzQ) return; rzQ=requestAnimationFrame(()=>{ rzQ=0; placeDock(); fitSoon(); if(innerWidth!==lastW){ lastW=innerWidth; settleKey(document.querySelector(".keybox"),true); fitMust(); } }); });
+addEventListener("resize",()=>{ if(rzQ) return; rzQ=requestAnimationFrame(()=>{ rzQ=0; placeDock(); fitSoon(); if(innerWidth!==lastW){ lastW=innerWidth; settleKey(document.querySelector(".keybox"),true); fitMust(); if(!matchMedia("print").matches){ sheetLay(); sheetBump(); } } }); });
 new MutationObserver(fitSoon).observe(app,{childList:true,subtree:true});
 window.addEventListener("hashchange",route);
 route();
