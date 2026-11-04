@@ -8506,7 +8506,7 @@ function renderSheetOnly(s){
   window.scrollTo(0,0);
 }
 
-let cdS=null, cdShuf=false, cdFrom="";
+let cdS=null, cdShuf=false, cdFrom="", cdMistOn=false;
 function cdDom(key){ const d=document.createElement("div"); d.innerHTML=SHEETS[key]||""; digest(d); return d; }
 function cdMist(key){ return [...cdDom(key).querySelectorAll(".wrongright .x")].filter(x=>x.nextElementSibling&&x.nextElementSibling.matches(".ok"))
   .map(x=>({f:`<p class="cask">What's wrong here?</p><div class="wrongright"><div class="x">${x.innerHTML}</div></div>`,b:`<div class="wrongright"><div class="ok">${x.nextElementSibling.innerHTML}</div></div>`})); }
@@ -8558,7 +8558,7 @@ function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; 
   else if(c==="shuf"){ cdShuf=!cdShuf; cdStart(S.set,true); }
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
-function renderCards(kind,id){
+function renderCards(kind,id){ if(kind==="mist"&&!cdMistOn) return false;
   const s=kind==="mist"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath")?sheetOf(id+"-memorise"):null; if(!s) return false;
   const cards=kind==="mist"?cdMist(s.sheet):cdMemo(s.sheet); if(!cards.length) return false;
   const name=kind==="mist"?"Spot the mistake":"Flashcards", key=kind+"/"+id;
@@ -8569,6 +8569,7 @@ function renderCards(kind,id){
   cdS={kind,key,cards,back:"#sheet/"+s.id}; cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(s.group==="memorise"){ const p=app.querySelector("p.tiny"); if(p) p.insertAdjacentHTML("afterend",PLAYLINK("#cards/memo/"+s.levels[0],"Flashcards")); return; }
+  if(!cdMistOn) return;
   const w=app.querySelectorAll(".wrongright"); if(app.querySelectorAll(".wrongright .x").length<2) return;
   const pn=w[w.length-1].closest(".panelc")||w[w.length-1]; pn.insertAdjacentHTML(pn===w[w.length-1]?"afterend":"beforeend",PLAYLINK("#cards/mist/"+s.id,"Spot the mistake"));
   if(cdFrom==="cards/mist/"+s.id){ const a=app.querySelector(`a[href="#cards/mist/${s.id}"]`); if(a) setTimeout(()=>a.scrollIntoView({block:"center"}),0); } }
