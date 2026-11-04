@@ -9571,7 +9571,123 @@ const QQ_HI={
   return {q:`Solve ${nw(`${a}<sup>2${X1}</sup> − ${p}(${ax}) + ${q} = 0.`)}`,w:[`let ${nw(`${vu} = ${ax}`)}: ${nw(`${vu}² − ${p}${vu} + ${q} = 0`)}`,nw(`(${vu} − ${u1})(${vu} − ${u2}) = 0`),`${nw(`${ax} = ${u1}`)} or ${nw(`${ax} = ${u2}`)}`,nw(`${X1} = ${m} or ${X1} = ${k}`)],a:`${nw(`${X1} = ${m}`)} or ${nw(`${X1} = ${k}`)}`,n:{a,m,k,p,q}}; }},
 {t:"log equation",g:R=>{ const L=[]; [[10,1],[10,2],[2,2],[2,3],[2,4],[2,5],[3,2],[3,3]].forEach(([b,k])=>{ const M=Math.pow(b,k); for(let r=1;r<=20;r++){ if(M%r) continue; const ap=M/r-r, am=r-M/r; [[1,ap],[-1,am]].forEach(([s,a])=>{ if(a>=1&&a<=15&&r!==b&&r!==k&&r!==a&&!(b===2&&r===2)) L.push({b,k,s,a,r,t:s>0?-(r+a):-M/r}); }); } });
   const n=R.pick(L), {b,k,s,a,r,t}=n, M=Math.pow(b,k), lg=v=>b===10?`lg${v}`:`${LOGA(b)}${v}`, xa=qJ(X1,s*a), pw=k===1?String(b):qP(String(b),k);
-  return {q:`Solve ${nw(`${lg(`(${xa})`)} + ${lg(" "+X1)} = ${k}.`)}`,w:[nw(`${lg(` [${X1}(${xa})]`)} = ${k}`),`${nw(`${lg(" "+V("A"))} = ${k}`)} means ${nw(`${V("A")} = ${pw}`)}`,nw(`${X1}(${xa}) = ${pw}`),nw(`${qJ(X2,qT(s*a,X1),-M)} = 0`),nw(`(${qJ(X1,-t)})(${qJ(X1,-r)}) = 0`),`${nw(`${X1} = ${r}`)} (reject ${qN(t)}: ${nw(`${lg(`(${qN(t)})`)}`)} is not defined)`],a:nw(`${X1} = ${r}`),n:{b,k,s,a}}; }}]
+  return {q:`Solve ${nw(`${lg(`(${xa})`)} + ${lg(" "+X1)} = ${k}.`)}`,w:[nw(`${lg(` [${X1}(${xa})]`)} = ${k}`),`${nw(`${lg(" "+V("A"))} = ${k}`)} means ${nw(`${V("A")} = ${pw}`)}`,nw(`${X1}(${xa}) = ${pw}`),nw(`${qJ(X2,qT(s*a,X1),-M)} = 0`),nw(`(${qJ(X1,-t)})(${qJ(X1,-r)}) = 0`),`${nw(`${X1} = ${r}`)} (reject ${qN(t)}: ${nw(`${lg(`(${qN(t)})`)}`)} is not defined)`],a:nw(`${X1} = ${r}`),n:{b,k,s,a}}; }}],
+"coordinate-geometry-circles":[
+{t:"perpendicular bisector",g:R=>{ const n=qTry(()=>{ const [dx,dy]=R.pick([[1,1],[1,-1],[1,2],[2,1],[1,-2],[2,-1],[1,3],[3,1],[1,-3],[3,-1],[2,3],[3,2],[2,-3],[3,-2]]), k=R.pick([1,1,2]), mx=R.nz(-4,5), my=R.nz(-4,5); return {dx,dy,mx,my,x1:mx-k*dx,y1:my-k*dy,x2:mx+k*dx,y2:my+k*dy}; },n=>n.x1&&n.y1,{dx:1,dy:1,mx:3,my:4,x1:1,y1:2,x2:5,y2:6}), {dx,dy,mx,my,x1,y1,x2,y2}=n, gg=qGcd(dx,dy), p=-dx*Math.sign(dy)/gg, q=Math.abs(dy)/gg, VM=V("m");
+  const ln=`${qJ(VY,-my)} = ${p===1&&q===1?qJ(X1,-mx):`${qF(p,q)}(${qJ(X1,-mx)})`}`, fin=q===1?`${VY} = ${qJ(qT(p,X1),my-p*mx)}`:`${qT(q,VY)} = ${qJ(qT(p,X1),q*my-p*mx)}`;
+  return {q:`A is the point ${nw(`(${qN(x1)}, ${qN(y1)})`)} and B is the point ${nw(`(${qN(x2)}, ${qN(y2)}).`)} Find the equation of the perpendicular bisector of AB.`,
+    w:[nw(`midpoint M = (${qN(mx)}, ${qN(my)})`),nw(`${VM}<sub>AB</sub> = ${frac(`${qN(y2)} − ${qB(y1)}`,`${qN(x2)} − ${qB(x1)}`)} = ${qF(dy,dx)}`),`perpendicular: ${nw(`${VM} = ${qF(p,q)}`)}`,nw(ln),nw(fin)],a:nw(fin),n:{x1,y1,x2,y2}}; }},
+{t:"area of a triangle",g:R=>{ const n=qTry(()=>{ const P=[0,1,2].map(()=>[R.int(-6,8),R.int(-6,8)]); return {A:P[0],B:P[1],C:P[2],cr:(P[1][0]-P[0][0])*(P[2][1]-P[0][1])-(P[1][1]-P[0][1])*(P[2][0]-P[0][0])}; },n=>Math.abs(n.cr)>=8&&Math.abs(n.cr)<=120&&(n.cr>0?n.A[1]*n.B[0]+n.B[1]*n.C[0]+n.C[1]*n.A[0]:n.A[1]*n.C[0]+n.C[1]*n.B[0]+n.B[1]*n.A[0])!==0,{A:[-4,3],B:[3,5],C:[2,-5],cr:-68}),
+  {A,B,C,cr}=n, o=cr>0?[["A",A],["B",B],["C",C]]:[["A",A],["C",C],["B",B]], L=[...o,o[0]], d=L.slice(0,3).map((v,i)=>v[1][0]*L[i+1][1][1]), u=L.slice(0,3).map((v,i)=>v[1][1]*L[i+1][1][0]), D=d.reduce((s,v)=>s+v,0), U=u.reduce((s,v)=>s+v,0), ar=(D-U)/2, pt=v=>`${v[0]}(${qN(v[1][0])}, ${qN(v[1][1])})`;
+  return {q:`The points ${nw(pt(["A",A]))}, ${nw(pt(["B",B]))} and ${nw(pt(["C",C]))} are the vertices of a triangle. Find the area of triangle ABC.`,
+    w:[`go round anticlockwise: ${o.map(v=>v[0]).join(", ")}, back to A`,nw(`${frac("1","2")} ${MX([L.map(v=>qN(v[1][0])),L.map(v=>qN(v[1][1]))],"det")}`),`${CS("blue","↘")}${nw(`: ${L.slice(0,3).map((v,i)=>`(${qN(v[1][0])})(${qN(L[i+1][1][1])})`).join(" + ")} = ${qN(D)}`)}`,`${CS("amber","↗")}${nw(`: ${L.slice(0,3).map((v,i)=>`(${qN(v[1][1])})(${qN(L[i+1][1][0])})`).join(" + ")} = ${qN(U)}`)}`,nw(`area = ${frac("1","2")}(${qN(D)} − ${qB(U)}) = ${qN(ar)} units²`)],a:`${qN(ar)} units²`,n:{A,B,C}}; }},
+{t:"centre and radius",g:R=>{ const n=qTry(()=>{ const a=R.nz(-6,6), b=R.nz(-6,6), r=R.int(2,9); return {a,b,r,c:a*a+b*b-r*r}; },n=>n.c!==0&&Math.abs(n.c)<=60,{a:2,b:-5,r:5,c:4}), {a,b,r,c}=n, h=R.f()<.3?2:1, VG=V("g"), VF=V("f"), VC=V("c"), sq=v=>v<0?`(${qN(v)})²`:`${v}²`,
+  E=m=>`${qJ(qT(m,X2),qT(m,VY+"²"),qT(-2*a*m,X1),qT(-2*b*m,VY),c*m)} = 0`, w=[];
+  if(h>1) w.push(qW(nw(E(1)),"÷ 2 first"));
+  w.push(nw(`2${VG} = ${qN(-2*a)}, 2${VF} = ${qN(-2*b)}, ${VC} = ${qN(c)}`),nw(`${VG} = ${qN(-a)}, ${VF} = ${qN(-b)}`),nw(`centre = (${qN(a)}, ${qN(b)})`),nw(`radius = ${SQRT(`${sq(-a)} + ${sq(-b)} − ${qB(c)}`)} = ${r}`));
+  return {q:`Find the centre and the radius of the circle ${nw(`${E(h)}.`)}`,w,a:`centre ${nw(`(${qN(a)}, ${qN(b)})`)}, radius ${r}`,n:{a,b,r,h}}; }},
+{t:"tangent at a point",g:R=>{ const n=qTry(()=>{ const a=R.nz(-5,5), b=R.nz(-5,5), dx=R.nz(-4,4), dy=R.nz(-4,4); return {a,b,dx,dy,px:a+dx,py:b+dy,c:a*a+b*b-dx*dx-dy*dy}; },n=>n.px&&n.py&&n.c&&Math.abs(n.c)<=50&&Math.abs(n.dx)!==Math.abs(n.dy),{a:3,b:-2,dx:3,dy:4,px:6,py:2,c:-12}),
+  {a,b,dx,dy,px,py,c}=n, gg=qGcd(dx,dy), p=-dx*Math.sign(dy)/gg, q=Math.abs(dy)/gg, VM=V("m");
+  const ln=`${qJ(VY,-py)} = ${p===1&&q===1?qJ(X1,-px):`${qF(p,q)}(${qJ(X1,-px)})`}`, fin=q===1?`${VY} = ${qJ(qT(p,X1),py-p*px)}`:`${qT(q,VY)} = ${qJ(qT(p,X1),q*py-p*px)}`;
+  return {q:`The point ${nw(`P(${qN(px)}, ${qN(py)})`)} lies on the circle ${nw(`${qJ(X2,VY+"²",qT(-2*a,X1),qT(-2*b,VY),c)} = 0.`)} Find the equation of the tangent to the circle at P.`,
+    w:[nw(`centre C = (${qN(a)}, ${qN(b)})`),nw(`${VM}<sub>CP</sub> = ${frac(`${qN(py)} − ${qB(b)}`,`${qN(px)} − ${qB(a)}`)} = ${qF(dy,dx)}`),`tangent: ${nw(`${VM} = ${qF(p,q)}`)}`,nw(ln),nw(fin)],a:nw(fin),n:{a,b,px,py}}; }}],
+"linear-law":[
+{t:"y = axⁿ",g:R=>{ const n=qTry(()=>{ const p=R.pick([0.5,1.5,2,2.5,3,-0.5,-1,-1.5,-2]), C=R.int(10,95)/100, u1=R.int(1,4)/10, u2=u1+R.int(2,6)/10, f=v=>Math.round(v*100)/100; return {p,C,u1:f(u1),u2:f(u2),v1:f(p*u1+C),v2:f(p*u2+C)}; },n=>n.v1!==0&&n.v2!==0&&Math.round(n.C*100)%10!==0,{p:1.5,C:0.48,u1:0.2,u2:0.6,v1:0.78,v2:1.38}),
+  {p,C,u1,u2,v1,v2}=n, va=V("a"), vn=V("n"), A=Math.pow(10,C);
+  return {q:`The variables ${X1} and ${VY} are related by ${nw(`${VY} = ${va}${X1}<sup>${vn}</sup>`)}, where ${va} and ${vn} are constants. When lg ${VY} is plotted against lg ${X1}, the straight line passes through ${nw(`(${qN(u1)}, ${qN(v1)})`)} and ${nw(`(${qN(u2)}, ${qN(v2)}).`)} Find ${vn} and ${va}.`,
+    w:[`take lg: ${nw(`lg ${VY} = ${vn} lg ${X1} + lg ${va}`)}`,nw(`${vn} = ${frac(`${qN(v2)} − ${qB(v1)}`,`${qN(u2)} − ${qN(u1)}`)} = ${qN(p)}`),nw(`${qN(v1)} = ${qN(p)}(${qN(u1)}) + lg ${va}`),nw(`lg ${va} = ${qN(C)}`),nw(`${va} = 10<sup>${qN(C)}</sup> = ${qR(A,6)}…`),nw(`= ${qR(A,3)} (3 s.f.)`)],
+    a:`${nw(`${vn} = ${qN(p)}`)}, ${nw(`${va} = ${qR(A,3)} (3 s.f.)`)}`,n}; }},
+{t:"y = abˣ",g:R=>{ const n=qTry(()=>{ const m=R.sign()*R.int(5,40)/100, C=R.int(10,99)/100, u1=R.int(1,3), u2=u1+R.int(2,4), f=v=>Math.round(v*100)/100; return {m,C,u1,u2,v1:f(m*u1+C),v2:f(m*u2+C)}; },n=>n.v1!==0&&n.v2!==0&&Math.round(n.C*100)%10!==0&&Math.round(n.m*100)%10!==0,{m:0.2,C:0.48,u1:1,u2:4,v1:0.68,v2:1.28}),
+  {m,C,u1,u2,v1,v2}=n, va=V("a"), vb=V("b"), A=Math.pow(10,C), B=Math.pow(10,m);
+  return {q:`The variables ${X1} and ${VY} are related by ${nw(`${VY} = ${va}${vb}<sup>${X1}</sup>`)}, where ${va} and ${vb} are constants. When lg ${VY} is plotted against ${X1}, the straight line passes through ${nw(`(${u1}, ${qN(v1)})`)} and ${nw(`(${u2}, ${qN(v2)}).`)} Find ${va} and ${vb}.`,
+    w:[`take lg: ${nw(`lg ${VY} = (lg ${vb})${X1} + lg ${va}`)}`,nw(`lg ${vb} = ${frac(`${qN(v2)} − ${qB(v1)}`,`${u2} − ${u1}`)} = ${qN(m)}`),nw(`${vb} = 10<sup>${qN(m)}</sup> = ${qR(B,6)}…`),nw(`= ${qR(B,3)} (3 s.f.)`),nw(`${qN(v1)} = ${qN(m)}(${u1}) + lg ${va}`),nw(`lg ${va} = ${qN(C)}`),nw(`${va} = 10<sup>${qN(C)}</sup> = ${qR(A,6)}…`),nw(`= ${qR(A,3)} (3 s.f.)`)],
+    a:`${nw(`${va} = ${qR(A,3)}`)}, ${nw(`${vb} = ${qR(B,3)} (3 s.f.)`)}`,n}; }},
+{t:"y = ax² + bx",g:R=>{ const n=qTry(()=>{ const a=R.nz(-5,5), b=R.nz(-9,9), u1=R.int(1,4), u2=u1+R.int(1,4); return {a,b,u1,u2,v1:a*u1+b,v2:a*u2+b}; },n=>n.v1!==0&&n.v2!==0&&n.a!==n.b,{a:2,b:3,u1:1,u2:3,v1:5,v2:9}),
+  {a,b,u1,u2,v1,v2}=n, va=V("a"), vb=V("b"), Yx=frac(VY,X1);
+  return {q:`The variables ${X1} and ${VY} are related by ${nw(`${VY} = ${va}${X2} + ${vb}${X1}`)}, where ${va} and ${vb} are constants. When ${nw(Yx)} is plotted against ${X1}, the straight line passes through ${nw(`(${u1}, ${qN(v1)})`)} and ${nw(`(${u2}, ${qN(v2)}).`)} Find ${va} and ${vb}.`,
+    w:[`÷ ${X1}: ${nw(`${Yx} = ${va}${X1} + ${vb}`)}`,`${nw(`${V("Y")} = ${Yx}, ${V("X")} = ${X1}`)}, ${nw(`${V("m")} = ${va}, ${V("C")} = ${vb}`)}`,nw(`${va} = ${frac(`${qN(v2)} − ${qB(v1)}`,`${u2} − ${u1}`)} = ${qN(a)}`),nw(`${qN(v1)} = ${qN(a)}(${u1}) + ${vb}`),nw(`${vb} = ${qN(b)}`)],
+    a:`${nw(`${va} = ${qN(a)}`)}, ${nw(`${vb} = ${qN(b)}`)}`,n}; }}],
+"trig-identities-equations":[
+{t:"basic equation",g:R=>{ const f=R.pick(["sin","cos","tan"]), sg=R.sign(), m=f==="tan"?R.pick([0.4,0.6,0.7,0.8,1.2,1.5,2,2.5,3,3.5]):R.pick([0.2,0.3,0.4,0.6,0.7,0.8,0.9]), k=sg*m, al=(f==="sin"?Math.asin(m):f==="cos"?Math.acos(m):Math.atan(m))*180/Math.PI, tr=v=>`${(Math.floor(v*1000)/1000).toFixed(3)}…°`,
+  Q=f==="sin"?(sg>0?[1,2]:[3,4]):f==="cos"?(sg>0?[1,4]:[2,3]):(sg>0?[1,3]:[2,4]), Fm=[null,"",`180° − `,`180° + `,`360° − `], val=q=>q===1?al:q===2?180-al:q===3?180+al:360-al, xs=Q.map(q=>qD(val(q),1));
+  return {q:`Solve ${nw(`${f} ${X1} = ${qN(k)}`)} for ${nw(`0° ≤ ${X1} ≤ 360°.`)} Give your answers correct to 1 decimal place.`,
+    w:[nw(`α = ${f}<sup>−1</sup> ${qN(m)} = ${tr(al)}`),`${f} is ${sg>0?"positive":"negative"}: Quadrants ${Q[0]} and ${Q[1]}`,...Q.map((q,i)=>nw(`${X1} = ${Fm[q]}${tr(al)} = ${xs[i]}°`)),`${nw(`${X1} = ${xs[0]}°,`)} ${nw(`${xs[1]}° (1 d.p.)`)}`],
+    a:`${nw(`${X1} = ${xs[0]}°,`)} ${nw(`${xs[1]}° (1 d.p.)`)}`,n:{f,k}}; }},
+{t:"bracket first",g:R=>{ const f=R.pick(["sin","cos"]), sg=R.sign(), m=R.pick([0.2,0.3,0.4,0.6,0.7,0.8,0.9]), k=sg*m, al=(f==="sin"?Math.asin(m):Math.acos(m))*180/Math.PI, tr=v=>`${(Math.floor(v*1000)/1000).toFixed(3)}…°`, x2=`2${X1}`,
+  Q=f==="sin"?(sg>0?[1,2]:[3,4]):(sg>0?[1,4]:[2,3]), val=q=>q===1?al:q===2?180-al:q===3?180+al:360-al, t1=Q.map(val), t2=t1.map(v=>v+360), xs=[...t1,...t2].map(v=>qD(v/2,1));
+  return {q:`Solve ${nw(`${f} ${x2} = ${qN(k)}`)} for ${nw(`0° ≤ ${X1} ≤ 360°.`)} Give your answers correct to 1 decimal place.`,
+    w:[nw(`θ = ${x2}: 0° ≤ θ ≤ 720°`),`basic angle ${nw(`α = ${f}<sup>−1</sup> ${qN(m)} = ${tr(al)}`)}`,`${f} ${sg>0?"positive":"negative"} → Q${Q[0]}, Q${Q[1]}:`,nw(`${x2} = ${t1.map(tr).join(", ")}`),`go round again ${nw("(+ 360°)")}:`,nw(`${x2} = ${t2.map(tr).join(", ")}`),`${nw(`${X1} = ${xs[0]}°,`)} ${nw(`${xs[1]}°,`)} ${nw(`${xs[2]}°,`)} ${nw(`${xs[3]}°`)} (1 d.p.)`],
+    a:`${nw(`${X1} = ${xs[0]}°,`)} ${nw(`${xs[1]}°,`)} ${nw(`${xs[2]}°,`)} ${nw(`${xs[3]}°`)} (1 d.p.)`,n:{f,k}}; }},
+{t:"identity first",g:R=>{ const f=R.pick(["sin","cos"]), o=f==="sin"?"cos":"sin", IN=[[1,2],[-1,2],[1,1],[-1,1],[0,1]], OUT=[[2,1],[-2,1],[3,1],[-3,1]],
+  n=qTry(()=>{ const r1=R.pick(IN), r2=R.pick(R.f()<.4?OUT:IN); return {r1,r2}; },n=>n.r1[0]*n.r2[1]!==n.r2[0]*n.r1[1]&&n.r1[0]*n.r2[1]+n.r2[0]*n.r1[1]!==0,{r1:[1,2],r2:[1,1]}),
+  {r1,r2}=n, A=r1[1]*r2[1], B=-(r1[0]*r2[1]+r2[0]*r1[1]), Cc=r1[0]*r2[0], p=A, q=-B, s0=Cc+p, s=`${f} ${X1}`, s2=`${f}²${X1}`, c2=`${o}²${X1}`,
+  tt=(c,v)=>c===0?"":c===1?v:c===-1?"−"+v:`${qN(c)} ${v}`,
+  AN={sin:{"1/2":[30,150],"-1/2":[210,330],"1/1":[90],"-1/1":[270],"0/1":[0,180,360]},cos:{"1/2":[60,300],"-1/2":[120,240],"1/1":[0,360],"-1/1":[180],"0/1":[90,270]}}[f],
+  fc=r=>r[0]===0?s:`(${qJ(tt(r[1],s),-r[0])})`, rs=[r1,r2].sort((u,v)=>u[0]===0?-1:v[0]===0?1:0), ok=[r1,r2].filter(r=>Math.abs(r[0])<=r[1]), xs=[...new Set(ok.flatMap(r=>AN[r[0]+"/"+r[1]]))].sort((u,v)=>u-v),
+  w=[`swap ${o}²: ${nw(`${qJ(p===1?`1 − ${s2}`:`${p}(1 − ${s2})`,tt(q,s))} = ${qN(s0)}`)}`,nw(`${qJ(p,tt(-p,s2),tt(q,s),-s0)} = 0`),`${nw("× (−1)")}: ${nw(`${qJ(tt(A,s2),tt(B,s),Cc)} = 0`)}`,nw(`${rs.map(fc).join("")} = 0`),`${nw(`${s} = ${qF(rs[0][0],rs[0][1])}`)} or ${nw(`${s} = ${qF(rs[1][0],rs[1][1])}`)}`];
+  [r1,r2].filter(r=>Math.abs(r[0])>r[1]).forEach(r=>w.push(`${nw(`${s} = ${qN(r[0])}`)} has no solution`));
+  const ls=[`${X1} = ${xs[0]}°`,...xs.slice(1).map(v=>v+"°")].map((v,i,a)=>nw(v+(i<a.length-1?",":""))).join(" "); w.push(ls);
+  return {q:`Solve ${nw(`${qJ(tt(p,c2),tt(q,s))} = ${qN(s0)}`)} for ${nw(`0° ≤ ${X1} ≤ 360°.`)}`,w,a:ls,n:{f,p,q,s0}}; }},
+{t:"exact value",g:R=>{ const S2=frac(SQRT("2"),"2"), S3=frac(SQRT("3"),"2"), H=frac("1","2"), Vs={45:[S2,S2],30:[H,S3],60:[S3,H]},
+  [f,ang,a1,a2,op]=R.pick([["sin",75,45,30,"+"],["cos",75,45,30,"+"],["sin",15,45,30,"−"],["cos",15,45,30,"−"],["sin",105,60,45,"+"],["cos",105,60,45,"+"]]),
+  sn=v=>Vs[v][0], cs=v=>Vs[v][1], fo=f==="sin"?op:(op==="+"?"−":"+"),
+  l2=f==="sin"?[`sin ${a1}° cos ${a2}°`,`cos ${a1}° sin ${a2}°`]:[`cos ${a1}° cos ${a2}°`,`sin ${a1}° sin ${a2}°`], l3=f==="sin"?[`${sn(a1)} × ${cs(a2)}`,`${cs(a1)} × ${sn(a2)}`]:[`${cs(a1)} × ${cs(a2)}`,`${sn(a1)} × ${sn(a2)}`],
+  val=(f==="sin"?Math.sin:Math.cos)(ang*Math.PI/180), big=val*4, ans=f==="cos"&&ang===105?frac(`${SQRT("2")} − ${SQRT("6")}`,"4"):frac(`${SQRT("6")} ${big>Math.sqrt(6)?"+":"−"} ${SQRT("2")}`,"4");
+  return {q:`Without using a calculator, find the exact value of ${nw(`${f} ${ang}°.`)}`,
+    w:[nw(`${f} ${ang}° = ${f}(${a1}° ${op} ${a2}°)`),`${nw(`= ${l2[0]}`)} ${nw(`${fo} ${l2[1]}`)}`,`${nw(`= ${l3[0]}`)} ${nw(`${fo} ${l3[1]}`)}`,nw(`= ${ans}`)],a:nw(ans),n:{f,ang}}; }}],
+"simultaneous-inequalities":[
+{t:"linear + non-linear",g:R=>{ const cv=R.pick(["circle","xy"]), n=qTry(()=>{ const m=R.pick([1,-1,1,-1,2,-2,3,-3]), c=R.nz(-6,6), x1=R.int(-6,6); let x2, K;
+    if(cv==="circle"){ x2=-2*m*c/(1+m*m)-x1; K=x1*x1+(m*x1+c)*(m*x1+c); } else { x2=-c/m-x1; K=x1*(m*x1+c); }
+    return {cv,m,c,x1,x2,K}; },n=>Number.isInteger(n.x2)&&n.x1!==n.x2&&n.K!==0&&Math.abs(n.K)<=(n.cv==="circle"?100:60)&&Math.abs(n.m*n.x2+n.c)<=12,{cv:"circle",m:1,c:-2,x1:-3,x2:5,K:34}),
+  {m,c,x1,x2,K}=n, cir=n.cv==="circle", xs=[x1,x2].sort((u,v)=>u-v), ys=xs.map(v=>m*v+c), ln=qJ(qT(m,X1),c), A=cir?1+m*m:m, B=cir?2*m*c:c, C0=cir?c*c-K:-K,
+  cvs=cir?`${X2} + ${VY}² = ${K}`:`${X1}${VY} = ${qN(K)}`, w=[EQN(nw(`${m<0?qJ(qT(-m,X1),VY):qJ(VY,qT(-m,X1))} = ${qN(c)}`),"①"),EQN(nw(cvs),"②"),`From ①: ${nw(`${VY} = ${ln}`)}`];
+  if(cir) w.push(`Sub into ②: ${nw(`${X2} + (${ln})² = ${K}`)}`,nw(`${qJ(qT(A,X2),qT(B,X1),c*c)} = ${K}`)); else w.push(`Sub into ②: ${nw(`${X1}(${ln}) = ${qN(K)}`)}`,nw(`${qJ(qT(A,X2),qT(B,X1))} = ${qN(K)}`));
+  w.push(nw(`${qJ(qT(A,X2),qT(B,X1),C0)} = 0`)); if(A!==1) w.push(qW(nw(`${qJ(X2,qT(B/A,X1),C0/A)} = 0`),A===-1?"× (−1)":`÷ ${qB(A)}`));
+  const fc=v=>v===0?X1:`(${qJ(X1,-v)})`, mv=v=>m===1?qN(v):m===-1?`−${qB(v)}`:`${qN(m)}(${qN(v)})`;
+  w.push(nw(`${xs[0]===0||xs[1]!==0?fc(xs[0])+fc(xs[1]):fc(xs[1])+fc(xs[0])} = 0`),`${nw(`${X1} = ${qN(xs[0])}`)} or ${nw(`${X1} = ${qN(xs[1])}`)}`,...xs.map((v,i)=>`${nw(`${X1} = ${qN(v)}`)}: ${nw(v===0?`${VY} = ${qN(c)}`:`${VY} = ${qJ(mv(v),c)} = ${qN(ys[i])}`)}`));
+  const ans=`${nw(`(${qN(xs[0])}, ${qN(ys[0])})`)} and ${nw(`(${qN(xs[1])}, ${qN(ys[1])})`)}`; w.push(ans);
+  return {q:`Solve the simultaneous equations <br>${nw(`${m<0?qJ(qT(-m,X1),VY):qJ(VY,qT(-m,X1))} = ${qN(c)}`)} <br>${nw(cvs)}`,w,a:ans,n:{cv:n.cv,m,c,K}}; }},
+{t:"quadratic inequality",g:R=>{ const n=qTry(()=>{ const u=R.pick([1,1,2]), p=u===2?R.pick([-5,-3,-1,1,3,5]):R.int(-6,6), q=R.int(-6,6); return {u,p,q,A:u,B:-(u*q+p),C:p*q}; },n=>n.p*1!==n.u*n.q&&!(n.p===0&&n.q===0)&&(n.B!==0||n.C!==0),{u:2,p:-1,q:-3,A:2,B:7,C:3}),
+  {u,p,q,A,B,C}=n, op=R.pick([">","<","≥","≤"]), fl={">":"<","<":">","≥":"≤","≤":"≥"}[op], v=C!==0&&B!==0&&R.f()<.35?1:R.f()<.3?2:0,
+  L=qJ(qT(A,X2),qT(B,X1),C), w=[], r=[[p,u],[q,1]].sort((a,b)=>a[0]/a[1]-b[0]/b[1]), rs=r.map(x=>qF(x[0],x[1])), out=op===">"||op==="≥", inc=op==="≥"||op==="≤";
+  let Q; if(v===1){ Q=`${qJ(qT(A,X2),qT(B,X1))} ${op} ${qN(-C)}`; w.push(nw(Q),nw(`${L} ${op} 0`)); } else if(v===2){ Q=`${qJ(qT(-A,X2),qT(-B,X1),-C)} ${fl} 0`; w.push(`${nw("× (−1)")}, the sign flips: ${nw(`${L} ${op} 0`)}`); } else { Q=`${L} ${op} 0`; w.push(nw(Q)); }
+  const f1=p===0?X1:`(${qJ(qT(u,X1),-p)})`, f2=q===0?X1:`(${qJ(X1,-q)})`;
+  w.push(nw(`${q===0?f2+f1:f1+f2} ${op} 0`),`roots: ${nw(`${X1} = ${rs[0]}`)} and ${nw(`${X1} = ${rs[1]}`)}`,inc?`${nw(`${op} 0`)}: ${out?"outside":"between"} the roots, and the roots count`:`${nw(`${op} 0`)} means ${out?"above":"below"} the ${X1}-axis: ${out?"outside":"between"} the roots`);
+  const ans=out?`${nw(`${X1} ${inc?"≤":"<"} ${rs[0]}`)} or ${nw(`${X1} ${inc?"≥":">"} ${rs[1]}`)}`:nw(`${rs[0]} ${inc?"≤":"<"} ${X1} ${inc?"≤":"<"} ${rs[1]}`); w.push(ans);
+  return {q:`Solve ${nw(`${Q}.`)}`,w,a:ans,n:{A,B,C,op}}; }},
+{t:"range of k",g:R=>{ const n=qTry(()=>{ const u=R.pick([1,2,-1,-2,3]), k1=R.int(-9,5), k2=4*u-k1; return {u,k1,k2,s:-k1*k2/4}; },n=>n.k1<n.k2&&Number.isInteger(n.s)&&n.s!==0&&Math.abs(n.s)<=20,{u:1,k1:-2,k2:6,s:3}),
+  {u,k1,k2,s}=n, VK=V("k"), [ph,op]=R.pick([["real roots","≥"],["two real distinct roots",">"],["no real roots","<"]]), out=op!=="<", inc=op==="≥", cst=qJ(qT(u,"k"),s),
+  fc=v=>v===0?VK:`(${qJ(VK,-v)})`, ans=out?`${nw(`${VK} ${inc?"≤":"<"} ${qN(k1)}`)} or ${nw(`${VK} ${inc?"≥":">"} ${qN(k2)}`)}`:nw(`${qN(k1)} < ${VK} < ${qN(k2)}`);
+  return {q:`The equation ${nw(`${qJ(X2,`${VK}${X1}`,qT(u,"k"),s)} = 0`)} has ${ph}. Find the range of values of ${VK}.`,
+    w:[`${ph}: ${nw(`${V("b")}² − 4${V("a")}${V("c")} ${op} 0`)}`,nw(`${VK}² − 4(1)(${cst}) ${op} 0`),nw(`${qJ(VK+"²",qT(-4*u,"k"),-4*s)} ${op} 0`),nw(`${k2===0?fc(k2)+fc(k1):fc(k1)+fc(k2)} ${op} 0`),inc?`${nw(`${op} 0`)}: outside the roots, and the roots count`:`${nw(`${op} 0`)}: ${out?"outside":"between"} the roots`,ans],
+    a:ans,n:{u,s,ph}}; }}],
+"surds":[
+{t:"simplify and add",g:R=>{ const n=qTry(()=>{ const k=R.pick([2,3,5,6,7]), m=R.int(2,3), sq=R.shuf([1,4,9,16,25]).slice(0,m), cs=sq.map((s,i)=>i?R.nz(-3,3):R.int(1,3)); return {k,sq,cs,T:cs.reduce((t,c,i)=>t+c*Math.sqrt(sq[i]),0)}; },n=>n.sq.filter(s=>s>1).length>=2&&n.sq.every(s=>s*n.k<=150)&&n.T!==0&&Math.abs(n.T)!==1,{k:3,sq:[4,9,1],cs:[2,1,-1],T:6}),
+  {k,sq,cs,T}=n, rk=SQRT(k), ex=qJ(...cs.map((c,i)=>qT(c,SQRT(sq[i]*k)))), br=cs.some((c,i)=>Math.abs(c)!==1&&sq[i]>1),
+  l2=qJ(...cs.map((c,i)=>{ const r=Math.sqrt(sq[i]); return sq[i]===1?qT(c,rk):Math.abs(c)===1?qT(c*r,rk):`${qN(c)}(${r}${rk})`; })), w=[nw(ex),nw(`= ${l2}`)];
+  if(br) w.push(nw(`= ${qJ(...cs.map((c,i)=>qT(c*Math.sqrt(sq[i]),rk)))}`)); w.push(nw(`= ${qT(T,rk)}`));
+  return {q:`Simplify ${nw(`${ex}.`)}`,w,a:nw(qT(T,rk)),n:{k,sq,cs}}; }},
+{t:"expand",g:R=>{ const k=R.pick([2,3,5,6,7]), rk=SQRT(k), B=(a,b)=>`(${qJ(a,qT(b,rk))})`;
+  if(R.f()<.6){ const n=qTry(()=>{ const a=R.int(1,5), b=R.nz(-3,3), c=R.int(1,5), d=R.nz(-3,3); return {a,b,c,d}; },n=>n.a*n.c+n.b*n.d*k!==0&&n.a*n.d+n.b*n.c!==0&&!(n.a===n.c&&n.b===-n.d)&&!(n.a===n.c&&n.b===n.d),{a:3,b:1,c:1,d:-1}), {a,b,c,d}=n, p=a*c+b*d*k, q=a*d+b*c;
+    return {q:`Expand and simplify ${nw(`${B(a,b)}${B(c,d)}.`)}`,w:[nw(`${B(a,b)}${B(c,d)}`),nw(`= ${qJ(a*c,qT(a*d,rk),qT(b*c,rk),b*d*k)}`),nw(`= ${qJ(p,qT(q,rk))}`)],a:nw(qJ(p,qT(q,rk))),n:{v:"prod",k,a,b,c,d}}; }
+  const b=R.int(1,3), a=R.nz(-5,5), tb=qT(b,rk), p=b*b*k+a*a, q=2*a*b;
+  return {q:`Expand and simplify ${nw(`(${qJ(tb,a)})².`)}`,w:[nw(`(${qJ(tb,a)})²`),nw(`= (${tb})² + 2(${tb})(${qN(a)}) + ${qB(a)}²`),nw(`= ${qJ(b*b*k,qT(q,rk),a*a)}`),nw(`= ${qJ(p,qT(q,rk))}`)],a:nw(qJ(p,qT(q,rk))),n:{v:"sq",k,a,b}}; }},
+{t:"rationalise",g:R=>{ const v=R.pick([0,1,1,2,2]), k=R.pick([2,3,5,6,7]), rk=SQRT(k);
+  if(v===0){ const t=R.int(2,5), c=t*k;
+    return {q:`Rationalise the denominator of ${nw(`${frac(c,rk)}.`)}`,w:[nw(`${frac(c,rk)} = ${frac(`${c} × ${rk}`,`${rk} × ${rk}`)}`),nw(`= ${frac(`${c}${rk}`,k)}`),nw(`= ${t}${rk}`)],a:nw(`${t}${rk}`),n:{v,k,N:[c,0],a:0,b:1}}; }
+  const d=qTry(()=>{ const a=R.int(1,5), b=R.pick([1,-1,1,-1,2,-2]); return {a,b,D:a*a-b*b*k}; },d=>d.D!==0&&Math.abs(d.D)<=5,{a:2,b:1,D:4-k}), {a,b,D}=d;
+  const m=v===1?qTry(()=>{ const t=R.nz(-4,4); return {m:t*a,n:-t*b,t}; },m=>m.t*D>1,{m:3*a,n:-3*b,t:3}):qTry(()=>({m:R.nz(-6,6),n:R.nz(-4,4)}),m=>(m.m*a+m.n*b*k)>0&&(m.m*b+m.n*a)!==0&&!(m.m===a&&m.n===b),{m:3,n:1}),
+  PP=v===1?m.t*D:m.m*a+m.n*b*k, QQ=v===1?0:m.m*b+m.n*a, den=qJ(a,qT(b,rk)), cj=qJ(a,qT(-b,rk)), num=qJ(PP,qT(QQ,rk)), res=qJ(m.m,qT(m.n,rk));
+  const top=v===1?`${qN(PP)}(${cj})`:`(${num})(${cj})`, ex=v===1?qJ(PP*a,qT(-PP*b,rk)):qJ(PP*a,qT(-PP*b,rk),qT(QQ*a,rk),-QQ*b*k), w=[nw(`${frac(num,den)} = ${frac(top,`(${den})(${cj})`)}`),nw(`= ${frac(ex,`${a*a} − ${b*b*k}`)}`)];
+  if(D!==1) w.push(nw(`= ${frac(v===1?ex:qJ(D*m.m,qT(D*m.n,rk)),qN(D))}`));
+  w.push(nw(`= ${res}`));
+  return {q:`Express ${nw(frac(num,den))} in the form ${nw(`${V("p")} + ${V("q")}${rk},`)} where ${V("p")} and ${V("q")} are integers.`,w,a:nw(res),n:{v,k,N:[PP,QQ],a,b}}; }},
+{t:"surd equation",g:R=>{ const n=qTry(()=>{ const c=R.nz(-5,5), x1=R.nz(-8,8), x2=R.nz(-8,8); return {c,x1,x2,a:2*c+x1+x2,b:c*c-x1*x2}; },n=>n.x1<n.x2&&n.a>=1&&n.a<=9&&n.b!==0&&n.x1+n.c!==0&&n.x2+n.c!==0&&(n.x1+n.c>0||n.x2+n.c>0)&&n.a*n.x1+n.b>0,{c:3,x1:-5,x2:1,a:2,b:14}),
+  {c,x1,x2,a,b}=n, ins=qJ(qT(a,X1),b), rt=SQRT(ins), xs=[x1,x2], ok=xs.map(x=>x+c>0), fc=v=>`(${qJ(X1,-v)})`,
+  ck=x=>{ const s=Math.abs(x+c), val=s-x; return `check ${nw(`${X1} = ${qN(x)}`)}: ${nw(`${SQRT(a*x+b)} ${x<0?`+ ${-x}`:`− ${x}`} = ${qN(val)}${val===c?"":` ≠ ${qN(c)}`}`)}${val===c?" ✓":""}`; },
+  good=xs.filter((x,i)=>ok[i]), bad=xs.filter((x,i)=>!ok[i]), fin=good.map(x=>nw(`${X1} = ${qN(x)}`)).join(" or ")+(bad.length?` (rej ${nw(`${X1} = ${qN(bad[0])}`)})`:"");
+  return {q:`Solve ${nw(`${rt} − ${X1} = ${qN(c)}.`)}`,w:[nw(`${rt} = ${qJ(X1,c)}`),nw(`${ins} = (${qJ(X1,c)})²`),nw(`${ins} = ${qJ(X2,qT(2*c,X1),c*c)}`),nw(`${qJ(X2,qT(2*c-a,X1),c*c-b)} = 0`),nw(`${fc(x1)}${fc(x2)} = 0`),`${nw(`${X1} = ${qN(x1)}`)} or ${nw(`${X1} = ${qN(x2)}`)}`,ck(x1),ck(x2),fin],
+    a:fin,n:{a,b,c}}; }}]
 };
 let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
 function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
