@@ -698,6 +698,120 @@ html[data-present] .clines .cfine{font-size:20px;line-height:32px;padding:0 12px
 body[data-page="lessons"] .lessbtn{display:none}
 @media (max-width:899px){ body:not([data-page="home"]) .lessbtn{display:none} }
 footer a{color:var(--accent);font-weight:700;text-decoration:none}
+.mzsec{margin:2px 0 24px}
+.mzsh{display:flex;align-items:center;gap:12px;margin:0 0 12px;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mzsh::after{content:"";flex:1;border-top:1.5px dashed var(--line)}
+.mzg{columns:3 340px;column-gap:16px}
+.mzg.js{columns:auto;display:flex;gap:16px;align-items:flex-start}
+.mzcol{flex:1 1 0;min-width:0}
+.mzg.js .mzc{display:block}
+.mzc{--c:var(--blue);--cf:var(--blue-fill);break-inside:avoid;display:inline-block;width:100%;vertical-align:top;background:var(--card);border:2px solid var(--cf);border-radius:16px;padding:10px 14px 12px;margin:0 0 16px;box-shadow:var(--shadow)}
+.mzc.c-amber{--c:var(--amber);--cf:var(--amber-fill)}
+.mzc.c-green{--c:var(--green);--cf:var(--green-fill)}
+.mzc.c-red{--c:var(--red);--cf:var(--red-fill)}
+.mzc.c-purple{--c:var(--purple);--cf:var(--purple-fill)}
+.mzc.c-teal{--c:var(--teal);--cf:var(--teal-fill)}
+.mzt{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:0 0 8px}
+.mzt b{display:inline-flex;align-items:center;gap:7px;background:var(--cf);color:var(--ink);border-radius:9px;padding:4px 11px 4px 9px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;line-height:1.25}
+.mzt b::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+.mzgo{margin-left:auto;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
+.mzgo:hover{text-decoration:underline}
+.mzf{font-size:17px;line-height:1.45;padding:3px 0}
+.mzf .ml{color:var(--c)}
+.mzx{display:block;font-size:14px;line-height:1.4;color:var(--muted);font-weight:400}
+.mzrs{display:block;font-size:14px;line-height:1.4;color:var(--c);font-weight:700}
+.mzrow{display:grid;grid-template-columns:minmax(0,44%) minmax(0,1fr);align-items:center;column-gap:12px;padding:7px 0}
+.mzrow.st{grid-template-columns:minmax(0,1fr);row-gap:4px}
+.mzrow.st .mzp{width:100%;max-width:260px;margin:0 auto}
+.mzrow+.mzrow{border-top:1px dashed var(--line)}
+.mzp{min-width:0}
+.mzp svg{display:block;width:100%;height:auto;max-width:100%;margin:0 auto}
+.mzp .mztb{margin:0}
+.mzl{min-width:0}
+.mzl:empty{display:none}
+.mzhero{text-align:center;font-size:19px;line-height:1.45;background:var(--cf);border-radius:12px;padding:8px 10px;margin:6px 0 8px}
+.mzhero .mzx{margin-top:2px}
+.mzpics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0}
+.mzpics.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mzpt{border:1.5px solid var(--line);border-radius:12px;padding:6px 7px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0}
+.mzpt svg{display:block;width:100%;max-width:120px;height:auto;margin:0 auto 3px}
+.mzpt svg.ico{width:56px;max-width:56px;margin:8px auto 8px}
+.mzrow.st.sm .mzp{max-width:180px}
+.mzpt b{font-size:15.5px;line-height:1.3;color:var(--c)}
+.mzpt span{font-size:14px;line-height:1.35}
+.mztb{width:100%;border-collapse:separate;border-spacing:0;font-size:16px;margin:6px 0;border:1.5px solid var(--cf);border-radius:10px;overflow:hidden}
+.mztb th{background:var(--cf);font-size:13.5px;font-weight:700;text-align:left;padding:5px 9px;color:var(--ink)}
+.mztb td{padding:6px 9px;border-top:1px solid var(--line);vertical-align:middle;line-height:1.4}
+.mztb tr:first-child td{border-top:0}
+.mztb td:first-child{font-weight:700}
+.mztb td .mzx{font-weight:400}
+.mztb.sg th,.mztb.sg td{text-align:center;font-size:19px;padding:2px 0;font-weight:700}
+.mztb.ev th,.mztb.ev td{text-align:center;padding:5px 2px;font-size:15.5px}
+.mztb.ev td:first-child,.mztb.ev th:first-child{text-align:left;padding-left:8px}
+.mztb.kw td:last-child,.mztb.kw th:last-child{text-align:center;font-size:19px;width:4em}
+.mztb.dsc td:last-child{width:84px;padding:2px 6px}
+.mztb.dsc .miniq{width:72px}
+.mztb.pairs td,.mztb.dif td{font-weight:400}
+.mztb.pairs td{width:50%}
+.mztb.lg td:first-child{font-size:14.5px;color:var(--c)}
+.mztip{border:1.5px dashed var(--c);border-radius:10px;padding:6px 10px;margin:8px 0 2px;font-size:15px;line-height:1.45}
+.mztip>b:first-child{color:var(--c)}
+.mzvs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:6px 0}
+.mzvs.one{grid-template-columns:minmax(0,1fr)}
+.mzbx{border:1.5px solid var(--line);border-radius:10px;padding:6px 9px 7px;font-size:15.5px;line-height:1.45;min-width:0}
+.mzbh{font-weight:700;color:var(--c);font-size:15px;line-height:1.35;margin-bottom:2px}
+.mzvs.pf .mzbx{font-size:15px}
+.mzchs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0}
+.mzchs.mzmid{justify-content:center;margin-top:10px}
+.mzcl{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);flex-basis:100%}
+.mzch{border:1.5px solid var(--c);background:var(--cf);border-radius:8px;padding:1px 9px;font-size:16px;line-height:1.5;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink)}
+.mzch.hi{background:var(--c);color:var(--card);font-weight:700}
+.mzsub{font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:10px 0 2px}
+.mzl>.mzsub:first-child{margin-top:0}
+.mzmu{color:var(--muted)}
+.mzord{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:4px 0 2px}
+.mzord span{border:1.5px solid var(--cf);border-radius:10px;text-align:center;padding:4px 2px 5px;font-size:15px;line-height:1.3;font-weight:700}
+.mzord span b{display:block;margin:0 auto 3px;width:20px;height:20px;border-radius:50%;background:var(--c);color:var(--card);font-size:12px;line-height:20px}
+.mzswap{display:grid;grid-template-columns:auto auto auto;justify-content:center;align-items:center;column-gap:10px;margin:10px 0 2px;font-size:17px}
+.mzswap .ar{display:flex;flex-direction:column;align-items:center;font-size:13px;font-weight:700;line-height:1.5;white-space:nowrap}
+.mzswap .ar span:first-child{color:var(--blue)}
+.mzswap .ar span:last-child{color:var(--green)}
+.mzzcf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 2px}
+.mzzcf span{border:1.5px solid var(--cf);border-radius:10px;text-align:center;padding:2px 2px 6px;font-size:14px;line-height:1.3}
+.mzzcf b{display:block;font-size:26px;line-height:1.25;color:var(--c)}
+.mzflow{display:flex;flex-direction:column;align-items:stretch;margin:4px 0 8px}
+.mzfb{border:1.5px solid var(--c);background:var(--cf);border-radius:10px;padding:5px 9px;font-size:15.5px;line-height:1.4;text-align:center;min-width:0}
+.mzfb>b{color:var(--c)}
+.mzfa{text-align:center;color:var(--c);font-weight:700;line-height:1.15;font-size:18px}
+.mzbr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.mzbr .mzfb{background:var(--card);padding:5px 3px}
+.mzbr .mzfb>b{display:block}
+.mzsteps{list-style:none;margin:4px 0;padding:0;counter-reset:mzs}
+.mzsteps li{counter-increment:mzs;position:relative;padding:4px 0 4px 32px;font-size:16.5px;line-height:1.45}
+.mzsteps li::before{content:counter(mzs);position:absolute;left:0;top:5px;width:22px;height:22px;border-radius:50%;background:var(--c);color:var(--card);font-size:13px;font-weight:700;text-align:center;line-height:22px}
+.mzset{border:2px solid var(--cf);border-radius:12px;padding:6px 8px 4px;margin:10px 0 2px}
+.mzset>.mzsub{margin:0 0 2px}
+.mzlad{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:10px;row-gap:2px;margin:6px 0 8px}
+.mzlad .bx{border:1.5px solid var(--c);background:var(--cf);border-radius:10px;padding:3px 16px;text-align:center;font-size:19px;line-height:1.3}
+.mzlad .bx small{display:block;font-size:12.5px;color:var(--muted)}
+.mzlad .dn{justify-self:end;color:var(--red);font-weight:700;font-size:14.5px;text-align:right}
+.mzlad .up{justify-self:start;color:var(--green);font-weight:700;font-size:14.5px}
+.mzll{display:grid;grid-template-columns:repeat(6,auto);justify-content:center;align-items:center;gap:8px 6px;margin:8px 0;font-size:17px}
+.mzll .mb{justify-self:center}
+@media (max-width:440px){
+  .mzc{padding:10px 12px 12px}
+  .mzrow{grid-template-columns:minmax(0,42%) minmax(0,1fr);column-gap:10px}
+  .mzf{font-size:16.5px}
+  .mzhero{font-size:18px}
+}
+@media print{
+  .mzc{box-shadow:none;border-color:#bbb}
+  .mzc,.mzhero,.mzt b,.mztb th,.mzch,.mzfb,.mzlad .bx,.mzt b::before,.mzsteps li::before,.mzord span b{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mzsec{zoom:.72}
+  .mzgo{display:none}
+  .mzg:not(.js){columns:3 300px;column-gap:12px}
+  .mzg.js{gap:12px}
+}
 </style>
 </head>
 <body>
@@ -6630,7 +6744,7 @@ emFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Math
     </div>
   </div>
 </div>`,
-emMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+emMemoFC:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a>.</p>
 <div class="sheet">
   <div class="panelc pn"><h4>numbers &amp; algebra</h4>
@@ -6734,7 +6848,7 @@ amFormula:`<p class="tiny" style="margin:0 0 14px">Based on the 2027 SEC G3 Addi
     </div>
   </div>
 </div>`,
-s1Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+s1MemoFC:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">Every formula and angle fact from the Sec 1 cheatsheets, in one place.</p>
 <div class="sheet">
   <div class="panelc pn"><h4>numbers &amp; algebra</h4>
@@ -6870,7 +6984,7 @@ s1Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from 
     </ul>
   </div>
 </div>`,
-s2Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+s2MemoFC:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">Every formula from the Sec 2 cheatsheets, in one place.</p>
 <div class="sheet">
   <div class="panelc pn"><h4>numbers &amp; algebra</h4>
@@ -6975,7 +7089,7 @@ s2Memo:`${MUST([FB("red","Memorise these",`know them by heart`,"write them from 
     </ul>
   </div>
 </div>`,
-amMemo:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
+amMemoFC:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")])}
 <p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/amath-formula-sheet">A-Math formula sheet</a>.</p>
 <div class="sheet">
   <div class="panelc pn"><h4>algebra</h4>
@@ -8431,6 +8545,403 @@ ${MIST([[`mixing the pairs: ${nw("(5, −5)")}`,`each ${X1} with its own ${V("y"
 </div>`
 };
 Object.assign(SHEETS,SHEETS9);
+const ZC=(c,t,sid,body)=>`<div class="mzc c-${c}"><div class="mzt"><b>${t}</b>${sid?`<a class="mzgo" href="#sheet/${sid}">cheatsheet →</a>`:""}</div>${body}</div>`;
+const ZS=(t,cards)=>`<section class="mzsec"><h3 class="mzsh">${t}</h3><div class="mzg">${cards.join("")}</div></section>`;
+const ZR=(pic,lines,cls)=>`<div class="mzrow${cls?" "+cls:""}"><div class="mzp">${pic}</div><div class="mzl">${lines.join("")}</div></div>`;
+const ZX=t=>`<span class="mzx">${t}</span>`;
+const ZF=(l,f,x)=>`<div class="mzf">${l?`<b class="ml">${l}</b> `:""}${f||""}${x?ZX(x):""}</div>`;
+const ZT=(tiles,cls)=>`<div class="mzpics${cls?" "+cls:""}">${tiles.map(([p,b,s])=>`<div class="mzpt">${p}${b?`<b>${b}</b>`:""}${s?`<span>${s}</span>`:""}</div>`).join("")}</div>`;
+const ZTIP=(l,t)=>`<div class="mztip"><b>${l}</b> ${t}</div>`;
+const ZVS=(bx,cls)=>`<div class="mzvs${cls?" "+cls:""}">${bx.map(([h,b])=>`<div class="mzbx">${h?`<div class="mzbh">${h}</div>`:""}${b}</div>`).join("")}</div>`;
+const ZH=(f,x)=>`<div class="mzhero">${f}${x?ZX(x):""}</div>`;
+const ZCH=(xs,l)=>`<div class="mzchs">${l?`<span class="mzcl">${l}</span>`:""}${xs.map(x=>`<span class="mzch">${x}</span>`).join("")}</div>`;
+const ZTB=(hd,rows,cls)=>`<table class="mztb${cls?" "+cls:""}">${hd?`<tr>${hd.map(h=>`<th>${h}</th>`).join("")}</tr>`:""}${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</table>`;
+const ZSUB=t=>`<div class="mzsub">${t}</div>`;
+const ZRS=t=>`<span class="mzrs">${t}</span>`;
+const ZK=(c,t)=>`<span class="k-${c}">${t}</span>`;
+function zSemi(){ return SV("0 0 100 58",`<path d="M14 46 A36 36 0 0 1 86 46 Z" fill="var(--blue-fill)"/><path d="M14 46 A36 36 0 0 1 86 46" fill="none" stroke="var(--blue)" stroke-width="2.6"/>`+LN(14,46,86,46,`stroke="var(--amber)" stroke-width="2.6"`)+LN(50,46,73.1,18.4,`stroke="var(--red)" stroke-width="1.3"`)+DOT(50,46,"var(--ink)")
+  +TX(66,38,IT("r"),`fill="var(--red)" font-weight="700" font-size="8.5" text-anchor="start"`)+TX(50,7.5,"π"+IT("r"),`fill="var(--blue)" font-weight="700" font-size="8.5"`)+TX(50,56,"2"+IT("r"),`fill="var(--amber)" font-weight="700" font-size="8.5"`)); }
+function zSqAB(){ const R=(x,y,w,h,f)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="var(--${f}-fill)" stroke="var(--ink)" stroke-width="1"/>`, T=(x,y,t,c)=>TX(x,y,t,`font-size="9" font-weight="700" fill="var(--${c})"`);
+  return SV("0 0 86 86",R(12,12,44,44,"blue")+R(56,12,26,44,"amber")+R(12,56,44,26,"amber")+R(56,56,26,26,"green")
+    +TX(34,9,IT("a"),'font-size="8.5"')+TX(69,9,IT("b"),'font-size="8.5"')+TX(6,37,IT("a"),'font-size="8.5"')+TX(6,72,IT("b"),'font-size="8.5"')
+    +T(34,37,IT("a")+"²","blue")+T(69,37,IT("ab"),"amber")+T(34,72,IT("ab"),"amber")+T(69,72,IT("b")+"²","green")); }
+function zPar2(k){ let s=LN(4,44,76,44,`stroke="var(--muted)"`)+LN(14,4,14,54,`stroke="var(--muted)"`);
+  if(k==="par") s+=LN(18,40,60,8,`stroke="var(--blue)" stroke-width="2.4"`)+LN(34,48,74,17.5,`stroke="var(--amber)" stroke-width="2.4"`);
+  else s+=LN(18,46,68,8,`stroke="var(--blue)" stroke-width="5" stroke-linecap="round"`)+LN(18,46,68,8,`stroke="var(--amber)" stroke-width="1.8" ${DASH}`);
+  return SV("0 0 80 56",s); }
+function zUM(k){ const up=k==="min"; return SV("0 0 70 56",`<path d="${up?"M10 4 Q35 78 60 4":"M10 52 Q35 -22 60 52"}" fill="none" stroke="var(--blue)" stroke-width="2.6"/>`+DOT(35,up?41:15)+TX(35,up?53:9,up?"min":"max",`fill="var(--red)" font-weight="700" font-size="8.5"`)); }
+function zRoots(){ const X=x=>15+14*x, Y=y=>40-5.5*y; let d=""; for(let i=0;i<=30;i++){ const x=6*i/30, y=(x-1)*(x-5); d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1); }
+  return SV("0 0 110 68",LN(4,40,106,40,`stroke="var(--muted)"`)+LN(X(3),6,X(3),66,`stroke="var(--amber)" ${DASH}`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`+DOT(X(1),40)+DOT(X(5),40)+DOT(X(3),Y(-4),"var(--amber)")
+    +TX(X(1)-3,50,"1",`font-weight="700" font-size="8" text-anchor="end"`)+TX(X(5)+3,50,"5",`font-weight="700" font-size="8" text-anchor="start"`)+TX(X(3)+3,10,IT("x")+" = 3",`fill="var(--amber)" font-weight="700" font-size="8" text-anchor="start"`)); }
+function zInterval(){ return SV("0 0 120 30",LN(6,13,114,13)+LN(30,13,90,13,`stroke="var(--blue)" stroke-width="3"`)+`<circle cx="30" cy="13" r="3.6" fill="var(--card)" stroke="var(--blue)" stroke-width="1.6"/><circle cx="90" cy="13" r="3.6" fill="var(--blue)"/>`+TX(30,26,"10",'font-size="8"')+TX(90,26,"20",'font-size="8"')); }
+function zObt(){ return SV("0 0 120 66",`<path d="M16 56 A44 44 0 0 1 104 56" fill="none" stroke="var(--muted)" stroke-width="1" ${DASH}/>`+LN(6,56,114,56,`stroke="var(--muted)"`)
+    +LN(60,56,93.7,56,`stroke="var(--amber)" stroke-width="3"`)+LN(60,56,26.3,56,`stroke="var(--red)" stroke-width="3"`)
+    +LN(93.7,56,93.7,27.7,`stroke="var(--green)" stroke-width="2.4"`)+LN(26.3,56,26.3,27.7,`stroke="var(--green)" stroke-width="2.4"`)
+    +LN(60,56,93.7,27.7,`stroke="var(--blue)" stroke-width="1.6"`)+LN(60,56,26.3,27.7,`stroke="var(--blue)" stroke-width="1.6"`)
+    +ARC(60,56,8,0,40,"var(--ink)")+ARC(60,56,13,0,140,"var(--muted)")+DOT(60,56,"var(--ink)")
+    +TX(74,52,"θ",'font-size="8" font-weight="700" text-anchor="start"')+TX(60,36,"180° − θ",'font-size="6.5" font-weight="700"')); }
+function zVec(){ return SV("0 0 90 62",LN(12,52,68,52,`stroke="var(--amber)" stroke-width="2" ${DASH}`)+LN(68,52,68,10,`stroke="var(--green)" stroke-width="2" ${DASH}`)+ARW(12,52,68,10,"var(--blue)",2)
+    +TX(40,61,"4",`fill="var(--amber)" font-weight="700" font-size="8.5"`)+TX(73,34,"3",`fill="var(--green)" font-weight="700" font-size="8.5" text-anchor="start"`)+TX(33,27,"5",`fill="var(--blue)" font-weight="700" font-size="8.5"`)); }
+function zBoxIQR(){ const L='font-size="7.5" font-weight="700"';
+  return SV("0 0 130 58",`<path d="M40 12 V9 H88 V12" fill="none" stroke="var(--amber)" stroke-width="1.3"/>`+TX(64,6.5,"IQR",`${L} fill="var(--amber)"`)
+    +LN(14,34,40,34)+LN(88,34,116,34)+LN(14,29,14,39)+LN(116,29,116,39)
+    +`<rect x="40" y="25" width="48" height="18" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`+LN(60,25,60,43,`stroke="var(--red)" stroke-width="2"`)
+    +TX(40,21,IT("Q")+"₁",L)+TX(60,21,IT("Q")+"₂",`${L} fill="var(--red)"`)+TX(88,21,IT("Q")+"₃",L)+TX(60,53,"median",`font-size="6.5" fill="var(--red)"`)); }
+function zWave(){ const X=t=>10+t/360*94, Y=v=>36-18*v; let d=""; for(let i=0;i<=72;i++){ const t=i*5; d+=(i?"L":"M")+X(t).toFixed(1)+" "+Y(Math.sin(t*Math.PI/180)).toFixed(1); }
+  const S='font-size="7" font-weight="700" text-anchor="start"';
+  return SV("0 0 150 84",LN(10,36,106,36,`stroke="var(--muted)" ${DASH}`)+LN(X(90),18,106,18,`stroke="var(--green)" stroke-width=".8" ${DASH}`)+LN(X(270),54,106,54,`stroke="var(--red)" stroke-width=".8" ${DASH}`)
+    +`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`
+    +LN(X(90),36,X(90),20.5,`stroke="var(--amber)" stroke-width="1.6"`)+`<path d="M${X(90)-2.5} 23 L${X(90)} 19 L${X(90)+2.5} 23" fill="none" stroke="var(--amber)" stroke-width="1.4"/>`
+    +TX(X(90)+3,31,"|"+IT("a")+"|",`fill="var(--amber)" ${S}`)
+    +TX(109,20.5,IT("c")+" + |"+IT("a")+"|",`fill="var(--green)" ${S}`)+TX(109,38.5,IT("c"),`fill="var(--muted)" ${S}`)+TX(109,56.5,IT("c")+" − |"+IT("a")+"|",`fill="var(--red)" ${S}`)
+    +`<path d="M10 62 V66 H104 V62" fill="none" stroke="var(--ink)" stroke-width="1"/>`+TX(56,77,"period =",'font-size="7" text-anchor="end"')
+    +TX(66,71.5,"360°",'font-size="7.5"')+LN(58,74,74,74,`stroke-width="1"`)+TX(66,82,IT("b"),'font-size="7.5"')); }
+function zRTri(){ const B='font-weight="700" font-size="9"';
+  return SV("0 0 100 62",LN(12,52,82,52,`stroke="var(--amber)" stroke-width="2.4"`)+LN(82,52,82,12,`stroke="var(--green)" stroke-width="2.4"`)+LN(12,52,82,12,`stroke="var(--blue)" stroke-width="2.4"`)+`<path d="M76 52 V46 H82" fill="none" stroke="var(--ink)" stroke-width=".9"/>`+ARC(12,52,14,0,29.7,"var(--red)")
+    +TX(47,61,IT("a"),`fill="var(--amber)" ${B}`)+TX(87,35,IT("b"),`fill="var(--green)" ${B} text-anchor="start"`)+TX(42,28,IT("R"),`fill="var(--blue)" ${B}`)+TX(31,49,"α",`fill="var(--red)" ${B}`)); }
+function zParPerp(k){ const s=k==="par"?LN(10,40,50,8,`stroke="var(--blue)" stroke-width="2.4"`)+LN(30,46,70,14,`stroke="var(--amber)" stroke-width="2.4"`)
+    :LN(10,40,66,12,`stroke="var(--blue)" stroke-width="2.4"`)+LN(27,4,49,48,`stroke="var(--amber)" stroke-width="2.4"`)+`<path d="M41.6 24.2 L43.4 27.8 L39.8 29.6" fill="none" stroke="var(--ink)" stroke-width="1"/>`;
+  return SV("0 0 80 52",s); }
+function zDots(k){ let s=""; [8,20,38,62].forEach((x0,i)=>{ const n=i+1; for(let j=0;j<n;j++) for(let m=0;m<(k==="sq"?n:n-j);m++) s+=`<circle cx="${x0+m*6+(k==="sq"?0:3*j)}" cy="${34-6*j}" r="2.3" fill="var(--blue)"/>`;
+    s+=TX(x0+(n-1)*3,45,String(k==="sq"?n*n:n*(n+1)/2),'font-size="8" font-weight="700"'); }); return SV("0 0 90 48",s); }
+function zAstc(){ const B='font-size="13" font-weight="700" fill="var(--green)"', S='font-size="8" font-weight="700" fill="var(--green)"', M='font-size="7" fill="var(--muted)"';
+  return SV("0 0 110 78",LN(4,40,106,40,`stroke="var(--muted)"`)+LN(55,4,55,76,`stroke="var(--muted)"`)
+    +TX(80,28,"A",B)+TX(80,37,"all +",S)+TX(30,28,"S",B)+TX(30,37,"sin +",S)+TX(30,60,"T",B)+TX(30,69,"tan +",S)+TX(80,60,"C",B)+TX(80,69,"cos +",S)
+    +TX(58,9,"90°",`${M} text-anchor="start"`)+TX(4,49,"180°",`${M} text-anchor="start"`)+TX(58,77,"270°",`${M} text-anchor="start"`)+TX(106,49,"0°",`${M} text-anchor="end"`)); }
+const ZMUST=MUST([FB("red","Memorise these",`know them by heart`,"write them from memory, without looking"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")]);
+const ZMUST2=MUST([FB("red","Not given",`memorise these`,"they're not in your exam paper"),FB("amber","Accuracy",`3 s.f. · angles: 1 d.p.`,"unless the question says otherwise")]);
+const ZPLUS=ZK("green","+"), ZMIN=ZK("red","−");
+const ZSIGN=ZTB(["×","+","−"],[["+",ZPLUS,ZMIN],["−",ZMIN,ZPLUS]],"sg");
+const ZRAIN=rainbow(110,31,27,[[20,"5"],[38,"−2","var(--ink)"],[50,"("],[58,RX],[69,"+"],[80,"1"],[87,")"]],[[40,58,1,6,"","var(--blue)"],[36,80,1,13,"","var(--green)"]]);
+const ZEXP=nw(`= ${ZK("blue",`${V("a")}²`)} + ${ZK("amber",`2${V("ab")}`)} + ${ZK("green",`${V("b")}²`)}`);
+const ZOPP=ZK("green","opp"), ZADJ=ZK("amber","adj"), ZHYP=ZK("blue","hyp");
+const ZTOA=[ZF("",nw(`tan θ = ${frac(ZOPP,ZADJ)}`)),ZF("",nw(`cos θ = ${frac(ZADJ,ZHYP)}`)),ZF("",nw(`sin θ = ${frac(ZOPP,ZHYP)}`))];
+const ZLAD=(()=>{ const dn=`<span class="dn">differentiate ↓</span><span></span><span class="up">↑ integrate</span>`, bx=(v,w)=>`<span></span><span class="bx">${V(v)}<small>${w}</small></span><span></span>`;
+  return `<div class="mzlad">${bx("s","displacement")}${dn}${bx("v","velocity")}${dn}${bx("a","acceleration")}</div>`; })();
+const SHEETS10={
+s1Memo:`${ZMUST}
+<p class="tiny" style="margin:0 0 14px">Every formula and angle fact from the Sec 1 cheatsheets, in one place.</p>
+${ZS("Numbers &amp; algebra",[
+ZC("blue","Primes, HCF &amp; LCM","primes-hcf-lcm",
+  ZF("Prime number","= exactly 2 factors","1 and itself")
+  +ZCH(["2","3","5","7","11","13","17","19","23","29"],"Primes under 30")
+  +ZTIP("1 is NOT prime:","it has only 1 factor.")
+  +ZSUB("A ladder for each number")+ZR(picLadder(),[ZF("HCF","= only what they have in common"),ZF("LCM","= every base, highest power")],"st")
+  +ZVS([["Answer smaller than the numbers?","→ HCF"+ZX("the biggest number that divides both")],["Answer bigger than the numbers?","→ LCM"+ZX("the smallest number both divide into")]])
+  +ZSUB("Index form")
+  +ZTB(null,[["Square root","halve every power"],["Cube root",`every power ${nw("÷ 3")}`],["Perfect square","every power is even"]])
+  +ZF("e.g.",nw(`${SQRT("2⁴ × 3²")} = 2² × 3 = 12`))),
+ZC("amber","Integers","integers",
+  ZR(ZSIGN,[ZF("Same signs","→ +"),ZF("Different signs","→ −"),ZX("the same for ÷")])
+  +ZF("Minus a negative","= plus",nw("4 − (−6) = 4 + 6 = 10"))
+  +ZSUB("Order of operations")
+  +`<div class="mzord"><span><b>1</b>Brackets</span><span><b>2</b>Powers</span><span><b>3</b>× ÷</span><span><b>4</b>+ −</span></div>`+ZX("left to right at the same level")
+  +ZVS([[nw("(−2)²"),"= 4"],[nw("−2²"),"= −4"+ZX("square first, then the minus")]])
+  +`<div class="mzset">${ZSUB("Real numbers")}${ZVS([["Rational","can be written as a fraction of two integers"+ZCH(["5","−3",frac("2","3"),"0.25"])],["Irrational","the decimals never end and never repeat"+ZCH([SQRT("2"),"π"])]])}</div>`),
+ZC("green","Approximation","approximation",
+  ZVS([["Decimal places","count after the point"],["Significant figures","start at the first non-zero digit"]])
+  +ZTB(["Zeros …","e.g.","s.f."],[["in front: don't count",`<span class="mzmu">0.0</span><b class="k-green">52</b>`,"2"],["between digits: count",`<b class="k-green">507</b>`,"3"],["at the end, after the point: count",`<b class="k-green">2.50</b>`,"3"]])
+  +ZR(picRound(),[ZF("5 or more","→ round up"),ZF("Less than 5","→ keep"),ZX("look at the next digit")],"st")
+  +ZF("Estimate","→ round every number to 1 s.f.")
+  +ZF("Estimate a square root","→ use the nearest square number",nw(`${SQRT("50")} ≈ ${SQRT("49")} = 7`))),
+ZC("purple","Basic algebra","basic-algebra",
+  ZVS([["Like terms ✓",nw(`3${X1} + 5${X1} = 8${X1}`)],["Not like terms ✗",`${nw(`3${X1}`)} and ${nw(`3${X2}`)}`]])+ZX("like terms: only the same letters and powers")
+  +`<div class="mzswap"><span>${nw(`${V("a")}(${V("b")} + ${V("c")})`)}</span><span class="ar"><span>expand →</span><span>← factorise</span></span><span>${nw(`${V("ab")} + ${V("ac")}`)}</span></div>`
+  +ZX("expand: every term in the bracket<br>factorise: take out the common factor")
+  +ZR(ZRAIN,[ZF("",`${nw("= 5")} ${ZK("blue",nw(`+ (−2 × ${X1})`))} ${ZK("green",nw("+ (−2 × 1)"))}`),ZF("",nw(`= 3 − 2${X1}`)),ZX("the −2 keeps its sign: one arc to each term")],"st")),
+ZC("teal","Linear equations","linear-equations",
+  `<ol class="mzsteps"><li><b>Brackets</b> → expand first</li><li><b>Fractions</b> →&nbsp;×&nbsp;by the LCM of the bottoms${ZX("every fraction disappears")}</li><li><b>${X1} terms on one side</b> → throw and flip</li></ol>`
+  +ZR(picThrow(),[ZCH(["+ ↔ −","× ↔ ÷"],"Throw it over the =, flip it"),ZX(nw("+ 7 becomes − 7"))+ZX(nw("× 3 becomes ÷ 3"))],"st")),
+ZC("red","Ratio, rate &amp; speed","ratio-rate-speed",
+  ZH(nw(`Speed = ${frac("distance","time")}`))
+  +ZF("Average speed",nw(`= ${frac("total distance","total time")}`),"not the average of the two speeds")
+  +ZSUB("Change the units")
+  +ZF("",nw(`72 km/h = ${frac("72 km","1 h")}`))+ZF("",nw(`= ${frac("72 × 1000 m","1 × 60 × 60 s")}`))+ZF("",nw("= 20 m/s"))+ZX("change the top and the bottom separately")
+  +ZF("Ratio, simplest form","= same units, whole numbers",`${nw("1.5 m : 50 cm")} ${nw("= 150 : 50")} ${nw("= 3 : 1")}`)),
+ZC("amber","Percentage","percentage",
+  ZF("",nw(`80% of 500 = ${frac("80","100")} × 500 = 400`))
+  +ZH(`Percentage change ${nw(`= ${frac("change","original")} × 100%`)}`,nw("change = new − original"))
+  +ZR(picRevPct(),[ZF("Reverse percentage","→ find 1% first","20% off: the new price is 80%")],"st")
+  +ZTB(["Faster way","multiply by"],[["20% off",nw("× 0.8")],["10% service charge",nw("× 1.1")],["9% GST",nw("× 1.09")]])),
+ZC("green","Number patterns","number-patterns",
+  ZR(picPattern(),[ZF("",nw(`T<sub>${V("n")}</sub> = 4${V("n")} + 3`)),ZX("same difference each time (+ 4): a linear sequence"),ZF(`${V("n")}th term`,"→ the difference first, then plus or minus to reach the 1st term")],"st")
+  +ZT([[zDots("sq"),"Square numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}²`)],[zDots("tri"),"Triangle numbers",nw(`T<sub>${V("n")}</sub> = ${frac(`${V("n")}(${V("n")} + 1)`,"2")}`)]],"two")
+  +ZF("Cube numbers",nw(`T<sub>${V("n")}</sub> = ${V("n")}³`),"1, 8, 27, 64, …")
+  +ZF("Is it a term?",`→ ${V("n")} must be a positive integer`)),
+ZC("blue","Linear graphs","linear-graphs",
+  ZR(picRunRise(),[ZF("Gradient",nw(`= ${frac("rise","run")}`)),ZF("",nw(`= ${frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`)}`)),ZX(`gradient of AB = ${nw(frac("3","4"))}`)],"st")
+  +ZH(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`),`${V("m")} = gradient, ${V("c")} = the ${V("y")}-intercept`)
+  +ZT([[picLineKind("up"),"Uphill","positive gradient"],[picLineKind("down"),"Downhill","negative gradient"],[picLineKind("flat"),nw(`${V("y")} = ${V("k")}`),"flat: gradient 0"],[picLineKind("upright"),nw(`${X1} = ${V("k")}`),"upright"]],"two")
+  +ZF("Parallel lines","→ the same gradient"))
+])}
+${ZS("Geometry &amp; measurement",[
+ZC("amber","Types of angles","angles-parallel-lines",
+  ZT([[picAng("acute"),"Acute","less than 90°"],[picAng("right"),"Right angle","exactly 90°"],[picAng("obtuse"),"Obtuse","between 90° and 180°"],[picAng("reflex"),"Reflex","between 180° and 360°"]],"two")
+  +ZVS([["Complementary","add to 90°"],["Supplementary","add to 180°"]])),
+ZC("blue","Angle facts","angles-parallel-lines",
+  ZR(picStrLine(),[ZF("On a straight line",""),ZF("",nw(`${V("a")} + ${V("b")} = 180°`)),ZRS("(adj. ∠s on a str. line)")])
+  +ZR(picAtPt(),[ZF("At a point",""),ZF("",nw(`${V("a")} + ${V("b")} + ${V("c")} = 360°`)),ZRS("(∠s at a pt.)")])
+  +ZR(picVertOpp(),[ZF("Vertically opposite",""),ZF("","→ equal"),ZRS("(vert. opp. ∠s)")])),
+ZC("green","Parallel lines","angles-parallel-lines",
+  ZR(picPar("corr"),[ZF("Corresponding","→ equal"),ZRS("(corr. ∠s, AB &#47;&#47; CD)")])
+  +ZR(picPar("alt"),[ZF("Alternate","→ equal"),ZRS("(alt. ∠s, AB &#47;&#47; CD)")])
+  +ZR(picPar("int"),[ZF("Interior",nw(`${V("a")} + ${V("b")} = 180°`)),ZRS("(int. ∠s, AB &#47;&#47; CD)")])
+  +`<div class="mzzcf"><span><b>Z</b>alternate</span><span><b>C</b>interior</span><span><b>F</b>corresponding</span></div>`),
+ZC("red","Triangles","polygons",
+  ZF("Angle sum","= 180°")+ZRS("(∠ sum of △)")
+  +ZR(picTriExt(),[ZF("Exterior angle",nw(`= ${V("a")} + ${V("c")}`)),ZX("the 2 opposite interior angles added"),ZRS("(ext. ∠ of △)")],"st")
+  +ZR(picIsos(),[ZF("Isosceles","2 equal sides, 2 equal base angles"),ZRS("(base ∠s of isos. △)")])
+  +ZF("Equilateral","3 equal sides, every angle 60°")),
+ZC("purple","Quadrilaterals","polygons",
+  ZF("Angle sum","= 360°")+ZRS("(∠ sum of quad.)")
+  +ZT([[picQuad("para"),"Parallelogram","opposite sides parallel and equal<br>opposite angles equal"],[picQuad("rect"),"Rectangle","4 right angles<br>opposite sides equal<br>diagonals equal"],[picQuad("rhombus"),"Rhombus","4 equal sides<br>diagonals cross at 90°"],[picQuad("square"),"Square","4 equal sides<br>4 right angles"],[picQuad("trap"),"Trapezium","1 pair of parallel sides"],[picQuad("kite"),"Kite","2 pairs of equal sides next to each other<br>diagonals cross at 90°"]],"two")),
+ZC("teal","Polygons","polygons",
+  ZR(picPolyPattern(),[ZF("Interior angles add to",nw(`(${V("n")} − 2) × 180°`)),ZX(`${V("n")} = number of sides: it splits into ${nw(`${V("n")} − 2`)} triangles`)],"st")
+  +ZF("Exterior angles add to","360°")+ZRS("(sum of ext. ∠s of polygon)")
+  +ZR(picHexExt(),[ZSUB("Regular polygon"),ZF("Each exterior ∠",nw(`= ${frac("360°",V("n"))}`)),ZF("Each interior ∠",nw("= 180° − exterior ∠")),ZX(`hexagon: ${nw(`${frac("360°","6")} = 60°`)}`)])
+  +ZTIP("Tip:","use the exterior angle first. It's much easier than the interior.")),
+ZC("blue","Perimeter &amp; area","perimeter-area",
+  ZR(picShape("tri"),[ZF("Triangle",nw(`= ${frac("1","2")} × base × ${V("h")}`))])
+  +ZR(picShape("para"),[ZF("Parallelogram",nw(`= base × ${V("h")}`)),ZX(`${V("h")} meets the base at 90°, not the slanted side`)])
+  +ZR(picShape("trap"),[ZF("Trapezium",nw(`= ${frac("1","2")}(${V("a")} + ${V("b")}) × ${V("h")}`)),ZX(`${V("a")}, ${V("b")} = the parallel sides`)])
+  +ZR(picCircleParts(),[ZF("Circumference",nw(`= 2π${V("r")}`)),ZF("Area",nw(`= π${V("r")}²`))])
+  +ZR(zSemi(),[ZF("Semicircle perimeter",nw(`= ${ZK("blue",`π${V("r")}`)} + ${ZK("amber",`2${V("r")}`)}`)),ZX(`the ${ZK("blue","curved edge")} + the ${ZK("amber","straight edge")}`)])),
+ZC("amber","Units","perimeter-area",
+  ZR(picUnitSq(),[ZF("Area",nw("1 m² = 10 000 cm²")),ZX("100 cm × 100 cm")],"st")
+  +ZCH([nw("1 m = 100 cm"),nw("1 km = 1000 m"),nw("1 m³ = 1 000 000 cm³"),nw("1 litre = 1000 cm³")])),
+ZC("green","Volume &amp; surface area","volume-surface-area-1",
+  ZR(picPrismBase(),[ZF("Prism volume",nw("= base area × height")),ZX(`a prism lying down: its "height" is the length`)],"st")
+  +ZR(picCylNet(),[ZF("Prism surface area",`${nw("= 2 × base area")} ${nw("+ perimeter of base × height")}`),ZX(`${nw("perimeter of base × height")}: the toilet paper`)],"st")
+  +ZR(picSolid("cuboid"),[ZF("Cuboid volume",nw(`= ${V("lbh")}`)),ZF("Surface area",`${nw(`= 2${V("lb")}`)} ${nw(`+ 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`)])
+  +ZR(picSolid("cyl"),[ZF("Cylinder volume",nw(`= π${V("r")}²${V("h")}`)),ZF("Closed surface area",`${nw(`= 2π${V("r")}²`)} ${nw(`+ 2π${V("r")} × ${V("h")}`)}`)]))
+])}
+${ZS("Statistics",[
+ZC("purple","Charts","data-handling",
+  ZT([[picChart("bar"),"Bar chart","compare groups<br>gaps between the bars"],[picChart("pie"),"Pie chart",`angle = ${nw(`${frac("part","total")} × 360°`)}<br>the angles add to 360°`],[picChart("line"),"Line graph","change over time<br>time goes along the bottom"],[picChart("picto"),"Pictogram","always read the key"]],"two"))
+])}`,
+s2Memo:`${ZMUST}
+<p class="tiny" style="margin:0 0 14px">Every formula from the Sec 2 cheatsheets, in one place.</p>
+${ZS("Numbers &amp; algebra",[
+ZC("blue","Simultaneous equations","simultaneous-equations",
+  ZVS([["Elimination","make one letter's numbers match"+ZX("same signs: subtract<br>opposite signs: add")],["Substitution","best when one letter is on its own"+ZX("put it into the other one, in brackets")]])
+  +ZR(picTwoLines(),[ZF("Solution","= where the 2 lines meet",`here ${nw("(2, 3)")}`)])
+  +ZT([[zPar2("par"),`Same gradient, different ${V("c")}`,"parallel lines:<br>no solution"],[zPar2("same"),`Same gradient, same ${V("c")}`,"the same line:<br>infinitely many solutions"]],"two")),
+ZC("amber","Linear inequalities","linear-inequalities",
+  ZH("× or ÷ by a negative<br>→ flip the sign",`${nw(`−2${X1} ≤ 8`)} → ${nw(`${X1} ≥ −4`)}`)
+  +ZT([[nline("ge",3),nw(`${X1} ≥ 3`),"● filled circle: 3 counts<br>≤ or ≥"],[nline("gt",3),nw(`${X1} &gt; 3`),"○ open circle: 3 doesn't count<br>&lt; or &gt;"]],"two")
+  +ZTB(["They say","Sign"],[["at least","≥"],["at most","≤"],["more than","&gt;"],["less than","&lt;"],["not more than","≤"]],"kw")),
+ZC("green","Expansion","expansion",
+  ZR(zSqAB(),[ZF("",nw(`(${V("a")} + ${V("b")})²`)),ZF("",ZEXP)])
+  +ZF("",`${nw(`(${V("a")} − ${V("b")})²`)} ${nw(`= ${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)
+  +ZF("",`${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} ${nw(`= ${V("a")}² − ${V("b")}²`)}`)
+  +ZTIP("Middle term",`${nw("= 2 × first term × last term")} (signs included)`)),
+ZC("purple","Factorising","factorisation",
+  `<div class="mzflow"><div class="mzfb"><b>1.</b> Common factor? Always take it out first</div><div class="mzfa">↓</div><div class="mzfb"><b>2.</b> Count the terms</div><div class="mzfa">↓</div><div class="mzbr"><div class="mzfb"><b>2 terms</b>${nw(`${V("a")}² − ${V("b")}²`)}</div><div class="mzfb"><b>3 terms</b>cross method</div><div class="mzfb"><b>4 terms</b>grouping</div></div></div>`
+  +ZF("Difference of squares","")+ZF("",`${nw(`${V("a")}² − ${V("b")}²`)} ${nw(`= (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)
+  +ZR(picCross(),[ZF("Cross method",""),ZF("",nw(`${X2} + 4${X1} − 5`)),ZF("",nw(`= (${X1} + 5)(${X1} − 1)`))],"st")),
+ZC("teal","Algebraic fractions","algebraic-fractions",
+  ZTB(null,[["Simplify","factorise, then cancel factors"+ZX("never cancel terms")],["Add or subtract","same denominator first"+ZX("use the LCM of the bottoms")],["Divide","× by the flip"+ZX("Keep, Change, Flip")]])
+  +ZF("e.g.",nw(`${frac(`${X1}<s class="cancel">(${X1} + 2)</s>`,`3<s class="cancel">(${X1} + 2)</s>`)} = ${frac(X1,"3")}`))
+  +ZF("e.g.",nw(`${frac(V("a"),V("b"))} ÷ ${frac(V("c"),V("d"))} = ${frac(V("a"),V("b"))} × ${frac(V("d"),V("c"))}`))),
+ZC("red","Quadratic equations &amp; graphs","quadratic-equations-graphs",
+  ZF("Solve","→ make one side 0, then factorise",nw(`never ÷ by ${X1}`))
+  +ZH(`If ${nw("A × B = 0")}`,"")+`<div class="mzf" style="text-align:center;margin-top:-6px">${nw("A = 0 or B = 0")}</div>`
+  +ZT([[zUM("min"),`${nw(`+${X2}`)} graph`,"∪ shape, minimum point"],[zUM("max"),`${nw(`−${X2}`)} graph`,"∩ shape, maximum point"]],"two")
+  +ZR(zRoots(),[ZF("Roots",`= where the graph cuts the ${X1}-axis`),ZF("Turning point","→ halfway between the roots",nw(`${X1} = ${frac("1 + 5","2")} = 3`))])),
+ZC("blue","Proportion &amp; map scales","proportion",
+  ZT([[picProp("direct"),`Direct: ${nw(`${V("y")} = ${V("k")}${X1}`)}`,`${X1} doubles, ${V("y")} doubles<br>a straight line through (0, 0)`],[picProp("inv"),`Inverse: ${nw(`${V("y")} = ${frac(V("k"),X1)}`)}`,`${X1} doubles, ${V("y")} halves<br>a curve that never touches the axes`]],"two")
+  +ZR(picMapSq(),[ZF("Map scale",nw(`1 : ${V("n")}`),`1 cm on the map is ${V("n")} cm for real`),ZF("Area on a map","→ square the scale")],"st")
+  +ZF("cm to km",nw("÷ 100 000")))
+])}
+${ZS("Geometry &amp; measurement",[
+ZC("amber","Congruence &amp; similarity","congruence-similarity",
+  ZVS([["Congruent","same shape and same size"+ZX("all sides and angles equal")],["Similar","same shape, sides in the same ratio"+ZX("the angles are equal")]])
+  +ZR(picSim(),[ZF("Scale factor",""),ZF("","more than 1 → bigger"),ZF("","less than 1 → smaller")],"st")),
+ZC("green","Pythagoras","pythagoras",
+  ZR(picRight("pyth"),[ZF("",nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)),ZX(`${V("c")} = hypotenuse, opposite the right angle`)])
+  +ZVS([["Long side","add the squares, then square root"],["Short side","subtract the squares, then square root"]])
+  +ZCH([nw("3, 4, 5"),nw("5, 12, 13"),nw("8, 15, 17"),nw("7, 24, 25")],"Whole-number triangles")+ZX("and their multiples")),
+ZC("purple","TOA CAH SOH","trigonometry-sec2",
+  ZR(picRight("trig"),ZTOA)
+  +ZTB(null,[[ZHYP,"the longest side, opposite the right angle"],[ZOPP,"opposite θ"],[ZADJ,"next to θ (not the hyp)"]])),
+ZC("red","Pyramids, cones &amp; spheres","volume-surface-area-2",
+  ZR(picSolid("pyr"),[ZF("Pyramid volume",nw(`= ${frac("1","3")} × base area × ${V("h")}`))])
+  +ZR(picSolid("cone"),[ZF("Cone volume",nw(`= ${frac("1","3")}π${V("r")}²${V("h")}`)),ZF("Curved surface area",nw(`= π${V("rl")}`),`${V("l")} = slant height`)])
+  +ZR(picSolid("sphere"),[ZF("Sphere volume",nw(`= ${frac("4","3")}π${V("r")}³`)),ZF("Surface area",nw(`= 4π${V("r")}²`))])
+  +ZR(picHemi(),[ZF("Hemisphere, curved",nw(`= 2π${V("r")}²`)),ZF("Solid hemisphere",nw(`= 3π${V("r")}²`),nw("+ the flat circle"))],"st")
+  +ZTIP("Pointy solids",`(pyramid, cone) get ${frac("1","3")} in front.`))
+])}
+${ZS("Statistics &amp; probability",[
+ZC("teal","Data diagrams","data-sec2",
+  ZR(picChart("dot"),[ZF("Dot diagram",""),ZX("one dot per value<br>the tallest stack is the mode")])
+  +ZR(picChart("hist"),[ZF("Histogram",""),ZX("bars touch<br>equal class widths")])
+  +ZR(picStemLeaf(),[ZF("Stem-and-leaf",""),ZX("stem is the tens, leaf is the ones<br>always give a key")])
+  +ZR(zInterval(),[ZF("",nw(`10 &lt; ${X1} ≤ 20`)),ZX("includes 20 but not 10")])
+  +ZR(picDotDesc(),[ZF("Describe a distribution",""),ZX("range, cluster, outlier")],"st")),
+ZC("blue","Mean, median &amp; mode","averages",
+  ZTB(null,[["Mean",nw(frac("total","how many"))],["Mean from a table",nw(frac(`total of ${V("fx")}`,`total of ${V("f")}`))],["Median","the middle value, after ordering"],["Median position",nw(frac(`${V("n")} + 1`,"2"))],["Mode","the most common value"+ZX("there can be more than one")]])
+  +`<div class="mzchs mzmid">${["3","5","6","8","9","11","14"].map((x,i)=>`<span class="mzch${i===3?" hi":""}">${x}</span>`).join("")}</div>`
+  +ZX(`7 values: position ${nw(`${frac("7 + 1","2")} = 4`)}, so the median is 8`)
+  +ZTIP("Outlier?","use the median.")),
+ZC("amber","Probability","probability-sec2",
+  ZR(picProb(),[],"st")
+  +ZH(nw(`Probability = ${frac("ways it can happen","total outcomes")}`),"outcomes equally likely")
+  +ZF("",nw("P(not A) = 1 − P(A)"))
+  +ZVS([["Impossible event","probability = 0"],["Certain event","probability = 1"]]))
+])}`,
+emMemo:`${ZMUST2}
+<p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/emath-formula-sheet">E-Math formula sheet</a>.</p>
+${ZS("Numbers &amp; algebra",[
+ZC("green","Expansion","expansion",
+  ZR(zSqAB(),[ZF("",nw(`(${V("a")} + ${V("b")})²`)),ZF("",ZEXP)])
+  +ZF("",`${nw(`(${V("a")} − ${V("b")})²`)} ${nw(`= ${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)
+  +ZF("",`${nw(`${V("a")}² − ${V("b")}²`)} ${nw(`= (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)),
+ZC("blue","Quadratic formula","quadratic-equations",
+  ZH(QUAD_F,`for ${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`)),
+ZC("amber","Completing the square","completing-the-square",
+  ZF("",nw(`${X2} + ${V("p")}${X1} + ${V("q")}`))+ZF("",nw(`= ${PAR(`${X1} + ${frac(V("p"),"2")}`,"2")} − ${PAR(frac(V("p"),"2"),"2")} + ${V("q")}`))
+  +ZX(`half of ${V("p")} goes in the bracket`)
+  +ZF("e.g.",nw(`${X2} + 6${X1} + 1 = (${X1} + 3)² − 9 + 1`))+ZF("",nw(`= (${X1} + 3)² − 8`))),
+ZC("purple","Indices","indices",
+  ZTB(null,[[`Multiply${ZX("add the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)],[`Divide${ZX("subtract the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)],[`Bracket${ZX("multiply the powers")}`,nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)],[`Power 0`,nw(`${V("a")}<sup>0</sup> = 1`)],[`Negative power${ZX("1 over")}`,nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)]])),
+ZC("red","Money &amp; rates","interest",
+  ZH(nw(`Simple interest = ${frac(V("PRT"),"100")}`),`${V("P")} = amount borrowed or saved<br>${V("R")} = % rate per year<br>${V("T")} = number of years`)
+  +ZF("Percentage change",nw(`= ${frac("change","original")} × 100%`))
+  +ZF("Average speed",nw(`= ${frac("total distance","total time")}`)))
+])}
+${ZS("Geometry &amp; measurement",[
+ZC("green","Right-angled triangles","pythagoras",
+  ZR(picRight("pyth"),[ZF("Pythagoras",""),ZF("",nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)),ZX(`${V("c")} = hypotenuse`)])
+  +ZR(picRight("trig"),[ZSUB("TOA CAH SOH"),...ZTOA])),
+ZC("red","Obtuse angles","further-trigonometry",
+  ZR(zObt(),[ZF("",nw("sin(180° − θ) = sin θ"),ZK("green","same height")),ZF("",nw("cos(180° − θ) = −cos θ"),ZK("red","the other side: minus"))],"st")),
+ZC("blue","Area","perimeter-area",
+  ZR(picShape("trap"),[ZF("Trapezium",nw(`= ${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`))])
+  +ZR(picShape("para"),[ZF("Parallelogram",nw(`= base × ${V("h")}`))])
+  +ZR(picCircleParts(),[ZF("Circle area",nw(`= π${V("r")}²`)),ZF("Circumference",nw(`= 2π${V("r")}`))])),
+ZC("amber","Volume &amp; surface area","volume-surface-area-1",
+  ZR(picPrismBase(),[ZF("Prism volume",nw("= base area × length"))],"st")
+  +ZR(picSolid("cyl"),[ZF("Cylinder volume",nw(`= π${V("r")}²${V("h")}`)),ZF("Curved surface area",nw(`= 2π${V("rh")}`))])
+  +ZR(picSolid("pyr"),[ZF("Pyramid volume",nw(`= ${frac("1","3")} × base area × ${V("h")}`))])),
+ZC("purple","Arcs &amp; sectors","arc-length-sector-area",
+  ZR(picSector(),[ZF("Arc length",nw(`= ${frac("θ","360°")} × 2π${V("r")}`)),ZF("Sector area",nw(`= ${frac("θ","360°")} × π${V("r")}²`))])
+  +ZCH([nw("π radians = 180°")])),
+ZC("teal","Polygons","polygons",
+  ZR(picPolyPattern(),[ZF("Interior angles add to",nw(`(${V("n")} − 2) × 180°`)),ZX(`${V("n")} = number of sides`),ZF("Exterior angles add to","360°")],"st")),
+ZC("red","Similar shapes","congruence-similarity",
+  ZR(picGridRatio(),[ZF("Area ratio",nw("= (length ratio)²"))],"st")+ZR(picCubeRatio(),[ZF("Volume ratio",nw("= (length ratio)³"))],"st")),
+ZC("blue","Coordinates","coordinate-geometry",
+  ZR(picRunRise(),[ZF("Gradient",nw(`= ${GRAD_F}`)),ZF("Length",nw(`= ${LEN_F}`))],"st")
+  +ZF("e.g.",nw(`AB = ${SQRT("4² + 3²")} = 5`))
+  +ZH(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`),`${V("m")} = gradient, ${V("c")} = ${V("y")}-intercept`)),
+ZC("green","Vectors","vectors",
+  ZR(zVec(),[ZF("Size of a vector",""),ZF("",nw(`|${MX([[X1],[V("y")]])}| = ${SQRT(`${X2} + ${V("y")}²`)}`)),ZF("e.g.",nw(`|${MX([["4"],["3"]])}| = ${SQRT("4² + 3²")} = 5`))]))
+])}
+${ZS("Statistics &amp; probability",[
+ZC("amber","Spread","measures-of-spread",
+  ZR(zBoxIQR(),[ZF("Interquartile range",nw(`= ${V("Q")}₃ − ${V("Q")}₁`))],"st")),
+ZC("purple","Probability","probability",
+  ZF("",nw("P(not A) = 1 − P(A)"))
+  +ZR(treeP(),[ZVS([["AND → multiply","independent, or along the tree branches"],["OR → add","only if they can't both happen"]])],"st")),
+ZC("teal","Sets","sets",
+  ZR(venn("or"),[ZF("",nw("n(A ∪ B)")),ZF("",`${nw("= n(A) + n(B)")} ${nw("− n(A ∩ B)")}`)]))
+])}`,
+amMemo:`${ZMUST2}
+<p class="tiny" style="margin:0 0 14px">What you do get in the exam: <a href="#sheet/amath-formula-sheet">A-Math formula sheet</a>.</p>
+${ZS("Algebra",[
+ZC("blue","Discriminant","discriminant",
+  ZTB([nw(`${V("b")}² − 4${V("ac")}`),"roots",""],[[nw("&gt; 0"),"2 real and distinct",miniQ(2)],[nw("= 0"),"2 equal",miniQ(1)],[nw("&lt; 0"),"no real roots",miniQ(0)]],"dsc")
+  +ZTIP("Real roots",`→ ${nw(`${V("b")}² − 4${V("ac")} ≥ 0`)} (equal roots are real too)`)
+  +ZR(picAlwaysPos(),[ZF("Always positive",""),ZF("",nw(`${V("a")} &gt; 0`)),ZF("",`and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)])),
+ZC("green","Quadratic inequalities","simultaneous-inequalities",
+  ZR(qIn("gt"),[ZF("",nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &gt; 0`)),ZF("",`${nw(`${X1} &lt; ${V("p")}`)} or ${nw(`${X1} &gt; ${V("q")}`)}`),ZX("outside the roots")])
+  +ZR(qIn("lt"),[ZF("",nw(`(${X1} − ${V("p")})(${X1} − ${V("q")}) &lt; 0`)),ZF("",nw(`${V("p")} &lt; ${X1} &lt; ${V("q")}`)),ZX("between the roots")])
+  +ZX(`${nw(`${V("p")} &lt; ${V("q")}`)}`)),
+ZC("amber","Completing the square","completing-the-square",
+  ZR(qMini("min"),[ZF("",nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)),ZX(`turning point ${nw(`(${V("h")}, ${V("k")})`)}`)])),
+ZC("purple","Surds","surds",
+  ZF("",nw(`${SQRT(V("a"))} × ${SQRT(V("b"))} = ${SQRT(V("ab"))}`))
+  +ZF("",nw(`${frac(SQRT(V("a")),SQRT(V("b")))} = ${SQRT(frac(V("a"),V("b")))}`))
+  +ZF("Conjugates","")+ZF("",nw(`(${V("a")} + ${SQRT(V("b"))})(${V("a")} − ${SQRT(V("b"))}) = ${V("a")}² − ${V("b")}`))),
+ZC("red","Polynomials","polynomials-partial-fractions",
+  ZVS([["Remainder theorem",`${nw(`f(${X1}) ÷ (${X1} − ${V("a")})`)}<br>leaves remainder ${nw(`f(${V("a")})`)}`],["Factor theorem",`${nw(`(${X1} − ${V("a")})`)} is a factor<br>⇔ ${nw(`f(${V("a")}) = 0`)}`]])
+  +ZSUB("Sum and difference of cubes")
+  +ZF("",`${nw(`${V("a")}³ + ${V("b")}³`)} ${nw(`= (${V("a")} + ${V("b")})(${V("a")}² − ${V("ab")} + ${V("b")}²)`)}`)
+  +ZF("",`${nw(`${V("a")}³ − ${V("b")}³`)} ${nw(`= (${V("a")} − ${V("b")})(${V("a")}² + ${V("ab")} + ${V("b")}²)`)}`)),
+ZC("teal","Partial fractions","polynomials-partial-fractions",
+  ZVS([["Two different linear factors",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)}`],
+    ["A repeated factor",`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${V("c")}${X1} + ${V("d")})²`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(V("B"),`${V("c")}${X1} + ${V("d")}`)}`)} ${nw(`+ ${frac(V("C"),`(${V("c")}${X1} + ${V("d")})²`)}`)}`],
+    [`A factor ${nw(`${X2} + ${V("c")}²`)} that won't factorise`,`${nw(frac("…",`(${V("a")}${X1} + ${V("b")})(${X2} + ${V("c")}²)`))} ${nw(`= ${frac(V("A"),`${V("a")}${X1} + ${V("b")}`)} + ${frac(`${V("B")}${X1} + ${V("C")}`,`${X2} + ${V("c")}²`)}`)}`]],"one pf")),
+ZC("blue","Binomial","binomial-theorem",
+  ZH(nw(`${V("T")}<sub>${V("r")} + 1</sub> = ${BIN(V("n"),V("r"))}${V("a")}<sup>${V("n")} − ${V("r")}</sup>${V("b")}<sup>${V("r")}</sup>`),"the general term")),
+ZC("green","Exponentials &amp; logs","exponentials-logarithms",
+  ZH(`${nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>`)} ⇔ ${nw(`${X1} = log<sub>${V("a")}</sub> ${V("y")}`)}`)
+  +ZTB(null,[["Product",nw(`log<sub>${V("a")}</sub> ${V("xy")} = log<sub>${V("a")}</sub> ${X1} + log<sub>${V("a")}</sub> ${V("y")}`)],["Quotient",nw(`log<sub>${V("a")}</sub> ${frac(X1,V("y"))} = log<sub>${V("a")}</sub> ${X1} − log<sub>${V("a")}</sub> ${V("y")}`)],["Power",nw(`log<sub>${V("a")}</sub> ${X1}<sup>${V("k")}</sup> = ${V("k")} log<sub>${V("a")}</sub> ${X1}`)]],"lg")
+  +ZCH([nw(`log<sub>${V("a")}</sub> ${V("a")} = 1`),nw(`log<sub>${V("a")}</sub> 1 = 0`)])
+  +ZF("Change of base",nw(`log<sub>${V("a")}</sub> ${V("b")} = ${frac(`log<sub>${V("c")}</sub> ${V("b")}`,`log<sub>${V("c")}</sub> ${V("a")}`)}`)))
+])}
+${ZS("Trigonometry",[
+ZC("purple","The six ratios","trig-ratios-any-angle",
+  ZTB(null,[[nw(`tan ${V("A")} = ${frac("sin "+V("A"),"cos "+V("A"))}`),nw(`cot ${V("A")} = ${frac("cos "+V("A"),"sin "+V("A"))}`)],[nw(`sec ${V("A")} = ${frac("1","cos "+V("A"))}`),nw(`cosec ${V("A")} = ${frac("1","sin "+V("A"))}`)],[nw(`cot ${V("A")} = ${frac("1","tan "+V("A"))}`),""]],"pairs")
+  +ZSUB("Exact values")
+  +ZTB(["","0°","30°","45°","60°","90°"],[["rad","0",frac("π","6"),frac("π","4"),frac("π","3"),frac("π","2")],["sin","0",frac("1","2"),frac("1",SQRT("2")),frac(SQRT("3"),"2"),"1"],["cos","1",frac(SQRT("3"),"2"),frac("1",SQRT("2")),frac("1","2"),"0"],["tan","0",frac("1",SQRT("3")),"1",SQRT("3"),"—"]],"ev")
+  +ZX("tan 90° is undefined")
+  +ZSUB("ASTC: which ratios are positive")+ZR(zAstc(),[],"st sm")),
+ZC("red","Trig graphs","trig-graphs",
+  ZR(zWave(),[],"st")
+  +ZF("",`${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)} or ${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}`)
+  +ZVS([["Amplitude",nw(`|${V("a")}|`)],["Period",nw(frac("360°",V("b")))],["Max",nw(`${V("c")} + |${V("a")}|`)],["Min",nw(`${V("c")} − |${V("a")}|`)]])
+  +ZF(nw(`${V("y")} = ${V("a")} tan ${V("b")}${X1} + ${V("c")}`),`period = ${nw(frac("180°",V("b")))}`)),
+ZC("amber","R-formula","r-formula",
+  ZH(`${nw(`${V("a")} cos θ + ${V("b")} sin θ`)} ${nw(`= ${V("R")} cos(θ − α)`)}`)
+  +ZR(zRTri(),[ZF("",nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)),ZF("",nw(`tan α = ${frac(V("b"),V("a"))}`))]))
+])}
+${ZS("Coordinate geometry",[
+ZC("blue","Lines","coordinate-geometry-circles",
+  ZF("Midpoint",nw(`= ${PAR(`${frac(`${X1}₁ + ${X1}₂`,"2")}, ${frac(`${V("y")}₁ + ${V("y")}₂`,"2")}`)}`))
+  +ZF("Gradient",nw(`= ${GRAD_F}`))+ZF("Length",nw(`= ${LEN_F}`))
+  +ZT([[zParPerp("par"),"Parallel",nw(`${V("m")}₁ = ${V("m")}₂`)],[zParPerp("perp"),"Perpendicular",nw(`${V("m")}₁${V("m")}₂ = −1`)]],"two")),
+ZC("green","Circles","coordinate-geometry-circles",
+  ZR(picCircAxes(),[ZF("",nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)),ZX(`centre ${nw("(−3, 2)")}, radius 4`)])
+  +ZVS([[nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`),`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`],[nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)}, radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`]],"one")),
+ZC("teal","Area from the corners","coordinate-geometry-circles",
+  ZR(picShoe(),[ZX("list the corners in order and repeat the first")],"st")
+  +ZF("Area",nw(`= ${frac("1","2")}${SHOE}`))
+  +ZF("",`${nw(`= ${frac("1","2")}|(${X1}₁${V("y")}₂ + ${X1}₂${V("y")}₃ + …)`)} ${nw(`− (${V("y")}₁${X1}₂ + ${V("y")}₂${X1}₃ + …)|`)}`)),
+ZC("purple","Linear law","linear-law",
+  `<div class="mzll"><span class="mb fb-blue">${V("Y")}</span><span>=</span><span class="mb fb-amber">${V("m")}</span><span class="mb fb-green">${V("X")}</span><span>+</span><span class="mb fb-red">${V("c")}</span><span class="mb fb-blue">lg ${V("y")}</span><span>=</span><span class="mb fb-amber">${V("n")}</span><span class="mb fb-green">lg ${X1}</span><span>+</span><span class="mb fb-red">lg ${V("a")}</span></div>`
+  +ZX(`e.g. ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}: plot ${nw(`${V("Y")} = lg ${V("y")}`)} against ${nw(`${V("X")} = lg ${X1}`)}`)
+  +ZTIP("Straight line:",`${nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("c")}`)}`))
+])}
+${ZS("Calculus",[
+ZC("red","Differentiation","differentiation-rules",
+  ZTB([V("y"),dydx],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${V("n")}${X1}<sup>${V("n")} − 1</sup>`)],[nw(`sin ${X1}`),nw(`cos ${X1}`)],[nw(`cos ${X1}`),nw(`−sin ${X1}`)],[nw(`tan ${X1}`),nw(`sec²${X1}`)],[nw(`e<sup>${X1}</sup>`),nw(`e<sup>${X1}</sup>`)],[nw(`ln ${X1}`),nw(frac("1",X1))]],"dif")
+  +ZVS([["Product rule",nw(`${frac("d","d"+X1)}(${V("uv")}) = ${V("u")}${dd(V("v"),X1)} + ${V("v")}${dd(V("u"),X1)}`)],["Quotient rule",nw(`${frac("d","d"+X1)}${PAR(frac(V("u"),V("v")))} = ${frac(`${V("v")}${dd(V("u"),X1)} − ${V("u")}${dd(V("v"),X1)}`,V("v")+"²")}`)],["Chain rule",nw(`${dd(V("y"),X1)} = ${dd(V("y"),V("u"))} × ${dd(V("u"),X1)}`)]],"one")),
+ZC("amber","Uses of differentiation","differentiation-uses",
+  ZF(`Tangent at ${nw(`(${X1}₁, ${V("y")}₁)`)}`,"")+ZF("",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`))
+  +ZF("Normal gradient",nw(`= −${frac("1",V("m"))}`))
+  +ZF("Stationary point",nw(`${dydx} = 0`))
+  +ZT([[shapeIcon("min","var(--green)",46),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`),"minimum"],[shapeIcon("max","var(--red)",46),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &lt; 0`),"maximum"]],"two")
+  +ZF("Rates of change","")+ZF("",nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`))),
+ZC("green","Integration","integration",
+  ZTB([nw(`f(${X1})`),nw(`∫ f(${X1}) d${X1}`)],[[nw(`${X1}<sup>${V("n")}</sup>`),nw(`${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`)+ZX(nw(`${V("n")} ≠ −1`))],[nw(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup>`),nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`)],[nw(`sin ${X1}`),nw(`−cos ${X1} + ${V("c")}`)],[nw(`cos ${X1}`),nw(`sin ${X1} + ${V("c")}`)],[nw(`sec²${X1}`),nw(`tan ${X1} + ${V("c")}`)],[nw(`e<sup>${V("a")}${X1} + ${V("b")}</sup>`),nw(`${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup> + ${V("c")}`)]],"dif")
+  +ZF("Definite",nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} = F(${V("b")}) − F(${V("a")})`))),
+ZC("blue","Kinematics","kinematics",
+  ZLAD
+  +ZVS([["Differentiate",`${nw(`${V("v")} = ${dd(V("s"),V("t"))}`)}<br>${nw(`${V("a")} = ${dd(V("v"),V("t"))}`)}`],["Integrate",`${nw(`${V("s")} = ∫${V("v")} d${V("t")}`)}<br>${nw(`${V("v")} = ∫${V("a")} d${V("t")}`)}`]]))
+])}`
+};
+Object.assign(SHEETS,SHEETS10);
+function mzLay(force){ app.querySelectorAll(".mzg").forEach(g=>{ if(!g._c) g._c=[...g.children]; const W=g.clientWidth; if(!W) return;
+  const n=force||Math.max(1,Math.min(3,Math.floor((W+16)/356))); if(!force&&g._n===n&&g._w===W) return; g._n=force?0:n; g._w=W;
+  const cols=[...Array(n)].map(()=>{ const c=document.createElement("div"); c.className="mzcol"; return c; }); g.classList.add("js"); g.replaceChildren(...cols);
+  g._c.forEach(c=>cols[0].append(c)); const hs=g._c.map(c=>c.offsetHeight), t=cols.map(()=>0);
+  g._c.forEach((c,i)=>{ let k=0; for(let j=1;j<n;j++) if(t[j]<t[k]-1) k=j; cols[k].append(c); t[k]+=hs[i]+16; }); }); }
+let mzRaf=0;
+addEventListener("resize",()=>{ if(!app.querySelector(".mzg")) return; cancelAnimationFrame(mzRaf); mzRaf=requestAnimationFrame(()=>mzLay()); });
+addEventListener("beforeprint",()=>{ if(app.querySelector(".mzg")) mzLay(3); });
+addEventListener("afterprint",()=>{ if(app.querySelector(".mzg")) mzLay(); });
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ app.querySelectorAll(".mzg").forEach(g=>{ g._n=0; }); mzLay(); });
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
@@ -8765,7 +9276,7 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.exam?s.title:s.title+" — cheatsheet"}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
-  digest(app); cdLinks(s.sheet); fitMust(); bindPrint(); fillPrintFoot(!!window.qrcode);
+  digest(app); cdLinks(s.sheet); fitMust(); mzLay(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
@@ -9054,7 +9565,7 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
   const tx=x=>{ const d=document.createElement("div"); if(typeof x==="string") d.innerHTML=x; else d.append(x); return d.textContent.replace(/\s+/g," ").trim(); };
   const upto=(q,n,i)=>{ const r=document.createRange(); r.setStart(q,0); r.setEnd(n,i); const s=document.createElement("span"); s.append(r.cloneContents()); return s.innerHTML; };
   const texts=q=>{ const w=document.createTreeWalker(q,NodeFilter.SHOW_TEXT), a=[]; let n; while((n=w.nextNode())) if(!n.parentElement.closest(".frac, sup, sub, svg, .lim, .mx, .fnote")) a.push(n); return a; };
-  cdDom(key).querySelectorAll("ul.fml > li").forEach(li=>{
+  cdDom(SHEETS[key+"FC"]?key+"FC":key).querySelectorAll("ul.fml > li").forEach(li=>{
     if(li.classList.contains("grp")){ const a=li.querySelector(".go"); g={n:li.firstElementChild.innerHTML,a:a?a.outerHTML:""}; prev=null; return; }
     const q=li.cloneNode(true), lb=[...q.children].find(c=>c.matches(".lbl")); if(lb) lb.remove();
     const it=li.matches(".frow, .fmap")?q.firstElementChild:q, ts=it?texts(it):[], k=ts.findIndex(n=>n.nodeValue.includes("=")), r={g,li,it,ts,k,prev,lb:lb?lb.innerHTML:""};
