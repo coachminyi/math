@@ -208,7 +208,9 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .flathint p{margin:0;font-size:17px}
 @keyframes hnudge{0%,100%{stroke-opacity:0;stroke-width:.4}50%{stroke-opacity:.6;stroke-width:1.6}}
 svg.nudge circle.nudgeme{stroke:var(--accent);animation:hnudge 1.6s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){svg.nudge circle.nudgeme{animation:none;stroke-opacity:.45;stroke-width:.8}}
+@keyframes pnudge{0%,100%{stroke-width:.9}50%{stroke-width:2.4}}
+svg.nudge .pgrab{animation:pnudge 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){svg.nudge circle.nudgeme{animation:none;stroke-opacity:.45;stroke-width:.8}svg.nudge .pgrab{animation:none}}
 .plbl{align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .pillrow[data-pk]>.plbl{flex-basis:100%;align-self:auto;margin:0 0 -3px}
 .steptabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:2px 0 14px}
@@ -873,12 +875,12 @@ const CV=(c,s)=>`<i class="v k-${c}">${s}</i>`, CS=(c,t)=>`<span class="k-${c}">
 const kStr=k=>Math.abs(k)<1e-12?"":(k>0?" + ":" − ")+N(Math.abs(k));
 
 function svgPt(svg,e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
-function dragger(svg,cb){
+function dragger(svg,cb,end){
   let id=null, pid=null;
   svg.addEventListener("pointerdown",e=>{const t=e.target.closest("[data-drag]"); if(!t||id) return;
-    id=t.getAttribute("data-drag"); pid=e.pointerId; try{svg.setPointerCapture(e.pointerId)}catch(_){}; e.preventDefault(); cb(id,svgPt(svg,e));});
-  svg.addEventListener("pointermove",e=>{ if(id&&e.pointerId===pid){ e.preventDefault(); cb(id,svgPt(svg,e)); } });
-  ["pointerup","pointercancel"].forEach(k=>svg.addEventListener(k,e=>{ if(e.pointerId===pid){ id=null; pid=null; } }));
+    id=t.getAttribute("data-drag"); pid=e.pointerId; try{svg.setPointerCapture(e.pointerId)}catch(_){}; e.preventDefault(); cb(id,svgPt(svg,e),true);});
+  svg.addEventListener("pointermove",e=>{ if(id&&e.pointerId===pid){ e.preventDefault(); cb(id,svgPt(svg,e),false); } });
+  ["pointerup","pointercancel"].forEach(k=>svg.addEventListener(k,e=>{ if(e.pointerId===pid){ const d=id; id=null; pid=null; if(end&&d) end(d); } }));
 }
 function kbdMark(svg,kbd,st){ const last={}; svg.querySelectorAll("circle[data-drag]").forEach(c=>{ last[c.getAttribute("data-drag")]=c; });
   Object.entries(last).forEach(([id,c])=>{ const l=kbd.label(id,st); if(!l) return; c.setAttribute("tabindex","0"); c.setAttribute("role","slider"); c.setAttribute("aria-label",l[0]); c.setAttribute("aria-valuetext",l[1]); }); }
@@ -1021,7 +1023,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     const b=jb&&jb.querySelector(`[data-j="${st.step}"]`); if(b&&jb.scrollWidth>jb.clientWidth) jb.scrollTo({left:b.offsetLeft-(jb.clientWidth-b.offsetWidth)/2,behavior:"smooth"}); };
   const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>stepTo(st.step+1);
   const pvb=$(".prevstep",panel); if(pvb) pvb.onclick=()=>stepTo(st.step-1);
-  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p)=>{svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st); draw();}); }
+  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } }); }
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
@@ -3014,8 +3016,6 @@ const ptRs=v=>Math.abs(v-Math.round(v))<1e-9?"":" "+nw("(3 s.f.)");
 
 const ptPour=s=>{ const f=s.f||0, q=clamp((f-.25)/.55,0,1), mv=f<.1?0:f<.25?(f-.1)/.15:f<.8?1:(1-f)/.2, e=mv*mv*(3-2*mv);
   const cone=s.n>=3?0:f===0?(s.n===0?1:0):f<.1?(s.n===0?1:f/.1):1-q, cnt=Math.min(3,s.n+(q>=1?1:0)); return {q,e,cone,cnt,lvl:Math.min(1,(s.n+q)/3)}; };
-const ptT3=s=>{ const cone=s.sh==="cone", L=25, by=cone?84:86, per=cone?2*PI*s.r:4*s.a, dw=cone?2*s.r:s.a*(1+PT3[0])+2;
-  const k=Math.min((150-L-6)/(dw+per),(cone?70:72)/(s.h+(cone?.6*s.r:PT3[1]*s.a))), by2=Math.min(by,50+(s.h*k)/2+(cone?0:PT3[1]*s.a*k/2)); return {cone,L,by:by2,per,k,xs:L+dw*k}; };
 const ptName=s=>s.sh==="cone"?["cone","cylinder","cones"]:["pyramid","prism","pyramids"];
 const m3=(A,B)=>A.map(r=>[0,1,2].map(j=>r[0]*B[0][j]+r[1]*B[1][j]+r[2]*B[2][j])), mv3=(M,p)=>M.map(r=>r[0]*p[0]+r[1]*p[1]+r[2]*p[2]);
 const R3={x:t=>[[1,0,0],[0,Math.cos(t),-Math.sin(t)],[0,Math.sin(t),Math.cos(t)]],y:t=>[[Math.cos(t),0,Math.sin(t)],[0,1,0],[-Math.sin(t),0,Math.cos(t)]],z:t=>[[Math.cos(t),-Math.sin(t),0],[Math.sin(t),Math.cos(t),0],[0,0,1]]};
@@ -3026,47 +3026,70 @@ const PT3P=[{q:[[0,0,0],[0,1,0],[0,1,1],[0,0,1]],d:[-1,0,0],c:"blue",M:m3(R3.y(-
   {q:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],d:[0,0,1],c:"green",M:m3(R3.y(PI/2),R3.x(PI/2)),sx:1.45}];
 PT3P.forEach(P=>{ const A=[1,1,0], cen=[0,1,2].map(j=>(P.q.reduce((s,p)=>s+p[j],0)/4)*.75+A[j]*.25), B=P.q.map(p=>mv3(P.M,p)), mn=[0,1,2].map(j=>Math.min(...B.map(p=>p[j])));
   P.cen=cen; P.aa=aa3(P.M); const Mc=mv3(P.M,cen); P.cf=[Mc[0]+P.sx-mn[0],Mc[1]-mn[1],Mc[2]-mn[2]]; });
-function ptCube3(svg,e){ const s1=clamp(e,0,1), s2=clamp(e-1,0,1), e1=s1*s1*(3-2*s1), e2=s2*s2*(3-2*s2), k=40+(31-40)*e2, Wx=.55+(.71-.55)*e2, Wy=.47+(.66-.47)*e2;
-  const VW=[PT3[0],PT3[1],-1], AP=[1,1,0];
-  const pj=p=>[75+k*(p[0]+PT3[0]*p[2]-Wx),50-k*(p[1]+PT3[1]*p[2]-Wy)], sub=(a,b)=>a.map((v,i)=>v-b[i]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
-  const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], LT=[-.35,.8,-.5];
-  const Ps=PT3P.map((P,i)=>{ const off=P.d.map(v=>v*.55), C0=P.cen.map((v,j)=>v+off[j]);
-    const mv=p=>{ const pe=p.map((v,j)=>v+off[j]*e1); if(e2<=0) return pe; const r=rot3(sub(pe,C0),P.aa.a,P.aa.th*e2); return r.map((v,j)=>v+C0[j]+(P.cf[j]-C0[j])*e2); };
-    const Q=P.q.map(mv), A=mv(AP), C=[0,1,2].map(j=>(Q.reduce((s,p)=>s+p[j],0)/4)*.75+A[j]*.25);
+const PTK=31, ptPj0=p=>[75+PTK*(p[0]+PT3[0]*p[2]-.71),50-PTK*(p[1]+PT3[1]*p[2]-.66)];
+const ptLin=v=>[PTK*(v[0]+PT3[0]*v[2]),-PTK*(v[1]+PT3[1]*v[2])];
+PT3P.forEach(P=>{ P.U=ptLin(P.d.map(v=>v*.55)); P.R=ptLin(P.cf.map((v,j)=>v-P.cen[j])); P.flat=P.aa.th<1e-6; });
+const PT3ZO=[0,1,2].sort((a,b)=>{ const d=P=>PT3[0]*P.cen[0]+PT3[1]*P.cen[1]-P.cen[2]; return d(PT3P[a])-d(PT3P[b]); });
+const ptHome=(s,i)=>{ const g=s.pp[i]; return Math.hypot(g.x,g.y)<.5&&(g.t<.01||PT3P[i].flat); };
+const ptStand=(s,i)=>PT3P[i].flat||s.pp[i].t>.95;
+const ptAtRow=(s,i)=>{ const g=s.pp[i], R=PT3P[i].R; return Math.hypot(g.x-R[0],g.y-R[1])<1&&ptStand(s,i); };
+const ptAll=(s,f)=>[0,1,2].every(i=>f(s,i));
+const ptSm=t=>t*t*(3-2*t);
+function ptCubeF(svg,s){ const VW=[PT3[0],PT3[1],-1], AP=[1,1,0], allHome=ptAll(s,ptHome);
+  const sub=(a,b)=>a.map((v,i)=>v-b[i]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], LT=[-.35,.8,-.5], NP={"pointer-events":"none"};
+  const Ps=PT3P.map((P,i)=>{ const g=s.pp[i], pj=p=>{ const q=ptPj0(p); return [q[0]+g.x,q[1]+g.y]; };
+    const mv=p=>{ if(g.t<=0||P.flat) return p; const r=rot3(sub(p,P.cen),P.aa.a,P.aa.th*g.t); return r.map((v,j)=>v+P.cen[j]); };
+    const Q=P.q.map(mv), A=mv(AP), C=P.cen;
     const F=[Q].concat(Q.map((p,j)=>[A,p,Q[(j+1)%4]])).map(f=>{ let n=cr(sub(f[1],f[0]),sub(f[2],f[0])); const m=[0,1,2].map(j=>f.reduce((s,p)=>s+p[j],0)/f.length); if(dot(n,sub(m,C))<0) n=n.map(v=>-v); const L=Math.hypot(...n)||1; n=n.map(v=>v/L); return {f,n,vis:dot(n,VW)>1e-6}; });
-    return {i,P,A,C,F,dd:dot(C,VW)}; }).sort((a,b)=>a.dd-b.dd);
-  const poly=(f,a)=>S_(svg,"polygon",Object.assign({points:f.map(p=>pj(p).map(v=>v.toFixed(2)).join(",")).join(" "),"stroke-linejoin":"round"},a));
-  Ps.forEach(({P,F,A})=>{ const col=`var(--${P.c})`;
-    F.filter(x=>!x.vis).forEach(x=>x.f.forEach((p,j)=>seg(svg,pj(p),pj(x.f[(j+1)%x.f.length]),{stroke:col,"stroke-width":.5,"stroke-dasharray":"1.4 1.2",opacity:.7})));
-    F.filter(x=>x.vis).forEach(x=>{ poly(x.f,{fill:`var(--${P.c}-fill)`,stroke:col,"stroke-width":.9});
-      const dk=.22*(1-Math.max(0,dot(x.n,LT))); if(dk>.01) poly(x.f,{fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"}); });
-    if(e1>.05&&e2<.5) S_(svg,"circle",{cx:pj(A)[0],cy:pj(A)[1],r:1.3,fill:"var(--ink)"}); });
-  if(e1>.6) Ps.forEach(({i,P,C,A})=>{ const c=e2>.5?pj(A):pj(C); lab(svg,[c[0],c[1]+(e2>.5?-3:2.4)],String(i+1),{"font-size":7,"font-weight":700,fill:`var(--${P.c})`}); });
-  if(e2>.95){ lab(svg,pj([.5,0,0]),"a",{"font-size":4.4,"font-weight":700,"font-style":"italic",dy:5.6}); lab(svg,pj([1,.5,0]),"a",{"font-size":4.4,"font-weight":700,"font-style":"italic",dx:-2.2,dy:1.6,"text-anchor":"end"}); } if(e2>.95) lab(svg,[75,50+k*Wy+15],"3 identical pyramids",{"font-size":4.4,"font-weight":700,fill:"var(--ink)"});
-  if(e1<.05){ const T=(p,t,a={})=>lab(svg,pj(p),t,Object.assign({"font-size":4.4,"font-weight":700,"font-style":"italic"},a));
-    T([.5,0,0],"a",{dy:5.6}); T([1,.5,0],"a",{dx:2.4,dy:1.6,"text-anchor":"start"}); T([1,0,.5],"a",{dx:2.6,dy:2.6,"text-anchor":"start"}); }
+    return {i,P,A,C,Q,F,pj,home:ptHome(s,i),dd:dot(C,VW)}; });
+  const ord=Ps.filter(o=>o.home).sort((a,b)=>a.dd-b.dd).concat(s.zo.map(i=>Ps[i]).filter(o=>!o.home));
+  ord.forEach(({i,P,F,A,pj})=>{ const col=`var(--${P.c})`, poly=(f,a)=>S_(svg,"polygon",Object.assign({points:f.map(p=>pj(p).map(v=>v.toFixed(2)).join(",")).join(" "),"stroke-linejoin":"round"},a));
+    F.filter(x=>!x.vis).forEach(x=>x.f.forEach((p,j)=>seg(svg,pj(p),pj(x.f[(j+1)%x.f.length]),Object.assign({stroke:col,"stroke-width":.5,"stroke-dasharray":"1.4 1.2",opacity:.7},NP))));
+    F.filter(x=>x.vis).forEach(x=>{ poly(x.f,{fill:`var(--${P.c}-fill)`,stroke:col,"stroke-width":.9,class:"pgrab","data-drag":"y"+i,style:"cursor:grab"});
+      const dk=.22*(1-Math.max(0,dot(x.n,LT))); if(dk>.01) poly(x.f,Object.assign({fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"},NP)); });
+    if(!ptHome(s,i)&&!ptStand(s,i)) S_(svg,"circle",Object.assign({cx:pj(A)[0],cy:pj(A)[1],r:1.3,fill:"var(--ink)"},NP)); });
+  const T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4,"font-weight":700,"font-style":"italic"},NP,a));
+  if(allHome){ const pj=ptPj0; T(pj([.5,0,0]),"a",{dy:5.6}); T(pj([1,.5,0]),"a",{dx:2.4,dy:1.6,"text-anchor":"start"}); T(pj([1,0,.5]),"a",{dx:2.6,dy:2.6,"text-anchor":"start"}); return; }
+  ord.forEach(({i,P,C,A,Q,pj,home})=>{ const up=ptStand(s,i);
+    if(up){ const u=Q.reduce((b,p,j)=>Math.hypot(p[0]-A[0],p[2]-A[2])<Math.hypot(Q[b][0]-A[0],Q[b][2]-A[2])?j:b,0), nb=[(u+1)%4,(u+3)%4].sort((a,b)=>Q[a][2]-Q[b][2])[0];
+      const m1=pj([0,1,2].map(j=>(Q[u][j]+Q[nb][j])/2)), m2=pj([0,1,2].map(j=>(Q[u][j]+A[j])/2)), cx=pj(C)[0], rt=m2[0]>cx;
+      T(m1,"a",{dy:5.6}); T(m2,"a",{dx:rt?2.2:-2.2,dy:1.6,"text-anchor":rt?"start":"end"}); }
+    if(!home){ const c=up?pj(A):pj(C); lab(svg,[c[0],c[1]+(up?-3:2.4)],String(i+1),Object.assign({"font-size":7,"font-weight":700,fill:`var(--${P.c})`},NP)); } });
+  if(ptAll(s,ptAtRow)) lab(svg,[75,85.5],"3 identical pyramids",Object.assign({"font-size":4.4,"font-weight":700,fill:"var(--ink)"},NP));
 }
 const pointyThird=aid({
-  init:{sh:"cone",r:3,a:6,h:4,n:0,f:0,u:0,e:0}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids; cone and cylinder, pyramid and prism", link:["n","u","e"],
-  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["cone","<span>Cone &amp; cylinder</span>"],["pyr","<span>Pyramid &amp; prism</span>"]],on:s=>{s.n=0;s.f=0;s.u=0;}}],
+  init:{sh:"cone",r:3,a:6,h:4,n:0,f:0,pp:[{x:0,y:0,t:0},{x:0,y:0,t:0},{x:0,y:0,t:0}],zo:[0,1,2]}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids you can drag apart; cone and cylinder, pyramid and prism", link:["n"],
+  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["cone","<span>Cone &amp; cylinder</span>"],["pyr","<span>Pyramid &amp; prism</span>"]],on:s=>{s.n=0;s.f=0;}}],
   sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="cone"},
     {k:"a",label:"side",min:1,max:10,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="pyr"},
     {k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:s=>s.step>1}],
-  buttons:[{label:"▶ Pull apart",show:s=>s.step===0&&s.e<2,fn:(s,anim)=>{const e0=s.e; anim(1700*(2-e0)+200,p=>{s.e=e0+(2-e0)*p;});}},
-    {label:"↺ Put back",show:s=>s.step===0&&s.e>0,fn:(s,anim)=>{const e0=s.e; anim(900*e0+200,p=>{s.e=e0*(1-p);});}},
+  buttons:[{label:"▶ Pull apart",show:s=>s.step===0&&!ptAll(s,ptAtRow),fn:(s,anim)=>{ const a0=s.pp.map(g=>Object.assign({},g)), two=ptAll(s,ptHome); s.zo=PT3ZO.slice();
+      anim(two?3600:1600,p=>{ s.pp.forEach((g,i)=>{ const P=PT3P[i], a=a0[i];
+        if(two){ const p1=ptSm(clamp(p/.4,0,1)), p2=ptSm(clamp((p-.45)/.55,0,1)), x1=a.x+(P.U[0]-a.x)*p1, y1=a.y+(P.U[1]-a.y)*p1; g.x=x1+(P.R[0]-x1)*p2; g.y=y1+(P.R[1]-y1)*p2; g.t=p2; }
+        else { const e=ptSm(p); g.x=a.x+(P.R[0]-a.x)*e; g.y=a.y+(P.R[1]-a.y)*e; g.t=a.t+(1-a.t)*e; } }); }); }},
+    {label:"↺ Put back",show:s=>s.step===0&&!ptAll(s,ptHome),fn:(s,anim)=>{ const a0=s.pp.map(g=>Object.assign({},g)), two=ptAll(s,ptAtRow);
+      anim(two?2200:1200,p=>{ s.pp.forEach((g,i)=>{ const P=PT3P[i], a=a0[i];
+        if(two){ const p1=ptSm(clamp(p/.55,0,1)), p2=ptSm(clamp((p-.6)/.4,0,1)), x1=a.x+(P.U[0]-a.x)*p1, y1=a.y+(P.U[1]-a.y)*p1; g.x=x1*(1-p2); g.y=y1*(1-p2); g.t=a.t*(1-p1); }
+        else { const e=ptSm(p); g.x=a.x*(1-e); g.y=a.y*(1-e); g.t=a.t*(1-e); } }); }); }},
     {label:"▶ Pour one",show:s=>s.step===1&&s.n<3,fn:(s,anim)=>{const n0=s.n; anim(1900,p=>{ if(p>=1){s.n=n0+1;s.f=0;return;} s.n=n0; s.f=p; });}},
-    {label:"↺ Empty",show:s=>s.step===1&&s.n>0,fn:s=>{s.n=0;s.f=0;}},
-    {label:"▶ Unroll",show:s=>s.step===3,fn:(s,anim)=>{s.u=0; anim(1800,p=>{s.u=p;});}}],
-  fix:s=>{s.n=clamp(Math.round(s.n),0,3); s.f=0; s.u=clamp(s.u,0,1); s.e=clamp(+s.e||0,0,2);},
+    {label:"↺ Empty",show:s=>s.step===1&&s.n>0,fn:s=>{s.n=0;s.f=0;}}],
+  fix:s=>{s.n=clamp(Math.round(s.n),0,3); s.f=0;},
+  drag(id,p,s,start){ if(s.step!==0||!/^y[012]$/.test(id)) return; const i=+id[1], g=s.pp[i];
+    if(start||!s._g||s._g.i!==i){ s._g={i,px:p.x,py:p.y,ox:g.x,oy:g.y,mv:false}; s.zo=s.zo.filter(j=>j!==i).concat([i]); return; }
+    const G=s._g, dx=p.x-G.px, dy=p.y-G.py; if(Math.hypot(dx,dy)>1.5) G.mv=true;
+    if(G.mv){ const c=ptPj0(PT3P[i].cen); g.x=clamp(G.ox+dx,18-c[0],132-c[0]); g.y=clamp(G.oy+dy,31-c[1],88-c[1]); } },
+  drop(id,s,anim){ const G=s._g; s._g=null; if(s.step!==0||!G) return; const i=G.i, g=s.pp[i], P=PT3P[i], x0=g.x, y0=g.y, t0=g.t; s._acted=true;
+    if(!G.mv){ if(ptHome(s,i)){ anim(500,q=>{ const e=ptSm(q); g.x=P.U[0]*e; g.y=P.U[1]*e; }); return; }
+      if(!P.flat){ const t1=t0>.5?0:1; anim(650,q=>{ g.t=t0+(t1-t0)*ptSm(q); }); } return; }
+    if(Math.hypot(g.x,g.y)<10) anim(350,q=>{ const e=ptSm(q); g.x=x0*(1-e); g.y=y0*(1-e); g.t=t0*(1-e); }); },
   steps:[
-    {name:"3 pyramids make a cube",t:s=>s.e>=2?`<b>3 identical pyramids</b> make the cube. Each has the cube's base and height.<br>So 1 pyramid = ${frac("1","3")} × base area × height.`:`Cut a cube from one corner: how many pyramids?<br>Press <b>▶ Pull apart</b>.`},
+    {name:"3 pyramids make a cube",t:s=>ptAll(s,ptStand)?`<b>3 identical pyramids</b> make the cube. Each has the cube's base and height.<br>So 1 pyramid = ${frac("1","3")} × base area × height.`:ptAll(s,(s,i)=>!ptHome(s,i))?`Tap each pyramid to stand it on its square base.<br>Do they look the same?`:`Drag a pyramid out of the cube, or press <b>▶ Pull apart</b>.<br>Tap a pyramid to stand it on its square base.`},
     {name:"Check: pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} fill the ${c}</b>, just like the cube.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`${s.sh==="cone"?"A cone is a round pyramid":`Same base, same height as the ${c}`}, so it should be ${frac("1","3")} too.<br>Check: press <b>▶ Pour one</b> until the ${c} is full.`;}},
-    {name:"Base area × height",set:{f:0},t:s=>`Every solid: <b>${nw(`${V("V")} = base area × height`)}</b>.<br>Pointy top (cone, pyramid)? Put ${frac("1","3")} in front.`},
-    {name:"Toilet paper",set:{f:0},t:s=>`Surface area = 2 × base area + toilet paper.<br>${s.sh==="cone"?"Unroll":"Unfold"} it: a rectangle, ${nw("perimeter × height")}. <a href="#toilet-paper">Try it →</a>`}
-
+    {name:"Base area × height",set:{f:0},t:s=>`Every solid: <b>${nw(`${V("V")} = base area × height`)}</b>.<br>Pointy top (cone, pyramid)? Put ${frac("1","3")} in front.`}
   ],
   draw(svg,s){ const cone=s.sh==="cone", [pn,cn]=ptName(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4},a));
-    if(s.step===0){ ptCube3(svg,s.e); return; }
+    if(s.step===0){ ptCubeF(svg,s); return; }
     if(s.step===1){ const P=ptPour(s), Hs=48, by=86, ty=by-Hs, hx=30+(66-30)*P.e, hy=ty-(ty-10)*P.e, cx2=110, CR=20, PA=32, ph=PA/2;
       [ty,by].forEach(y=>seg(svg,[10,y],[cx2-(cone?CR:ph),y],{stroke:RD,"stroke-width":.6,"stroke-dasharray":"1.6 1.4",opacity:1-P.e}));
       if(cone) ptCyl(svg,cx2,by,CR,Hs,{water:P.lvl}); else ptBox(svg,ptPj([cx2+ph*PT3[0],by-ph*PT3[1]],1),PA,Hs,{water:P.lvl});
@@ -3090,25 +3113,7 @@ const pointyThird=aid({
         T([pL(0,0,-A/2)[0],by+A/2*PT3[1]+11],pn,{fill:AMB,"font-weight":700,"font-size":4}); T([pR(0,0,-A/2)[0],by+A/2*PT3[1]+11],cn,{"font-weight":700,"font-size":4});
         T([75,by-H/2+1.6],`h = ${N(s.h)}`,{fill:RD,"font-weight":700}); }
       return; }
-    const {L,by,per,k,xs}=ptT3(s), R=s.r, Hh=s.h, A=s.a, H=Hh*k;
-    if(cone){ const cx=L+R*k; const c=ptCyl(svg,cx,by,R*k,H,{base:"var(--blue-fill)",fill:"var(--green-fill)",op:1-s.u,top:"var(--blue-fill)"});
-      S_(svg,"path",{d:`M${c.x0} ${by} A${R*k} ${c.ry} 0 0 0 ${c.x1} ${by}`,fill:"none",stroke:BL,"stroke-width":1}); S_(svg,"ellipse",{cx,cy:c.ty,rx:R*k,ry:c.ry,fill:"none",stroke:BL,"stroke-width":1});
-      seg(svg,[cx,c.ty],[c.x1,c.ty],{stroke:"var(--ink)","stroke-width":.9}); T([cx+R*k/2,c.ty-c.ry-2],`r = ${N(R)}`,{"font-weight":700}); }
-    else { const ak=A*k, pj=ptPj([L+ak*(1+PT3[0])/2,by-ak*PT3[1]/2],1), P=pj, Fb=[P(-ak/2,0,-ak/2),P(ak/2,0,-ak/2),P(ak/2,H,-ak/2),P(-ak/2,H,-ak/2)], Rb=[P(ak/2,0,-ak/2),P(ak/2,0,ak/2),P(ak/2,H,ak/2),P(ak/2,H,-ak/2)];
-      ptPoly(svg,ptSq(P,ak,0),{fill:"var(--blue-fill)",stroke:BL,"stroke-width":.8}); ptPoly(svg,Fb,{fill:"var(--green-fill)","fill-opacity":1-s.u,stroke:"none"}); ptPoly(svg,Rb,{fill:"var(--green-fill)","fill-opacity":1-s.u,stroke:"none"});
-      ptBox(svg,P,ak,H,{}); ptPoly(svg,ptSq(P,ak,H),{fill:"var(--blue-fill)",stroke:BL,"stroke-width":.8});
-      const F=P(0,0,-ak/2); T([F[0],F[1]+5.6],`${N(A)} cm`,{"font-weight":700}); }
-    seg(svg,[L-4,by],[L-4,by-H],{stroke:RD,"stroke-width":.9}); [by,by-H].forEach(y=>seg(svg,[L-5.5,y],[L-2.5,y],{stroke:RD,"stroke-width":.9}));
-    T([L-6,by-H/2+1.6],`h = ${N(Hh)}`,{fill:RD,"font-weight":700,"text-anchor":"end"});
-    const W=per*k*s.u;
-    if(W>.05){ S_(svg,"rect",{x:xs,y:by-H,width:W,height:H,fill:"var(--green-fill)",stroke:GR,"stroke-width":.9});
-      if(!cone) for(let i=1;i<4;i++){ const x=xs+A*k*i; if(x<xs+W-.01) seg(svg,[x,by-H],[x,by],{stroke:GR,"stroke-width":.5,"stroke-dasharray":"1.2 1"}); } }
-    if(s.u>.55) T([W<48?xs:xs+W/2,by+6.2],cone?`perimeter = 2π(${N(R)})`:`perimeter = 4 × ${N(A)} = ${N(4*A)}`,Object.assign({fill:GR,"font-weight":700},W<48?{"text-anchor":"start"}:{}));
-    if(s.u>.55&&H>9&&W>36) T([xs+W/2,by-H/2+1.6],"toilet paper",{fill:GR,"font-weight":700});
-    handle(svg,xs+W,by-H/2,"u",GR);
   },
-  drag(id,p,s){ if(id!=="u"||s.step!==3) return; const {per,k,xs}=ptT3(s);
-    s.u=clamp(snap((p.x-xs)/(per*k),.05),0,1); },
   key(s){ const cone=s.sh==="cone", [pn,cn,ps]=ptName(s), R=s.r, A=s.a, h=s.h, t3=frac("1","3");
     if(s.step===0){ const VA=V("a");
       return FORMS([FB("ink","Cube",nw(`${VA} × ${VA} × ${VA}`),"= 3 identical pyramids"),
@@ -3123,14 +3128,7 @@ const pointyThird=aid({
       return KHEAD(`<span class="k-blue">base area = ${bT} cm²</span>`)+FORMS([
         FB("ink",cn,nw(`${bS} × ${N(h)}`),res(vC,dC),nw(`base area × ${V("h")}`)),
         FB("amber",pn,nw(`${t3} × ${bS} × ${N(h)}`),res(vP,dP),nw(`${t3} × base area × ${V("h")}`))]); }
-    const b2=cone?2*R*R:2*A*A, tp=cone?2*R*h:4*A*h, tot=b2+tp;
-    const bT=cone?nw(`2 × π(${N(R)})²`):nw(`2 × ${N(A)} × ${N(A)}`), tT=cone?nw(`2π(${N(R)}) × ${N(h)}`):nw(`${N(4*A)} × ${N(h)}`);
-    const one=v=>cone?ptPi(v):N(v);
-    return FORMS([FB("blue","2 × base area",bT,nw(`= ${one(b2)}`)),
-      FB("green","Toilet paper",tT,nw(`= ${one(tp)}`)),
-      FB("ink","Surface area",nw(`${one(b2)} + ${one(tp)}`),cone?nw(`= ${ptPi(tot)}`)+" "+nw(`= ${ptS3(PI*tot)} cm²`)
-+" "+nw("(3 s.f.)"):nw(`= ${N(tot)} cm²`)
-)],true); }
+    return ""; }
 
 });
 const QSG={gt:"&gt;",ge:"≥",lt:"&lt;",le:"≤"}, QFL={gt:"lt",ge:"le",lt:"gt",le:"ge"}, QSV={gt:">",ge:"≥",lt:"<",le:"≤"};
@@ -4747,7 +4745,8 @@ const TPSH={
     lb:[[[2,0],0,5.6,"middle"],[[2,1.5],1.8,-1.4,"start",1],[[0,1.5],-1.8,1.6,"end"]],inner:[[[1.25,.9],"6"]]},
   trap:{nm:"trapezium",pts:[[0,0],[6,0],[3,4],[0,4]],sides:[6,5,3,4],ar:18,ar2:()=>nw(`2 × ${frac("1","2")}(3 + 6) × 4`),hb:4,wb:6,
     lb:[[[3,0],0,5.6,"middle"],[[4.5,2],2.2,1.2,"start"],[[1.5,4],0,-2,"middle",1],[[0,2],-1.8,1.6,"end"]],inner:[[[2.2,1.8],"18"]]}};
-Object.values(TPSH).forEach(o=>{ o.per=o.sides.reduce((a,b)=>a+b,0); o.cum=o.sides.map((_,i)=>o.sides.slice(0,i).reduce((a,b)=>a+b,0)); });
+Object.values(TPSH).forEach(o=>{ o.per=o.sides.reduce((a,b)=>a+b,0); o.cum=o.sides.map((_,i)=>o.sides.slice(0,i).reduce((a,b)=>a+b,0));
+  const V=o.pts, n=V.length, E=V.map((p,i)=>[V[(i+1)%n][0]-p[0],V[(i+1)%n][1]-p[1]]); o.tau=E.map((e,i)=>{ if(!i) return 0; const f=E[i-1]; return Math.atan2(f[0]*e[1]-f[1]*e[0],f[0]*e[0]+f[1]*e[1]); }); });
 const tpShape=s=>s.step===1?(TPSH[s.ps]||TPSH.L):TPSH.L;
 const tpS3=v=>{const r=+(+v).toPrecision(3), e=Math.floor(Math.log10(Math.abs(r))); return e>=2?String(r):r.toFixed(2-e);};
 const tpPi=c=>c===0?"0":(c===1?"":N(c))+"π";
@@ -4789,28 +4788,33 @@ function tpCyl(svg,s,u,live){ const {R,H,ry,D,cx,ty,by,per}=tpCylG(s), T=(P,t,a=
   if(u>.55){ const lx=Math.max(m,cx+R+20); if(lx+16<c0-2) T([lx,fb+6.5],`2πr = 2π(${N(s.r)})`,{fill:AMB});
     if(H>9&&W/2>17) T([m,(fy+fb)/2+1.6],"toilet paper",{fill:GR}); }
   if(live) handle(svg,c0,fb,"u",GR); }
-const tpPrG=s=>{ const S=tpShape(s), k=Math.min(5.9,82/(S.hb+1.32*s.L)), dx=.42*s.L*k, dy=.32*s.L*k, top=Math.max(8+dy,10), tot=top+S.hb*k+9+s.L*k+12, sh=(111-tot)/2, sx=(150-S.per*k-6)/2;
-  return {S,k,dx,dy,ox:sx,oy:sh+top+S.hb*k,sx,sy:sh+top+S.hb*k+9}; };
-function tpPrism(svg,s,u,live){ const {S,k,dx,dy,ox,oy,sx,sy}=tpPrG(s), V=S.pts, n=V.length, per=S.per, P=([x,y],z=0)=>[ox+k*x+dx*z,oy-k*y-dy*z], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":4.4,"font-weight":700},a));
-  const pl=i=>clamp((u*per-S.cum[i])/S.sides[i],0,1), D={stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.2"}, poly=(Q,a)=>S_(svg,"polygon",Object.assign({points:Q.map(p=>p.map(v=>+v.toFixed(2)).join(",")).join(" ")},a));
-  seg(svg,P(V[0],1),P(V[1],1),D); seg(svg,P(V[n-1],1),P(V[0],1),D); seg(svg,P(V[0]),P(V[0],1),D);
-  for(let i=1;i<n-1;i++) poly([P(V[i]),P(V[i+1]),P(V[i+1],1),P(V[i],1)],{fill:TPF(i),"fill-opacity":1-pl(i),stroke:"var(--ink)","stroke-width":.7,"stroke-linejoin":"round"});
-  poly(V.map(p=>P(p)),{fill:"var(--blue-fill)",stroke:"none"});
-  if(S.split) seg(svg,P(S.split[0]),P(S.split[1]),{stroke:BL,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"});
-  S.inner.forEach(([m,t])=>T(P(m),t,{fill:BL,dy:1.6}));
-  V.forEach((p,i)=>{ const q=V[(i+1)%n], f=pl(i); seg(svg,P(p),P(q),{stroke:TPC(i),"stroke-width":f>0&&f<1?2.4:1.4,"stroke-linecap":"round"}); });
-  S.lb.forEach(([m,ddx,ddy,an,back],i)=>{ const Q=P(m,back?1:0); T([Q[0]+ddx,Q[1]+ddy],String(S.sides[i]),{fill:TPC(i),"text-anchor":an}); });
-  const E0=P(V[1]), E1=P(V[1],1); seg(svg,E0,E1,{stroke:RD,"stroke-width":1.3});
-  T([(E0[0]+E1[0])/2+2.4,(E0[1]+E1[1])/2+5],`length = ${N(s.L)}`,{fill:RD,"text-anchor":"start"});
-  const H=s.L*k, W=per*k*u;
-  if(u<1) S_(svg,"rect",{x:sx,y:sy,width:per*k,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
-  S.sides.forEach((w,i)=>{ const f=pl(i); if(f<=0) return; const x=sx+k*S.cum[i];
-    S_(svg,"rect",{x,y:sy,width:k*w*f,height:H,fill:TPF(i),stroke:TPC(i),"stroke-width":.8});
-    if(f>.5) T([x+k*w/2,sy+H+5.6],String(w),{fill:TPC(i)}); });
-  if(W>.05){ seg(svg,[sx,sy],[sx,sy+H],{stroke:RD,"stroke-width":1.1}); seg(svg,[sx+W,sy],[sx+W,sy+H],{stroke:RD,"stroke-width":1.1});
-    T([sx+W+1.6,sy+H/2+1.6],N(s.L),{fill:RD,"text-anchor":"start"}); }
-  if(u>=1){ T([sx+per*k/2,sy+H+12],`perimeter = ${per}`,{fill:"var(--ink)"}); if(H>9) T([sx+per*k/2,sy+H/2+1.6],"toilet paper",{fill:"var(--ink)"}); }
-  if(live) handle(svg,sx+W,sy+H,"u",GR); }
+const tpPrG=s=>{ const S=tpShape(s), L=s.L, k=Math.min(6,122/S.per,100/(2*S.hb+L)), tot=(2*S.hb+L)*k, top=(112-tot-8)/2+6, sy=top+(S.hb+L)*k, x0=(150-S.per*k-22)/2+22;
+  return {S,k,x0,sy,L,per:S.per}; };
+function tpPrism(svg,s,u,live){ const {S,k,x0,sy,L,per}=tpPrG(s), V=S.pts, n=V.length, pj=(x,y,d)=>[x0+k*(x+.5*d),sy-k*(y+.4*d)], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":4.4,"font-weight":700},a));
+  const sm=t=>t*t*(3-2*t), pt=q=>q.map(v=>v.toFixed(2)).join(","), poly=(Q,a)=>S_(svg,"polygon",Object.assign({points:Q.map(pt).join(" "),"stroke-linejoin":"round"},a));
+  const l=u*per, ps=PI/2*sm(clamp(l/S.sides[0],0,1)), f=S.sides.map((w,j)=>j?sm(clamp((l-S.cum[j])/w,0,1)):1);
+  const W=[[0,0]], A=[]; let a=0; for(let j=0;j<n;j++){ if(j) a+=S.tau[j]*(1-f[j]); A.push(a); const p=W[j]; W.push([p[0]+S.sides[j]*Math.cos(a),p[1]+S.sides[j]*Math.sin(a)]); }
+  const flat=j=>Math.abs(A[j])<1e-4&&Math.abs(W[j][1])<1e-4&&Math.abs(W[j+1][1])<1e-4;
+  if(u<1) poly([pj(0,0,0),pj(per,0,0),pj(per,L,0),pj(0,L,0)],{fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
+  const lid=top=>{ const Q=V.map(([px,py])=>top?pj(px,L+py*Math.sin(ps),py*Math.cos(ps)):pj(px,-py*Math.sin(ps),py*Math.cos(ps)));
+    poly(Q,{fill:"var(--blue-fill)",stroke:"none"}); Q.forEach((p,i)=>seg(svg,p,Q[(i+1)%n],{stroke:TPC(i),"stroke-width":top?1.4:.9,"stroke-linecap":"round"})); return Q; };
+  lid(false);
+  const F=S.sides.map((w,j)=>{ const p=W[j], q=W[j+1], nx=Math.sin(A[j]), nd=-Math.cos(A[j]), fv=nd-.5*nx;
+    return {j,p,q,vis:fv<0,lit:-fv/1.118,key:(p[1]+q[1])/2-.5*(p[0]+q[0])/2}; }).sort((x,y)=>y.key-x.key);
+  F.forEach(o=>{ const Q=[pj(o.p[0],0,o.p[1]),pj(o.q[0],0,o.q[1]),pj(o.q[0],L,o.q[1]),pj(o.p[0],L,o.p[1])];
+    poly(Q,{fill:TPF(o.j),stroke:TPF(o.j),"stroke-width":.3}); const dk=o.vis?.22*(1-clamp(o.lit,0,1)):.32; if(dk>.01) poly(Q,{fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"});
+    seg(svg,Q[0],Q[1],{stroke:TPC(o.j),"stroke-width":.9}); seg(svg,Q[3],Q[2],{stroke:TPC(o.j),"stroke-width":1.4,"stroke-linecap":"round"});
+    const ed=(P1,P2,red)=>seg(svg,P1,P2,red?Object.assign({stroke:RD,"stroke-width":1.1},u<.001?{"stroke-dasharray":"1.6 1.2"}:{}):{stroke:"var(--ink)","stroke-width":.5,"stroke-opacity":.6});
+    ed(Q[0],Q[3],o.j===0); ed(Q[1],Q[2],o.j===n-1); });
+  const TQ=lid(true);
+  if(ps>PI/2-.02){ if(S.split) seg(svg,pj(S.split[0][0],L+S.split[0][1],0),pj(S.split[1][0],L+S.split[1][1],0),{stroke:BL,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"});
+    S.inner.forEach(([m,t])=>T(pj(m[0],L+m[1],0),t,{fill:BL,dy:1.6}));
+    S.lb.forEach(([m,ddx,ddy,an],i)=>{ if(!i) return; const Q=pj(m[0],L+m[1],0); T([Q[0]+ddx,Q[1]+ddy],String(S.sides[i]),{fill:TPC(i),"text-anchor":an}); }); }
+  let fl=0; for(let j=0;j<n&&flat(j);j++){ fl=W[j+1][0]; T([pj((W[j][0]+W[j+1][0])/2,0,0)[0],sy-2.4],String(S.sides[j]),{fill:TPC(j)}); }
+  const H=L*k, ly=sy-H/2; T([x0-2,ly-1.8],"length",{fill:RD,"text-anchor":"end"}); T([x0-2,ly+5.4],`= ${N(L)}`,{fill:RD,"text-anchor":"end"});
+  if(H>16&&fl*k>38) T([x0+fl*k/2,ly+1.6],"toilet paper",{fill:"var(--ink)"});
+  if(u>=.999) T([Math.max(x0+per*k/2,x0+S.wb*k+20),sy+6.5],`perimeter = ${per}`,{fill:"var(--ink)"});
+  if(live) handle(svg,x0+k*l,sy,"u",GR); }
 const tpLines=s=>{ if(s.q==="cyl"){ const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h;
     return [`surface = ${kc("blue","2 circles")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue",`2π(${r})²`)} + ${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${kc("blue",tpPi(c))} + ${kc("green",tpPi(t))} = ${tpPi(c+t)}`),nw(`= ${tpS3(PI*(c+t))} cm² (3 s.f.)`)]; }
   const t=22*s.L;
@@ -4827,13 +4831,13 @@ const toiletPaper=aid({
   fix:s=>{ if(s.u>=0) s.u=clamp(s.u,0,1); if(s.ln>=0) s.ln=clamp(Math.round(s.ln),1,tpLines(s).length); },
   steps:[
     {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Unroll it: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
-    {name:"Any prism",set:tpSet({u:0}),t:()=>`Unroll the sides into one strip: ${nw("perimeter × length")}.<br>“Height” = the length between the 2 ends, even lying down.`},
+    {name:"Any prism",set:tpSet({u:0}),t:()=>`Unroll the sides into one strip: ${nw("perimeter × length")}.<br>Length = the distance between the 2 ends, even when the prism lies down.`},
     {name:"Exam style",set:tpSet({ln:1}),t:s=>s.q==="cyl"?`A closed cylinder has radius ${N(s.r)} cm and height ${N(s.h)} cm.<br>Find its total surface area.`:`This prism has the L-shaped end shown and length ${N(s.L)} cm.<br>Find its total surface area.`}
   ],
   draw(svg,s){ if(s.step===2){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
     if(s.step===1) tpPrism(svg,s,s.u,true); else tpCyl(svg,s,s.u,true); },
   drag(id,p,s){ if(id!=="u"||s.step===2) return;
-    if(s.step===1){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.sx)/(g.S.per*g.k),.01),0,1); }
+    if(s.step===1){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.x0)/(g.per*g.k),.01),0,1); }
     else { const g=tpCylG(s); s.u=clamp(snap((p.x-g.cx)/g.per,.01),0,1); } },
   key(s){ if(s.step===2) return EG(null,tpLines(s).slice(0,s.ln));
     if(s.step===1){ const S=tpShape(s), t=S.per*s.L, b2=2*S.ar;
