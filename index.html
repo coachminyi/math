@@ -10748,7 +10748,7 @@ const QQ_HI={
   return {q:`Solve ${nw(`${rt} − ${X1} = ${qN(c)}.`)}`,w:[nw(`${rt} = ${qJ(X1,c)}`),nw(`${ins} = (${qJ(X1,c)})²`),nw(`${ins} = ${qJ(X2,qT(2*c,X1),c*c)}`),nw(`${qJ(X2,qT(2*c-a,X1),c*c-b)} = 0`),nw(`${fc(x1)}${fc(x2)} = 0`),`${nw(`${X1} = ${qN(x1)}`)} or ${nw(`${X1} = ${qN(x2)}`)}`,ck(x1),ck(x2),fin],
     a:fin,n:{a,b,c}}; }}]
 };
-let cdS=null, cdShuf=false, cdFrom="", cdMistOn=true;
+let cdS=null, cdShuf=false, cdFrom="", cdMistOn=false;
 function cdSpot(id){ return SPOTS_LO[id]||SPOTS_HI[id]||[]; }
 function cdLn(c){ const S=cdS, p=S.pk, sh=S.shown, ok=sh&&p===c.bad;
   return `<p class="cspl">Question</p><div class="cspq">${c.q}</div><p class="cspi${sh?(ok?" cyay":" cnay"):""}">${sh?(ok?"✓ You spotted it":"✗ Not that one"):"Tap the wrong line"}</p><div class="clines">${c.w.map((l,i)=>!sh?`<button class="cln" type="button" data-c="ln" data-n="${i}">${l}</button>`
