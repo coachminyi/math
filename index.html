@@ -326,6 +326,11 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .lgrid b{display:block;margin-bottom:2px}
 .lres{margin:0 0 22px;padding-left:20px;line-height:1.5}
 .lres li{margin:0 0 6px}
+.lcats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.lcats figure{margin:0}
+.lcats img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:var(--line)}
+.lcats figcaption{font-size:14px;color:var(--muted);margin-top:5px;line-height:1.35}
+.lpage .lcat{line-height:1.5;margin:0 0 10px}
 .sheetend{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:14px 0 6px;margin:4px 0 0;color:var(--muted);font-size:15px}
 .sheetend a{color:var(--accent);font-weight:700;text-decoration:none}
 .printfoot{display:none}
@@ -8369,6 +8374,11 @@ function renderLessons(){
     </div>
     <h3>Recent results</h3>
     <ul class="lres"><li>4 of my 5 Sec 4s got A1 for maths in their prelims this year.</li><li>Over the past year, 4 of my students went from C6 or lower in a school test to A1 later on.</li><li>One of my Sec 2s failed a WA in Term 3 and got A1 for EOY.</li></ul>
+    <h3>Tuturu and Mimiru</h3>
+    <div class="lcats"><figure><img src="tuturu.jpg" alt="Tuturu, a blue-eyed ragdoll cat, lying on a desk" width="1200" height="900" loading="lazy"><figcaption>Tuturu, my ragdoll</figcaption></figure><figure><img src="mimiru.jpg" alt="Mimiru, a cream and white British longhair cat, with a paw on an iPad" width="1200" height="900" loading="lazy"><figcaption>Mimiru, my British longhair</figcaption></figure></div>
+    <p class="lcat">My two cats are usually around during lessons. One of them is often asleep on someone’s desk, and students get to feed them treats or play with them during breaks.</p>
+    <p class="lcat">I also keep the pantry stocked with drinks and snacks, so if anyone gets hungry they can just help themselves.</p>
+    <p class="lcat">If your child is allergic to cats or scared of them, just let me know before the trial and I’ll keep them in another room.</p>
     <div class="lcard"><h3>Ask about a slot</h3><p>My slots are limited, so just WhatsApp me with the level, school, ${nw("E-Math")} or ${nw("A-Math")}, and which days work for you. New students can start with a free 1-hour trial lesson.</p><div class="acts">${waBtn()}</div><div class="waqr" hidden><div id="waQr"></div><span>On a computer? Scan this with your phone.</span></div></div>
   </div>`;
   if(waURL()&&matchMedia("(min-width:900px)").matches) loadQR().then(()=>{ const q=qrcode(0,"M"); q.addData(waURL()); q.make(); const box=$("#waQr"); if(box){ box.innerHTML=q.createSvgTag(4,2); box.parentElement.hidden=false; } }).catch(()=>{});
