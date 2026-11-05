@@ -56,8 +56,8 @@ hubTheme(hubSavedTheme()||(matchMedia("(prefers-color-scheme: dark)").matches?"d
   --grid:rgba(140,170,255,.08); --grid2:#3a4256;
   --blue:#7ea6ff; --blue-fill:#22345c;
   --amber:#f0b04a; --amber-fill:#4a3712;
-  --red:#ff7b8e; --red-fill:#4d2129; --green-fill:#173a2a;
-  --green:#5fd39a;
+  --red:#ff7b82; --red-fill:#4d2129; --green-fill:#173a2a;
+  --green:#5fe5ac;
   --accent:#7ea6ff; --accent-ink:#0f1320;
   --shadow:none;
 }
@@ -618,6 +618,16 @@ html[data-present] .readout{font-size:22px}
 html[data-present] .keybox{font-size:21px}
 .exitp{display:none;position:fixed;bottom:16px;right:16px;z-index:9;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;height:44px;padding:0 16px;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
 html[data-present] .exitp{display:inline-flex;align-items:center}
+.askb{display:none;position:fixed;bottom:68px;right:16px;z-index:9;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;height:44px;padding:0 16px;cursor:pointer;font-weight:700;box-shadow:var(--shadow)}
+html[data-present] .askb{display:inline-flex;align-items:center}
+html[data-present][data-ask] .askb{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.askcov{display:none}
+html[data-present][data-ask] .askw{position:relative}
+html[data-present][data-ask] .askw.shut>:not(.askcov){visibility:hidden}
+html[data-present][data-ask] .askw.shut>.askcov{display:flex;position:absolute;inset:0;z-index:2;align-items:center;justify-content:center;border:2px dashed var(--muted);border-radius:12px;background:var(--card);color:var(--muted);font:inherit;font-weight:700;cursor:pointer}
+html[data-present][data-ask] .key.empty>.askcov,html[data-present][data-ask] .exwrap:empty+.askcov{display:none}
+.tryq{text-decoration:none;align-self:flex-start;margin-top:8px;color:var(--accent);font-weight:700}
+.panel>.tryq{order:7}
 .cdeck{max-width:640px;margin:0 auto;padding:14px 0 28px}
 .ctop{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;margin:0 0 8px}
 .ctop .stepof{font-size:14px;margin:0}
@@ -949,6 +959,7 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   <button class="themebtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch to dark mode"></button>
 </div></header>
 <button class="exitp" id="exitPresent">✕ Exit present mode</button>
+<button class="askb" id="askBtn" type="button" aria-pressed="false" title="Cover the explanation and the answer until you tap them">Ask first: off</button>
 <div class="modal" id="qrModal" hidden role="dialog" aria-modal="true" aria-labelledby="qrTitle"><div class="mbox"><p class="mt" id="qrTitle"></p><div class="qr" id="qrBox"></div><p class="url" id="qrUrl"></p><button class="pill" id="qrClose">Close</button></div></div>
 
 <main class="wrap" id="app"></main>
@@ -1270,21 +1281,23 @@ function graph(svg,o){
 }
 graph.n=0;
 
+const ASKCOV='<button class="askcov" type="button">Tap to show</button>', TRYQ='<a class="pill tryq" style="display:none">Try 5 questions →</a>';
+const askOpen=e=>{ const c=e.target.closest(".askcov"); if(c) c.parentNode.classList.remove("shut"); };
 function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const st=Object.assign({step:0},JSON.parse(JSON.stringify(def.init)));
   const flat=!def.jump; if(flat) st.step=def.showStep??def.steps.length-1;
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
-  const kb=def.key?h("div",{class:"keybox"}):null; if(kb) key.append(kb);
+  const kb=def.key?h("div",{class:"keybox"}):null; if(kb){ key.append(kb); key.classList.add("askw"); key.insertAdjacentHTML("beforeend",ASKCOV); key.addEventListener("click",askOpen); } panel.addEventListener("click",askOpen);
   const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
-  panel.innerHTML=`${jump}${flat?`<div class="box flathint" hidden></div><div class="exwrap"></div>`:""}<span class="dockslot" hidden></span>
+  panel.innerHTML=`${jump}${flat?`<div class="box flathint" hidden></div><div class="exwrap askw"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<p class="steptext"></p><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}</div>`}
-    <div class="box robox"><div class="readout"></div></div>
+    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
+    <div class="box robox askw"><div class="readout"></div>${ASKCOV}</div>${flat?TRYQ:""}
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
   const KSEL=".formbox, .khead, .kpair, .egl", kbSnap=()=>kb?[...kb.querySelectorAll(KSEL)].map(e=>e.textContent):null, portrait=()=>innerWidth<900&&innerHeight>innerWidth;
@@ -1310,18 +1323,20 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     acts.forEach(b=>b.classList.toggle("alt",b!==solid)); cbox.querySelectorAll(".pill.act[aria-pressed='true'].alt").forEach(b=>b.classList.remove("alt"));
     if(flat){const ex0=typeof def.explain==="function"?def.explain(st):(def.explain||[]), fh=$(".flathint",panel); let ex=ex0;
       const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
-      $(".exwrap",panel).innerHTML=ex.length?explainBox(ex):"";}
+      $(".exwrap",panel).innerHTML=ex.length?explainBox(ex)+ASKCOV:"";}
     else { const stx=$(".steptext",panel); stx.innerHTML=def.steps[st.step].t(st);
       const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
       const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||/^[①-⑨]/.test(lt))&&!said;
       dh.hidden=!dshow; if(dshow) dh.innerHTML=`${/^(Slide|Drag|Tap|Move)\b/.test(stx.textContent.trim())?"↓ Or press":"↓ Press"} <b>${mb.innerHTML}</b>`;
       const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1], done=!n&&cur&&cur.done; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=(n||done)?"":"none"; nx.innerHTML=n?`Next <span class="sn">${st.step+2}</span> ${n.name} →`:"Back to the cheatsheet →"; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
         nx.classList.toggle("go",!mains.length||!!st._acted); } }
+    const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
   };
-  const go=i=>{st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
+  const askShut=all=>[key,...panel.querySelectorAll(".askw")].forEach(w=>{ if(all||!w.matches(".asktx,.exwrap")) w.classList.add("shut"); });
+  const go=i=>{askShut(true); st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
-    const snap=kbSnap(); stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); st._lastB=null; st._reset=true; draw(); showRes(snap,true);}));
+    const snap=kbSnap(); stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); askShut(false); st._lastB=null; st._reset=true; draw(); showRes(snap,true);}));
   const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
   (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{const snap=kbSnap(); stopAnim(); b.fn(st,animate); st._acted=true; st._lastB=i; st._reset=true; draw(); showRes(snap);}));
@@ -1852,7 +1867,7 @@ const DY=frac("d"+V("y"),"d"+V("x")), D2Y=frac("d²"+V("y"),"d"+V("x")+"²");
 const strip=s=>String(s).replace(/<[^>]+>/g,"");
 const tangentAid=aid({
   init:{cv:"cubic",x:-1.5,nm:"tan"}, vb:"0 0 140 208", label:"Curve with a tangent you can slide, gradient graph below",
-  explain:[`Drag <b>P</b>. Flat tangent = <span class="k-amber"><b>stationary point</b></span>.`,`<span class="k-green"><b>Green</b></span> axis = going up · <span class="k-red"><b>red</b></span> = going down.`],
+  explain:[`Drag <b>P</b>. Flat tangent = <span class="k-amber"><b>stationary point</b></span>.`,`<span class="k-green"><b>Green (+)</b></span> axis = going up · <span class="k-red"><b>red (−)</b></span> = going down.`],
   pills:[{k:"cv",label:"Sample curves",opts:[["cubic","x³ − 3x + 1"],["quad","x² − 2x − 3"],["cube","x³"]],on:s=>{s.x={cubic:-1.5,quad:-.5,cube:-1}[s.cv]}},{k:"nm",label:"Line",opts:[["tan","Tangent"],["nor","Normal"]]}],
   sliders:[{k:"x",label:"x",min:-2.5,max:2.5,step:.05}],
   buttons:[{label:"Jump to a stationary point",fn:s=>{const L=TC[s.cv].st; const nx=L.find(v=>v>s.x+1e-9); s.x=nx!==undefined?nx:L[0];}}],
@@ -2112,7 +2127,7 @@ function eqAid(cfg){
   const C=cfg.curves, B=cfg.box, cv=s=>C.find(c=>c.id===s.cv)||C[0], xr=c=>c.xr||cfg.xr;
   const xsOf=c=>{const [a,b,d]=xr(c), o=[]; for(let x=a;x<=b+1e-9;x+=d) o.push(+x.toFixed(4)); return o;};
   const tabs=[{name:"Plot it",t:s=>`Slide ${X1}: each ${X1} gives one ${V("y")}, so one dot.<br>${cv(s).joinT||cfg.joinT||"Then join the dots with <b>one smooth curve</b> (no ruler)."}`},
-    {name:"Test a point",t:()=>`Drag the dot. It turns <b class="k-green">green</b> when it makes the equation true.<br>The graph is every point that works.`}];
+    {name:"Test a point",t:()=>`Drag the dot. It turns <b class="k-green">green ✓</b> when it makes the equation true.<br>The graph is every point that works.`}];
   const hasWhy=cfg.why!==false; if(hasWhy) tabs.push({name:cfg.whyName||"Why this shape?",t:s=>{const w=(cv(s).why||[])[s.wq]||(cv(s).why||[])[0]; return w?w.t:"";}});
   const W=hasWhy?2:-9, X0=tabs.length; (cfg.extra||[]).forEach(e=>tabs.push(e));
   const ext=s=>s.step>=X0?tabs[s.step]:null;
@@ -2149,7 +2164,7 @@ function eqAid(cfg){
         s._hits.forEach(([a,b])=>g.dot(a,b,GR,1.5));
         const col=on?GR:RD, dash={stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5};
         g.line(s.px,0,s.px,s.py,dash); g.line(0,s.py,s.px,s.py,dash);
-        g.text(s.px,s.py,`(${N(s.px)}, ${N(s.py,2)})`,{dx:s.px>=0?3.4:-3.4,dy:s.py>B.y1-2?5.5:-3,"text-anchor":s.px>=0?"start":"end",fill:col,"font-size":3.9,"font-weight":700});
+        g.text(s.px,s.py,`(${N(s.px)}, ${N(s.py,2)})${on?" ✓":""}`,{dx:s.px>=0?3.4:-3.4,dy:s.py>B.y1-2?5.5:-3,"text-anchor":s.px>=0?"start":"end",fill:col,"font-size":3.9,"font-weight":700});
         handle(svg,g.X(s.px),g.Y(s.py),"pt",col); return; }
       g.plot(F,{"stroke-width":1.2});
       const w=(c.why||[])[s.wq]||(c.why||[])[0]; if(w&&w.draw) w.draw(g,s,F,B);
@@ -10922,6 +10937,9 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
 addEventListener("resize",()=>{ if(cur&&cur.cards){ if(cdS&&cdS.kind==="quick") qqFit(); else cdFit(); } });
 let srcFrom=null;
+let hitLast="", hitOn=false;
+function hubHit(p){ p=String(p).replace(/[^a-zA-Z0-9\/-]/g,"").slice(0,80); if(!p||(hitOn&&p===hitLast)) return; hitLast=p; if(!hitOn) return;
+  try{ const u=location.href; history.replaceState(history.state,"",location.pathname.replace(/[^\/]*$/,"")+"v/"+p); history.replaceState(history.state,"",u); }catch(e){} }
 function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURIComponent(old); }catch(e){} const op=old.replace(/^\//,"").split("/");
   if(t&&srcFrom&&srcFrom.topic===t.id&&op[0]===t.id) return;
   srcFrom=null; if(!t) return;
@@ -10931,13 +10949,14 @@ function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
   const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
   const t0=TOPICS.find(x=>x.id===parts[0])||(parts[0]==="sheet"&&parts[1]&&(()=>{ const s=sheetOf(parts[1]); return s&&s.aid&&TOPICS.find(x=>x.id===s.aid); })())||null; noteSrc(t0);
+  hubHit(parts[0]==="sheet"&&parts[1]?"sheet/"+parts[1]:parts[0]==="cards"?"cards/"+(parts[1]||"")+"/"+(parts[2]||""):parts[0]==="lessons"?"tuition":t0?(parts[1]==="sheet"?"sheet/"+((sheetForTopic(t0)||{}).id||t0.id):"aid/"+t0.id):"home/"+(VIEWS.some(([k])=>k===parts[0])?parts[0]:"start"));
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
     if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
   if(parts[0]==="cards"&&renderCards(parts[1],parts[2],parts[3])) return;
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
-  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); if(tab==="sheet") exitPresent(); renderTopic(t,tab,prm); }
+  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); if(tab==="sheet") exitPresent(); renderTopic(t,tab,prm); if(tab==="play"&&t.play&&prm.get("pres")==="1"&&innerWidth>=900){ if(prm.has("ask")) setAsk(prm.get("ask")==="1"); enterPresent(); } }
   else { exitPresent(); renderHome(); }
 }
 function topicLink(){
@@ -10982,8 +11001,11 @@ function exitPresent(){
   fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
 }
 presentBtn.onclick=enterPresent; exitBtn.onclick=exitPresent; printBtn.onclick=printSheet;
+function setAsk(on,save){ const b=$("#askBtn"); document.documentElement.toggleAttribute("data-ask",!!on); b.setAttribute("aria-pressed",String(!!on)); b.textContent=on?"Ask first: on":"Ask first: off"; if(on) document.querySelectorAll(".askw").forEach(w=>w.classList.add("shut")); if(save){ try{ localStorage.setItem("hubAsk",on?"1":"0"); }catch(e){} } }
+$("#askBtn").onclick=()=>setAsk(!document.documentElement.hasAttribute("data-ask"),true);
+try{ if(localStorage.getItem("hubAsk")==="1") setAsk(true); }catch(e){}
 if("serviceWorker" in navigator&&location.protocol==="https:") addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); });
-if(CF_TOKEN&&location.protocol==="https:"){ const s=document.createElement("script"); s.defer=true; s.src="https://static.cloudflareinsights.com/beacon.min.js"; s.setAttribute("data-cf-beacon",JSON.stringify({token:CF_TOKEN})); document.head.append(s); }
+if(CF_TOKEN&&location.protocol==="https:"){ const s=document.createElement("script"); s.defer=true; s.src="https://static.cloudflareinsights.com/beacon.min.js"; s.setAttribute("data-cf-beacon",JSON.stringify({token:CF_TOKEN})); s.onload=()=>setTimeout(()=>{ hitOn=true; const p=hitLast; hitLast=""; hubHit(p); },1500); document.head.append(s); }
 document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) exitPresent(); });
 document.addEventListener("webkitfullscreenchange",()=>{ if(!document.webkitFullscreenElement) exitPresent(); });
 zoomBtn.onclick=()=>{ if(!cur||!cur.stage) return; const big=cur.stage.classList.toggle("zoomed"); const l=big?"Smaller diagram":"Bigger diagram"; zoomBtn.setAttribute("aria-label",l); zoomBtn.title=l; };
