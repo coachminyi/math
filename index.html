@@ -10927,7 +10927,7 @@ function renderCards(kind,id,sub){ if(kind==="mist"&&!cdMistOn) return false;
   app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
   cdS={kind,key,cards,id:s.id,back:"#sheet/"+s.id}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
-  if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, h=app.querySelector(".sheeth"), e=app.querySelector(".sheetend"); if(h) h.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); }
+  if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, e=app.querySelector(".sheetend"); if(e) e.insertAdjacentHTML("beforebegin",b); }
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
     if(p) p.insertAdjacentHTML("afterend",b); if(e) e.insertAdjacentHTML("beforebegin",b); return; }
   if(!cdMistOn) return;
