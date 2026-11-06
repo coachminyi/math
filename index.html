@@ -5407,8 +5407,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
       <tr><td>${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(${V("x")} − 5)²`)} = ${nw(`${V("x")}² − 10${V("x")} + 25`)}</td></tr>
       <tr><td>${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}</td><td>${nw(`(${V("x")} + 4)(${V("x")} − 4)`)} = ${nw(`${V("x")}² − 16`)}</td></tr>
     </table>
-    <p class="anno">* middle term = 2 × first term × last term in the bracket, signs included</p>
-    ${EG("The middle term",[`${nw(`(3${V("x")} + 2)²`)}: ${nw(`2 × 3${V("x")} × 2 = 12${V("x")}`)}`,`${nw(`(${V("x")} − 5)²`)}: ${nw(`2 × ${V("x")} × (−5) = −10${V("x")}`)}`])}
+    ${EG("The middle term",[`${nw(`(3${V("x")} + 2)²`)}: ${nw(`2 × 3${V("x")} × 2 = 12${V("x")}`)}`,`${nw(`(${V("x")} − 5)²`)}: ${nw(`2 × ${V("x")} × 5 = 10${V("x")}`)}, so ${nw(`− 10${V("x")}`)}`])}
   </div>
 
   <div class="panelc"><h4>Picture it</h4>
