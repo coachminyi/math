@@ -215,6 +215,11 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .nextstep{display:inline-flex;align-items:center;gap:6px;background:var(--card);color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:0 14px;min-height:40px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
 .nextstep:hover{background:var(--blue-fill)}
 .dohint{margin:6px 0 0;font-size:15px;font-weight:600;color:var(--accent)}
+.stepq{margin:2px 0 8px;padding:2px 0 2px 10px;border-left:4px solid var(--accent);font-size:18px;font-weight:600;line-height:1.5}
+html[data-present] .stepq{font-size:23px}
+.stage>.stq{display:none}
+html[data-present] .stage>.stq:not([hidden]){display:block;margin:4px 6px 12px}
+html[data-present] .exbox>.stepq{display:none}
 .panel>.flathint{order:-2;padding:10px 14px;border-left:4px solid var(--accent)}
 .flathint p{margin:0;font-size:17px}
 @keyframes hnudge{0%,100%{stroke-opacity:0;stroke-width:.4}50%{stroke-opacity:.6;stroke-width:1.6}}
@@ -251,6 +256,10 @@ svg.nudge .pgrab{animation:pnudge 1.6s ease-in-out infinite}
 .gloss .ge::before{content:"e.g. ";color:var(--muted);font-size:13px}
 .gloss .glv{display:inline-block;margin-left:6px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 6px;vertical-align:1px}
 s.cancel{text-decoration-color:var(--red);text-decoration-thickness:2px}
+.cx{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:middle}
+.cxn{font-size:.7em;font-weight:700;color:var(--accent)}
+.qqfig{display:block;width:100%;max-width:440px;margin:2px auto 4px;overflow:visible}
+.qqfig text{paint-order:stroke;stroke:var(--card);stroke-width:1.3px;stroke-linejoin:round}
 i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,serif;font-size:1.05em}
 
 .sheet{columns:2 420px;column-gap:18px;padding-bottom:30px}
@@ -521,6 +530,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .dock .pill{min-height:34px;padding:0 9px;font-size:14.5px}
   .dock .pill.sm{min-height:32px}
   .steptext{font-size:17px;min-height:0;margin:0}
+  .stepq{font-size:16px;margin:0 0 6px}
   .keybox{font-size:calc(15*var(--k))}
   .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
   .forms{gap:calc(8*var(--k))}
@@ -1291,6 +1301,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
   const flat=!def.jump; if(flat) st.step=def.showStep??def.steps.length-1;
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
   stage.append(svg);
+  const stq=document.createElement("div"); stq.className="stepq stq"; stq.hidden=true; if(def.jump) stage.prepend(stq);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb){ key.append(kb); key.classList.add("askw"); key.insertAdjacentHTML("beforeend",ASKCOV); key.addEventListener("click",askOpen); } panel.addEventListener("click",askOpen);
   const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
   panel.innerHTML=`${jump}${flat?`<div class="box flathint" hidden></div><div class="exwrap askw"></div>`:""}<span class="dockslot" hidden></span>
@@ -1299,7 +1310,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
+    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
     <div class="box robox askw"><div class="readout"></div>${ASKCOV}</div>${flat?TRYQ:""}
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
@@ -1309,6 +1320,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     const dk=document.querySelector(".play>.box.dock"), sr=stage.getBoundingClientRect(), dt=(dk?dk.getBoundingClientRect().top:innerHeight)-8, r=tg.getBoundingClientRect(), stuck=(parseFloat(getComputedStyle(stage).top)||56)+sr.height+8;
     let dy=0; if(r.bottom>dt) dy=Math.min(r.bottom-dt,r.top-stuck); else if(r.top<sr.bottom+4) dy=r.top-sr.bottom-8;
     if(Math.abs(dy)>4) window.scrollBy({top:dy,behavior:"smooth"}); }; requestAnimationFrame(wait); };
+  let fwait=false;
   const draw=()=>{
     (def.sliders||[]).forEach(s=>{const row=$(`[data-sk="${s.k}"]`,cbox), inp=$("input",row);
       if(s.minf){const mn=s.minf(st); if(+inp.min!==mn){inp.min=mn;} if(st[s.k]<mn) st[s.k]=mn;}
@@ -1327,13 +1339,16 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     if(flat){const ex0=typeof def.explain==="function"?def.explain(st):(def.explain||[]), fh=$(".flathint",panel); let ex=ex0;
       const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
       $(".exwrap",panel).innerHTML=ex.length?explainBox(ex)+ASKCOV:"";}
-    else { const stx=$(".steptext",panel); stx.innerHTML=def.steps[st.step].t(st);
+    else { const stx=$(".steptext",panel), S0=def.steps[st.step]; stx.innerHTML=S0.t(st);
+      const qh=S0.q?S0.q(st):""; [$(".stepq",panel),stq].forEach(e=>{ if(e&&e.dataset.h!==qh){ e.dataset.h=qh; e.innerHTML=qh; e.hidden=!qh; } });
       const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
-      const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||/^[①-⑨]/.test(lt))&&!said;
+      const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||def.nxWait||/^[①-⑨]/.test(lt))&&!said;
       dh.hidden=!dshow; if(dshow) dh.innerHTML=`${/^(Slide|Drag|Tap|Move)\b/.test(stx.textContent.trim())?"↓ Or press":"↓ Press"} <b>${mb.innerHTML}</b>`;
+      const sh=!dshow&&S0.hint?S0.hint(st):""; if(sh){ dh.hidden=false; dh.innerHTML=sh; }
       const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1], done=!n&&cur&&cur.done; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=(n||done)?"":"none"; nx.innerHTML=n?`Next <span class="sn">${st.step+2}</span> ${n.name} →`:"Back to the cheatsheet →"; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
-        nx.classList.toggle("go",!mains.length||!!st._acted); } }
-    const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:cur&&!cur.sheet&&cur.t&&qqMk(cur.t.id).length?cur.t.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
+        nx.classList.toggle("go",!mains.length||(!!st._acted&&!def.nxWait)); } }
+    const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:cur&&!cur.sheet&&cur.t&&qqMk(cur.t.id).length?cur.t.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)&&(!def.tryWhen||def.tryWhen(st))?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
+    if(!fwait&&document.fonts&&document.fonts.status==="loading"){ fwait=true; document.fonts.ready.then(()=>{ fwait=false; if(svg.isConnected) layoutFracs(svg); }); }
   };
   const askShut=all=>[key,...panel.querySelectorAll(".askw")].forEach(w=>{ if(all||!w.matches(".asktx,.exwrap")) w.classList.add("shut"); });
   const go=i=>{askShut(true); st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
@@ -5334,17 +5349,27 @@ function fbBar(svg,y,h,cuts,shade,o={}){ const x=o.x??FBX0, w=o.w??FBW;
   fbRc(svg,x,y,w,h,{fill:"none",stroke:o.stroke||"var(--ink)","stroke-width":o.sw||.8}); }
 const fbXp=(svg,x,y,w,h,op=1)=>{ const m=Math.min(w,h)*.22, a={stroke:RD,"stroke-width":.9,"stroke-opacity":op}; seg(svg,[x+m,y+m],[x+w-m,y+h-m],a); seg(svg,[x+w-m,y+m],[x+m,y+h-m],a); };
 const fbLbl=(i,h)=>{ const b=document.querySelector(`.box.dock [data-b="${i}"]`); if(b&&b.dataset.l!==h){ b.dataset.l=h; b.innerHTML=h; } };
-const FBA=[[1,2,1,3,"+"],[2,5,1,2,"+"],[3,4,2,3,"−"],[5,6,1,3,"−"]];
-const FBM=[[3,5,1,7,12],[4,1,1,3,4],[3,1,1,3,5],[5,1,2,2,3]];
+const fbX=(v,g,top)=>g>1?(top?`<span class="cx"><span class="cxn">${v/g}</span><s class="cancel">${v}</s></span>`:`<span class="cx"><s class="cancel">${v}</s><span class="cxn">${v/g}</span></span>`):`${v}`;
+const fbXn=(a,d,g1,c,b,g2)=>[g1>1?`${a} and ${d} ÷ ${g1}`:"",g2>1?`${c} and ${b} ÷ ${g2}`:""].filter(Boolean).join(", ");
+const FBA=[[1,2,1,3,"+"],[2,5,1,2,"+"],[2,3,1,2,"+"],[3,4,2,3,"−"],[5,6,1,3,"−"]];
+const FBM=[[3,5,12,1,7,12],[4,1,4,1,3,4],[3,1,5,1,3,5],[5,1,3,2,2,3],[3,1,4,1,5,6]];
+const fbM=s=>{ const [W1,a,d1,W2,c,d2]=FBM[s.b], un=d1!==d2, D=Math.max(d1,d2), sm=Math.min(d1,d2); let L=D; while(L%sm) L+=D;
+  const ms=[]; for(let m=D;m<=L;m+=D) ms.push(m); const u=!un||!!s.u, d=u?L:d1;
+  return {W1,W2,a,c,d1,d2,un,u,D,sm,L,ms,d,n1:u?a*L/d1:a,n2:u?c*L/d2:c}; };
 const FBO=[[3,5,40,"stickers"],[3,4,24,"marbles"],[2,3,18,"sweets"],[5,8,32,"beads"]];
 const FBP=[[2,3,3,4],[1,2,4,5],[3,4,2,5],[2,5,5,6]];
 const FBR=[{n1:1,d1:3,n2:1,d2:4,who:"Ali",his:"his",he:"he",sa:"on a book",sb:"on a pen",ask:"on the pen",askT:"The pen",la:"book",lb:"pen"},
   {n1:1,d1:4,n2:2,d2:9,who:"Ken",his:"his",he:"he",sa:"on Monday",sb:"on Tuesday",ask:"on Tuesday",askT:"Tuesday's spending",la:"Mon",lb:"Tue"},
-  {n1:2,d1:5,n2:1,d2:4,who:"Mei",his:"her",he:"she",sa:"on a bag",sb:"on a book",la:"bag",lb:"book",left:45}];
+  {n1:2,d1:5,n2:1,d2:4,who:"Mei",his:"her",he:"she",sa:"on a bag",sb:"on a book",la:"bag",lb:"book",left:45},
+  {n1:1,d1:4,n2:1,d2:3,all:true,who:"Siti",his:"her",he:"she",sa:"on Monday",sb:"on Tuesday",la:"Mon",lb:"Tue"}];
 const fbA=s=>{ const [n1,d1,n2,d2,op]=FBA[s.a], D=Math.max(d1,d2), sm=Math.min(d1,d2), m=s.k*D, fits=s.k>0&&m%sm===0, A=fits?n1*m/d1:0, B=fits?n2*m/d2:0;
   return {n1,d1,n2,d2,op,D,sm,m,fits,A,B,r:op==="+"?A+B:A-B,wn:op==="+"?n1+n2:n1-n2,wd:op==="+"?d1+d2:d1-d2}; };
-const fbR=s=>{ const Q=FBR[s.q], rest=Q.d1-Q.n1, k=Q.d2/rest, pv=Q.left?Q.left/(Q.d2-Q.n2):0, uv=pv*Q.d2/rest; return Object.assign({rest,k,T:Q.d1*k,pv,uv,tot:uv*Q.d1},Q); };
-function fbD0(svg,s){ const F=fbA(s), y3=54; svg.setAttribute("viewBox","0 0 140 81");
+const fbR=s=>{ const Q=FBR[s.q];
+  if(Q.all){ const D=Math.max(Q.d1,Q.d2), sm=Math.min(Q.d1,Q.d2); let L=D; while(L%sm) L+=D; const ms=[]; for(let m=D;m<=L;m+=D) ms.push(m);
+    const A=Q.n1*L/Q.d1, B=Q.n2*L/Q.d2; return Object.assign({ok:"w",D,sm,L,ms,A,B,lf:L-A-B},Q); }
+  const rest=Q.d1-Q.n1, k=Q.d2/rest, pv=Q.left?Q.left/(Q.d2-Q.n2):0, uv=pv*Q.d2/rest; return Object.assign({ok:"r",rest,k,T:Q.d1*k,pv,uv,tot:uv*Q.d1},Q); };
+const fbRQ=R=>`${R.who} spent ${frac(R.n1,R.d1)} of ${R.his} money ${R.sa} and ${frac(R.n2,R.d2)} of ${R.all?`${R.his} money`:"the rest"} ${R.sb}. ${R.all?`What fraction of ${R.his} money did ${R.he} have left?`:R.left?`${fbCap(R.he)} had $${R.left} left. How much money did ${R.he} have at first?`:`What fraction of ${R.his} money did ${R.he} spend ${R.ask}?`}`;
+function fbD0(svg,s){ const F=fbA(s), y3=54, ov=F.op==="+"&&F.fits&&F.r>F.m&&!!s.j, y4=y3+14; svg.setAttribute("viewBox",`0 0 140 ${ov?95:81}`);
   lab(svg,[FBX0+FBW/2,6.5],!s.k?"Different-size pieces":F.fits?`${F.m} pieces: both fit ✓`:`${F.m} pieces: ${F.sm} doesn't go into ${F.m} ✗`,{"font-size":5.4,"font-weight":700,fill:F.fits?GR:RD});
   [[F.n1,F.d1,16,BL,"var(--blue-fill)",F.A],[F.n2,F.d2,35,AMB,"var(--amber-fill)",F.B]].forEach(([n,d,y,c,f,nn])=>{ const bad=s.k>0&&F.m%d!==0;
     fbBar(svg,y,11,s.k?F.m:d,[[0,n/d,f]],{stroke:bad?RD:"var(--ink)",sw:bad?1.1:.8});
@@ -5356,13 +5381,17 @@ function fbD0(svg,s){ const F=fbA(s), y3=54; svg.setAttribute("viewBox","0 0 140
     lab(svg,[10,y3+8],"✗",{"font-size":6.6,"font-weight":700,fill:RD});
     lab(svg,[FBX0+FBW/2,ok?y3+21:y3+8],`${fbT(F.n1,F.d1)} ${F.op} ${fbT(F.n2,F.d2)} = {${F.wn}/${F.wd}}? ${F.op==="+"?`Less than ${fbT(big[0],big[1])}!`:`More than ${fbT(F.n1,F.d1)}!`}`,{"font-size":5.4,"font-weight":700,fill:RD}); }
   else if(F.fits&&s.j){ const p=s.jp, a=F.n1/F.d1, b=F.n2/F.d2, o={stroke:p>=1?GR:"var(--ink)",sw:p>=1?1.3:.8};
-    if(F.op==="+") fbBar(svg,y3,11,F.m,[[0,a*Math.min(1,p*2),"var(--blue-fill)"],[a,a+b*clamp(p*2-1,0,1),"var(--amber-fill)"]],o);
+    if(F.op==="+"){ const e=a+b*clamp(p*2-1,0,1); fbBar(svg,y3,11,F.m,[[0,a*Math.min(1,p*2),"var(--blue-fill)"],[a,Math.min(1,e),"var(--amber-fill)"]],o);
+      if(ov) fbBar(svg,y4,11,F.m,[[0,Math.max(0,e-1),"var(--amber-fill)"]],o); }
     else { fbBar(svg,y3,11,F.m,[[0,a,"var(--blue-fill)"]],o); const n=Math.round(F.B*Math.min(1,p)), pw=FBW/F.m; for(let i=0;i<n;i++) fbXp(svg,FBX0+pw*(F.A-1-i),y3,pw,11); }
-    if(p>=1){ const [rn,rd]=fbS(F.r,F.m); lab(svg,[10,y3+8],fbT(F.r,F.m),{"font-size":6.6,"font-weight":700,fill:GR});
+    if(p>=1&&ov){ const [qn,qd]=fbS(F.r-F.m,F.m); lab(svg,[10,y3+8],"1",{"font-size":6.6,"font-weight":700,fill:GR}); lab(svg,[10,y4+8],fbT(F.r-F.m,F.m),{"font-size":6.6,"font-weight":700,fill:GR});
+      lab(svg,[FBX0+FBW/2,y4+21],`${F.A} + ${F.B} = ${F.r} ${fbNm(F.r,F.m)} = ${fbMT(1,qn,qd)}`,{"font-size":5.4,"font-weight":700,fill:GR}); }
+    else if(p>=1){ const [rn,rd]=fbS(F.r,F.m); lab(svg,[10,y3+8],fbT(F.r,F.m),{"font-size":6.6,"font-weight":700,fill:GR});
       lab(svg,[FBX0+FBW/2,y3+21],`${F.A} ${F.op} ${F.B} = ${F.r} ${fbNm(F.r,F.m)}${rd!==F.m?` = ${fbT(rn,rd)}`:""}`,{"font-size":5.4,"font-weight":700,fill:GR}); } } }
-function fbD1(svg,s){ const [W1,n1,W2,n2,d]=FBM[s.b], y0=17, P=13, h=10, done=s.r===2&&s.tp>=1, rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
-  svg.setAttribute("viewBox",`0 0 140 ${y0+(W1+1)*P+1}`);
-  lab(svg,[FBX0+FBW/2,9.5],done?`Left: ${fbMT(rw,rn,d)}${sd!==d?` = ${fbMT(rw,sn,sd)}`:""}`:`${fbMT(W1,n1,d)} − ${fbMT(W2,n2,d)}`,{"font-size":5.8,"font-weight":700,fill:done?GR:"var(--ink)"});
+function fbD1(svg,s){ const M=fbM(s), {W1,W2,n1,n2,d}=M, y0=17, P=13, h=10, done=s.r===2&&s.tp>=1, rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+  const nl=`need ${n2}`, nx=FBX0+FBW*n2/d+2, nin=nx+nl.length*3.1<=FBX0+FBW-1, nb=M.u&&!s.r&&!nin;
+  svg.setAttribute("viewBox",`0 0 140 ${y0+(W1+1)*P+1+(nb?6:0)}`);
+  lab(svg,[FBX0+FBW/2,9.5],done?`Left: ${fbMT(rw,rn,d)}${sd!==d?` = ${fbMT(rw,sn,sd)}`:""}`:M.u?`${fbMT(W1,n1,d)} − ${fbMT(W2,n2,d)}`:`${fbMT(W1,M.a,M.d1)} − ${fbMT(W2,M.c,M.d2)}`,{"font-size":5.8,"font-weight":700,fill:done?GR:"var(--ink)"});
   for(let i=0;i<W1;i++){ const y=y0+i*P, br=i===W1-1&&s.r>=1, bp=br?(s.r===1?s.bp:1):0, am=br&&bp>.5;
     fbBar(svg,y,h,br?d:1,[[0,1,am?"var(--amber-fill)":"var(--blue-fill)"]],{co:bp});
     lab(svg,[10,y+7.4],am?fbT(d,d):"1",{"font-size":5.8,"font-weight":700,fill:am?AMB:BL});
@@ -5370,7 +5399,7 @@ function fbD1(svg,s){ const [W1,n1,W2,n2,d]=FBM[s.b], y0=17, P=13, h=10, done=s.
       if(br){ const k=Math.round(n2*clamp(s.tp*2-1,0,1)), pw=FBW/d; for(let j=0;j<k;j++) fbXp(svg,FBX0+pw*(d-1-j),y,pw,h); } } }
   const y=y0+W1*P; fbBar(svg,y,h,d,[[0,n1/d,"var(--blue-fill)"]]);
   lab(svg,[10,y+7.4],fbT(n1,d),{"font-size":5.8,"font-weight":700,fill:BL});
-  if(!s.r){ fbRc(svg,FBX0,y-1,FBW*n2/d,h+2,{fill:"none",stroke:RD,"stroke-width":.9,"stroke-dasharray":"2 1.4"}); lab(svg,[FBX0+FBW*n2/d+2,y+7],`need ${n2}`,{"text-anchor":"start","font-size":5,"font-weight":700,fill:RD}); } }
+  if(M.u&&!s.r){ fbRc(svg,FBX0,y-1,FBW*n2/d,h+2,{fill:"none",stroke:RD,"stroke-width":.9,"stroke-dasharray":"2 1.4"}); lab(svg,nin?[nx,y+7]:[FBX0+FBW*n2/d/2,y+h+6.2],nl,{"text-anchor":nin?"start":"middle","font-size":5,"font-weight":700,fill:RD}); } }
 function fbD2(svg,s){ const [n,d,N,noun]=FBO[s.o], per=N/d, y0=16, P=Math.min(11,80/d), cols=Math.min(N,10), dx=7, gx=70-(per-1)*dx/2, p=s.sh?fbE(s.sp):0, q=s.tk?s.kp:0;
   svg.setAttribute("viewBox",`0 0 140 ${y0+Math.max(d*P,Math.ceil(N/10)*8)+4}`);
   lab(svg,[70,9.5],`${fbT(n,d)} of ${N} ${noun}`,{"font-size":5.8,"font-weight":700});
@@ -5391,14 +5420,26 @@ function fbD3(svg,s){ const [a,b,c,d]=FBP[s.x], X=34, Y=17, W=78, H=56, cp=s.cu?
   lab(svg,[X+W*c/d/2,Y+H+8],fbT(c,d),{"font-size":6.2,"font-weight":700,fill:BL});
   if(cp>=1) lab(svg,[X-8,Y+H*a/b/2+2.4],fbT(a,b),{"font-size":6.2,"font-weight":700,fill:GR});
   if(xp>=1) lab(svg,[X+W+2.5,Y+H/2+1.8],`${a*c} of ${b*d}`,{"text-anchor":"start","font-size":5,"font-weight":700,fill:GR}); }
-function fbD4(svg,s){ const R=fbR(s), X=27, W=84, Y1=14, Y2=42, H=10, f=!R.left, rx=X+W*R.n1/R.d1, rw=W*R.rest/R.d1, ph=s.ph, pp=ph?(ph>1?1:fbE(s.pp)):0, qp=ph>1?s.qp:0, cut2=ph>1&&f;
+function fbD4(svg,s){ const R=fbR(s), X=27, W=84, Y1=14, Y2=42, H=10, ph=s.ph, pp=ph?(ph>1?1:fbE(s.pp)):0, qp=ph>1?s.qp:0, bad=!!s.of&&s.of!==R.ok,
+    cap=(y,t)=>lab(svg,[X+W+3,y],t,{"text-anchor":"start","font-size":4.2,"font-weight":600,fill:"var(--muted)"});
+  if(R.all){ const a=R.n1/R.d1, b=R.n2/R.d2, c2=ph>0, dn=c2&&pp>=1; svg.setAttribute("viewBox","0 0 140 44");
+    fbBar(svg,Y1,H,c2?R.L:R.d1,c2?[[0,a,"var(--blue-fill)"],[a,a+b*pp,"var(--amber-fill)"]]:[[0,a,"var(--blue-fill)"]],{x:X,w:W});
+    lab(svg,[X-3.6,Y1+7.2],"All",{"text-anchor":"end","font-size":4.8,"font-weight":700});
+    lab(svg,[X+W*a/2,Y1+6.8],R.la,{"font-size":4.4,"font-weight":700,fill:BL});
+    lab(svg,[X+W+3,Y1+7.2],dn?`${R.L}u`:`${R.d1}u`,{"text-anchor":"start","font-size":4.6,"font-weight":700}); cap(Y1+12.6,"u = unit");
+    if(bad){ fbRc(svg,X+W*a-.6,Y1-1.2,W*(1-a)+1.8,H+2.4,{fill:"none",stroke:RD,"stroke-width":1,"stroke-dasharray":"2 1.4"}); lab(svg,[X+W*(1+a)/2,Y1+H+7.5],"✗ Not the rest",{"font-size":5,"font-weight":700,fill:RD}); }
+    if(s.of==="w"&&!ph){ fbRc(svg,X-1.2,Y1-1.2,W+2.4,H+2.4,{fill:"none",stroke:GR,"stroke-width":1.2}); lab(svg,[X+W/2,Y1+H+7.5],`all ${R.his} money`,{"font-size":5,"font-weight":700,fill:GR}); }
+    if(dn){ lab(svg,[X+W*(a+b/2),Y1+6.8],R.lb,{"font-size":4.4,"font-weight":700,fill:AMB}); const lx=X+W*(a+b);
+      seg(svg,[lx,Y1+H+1.6],[X+W,Y1+H+1.6],{stroke:GR,"stroke-width":1}); lab(svg,[(lx+X+W)/2,Y1+H+8],`left: ${R.lf}u`,{"font-size":5,"font-weight":700,fill:GR}); }
+    return; }
+  const f=!R.left, rx=X+W*R.n1/R.d1, rw=W*R.rest/R.d1, cut2=ph>1&&f;
   svg.setAttribute("viewBox","0 0 140 65");
   fbBar(svg,Y1,H,R.d1,cut2?[[0,R.n1/R.d1,"var(--blue-fill)"],[R.n1/R.d1,R.n1/R.d1+R.n2/R.T,"var(--amber-fill)",qp]]:[[0,R.n1/R.d1,"var(--blue-fill)"]],{x:X,w:W});
   if(cut2){ const pw=W/R.T; for(let i=1;i<R.T;i++) if(i%R.k) seg(svg,[X+pw*i,Y1],[X+pw*i,Y1+H],{stroke:"var(--ink)","stroke-width":.4,"stroke-dasharray":"1.2 .9","stroke-opacity":qp});
     if(qp>=1) lab(svg,[X+pw*(R.n1*R.k+R.n2/2),Y1+6.8],R.lb,{"font-size":4.4,"font-weight":700,fill:AMB}); }
   lab(svg,[X-3.6,Y1+7.2],"All",{"text-anchor":"end","font-size":4.8,"font-weight":700});
   lab(svg,[X+W*R.n1/R.d1/2,Y1+6.8],R.la,{"font-size":4.4,"font-weight":700,fill:BL});
-  lab(svg,[X+W+3,Y1+7.2],cut2&&qp>=1?`${R.d1}u = ${R.T}p`:!f&&ph>1&&qp>=1?`${R.d1}u = $${R.tot}`:`${R.d1}u`,{"text-anchor":"start","font-size":4.6,"font-weight":700});
+  lab(svg,[X+W+3,Y1+7.2],cut2&&qp>=1?`${R.d1}u = ${R.T}p`:!f&&ph>1&&qp>=1?`${R.d1}u = $${R.tot}`:`${R.d1}u`,{"text-anchor":"start","font-size":4.6,"font-weight":700}); cap(Y1+12.6,"u = unit");
   if(s.of==="w"){ fbRc(svg,X-1.2,Y1-1.2,W+2.4,H+2.4,{fill:"none",stroke:RD,"stroke-width":1,"stroke-dasharray":"2 1.4"}); lab(svg,[X+W/2,Y1+H+7.5],"✗ Not all of it",{"font-size":5,"font-weight":700,fill:RD}); }
   if(s.of==="r"&&!ph){ fbRc(svg,rx-.6,Y1-1.2,rw+1.8,H+2.4,{fill:"none",stroke:GR,"stroke-width":1.2}); lab(svg,[rx+rw/2,Y1+H+7.5],"the rest",{"font-size":5,"font-weight":700,fill:GR}); }
   if(!ph) return;
@@ -5407,8 +5448,8 @@ function fbD4(svg,s){ const R=fbR(s), X=27, W=84, Y1=14, Y2=42, H=10, f=!R.left,
   fbBar(svg,Y2,H,R.d2,[[0,R.n2/R.d2,"var(--amber-fill)"]],{x:rx,w:rw});
   lab(svg,[rx+rw*R.n2/R.d2/2,Y2+6.8],R.lb,{"font-size":4.4,"font-weight":700,fill:AMB});
   lab(svg,[rx-2.5,Y2+7.2],"Rest",{"text-anchor":"end","font-size":4.8,"font-weight":700});
-  lab(svg,[X+W+3,Y2+7.2],!f&&ph>1&&qp>=1?`${R.d2}p = $${R.d2*R.pv}`:`${R.d2}p`,{"text-anchor":"start","font-size":4.6,"font-weight":700});
-  if(f){ lab(svg,[rx+rw/2,Y2+H+8],`${R.rest}u = ${R.d2}p, so 1u = ${R.k}p`,{"font-size":5,"font-weight":700,fill:BL}); return; }
+  lab(svg,[X+W+3,Y2+7.2],!f&&ph>1&&qp>=1?`${R.d2}p = $${R.d2*R.pv}`:`${R.d2}p`,{"text-anchor":"start","font-size":4.6,"font-weight":700}); cap(Y2+12.6,"p = part");
+  if(f){ lab(svg,[rx+rw/2,Y2+H+8],`${R.rest}u = ${R.d2}p${ph>1&&qp>=1?`, so 1u = ${R.k}p`:""}`,{"font-size":5,"font-weight":700,fill:BL}); return; }
   const lx=rx+rw*R.n2/R.d2; seg(svg,[lx,Y2+H+1.6],[X+W,Y2+H+1.6],{stroke:GR,"stroke-width":1}); lab(svg,[(lx+X+W)/2,Y2+H+8],`left: $${R.left}`,{"font-size":5,"font-weight":700,fill:GR});
   if(ph>1&&qp>0){ for(let i=0;i<R.d2;i++) lab(svg,[rx+rw*(i+.5)/R.d2,Y2-1.8],`$${R.pv}`,{"font-size":4.2,"font-weight":700,fill:AMB,"fill-opacity":qp});
     for(let i=0;i<R.d1;i++) lab(svg,[X+W*(i+.5)/R.d1,Y1-1.8],`$${R.uv}`,{"font-size":4.2,"font-weight":700,fill:BL,"fill-opacity":qp}); } }
@@ -5419,36 +5460,43 @@ function fbK(s){
     const bx=[FB(F.fits?"green":"blue",`Multiples of ${F.D}`,ms.join(", ")+(F.fits?" ✓":""),F.fits?`${F.sm} goes into ${F.m}`:`${F.sm} doesn't go into ${F.m}`,null,"wide")];
     if(F.fits){ const ch=(n,d,c)=>{ const f=F.m/d; return f===1?FB(c,`Already ${fbName(d)}`,frac(n,d),"keep it"):FB(c,"Change it",nw(`${frac(n,d)} = ${frac(n*f,F.m)}`),`numerator and denominator × ${f}`); };
       bx.push(ch(F.n1,F.d1,"blue"),ch(F.n2,F.d2,"amber"));
-      if(s.j&&s.jp>=1){ const [rn,rd]=fbS(F.r,F.m); bx.push(FB("green","Answer",nw(`${frac(F.A,F.m)} ${F.op} ${frac(F.B,F.m)} = ${frac(F.r,F.m)}`)+(rd!==F.m?` ${nw(`= ${frac(rn,rd)}`)}`:""),rd!==F.m?"simplest form":"",null,"wide")); } }
+      if(s.j&&s.jp>=1&&F.r>F.m){ const [qn,qd]=fbS(F.r-F.m,F.m); bx.push(FB("green","Answer",nw(`${frac(F.A,F.m)} + ${frac(F.B,F.m)} = ${frac(F.r,F.m)}`)+` ${nw(`= ${fbMH(1,qn,qd)}`)}`,`${F.m} ${fbName(F.m)} make 1 whole: write it as a mixed number`,null,"wide")); }
+      else if(s.j&&s.jp>=1){ const [rn,rd]=fbS(F.r,F.m); bx.push(FB("green","Answer",nw(`${frac(F.A,F.m)} ${F.op} ${frac(F.B,F.m)} = ${frac(F.r,F.m)}`)+(rd!==F.m?` ${nw(`= ${frac(rn,rd)}`)}`:""),rd!==F.m?"simplest form":"",null,"wide")); } }
     return FORMS(bx,true); }
-  if(s.step===1){ const [W1,n1,W2,n2,d]=FBM[s.b], rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
-    if(!s.r) return FORMS([FB("red","Not enough",nw(`${frac(n1,d)} − ${frac(n2,d)}`),`only ${n1} ${fbNm(n1,d)} here`,null,"wide")],true);
-    const bx=[FB("blue","Change it",nw(`${fbMH(W1,n1,d)} = ${fbMH(W1-1,n1+d,d)}`),`break 1 whole: ${nw(`${frac(d,d)} + ${frac(n1,d)} = ${frac(n1+d,d)}`)}`,null,"wide")];
+  if(s.step===1){ const M=fbM(s), {W1,W2,n1,n2,d}=M, rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+    if(!M.u) return FORMS([FB("red","Different sizes",nw(`${frac(M.a,M.d1)} and ${frac(M.c,M.d2)}`),`${fbName(M.d1)} and ${fbName(M.d2)}`,null,"wide")],true);
+    const b0=M.un?[FB("blue","Same-size pieces",nw(`${fbMH(W1,M.a,M.d1)} − ${fbMH(W2,M.c,M.d2)}`)+" "+nw(`= ${fbMH(W1,n1,d)} − ${fbMH(W2,n2,d)}`),`multiples of ${M.D}: ${M.ms.join(", ")} ✓`,null,"wide")]:[];
+    if(!s.r) return FORMS([...b0,FB("red","Not enough",nw(`${frac(n1,d)} − ${frac(n2,d)}`),`only ${n1} ${fbNm(n1,d)} here`,null,"wide")],true);
+    const bx=[...b0,FB("blue","Change it",nw(`${fbMH(W1,n1,d)} = ${fbMH(W1-1,n1+d,d)}`),`break 1 whole: ${nw(`${frac(d,d)} + ${frac(n1,d)} = ${frac(n1+d,d)}`)}`,null,"wide")];
     if(s.r===2&&s.tp>=1) bx.push(FB("green","Take away",nw(`${fbMH(W1-1,n1+d,d)} − ${fbMH(W2,n2,d)} = ${fbMH(rw,rn,d)}`)+(sd!==d?` ${nw(`= ${fbMH(rw,sn,sd)}`)}`:""),`wholes − wholes, ${fbName(d)} − ${fbName(d)}`,null,"wide"));
     return FORMS(bx,true); }
   if(s.step===2){ const [n,d,N,noun]=FBO[s.o], per=N/d, who=FB("amber","Of who?",`${N} ${noun}`,"that's the whole"), one=FB("blue","1 group",nw(`${N} ÷ ${d} = ${per}`),`each group is ${frac(1,d)}`);
     if(!s.sh||s.sp<1) return FORMS([who,FB("blue",`Denominator ${d}`,`${d} equal groups`,"share them out")],true);
     if(!s.tk||s.kp<1) return FORMS([who,one],true);
     return FORMS([one,FB("green",`Numerator ${n}`,nw(`${per} × ${n} = ${per*n}`),`take ${n} group${n>1?"s":""}`),FB("ink","“Of” means ×",nw(`${frac(n,d)} × ${N} = ${per*n}`),"",null,"wide")],true); }
-  if(s.step===3){ const [a,b,c,d]=FBP[s.x], [rn,rd]=fbS(a*c,b*d), g1=gcd(a,d), g2=gcd(c,b), X=(v,g)=>g>1?`<s class="cancel">${v}</s><sup>${v/g}</sup>`:`${v}`;
+  if(s.step===3){ const [a,b,c,d]=FBP[s.x], [rn,rd]=fbS(a*c,b*d), g1=gcd(a,d), g2=gcd(c,b);
     if(!s.cu||s.cp<1) return FORMS([FB("blue","Shaded",frac(c,d),"of the rectangle"),FB("ink","Means",nw(`${frac(a,b)} × ${frac(c,d)}`),nw(`${frac(a,b)} of ${frac(c,d)}`))],true);
     if(!s.tx||s.xp<1) return FORMS([FB("amber",`Cut into ${b} rows`,nw(`${b} × ${d} = ${b*d} pieces`),`each piece is ${frac(1,b*d)}`,null,"wide")],true);
     return FORMS([FB("green","Answer",nw(`${frac(a,b)} × ${frac(c,d)} = ${frac(`${a} × ${c}`,`${b} × ${d}`)} = ${frac(a*c,b*d)}`)+(rd!==b*d?` ${nw(`= ${frac(rn,rd)}`)}`:""),"numerator × numerator, denominator × denominator",null,"wide"),
-      FB("amber","Faster: cancel first",nw(`${frac(X(a,g1),X(b,g2))} × ${frac(X(c,g2),X(d,g1))} = ${frac(rn,rd)}`),"",null,"wide")],true); }
-  const R=fbR(s), qh=KHEAD(`${R.who} spent ${frac(R.n1,R.d1)} of ${R.his} money ${R.sa} and ${frac(R.n2,R.d2)} of the <b>rest</b> ${R.sb}. ${R.left?`${fbCap(R.he)} had $${R.left} left. How much money did ${R.he} have at first?`:`What fraction of ${R.his} money did ${R.he} spend ${R.ask}?`}`);
+      FB("amber","Faster: cancel first",nw(`${frac(fbX(a,g1,1),fbX(b,g2,0))} × ${frac(fbX(c,g2,1),fbX(d,g1,0))} = ${frac(rn,rd)}`),fbXn(a,d,g1,c,b,g2),null,"wide")],true); }
+  const R=fbR(s), bad=!!s.of&&s.of!==R.ok;
   let bx;
   if(!s.of) bx=[FB("amber","Of who?",nw(`${frac(R.n2,R.d2)} of …?`),"every fraction is OF something",null,"wide")];
-  else if(s.of==="w") bx=[FB("red","Not yet",nw(`${frac(R.n2,R.d2)} of all the money?`),"read it again: of the rest",null,"wide")];
+  else if(bad) bx=[FB("red","Not yet",nw(R.all?`${frac(R.n2,R.d2)} of the rest?`:`${frac(R.n2,R.d2)} of all the money?`),R.all?`read it again: of ${R.his} money`:"read it again: of the rest",null,"wide")];
+  else if(R.all){ if(!s.ph||s.pp<1) bx=[FB("green","✓ Of all the money",nw(`${frac(R.n1,R.d1)} and ${frac(R.n2,R.d2)}`),`both are of all ${R.his} money: one bar`,null,"wide")];
+    else { const [sn,sd]=fbS(R.lf,R.L); bx=[FB("blue",`Multiples of ${R.D}`,R.ms.join(", ")+" ✓",`${R.sm} goes into ${R.L}`,null,"wide"),FB("blue",R.la,nw(`${frac(R.n1,R.d1)} = ${frac(R.A,R.L)}`),`${R.A}u`),FB("amber",R.lb,nw(`${frac(R.n2,R.d2)} = ${frac(R.B,R.L)}`),`${R.B}u`),
+      FB("green","Answer",nw(`${R.L}u − ${R.A}u − ${R.B}u = ${R.lf}u`)+" "+nw(`= ${frac(R.lf,R.L)}`)+(sd!==R.L?` ${nw(`= ${frac(sn,sd)}`)}`:""),`${R.lf}u out of ${R.L}u are left`,null,"wide")]; } }
   else if(!s.ph||(s.ph===1&&s.pp<1)) bx=[FB("green","✓ Of the rest",nw(`${frac(R.n2,R.d2)} of the rest`),"so the rest gets its own bar",null,"wide")];
-  else if(!R.left){ bx=[FB("blue","Drop lines",nw(`${R.rest}u = ${R.d2}p`),`so 1u = ${R.k}p`)];
+  else if(!R.left){ bx=[FB("blue","Drop lines",nw(`${R.rest}u = ${R.d2}p`),s.ph>1&&s.qp>=1?`so 1u = ${R.k}p`:"the rest, two ways")];
     if(s.ph>1&&s.qp>=1){ const [sn,sd]=fbS(R.n2,R.T); bx.push(FB("blue","All",nw(`${R.d1}u = ${R.T}p`),""),FB("green","Answer",frac(R.n2,R.T)+(sd!==R.T?` ${nw(`= ${frac(sn,sd)}`)}`:""),`${R.n2}p out of ${R.T}p`,null,"wide")); } }
   else { bx=[FB("blue","Left",nw(`${R.d2-R.n2}p = $${R.left}`),`1p = $${R.pv}`)];
     if(s.ph>1&&s.qp>=1) bx.push(FB("blue","Climb up",nw(`${R.d2}p = $${R.d2*R.pv} = ${R.rest}u`),`1u = $${R.uv}`),FB("green","At first",nw(`${R.d1}u = $${R.tot}`),"",null,"wide")); }
-  return qh+FORMS(bx,true); }
+  return FORMS(bx,true); }
 const fracBars=aid({
-  init:{a:0,k:0,j:0,jp:0,b:0,r:0,bp:0,tp:0,o:0,sh:0,sp:0,tk:0,kp:0,x:0,cu:0,cp:0,tx:0,xp:0,q:0,of:"",ph:0,pp:0,qp:0}, jump:true, vb:"0 0 140 76", label:"Fraction bars",
+  init:{a:0,k:0,j:0,jp:0,b:0,u:0,r:0,bp:0,tp:0,o:0,sh:0,sp:0,tk:0,kp:0,x:0,cu:0,cp:0,tx:0,xp:0,q:0,of:"",ph:0,pp:0,qp:0}, jump:true, nxWait:true,
+  tryWhen:s=>{ if(s.step!==4) return true; const R=fbR(s); return R.all?s.ph>0&&s.pp>=1:s.ph>1&&s.qp>=1; }, vb:"0 0 140 76", label:"Fraction bars",
   pills:[{k:"a",label:"Example",opts:FBA.map(([a,b,c,d,o],i)=>[i,`<span>${frac(a,b)} ${o} ${frac(c,d)}</span>`]),show:s=>s.step===0,on:s=>{s.k=0;s.j=0;s.jp=0;}},
-    {k:"b",label:"Example",opts:FBM.map(([W1,n1,W2,n2,d],i)=>[i,`<span>${fbMH(W1,n1,d)} − ${fbMH(W2,n2,d)}</span>`]),show:s=>s.step===1,on:s=>{s.r=0;s.bp=0;s.tp=0;}},
+    {k:"b",label:"Example",opts:FBM.map(([W1,a,d1,W2,c,d2],i)=>[i,`<span>${fbMH(W1,a,d1)} − ${fbMH(W2,c,d2)}</span>`]),show:s=>s.step===1,on:s=>{s.u=0;s.r=0;s.bp=0;s.tp=0;}},
     {k:"o",label:"Example",opts:FBO.map(([n,d,N],i)=>[i,`<span>${frac(n,d)} of ${N}</span>`]),show:s=>s.step===2,on:s=>{s.sh=0;s.sp=0;s.tk=0;s.kp=0;}},
     {k:"x",label:"Example",opts:FBP.map(([a,b,c,d],i)=>[i,`<span>${frac(a,b)} × ${frac(c,d)}</span>`]),show:s=>s.step===3,on:s=>{s.cu=0;s.cp=0;s.tx=0;s.xp=0;}},
     {k:"q",label:"Example",opts:FBR.map((R,i)=>[i,R.who]),show:s=>s.step===4,on:s=>{s.of="";s.ph=0;s.pp=0;s.qp=0;}},
@@ -5457,25 +5505,30 @@ const fracBars=aid({
     {label:"▶ Put them together",fn:(s,an)=>{s.j=1;s.jp=0;an(900,p=>{s.jp=p;});},show:s=>s.step===0&&fbA(s).fits&&!s.j&&fbA(s).op==="+"},
     {label:"▶ Take it away",fn:(s,an)=>{s.j=1;s.jp=0;an(900,p=>{s.jp=p;});},show:s=>s.step===0&&fbA(s).fits&&!s.j&&fbA(s).op==="−"},
     {label:"↺ Start again",fn:s=>{s.k=0;s.j=0;s.jp=0;},show:s=>s.step===0&&s.k>0},
-    {label:"▶ Break a whole",fn:(s,an)=>{s.r=1;s.bp=0;an(800,p=>{s.bp=p;});},show:s=>s.step===1&&!s.r},
+    {label:"▶ Break a whole",fn:(s,an)=>{s.r=1;s.bp=0;an(800,p=>{s.bp=p;});},show:s=>s.step===1&&!s.r&&fbM(s).u},
     {label:"▶ Take away",fn:(s,an)=>{s.r=2;s.tp=0;an(1000,p=>{s.tp=p;});},show:s=>s.step===1&&s.r===1},
-    {label:"↺ Start again",fn:s=>{s.r=0;s.bp=0;s.tp=0;},show:s=>s.step===1&&s.r>0},
+    {label:"↺ Start again",fn:s=>{s.u=0;s.r=0;s.bp=0;s.tp=0;},show:s=>s.step===1&&(s.r>0||!!s.u)},
     {label:"▶ Share into groups",fn:(s,an)=>{s.sh=1;s.sp=0;an(1000,p=>{s.sp=p;});},show:s=>s.step===2&&!s.sh},
     {label:"▶ Take the groups",fn:(s,an)=>{s.tk=1;s.kp=0;an(600,p=>{s.kp=p;});},show:s=>s.step===2&&!!s.sh&&!s.tk},
     {label:"↺ Start again",fn:s=>{s.sh=0;s.sp=0;s.tk=0;s.kp=0;},show:s=>s.step===2&&!!s.sh},
     {label:"▶ Cut the other way",fn:(s,an)=>{s.cu=1;s.cp=0;an(700,p=>{s.cp=p;});},show:s=>s.step===3&&!s.cu},
     {label:"▶ Take the rows",fn:(s,an)=>{s.tx=1;s.xp=0;an(600,p=>{s.xp=p;});},show:s=>s.step===3&&!!s.cu&&!s.tx},
     {label:"↺ Start again",fn:s=>{s.cu=0;s.cp=0;s.tx=0;s.xp=0;},show:s=>s.step===3&&!!s.cu},
-    {label:"▶ Draw the rest",fn:(s,an)=>{s.ph=1;s.pp=0;an(800,p=>{s.pp=p;});},show:s=>s.step===4&&s.of==="r"&&!s.ph},
-    {label:"▶ Cut each u",fn:(s,an)=>{s.ph=2;s.qp=0;an(700,p=>{s.qp=p;});},show:s=>s.step===4&&s.ph===1&&!FBR[s.q].left},
+    {label:"▶ Draw the rest",fn:(s,an)=>{s.ph=1;s.pp=0;an(800,p=>{s.pp=p;});},show:s=>s.step===4&&!FBR[s.q].all&&s.of==="r"&&!s.ph},
+    {label:"▶ Cut each u",fn:(s,an)=>{s.ph=2;s.qp=0;an(700,p=>{s.qp=p;});},show:s=>s.step===4&&s.ph===1&&!FBR[s.q].all&&!FBR[s.q].left},
     {label:"▶ Climb up",fn:(s,an)=>{s.ph=2;s.qp=0;an(700,p=>{s.qp=p;});},show:s=>s.step===4&&s.ph===1&&!!FBR[s.q].left},
-    {label:"↺ Start again",fn:s=>{s.of="";s.ph=0;s.pp=0;s.qp=0;},show:s=>s.step===4&&(s.ph>0||!!s.of)}],
+    {label:"↺ Start again",fn:s=>{s.of="";s.ph=0;s.pp=0;s.qp=0;},show:s=>s.step===4&&(s.ph>0||!!s.of)},
+    {label:"▶ Same-size pieces",fn:s=>{s.u=1;},show:s=>s.step===1&&!fbM(s).u},
+    {label:"▶ Same-size pieces",fn:(s,an)=>{s.ph=1;s.pp=0;an(800,p=>{s.pp=p;});},show:s=>s.step===4&&!!FBR[s.q].all&&s.of==="w"&&!s.ph}],
   steps:[{name:"Add, take away",set:{k:0,j:0,jp:0},t:s=>{ const F=fbA(s), v=F.op==="+"?"add":"take away";
-      if(!s.k) return `${fbCap(fbName(F.d1))} and ${fbName(F.d2)} are different sizes, so you can't ${v} them yet.<br>List the multiples of ${F.D}, the bigger denominator.`;
+      if(!s.k) return `${fbCap(fbName(F.d1))} and ${fbName(F.d2)} are different sizes, so you can't ${F.op==="+"?"add them":"take them away"} yet.<br>List the multiples of ${F.D}, the bigger denominator.`;
       if(!F.fits) return `${F.sm} doesn't go into ${F.m}, so the ${fbName(F.sm)} don't fit.<br>Try the next multiple.`;
       if(!s.j||s.jp<1) return `${F.m} works for both. Every piece is now a ${fbNm(1,F.m)}.<br>Now you can ${v}.`;
+      if(F.r>F.m){ const [qn,qd]=fbS(F.r-F.m,F.m); return `Same-size pieces: ${F.A} + ${F.B} = ${F.r} ${fbNm(F.r,F.m)}.<br>${F.m} ${fbName(F.m)} make 1 whole, so it is ${fbMH(1,qn,qd)}.`; }
       return `Same-size pieces, so just count them:<br>${F.A} ${F.op} ${F.B} = ${F.r} ${fbNm(F.r,F.m)}.`; }},
-    {name:"Mixed numbers",set:{r:0,bp:0,tp:0},t:s=>{ const [W1,n1,W2,n2,d]=FBM[s.b], rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+    {name:"Mixed numbers",set:{u:0,r:0,bp:0,tp:0},t:s=>{ const M=fbM(s), {W1,W2,n1,n2,d}=M, rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+      if(!M.u) return `${fbCap(fbName(M.d1))} and ${fbName(M.d2)} are different sizes.<br>Make same-size pieces first: list the multiples of ${M.D}.`;
+      if(!s.r&&M.un) return `Now both are ${fbName(d)}: you need ${n2}, but there ${n1===1?"is":"are"} only ${n1}.<br>Not enough, so break a whole.`;
       if(!s.r) return `Take away ${fbMH(W2,n2,d)}: you need ${n2} ${fbNm(n2,d)}, but there ${n1===1?"is":"are"} only ${n1}.<br>Not enough, so break a whole.`;
       if(s.r===1) return `1 whole = ${frac(d,d)}, so ${nw(`${fbMH(W1,n1,d)} = ${fbMH(W1-1,n1+d,d)}`)}.<br>Now there are enough ${fbName(d)}.`;
       return `Take away ${W2} whole${W2>1?"s":""} and ${n2} ${fbNm(n2,d)}.<br>Left: ${nw(fbMH(rw,rn,d)+(sd!==d?` = ${fbMH(rw,sn,sd)}`:""))}.`; }},
@@ -5487,16 +5540,17 @@ const fracBars=aid({
       if(!s.cu) return `${nw(`${frac(a,b)} × ${frac(c,d)}`)} means ${frac(a,b)} of ${frac(c,d)}.<br>Here is ${frac(c,d)}, shaded blue.`;
       if(!s.tx) return `Cut it into ${b} rows the other way: ${b*d} pieces in all.<br>Now take ${a} of the ${b} rows.`;
       return `Taken: ${a} × ${c} = ${a*c} pieces (the numerators).<br>All: ${b} × ${d} = ${b*d} pieces (the denominators).`; }},
-    {name:"Of the rest",set:{of:"",ph:0,pp:0,qp:0},t:s=>{ const R=fbR(s);
+    {name:"Word problems",set:{of:"",ph:0,pp:0,qp:0},q:s=>fbRQ(fbR(s)),
+     hint:s=>{ const R=fbR(s); return !s.of?"↓ Pick one: <b>All the money</b> or <b>The rest</b>":s.of!==R.ok?"↓ Pick again":""; },
+     t:s=>{ const R=fbR(s), bad=!!s.of&&s.of!==R.ok;
       if(!s.of) return `Every fraction is OF something.<br>The ${frac(R.n2,R.d2)}: is it of all the money, or of the rest?`;
-      if(s.of==="w") return `Not all of it. Read it again:<br>${frac(R.n2,R.d2)} of the <b>rest</b>.`;
+      if(bad) return R.all?`Not the rest. Read it again:<br>${frac(R.n2,R.d2)} of ${R.his} <b>money</b>.`:`Not all of it. Read it again:<br>${frac(R.n2,R.d2)} of the <b>rest</b>.`;
+      if(R.all){ const [sn,sd]=fbS(R.lf,R.L); return s.ph&&s.pp>=1?`Multiples of ${R.D}: ${R.L} fits both. ${R.la} ${R.A}u + ${R.lb} ${R.B}u = ${R.A+R.B}u.<br>Left: ${R.lf}u out of ${R.L}u, so ${frac(sn,sd)} of ${R.his} money.`:`Yes! Both fractions are of all ${R.his} money,<br>so they go on the same bar.`; }
       if(!s.ph) return `Yes! The rest gets its own bar.<br>Draw it under the top bar.`;
-      if(!R.left){ const [sn,sd]=fbS(R.n2,R.T); return s.ph>1&&s.qp>=1?`Now it's all in p. ${R.askT} is ${R.n2} of the ${R.T} p.<br>So it is ${frac(sn,sd)} of ${R.his} money.`:`The drop lines show ${R.rest}u = ${R.d2}p, so 1u = ${R.k}p.<br>Cut each u into ${R.k}.`; }
-      return s.ph>1&&s.qp>=1?`1p = $${R.pv}, so ${R.d2}p = $${R.d2*R.pv} = ${R.rest}u, and 1u = $${R.uv}.<br>At first: ${R.d1}u = $${R.tot}.`:`Start from the number you know: ${R.d2-R.n2}p = $${R.left}.<br>Then climb up the drop lines.`; }}],
+      if(!R.left){ const [sn,sd]=fbS(R.n2,R.T); return s.ph>1&&s.qp>=1?`${R.rest}u = ${R.d2}p, so 1u = ${R.k}p and all ${R.d1}u = ${R.T}p.<br>${R.askT} is ${R.n2} of the ${R.T} p, so it is ${frac(sn,sd)} of ${R.his} money.`:`${frac(R.n2,R.d2)} of the rest: the rest is cut into ${R.d2} parts (p).<br>The drop lines show ${R.rest}u = ${R.d2}p. So 1u = how many p?`; }
+      return s.ph>1&&s.qp>=1?`1p = $${R.pv}, so ${R.d2}p = $${R.d2*R.pv} = ${R.rest}u, and 1u = $${R.uv}.<br>At first: ${R.d1}u = $${R.tot}.`:`${frac(R.n2,R.d2)} of the rest: the rest is cut into ${R.d2} parts (p). ${R.d2-R.n2}p = $${R.left} is left.<br>Start there and climb up the drop lines.`; }}],
   draw(svg,s){ [fbD0,fbD1,fbD2,fbD3,fbD4][s.step](svg,s);
-    const [,,W2,n2,d]=FBM[s.b], on=FBO[s.o][0], od=FBO[s.o][1], [a,b]=FBP[s.x], R=fbR(s);
-    fbLbl(5,`<span>▶ Take away ${fbMH(W2,n2,d)}</span>`); fbLbl(7,`▶ Share into ${od} groups`); fbLbl(8,`▶ Take ${on} group${on>1?"s":""}`);
-    fbLbl(10,`▶ Cut into ${b} rows`); fbLbl(11,`▶ Take ${a} of the ${b} rows`); if(!R.left) fbLbl(14,`▶ Cut each u into ${R.k}`); },
+    const M=fbM(s); fbLbl(5,`<span>▶ Take away ${fbMH(M.W2,M.n2,M.d)}</span>`); },
   key:fbK
 });
 const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid,vecAreas,angPar,bearAid,crossAid,balanceEq,pythSq,pointyThird,quadIneq,vennAid,parPerp,polyAng,areaCut,speedConv,idxCollect,arcRad,sixRatios,addProof,whyLogs,firstPrin,areaRect,whereE,quadProof,zeroPow,pascalPaths,centreProof};
@@ -11064,15 +11118,44 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     if(fx){ if(fx[2]){ const m=fx[2](r); if(m){ r.top=r.g.n; r.main=m; } } else r.drop=1; }
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
   return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`,sid:r.g.s,grp:tx(r.g.n)})); }
+function qqBars(o){ const X=26, W=86, x2=X+W, H=10, Y1=6, Y2=30, fs=6,
+    r=(x,y,w,h,f,st)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}"${st?` stroke="${st}" stroke-width=".8"`:""}/>`,
+    ln=(xa,ya,xb,yb,c,sw,da)=>`<line x1="${xa}" y1="${ya}" x2="${xb}" y2="${yb}" stroke="${c}" stroke-width="${sw}"${da?` stroke-dasharray="${da}"`:""}/>`,
+    tx=(x,y,t,c,an)=>`<text x="${x}" y="${y}" font-size="${fs}" font-weight="700" fill="${c}" text-anchor="${an||"middle"}">${t}</text>`,
+    bar=(x,y,w,n,sh)=>{ let s=r(x,y,w,H,"var(--card)"); sh.forEach(([a,b,f])=>{ if(b>a) s+=r(x+w*a,y,w*(b-a),H,f); }); for(let i=1;i<n;i++) s+=ln(x+w*i/n,y,x+w*i/n,y+H,"var(--ink)",.45); return s+r(x,y,w,H,"none","var(--ink)"); },
+    fit=(t,w)=>t.length*fs*.6+2<=w, ink="var(--ink)";
+  let s="", y0=0, h;
+  if(o.all){ const {L,A,C,la,lb,left}=o, a=A/L, b=C/L, lx=X+W*(a+b);
+    s+=bar(X,Y1,W,L,[[0,a,"var(--blue-fill)"],[a,a+b,"var(--amber-fill)"]])+tx(X-3,Y1+7.2,"All",ink,"end")+tx(x2+3,Y1+7.2,`${L}u`,ink,"start");
+    [[la,0,a,BL],[lb,a,a+b,AMB]].forEach(([t,p,q,c])=>{ const inb=fit(t,W*(q-p)); if(!inb) y0=-7; s+=tx(X+W*(p+q)/2,inb?Y1+7.1:Y1-2,t,c); });
+    s+=ln(lx,Y1+H+2,x2,Y1+H+2,GR,1.1)+tx((lx+x2)/2,Y1+H+9.2,left,GR); h=Y1+H+11.5; }
+  else { const {d1,n1,d2,n2,la,lb,left}=o, rx=X+W*n1/d1, rw=x2-rx;
+    s+=bar(X,Y1,W,d1,[[0,n1/d1,"var(--blue-fill)"]])+tx(X-3,Y1+7.2,"All",ink,"end")+tx(x2+3,Y1+7.2,`${d1}u`,ink,"start");
+    if(fit(la,W*n1/d1)) s+=tx(X+W*n1/d1/2,Y1+7.1,la,BL);
+    s+=ln(rx,Y1+H,rx,Y2,"var(--muted)",.7,"1.6 1.2")+ln(x2,Y1+H,x2,Y2,"var(--muted)",.7,"1.6 1.2");
+    s+=bar(rx,Y2,rw,d2,[[0,n2/d2,"var(--amber-fill)"]])+tx(rx-2.5,Y2+7.2,"Rest",ink,"end")+tx(x2+3,Y2+7.2,`${d2}p`,ink,"start");
+    if(fit(lb,rw*n2/d2)) s+=tx(rx+rw*n2/d2/2,Y2+7.1,lb,AMB);
+    if(left){ const lx=rx+rw*n2/d2; s+=ln(lx,Y2+H+2,x2,Y2+H+2,GR,1.1)+tx((lx+x2)/2,Y2+H+9.2,left,GR); h=Y2+H+11.5; } else h=Y2+H+2; }
+  return `<svg class="qqfig" viewBox="6 ${y0} 128 ${h-y0}" role="img" aria-label="bar model">${s}</svg>`; }
 QQ_LO["p5-fractions"]=[
 {t:"add or take away",g:R=>{ const n=qTry(()=>{ const b=R.int(2,10), d=R.int(2,10); return {a:R.int(1,b-1),b,c:R.int(1,d-1),d,op:R.f()<.5?"+":"−"}; },
-    n=>n.b!==n.d&&qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&qLcm(n.b,n.d)<=24&&(n.op==="+"?n.a*n.d+n.c*n.b<n.b*n.d:n.a*n.d>n.c*n.b),{a:1,b:2,c:1,d:3,op:"+"}),
+    n=>n.b!==n.d&&qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&qLcm(n.b,n.d)<=24&&(n.op==="+"||n.a*n.d>n.c*n.b),{a:1,b:2,c:1,d:3,op:"+"}),
   {a,b,c,d,op}=n, D=Math.max(b,d), S=Math.min(b,d), L=qLcm(b,d), ms=[]; for(let m=D;m<=L;m+=D) ms.push(m);
   const A=a*L/b, C=c*L/d, r=op==="+"?A+C:A-C, g=qGcd(r,L), ch=(x,y)=>y===L?`${frac(x,y)} stays ${frac(x,y)}`:nw(`${frac(x,y)} = ${frac(`${x} × ${L/y}`,`${y} × ${L/y}`)} = ${frac(x*L/y,L)}`);
-  const w=[qW(`Multiples of ${D}: ${ms.join(", ")}`,`${S} goes into ${L}`),ch(a,b),ch(c,d),nw(`${frac(A,L)} ${op} ${frac(C,L)} = ${frac(r,L)}`)];
+  const w=[qW(`Multiples of ${D}: ${ms.join(", ")}`,`${S} goes into ${L}`),ch(a,b),ch(c,d),nw(`${frac(A,L)} ${op} ${frac(C,L)} = ${frac(r,L)}`)], q=`Find ${nw(`${frac(a,b)} ${op} ${frac(c,d)}`)}. Give your answer in its simplest form.`;
+  if(r>L){ const wh=Math.floor(r/L), rm=r-wh*L, g2=qGcd(rm,L); w.push(qW(nw(`${frac(r,L)} = ${fbMH(wh,rm,L)}`+(g2>1?` = ${fbMH(wh,rm/g2,L/g2)}`:"")),`more than 1 whole: mixed number${g2>1?", simplest form":""}`)); return {q,w,a:fbMH(wh,rm/g2,L/g2),n:{a,b,c,d,op}}; }
   if(g>1) w.push(qW(nw(`${frac(r,L)} = ${frac(r/g,L/g)}`),"simplest form"));
-  return {q:`Find ${nw(`${frac(a,b)} ${op} ${frac(c,d)}`)}. Give your answer in its simplest form.`,w,a:qF(r,L),n:{a,b,c,d,op}}; }},
-{t:"mixed numbers",g:R=>{ const n=qTry(()=>{ const d=R.pick([3,4,5,6,8,9,10,12]), a=R.int(1,d-2), W=R.int(2,6); return {W,a,V:R.int(1,W-1),c:R.int(a+1,d-1),d}; },
+  return {q,w,a:qF(r,L),n:{a,b,c,d,op}}; }},
+{t:"mixed numbers",g:R=>{ if(R.f()<.4){
+  const n=qTry(()=>{ const d1=R.pick([2,3,4,5,6,8]), d2=R.pick([2,3,4,5,6,8,9,10,12]), W=R.int(2,6); return {W,a:R.int(1,d1-1),d1,V:R.int(1,W-1),c:R.int(1,d2-1),d2}; },
+    n=>{ const L=qLcm(n.d1,n.d2); return n.d1!==n.d2&&qGcd(n.a,n.d1)===1&&qGcd(n.c,n.d2)===1&&L<=12&&n.a*L/n.d1<n.c*L/n.d2; },{W:3,a:1,d1:4,V:1,c:5,d2:6}),
+    {W,a,d1,V,c,d2}=n, D=Math.max(d1,d2), S=Math.min(d1,d2), L=qLcm(d1,d2), ms=[]; for(let m=D;m<=L;m+=D) ms.push(m);
+  const A=a*L/d1, C=c*L/d2, top=A+L, rn=top-C, rw=W-1-V, g=qGcd(rn,L);
+  const w=[qW(`Multiples of ${D}: ${ms.join(", ")}`,`${S} goes into ${L}`),qW(nw(`${fbMH(W,a,d1)} − ${fbMH(V,c,d2)} = ${fbMH(W,A,L)} − ${fbMH(V,C,L)}`),"same-size pieces"),
+    qW(nw(`${fbMH(W,A,L)} = ${fbMH(W-1,top,L)}`),`not enough ${fbName(L)}: break 1 whole`),nw(`${fbMH(W-1,top,L)} − ${fbMH(V,C,L)} = ${fbMH(rw,rn,L)}`)];
+  if(g>1) w.push(qW(nw(`${fbMH(rw,rn,L)} = ${fbMH(rw,rn/g,L/g)}`),"simplest form"));
+  return {q:`Find ${nw(`${fbMH(W,a,d1)} − ${fbMH(V,c,d2)}`)}. Give your answer in its simplest form.`,w,a:fbMH(rw,rn/g,L/g),n:{W,a,d1,V,c,d2}}; }
+  const n=qTry(()=>{ const d=R.pick([3,4,5,6,8,9,10,12]), a=R.int(1,d-2), W=R.int(2,6); return {W,a,V:R.int(1,W-1),c:R.int(a+1,d-1),d}; },
     n=>qGcd(n.a,n.d)===1&&qGcd(n.c,n.d)===1,{W:3,a:5,V:1,c:7,d:12}),
   {W,a,V,c,d}=n, top=a+d, rn=top-c, rw=W-1-V, g=qGcd(rn,d);
   const w=[qW(nw(`${fbMH(W,a,d)} = ${fbMH(W-1,top,d)}`),`not enough ${fbName(d)}: break 1 whole`),nw(`${fbMH(W-1,top,d)} − ${fbMH(V,c,d)} = ${fbMH(rw,rn,d)}`)];
@@ -11085,16 +11168,24 @@ QQ_LO["p5-fractions"]=[
   return {q:`${who} had ${N} ${thing}. ${he} gave ${frac(a,d)} of them to a friend. How many ${thing} ${left?`did ${who} have left`:`did ${who} give away`}?`,w,a:`${left?N-gv:gv} ${thing}`,n:{d,a,N,left}}; }},
 {t:"fraction × fraction",g:R=>{ const n=qTry(()=>{ const b=R.int(2,9), d=R.int(2,9); return {a:R.int(1,b-1),b,c:R.int(1,d-1),d}; },
     n=>qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&(qGcd(n.a,n.d)>1||qGcd(n.c,n.b)>1),{a:2,b:3,c:3,d:4}),
-  {a,b,c,d}=n, g1=qGcd(a,d), g2=qGcd(c,b), X=(v,g)=>g>1?`<s class="cancel">${v}</s><sup>${v/g}</sup>`:`${v}`;
+  {a,b,c,d}=n, g1=qGcd(a,d), g2=qGcd(c,b);
   return {q:`Find ${nw(`${frac(a,b)} × ${frac(c,d)}`)}. Give your answer in its simplest form.`,
-    w:[qW(nw(`${frac(X(a,g1),X(b,g2))} × ${frac(X(c,g2),X(d,g1))}`),"cancel first"),qW(nw(`= ${frac(`${a/g1} × ${c/g2}`,`${b/g2} × ${d/g1}`)} = ${qF(a*c,b*d)}`),"numerator × numerator, denominator × denominator")],a:qF(a*c,b*d),n:{a,b,c,d}}; }},
-{t:"of the rest",g:R=>{ const [who,he,his,A,B]=R.pick([["Ali","He","his","a book","a pen"],["Mei","She","her","a bag","a cap"],["Ken","He","his","food","a toy"],["Siti","She","her","a dress","a belt"]]), money=R.f()<.5;
+    w:[qW(nw(`${frac(fbX(a,g1,1),fbX(b,g2,0))} × ${frac(fbX(c,g2,1),fbX(d,g1,0))}`),`cancel first: ${fbXn(a,d,g1,c,b,g2)}`),qW(nw(`= ${frac(`${a/g1} × ${c/g2}`,`${b/g2} × ${d/g1}`)} = ${qF(a*c,b*d)}`),"numerator × numerator, denominator × denominator")],a:qF(a*c,b*d),n:{a,b,c,d}}; }},
+{t:"of all or of the rest",g:R=>{ const [who,he,his,A,B]=R.pick([["Ali","He","his","a book","a pen"],["Mei","She","her","a bag","a cap"],["Ken","He","his","food","a toy"],["Siti","She","her","a dress","a belt"]]), all=R.f()<.3, money=R.f()<.5, A0=A.replace(/^a /,""), B0=B.replace(/^a /,"");
+  if(all){ const n=qTry(()=>{ const b=R.pick([2,3,4,5,6]), d=R.pick([2,3,4,5,6]); return {a:R.int(1,b-1),b,c:R.int(1,d-1),d,uv:R.int(2,30)}; },
+      n=>{ const L=qLcm(n.b,n.d); return n.b!==n.d&&qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&L<=12&&n.a*n.d+n.c*n.b<n.b*n.d&&(!money||(L*n.uv<=600&&L*n.uv>=30)); },{a:1,b:4,c:1,d:3,uv:10}),
+      {a,b,c,d,uv}=n, D=Math.max(b,d), S=Math.min(b,d), L=qLcm(b,d), ms=[]; for(let m=D;m<=L;m+=D) ms.push(m);
+    const Au=a*L/b, Cu=c*L/d, lf=L-Au-Cu, st=`${who} spent ${frac(a,b)} of ${his} money on ${A} and ${frac(c,d)} of ${his} money on ${B}.`;
+    const w0=[qqBars({all:1,L,A:Au,C:Cu,la:A0,lb:B0,left:money?`left: $${lf*uv}`:`left: ${lf}u`}),qW(`Both are of all ${his} money`,"one bar"),qW(`Multiples of ${D}: ${ms.join(", ")}`,`${S} goes into ${L}`),
+      qW(`All = ${L}u, ${A0} = ${Au}u, ${B0} = ${Cu}u`,"same-size units"),nw(`left = ${L}u − ${Au}u − ${Cu}u = ${lf}u`)];
+    if(money) return {q:`${st} ${he} had $${lf*uv} left. How much money did ${who} have at first?`,w:[...w0,nw(`${lf}u = $${lf*uv}`),...(lf>1?[nw(`1u = $${uv}`)]:[]),nw(`${L}u = $${L*uv}`)],a:`$${L*uv}`,n:{all:1,a,b,c,d,left:lf*uv,tot:L*uv}};
+    return {q:`${st} What fraction of ${his} money did ${who} have left?`,w:[...w0,qW(nw(`left = ${frac(lf,L)}`+(qGcd(lf,L)>1?` = ${qF(lf,L)}`:"")),`${lf} out of ${L}`)],a:qF(lf,L),n:{all:1,a,b,c,d}}; }
   const n=qTry(()=>{ const d1=R.int(3,8), n1=R.int(1,d1-2), rest=d1-n1, k=money?0:R.int(2,4), d2=money?R.int(2,6):rest*k, uv=d2/qGcd(rest,d2)*R.int(1,6); return {d1,n1,rest,d2,n2:R.int(1,d2-1),k,uv,pv:rest*uv/d2}; },
     n=>qGcd(n.n1,n.d1)===1&&qGcd(n.n2,n.d2)===1&&n.d2<=12&&(!money||(n.d1*n.uv<=600&&n.d1*n.uv>=30&&n.uv>=2&&n.pv>=2)),money?{d1:5,n1:2,rest:3,d2:4,n2:1,k:0,uv:20,pv:15}:{d1:3,n1:1,rest:2,d2:4,n2:1,k:2,uv:0,pv:0}),
-  {d1,n1,rest,d2,n2,k,uv,pv}=n, st=`${who} spent ${frac(n1,d1)} of ${his} money on ${A} and ${frac(n2,d2)} of the rest on ${B}.`, w0=[qW(`All = ${d1}u, ${A.replace(/^a /,"")} = ${n1}u`,"top bar"),qW(nw(`rest = ${rest}u = ${d2}p`),"rest drawn underneath")];
-  if(money){ const left=(d2-n2)*pv, tot=d1*uv;
+  {d1,n1,rest,d2,n2,k,uv,pv}=n, st=`${who} spent ${frac(n1,d1)} of ${his} money on ${A} and ${frac(n2,d2)} of the rest on ${B}.`, w1=[qW(`All = ${d1}u, ${A0} = ${n1}u`,"top bar"),qW(nw(`rest = ${rest}u = ${d2}p`),"rest drawn underneath")];
+  if(money){ const left=(d2-n2)*pv, tot=d1*uv, w0=[qqBars({d1,n1,d2,n2,la:A0,lb:B0,left:`left: $${left}`}),...w1];
     return {q:`${st} ${he} had $${left} left. How much money did ${who} have at first?`,w:[...w0,qW(nw(`${d2-n2}p = $${left}`),"left"),...(d2-n2>1?[nw(`1p = $${pv}`)]:[]),qW(nw(`${d2}p = $${d2*pv} = ${rest}u`),"climb up"),nw(`1u = $${uv}`),nw(`${d1}u = $${tot}`)],a:`$${tot}`,n:{d1,n1,d2,n2,left,tot}}; }
-  const T=d1*k, B0=B.replace(/^a /,"");
+  const T=d1*k, w0=[qqBars({d1,n1,d2,n2,la:A0,lb:B0}),...w1];
   return {q:`${st} What fraction of ${his} money did ${who} spend on ${B.replace(/^a /,"the ")}?`,w:[...w0,qW(nw(`1u = ${k}p`),`${d2} ÷ ${rest} = ${k}`),qW(nw(`All = ${d1}u = ${T}p`),`${d1} × ${k} = ${T}`),qW(nw(`${B0} = ${n2}p = ${frac(n2,T)}`+(qGcd(n2,T)>1?` = ${qF(n2,T)}`:"")),`${n2} out of ${T}`)],a:qF(n2,T),n:{d1,n1,d2,n2,T}}; }}];
 function qqMk(id){ return QQ_LO[id]||QQ_HI[id]||[]; }
 function qqSeed(){ return 1+Math.floor(Math.random()*999999); }
