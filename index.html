@@ -971,7 +971,8 @@ const LEVELS = [
   {id:"sec1", name:"Sec 1"},
   {id:"sec2", name:"Sec 2"},
   {id:"emath", name:"E-Math (Sec 3–4)"},
-  {id:"amath", name:"A-Math (Sec 3–4)"}
+  {id:"amath", name:"A-Math (Sec 3–4)"},
+  {id:"p5", name:"P5"}
 ];
 
 const TOPICS = [
@@ -1070,7 +1071,9 @@ const TOPICS = [
   {id:"toilet-paper", strand:"geo", levels:["sec1","emath"], chapter:"Volume & surface area",
    title:"Surface area: the toilet paper method", blurb:"Unroll the sides into one rectangle. Surface area = 2 × base area + toilet paper.", play:"toiletPaper", sheet:"s1Volume", sheetTitle:"Volume & surface area: prisms & cylinders"},
   {id:"cone-sector", strand:"geo", levels:["sec2","emath"], chapter:"Measurement",
-   title:"Roll a sector up into a cone", blurb:"The arc becomes the base circle. Where r, h and πrl come from.", play:"coneSector", sheet:"s2Volume", sheetTitle:"Volume & surface area"}
+   title:"Roll a sector up into a cone", blurb:"The arc becomes the base circle. Where r, h and πrl come from.", play:"coneSector", sheet:"s2Volume", sheetTitle:"Volume & surface area"},
+  {id:"p5-fractions", strand:"num", levels:["p5"], chapter:"Fractions", unlisted:true,
+   title:"Fractions: see the pieces", blurb:"Same-size pieces, mixed numbers, “of”, fraction × fraction and “of the rest”, all on bars.", play:"fracBars"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -1330,7 +1333,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       dh.hidden=!dshow; if(dshow) dh.innerHTML=`${/^(Slide|Drag|Tap|Move)\b/.test(stx.textContent.trim())?"↓ Or press":"↓ Press"} <b>${mb.innerHTML}</b>`;
       const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1], done=!n&&cur&&cur.done; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=(n||done)?"":"none"; nx.innerHTML=n?`Next <span class="sn">${st.step+2}</span> ${n.name} →`:"Back to the cheatsheet →"; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
         nx.classList.toggle("go",!mains.length||!!st._acted); } }
-    const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
+    const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:cur&&!cur.sheet&&cur.t&&qqMk(cur.t.id).length?cur.t.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
   };
   const askShut=all=>[key,...panel.querySelectorAll(".askw")].forEach(w=>{ if(all||!w.matches(".asktx,.exwrap")) w.classList.add("shut"); });
   const go=i=>{askShut(true); st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
@@ -5313,12 +5316,196 @@ const coneSector=aid({
         FB("green",`2. Arc = 2${MS("π")}${VR}`,nw(`${fr} × 2π(13) = 2π(5)`),`so ${nw(`${fr} × 13 = 5`)}`,null,"wide"),
         FB("amber","3. Angle",nw(`θ = ${frac("5","13")} × 360°`),`= ${n1(th)}° (1 d.p.)`,null,"wide")],true); }
 });
+const FBX0=20, FBW=106;
+const FBN1={2:"half",3:"third",4:"quarter",5:"fifth",6:"sixth",7:"seventh",8:"eighth",9:"ninth",10:"tenth",11:"eleventh",12:"twelfth"};
+const fbName=d=>d===2?"halves":(FBN1[d]||d+"th")+"s";
+const fbNm=(n,d)=>n===1?(FBN1[d]||d+"th"):fbName(d);
+const fbCap=t=>t[0].toUpperCase()+t.slice(1);
+const fbT=(n,d)=>d===1?`${n}`:`{${n}/${d}}`;
+const fbMT=(w,n,d)=>n?(w?`${w}{${n}/${d}}`:`{${n}/${d}}`):`${w}`;
+const fbMH=(w,n,d)=>n?(w?`${w}${frac(n,d)}`:frac(n,d)):`${w}`;
+const fbS=(n,d)=>{ const g=gcd(n,d); return [n/g,d/g]; };
+const fbE=p=>p<.5?2*p*p:1-2*(1-p)*(1-p);
+const fbRc=(svg,x,y,w,h,a)=>S_(svg,"rect",Object.assign({x,y,width:w,height:h},a));
+function fbBar(svg,y,h,cuts,shade,o={}){ const x=o.x??FBX0, w=o.w??FBW;
+  fbRc(svg,x,y,w,h,{fill:"var(--card)"});
+  shade.forEach(([a,b,f,op])=>{ if(b>a+1e-9) fbRc(svg,x+w*a,y,w*(b-a),h,{fill:f,"fill-opacity":op??1}); });
+  for(let i=1;i<cuts;i++){ const cx=x+w*i/cuts; seg(svg,[cx,y],[cx,y+h],{stroke:"var(--ink)","stroke-width":.45,"stroke-opacity":o.co??1}); }
+  fbRc(svg,x,y,w,h,{fill:"none",stroke:o.stroke||"var(--ink)","stroke-width":o.sw||.8}); }
+const fbXp=(svg,x,y,w,h,op=1)=>{ const m=Math.min(w,h)*.22, a={stroke:RD,"stroke-width":.9,"stroke-opacity":op}; seg(svg,[x+m,y+m],[x+w-m,y+h-m],a); seg(svg,[x+w-m,y+m],[x+m,y+h-m],a); };
+const fbLbl=(i,h)=>{ const b=document.querySelector(`.box.dock [data-b="${i}"]`); if(b&&b.dataset.l!==h){ b.dataset.l=h; b.innerHTML=h; } };
+const FBA=[[1,2,1,3,"+"],[2,5,1,2,"+"],[3,4,2,3,"−"],[5,6,1,3,"−"]];
+const FBM=[[3,5,1,7,12],[4,1,1,3,4],[3,1,1,3,5],[5,1,2,2,3]];
+const FBO=[[3,5,40,"stickers"],[3,4,24,"marbles"],[2,3,18,"sweets"],[5,8,32,"beads"]];
+const FBP=[[2,3,3,4],[1,2,4,5],[3,4,2,5],[2,5,5,6]];
+const FBR=[{n1:1,d1:3,n2:1,d2:4,who:"Ali",his:"his",he:"he",sa:"on a book",sb:"on a pen",ask:"on the pen",askT:"The pen",la:"book",lb:"pen"},
+  {n1:1,d1:4,n2:2,d2:9,who:"Ken",his:"his",he:"he",sa:"on Monday",sb:"on Tuesday",ask:"on Tuesday",askT:"Tuesday's spending",la:"Mon",lb:"Tue"},
+  {n1:2,d1:5,n2:1,d2:4,who:"Mei",his:"her",he:"she",sa:"on a bag",sb:"on a book",la:"bag",lb:"book",left:45}];
+const fbA=s=>{ const [n1,d1,n2,d2,op]=FBA[s.a], D=Math.max(d1,d2), sm=Math.min(d1,d2), m=s.k*D, fits=s.k>0&&m%sm===0, A=fits?n1*m/d1:0, B=fits?n2*m/d2:0;
+  return {n1,d1,n2,d2,op,D,sm,m,fits,A,B,r:op==="+"?A+B:A-B,wn:op==="+"?n1+n2:n1-n2,wd:op==="+"?d1+d2:d1-d2}; };
+const fbR=s=>{ const Q=FBR[s.q], rest=Q.d1-Q.n1, k=Q.d2/rest, pv=Q.left?Q.left/(Q.d2-Q.n2):0, uv=pv*Q.d2/rest; return Object.assign({rest,k,T:Q.d1*k,pv,uv,tot:uv*Q.d1},Q); };
+function fbD0(svg,s){ const F=fbA(s), y3=54; svg.setAttribute("viewBox","0 0 140 81");
+  lab(svg,[FBX0+FBW/2,6.5],!s.k?"Different-size pieces":F.fits?`${F.m} pieces: both fit ✓`:`${F.m} pieces: ${F.sm} doesn't go into ${F.m} ✗`,{"font-size":5.4,"font-weight":700,fill:F.fits?GR:RD});
+  [[F.n1,F.d1,16,BL,"var(--blue-fill)",F.A],[F.n2,F.d2,35,AMB,"var(--amber-fill)",F.B]].forEach(([n,d,y,c,f,nn])=>{ const bad=s.k>0&&F.m%d!==0;
+    fbBar(svg,y,11,s.k?F.m:d,[[0,n/d,f]],{stroke:bad?RD:"var(--ink)",sw:bad?1.1:.8});
+    lab(svg,[10,y+8],fbT(n,d),{"font-size":6.6,"font-weight":700,fill:c});
+    if(F.fits&&F.m!==d) lab(svg,[FBX0+FBW+1.2,y+7.8],`= ${fbT(nn,F.m)}`,{"text-anchor":"start","font-size":5.2,"font-weight":700,fill:c});
+    if(bad){ const ex=FBX0+FBW*n/d; seg(svg,[ex,y-2],[ex,y+13],{stroke:RD,"stroke-width":1.2}); lab(svg,[ex,y-2.6],"✗",{"font-size":5,"font-weight":700,fill:RD}); } });
+  if(!s.k){ const ok=F.wn<=F.wd, big=F.n1/F.d1>=F.n2/F.d2?[F.n1,F.d1]:[F.n2,F.d2];
+    if(ok) fbBar(svg,y3,11,F.wd,[[0,F.wn/F.wd,"var(--red-fill)"]],{stroke:RD,sw:1});
+    lab(svg,[10,y3+8],"✗",{"font-size":6.6,"font-weight":700,fill:RD});
+    lab(svg,[FBX0+FBW/2,ok?y3+21:y3+8],`${fbT(F.n1,F.d1)} ${F.op} ${fbT(F.n2,F.d2)} = {${F.wn}/${F.wd}}? ${F.op==="+"?`Less than ${fbT(big[0],big[1])}!`:`More than ${fbT(F.n1,F.d1)}!`}`,{"font-size":5.4,"font-weight":700,fill:RD}); }
+  else if(F.fits&&s.j){ const p=s.jp, a=F.n1/F.d1, b=F.n2/F.d2, o={stroke:p>=1?GR:"var(--ink)",sw:p>=1?1.3:.8};
+    if(F.op==="+") fbBar(svg,y3,11,F.m,[[0,a*Math.min(1,p*2),"var(--blue-fill)"],[a,a+b*clamp(p*2-1,0,1),"var(--amber-fill)"]],o);
+    else { fbBar(svg,y3,11,F.m,[[0,a,"var(--blue-fill)"]],o); const n=Math.round(F.B*Math.min(1,p)), pw=FBW/F.m; for(let i=0;i<n;i++) fbXp(svg,FBX0+pw*(F.A-1-i),y3,pw,11); }
+    if(p>=1){ const [rn,rd]=fbS(F.r,F.m); lab(svg,[10,y3+8],fbT(F.r,F.m),{"font-size":6.6,"font-weight":700,fill:GR});
+      lab(svg,[FBX0+FBW/2,y3+21],`${F.A} ${F.op} ${F.B} = ${F.r} ${fbNm(F.r,F.m)}${rd!==F.m?` = ${fbT(rn,rd)}`:""}`,{"font-size":5.4,"font-weight":700,fill:GR}); } } }
+function fbD1(svg,s){ const [W1,n1,W2,n2,d]=FBM[s.b], y0=17, P=13, h=10, done=s.r===2&&s.tp>=1, rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+  svg.setAttribute("viewBox",`0 0 140 ${y0+(W1+1)*P+1}`);
+  lab(svg,[FBX0+FBW/2,9.5],done?`Left: ${fbMT(rw,rn,d)}${sd!==d?` = ${fbMT(rw,sn,sd)}`:""}`:`${fbMT(W1,n1,d)} − ${fbMT(W2,n2,d)}`,{"font-size":5.8,"font-weight":700,fill:done?GR:"var(--ink)"});
+  for(let i=0;i<W1;i++){ const y=y0+i*P, br=i===W1-1&&s.r>=1, bp=br?(s.r===1?s.bp:1):0, am=br&&bp>.5;
+    fbBar(svg,y,h,br?d:1,[[0,1,am?"var(--amber-fill)":"var(--blue-fill)"]],{co:bp});
+    lab(svg,[10,y+7.4],am?fbT(d,d):"1",{"font-size":5.8,"font-weight":700,fill:am?AMB:BL});
+    if(s.r===2&&s.tp>0){ if(i<W2) fbXp(svg,FBX0,y,FBW,h,Math.min(1,s.tp*2));
+      if(br){ const k=Math.round(n2*clamp(s.tp*2-1,0,1)), pw=FBW/d; for(let j=0;j<k;j++) fbXp(svg,FBX0+pw*(d-1-j),y,pw,h); } } }
+  const y=y0+W1*P; fbBar(svg,y,h,d,[[0,n1/d,"var(--blue-fill)"]]);
+  lab(svg,[10,y+7.4],fbT(n1,d),{"font-size":5.8,"font-weight":700,fill:BL});
+  if(!s.r){ fbRc(svg,FBX0,y-1,FBW*n2/d,h+2,{fill:"none",stroke:RD,"stroke-width":.9,"stroke-dasharray":"2 1.4"}); lab(svg,[FBX0+FBW*n2/d+2,y+7],`need ${n2}`,{"text-anchor":"start","font-size":5,"font-weight":700,fill:RD}); } }
+function fbD2(svg,s){ const [n,d,N,noun]=FBO[s.o], per=N/d, y0=16, P=Math.min(11,80/d), cols=Math.min(N,10), dx=7, gx=70-(per-1)*dx/2, p=s.sh?fbE(s.sp):0, q=s.tk?s.kp:0;
+  svg.setAttribute("viewBox",`0 0 140 ${y0+Math.max(d*P,Math.ceil(N/10)*8)+4}`);
+  lab(svg,[70,9.5],`${fbT(n,d)} of ${N} ${noun}`,{"font-size":5.8,"font-weight":700});
+  if(p>0) for(let g=0;g<d;g++){ const y=y0+g*P, tk=g<n&&q>0;
+    fbRc(svg,gx-4,y+.8,(per-1)*dx+8,P-1.6,{rx:2,fill:tk?"var(--green-fill)":"none","fill-opacity":tk?q:1,stroke:tk?GR:"var(--muted)","stroke-width":tk?1:.6,"stroke-opacity":p});
+    lab(svg,[gx+(per-1)*dx+8,y+P/2+1.8],`${per}`,{"text-anchor":"start","font-size":5,"font-weight":700,fill:tk?GR:"var(--muted)","fill-opacity":p}); }
+  for(let i=0;i<N;i++){ const sx=70-(cols-1)*dx/2+(i%10)*dx, sy=y0+4+Math.floor(i/10)*8, g=Math.floor(i/per), ex=gx+(i%per)*dx, ey=y0+g*P+P/2;
+    S_(svg,"circle",{cx:sx+(ex-sx)*p,cy:sy+(ey-sy)*p,r:Math.min(2.3,P*.24),fill:g<n&&q>=.5?GR:BL}); } }
+function fbD3(svg,s){ const [a,b,c,d]=FBP[s.x], X=34, Y=17, W=78, H=56, cp=s.cu?fbE(s.cp):0, xp=s.tx?s.xp:0;
+  svg.setAttribute("viewBox","0 0 140 88");
+  lab(svg,[70,9.5],`${fbT(a,b)} of ${fbT(c,d)}`,{"font-size":5.8,"font-weight":700});
+  fbRc(svg,X,Y,W,H,{fill:"var(--card)"}); fbRc(svg,X,Y,W*c/d,H,{fill:"var(--blue-fill)"});
+  if(xp>0) fbRc(svg,X,Y,W*c/d,H*a/b,{fill:"var(--green-fill)","fill-opacity":xp});
+  for(let i=1;i<d;i++) seg(svg,[X+W*i/d,Y],[X+W*i/d,Y+H],{stroke:"var(--ink)","stroke-width":.5});
+  if(cp>0) for(let i=1;i<b;i++) seg(svg,[X,Y+H*i/b],[X+W*cp,Y+H*i/b],{stroke:"var(--ink)","stroke-width":.5});
+  fbRc(svg,X,Y,W,H,{fill:"none",stroke:"var(--ink)","stroke-width":.9});
+  if(xp>0) fbRc(svg,X,Y,W*c/d,H*a/b,{fill:"none",stroke:GR,"stroke-width":1.4,"stroke-opacity":xp});
+  lab(svg,[X+W*c/d/2,Y+H+8],fbT(c,d),{"font-size":6.2,"font-weight":700,fill:BL});
+  if(cp>=1) lab(svg,[X-8,Y+H*a/b/2+2.4],fbT(a,b),{"font-size":6.2,"font-weight":700,fill:GR});
+  if(xp>=1) lab(svg,[X+W+2.5,Y+H/2+1.8],`${a*c} of ${b*d}`,{"text-anchor":"start","font-size":5,"font-weight":700,fill:GR}); }
+function fbD4(svg,s){ const R=fbR(s), X=27, W=84, Y1=14, Y2=42, H=10, f=!R.left, rx=X+W*R.n1/R.d1, rw=W*R.rest/R.d1, ph=s.ph, pp=ph?(ph>1?1:fbE(s.pp)):0, qp=ph>1?s.qp:0, cut2=ph>1&&f;
+  svg.setAttribute("viewBox","0 0 140 65");
+  fbBar(svg,Y1,H,R.d1,cut2?[[0,R.n1/R.d1,"var(--blue-fill)"],[R.n1/R.d1,R.n1/R.d1+R.n2/R.T,"var(--amber-fill)",qp]]:[[0,R.n1/R.d1,"var(--blue-fill)"]],{x:X,w:W});
+  if(cut2){ const pw=W/R.T; for(let i=1;i<R.T;i++) if(i%R.k) seg(svg,[X+pw*i,Y1],[X+pw*i,Y1+H],{stroke:"var(--ink)","stroke-width":.4,"stroke-dasharray":"1.2 .9","stroke-opacity":qp});
+    if(qp>=1) lab(svg,[X+pw*(R.n1*R.k+R.n2/2),Y1+6.8],R.lb,{"font-size":4.4,"font-weight":700,fill:AMB}); }
+  lab(svg,[X-3.6,Y1+7.2],"All",{"text-anchor":"end","font-size":4.8,"font-weight":700});
+  lab(svg,[X+W*R.n1/R.d1/2,Y1+6.8],R.la,{"font-size":4.4,"font-weight":700,fill:BL});
+  lab(svg,[X+W+3,Y1+7.2],cut2&&qp>=1?`${R.d1}u = ${R.T}p`:!f&&ph>1&&qp>=1?`${R.d1}u = $${R.tot}`:`${R.d1}u`,{"text-anchor":"start","font-size":4.6,"font-weight":700});
+  if(s.of==="w"){ fbRc(svg,X-1.2,Y1-1.2,W+2.4,H+2.4,{fill:"none",stroke:RD,"stroke-width":1,"stroke-dasharray":"2 1.4"}); lab(svg,[X+W/2,Y1+H+7.5],"✗ Not all of it",{"font-size":5,"font-weight":700,fill:RD}); }
+  if(s.of==="r"&&!ph){ fbRc(svg,rx-.6,Y1-1.2,rw+1.8,H+2.4,{fill:"none",stroke:GR,"stroke-width":1.2}); lab(svg,[rx+rw/2,Y1+H+7.5],"the rest",{"font-size":5,"font-weight":700,fill:GR}); }
+  if(!ph) return;
+  const yb=Y1+H+(Y2-Y1-H)*pp; [rx,X+W].forEach(x=>seg(svg,[x,Y1+H],[x,yb],{stroke:"var(--muted)","stroke-width":.7,"stroke-dasharray":"1.6 1.2"}));
+  if(pp<1) return;
+  fbBar(svg,Y2,H,R.d2,[[0,R.n2/R.d2,"var(--amber-fill)"]],{x:rx,w:rw});
+  lab(svg,[rx+rw*R.n2/R.d2/2,Y2+6.8],R.lb,{"font-size":4.4,"font-weight":700,fill:AMB});
+  lab(svg,[rx-2.5,Y2+7.2],"Rest",{"text-anchor":"end","font-size":4.8,"font-weight":700});
+  lab(svg,[X+W+3,Y2+7.2],!f&&ph>1&&qp>=1?`${R.d2}p = $${R.d2*R.pv}`:`${R.d2}p`,{"text-anchor":"start","font-size":4.6,"font-weight":700});
+  if(f){ lab(svg,[rx+rw/2,Y2+H+8],`${R.rest}u = ${R.d2}p, so 1u = ${R.k}p`,{"font-size":5,"font-weight":700,fill:BL}); return; }
+  const lx=rx+rw*R.n2/R.d2; seg(svg,[lx,Y2+H+1.6],[X+W,Y2+H+1.6],{stroke:GR,"stroke-width":1}); lab(svg,[(lx+X+W)/2,Y2+H+8],`left: $${R.left}`,{"font-size":5,"font-weight":700,fill:GR});
+  if(ph>1&&qp>0){ for(let i=0;i<R.d2;i++) lab(svg,[rx+rw*(i+.5)/R.d2,Y2-1.8],`$${R.pv}`,{"font-size":4.2,"font-weight":700,fill:AMB,"fill-opacity":qp});
+    for(let i=0;i<R.d1;i++) lab(svg,[X+W*(i+.5)/R.d1,Y1-1.8],`$${R.uv}`,{"font-size":4.2,"font-weight":700,fill:BL,"fill-opacity":qp}); } }
+function fbK(s){
+  if(s.step===0){ const F=fbA(s);
+    if(!s.k) return FORMS([FB("red","✗ Not straight across",nw(`${frac(F.n1,F.d1)} ${F.op} ${frac(F.n2,F.d2)} ≠ ${frac(F.wn,F.wd)}`),"the pieces are different sizes",null,"wide")],true);
+    const ms=[]; for(let i=1;i<=s.k;i++) ms.push(i*F.D);
+    const bx=[FB(F.fits?"green":"blue",`Multiples of ${F.D}`,ms.join(", ")+(F.fits?" ✓":""),F.fits?`${F.sm} goes into ${F.m}`:`${F.sm} doesn't go into ${F.m}`,null,"wide")];
+    if(F.fits){ const ch=(n,d,c)=>{ const f=F.m/d; return f===1?FB(c,`Already ${fbName(d)}`,frac(n,d),"keep it"):FB(c,"Change it",nw(`${frac(n,d)} = ${frac(n*f,F.m)}`),`numerator and denominator × ${f}`); };
+      bx.push(ch(F.n1,F.d1,"blue"),ch(F.n2,F.d2,"amber"));
+      if(s.j&&s.jp>=1){ const [rn,rd]=fbS(F.r,F.m); bx.push(FB("green","Answer",nw(`${frac(F.A,F.m)} ${F.op} ${frac(F.B,F.m)} = ${frac(F.r,F.m)}`)+(rd!==F.m?` ${nw(`= ${frac(rn,rd)}`)}`:""),rd!==F.m?"simplest form":"",null,"wide")); } }
+    return FORMS(bx,true); }
+  if(s.step===1){ const [W1,n1,W2,n2,d]=FBM[s.b], rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+    if(!s.r) return FORMS([FB("red","Not enough",nw(`${frac(n1,d)} − ${frac(n2,d)}`),`only ${n1} ${fbNm(n1,d)} here`,null,"wide")],true);
+    const bx=[FB("blue","Change it",nw(`${fbMH(W1,n1,d)} = ${fbMH(W1-1,n1+d,d)}`),`break 1 whole: ${nw(`${frac(d,d)} + ${frac(n1,d)} = ${frac(n1+d,d)}`)}`,null,"wide")];
+    if(s.r===2&&s.tp>=1) bx.push(FB("green","Take away",nw(`${fbMH(W1-1,n1+d,d)} − ${fbMH(W2,n2,d)} = ${fbMH(rw,rn,d)}`)+(sd!==d?` ${nw(`= ${fbMH(rw,sn,sd)}`)}`:""),`wholes − wholes, ${fbName(d)} − ${fbName(d)}`,null,"wide"));
+    return FORMS(bx,true); }
+  if(s.step===2){ const [n,d,N,noun]=FBO[s.o], per=N/d, who=FB("amber","Of who?",`${N} ${noun}`,"that's the whole"), one=FB("blue","1 group",nw(`${N} ÷ ${d} = ${per}`),`each group is ${frac(1,d)}`);
+    if(!s.sh||s.sp<1) return FORMS([who,FB("blue",`Denominator ${d}`,`${d} equal groups`,"share them out")],true);
+    if(!s.tk||s.kp<1) return FORMS([who,one],true);
+    return FORMS([one,FB("green",`Numerator ${n}`,nw(`${per} × ${n} = ${per*n}`),`take ${n} group${n>1?"s":""}`),FB("ink","“Of” means ×",nw(`${frac(n,d)} × ${N} = ${per*n}`),"",null,"wide")],true); }
+  if(s.step===3){ const [a,b,c,d]=FBP[s.x], [rn,rd]=fbS(a*c,b*d), g1=gcd(a,d), g2=gcd(c,b), X=(v,g)=>g>1?`<s class="cancel">${v}</s><sup>${v/g}</sup>`:`${v}`;
+    if(!s.cu||s.cp<1) return FORMS([FB("blue","Shaded",frac(c,d),"of the rectangle"),FB("ink","Means",nw(`${frac(a,b)} × ${frac(c,d)}`),nw(`${frac(a,b)} of ${frac(c,d)}`))],true);
+    if(!s.tx||s.xp<1) return FORMS([FB("amber",`Cut into ${b} rows`,nw(`${b} × ${d} = ${b*d} pieces`),`each piece is ${frac(1,b*d)}`,null,"wide")],true);
+    return FORMS([FB("green","Answer",nw(`${frac(a,b)} × ${frac(c,d)} = ${frac(`${a} × ${c}`,`${b} × ${d}`)} = ${frac(a*c,b*d)}`)+(rd!==b*d?` ${nw(`= ${frac(rn,rd)}`)}`:""),"numerator × numerator, denominator × denominator",null,"wide"),
+      FB("amber","Faster: cancel first",nw(`${frac(X(a,g1),X(b,g2))} × ${frac(X(c,g2),X(d,g1))} = ${frac(rn,rd)}`),"",null,"wide")],true); }
+  const R=fbR(s), qh=KHEAD(`${R.who} spent ${frac(R.n1,R.d1)} of ${R.his} money ${R.sa} and ${frac(R.n2,R.d2)} of the <b>rest</b> ${R.sb}. ${R.left?`${fbCap(R.he)} had $${R.left} left. How much money did ${R.he} have at first?`:`What fraction of ${R.his} money did ${R.he} spend ${R.ask}?`}`);
+  let bx;
+  if(!s.of) bx=[FB("amber","Of who?",nw(`${frac(R.n2,R.d2)} of …?`),"every fraction is OF something",null,"wide")];
+  else if(s.of==="w") bx=[FB("red","Not yet",nw(`${frac(R.n2,R.d2)} of all the money?`),"read it again: of the rest",null,"wide")];
+  else if(!s.ph||(s.ph===1&&s.pp<1)) bx=[FB("green","✓ Of the rest",nw(`${frac(R.n2,R.d2)} of the rest`),"so the rest gets its own bar",null,"wide")];
+  else if(!R.left){ bx=[FB("blue","Drop lines",nw(`${R.rest}u = ${R.d2}p`),`so 1u = ${R.k}p`)];
+    if(s.ph>1&&s.qp>=1){ const [sn,sd]=fbS(R.n2,R.T); bx.push(FB("blue","All",nw(`${R.d1}u = ${R.T}p`),""),FB("green","Answer",frac(R.n2,R.T)+(sd!==R.T?` ${nw(`= ${frac(sn,sd)}`)}`:""),`${R.n2}p out of ${R.T}p`,null,"wide")); } }
+  else { bx=[FB("blue","Left",nw(`${R.d2-R.n2}p = $${R.left}`),`1p = $${R.pv}`)];
+    if(s.ph>1&&s.qp>=1) bx.push(FB("blue","Climb up",nw(`${R.d2}p = $${R.d2*R.pv} = ${R.rest}u`),`1u = $${R.uv}`),FB("green","At first",nw(`${R.d1}u = $${R.tot}`),"",null,"wide")); }
+  return qh+FORMS(bx,true); }
+const fracBars=aid({
+  init:{a:0,k:0,j:0,jp:0,b:0,r:0,bp:0,tp:0,o:0,sh:0,sp:0,tk:0,kp:0,x:0,cu:0,cp:0,tx:0,xp:0,q:0,of:"",ph:0,pp:0,qp:0}, jump:true, vb:"0 0 140 76", label:"Fraction bars",
+  pills:[{k:"a",label:"Example",opts:FBA.map(([a,b,c,d,o],i)=>[i,`<span>${frac(a,b)} ${o} ${frac(c,d)}</span>`]),show:s=>s.step===0,on:s=>{s.k=0;s.j=0;s.jp=0;}},
+    {k:"b",label:"Example",opts:FBM.map(([W1,n1,W2,n2,d],i)=>[i,`<span>${fbMH(W1,n1,d)} − ${fbMH(W2,n2,d)}</span>`]),show:s=>s.step===1,on:s=>{s.r=0;s.bp=0;s.tp=0;}},
+    {k:"o",label:"Example",opts:FBO.map(([n,d,N],i)=>[i,`<span>${frac(n,d)} of ${N}</span>`]),show:s=>s.step===2,on:s=>{s.sh=0;s.sp=0;s.tk=0;s.kp=0;}},
+    {k:"x",label:"Example",opts:FBP.map(([a,b,c,d],i)=>[i,`<span>${frac(a,b)} × ${frac(c,d)}</span>`]),show:s=>s.step===3,on:s=>{s.cu=0;s.cp=0;s.tx=0;s.xp=0;}},
+    {k:"q",label:"Example",opts:FBR.map((R,i)=>[i,R.who]),show:s=>s.step===4,on:s=>{s.of="";s.ph=0;s.pp=0;s.qp=0;}},
+    {k:"of",label:"Of who?",opts:[["w","All the money"],["r","The rest"]],show:s=>s.step===4,on:s=>{s.ph=0;s.pp=0;s.qp=0;}}],
+  buttons:[{label:"▶ Next multiple",fn:s=>{s.k=Math.min(s.k+1,12);},show:s=>s.step===0&&!fbA(s).fits},
+    {label:"▶ Put them together",fn:(s,an)=>{s.j=1;s.jp=0;an(900,p=>{s.jp=p;});},show:s=>s.step===0&&fbA(s).fits&&!s.j&&fbA(s).op==="+"},
+    {label:"▶ Take it away",fn:(s,an)=>{s.j=1;s.jp=0;an(900,p=>{s.jp=p;});},show:s=>s.step===0&&fbA(s).fits&&!s.j&&fbA(s).op==="−"},
+    {label:"↺ Start again",fn:s=>{s.k=0;s.j=0;s.jp=0;},show:s=>s.step===0&&s.k>0},
+    {label:"▶ Break a whole",fn:(s,an)=>{s.r=1;s.bp=0;an(800,p=>{s.bp=p;});},show:s=>s.step===1&&!s.r},
+    {label:"▶ Take away",fn:(s,an)=>{s.r=2;s.tp=0;an(1000,p=>{s.tp=p;});},show:s=>s.step===1&&s.r===1},
+    {label:"↺ Start again",fn:s=>{s.r=0;s.bp=0;s.tp=0;},show:s=>s.step===1&&s.r>0},
+    {label:"▶ Share into groups",fn:(s,an)=>{s.sh=1;s.sp=0;an(1000,p=>{s.sp=p;});},show:s=>s.step===2&&!s.sh},
+    {label:"▶ Take the groups",fn:(s,an)=>{s.tk=1;s.kp=0;an(600,p=>{s.kp=p;});},show:s=>s.step===2&&!!s.sh&&!s.tk},
+    {label:"↺ Start again",fn:s=>{s.sh=0;s.sp=0;s.tk=0;s.kp=0;},show:s=>s.step===2&&!!s.sh},
+    {label:"▶ Cut the other way",fn:(s,an)=>{s.cu=1;s.cp=0;an(700,p=>{s.cp=p;});},show:s=>s.step===3&&!s.cu},
+    {label:"▶ Take the rows",fn:(s,an)=>{s.tx=1;s.xp=0;an(600,p=>{s.xp=p;});},show:s=>s.step===3&&!!s.cu&&!s.tx},
+    {label:"↺ Start again",fn:s=>{s.cu=0;s.cp=0;s.tx=0;s.xp=0;},show:s=>s.step===3&&!!s.cu},
+    {label:"▶ Draw the rest",fn:(s,an)=>{s.ph=1;s.pp=0;an(800,p=>{s.pp=p;});},show:s=>s.step===4&&s.of==="r"&&!s.ph},
+    {label:"▶ Cut each u",fn:(s,an)=>{s.ph=2;s.qp=0;an(700,p=>{s.qp=p;});},show:s=>s.step===4&&s.ph===1&&!FBR[s.q].left},
+    {label:"▶ Climb up",fn:(s,an)=>{s.ph=2;s.qp=0;an(700,p=>{s.qp=p;});},show:s=>s.step===4&&s.ph===1&&!!FBR[s.q].left},
+    {label:"↺ Start again",fn:s=>{s.of="";s.ph=0;s.pp=0;s.qp=0;},show:s=>s.step===4&&(s.ph>0||!!s.of)}],
+  steps:[{name:"Add, take away",set:{k:0,j:0,jp:0},t:s=>{ const F=fbA(s), v=F.op==="+"?"add":"take away";
+      if(!s.k) return `${fbCap(fbName(F.d1))} and ${fbName(F.d2)} are different sizes, so you can't ${v} them yet.<br>List the multiples of ${F.D}, the bigger denominator.`;
+      if(!F.fits) return `${F.sm} doesn't go into ${F.m}, so the ${fbName(F.sm)} don't fit.<br>Try the next multiple.`;
+      if(!s.j||s.jp<1) return `${F.m} works for both. Every piece is now a ${fbNm(1,F.m)}.<br>Now you can ${v}.`;
+      return `Same-size pieces, so just count them:<br>${F.A} ${F.op} ${F.B} = ${F.r} ${fbNm(F.r,F.m)}.`; }},
+    {name:"Mixed numbers",set:{r:0,bp:0,tp:0},t:s=>{ const [W1,n1,W2,n2,d]=FBM[s.b], rw=W1-1-W2, rn=n1+d-n2, [sn,sd]=fbS(rn,d);
+      if(!s.r) return `Take away ${fbMH(W2,n2,d)}: you need ${n2} ${fbNm(n2,d)}, but there ${n1===1?"is":"are"} only ${n1}.<br>Not enough, so break a whole.`;
+      if(s.r===1) return `1 whole = ${frac(d,d)}, so ${nw(`${fbMH(W1,n1,d)} = ${fbMH(W1-1,n1+d,d)}`)}.<br>Now there are enough ${fbName(d)}.`;
+      return `Take away ${W2} whole${W2>1?"s":""} and ${n2} ${fbNm(n2,d)}.<br>Left: ${nw(fbMH(rw,rn,d)+(sd!==d?` = ${fbMH(rw,sn,sd)}`:""))}.`; }},
+    {name:"Of who?",set:{sh:0,sp:0,tk:0,kp:0},t:s=>{ const [n,d,N,noun]=FBO[s.o], per=N/d;
+      if(!s.sh) return `${frac(n,d)} of ${N}. Of who? ${N} ${noun}.<br>The denominator ${d} means ${d} equal groups.`;
+      if(!s.tk) return `${d} groups of ${per}. Each group is ${frac(1,d)}.<br>The numerator ${n} means take ${n} group${n>1?"s":""}.`;
+      return `${n} group${n>1?"s":""} of ${per} = ${n*per} ${noun}.<br>“Of” means ×: ${nw(`${frac(n,d)} × ${N} = ${n*per}`)}.`; }},
+    {name:"Fraction × fraction",set:{cu:0,cp:0,tx:0,xp:0},t:s=>{ const [a,b,c,d]=FBP[s.x];
+      if(!s.cu) return `${nw(`${frac(a,b)} × ${frac(c,d)}`)} means ${frac(a,b)} of ${frac(c,d)}.<br>Here is ${frac(c,d)}, shaded blue.`;
+      if(!s.tx) return `Cut it into ${b} rows the other way: ${b*d} pieces in all.<br>Now take ${a} of the ${b} rows.`;
+      return `Taken: ${a} × ${c} = ${a*c} pieces (the numerators).<br>All: ${b} × ${d} = ${b*d} pieces (the denominators).`; }},
+    {name:"Of the rest",set:{of:"",ph:0,pp:0,qp:0},t:s=>{ const R=fbR(s);
+      if(!s.of) return `Every fraction is OF something.<br>The ${frac(R.n2,R.d2)}: is it of all the money, or of the rest?`;
+      if(s.of==="w") return `Not all of it. Read it again:<br>${frac(R.n2,R.d2)} of the <b>rest</b>.`;
+      if(!s.ph) return `Yes! The rest gets its own bar.<br>Draw it under the top bar.`;
+      if(!R.left){ const [sn,sd]=fbS(R.n2,R.T); return s.ph>1&&s.qp>=1?`Now it's all in p. ${R.askT} is ${R.n2} of the ${R.T} p.<br>So it is ${frac(sn,sd)} of ${R.his} money.`:`The drop lines show ${R.rest}u = ${R.d2}p, so 1u = ${R.k}p.<br>Cut each u into ${R.k}.`; }
+      return s.ph>1&&s.qp>=1?`1p = $${R.pv}, so ${R.d2}p = $${R.d2*R.pv} = ${R.rest}u, and 1u = $${R.uv}.<br>At first: ${R.d1}u = $${R.tot}.`:`Start from the number you know: ${R.d2-R.n2}p = $${R.left}.<br>Then climb up the drop lines.`; }}],
+  draw(svg,s){ [fbD0,fbD1,fbD2,fbD3,fbD4][s.step](svg,s);
+    const [,,W2,n2,d]=FBM[s.b], on=FBO[s.o][0], od=FBO[s.o][1], [a,b]=FBP[s.x], R=fbR(s);
+    fbLbl(5,`<span>▶ Take away ${fbMH(W2,n2,d)}</span>`); fbLbl(7,`▶ Share into ${od} groups`); fbLbl(8,`▶ Take ${on} group${on>1?"s":""}`);
+    fbLbl(10,`▶ Cut into ${b} rows`); fbLbl(11,`▶ Take ${a} of the ${b} rows`); if(!R.left) fbLbl(14,`▶ Cut each u into ${R.k}`); },
+  key:fbK
+});
 const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid,vecAreas,angPar,bearAid,crossAid,balanceEq,pythSq,pointyThird,quadIneq,vennAid,parPerp,polyAng,areaCut,speedConv,idxCollect,arcRad,sixRatios,addProof,whyLogs,firstPrin,areaRect,whereE,quadProof,zeroPow,pascalPaths,centreProof};
 Object.assign(PLAYS,{simRatios});
 PLAYS.dataDots=dataDots;
 PLAYS.probAid=probAid;
 PLAYS.toiletPaper=toiletPaper;
 PLAYS.coneSector=coneSector;
+PLAYS.fracBars=fracBars;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -9405,6 +9592,7 @@ function thumbFor(t){
   const T={
    bearAid:`<line x1="30" y1="60" x2="30" y2="10" stroke="var(--ink)" stroke-width="2"/><path d="M30 4 L25.5 13 L34.5 13 Z" fill="var(--ink)"/><path d="M30 42 A18 18 0 0 1 41.6 46.2" fill="none" stroke="var(--amber)" stroke-width="3"/><line x1="30" y1="60" x2="62" y2="22" stroke="var(--blue)" stroke-width="2.5"/><circle cx="62" cy="22" r="4" fill="var(--blue)"/><text x="70" y="44" font-size="17" font-weight="700" fill="var(--amber)">040°</text>`,
 balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" y1="57" x2="60" y2="49" stroke="var(--muted)" stroke-width="2.5"/><line x1="28" y1="49" x2="92" y2="49" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="49" x2="28" y2="43" stroke="var(--muted)" stroke-width="2.5"/><line x1="92" y1="49" x2="92" y2="43" stroke="var(--muted)" stroke-width="2.5"/><rect x="4" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><rect x="68" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><path d="M9 41 H25 Q28 31 20.5 28 L23 23 H11 L13.5 28 Q6 31 9 41Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.5"/><rect x="29" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="40" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><path d="M40 26 C44 2 96 0 102 12" fill="none" stroke="var(--amber)" stroke-width="2.2"/><polygon points="102,17.5 98.4,10.8 105.2,11.2" fill="var(--amber)"/>`,
+   fracBars:`<rect x="14" y="5" width="96" height="14" fill="var(--card)"/><rect x="14" y="5" width="48" height="14" fill="var(--blue-fill)"/><rect x="14" y="25" width="96" height="14" fill="var(--card)"/><rect x="14" y="25" width="32" height="14" fill="var(--amber-fill)"/><rect x="14" y="45" width="96" height="14" fill="var(--card)"/><rect x="14" y="45" width="48" height="14" fill="var(--blue-fill)"/><rect x="62" y="45" width="32" height="14" fill="var(--amber-fill)"/><path d="M30 5v14M46 5v14M62 5v14M78 5v14M94 5v14M30 25v14M46 25v14M62 25v14M78 25v14M94 25v14M30 45v14M46 45v14M62 45v14M78 45v14M94 45v14" stroke="var(--ink)" stroke-width=".8" stroke-opacity=".5"/><path d="M14 5h96v14h-96zM14 25h96v14h-96z" fill="none" stroke="var(--ink)" stroke-width="1.5"/><path d="M14 45h96v14h-96z" fill="none" stroke="var(--green)" stroke-width="2"/>`,
    pointyThird:`<polygon points="6,14 36,14 25,56" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="36,14 44,8 25,56" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="36,14 44,8 25,56" fill="var(--ink)" fill-opacity=".12"/><polygon points="6,14 36,14 44,8 14,8" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5" stroke-linejoin="round"/><polygon points="66,43.3 102,43.3 102,58 66,58" fill="var(--blue)" fill-opacity=".35"/><polygon points="102,43.3 110,37.3 110,52 102,58" fill="var(--blue)" fill-opacity=".25"/><path d="M66 14 V58 H102 V14 Z M102 14 L110 8 V52 L102 58 M66 14 L74 8 H110" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/><path d="M66 43.3 H102 M66 28.7 H102" stroke="var(--muted)" stroke-dasharray="2 2"/><text x="84" y="54.5" font-size="11" font-weight="700" text-anchor="middle" fill="var(--amber)">1</text><text x="84" y="40" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">2</text><text x="84" y="25.5" font-size="11" font-weight="700" text-anchor="middle" fill="var(--muted)">3</text>`,
    areaRect:`<rect x="10" y="56.6" width="25" height="3.4" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="35" y="46.5" width="25" height="13.5" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="35" y="56.6" width="25" height="3.4" fill="var(--blue-fill)" stroke="var(--blue)"/><rect x="60" y="29.6" width="25" height="30.4" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="60" y="46.5" width="25" height="13.5" fill="var(--blue-fill)" stroke="var(--blue)"/><rect x="85" y="6" width="25" height="54" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="85" y="29.6" width="25" height="30.4" fill="var(--blue-fill)" stroke="var(--blue)"/><path d="M10 60 L20 59.5 L30 57.8 L40 55.1 L50 51.4 L60 46.5 L70 40.6 L80 33.5 L90 25.4 L100 16.3 L110 6" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`,
    quadProof:`<text x="4" y="16" font-size="13" font-style="italic" fill="var(--ink)">ax²+bx+c=0</text><path d="M30 22 L30 30" stroke="var(--muted)" stroke-width="1.5"/><path d="M26 27 L30 32 L34 27" fill="none" stroke="var(--muted)" stroke-width="1.5"/><text x="4" y="47" font-size="13" font-style="italic" fill="var(--ink)">x =</text><text x="30" y="42" font-size="11" font-style="italic" fill="var(--amber)">−b ±</text><path d="M58 36 L61 34 L64 42 L68 31 L100 31" fill="none" stroke="var(--green)" stroke-width="1.2"/><text x="69" y="42" font-size="10" font-style="italic" fill="var(--green)">b²−4ac</text><line x1="30" y1="46" x2="102" y2="46" stroke="var(--ink)" stroke-width="1.2"/><text x="66" y="58" font-size="11" font-style="italic" text-anchor="middle" fill="var(--ink)">2a</text>`,
@@ -9458,7 +9646,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
 const STRANDS=[["graph","Graphs"],["alg","Algebra"],["trig","Trigonometry"],["geo","Geometry"],["calc","Calculus"],["num","Numbers"]];
 STRANDS.push(["stats","Statistics"]);
 if(!STRANDS.some(([k])=>k==="stats")) STRANDS.push(["stats","Statistics & Probability"]);
-const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math"};
+const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math",p5:"P5"};
 function cardFor(t){ return h("a",{class:"card",href:"#"+t.id},
   `${thumbFor(t)}<div class="txt"><span class="chap">${t.chapter}</span><b>${t.title}</b><span class="blurb">${t.blurb}</span><div class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${t.tier==="curious"?CURTAG:""}</div></div>`); }
 const CONTACT={wa:"https://wa.me/message/U6WIMYI7KU7LG1"}, CF_TOKEN="f1a8bfe680d94826ac08e3b90e257753";
@@ -9468,7 +9656,7 @@ const waBtn=()=>waURL()?`<a class="pill wa" href="${waURL()}" target="_blank" re
 const AVATAR=(cls="")=>`<img class="avatar ${cls}" src="avatar.png" alt="Coach Minyi" width="256" height="256" loading="lazy">`;
 const VIEWS=[["sheets","Cheatsheets"],["exam","Exam kit"],["play","Interactives"]];
 const VIEWNOTE={exam:"The official formula sheets, the formulas you have to memorise, and a few tips.",play:"Drag things around and see why the rule works."};
-const homeItems=v=>v==="play"?TOPICS:SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
+const homeItems=v=>v==="play"?TOPICS.filter(t=>!t.unlisted):SHEETLIST.filter(s=>v==="exam"?!!s.exam:!s.exam);
 let homeView="sheets"; try{ const v=localStorage.getItem("hubHome2"); if(VIEWS.some(([k])=>k===v)) homeView=v; }catch(e){}
 const setHomeView=v=>{ homeView=v; try{localStorage.setItem("hubHome2",v)}catch(e){} };
 const setPage=p=>{ document.body.dataset.page=p; };
@@ -9516,7 +9704,7 @@ function renderHome(keep){
   } else {
     const rec=recentTopics();
     if(rec.length){ const sec=h("section",{class:"level"},`<h3>Recently opened</h3>`), grid=h("div",{class:"cards"}); rec.forEach(t=>grid.append(cardFor(t))); sec.append(grid); body.append(sec); }
-    const shown=TOPICS.filter(fit);
+    const shown=TOPICS.filter(t=>!t.unlisted&&fit(t));
     STRANDS.forEach(([sid,sname])=>{
       const lv=t=>Math.min(...t.levels.map(l=>LEVELS.findIndex(x=>x.id===l))), list=shown.filter(t=>t.strand===sid&&t.tier!=="curious").sort((a,b)=>lv(a)-lv(b)); if(!list.length) return;
       const sec=h("section",{class:"level"},`<h3>${sname}</h3>`), grid=h("div",{class:"cards"});
@@ -9530,7 +9718,7 @@ function renderHome(keep){
   sb.oninput=()=>{ const q=sb.value.trim().toLowerCase();
     if(!q){ res.hidden=true; body.hidden=false; return; }
     const hits=[...SHEETLIST.filter(s=>(s.chapter+" "+s.title+" "+(s.kw||"")).toLowerCase().includes(q)).map(s=>sheetCard(s)),
-      ...TOPICS.filter(t=>(t.chapter+" "+t.title+" "+t.blurb).toLowerCase().includes(q)).map(topicCard)];
+      ...TOPICS.filter(t=>!t.unlisted&&(t.chapter+" "+t.title+" "+t.blurb).toLowerCase().includes(q)).map(topicCard)];
     res.innerHTML=`<h3>${hits.length?"Results":"Nothing matches. Try another word."}</h3>`;
     if(hits.length){ const grid=h("div",{class:"scards"}); hits.forEach(r=>grid.append(r)); res.append(grid); }
     res.hidden=false; body.hidden=true; };
@@ -10876,6 +11064,38 @@ function cdMemo(key){ const rows=[]; let g={n:"",a:""}, prev=null;
     if(fx){ if(fx[2]){ const m=fx[2](r); if(m){ r.top=r.g.n; r.main=m; } } else r.drop=1; }
     else if(i&&r.g===rows[i-1].g&&/^= /.test(t)){ const p=rows.slice(0,i).reverse().find(x=>!x.drop); if(p){ p.more=(p.more||"")+r.li.outerHTML; r.drop=1; } } });
   return rows.filter(r=>!r.drop).map(r=>({f:`${r.top?`<p class="cgrp">${r.top}</p>`:""}<div class="cq">${r.main}</div>`,b:`<div class="cbk fml"><ul class="steps fml">${r.li.outerHTML}${r.more||""}</ul>${r.g.a}</div>`,sid:r.g.s,grp:tx(r.g.n)})); }
+QQ_LO["p5-fractions"]=[
+{t:"add or take away",g:R=>{ const n=qTry(()=>{ const b=R.int(2,10), d=R.int(2,10); return {a:R.int(1,b-1),b,c:R.int(1,d-1),d,op:R.f()<.5?"+":"−"}; },
+    n=>n.b!==n.d&&qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&qLcm(n.b,n.d)<=24&&(n.op==="+"?n.a*n.d+n.c*n.b<n.b*n.d:n.a*n.d>n.c*n.b),{a:1,b:2,c:1,d:3,op:"+"}),
+  {a,b,c,d,op}=n, D=Math.max(b,d), S=Math.min(b,d), L=qLcm(b,d), ms=[]; for(let m=D;m<=L;m+=D) ms.push(m);
+  const A=a*L/b, C=c*L/d, r=op==="+"?A+C:A-C, g=qGcd(r,L), ch=(x,y)=>y===L?`${frac(x,y)} stays ${frac(x,y)}`:nw(`${frac(x,y)} = ${frac(`${x} × ${L/y}`,`${y} × ${L/y}`)} = ${frac(x*L/y,L)}`);
+  const w=[qW(`Multiples of ${D}: ${ms.join(", ")}`,`${S} goes into ${L}`),ch(a,b),ch(c,d),nw(`${frac(A,L)} ${op} ${frac(C,L)} = ${frac(r,L)}`)];
+  if(g>1) w.push(qW(nw(`${frac(r,L)} = ${frac(r/g,L/g)}`),"simplest form"));
+  return {q:`Find ${nw(`${frac(a,b)} ${op} ${frac(c,d)}`)}. Give your answer in its simplest form.`,w,a:qF(r,L),n:{a,b,c,d,op}}; }},
+{t:"mixed numbers",g:R=>{ const n=qTry(()=>{ const d=R.pick([3,4,5,6,8,9,10,12]), a=R.int(1,d-2), W=R.int(2,6); return {W,a,V:R.int(1,W-1),c:R.int(a+1,d-1),d}; },
+    n=>qGcd(n.a,n.d)===1&&qGcd(n.c,n.d)===1,{W:3,a:5,V:1,c:7,d:12}),
+  {W,a,V,c,d}=n, top=a+d, rn=top-c, rw=W-1-V, g=qGcd(rn,d);
+  const w=[qW(nw(`${fbMH(W,a,d)} = ${fbMH(W-1,top,d)}`),`not enough ${fbName(d)}: break 1 whole`),nw(`${fbMH(W-1,top,d)} − ${fbMH(V,c,d)} = ${fbMH(rw,rn,d)}`)];
+  if(g>1) w.push(qW(nw(`${fbMH(rw,rn,d)} = ${fbMH(rw,rn/g,d/g)}`),"simplest form"));
+  return {q:`Find ${nw(`${fbMH(W,a,d)} − ${fbMH(V,c,d)}`)}. Give your answer in its simplest form.`,w,a:fbMH(rw,rn/g,d/g),n:{W,a,V,c,d}}; }},
+{t:"fraction of a number",g:R=>{ const [who,he,thing]=R.pick([["Mei","She","stickers"],["Ravi","He","marbles"],["Siti","She","beads"],["Ken","He","stamps"],["Aisha","She","sweets"],["Jun","He","cards"]]);
+  const n=qTry(()=>{ const d=R.int(3,9), k=R.int(3,12); return {d,a:R.int(1,d-1),k,N:d*k,left:R.f()<.4}; },n=>qGcd(n.a,n.d)===1&&n.N<=96,{d:5,a:3,k:8,N:40,left:false}),
+  {d,a,k,N,left}=n, gv=a*k, w=[`Of who? ${N} ${thing}`,qW(nw(`${N} ÷ ${d} = ${k}`),"1 group"),qW(nw(`${k} × ${a} = ${gv}`),`${a} group${a>1?"s":""}`)];
+  if(left) w.push(qW(nw(`${N} − ${gv} = ${N-gv}`),"left"));
+  return {q:`${who} had ${N} ${thing}. ${he} gave ${frac(a,d)} of them to a friend. How many ${thing} ${left?`did ${who} have left`:`did ${who} give away`}?`,w,a:`${left?N-gv:gv} ${thing}`,n:{d,a,N,left}}; }},
+{t:"fraction × fraction",g:R=>{ const n=qTry(()=>{ const b=R.int(2,9), d=R.int(2,9); return {a:R.int(1,b-1),b,c:R.int(1,d-1),d}; },
+    n=>qGcd(n.a,n.b)===1&&qGcd(n.c,n.d)===1&&(qGcd(n.a,n.d)>1||qGcd(n.c,n.b)>1),{a:2,b:3,c:3,d:4}),
+  {a,b,c,d}=n, g1=qGcd(a,d), g2=qGcd(c,b), X=(v,g)=>g>1?`<s class="cancel">${v}</s><sup>${v/g}</sup>`:`${v}`;
+  return {q:`Find ${nw(`${frac(a,b)} × ${frac(c,d)}`)}. Give your answer in its simplest form.`,
+    w:[qW(nw(`${frac(X(a,g1),X(b,g2))} × ${frac(X(c,g2),X(d,g1))}`),"cancel first"),qW(nw(`= ${frac(`${a/g1} × ${c/g2}`,`${b/g2} × ${d/g1}`)} = ${qF(a*c,b*d)}`),"numerator × numerator, denominator × denominator")],a:qF(a*c,b*d),n:{a,b,c,d}}; }},
+{t:"of the rest",g:R=>{ const [who,he,his,A,B]=R.pick([["Ali","He","his","a book","a pen"],["Mei","She","her","a bag","a cap"],["Ken","He","his","food","a toy"],["Siti","She","her","a dress","a belt"]]), money=R.f()<.5;
+  const n=qTry(()=>{ const d1=R.int(3,8), n1=R.int(1,d1-2), rest=d1-n1, k=money?0:R.int(2,4), d2=money?R.int(2,6):rest*k, uv=d2/qGcd(rest,d2)*R.int(1,6); return {d1,n1,rest,d2,n2:R.int(1,d2-1),k,uv,pv:rest*uv/d2}; },
+    n=>qGcd(n.n1,n.d1)===1&&qGcd(n.n2,n.d2)===1&&n.d2<=12&&(!money||(n.d1*n.uv<=600&&n.d1*n.uv>=30&&n.uv>=2&&n.pv>=2)),money?{d1:5,n1:2,rest:3,d2:4,n2:1,k:0,uv:20,pv:15}:{d1:3,n1:1,rest:2,d2:4,n2:1,k:2,uv:0,pv:0}),
+  {d1,n1,rest,d2,n2,k,uv,pv}=n, st=`${who} spent ${frac(n1,d1)} of ${his} money on ${A} and ${frac(n2,d2)} of the rest on ${B}.`, w0=[qW(`All = ${d1}u, ${A.replace(/^a /,"")} = ${n1}u`,"top bar"),qW(nw(`rest = ${rest}u = ${d2}p`),"rest drawn underneath")];
+  if(money){ const left=(d2-n2)*pv, tot=d1*uv;
+    return {q:`${st} ${he} had $${left} left. How much money did ${who} have at first?`,w:[...w0,qW(nw(`${d2-n2}p = $${left}`),"left"),...(d2-n2>1?[nw(`1p = $${pv}`)]:[]),qW(nw(`${d2}p = $${d2*pv} = ${rest}u`),"climb up"),nw(`1u = $${uv}`),nw(`${d1}u = $${tot}`)],a:`$${tot}`,n:{d1,n1,d2,n2,left,tot}}; }
+  const T=d1*k, B0=B.replace(/^a /,"");
+  return {q:`${st} What fraction of ${his} money did ${who} spend on ${B.replace(/^a /,"the ")}?`,w:[...w0,qW(nw(`1u = ${k}p`),`${d2} ÷ ${rest} = ${k}`),qW(nw(`All = ${d1}u = ${T}p`),`${d1} × ${k} = ${T}`),qW(nw(`${B0} = ${n2}p = ${frac(n2,T)}`+(qGcd(n2,T)>1?` = ${qF(n2,T)}`:"")),`${n2} out of ${T}`)],a:qF(n2,T),n:{d1,n1,d2,n2,T}}; }}];
 function qqMk(id){ return QQ_LO[id]||QQ_HI[id]||[]; }
 function qqSeed(){ return 1+Math.floor(Math.random()*999999); }
 function qqNums(h){ return String(h).replace(/<[^>]*>/g," ").match(/−?\d+(?:\.\d+)?/g)||[]; }
@@ -10886,7 +11106,8 @@ function qqDeal(ts,seed){ const S=cdS, R=qRand(seed), mk=qqMk(S.id), seen=[];
 function qqCard(S){ const c=S.cards[S.deck[S.i]];
   return `<div class="ctop"><p class="stepof">Card ${S.i+1} of ${S.deck.length}</p></div><div class="ccard cqk"><div class="cq">${c.q}</div>${S.shown?`<div class="cbk cqw"><ul class="steps">${c.w.map(l=>`<li>${l}</li>`).join("")}</ul><p class="cqa">Answer: ${c.a}</p>${c.k?`<p class="cqc">Check: ${c.k}</p>`:""}</div>`:`<p class="cqh">Work it out on paper first.</p>`}</div>
     <div class="cacts">${S.shown?`<button class="pill act cbtn cyes" type="button" data-c="yes">✓ I got it</button><button class="pill act sec cbtn" type="button" data-c="no">Not yet</button>`:`<button class="pill act cbtn" type="button" data-c="show">Show the working →</button>`}</div>`; }
-function qqEnd(S,n){ return `<p class="cend">You got ${S.got} of ${S.deck.length}</p><div class="cacts"><button class="pill act cbtn" type="button" data-c="new">5 new questions →</button>${n?`<button class="pill cbtn" type="button" data-c="miss">Try the ${n} I missed</button>`:""}<a class="pill cbtn" href="${S.back}">← Back to the cheatsheet</a></div>`; }
+function qqEnd(S,n){ return `<p class="cend">You got ${S.got} of ${S.deck.length}</p><div class="cacts"><button class="pill act cbtn" type="button" data-c="new">5 new questions →</button>${n?`<button class="pill cbtn" type="button" data-c="miss">Try the ${n} I missed</button>`:""}<a class="pill cbtn" href="${S.back}">← Back to the ${S.back.startsWith("#sheet/")?"cheatsheet":"interactive"}</a></div>`; }
+function qqAid(id){ const t=TOPICS.find(x=>x.id===id&&!x.sheet); return t&&qqMk(id).length?{id,title:t.title,levels:t.levels,back:`#${id}?step=${PLAYS[t.play].steps.length-1}`}:null; }
 function qqFit(){ alignEq(app); cdFit(); alignEq(app); }
 function cdSave(){ try{ const m=JSON.parse(localStorage.getItem("hubCards")||"{}"); m[cdS.key]=cdS.missed; localStorage.setItem("hubCards",JSON.stringify(m)); }catch(e){} }
 function cdOv(el){ if(el.scrollWidth>el.clientWidth+1) return true; if(!el.classList.contains("cln")) return false; const r=el.getBoundingClientRect().right-parseFloat(getComputedStyle(el).paddingRight); return [...el.querySelectorAll(".nw, .cfine")].some(n=>n.getBoundingClientRect().right>r+.5); }
@@ -10916,15 +11137,16 @@ function cdClick(e){ const b=e.target.closest("[data-c]"); if(!b||!cdS) return; 
   else if(c==="miss") cdStart(S.missed.slice().sort((a,b)=>a-b),true);
   else if(c==="again") cdStart(S.cards.map((x,i)=>i),true); }
 function renderCards(kind,id,sub){ if(kind==="mist"&&!cdMistOn) return false;
-  const s=kind==="mist"||kind==="quick"?sheetOf(id):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
+  const s=kind==="mist"?sheetOf(id):kind==="quick"?(sheetOf(id)||qqAid(id)):kind==="memo"&&(id==="emath"||id==="amath"||id==="sec1"||id==="sec2")?sheetOf(id+"-memorise"):null; if(!s) return false;
   let cards=kind==="mist"?cdSpot(s.id):kind==="quick"?qqMk(s.id):cdMemo(s.sheet), subT=""; if(!cards.length) return false;
   if(kind==="memo"&&sub){ const el=cdDom(s.sheet).querySelector(`.mzc[data-k="${sub}"]`), f=el?cards.filter(c=>mzIn(c,el.dataset.deck)):[]; if(f.length){ cards=f; subT=el.querySelector(".mzt b").textContent; } else sub=""; }
   const name=kind==="mist"?"Spot the mistake":kind==="quick"?"Try 5 questions":"Flashcards", key=kind+"/"+id+(sub&&kind==="memo"?"/"+sub:"");
   document.title=`${name} · ${s.title} · Maths Hub`; titleEl.textContent=name; crumbEl.textContent=subT?`${s.title} · ${subT}`:s.title;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=false; zoomBtn.hidden=printBtn.hidden=true;
-  cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:"#sheet/"+s.id}; setPage("cards"); setNav(s.exam?"exam":"sheets");
+  const bk=s.back||"#sheet/"+s.id;
+  cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:bk}; setPage("cards"); setNav(s.exam?"exam":s.back?"play":"sheets");
   app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
-  cdS={kind,key,cards,id:s.id,back:"#sheet/"+s.id}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
+  cdS={kind,key,cards,id:s.id,back:bk}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, e=app.querySelector(".sheetend"); if(e) e.insertAdjacentHTML("beforebegin",b); }
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
