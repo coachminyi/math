@@ -131,6 +131,14 @@ button{font:inherit;color:inherit}
 .box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
 .steptext{font-size:20px;margin:8px 0 0;min-height:3.2em}
 .steptext .m{white-space:nowrap}
+.stepwk{font-size:20px;margin:8px 0 0}
+.stepwk:not([hidden])+.asktx>.steptext{margin-top:0}
+.fpr{display:block;padding:2px 0 2px 9px;border-left:3px solid transparent;line-height:1.45}
+.fpr.fpc{padding-left:calc(9px + 1em)}
+.stepwk .fpr{color:var(--muted)}
+.fpr.fpn{border-left-color:var(--accent)}
+.fpx{text-decoration:line-through;text-decoration-thickness:1.5px}
+.fpm{display:block;margin-top:8px}
 .ctrl{display:flex;align-items:center;gap:8px;margin:6px 0}
 .ctrl label{font-weight:700;font-size:20px;font-style:italic;min-width:1.2em;flex:none}
 .ctrl input[type=range]{flex:1;min-width:50px}
@@ -530,6 +538,7 @@ footer{color:var(--muted);font-size:13px;padding:30px 0 40px;text-align:center}
   .dock .pill{min-height:34px;padding:0 9px;font-size:14.5px}
   .dock .pill.sm{min-height:32px}
   .steptext{font-size:17px;min-height:0;margin:0}
+  .stepwk{font-size:17px;margin:0}
   .stepq{font-size:16px;margin:0 0 6px}
   .keybox{font-size:calc(15*var(--k))}
   .key{--k:clamp(0.88px,0.2273vw,1px);padding:calc(6*var(--k)) calc(8*var(--k)) calc(8*var(--k))}
@@ -1310,7 +1319,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
+    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="stepwk" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
     <div class="box robox askw"><div class="readout"></div>${ASKCOV}</div>${flat?TRYQ:""}
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
   const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
@@ -1340,6 +1349,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
       $(".exwrap",panel).innerHTML=ex.length?explainBox(ex)+ASKCOV:"";}
     else { const stx=$(".steptext",panel), S0=def.steps[st.step]; stx.innerHTML=S0.t(st);
+      const wk=$(".stepwk",panel), wh=S0.w?S0.w(st):""; if(wk){ wk.innerHTML=wh; wk.hidden=!wh; }
       const qh=S0.q?S0.q(st):""; [$(".stepq",panel),stq].forEach(e=>{ if(e&&e.dataset.h!==qh){ e.dataset.h=qh; e.innerHTML=qh; e.hidden=!qh; } });
       const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
       const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||def.nxWait||/^[①-⑨]/.test(lt))&&!said;
@@ -4568,6 +4578,12 @@ const FPC={
     gs:(x,h)=>`3(${N(x)})²(${N(h)})`,rs:(x,h)=>`3(${N(x)})(${N(h)})² + ${N(h)}³`,g1s:x=>`3(${N(x)})²`,r1s:(x,h)=>`3(${N(x)})(${N(h)}) + ${N(h)}²`}
 };
 const fpN=v=>N(v,6), fpC=s=>FPC[s.cv]||FPC.sq;
+const fpRows=C=>{ const A=kc("amber",FPH), cx=`<span class="fpx">${C.fx}</span>`;
+  return [[0,"Gradient of PQ",1],[0,`= ${frac(kc("red",`${C.fxh} − ${C.fx}`),A)}`],
+    [1,`= ${frac(`${cx}${C.ex.slice(C.fx.length)} − ${cx}`,A)}`],[1,`= ${frac(`${kc("green",C.G)} + ${kc("red",C.R)}`,A)}`],
+    [2,nw(`= ${kc("green",C.G1)} + ${kc("red",C.R1)}`)],[3,`${nw(`→ ${kc("green",C.G1)}`)} as ${nw(`${FPH} → 0`)}`]]; };
+const fpWk=(s,old)=>fpRows(fpC(s)).filter(r=>old?r[0]<s.step:r[0]===s.step).map(r=>`<span class="fpr${r[2]?"":" fpc"}${!old&&s.step?" fpn":""}">${r[1]}</span>`).join("");
+const fpOld=s=>fpWk(s,1);
 function fpFs(svg,b){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb) return b; const ppu=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return ppu>=3.2?b:Math.max(b,12/ppu); }
 const firstPrin=aid({
   init:{cv:"sq",x:1.5,h:.5}, jump:true, vb:"0 0 140 112", label:"Chord PQ on a curve: rise over run, expanded and divided by h",
@@ -4577,10 +4593,10 @@ const firstPrin=aid({
   buttons:[{label:"▶ Shrink h",show:s=>s.step===3||s.step===4,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=Math.max(.01,+(h0*Math.pow(.01/h0,p)).toFixed(2));});}},
     {label:"↺ h = 0.5",show:s=>s.step===3||s.step===4,fn:s=>{s.h=.5}}],
   steps:[
-    {name:"Rise over run",t:s=>{const C=fpC(s); return `Gradient of PQ = ${frac(kc("red","rise"),kc("amber","run"))} = ${frac(kc("red",`${C.fxh} − ${C.fx}`),kc("amber",FPH))}<br>${kc("amber",FPH)} = how far Q is along from P.`;}},
-    {name:"Expand",t:s=>{const C=fpC(s); return `${nw(`${C.fxh} − ${C.fx}`)} = ${nw(`${C.ex} − ${C.fx}`)}<br>= ${nw(kc("green",C.G))} + ${nw(kc("red",C.R))} (the ${C.fx} cancel)`;}},
-    {name:"Divide by h",t:s=>{const C=fpC(s); return `Gradient of PQ = ${frac(kc("green",C.G)+" + "+kc("red",C.R),kc("amber",FPH))}<br>= ${nw(kc("green",C.G1))} + ${nw(kc("red",C.R1))}: the rise for every ${kc("amber","1")} along`;}},
-    {name:"Shrink h",t:s=>{const C=fpC(s); return `Shrink ${FPH}: ${nw(kc("red",C.R1)+" → 0")}, so the gradient → ${nw(kc("green",C.G1))}.<br>${FPH} is never 0: you can't divide by 0.`;}},
+    {name:"Rise over run",t:s=>`${fpWk(s)}<span class="fpm">${kc("red","Rise")} over ${kc("amber","run")}: ${kc("amber",FPH)} = how far Q is along from P.</span>`},
+    {name:"Expand",w:fpOld,t:s=>`${fpWk(s)}<span class="fpm">Expand the top: the ${fpC(s).fx} cancel.</span>`},
+    {name:"Divide by h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">Divide each term by ${kc("amber",FPH)}: ${nw(`${kc("green",C.G1)} + ${kc("red",C.R1)}`)} is the rise for every ${kc("amber","1")} along.</span>`;}},
+    {name:"Shrink h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">${nw(kc("red",C.R1)+" → 0")}: the chord PQ becomes the ${kc("green","tangent at P")}.<br>${FPH} is never 0: you can't divide by 0.</span>`;}},
     {name:"Same for x³",set:{cv:"cube"},t:s=>{const C=fpC(s); return `${C.Y}: expand, divide by ${FPH}, then shrink ${FPH}.<br>Same steps, and out comes ${kc("green",C.G1)}.`;}},
     {name:"So…",t:()=>`${nw(`(${X1} + ${FPH})<sup>${FPN}</sup> − ${X1}<sup>${FPN}</sup>`)} = ${nw(kc("green",`${FPN}${X1}<sup>${FPN} − 1</sup>${FPH}`))} + ${nw(kc("red",`${FPH}², ${FPH}³ … terms`))}<br>Divide by ${FPH}, shrink ${FPH}: only ${nw(kc("green",`${FPN}${X1}<sup>${FPN} − 1</sup>`))} is left.`}
   ],
