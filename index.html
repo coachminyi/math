@@ -4579,7 +4579,8 @@ const FPC={
 };
 const fpN=v=>N(v,6), fpC=s=>FPC[s.cv]||FPC.sq;
 const fpRows=C=>{ const A=kc("amber",FPH), cx=`<span class="fpx">${C.fx}</span>`;
-  return [[0,"Gradient of PQ",1],[0,`= ${frac(kc("red",`${C.fxh} − ${C.fx}`),A)}`],
+  return [[0,`Gradient of PQ ${nw(`= ${frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`)}`)}`,1],
+    [0,`= ${frac(kc("red",`${C.fxh} − ${C.fx}`),kc("amber",`(${X1} + ${FPH}) − ${X1}`))}`],[0,`= ${frac(kc("red",`${C.fxh} − ${C.fx}`),A)}`],
     [1,`= ${frac(`${cx}${C.ex.slice(C.fx.length)} − ${cx}`,A)}`],[1,`= ${frac(`${kc("green",C.G)} + ${kc("red",C.R)}`,A)}`],
     [2,nw(`= ${kc("green",C.G1)} + ${kc("red",C.R1)}`)],[3,`${nw(`→ ${kc("green",C.G1)}`)} as ${nw(`${FPH} → 0`)}`]]; };
 const fpWk=(s,old)=>fpRows(fpC(s)).filter(r=>old?r[0]<s.step:r[0]===s.step).map(r=>`<span class="fpr${r[2]?"":" fpc"}${!old&&s.step?" fpn":""}">${r[1]}</span>`).join("");
@@ -4593,7 +4594,7 @@ const firstPrin=aid({
   buttons:[{label:"▶ Shrink h",show:s=>s.step===3||s.step===4,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=Math.max(.01,+(h0*Math.pow(.01/h0,p)).toFixed(2));});}},
     {label:"↺ h = 0.5",show:s=>s.step===3||s.step===4,fn:s=>{s.h=.5}}],
   steps:[
-    {name:"Rise over run",t:s=>`${fpWk(s)}<span class="fpm">${kc("red","Rise")} over ${kc("amber","run")}: ${kc("amber",FPH)} = how far Q is along from P.</span>`},
+    {name:"Rise over run",t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">${nw(`P(${X1}, ${C.fx})`)} and ${nw(`Q(${X1} + ${FPH}, ${C.fxh})`)}<br>${kc("red","Rise")} on top, ${kc("amber","run")} below: Q is ${kc("amber",FPH)} along from P.</span>`;}},
     {name:"Expand",w:fpOld,t:s=>`${fpWk(s)}<span class="fpm">Expand the top: the ${fpC(s).fx} cancel.</span>`},
     {name:"Divide by h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">Divide each term by ${kc("amber",FPH)}: ${nw(`${kc("green",C.G1)} + ${kc("red",C.R1)}`)} is the rise for every ${kc("amber","1")} along.</span>`;}},
     {name:"Shrink h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">${nw(kc("red",C.R1)+" → 0")}: the chord PQ becomes the ${kc("green","tangent at P")}.<br>${FPH} is never 0: you can't divide by 0.</span>`;}},
@@ -8588,7 +8589,7 @@ ${PAN("Area and shortest distance",picBoxTri()+EG("No flat side? Box it in, take
 ${MIST([[`${nw(`2${VY} = 6${X1} − 8`)}, so ${nw(`${V("m")} = 6`)}`,`${nw(`${VY} = 3${X1} − 4`)} first, so ${nw(`${V("m")} = 3`)}`],[`perpendicular to ${nw(`−${frac("7","4")}`)} is ${nw(`−${frac("4","7")}`)}`,`flip, then change the sign: ${nw(frac("4","7"))}`],[`${nw("AP : PB = 3 : 4")}, so scale by ${nw(frac("3","4"))}`,`${nw("AP : AB = 3 : 7")}, so scale by ${nw(frac("3","7"))}`],["height = the slant side","the height is perpendicular to the base"]])}
 </div>`,
 
-emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"),FB("amber","Cosine rule",`${nw(`${V("a")}² = ${V("b")}² + ${V("c")}²`)}<br>${nw(`− 2${V("bc")} cos ${V("A")}`)}`,"2 sides and the angle between, or 3 sides"),FB("green","Area",nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),`${V("C")} is the angle between ${V("a")} and ${V("b")}`)])}
+emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"),FB("amber","Cosine rule",nw(`${V("a")}² = ${V("b")}² + ${V("c")}² − 2${V("bc")} cos ${V("A")}`),"2 sides and the angle between, or 3 sides"),FB("green","Area",nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),`${V("C")} is the angle between ${V("a")} and ${V("b")}`)])}
 <div class="sheet">
 ${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its opposite angle"),PIC(null,picRule("sas"),"Cosine rule","2 sides and the angle between"),PIC(null,picRule("sss"),"Cosine rule","all 3 sides"))+`<p class="anno">* a right angle? TOA CAH SOH is quicker</p>`)}
 ${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
@@ -9874,7 +9875,7 @@ function fillPrintFoot(withQR){
 }
 async function printSheet(){ try{ await loadQR(); }catch(e){} fillPrintFoot(true); window.print(); }
 window.addEventListener("beforeprint",()=>fillPrintFoot(!!window.qrcode));
-function fitMust(){ requestAnimationFrame(()=>{ fitText(document.querySelector(".must"),true); fitPaper(); alignEq(app); }); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>alignEq(app)); }
+function fitMust(){ requestAnimationFrame(()=>{ fitText(document.querySelector(".must"),true); fitPaper(); alignEq(app); }); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ fitText(document.querySelector(".must"),true); alignEq(app); }); }
 function eqLead(l){ const base=l.getBoundingClientRect(), cs=getComputedStyle(l), pl=parseFloat(cs.paddingLeft)||0, lh=parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.4;
   const w=document.createTreeWalker(l,NodeFilter.SHOW_TEXT); let n;
   while((n=w.nextNode())){ if(n.parentElement.closest(".tagop, .frac, sup, sub, svg, .lim, .mx, .rt, .pb")) continue; const i=n.nodeValue.indexOf("="); if(i<0) continue;
