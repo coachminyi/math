@@ -292,6 +292,7 @@ i.v{font-style:italic;font-family:"STIX Two Text","Times New Roman",Georgia,seri
 .eg{border-left:3px solid var(--blue);margin:10px 0 2px;padding:1px 0 1px 10px}
 .eg .egh{font-size:14px;font-weight:700;color:var(--blue);line-height:1.4;margin-bottom:2px}
 .eg .egl{font-size:16px;line-height:1.6}
+.eg .egm{color:var(--muted);font-size:14px;margin-left:8px;white-space:nowrap}
 .facts{margin:10px 0 2px}
 .facts .fh{font-size:14px;font-weight:700;color:var(--blue);margin:0 0 6px}
 .facts .fr{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:start;margin:0 0 6px}
@@ -1312,7 +1313,9 @@ const TOPICS = [
   {id:"sugar-left", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
    title:"Sugar left", blurb:"A bag of sugar, a fraction of it used. How much is left, in grams?", play:"sugarLeft"},
   {id:"beads-video", strand:"num", levels:["p6"], chapter:"Ratio", unlisted:true,
-   title:"Vivian's beads: the video", blurb:"Bags of beads pour into one bag. Stop and write each line.", play:"beadsVideo"}
+   title:"Vivian's beads: the video", blurb:"Bags of beads pour into one bag. Stop and write each line.", play:"beadsVideo"},
+  {id:"sugar-video", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"Mr Ali's sugar: the video", blurb:"4 bags pour into one jar. ⅝ of HIS sugar. Stop twice and write the line.", play:"sugarVideo"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -1503,9 +1506,9 @@ function graph(svg,o){
   const ax=Math.min(Math.max(0,o.y0),o.y1), ay=Math.min(Math.max(0,o.x0),o.x1);
   add("line",{x1:o.l,x2:o.l+o.w,y1:Y(ax),y2:Y(ax),stroke:"var(--ink)","stroke-width":.55});
   add("line",{x1:X(ay),x2:X(ay),y1:o.t,y2:o.t+o.h,stroke:"var(--ink)","stroke-width":.55});
-  for(let i=Math.ceil(o.x0/xl-1e-9);i*xl<=o.x1+1e-9;i++){const x=i*xl; if(Math.abs(x)<1e-9) continue;
+  if(!o.nonum) for(let i=Math.ceil(o.x0/xl-1e-9);i*xl<=o.x1+1e-9;i++){const x=i*xl; if(Math.abs(x)<1e-9) continue;
     add("text",{x:X(x),y:Y(ax)+4.6,"text-anchor":X(x)>o.l+o.w-3?"end":"middle","font-size":3.7,fill:"var(--muted)"},xf(x));}
-  for(let i=Math.ceil(o.y0/yl-1e-9);i*yl<=o.y1+1e-9;i++){const y=i*yl; if(Math.abs(y)<1e-9||Math.abs(Y(y)-o.t)<4) continue;
+  if(!o.nonum) for(let i=Math.ceil(o.y0/yl-1e-9);i*yl<=o.y1+1e-9;i++){const y=i*yl; if(Math.abs(y)<1e-9||Math.abs(Y(y)-o.t)<4) continue;
     add("text",{x:X(ay)-1.4,y:Y(y)+1.3,"text-anchor":"end","font-size":3.7,fill:"var(--muted)"},N(y));}
   add("text",{x:o.l+o.w-1,y:Y(ax)-3,"text-anchor":"end","font-size":4.4,"font-style":"italic",fill:"var(--ink)"},o.xn||"x");
   add("text",{x:X(ay)+1.6,y:o.t+4,"font-size":4.4,"font-style":"italic",fill:"var(--ink)"},o.yn||"y");
@@ -2351,7 +2354,7 @@ const complSq=aid({
 const FB=(c,lbl,eq,rd,gen,cls)=>`<div class="formbox fb-${c}${cls?" "+cls:""}"><div class="hd">${lbl}</div>${gen?`<div class="gen">${gen}</div>`:""}<div class="eq">${eq}</div>${rd?`<div class="rd">${rd}</div>`:""}</div>`;
 const FORMS=(a,tight)=>`<div class="forms${tight?" tight":""}">${a.join("")}</div>`;
 const KHEAD=t=>`<div class="khead">${t}</div>`;
-const KPAIR=(gen,spec,lbl)=>`<div class="kpair"><span class="gl">General form</span><span class="ge">${gen}</span><span class="gl">${lbl}</span><span class="se">${spec}</span></div>`;
+const KPAIR=(gen,spec,lbl,glbl="General form")=>`<div class="kpair"><span class="gl">${glbl}</span><span class="ge">${gen}</span><span class="gl">${lbl}</span><span class="se">${spec}</span></div>`;
 const explainBox=lines=>`<div class="box explain"><ul>${lines.map(l=>`<li>${l}</li>`).join("")}</ul></div>`;
 const PB=v=>v<0?`(${N(v)})`:N(v), PM=v=>`(${N(v)})`;
 const eqv=v=>Math.abs(v*100-Math.round(v*100))<1e-6?`= ${N(v,2)}`:`≈ ${N(v,2)}`;
@@ -2615,13 +2618,38 @@ const circLat=s=>{const o=[]; for(let dx=-s.r;dx<=s.r;dx++){const d2=s.r*s.r-dx*
 const cP=s=>{const t=s.th*Math.PI/180; return [s.a+s.r*Math.cos(t),s.b+s.r*Math.sin(t)];};
 const r2=v=>+(+v).toFixed(2), sqP=v=>`${PB(r2(v))}²`, brN=(v,c)=>`(${N(v)} ${c<0?"+":"−"} ${N(Math.abs(c))})`;
 const cSign=s=>s.a===0?`${X2} on its own means the centre has ${nw(`${X1} = 0`)}.`:s.a<0?`${nw(`(${X1} + ${N(-s.a)})²`)} is ${nw(`(${X1} − (${N(s.a)}))²`)}, so the centre has ${nw(`${X1} = ${N(s.a)}`)}.`:`${nw(`(${X1} − ${N(s.a)})²`)} means the centre has ${nw(`${X1} = ${N(s.a)}`)}.`;
+const CEL={a:2,b:1,x:5,y:5,r:5};
+const ceLines=s=>{ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b, ok=dx>.5&&dy>.5&&Math.abs(dx-Math.round(dx))<1e-6&&Math.abs(dy-Math.round(dy))<1e-6;
+  const A=kc("amber",`${X1} − ${V("a")}`), U=kc("green",`${V("y")} − ${V("b")}`), M=t=>`<span class="egm">${t}</span>`;
+  return [nw(`CP = ${kc("red",V("r"))}`)+M("the radius"),
+    `${nw(`${kc("amber","across")} = ${A}`)}, ${nw(`${kc("green","up")} = ${U}`)}`+(ok?M(`like ${N(Math.round(px))} − ${PB(s.a)} and ${N(Math.round(py))} − ${PB(s.b)}`):""),
+    nw(`${kc("amber","across")}² + ${kc("green","up")}² = ${kc("red","CP")}²`)+M("Pythagoras' Theorem"),
+    nw(`(${A})² + (${U})² = ${kc("red",V("r"))}²`)+M("standard form")]; };
+function ceLet(svg,s){ const g=graph(svg,Object.assign({},BXC,{nonum:1})), {a,b,x,y,r}=CEL, L=s.ln, op=k=>({opacity:k?1:.2});
+  const T=(px,py,parts,at)=>{ const t=g.text(px,py,"",Object.assign({"font-size":3.9,"font-weight":700},at)); parts.forEach((p,i)=>{ if(p) t.append(svgEl("tspan",i%2?{"font-style":"italic"}:{},p)); }); return t; };
+  const dash=(c,k)=>Object.assign({stroke:c,"stroke-dasharray":"1.2 1.2","stroke-width":.6},op(k)), lit2=L>=2;
+  g.add("circle",{cx:g.X(a),cy:g.Y(b),r:g.X(a+r)-g.X(a),fill:"none",stroke:BL,"stroke-width":L>=4?2:1.2});
+  g.line(a,b,a,0,dash(AMB,lit2)); g.line(x,b,x,0,dash(AMB,lit2)); g.line(a,b,0,b,dash(GR,lit2)); g.line(x,y,0,y,dash(GR,lit2));
+  [[a,"a"],[x,"x"]].forEach(([v,t])=>{ g.line(v,-.3,v,.3,Object.assign({stroke:AMB,"stroke-width":.8},op(lit2))); T(v,0,["",t],Object.assign({dy:4.8,"text-anchor":"middle",fill:AMB},op(lit2))); });
+  [[b,"b"],[y,"y"]].forEach(([v,t])=>{ g.line(-.3,v,.3,v,Object.assign({stroke:GR,"stroke-width":.8},op(lit2))); T(0,v,["",t],Object.assign({dx:-1.8,dy:1.4,"text-anchor":"end",fill:GR},op(lit2))); });
+  g.line(a,b,x,b,Object.assign({stroke:AMB,"stroke-width":1.3},op(lit2))); g.line(x,b,x,y,Object.assign({stroke:GR,"stroke-width":1.3},op(lit2))); g.line(a,b,x,y,Object.assign({stroke:RD,"stroke-width":1.3},op(L!==2)));
+  rightMark(svg,[g.X(x),g.Y(b)],[g.X(a),g.Y(b)],[g.X(x),g.Y(y)],3); svg.lastElementChild.setAttribute("opacity",L>=3?1:.2);
+  T((a+x)/2,b,["","x"," − ","a"],Object.assign({dy:4.6,"text-anchor":"middle",fill:AMB},op(lit2)));
+  T(x,(b+y)/2,["","y"," − ","b"],Object.assign({dx:1.6,dy:1.3,"text-anchor":"start",fill:GR},op(lit2)));
+  T((a+x)/2,(b+y)/2,["","r"],Object.assign({dx:-1.8,dy:-1.6,"text-anchor":"end",fill:RD,"font-size":4.4},op(L!==2)));
+  g.dot(a,b,"var(--ink)",1.6); g.dot(x,y,"var(--accent)",1.6);
+  T(a,b,["C(","a",", ","b",")"],{dx:-2,dy:5,"text-anchor":"end"});
+  T(x,y,["P(","x",", ","y",")"],{dx:3.4,dy:-3,"text-anchor":"start",fill:"var(--accent)"}); }
 const circleEq=aid({
-  init:{a:2,b:1,r:5,th:53.13010235415598,qx:6,qy:5}, jump:true, label:"Circle: every point is r away from the centre", link:["th","qx","qy"],
-  sliders:[{k:"a",label:V("a"),min:-3,max:5,step:1,show:s=>s.step===2},{k:"b",label:V("b"),min:-3,max:4,step:1,show:s=>s.step===2},{k:"r",label:V("r"),min:1,max:6,step:1,show:s=>s.step===2}],
+  init:{a:2,b:1,r:5,th:53.13010235415598,qx:6,qy:5,ln:1}, jump:true, nxWait:true, label:"Circle: every point is r away from the centre", link:["th","qx","qy","ln"],
+  fix:s=>{ s.ln=clamp(Math.round(+s.ln||1),1,4); },
+  sliders:[{k:"a",label:V("a"),min:-3,max:5,step:1,show:s=>s.step===3},{k:"b",label:V("b"),min:-3,max:4,step:1,show:s=>s.step===3},{k:"r",label:V("r"),min:1,max:6,step:1,show:s=>s.step===3}],
+  buttons:[{label:"▶ Next line",show:s=>s.step===1&&s.ln<4,fn:s=>{s.ln++;}},{label:"Start again",show:s=>s.step===1&&s.ln>1,fn:s=>{s.ln=1;}}],
   steps:[{name:"On the circle",t:s=>`Drag P round the circle. It's always ${N(s.r)} away from the centre C.<br>So across² + up² = ${N(s.r)}² = ${N(s.r*s.r)}, wherever P is.`},
+    {name:"In letters",set:{ln:1},t:s=>s.ln<4?`Same triangle in letters: centre ${nw(`C(${V("a")}, ${V("b")})`)}, any point ${nw(`P(${X1}, ${V("y")})`)} on the circle.<br>Press <b>▶ Next line</b>.`:`This works for every point P on the circle.<br>P left of or below C? ${nw(`${X1} − ${V("a")}`)} or ${nw(`${V("y")} − ${V("b")}`)} is negative, but its square is the same.`},
     {name:"Test a point",t:s=>`Drag the dot. Put it into the left side and compare with ${N(s.r*s.r)}.<br>Less: inside. Equal: on the circle. More: outside.`},
     {name:"Centre & radius",t:s=>`Change the centre and the radius.<br>Watch the signs: ${cSign(s)}`}],
-  draw(svg,s){ const g=graph(svg,BXC);
+  draw(svg,s){ if(s.step===1){ ceLet(svg,s); return; } const g=graph(svg,BXC);
     g.add("circle",{cx:g.X(s.a),cy:g.Y(s.b),r:g.X(s.a+s.r)-g.X(s.a),fill:"none",stroke:BL,"stroke-width":1.2});
     g.dot(s.a,s.b,"var(--ink)",1.6); g.text(s.a,s.b,`C(${N(s.a)}, ${N(s.b)})`,{dx:-2,dy:s.step===0&&cP(s)[1]<s.b?-2.4:5,"text-anchor":"end","font-size":3.9,"font-weight":700});
     if(s.step===0){ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b;
@@ -2632,7 +2660,7 @@ const circleEq=aid({
       g.text((s.a+px)/2,(s.b+py)/2,N(s.r),{dx:dx>=0?-1.8:1.8,dy:dy>=0?-1.6:4,"text-anchor":dx>=0?"end":"start",fill:RD,"font-size":3.9,"font-weight":700});
       g.text(px,py,`P(${N(r2(px))}, ${N(r2(py))})`,{dx:dx>=0?3.4:-3.4,dy:dy>=0?-3:5.5,"text-anchor":dx>=0?"start":"end",fill:"var(--accent)","font-size":3.9,"font-weight":700});
       handle(svg,g.X(px),g.Y(py),"p"); return; }
-    if(s.step===1){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1, col=st===0?GR:st<0?BL:RD;
+    if(s.step===2){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1, col=st===0?GR:st<0?BL:RD;
       g.line(s.a,s.b,s.qx,s.qy,{stroke:col,"stroke-dasharray":"1.6 1.2","stroke-width":.9});
       g.text(s.qx,s.qy,`(${N(s.qx)}, ${N(s.qy)})`,{dx:s.qx>=s.a?3.4:-3.4,dy:-3,"text-anchor":s.qx>=s.a?"start":"end",fill:col,"font-size":3.9,"font-weight":700});
       handle(svg,g.X(s.qx),g.Y(s.qy),"q",col); return; }
@@ -2644,10 +2672,11 @@ const circleEq=aid({
     if(s.step===0){ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b, lat=Math.abs(dx-Math.round(dx))<1e-6&&Math.abs(dy-Math.round(dy))<1e-6;
       return eq+FORMS([FB("amber",`Across: ${X1} − ${PB(s.a)}`,nw(`${N(r2(px))} − ${PB(s.a)} = ${N(r2(dx))}`),""),FB("green",`Up: ${V("y")} − ${PB(s.b)}`,nw(`${N(r2(py))} − ${PB(s.b)} = ${N(r2(dy))}`),""),
         FB("blue","Pythagoras",nw(`${sqP(dx)} + ${sqP(dy)} ${lat?"=":"≈"} ${N(s.r*s.r)}`),`wherever P is, it comes to ${N(s.r*s.r)} = ${V("r")}²`,null,"wide")],true); }
-    if(s.step===1){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1;
+    if(s.step===1) return EG(null,ceLines(s).slice(0,s.ln));
+    if(s.step===2){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1;
       return eq+FORMS([FB("amber","Put the point in",nw(`${brN(s.qx,s.a)}² + ${brN(s.qy,s.b)}² = ${N(d2,2)}`),"",null,"wide"),
         FB(st===0?"green":st<0?"blue":"red",st===0?"✓ On the circle":st<0?"Inside":"Outside",nw(`${N(d2,2)} ${st===0?"=":st<0?"&lt;":"&gt;"} ${N(R2)}`),`compared with ${V("r")}² = ${N(R2)}`,null,"wide")],true); }
-    return KPAIR(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`,live,"Here")+FORMS([FB("blue","Centre",nw(`(${N(s.a)}, ${N(s.b)})`),`${nw(`(${V("a")}, ${V("b")})`)}: flip the signs in the brackets`),FB("red","Radius",nw(`${SQRT(N(s.r*s.r))} = ${N(s.r)}`),"square root of the right side"),
+    return KPAIR(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`,live,"Here","Standard form")+FORMS([FB("blue","Centre",nw(`(${N(s.a)}, ${N(s.b)})`),`${nw(`(${V("a")}, ${V("b")})`)}: flip the signs in the brackets`),FB("red","Radius",nw(`${SQRT(N(s.r*s.r))} = ${N(s.r)}`),"square root of the right side"),
       FB("amber","Multiplied out",nw(`${poly([[1,X2],[1,V("y")+"²"],[-2*s.a,X1],[-2*s.b,V("y")],[s.a*s.a+s.b*s.b-s.r*s.r,""]])} = 0`),`centre from here: half each ${X1} and ${V("y")} coefficient, then flip the sign`,null,"wide")],true); }
 });
 const LLX=[1,2,3,4,5];
@@ -6472,7 +6501,7 @@ const sugarLeft={ steps:[],
   } };
 const myFractions={ steps:[],
   mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("sgplay","sgaid"); key.remove(); panel.innerHTML=""; stage.innerHTML=""; const P=sgLoad(), d=P.done||{}, pulse=sgLS("mf:pulse"), done=d[1]&&d[2]&&d[3];
-    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a>`);
+    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a><a class="sgcard" href="#sugar-video"><div class="m">🎬</div><div class="t">Sugar: the video</div><div class="s">Mr Ali's 4 bags pour into one jar. Stop twice, write the line.</div></a>`);
     stage.append(h("div",{class:"sgq",style:"order:0"},`<div class="sgqt" style="line-height:1.4;font-weight:700">My fractions</div>`),cards);
     if(!sgLS("mf:seen")){ stage.append(h("div",{class:"sgnote"},`Progress lives on this iPad. In Safari, tap <b>Share</b> then <b>Add to Home Screen</b> to keep this link.`)); sgLS("mf:seen","1"); }
     kidBtn.dataset.lp="1"; this.kmenu=B=>`${B("x:pulse",pulse==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:rn","New child: clear everything")}<div class="kmh">Progress lives on this device</div><hr>`; this.kact=k=>{ if(k==="pulse") sgLS("mf:pulse",pulse==="S"?"":"S"); if(k==="rn") sgSave({done:{}}); route(); }; } };
@@ -6499,6 +6528,31 @@ const beadsVideo={ steps:[],
     v.addEventListener("ended",()=>{ say("Well done! Now do <b>HW5 (Jacy's flour)</b> on paper. The bags left pour into ONE bag too."); again.hidden=false; });
     if(cur) cur.state=()=>({}); } };
 PLAYS.beadsVideo=beadsVideo;
+function vidPlay(cfg){ return { steps:[],
+  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("bvplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
+    const CUES=cfg.cues, v=h("video",{src:cfg.src,poster:cfg.poster,playsinline:"",preload:"auto",controls:""}); v.setAttribute("webkit-playsinline","");
+    const go=h("button",{class:"bvbtn bvgo",type:"button"},"▶ Watch"), wrap=h("div",{class:"bvwrap"}); wrap.append(v,go);
+    const msg=h("div",{class:"bvmsg"}), done=h("button",{class:"bvbtn",type:"button",hidden:""},"Done ✓"), again=h("button",{class:"bvbtn bvagain",type:"button",hidden:""},"↺ Watch again"), bar=h("div",{class:"bvbar"}); bar.append(msg,done,again);
+    stage.append(wrap,bar);
+    let wait=-1, raf=0; const passed=CUES.map(()=>false);
+    const say=(s,live)=>{ msg.innerHTML=s; bar.classList.toggle("live",!!live); done.hidden=!live||!!cfg.wait; again.hidden=true; if(live&&cfg.wait) setTimeout(()=>{ if(wait>=0) done.hidden=false; },cfg.wait*1000); };
+    const idle=()=>say(cfg.idle);
+    const check=()=>{ if(wait>=0) return; const t=v.currentTime; for(let i=0;i<CUES.length;i++){ const [a,b]=CUES[i]; if(!passed[i]&&t>=a-0.04&&t<b){ wait=i; v.pause(); v.currentTime=a; say("✏️ Stop. Write it on paper first. Then tap",true); return; } } };
+    const loop=()=>{ check(); if(!v.paused&&!v.ended) raf=requestAnimationFrame(loop); };
+    const finish=()=>{ if(wait<0) return; const i=wait; passed[i]=true; wait=-1; v.currentTime=CUES[i][1]; idle(); v.play(); };
+    idle(); done.onclick=finish; go.onclick=()=>{ go.hidden=true; v.play(); };
+    again.onclick=()=>{ passed.fill(false); wait=-1; v.currentTime=0; idle(); v.play(); };
+    v.addEventListener("play",()=>{ go.hidden=true; if(wait>=0){ finish(); return; } cancelAnimationFrame(raf); raf=requestAnimationFrame(loop); });
+    v.addEventListener("timeupdate",check);
+    const sk=()=>{ const t=v.currentTime; if(wait>=0&&Math.abs(t-CUES[wait][0])>0.3){ wait=-1; idle(); } CUES.forEach(([a],i)=>{ if(t<a-0.1) passed[i]=false; }); };
+    v.addEventListener("seeking",sk); v.addEventListener("seeked",sk);
+    v.addEventListener("ended",()=>{ say(cfg.end); again.hidden=false; });
+    if(cur) cur.state=()=>({}); } }; }
+const SV_CUES=[[51.0,59.5],[98.6,107.1]];
+const sugarVideo=vidPlay({src:"sugar-video.mp4",poster:"sugar-video-poster.jpg",cues:SV_CUES,wait:5,
+  idle:"It stops 2 times. Each time, write the line on paper, then tap <b>Done</b>.",
+  end:`Well done! Now <b>Your turn</b> on paper: ${frac(3,8)} kg of sugar, ${frac(2,3)} of it used. How much is left, in grams?`});
+PLAYS.sugarVideo=sugarVideo;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
