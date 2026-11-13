@@ -9,6 +9,7 @@ self.addEventListener("activate",e=>{
 self.addEventListener("fetch",e=>{
   const r=e.request;
   if(r.method!=="GET"||new URL(r.url).origin!==self.location.origin) return;
+  if(r.headers.has("range")||/\.mp4$/i.test(new URL(r.url).pathname)) return;
   const net=fetch(r).then(res=>{
     if(res.ok){ const copy=res.clone(); return caches.open(CACHE).then(c=>c.put(r,copy)).then(()=>res,()=>res); }
     return res;
