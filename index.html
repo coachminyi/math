@@ -1134,6 +1134,18 @@ html[data-theme="dark"] .sgp.live{box-shadow:inset 0 0 0 1.5px var(--blue)}
  .play.sgplay .stage svg{max-height:46svh}
 }
 @media (prefers-reduced-motion:reduce){.sgp.sghint,.sgp.sgglow,.sgf.sghint,.sgf.sgglow,.sgline .sgbox.sglive,.sgbtn.sglive,.sgdoor.next,.sgcard.next,.sgaid.sgidle .sgp.live,.sgaid.sgidle .sgf.live,.kglow.sgpart{animation:none}}
+.play.bvplay{display:block;max-width:1100px;margin:0 auto}
+.play.bvplay .panel{display:none}
+.play.bvplay .stage{padding:10px}
+.bvwrap{position:relative;border-radius:12px;overflow:hidden;background:#000}
+.bvwrap video{display:block;width:100%;height:auto;max-height:76vh;margin:0 auto;background:#000}
+.bvgo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:26px;padding:16px 34px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.bvbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin-top:12px;padding:12px 16px;border:2px solid var(--line);border-radius:16px;background:var(--card);font-size:19px;text-align:center;line-height:1.4}
+.bvbar.live{border-color:#d97706;background:color-mix(in srgb,#fde68a 45%,var(--card))}
+.bvbtn{font:inherit;font-size:20px;font-weight:700;border:0;border-radius:999px;padding:12px 28px;background:var(--blue);color:#fff;cursor:pointer}
+.bvbtn[hidden]{display:none}
+.bvbar.live .bvbtn{animation:kidPulse 1.6s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.bvbar.live .bvbtn{animation:none}}
 .kq>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .kq>summary::-webkit-details-marker{display:none}
 .kqc{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 11px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:15px;white-space:nowrap}
@@ -1298,7 +1310,9 @@ const TOPICS = [
   {id:"my-fractions", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
    title:"My fractions", blurb:"Fraction stories, one small aid each.", play:"myFractions"},
   {id:"sugar-left", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
-   title:"Sugar left", blurb:"A bag of sugar, a fraction of it used. How much is left, in grams?", play:"sugarLeft"}
+   title:"Sugar left", blurb:"A bag of sugar, a fraction of it used. How much is left, in grams?", play:"sugarLeft"},
+  {id:"beads-video", strand:"num", levels:["p6"], chapter:"Ratio", unlisted:true,
+   title:"Vivian's beads: the video", blurb:"Bags of beads pour into one bag. Stop and write each line.", play:"beadsVideo"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -6463,6 +6477,28 @@ const myFractions={ steps:[],
     if(!sgLS("mf:seen")){ stage.append(h("div",{class:"sgnote"},`Progress lives on this iPad. In Safari, tap <b>Share</b> then <b>Add to Home Screen</b> to keep this link.`)); sgLS("mf:seen","1"); }
     kidBtn.dataset.lp="1"; this.kmenu=B=>`${B("x:pulse",pulse==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:rn","New child: clear everything")}<div class="kmh">Progress lives on this device</div><hr>`; this.kact=k=>{ if(k==="pulse") sgLS("mf:pulse",pulse==="S"?"":"S"); if(k==="rn") sgSave({done:{}}); route(); }; } };
 PLAYS.sugarLeft=sugarLeft; PLAYS.myFractions=myFractions;
+const BV_CUES=[[37.6,47.6],[59.2,69.2],[95.6,105.6]];
+const beadsVideo={ steps:[],
+  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("bvplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
+    const v=h("video",{src:"beads-video.mp4",poster:"beads-video-poster.jpg",playsinline:"",preload:"auto",controls:""}); v.setAttribute("webkit-playsinline","");
+    const go=h("button",{class:"bvbtn bvgo",type:"button"},"▶ Watch"), wrap=h("div",{class:"bvwrap"}); wrap.append(v,go);
+    const msg=h("div",{class:"bvmsg"}), done=h("button",{class:"bvbtn",type:"button",hidden:""},"Done ✓"), again=h("button",{class:"bvbtn bvagain",type:"button",hidden:""},"↺ Watch again"), bar=h("div",{class:"bvbar"}); bar.append(msg,done,again);
+    stage.append(wrap,bar);
+    let wait=-1, raf=0; const passed=BV_CUES.map(()=>false);
+    const say=(s,live)=>{ msg.innerHTML=s; bar.classList.toggle("live",!!live); done.hidden=!live; again.hidden=true; };
+    const idle=()=>say("It stops 3 times. Each time, write the line on paper, then tap <b>Done</b>.");
+    const check=()=>{ if(wait>=0) return; const t=v.currentTime; for(let i=0;i<BV_CUES.length;i++){ const [a,b]=BV_CUES[i]; if(!passed[i]&&t>=a-0.04&&t<b){ wait=i; v.pause(); v.currentTime=a; say("✏️ Stop. Write it on paper first. Then tap",true); return; } } };
+    const loop=()=>{ check(); if(!v.paused&&!v.ended) raf=requestAnimationFrame(loop); };
+    const finish=()=>{ if(wait<0) return; const i=wait; passed[i]=true; wait=-1; v.currentTime=BV_CUES[i][1]; idle(); v.play(); };
+    idle(); done.onclick=finish; go.onclick=()=>{ go.hidden=true; v.play(); };
+    again.onclick=()=>{ passed.fill(false); wait=-1; v.currentTime=0; idle(); v.play(); };
+    v.addEventListener("play",()=>{ go.hidden=true; if(wait>=0){ finish(); return; } cancelAnimationFrame(raf); raf=requestAnimationFrame(loop); });
+    v.addEventListener("timeupdate",check);
+    const sk=()=>{ const t=v.currentTime; if(wait>=0&&Math.abs(t-BV_CUES[wait][0])>0.3){ wait=-1; idle(); } BV_CUES.forEach(([a],i)=>{ if(t<a-0.1) passed[i]=false; }); };
+    v.addEventListener("seeking",sk); v.addEventListener("seeked",sk);
+    v.addEventListener("ended",()=>{ say("Well done! Now do <b>HW5 (Jacy's flour)</b> on paper. The bags left pour into ONE bag too."); again.hidden=false; });
+    if(cur) cur.state=()=>({}); } };
+PLAYS.beadsVideo=beadsVideo;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
