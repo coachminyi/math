@@ -960,6 +960,201 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .sheet.js{columns:auto;display:flex;gap:18px;align-items:flex-start}
 .sheet.js>.scol{flex:1 1 0;min-width:0}
 @media print{ .piccard .go{display:none} .wrongright div{background:none} }
+:root{--wood:#e6c294;--wood-edge:#a8763f;--sack:#f6e6c6;--sack-edge:#8c6438}
+:root[data-theme="dark"]{--wood:#56402a;--wood-edge:#b08654;--sack:#8a6c45;--sack-edge:#e2bd86}
+.kidbtn,.kidmenu{display:none}
+html[data-kid] .bar .brand,html[data-kid] .bar .topnav,html[data-kid] .bar .back,html[data-kid] .bar .ibtn,html[data-kid] .bar .lessbtn,html[data-kid] .bar .themebtn,html[data-kid] .bar .crumb,html[data-kid] footer,html[data-kid] .ptitle,html[data-kid] #app>.tabs,html[data-kid] .stepof,html[data-kid] .prevstep,html[data-kid] .dohint,html[data-kid] .sheetlink,html[data-kid] .panel>.hint,html[data-kid] .stage>.stq,html[data-kid] .askcov,html[data-kid] .askb{display:none !important}
+html[data-kid] .askw.shut>:not(.askcov){visibility:visible !important}
+html[data-kid] .bar .ttl{display:flex !important;cursor:default;pointer-events:none}
+html[data-kid] .bar h1{font-size:20px}
+html[data-kid] .kidbtn{display:inline-flex;align-items:center;justify-content:center;flex:none;margin-left:auto;width:50px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:24px;font-weight:700;line-height:1;cursor:pointer}
+html[data-kid] .kidmenu:not([hidden]){display:flex;flex-direction:column;position:fixed;top:calc(var(--barh,56px) + 4px);right:12px;z-index:30;min-width:250px;max-width:calc(100vw - 24px);max-height:calc(100vh - var(--barh,56px) - 16px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:6px}
+.kidmenu [hidden]{display:none !important}
+.kidmenu button{display:flex;align-items:center;gap:8px;text-align:left;background:none;border:0;border-radius:10px;min-height:44px;padding:0 12px;font:inherit;font-size:16px;color:var(--ink);cursor:pointer}
+.kidmenu button:hover{background:var(--line)}
+.kidmenu button[aria-current="step"]{color:var(--accent);font-weight:700}
+.kidmenu .kmh{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 12px 2px}
+.kidmenu hr{border:0;border-top:1px solid var(--line);margin:4px 6px;width:auto}
+.kidmenu .kmc{display:flex;gap:6px;padding:4px 8px 6px;align-items:center}
+.kidmenu .kmc span{font-weight:700;margin-right:auto;padding-left:4px}
+.kidmenu .kmc button{border:1.5px solid var(--accent);min-height:40px;padding:0 16px;font-weight:700;color:var(--accent)}
+.kidmenu .kmc button.y{background:var(--accent);color:var(--accent-ink)}
+html[data-kid] .steptabs{pointer-events:none;border-bottom:0;justify-content:center;align-items:center;gap:8px;margin:8px 0 12px;padding:0;overflow:visible;-webkit-mask-image:none;mask-image:none}
+html[data-kid] .stab{display:inline-flex;align-items:center;font-size:0;padding:0;min-height:0;margin:0;border:0}
+html[data-kid] .stab .sn{width:28px;height:28px;margin:0;font-size:14px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);opacity:.45}
+html[data-kid] .stab[aria-selected="true"]{font-size:17px;font-weight:700;color:var(--ink)}
+html[data-kid] .stab[aria-selected="true"] .sn{opacity:1;margin-right:8px}
+html[data-kid] .stab[aria-selected="true"]~.stab .sn{background:var(--card);border-color:var(--line);color:var(--muted);opacity:1}
+@media (min-width:900px){ html[data-kid] .play:not(.kstack){grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:18px} }
+html[data-kid] .panel>.exbox{display:contents}
+html[data-kid] .panel{gap:12px}
+html[data-kid] .asktx{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:var(--r);box-shadow:var(--shadow);padding:10px 16px}
+html[data-kid] .asktx .steptext{font-size:21px;line-height:1.4;margin:0;min-height:2.8em;font-weight:600}
+html[data-kid] .stepq{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;margin:0;font-size:16px;font-weight:400;line-height:1.5}
+html[data-kid] .box.dock{background:none;border:0;box-shadow:none;padding:0;margin:0}
+html[data-kid] .dock .pillrow,html[data-kid] .dock .pillrow[data-pk]{flex-wrap:wrap;overflow:visible;gap:10px;margin:0 0 8px;padding:0;-webkit-mask-image:none;mask-image:none}
+html[data-kid] .dock .pillrow:last-child{margin-bottom:0}
+html[data-kid] .dock .pill{min-height:56px;padding:0 22px;font-size:20px;border-width:2px;border-radius:16px}
+html[data-kid] .dock .plbl{font-size:13px}
+html[data-kid] .key{padding:10px 14px}
+html[data-kid] .formbox .hd{font-size:14px}
+html[data-kid] .formbox .rd{font-size:15px}
+html[data-kid] .formbox .eq{font-size:21px}
+html[data-kid] .nxrow{justify-content:flex-end;margin:0}
+html[data-kid] .nextstep:not(.go){display:none !important}
+html[data-kid] .nextstep{min-height:56px;padding:0 22px;font-size:20px;border-radius:16px}
+.pill.tried{opacity:.45;border-style:dashed;box-shadow:none}
+.pill.glow{border-color:var(--green);background:var(--green-fill);color:var(--ink)}
+@keyframes kidPulse{0%{box-shadow:0 0 0 0 var(--accent)}70%{box-shadow:0 0 0 11px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes kidPulseG{0%{box-shadow:0 0 0 0 var(--green)}70%{box-shadow:0 0 0 11px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes kglow{0%,100%{stroke-opacity:1}50%{stroke-opacity:.2}}
+html[data-kid] .dock .pill.act:not(.alt):not(.sec):not([aria-pressed="true"]),html[data-kid] .nextstep.go{animation:kidPulse 1.8s ease-out infinite}
+html[data-kid] .dock .pill.glow{animation:kidPulseG 1.8s ease-out infinite}
+.kglow{animation:kglow 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){html[data-kid] .dock .pill.act,html[data-kid] .nextstep.go,html[data-kid] .dock .pill.glow,.kglow{animation:none}}
+.play.kstack{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.play.kstack .left,.play.kstack .panel,.play.kstack .panel>.exbox{display:contents}
+.play.kstack .stage{position:relative;top:auto;z-index:auto;order:4}
+.play.kstack .stepq{order:1}
+.play.kstack .stepwk{order:2}
+.play.kstack .asktx{order:3}
+.play.kstack .box.dock{order:5}
+.play.kstack .key{order:6}
+.play.kstack .robox{order:7}
+.play.kstack .nxrow{order:8}
+.play.kstack .tryq{order:9}
+.play.kstack .stage svg,.play.kstack .stage.tall svg{max-height:52vh;max-height:52svh}
+@media (max-width:899px){ html[data-kid] .asktx .steptext{font-size:18px} html[data-kid] .dock .pill{min-height:52px;font-size:18px;padding:0 18px} html[data-kid] .nextstep{font-size:18px} html[data-kid] .bar h1{font-size:17px} }
+.play.sgplay{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.play.sgplay .stage svg{touch-action:none;max-height:none}
+.play.sgplay .left{gap:10px}
+.sgtop{display:flex;align-items:center;gap:10px;min-height:44px;order:1}
+.sghome{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:22px;cursor:pointer;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.sgdots{display:flex;gap:8px;align-items:center;margin:0 auto}
+.sgdots i{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:block}
+.sgdots i.on{background:var(--accent);border-color:var(--accent)}
+.sgdots i.done{background:var(--line);border-color:var(--line)}
+.sgq{order:2;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:12px 16px;font-size:20px;line-height:2.2;display:flex;gap:10px;align-items:flex-start}
+.sgq .sgqt{flex:1;min-width:0}
+.sgspk{width:40px;height:40px;flex:none;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:18px;cursor:pointer;margin-top:6px}
+.sgp{display:inline;padding:4px 4px;margin:0 -2px;border-radius:10px;background:transparent;position:relative;transition:background .2s}
+.sgp.live{background:var(--blue-fill);cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--blue)}
+html[data-theme="dark"] .sgp.live{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.sgp.hit{background:var(--green-fill);box-shadow:inset 0 0 0 2px var(--green)}
+.sgp.sghint{animation:sgPulse 1.4s ease-out infinite}
+.sgp.sgglow{background:var(--green-fill);box-shadow:inset 0 0 0 2px var(--green);animation:sgPulse 1.4s ease-out infinite}
+.sgp[data-u]::before{content:attr(data-u);position:absolute;left:50%;transform:translateX(-50%);top:-14px;font-size:14px;font-weight:700;line-height:1;color:var(--blue);white-space:nowrap}
+.sgp.sgp0{padding:0}
+.sgp .frac{vertical-align:middle}
+.sgf{display:inline-block;border-radius:8px;padding:1px 4px}
+.sgf.live{background:var(--blue-fill);box-shadow:inset 0 0 0 1.5px var(--blue);cursor:pointer}
+.sgf.hit{background:var(--green-fill);box-shadow:inset 0 0 0 2px var(--green)}
+.sgf.sghint,.sgf.sgglow{animation:sgPulse 1.4s ease-out infinite}
+.sgq.m1a .sgp{pointer-events:none}
+.sgq.m1a .sgf.live{pointer-events:auto}
+.sgq:not(.m1a) .sgf{pointer-events:none}
+.sgask{order:3;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:var(--r);box-shadow:var(--shadow);padding:10px 16px;display:flex;gap:10px;align-items:center;min-height:64px}
+.sgask .sgat{flex:1;font-size:21px;font-weight:600;line-height:1.35;min-width:0}
+.sgask .sgnud{display:block;font-size:16px;font-weight:400;color:var(--muted);margin-top:4px}
+.sgask.bub{border-left-color:var(--amber);background:var(--amber-fill)}
+.sgask .sgav{width:36px;height:36px;border-radius:50%;flex:none;object-fit:cover}
+.play.sgplay .stage{order:4;padding:8px;overflow:hidden}
+.sgcap{position:absolute;left:10px;right:10px;bottom:10px;background:var(--card);border:1.5px solid var(--amber);border-radius:12px;padding:8px 14px;font-size:18px;font-weight:600;line-height:1.3;text-align:center;box-shadow:var(--shadow);pointer-events:none;opacity:0;transition:opacity .25s}
+.sgcap.on{opacity:1}
+.sgcap.ok{border-color:var(--green)}
+.play.sgplay .panel{order:5;gap:12px}
+.sgright{order:5;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:12px;min-height:120px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.sgline{font-size:22px;font-weight:600;line-height:1.3;text-align:center;min-height:30px}
+.sgline .sgbox{display:inline-block;min-width:2.6em;padding:0 8px;border-radius:10px;border:2px dashed var(--blue);color:var(--blue);background:var(--blue-fill)}
+.sgline .sgbox.sglive{animation:sgPulse 1.6s ease-out infinite}
+.sgline .sgbox.sgshake{animation:sgShake .4s}
+.sgline .frac{vertical-align:middle}
+.sgpad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sgpad button{min-height:60px;font:inherit;font-size:24px;font-weight:700;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);cursor:pointer}
+.sgpad button.ok{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.sgpad button:active{transform:scale(.96)}
+.sgpad button.dis{opacity:.35}
+.sglines{display:flex;flex-direction:column;gap:6px}
+.sglines div{font-size:19px;font-weight:600;padding:6px 10px;border-left:4px solid var(--line);line-height:1.3}
+.sglines div.help{border-left-style:dashed}
+.sglines div .frac{vertical-align:middle}
+.sghint2{font-size:15px;color:var(--muted);text-align:center}
+.sgbtnrow{display:flex;justify-content:flex-end}
+.sgbtn{min-height:56px;padding:0 26px;font:inherit;font-size:20px;font-weight:700;border-radius:16px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.sgbtn.dis{background:var(--card);color:var(--muted);border-color:var(--line);cursor:default}
+.sgbtn.sglive:not(.dis){animation:kidPulse 1.8s ease-out infinite}
+.sgchips{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.sgchips button{min-height:56px;min-width:90px;padding:0 22px;font:inherit;font-size:22px;font-weight:700;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);cursor:pointer}
+.sgchips button.sgglow{border-color:var(--green);background:var(--green-fill)}
+.sgov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:5;border-radius:var(--r)}
+.sgov .sgovc{background:var(--card);border-radius:18px;padding:20px 22px;max-width:360px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.sgov .sgovc p{font-size:22px;font-weight:700;margin:0 0 14px}
+.sgov .sgovc small{display:block;color:var(--muted);font-size:14px;margin-top:10px}
+.sgov .sgchips button{min-width:120px}
+.sgq[hidden],.sgask[hidden],.sgright[hidden]{display:none}
+.sgdoors{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;padding:10px 0}
+.sgdoor{width:150px;min-height:170px;border:2px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px}
+.sgdoor .t{font-size:20px;font-weight:700}
+.sgdoor .m{font-size:36px;line-height:1}
+.sgdoor .s{font-size:14px;color:var(--muted)}
+.sgdoor.next{border-color:var(--accent);animation:kidPulse 1.8s ease-out infinite}
+.sgdoor.grey{opacity:.55}
+.sgcards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;padding:12px 0}
+.sgcard{width:220px;min-height:150px;border:2px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);color:var(--ink);text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px}
+.sgcard .t{font-size:24px;font-weight:700}
+.sgcard .m{font-size:40px;line-height:1}
+.sgcard .s{font-size:15px;color:var(--muted);text-align:center}
+.sgcard.next{border-color:var(--accent);animation:kidPulse 1.8s ease-out infinite}
+.sgnote{font-size:15px;color:var(--muted);text-align:center;max-width:420px;margin:8px auto}
+.sgnote img{height:20px;vertical-align:middle}
+.sgend h3{font-size:22px;margin:0 0 8px}
+.sgend .sgcmp{display:flex;flex-direction:column;gap:8px}
+.sgend .sgcmp button{font:inherit;font-size:19px;font-weight:600;text-align:left;min-height:48px;padding:8px 12px;border:1px dashed var(--line);border-radius:12px;background:var(--card);color:var(--ink);cursor:pointer}
+.sgend .sgcmp button.open{border-style:solid;border-left:4px solid var(--green)}
+.sgend .sgcmp button .frac{vertical-align:middle}
+.sgshake{animation:sgShake .4s}
+.sgwig{animation:sgWig .6s}
+.sgaid.sgidle .sgp.live,.sgaid.sgidle .sgf.live,.sgaid.sgidle .sgchips button{animation:sgPulse 1.4s ease-out infinite}
+.kglow.sgpart{animation:kglowPulse 1.4s ease-out infinite}
+.sgtwin{display:flex;flex-direction:column;gap:10px;padding:6px}
+.sgtwin .sgtq{font-size:20px;line-height:1.6}
+.sgtwin svg{width:100%;max-width:420px;margin:0 auto;display:block}
+.sgher{font-size:15px;line-height:1.45;max-height:50vh;overflow:auto;padding:4px 8px}
+@keyframes sgPulse{0%{box-shadow:0 0 0 0 var(--accent)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes sgShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes sgWig{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+@keyframes kglowPulse{0%{stroke-opacity:1}50%{stroke-opacity:.25}100%{stroke-opacity:1}}
+@media (max-width:899px){
+ .sgq{font-size:18px;line-height:2;padding:10px 12px}
+ .sgask .sgat{font-size:19px}
+ .sgright{min-height:0}
+ .sgpad button{min-height:56px}
+ .sgplay.kstack .sglines.hide{display:none}
+ .sgcap{font-size:16px}
+ .play.sgplay .stage svg{max-height:46svh}
+}
+@media (prefers-reduced-motion:reduce){.sgp.sghint,.sgp.sgglow,.sgf.sghint,.sgf.sgglow,.sgline .sgbox.sglive,.sgbtn.sglive,.sgdoor.next,.sgcard.next,.sgaid.sgidle .sgp.live,.sgaid.sgidle .sgf.live,.kglow.sgpart{animation:none}}
+.kq>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.kq>summary::-webkit-details-marker{display:none}
+.kqc{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 11px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:15px;white-space:nowrap}
+.kqc.mon{background:var(--blue-fill);border-color:var(--blue)}
+.kqc.tue{background:var(--amber-fill);border-color:var(--amber)}
+.kqc.lft{background:var(--green-fill);border-color:var(--green)}
+.kqm{font-size:14px;color:var(--accent);font-weight:700;margin-left:2px}
+.kq[open] .kqm{visibility:hidden}
+.kqf{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:16px}
+.kwl{display:flex;flex-direction:column;gap:4px;font-size:18px;line-height:1.3}
+.kwl .kr{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;padding:3px 10px;border-left:6px solid var(--kc,var(--ink));border-radius:6px;background:var(--kb,transparent)}
+.kwl .kr b{font-weight:700}
+.kwl .kr .kx{color:var(--muted);font-size:14px}
+.kwl .frac{font-size:.82em}
+.kwl .kr.mon{--kc:var(--blue);--kb:var(--blue-fill)}
+.kwl .kr.tue{--kc:var(--amber);--kb:var(--amber-fill)}
+.kwl .kr.lft{--kc:var(--green);--kb:var(--green-fill)}
+.kwl .kr.ask{--kc:var(--muted);border-left-style:dashed}
+.kwl .kr.oops{--kc:var(--amber);border-left-style:dashed}
+.kwl .kr.rrw{display:block;overflow-x:auto;font-size:16px}
+.kwl .kr.rrw .kx{display:block;margin-top:2px}
 </style>
 </head>
 <body>
@@ -976,7 +1171,9 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
   <button class="ibtn wide-only" id="printBtn" hidden aria-label="Print or save as PDF" title="Print or save as PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2"/><rect x="6" y="14" width="12" height="7"/></svg><span class="lbl">Print</span></button>
   <a class="ibtn lessbtn" id="lessBtn" href="#lessons"><span class="lbl">Tuition</span></a>
   <button class="themebtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch to dark mode"></button>
+  <button class="kidbtn" id="kidBtn" type="button" aria-label="More" aria-haspopup="true" aria-expanded="false">⋯</button>
 </div></header>
+<div class="kidmenu" id="kidMenu" hidden role="menu"></div>
 <button class="exitp" id="exitPresent">✕ Exit present mode</button>
 <button class="askb" id="askBtn" type="button" aria-pressed="false" title="Cover the explanation and the answer until you tap them">Ask first: off</button>
 <div class="modal" id="qrModal" hidden role="dialog" aria-modal="true" aria-labelledby="qrTitle"><div class="mbox"><p class="mt" id="qrTitle"></p><div class="qr" id="qrBox"></div><p class="url" id="qrUrl"></p><button class="pill" id="qrClose">Close</button></div></div>
@@ -991,7 +1188,8 @@ const LEVELS = [
   {id:"sec2", name:"Sec 2"},
   {id:"emath", name:"E-Math (Sec 3–4)"},
   {id:"amath", name:"A-Math (Sec 3–4)"},
-  {id:"p5", name:"P5"}
+  {id:"p5", name:"P5"},
+  {id:"p6", name:"P6"}
 ];
 
 const TOPICS = [
@@ -1092,7 +1290,15 @@ const TOPICS = [
   {id:"cone-sector", strand:"geo", levels:["sec2","emath"], chapter:"Measurement",
    title:"Roll a sector up into a cone", blurb:"The arc becomes the base circle. Where r, h and πrl come from.", play:"coneSector", sheet:"s2Volume", sheetTitle:"Volume & surface area"},
   {id:"p5-fractions", strand:"num", levels:["p5"], chapter:"Fractions", unlisted:true,
-   title:"Fractions: see the pieces", blurb:"Same-size pieces, mixed numbers, “of”, fraction × fraction and “of the rest”, all on bars.", play:"fracBars"}
+   title:"Fractions: see the pieces", blurb:"Same-size pieces, mixed numbers, “of”, fraction × fraction and “of the rest”, all on bars.", play:"fracBars"},
+  {id:"of-the-rest", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"Fraction of the rest: see the piles", blurb:"Melons in crates and marbles in bags. See what each fraction is of, then work back to the start.", play:"restPiles"},
+  {id:"on-the-table", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"Fraction of the remaining: on the table", blurb:"Melons on plates, then in closed bags. The remaining = what's on the table.", play:"onTable"},
+  {id:"my-fractions", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"My fractions", blurb:"Fraction stories, one small aid each.", play:"myFractions"},
+  {id:"sugar-left", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"Sugar left", blurb:"A bag of sugar, a fraction of it used. How much is left, in grams?", play:"sugarLeft"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -1317,17 +1523,18 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     <div class="box dock">
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
-      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
+      ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}${/^↺/.test(b.label)?" rst":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
     ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="stepwk" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
     <div class="box robox askw"><div class="readout"></div>${ASKCOV}</div>${flat?TRYQ:""}
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
-  const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel);
-  const KSEL=".formbox, .khead, .kpair, .egl", kbSnap=()=>kb?[...kb.querySelectorAll(KSEL)].map(e=>e.textContent):null, portrait=()=>innerWidth<900&&innerHeight>innerWidth;
+  const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel), stxE=$(".steptext",panel);
+  const KSEL=".formbox, .khead, .kpair, .egl, .kr", kbSnap=()=>kb?[...kb.querySelectorAll(KSEL)].map(e=>e.textContent):null, portrait=()=>innerWidth<900&&innerHeight>innerWidth, kidOn=()=>document.documentElement.hasAttribute("data-kid");
   const showRes=(snap,first)=>{ if(!kb||!snap||!portrait()) return; let n=0; const wait=()=>{ if(st._anim&&n++<400){ requestAnimationFrame(wait); return; }
     const bs=[...kb.querySelectorAll(KSEL)]; let tg=null; bs.forEach((e,i)=>{ if((i>=snap.length||e.textContent!==snap[i])&&!(first&&tg)) tg=e; }); if(!tg||!tg.isConnected) return;
     const dk=document.querySelector(".play>.box.dock"), sr=stage.getBoundingClientRect(), dt=(dk?dk.getBoundingClientRect().top:innerHeight)-8, r=tg.getBoundingClientRect(), stuck=(parseFloat(getComputedStyle(stage).top)||56)+sr.height+8;
-    let dy=0; if(r.bottom>dt) dy=Math.min(r.bottom-dt,r.top-stuck); else if(r.top<sr.bottom+4) dy=r.top-sr.bottom-8;
+    let dy=0; if(kidOn()){ const ak=document.querySelector(".play .asktx"), bh=parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--barh"))||56; if(r.bottom>innerHeight-8) dy=Math.min(r.bottom-innerHeight+8,ak?ak.getBoundingClientRect().top-bh-8:0); }
+    else if(r.bottom>dt) dy=Math.min(r.bottom-dt,r.top-stuck); else if(r.top<sr.bottom+4) dy=r.top-sr.bottom-8;
     if(Math.abs(dy)>4) window.scrollBy({top:dy,behavior:"smooth"}); }; requestAnimationFrame(wait); };
   let fwait=false;
   const draw=()=>{
@@ -1337,7 +1544,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
       inp.value=st[s.k]; $("output",row).textContent=(s.f||N)(st[s.k]); row.style.display=(s.show&&!s.show(st))?"none":"";});
     (def.pills||[]).forEach(p=>{const row=$(`[data-pk="${p.k}"]`,cbox); row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===String(st[p.k])))); row.style.display=(p.show&&!p.show(st))?"none":"";});
     if(jb) jb.querySelectorAll("[data-j]").forEach(b=>{const on=+b.dataset.j===st.step; b.setAttribute("aria-pressed",String(on)); b.setAttribute("aria-selected",String(on));});
-    (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st)));});
+    const KID=kidOn(); (def.buttons||[]).forEach((b,i)=>{const el=$(`[data-b="${i}"]`,cbox); el.style.display=(b.show&&!b.show(st))||(KID&&el.classList.contains("rst"))?"none":""; if(b.pressed) el.setAttribute("aria-pressed",String(!!b.pressed(st))); if(b.tried) el.classList.toggle("tried",!!b.tried(st)); if(b.glow) el.classList.toggle("glow",!!b.glow(st));});
     svg.innerHTML=""; def.draw(svg,st); if(def.kbd) kbdMark(svg,def.kbd,st); if(svg.classList.contains("nudge")){ const hc=svg.querySelectorAll("circle[data-drag]"); if(hc.length<=3) hc.forEach(c=>c.classList.add("nudgeme")); } const vb=svg.viewBox.baseVal; stage.classList.toggle("tall",!!vb&&vb.height>vb.width); bumpText(svg); bumpHits(svg); layoutFracs(svg);
     if(kb){kb.innerHTML=def.key(st); key.classList.toggle("empty",!kb.innerHTML.trim()); settleKey(kb,st._reset); st._reset=false;}
     ro.innerHTML=def.readout?def.readout(st):""; ro.closest(".box").style.display=ro.innerHTML.trim()?"":"none";
@@ -1348,20 +1555,20 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     if(flat){const ex0=typeof def.explain==="function"?def.explain(st):(def.explain||[]), fh=$(".flathint",panel); let ex=ex0;
       const fi=ex0.length&&/^(Drag|Tap|Slide|Press|Move|Pick|Change|Click)\b/.test(strip(String(ex0[0])).trim()); fh.hidden=!fi; fh.innerHTML=fi?`<p>${ex0[0]}</p>`:""; if(fi) ex=ex0.slice(1);
       $(".exwrap",panel).innerHTML=ex.length?explainBox(ex)+ASKCOV:"";}
-    else { const stx=$(".steptext",panel), S0=def.steps[st.step]; stx.innerHTML=S0.t(st);
+    else { const stx=stxE, S0=def.steps[st.step]; stx.innerHTML=S0.t(st);
       const wk=$(".stepwk",panel), wh=S0.w?S0.w(st):""; if(wk){ wk.innerHTML=wh; wk.hidden=!wh; }
-      const qh=S0.q?S0.q(st):""; [$(".stepq",panel),stq].forEach(e=>{ if(e&&e.dataset.h!==qh){ e.dataset.h=qh; e.innerHTML=qh; e.hidden=!qh; } });
+      const qh0=S0.q?S0.q(st):"", qc=KID&&S0.qs?S0.qs(st):"", qh=qc?`<details class="kq"><summary>${qc}<span class="kqm">▾ the question</span></summary><div class="kqf">${qh0}</div></details>`:qh0; [$(".stepq",panel),stq].forEach(e=>{ if(e&&e.dataset.h!==qh){ e.dataset.h=qh; e.innerHTML=qh; e.hidden=!qh; } });
       const mains=cbox.style.display==="none"?[]:[...cbox.querySelectorAll(".pill.act:not(.sec)")].filter(b=>b.style.display!=="none"&&b.getAttribute("aria-pressed")!=="true"&&/^\s*(▶|[①-⑨]|Check\b|Next step)/.test(b.textContent));
       const mb=mains.includes(solid)?solid:mains[0], lt=mb?mb.textContent.trim():"", dh=$(".dohint",panel), core=lt.replace(/^[▶①-⑨]\s*/,""), said=stx.textContent.includes(lt)||(core===lt&&stx.textContent.toLowerCase().includes("press "+core.toLowerCase())), dshow=!!mb&&(!st._acted||def.nxWait||/^[①-⑨]/.test(lt))&&!said;
       dh.hidden=!dshow; if(dshow) dh.innerHTML=`${/^(Slide|Drag|Tap|Move)\b/.test(stx.textContent.trim())?"↓ Or press":"↓ Press"} <b>${mb.innerHTML}</b>`;
       const sh=!dshow&&S0.hint?S0.hint(st):""; if(sh){ dh.hidden=false; dh.innerHTML=sh; }
       const nx=$(".nextstep",panel); if(nx){ const n=def.steps[st.step+1], done=!n&&cur&&cur.done; $(".stepof",panel).textContent=`Step ${st.step+1} of ${def.steps.length}`; nx.style.display=(n||done)?"":"none"; nx.innerHTML=n?`Next <span class="sn">${st.step+2}</span> ${n.name} →`:"Back to the cheatsheet →"; $(".prevstep",panel).style.visibility=st.step?"":"hidden";
-        nx.classList.toggle("go",!mains.length||(!!st._acted&&!def.nxWait)); } }
+        const g=(!mains.length||(!!st._acted&&!def.nxWait))&&(!def.nxOk||def.nxOk(st)); if(KID&&g&&!st._nx0&&!nx.classList.contains("go")) requestAnimationFrame(()=>{ if(nx.isConnected&&nx.getBoundingClientRect().bottom>innerHeight-4) nx.scrollIntoView({block:"nearest",behavior:"smooth"}); }); nx.classList.toggle("go",g); st._nx0=0; } }
     const tq=$(".tryq",panel); if(tq){ const sid=cur&&cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:cur&&!cur.sheet&&cur.t&&qqMk(cur.t.id).length?cur.t.id:""; tq.style.display=sid&&(flat||st.step===def.steps.length-1)&&(!def.tryWhen||def.tryWhen(st))?"":"none"; if(sid) tq.setAttribute("href","#cards/quick/"+sid); }
     if(!fwait&&document.fonts&&document.fonts.status==="loading"){ fwait=true; document.fonts.ready.then(()=>{ fwait=false; if(svg.isConnected) layoutFracs(svg); }); }
   };
   const askShut=all=>[key,...panel.querySelectorAll(".askw")].forEach(w=>{ if(all||!w.matches(".asktx,.exwrap")) w.classList.add("shut"); });
-  const go=i=>{askShut(true); st.step=i; st._acted=false; st._lastB=null; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
+  const go=i=>{askShut(true); st.step=i; st._acted=false; st._lastB=null; st._nx0=1; const S=def.steps[i]; if(!flat&&S.set) Object.assign(st,typeof S.set==="function"?S.set(st):S.set); st._reset=true; draw();};
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     const snap=kbSnap(); stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); askShut(false); st._lastB=null; st._reset=true; draw(); showRes(snap,true);}));
@@ -5570,6 +5777,227 @@ const fracBars=aid({
     const M=fbM(s); fbLbl(5,`<span>▶ Take away ${fbMH(M.W2,M.n2,M.d)}</span>`); },
   key:fbK
 });
+const RPMV=[{n1:1,d1:4,n2:2,d2:9,c:1,r:3,N:36},{n1:1,d1:3,n2:1,d2:4,c:2,r:2,N:24}];
+const RPMH=[{n1:1,d1:4,n2:2,d2:9,c:3,r:4,left:84},{n1:1,d1:3,n2:1,d2:4,c:5,r:3,left:45}];
+const RPBV=[{n1:2,d1:5,x:3,n2:1,d2:3,r:3,N:30},{n1:1,d1:3,x:4,n2:1,d2:4,r:4,N:24}];
+const RPBH=[{n1:2,d1:5,x:12,n2:1,d2:3,r:3,left:34},{n1:1,d1:3,x:8,n2:1,d2:4,r:4,left:30}];
+const RPX=24, RPW=104, RPY1=18, RPY2=52, RPHT=17;
+const rpJ=(i,k)=>{ const v=Math.sin(i*12.9898+k*78.233)*43758.5453; return v-Math.floor(v)-.5; };
+const rpP=(s,i)=>s.ph>i?1:s.ph===i?fbE(s.pp):0;
+const rpL=(a,b,p)=>a+(b-a)*p;
+const rpS=(n,w)=>`${n} ${w}${n===1?"":"s"}`;
+const rpE=s=>s.pp>=1?s.ph:s.ph-1;
+const rpR=s=>{ s.ph=0; s.pp=1; s.of=""; s.og=""; s.pm=""; };
+const rpGo=(k,d)=>(s,an)=>{ s.ph=k; s.pp=0; an(d,p=>{ s.pp=p; }); };
+const rpMel=s=>{ const hid=s.step===1, Q=hid?RPMH[s.eb]:RPMV[s.ea], rest=Q.d1-Q.n1, k=Q.d2/rest, T=Q.d1*k, m=hid?Q.left/(Q.d2-Q.n2):Q.N/T;
+  return Object.assign({},Q,{hid,rest,k,T,m,per:m*k,N:m*T,mon:m*k*Q.n1,restN:m*Q.d2,tue:m*Q.n2,lf:m*(Q.d2-Q.n2)}); };
+const rpMar=s=>{ const hid=s.step===3, Q=hid?RPBH[s.ed]:RPBV[s.ec], rest=Q.d1-Q.n1; let u,Rm,j;
+  if(hid){ j=Q.left/(Q.d2-Q.n2); Rm=j*Q.d2; u=(Rm+Q.x)/rest; } else { u=Q.N/Q.d1; Rm=rest*u-Q.x; j=Rm/Q.d2; }
+  return Object.assign({},Q,{hid,rest,u,Rm,j,N:u*Q.d1,bro:u*Q.n1,sis:j*Q.n2,lf:j*(Q.d2-Q.n2),cu:u/Q.r,jc:Math.ceil(j/3)}); };
+const rpQM=M=>`Mr Ong had ${M.hid?"some":M.N} melons. On Monday, he sold ${frac(M.n1,M.d1)} of the melons. On Tuesday, he sold ${frac(M.n2,M.d2)} of the remaining melons. ${M.hid?`After that, there were ${M.lf} melons left. How many melons did Mr Ong have at first?`:"How many melons were left?"}`;
+const rpQB=B=>`Siti had ${B.hid?"some":B.N} marbles. She gave ${frac(B.n1,B.d1)} of the marbles to her brother and gave away another ${B.x} marbles. Her sister then took ${frac(B.n2,B.d2)} of the remaining marbles. ${B.hid?`Siti had ${B.lf} marbles left. How many marbles did Siti have at first?`:"How many marbles did Siti have left?"}`;
+const rpRows=(M,lv)=>{ const c=(t,x)=>`<span style="padding:0 7px${x?";"+x:""}">${t}</span>`, mu="color:var(--muted);font-weight:600", ln="border-top:1.5px solid var(--ink);align-self:stretch;justify-self:stretch;text-align:center";
+  const g=[c("Total",mu),c("Mon",mu),c("Rest",mu+";border:1.5px solid var(--ink);border-radius:5px"),c("Tue",mu),c("Left",mu),c(""),
+    c(M.d1),c(M.n1),c(M.rest),c(""),c(""),c(lv>2&&M.k>1?`↓ × ${M.k}`:"",mu)];
+  if(lv>0) g.push(c(""),c(""),c(M.d2),c(M.n2),c(M.d2-M.n2),c(""));
+  if(lv>2) g.push(...[M.T,M.n1*M.k,M.d2,M.n2,M.d2-M.n2].map(v=>c(v,ln)),c(""));
+  return `<span style="display:inline-grid;grid-template-columns:repeat(6,auto);gap:1px 0;justify-items:center;align-items:center;line-height:1.3">${g.join("")}</span>`; };
+const rpQm=(svg,x,y,op=1)=>lab(svg,[x,y],"?",{"font-size":5.4,"font-weight":700,fill:"var(--muted)","fill-opacity":op});
+const rpPick=(svg,x1,w1,x2,w2,pick,bad,good)=>{ const Y1=RPY1, Y2=RPY2, H=RPHT;
+  if(pick==="w"){ fbRc(svg,x1-1.2,Y1-1.2,w1+2.4,H+2.4,{fill:"none",stroke:RD,"stroke-width":1,"stroke-dasharray":"2 1.4"}); lab(svg,[x1+w1/2+14,Y1-3.4],bad,{"font-size":4.8,"font-weight":700,fill:RD}); }
+  if(pick==="r"){ fbRc(svg,x2-1.2,Y2-1.2,w2+2.4,H+2.4,{fill:"none",stroke:GR,"stroke-width":1.2}); lab(svg,[x2+w2/2,Y2+H+7.5],good,{"font-size":4.8,"font-weight":700,fill:GR}); }
+  fbRc(svg,x1,Y1-2,w1,H+4,{fill:"transparent","data-drag":"w",style:"cursor:pointer"}); fbRc(svg,x2,Y2-2,w2,H+4,{fill:"transparent","data-drag":"r",style:"cursor:pointer"}); };
+function rpDM(svg,s){ const M=rpMel(s), X=RPX, W=RPW, Y1=RPY1, Y2=RPY2, H=RPHT, hid=M.hid, CW=W/M.d1, UW=W/M.T, rx=X+M.n1*CW, rw=W-M.n1*CW, P=i=>rpP(s,i),
+    p1=P(1), p2=P(2), p3=P(3), p4=P(4), p5=P(5), p6=P(6), p7=P(7), p8=P(8), g=1-p8, sx=UW/M.c, sy=(H-2)/M.r, rad=Math.min(sx,sy)*.42, ja=Math.min(sx,sy)*.32, CL="var(--line)", T2={"font-size":4.8,"font-weight":700};
+  svg.setAttribute("viewBox","0 0 140 82");
+  lab(svg,[X-3,Y1+H/2+1.7],"All",Object.assign({"text-anchor":"end"},T2));
+  if(!s.ph&&hid){ fbRc(svg,X+10,Y1,W-20,H,{rx:6,fill:CL,stroke:"var(--ink)","stroke-width":.7}); rpQm(svg,X+W/2,Y1+H/2+2); }
+  if(s.ph>0){
+    for(let i=0;i<M.d1;i++){ const x=X+i*CW, mon=i<M.n1;
+      fbRc(svg,x,Y1,CW,H,{fill:hid?CL:"var(--card)","fill-opacity":p1});
+      if(hid&&!mon&&p3>0) fbRc(svg,x,Y1,CW,H,{fill:"var(--card)","fill-opacity":p3});
+      if(hid&&mon&&p8>0) fbRc(svg,x,Y1,CW,H,{fill:"var(--card)","fill-opacity":p8});
+      if(mon&&p2>0) fbRc(svg,x,Y1,CW,H,{fill:"var(--blue-fill)","fill-opacity":p2*.8}); }
+    if(hid&&p8>0){ for(let v=0;v<M.n2;v++) fbRc(svg,rx+v*UW,Y1,UW,H,{fill:"var(--amber-fill)","fill-opacity":p8*.8});
+      for(let U=1;U<M.T;U++) if(U%M.k) seg(svg,[X+U*UW,Y1],[X+U*UW,Y1+H],{stroke:"var(--ink)","stroke-width":.4,"stroke-opacity":p8}); }
+    for(let i=0;i<M.d1;i++){ const x=X+i*CW, gh=i>=M.n1&&p3>0&&p8<1;
+      fbRc(svg,x,Y1,CW,H,Object.assign({fill:"none",stroke:"var(--ink)","stroke-width":.7,"stroke-opacity":p1},gh?{"stroke-dasharray":"1.6 1.2"}:{}));
+      if(hid&&p1>=1&&(i<M.n1?p8<=0:p3<=0)) rpQm(svg,x+CW/2,Y1+H/2+2); } }
+  if(p3>0){ const yb=rpL(Y1,Y2,p3);
+    [rx,X+W].forEach(x=>seg(svg,[x,Y1+H],[x,yb],{stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.2","stroke-opacity":g}));
+    if(hid) fbRc(svg,rx,yb,rw,H,{fill:CL,"fill-opacity":g});
+    for(let v=0;v<M.d2;v++){ const x=rx+v*UW, tue=v<M.n2, op=hid?(tue?p7:p6):0;
+      if(op>0) fbRc(svg,x,yb,UW,H,{fill:"var(--card)","fill-opacity":op*g});
+      if(tue&&p5>0) fbRc(svg,x,yb,UW,H,{fill:"var(--amber-fill)","fill-opacity":p5*g*.8}); }
+    if(p4>0) for(let v=1;v<M.d2;v++) seg(svg,[rx+v*UW,yb],[rx+v*UW,yb+H],{stroke:"var(--ink)","stroke-width":.45,"stroke-opacity":p4*(.35+.65*g)});
+    const oo=hid?1:p4; if(oo>0) fbRc(svg,rx,yb,rw,H,Object.assign({fill:"none",stroke:"var(--ink)","stroke-width":.7,"stroke-opacity":oo*(.45+.55*g)},p8>=1?{"stroke-dasharray":"1.6 1.2"}:{}));
+    if(p3>=1) lab(svg,[rx-2.5,Y2+H/2+1.7],"Rest",Object.assign({"text-anchor":"end","fill-opacity":.4+.6*g},T2));
+    if(hid&&p3>=1&&p4<1) rpQm(svg,rx+rw/2,Y2+H/2+2);
+    if(hid&&p4>=1) for(let v=0;v<M.d2;v++){ const o=1-(v<M.n2?p7:p6); if(o>0) rpQm(svg,rx+(v+.5)*UW,Y2+H/2+2,o); } }
+  let i=0; for(let U=0;U<M.T;U++) for(let q=0;q<M.m;q++,i++){ const mon=U<M.n1*M.k, V=U-M.n1*M.k, tue=V>=0&&V<M.n2,
+      gx=X+U*UW+(q%M.c+.5)*sx, gy=Y1+1+(Math.floor(q/M.c)+.5)*sy, g2=gy-Y1+Y2, ox=rpJ(i,1)*ja*2, oy=rpJ(i,2)*ja*2; let x=gx, y=gy, op=1;
+    if(!hid){ const hx=X+W/2+(gx-X-W/2)*.6+ox, hy=gy+oy; x=rpL(hx,gx,p1); y=rpL(hy,gy,p1); op=mon?1-.65*p2:tue?1-.65*p5:1;
+      if(!mon&&p3>0){ const cx=rx+rw/2, h2x=cx+(gx-cx)*.6+ox, h2y=g2+oy; x=rpL(gx,h2x,p3); y=rpL(gy,h2y,p3); if(p4>0){ x=rpL(h2x,gx,p4); y=rpL(h2y,g2,p4); } } }
+    else if(mon) op=.35*p8; else { y=rpL(g2,gy,p8); op=tue?.35*p7:p6; }
+    if(op>.02){ S_(svg,"circle",{cx:x,cy:y,r:rad,fill:GR,"fill-opacity":op});
+      if(rad>1.5) [-.42,.42].forEach(d=>S_(svg,"path",{d:`M${x+d*rad} ${y-rad*.8}Q${x+d*rad*2.1} ${y} ${x+d*rad} ${y+rad*.8}`,fill:"none",stroke:"var(--green-fill)","stroke-width":rad*.15,"stroke-opacity":op*.8,"stroke-linecap":"round"})); } }
+  if(p2>0) lab(svg,[X+M.n1*CW/2,Y1-2.2],"Mon",Object.assign({fill:BL,"fill-opacity":p2},T2));
+  if(p5>0){ const yy=rpL(Y2,Y1,p8), lx=rx+M.n2*UW;
+    lab(svg,[rx+M.n2*UW/2,yy-2.2],"Tue",Object.assign({fill:AMB,"fill-opacity":p5},T2));
+    seg(svg,[lx,yy+H+1.8],[X+W,yy+H+1.8],{stroke:GR,"stroke-width":1,"stroke-opacity":p5}); lab(svg,[(lx+X+W)/2,yy+H+7.8],`left: ${M.lf}`,Object.assign({fill:GR,"fill-opacity":p5},T2)); }
+  lab(svg,[X+W+2.5,Y1+H/2+1.7],hid&&p8<1?"?":`${M.N}`,Object.assign({"text-anchor":"start"},T2));
+  if(p3>=1&&p8<1) lab(svg,[X+W+2.5,Y2+H/2+1.7],hid&&p7<1?"?":`${M.restN}`,Object.assign({"text-anchor":"start"},T2));
+  if(s.ph===3&&p3>=1) rpPick(svg,X,W,rx,rw,s.of,"✗ Monday's are sold","the remaining melons"); }
+function rpDB(svg,s){ const B=rpMar(s), X=RPX, W=RPW, Y1=RPY1, Y2=RPY2, H=RPHT, hid=B.hid, BW=W/B.d1, cx0=X+B.n1*BW, sx=BW/B.cu, xw=sx*B.x/B.r, rx=cx0+xw, rw=X+W-rx, JW=rw/B.d2, sy=(H-2)/B.r, jx=JW/B.jc, jy=(H-2)/3, P=i=>rpP(s,i),
+    p1=P(1), p2=P(2), p3=P(3), p4=P(4), p5=P(5), p6=P(6), p7=P(7), p8=P(8), p9=P(9), p10=P(10), g=1-p9, rad=Math.min(sx,sy,jx,jy)*.42, ja=rad*.8, CL="var(--line)", T2={"font-size":4.8,"font-weight":700};
+  svg.setAttribute("viewBox","0 0 140 82");
+  lab(svg,[X-3,Y1+H/2+1.7],"All",Object.assign({"text-anchor":"end"},T2));
+  if(!s.ph&&hid){ fbRc(svg,X+10,Y1,W-20,H,{rx:6,fill:CL,stroke:"var(--ink)","stroke-width":.7}); rpQm(svg,X+W/2,Y1+H/2+2); }
+  if(s.ph>0){
+    for(let b=0;b<B.d1;b++){ const x=X+b*BW, bro=b<B.n1;
+      fbRc(svg,x,Y1,BW,H,{fill:hid?CL:"var(--card)","fill-opacity":p1});
+      if(hid&&bro&&p10>0) fbRc(svg,x,Y1,BW,H,{fill:"var(--card)","fill-opacity":p10});
+      if(bro&&p2>0) fbRc(svg,x,Y1,BW,H,{fill:"var(--blue-fill)","fill-opacity":p2*.8}); }
+    if(hid&&p4>0) fbRc(svg,rx,Y1,rw,H,{fill:"var(--card)","fill-opacity":p4});
+    if(p3>0){ fbRc(svg,cx0,Y1,xw,H,{fill:"var(--teal-fill)","fill-opacity":p3}); seg(svg,[rx,Y1],[rx,Y1+H],{stroke:"var(--teal)","stroke-width":.6,"stroke-dasharray":"1.2 .9","stroke-opacity":p3}); }
+    for(let b=0;b<B.d1;b++){ const x=X+b*BW; fbRc(svg,x,Y1,BW,H,{fill:"none",stroke:"var(--ink)","stroke-width":.7,"stroke-opacity":p1});
+      if(hid&&p1>=1&&(b<B.n1?p10<=0:p4<=0)) rpQm(svg,b===B.n1&&p3>0?(rx+x+BW)/2:x+BW/2,Y1+H/2+2); } }
+  if(p4>0){ const yb=rpL(Y1,Y2,p4);
+    [rx,X+W].forEach(x=>seg(svg,[x,Y1+H],[x,yb],{stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.2","stroke-opacity":g}));
+    if(hid) fbRc(svg,rx,yb,rw,H,{fill:CL,"fill-opacity":g});
+    for(let v=0;v<B.d2;v++){ const x=rx+v*JW, sis=v<B.n2, op=hid?(sis?p8:p7):0;
+      if(op>0) fbRc(svg,x,yb,JW,H,{fill:"var(--card)","fill-opacity":op*g});
+      if(sis&&p6>0) fbRc(svg,x,yb,JW,H,{fill:"var(--amber-fill)","fill-opacity":p6*g*.8}); }
+    if(p5>0) for(let v=1;v<B.d2;v++) seg(svg,[rx+v*JW,yb],[rx+v*JW,yb+H],{stroke:"var(--ink)","stroke-width":.45,"stroke-opacity":p5*(.35+.65*g)});
+    const oo=hid?1:p5; if(oo>0) fbRc(svg,rx,yb,rw,H,Object.assign({fill:"none",stroke:"var(--ink)","stroke-width":.7,"stroke-opacity":oo*(.45+.55*g)},p9>=1?{"stroke-dasharray":"1.6 1.2"}:{}));
+    if(p4>=1) lab(svg,[rx-2.5,Y2+H/2+1.7],"Rest",Object.assign({"text-anchor":"end","fill-opacity":.4+.6*g},T2));
+    if(hid&&p4>=1&&p5<1) rpQm(svg,rx+rw/2,Y2+H/2+2);
+    if(hid&&p5>=1) for(let v=0;v<B.d2;v++){ const o=1-(v<B.n2?p8:p7); if(o>0) rpQm(svg,rx+(v+.5)*JW,Y2+H/2+2,o); } }
+  let t=0; for(let b=0;b<B.d1;b++) for(let q=0;q<B.u;q++){ const bro=b<B.n1, oth=b===B.n1&&q<B.x, i=b*B.u+q, gx=X+b*BW+(Math.floor(q/B.r)+.5)*sx, gy=Y1+1+(q%B.r+.5)*sy, ox=rpJ(i,1)*ja*2, oy=rpJ(i,2)*ja*2; let x=gx, y=gy, op=1;
+    if(!hid){ const hx=X+W/2+(gx-X-W/2)*.6+ox, hy=gy+oy; x=rpL(hx,gx,p1); y=rpL(hy,gy,p1); op=bro?1-.65*p2:oth?1-.4*p3:1; } else op=bro?.35*p10:oth?.6*p3:1;
+    if(!bro&&!oth){ const jar=Math.floor(t/B.j), q2=t%B.j, sis=jar<B.n2, g2x=rx+jar*JW+(Math.floor(q2/3)+.5)*jx, g2y=Y2+1+(q2%3+.5)*jy, cx=rx+rw/2, h2x=cx+(g2x-cx)*.6+ox, h2y=g2y+oy; t++;
+      if(!hid){ if(p4>0){ x=rpL(gx,h2x,p4); y=rpL(gy,h2y,p4); } if(p5>0){ x=rpL(h2x,g2x,p5); y=rpL(h2y,g2y,p5); } op=sis?1-.65*p6:1; }
+      else { x=rpL(g2x,gx,p9); y=rpL(g2y,gy,p9); op=sis?.35*p8:p7; } }
+    if(op>.02){ S_(svg,"circle",{cx:x,cy:y,r:rad,fill:BL,"fill-opacity":op});
+      if(rad>1.5) S_(svg,"circle",{cx:x-rad*.32,cy:y-rad*.32,r:rad*.24,fill:"var(--card)","fill-opacity":op*.75}); } }
+  if(p2>0) lab(svg,[X+B.n1*BW/2,Y1-2.2],"Brother",Object.assign({fill:BL,"fill-opacity":p2},T2));
+  if(p3>0) lab(svg,[cx0+xw/2,Y1-2.2],`${B.x}`,Object.assign({fill:"var(--teal)","fill-opacity":p3},T2));
+  if(p6>0&&g>0){ const lx=rx+B.n2*JW;
+    lab(svg,[rx+B.n2*JW/2,Y2-2.2],"Sister",Object.assign({fill:AMB,"fill-opacity":p6*g},T2));
+    seg(svg,[lx,Y2+H+1.8],[X+W,Y2+H+1.8],{stroke:GR,"stroke-width":1,"stroke-opacity":p6*g}); lab(svg,[(lx+X+W)/2,Y2+H+7.8],`left: ${B.lf}`,Object.assign({fill:GR,"fill-opacity":p6*g},T2)); }
+  if(p9>0){ seg(svg,[cx0,Y1+H+1.8],[X+W,Y1+H+1.8],{stroke:GR,"stroke-width":1,"stroke-opacity":p9}); lab(svg,[(cx0+X+W)/2,Y1+H+7.8],`${rpS(B.rest,"bag")} = ${B.Rm+B.x}`,Object.assign({fill:GR,"fill-opacity":p9},T2)); }
+  lab(svg,[X+W+2.5,Y1+H/2+1.7],hid&&p10<1?"?":`${B.N}`,Object.assign({"text-anchor":"start"},T2));
+  if(p4>=1&&p9<1) lab(svg,[X+W+2.5,Y2+H/2+1.7],hid&&p8<1?"?":`${B.Rm}`,Object.assign({"text-anchor":"start"},T2));
+  if(s.ph===4&&p4>=1) rpPick(svg,X,W,rx,rw,s.og,"✗ Some are given away","the remaining marbles");
+  if(s.ph===8&&p8>=1&&s.pm) fbRc(svg,cx0-1,Y1-1,xw+2,H+2,Object.assign({fill:"none",stroke:s.pm==="a"?GR:RD,"stroke-width":1.1},s.pm==="a"?{}:{"stroke-dasharray":"2 1.4"})); }
+function rpK(s){ const e=rpE(s), wd=(c,l,q,r)=>FB(c,l,q,r,null,"wide");
+  if(s.step<2){ const M=rpMel(s), f1=frac(M.n1,M.d1), f2=frac(M.n2,M.d2), lu=M.d2-M.n2;
+    const pick=!s.of?wd("amber","Of who?",nw(`${f2} of …?`),"every fraction is OF something"):s.of==="w"?wd("red","Not yet",nw(`${f2} of all the melons?`),"read it again: of the remaining melons"):wd("green","✓ Of the remaining melons",nw(M.hid?`${f2} of the remaining melons`:`${f2} of ${M.restN}`),"a new pile, so a new whole");
+    if(!M.hid) return FORMS(e<=0?[wd("amber","Of who?",nw(`${f1} of the melons`),`all ${M.N} melons`)]
+      :e===1?[wd("blue",`${M.d1} equal crates`,nw(`${M.N} ÷ ${M.d1} = ${M.per}`),`each crate is ${frac(1,M.d1)}`)]
+      :e===2?[FB("blue","Monday",nw(`${f1} of ${M.N} = ${M.mon}`),"sold"),FB("ink","Remaining",nw(`${M.N} − ${M.mon} = ${M.restN}`),"not sold yet")]
+      :e===3?[pick]
+      :e===4?[wd("amber",`${M.d2} equal baskets`,nw(`${M.restN} ÷ ${M.d2} = ${M.m}`),`each basket is ${frac(1,M.d2)} of the remaining melons`)]
+      :[FB("amber","Tuesday",nw(`${f2} of ${M.restN} = ${M.tue}`),"sold"),FB("green","Left",nw(`${M.restN} − ${M.tue} = ${M.lf}`),rpS(lu,"basket"))],true);
+    if(e<=0) return FORMS([wd("amber","Of who?",nw(`${f1} of the melons`),"all the melons: we don't know how many")],true);
+    if(e===1) return FORMS([wd("blue",`${M.d1} equal crates`,`each crate is ${frac(1,M.d1)}`,"the same number in every crate")],true);
+    const R=lv=>wd("ink","Ratio rows",rpRows(M,lv),"");
+    return FORMS(e===2?[R(0)]:e===3?[R(0),pick]
+      :e===4?[R(0),wd("amber",`${M.d2} equal baskets`,nw(`${rpS(M.rest,"crate")} = ${M.d2} baskets`),`so 1 crate = ${rpS(M.k,"basket")}`)]
+      :e===5?[R(1),wd("green","Left",nw(`${rpS(lu,"basket")} = ${M.lf}`),"start here")]
+      :e===6?[R(1),wd("green","1 basket",nw(`${M.lf} ÷ ${lu} = ${M.m}`),"")]
+      :e===7?[R(1),wd("amber","Remaining melons",nw(`${M.d2} × ${M.m} = ${M.restN}`),`${M.d2} baskets`)]
+      :[R(3),wd("green","At first",`${nw(`${lu}u = ${M.lf}`)} &nbsp; ${nw(`1u = ${M.m}`)} &nbsp; ${nw(`${M.T}u = ${M.N}`)}`,"1u = 1 basket")],true); }
+  const B=rpMar(s), f1=frac(B.n1,B.d1), f2=frac(B.n2,B.d2), lu=B.d2-B.n2, fb=rpS(B.rest,"full bag");
+  const pick=!s.og?wd("amber","Of who?",nw(`${f2} of …?`),"every fraction is OF something"):s.og==="w"?wd("red","Not yet",nw(`${f2} of all the marbles?`),"read it again: of the remaining marbles"):wd("green","✓ Of the remaining marbles",nw(B.hid?`${f2} of the remaining marbles`:`${f2} of ${B.Rm}`),"a new pile, so a new whole");
+  if(!B.hid) return FORMS(e<=0?[wd("amber","Of who?",nw(`${f1} of the marbles`),`all ${B.N} marbles`)]
+    :e===1?[wd("blue",`${B.d1} equal bags`,nw(`${B.N} ÷ ${B.d1} = ${B.u}`),`each bag is ${frac(1,B.d1)}`)]
+    :e===2?[wd("blue","Brother",nw(`${f1} of ${B.N} = ${B.bro}`),rpS(B.n1,"bag"))]
+    :e===3?[FB("ink",`Another ${B.x}`,`${B.x} marbles`,"not a fraction"),FB("ink","Remaining",nw(`${B.N} − ${B.bro} − ${B.x} = ${B.Rm}`),"")]
+    :e===4?[pick]
+    :e===5?[wd("amber",`${B.d2} equal jars`,nw(`${B.Rm} ÷ ${B.d2} = ${B.j}`),`each jar is ${frac(1,B.d2)} of the remaining marbles`)]
+    :[FB("amber","Sister",nw(`${f2} of ${B.Rm} = ${B.sis}`),rpS(B.n2,"jar")),FB("green","Left",nw(`${B.Rm} − ${B.sis} = ${B.lf}`),rpS(lu,"jar"))],true);
+  const back=!s.pm?wd("amber",fb,nw(`${B.Rm} + ${B.x} or ${B.Rm} − ${B.x}?`),`the ${B.x} came out before the sharing`):s.pm==="s"?wd("red","Not yet",nw(`${B.Rm} − ${B.x}?`),`the ${B.x} came OUT of these bags`):wd("green","✓ Put them back",nw(`${B.Rm} + ${B.x} = ${B.Rm+B.x}`),fb);
+  return FORMS(e<=0?[wd("amber","Of who?",nw(`${f1} of the marbles`),"all the marbles: we don't know how many")]
+    :e===1?[wd("blue",`${B.d1} equal bags`,`each bag is ${frac(1,B.d1)}`,"the same number in every bag")]
+    :e===2?[wd("blue","Brother",rpS(B.n1,"bag"),"given away")]
+    :e===3?[wd("ink",`Another ${B.x}`,`${B.x} marbles`,"not a fraction: they come out of the next bag")]
+    :e===4?[pick]
+    :e===5?[wd("amber",`${B.d2} equal jars`,`each jar is ${frac(1,B.d2)} of the remaining marbles`,"a jar is not the same size as a bag")]
+    :e===6?[FB("amber","Sister",rpS(B.n2,"jar"),"taken"),FB("green","Left",nw(`${rpS(lu,"jar")} = ${B.lf}`),"start here")]
+    :e===7?[wd("green","1 jar",nw(`${B.lf} ÷ ${lu} = ${B.j}`),"")]
+    :e===8?[FB("amber","Remaining",nw(`${B.d2} × ${B.j} = ${B.Rm}`),`${B.d2} jars`),back]
+    :e===9?[FB("green",fb,nw(`${B.Rm} + ${B.x} = ${B.Rm+B.x}`),""),FB("blue","1 bag",nw(`${B.Rm+B.x} ÷ ${B.rest} = ${B.u}`),"")]
+    :[wd("green","At first",nw(`${B.d1} × ${B.u} = ${B.N}`),`${B.d1} bags of ${B.u}`)],true); }
+function rpTM(s){ const M=rpMel(s), e=rpE(s), f1=frac(M.n1,M.d1), f2=frac(M.n2,M.d2), lu=M.d2-M.n2;
+  if(e<=0) return M.hid?`${f1} of the melons. We don't know how many, so they are covered.<br>The denominator ${M.d1} still means ${M.d1} equal crates.`:`${f1} of the melons. Of who? All ${M.N} melons.<br>The denominator ${M.d1} means ${M.d1} equal crates.`;
+  if(e===1) return `${M.hid?`${M.d1} equal crates`:`${M.d1} crates of ${M.per}`}. Each crate is ${frac(1,M.d1)} of the melons.<br>Monday: the numerator ${M.n1} means ${rpS(M.n1,"crate")} sold.`;
+  if(e===2) return `Monday's melons are gone.<br>The other ${rpS(M.rest,"crate")} are the remaining melons. Push them together.`;
+  if(e===3) return !s.of?`This is a new pile: the remaining melons.<br>The ${f2}: is it of all the melons, or of the remaining melons?`
+    :s.of==="w"?`Not all the melons: Monday's are sold. Read it again:<br>${f2} of the <b>remaining</b> melons.`
+    :`Yes! The remaining ${M.hid?"":M.restN+" "}melons are the whole now.<br>The denominator ${M.d2} means ${M.d2} equal baskets.`;
+  if(e===4) return M.hid?`${fbCap(rpS(M.rest,"crate"))} became ${M.d2} baskets, so 1 crate = ${rpS(M.k,"basket")}.<br>Tuesday: the numerator ${M.n2} means ${rpS(M.n2,"basket")} sold.`:`${M.d2} baskets of ${M.m}. Each basket is ${frac(1,M.d2)} of the remaining melons.<br>Tuesday: the numerator ${M.n2} means ${rpS(M.n2,"basket")} sold.`;
+  if(e===5) return M.hid?`${fbCap(rpS(lu,"basket"))} are left, and that is ${M.lf} melons.<br>Start here: share the ${M.lf} melons into the ${lu} baskets.`:`${fbCap(rpS(lu,"basket"))} of ${M.m} are left: ${M.lf} melons.<br>The ${f1} was of all ${M.N}. The ${f2} was of the remaining ${M.restN}.`;
+  if(e===6) return `${M.lf} ÷ ${lu} = ${M.m} melons in a basket.<br>Every basket is the same size, so fill them all.`;
+  if(e===7) return `The remaining pile: ${M.d2} baskets × ${M.m} = ${M.restN} melons.<br>It came from ${rpS(M.rest,"crate")}. Put the melons back up.`;
+  return `1 crate = ${rpS(M.k,"basket")} = ${M.k*M.m} melons, and Monday's is the same.<br>At first: ${M.T} baskets × ${M.m} = ${M.N} melons.`; }
+function rpTB(s){ const B=rpMar(s), e=rpE(s), f1=frac(B.n1,B.d1), f2=frac(B.n2,B.d2), lu=B.d2-B.n2;
+  if(e<=0) return B.hid?`${f1} of the marbles. We don't know how many, so they are covered.<br>The denominator ${B.d1} still means ${B.d1} equal bags.`:`${f1} of the marbles. Of who? All ${B.N} marbles.<br>The denominator ${B.d1} means ${B.d1} equal bags.`;
+  if(e===1) return `${B.hid?`${B.d1} equal bags`:`${B.d1} bags of ${B.u}`}. Each bag is ${frac(1,B.d1)} of the marbles.<br>Her brother: the numerator ${B.n1} means ${rpS(B.n1,"bag")}.`;
+  if(e===2) return `She gave away another ${B.x} marbles.<br>That is not a fraction. It is just ${B.x} marbles, out of the next bag.`;
+  if(e===3) return `Her brother's and the other ${B.x} are gone.<br>The ones still there are the remaining marbles. Push them together.`;
+  if(e===4) return !s.og?`This is a new pile: the remaining marbles.<br>The ${f2}: is it of all the marbles, or of the remaining marbles?`
+    :s.og==="w"?`Not all the marbles: some are given away. Read it again:<br>${f2} of the <b>remaining</b> marbles.`
+    :`Yes! The remaining ${B.hid?"":B.Rm+" "}marbles are the whole now.<br>The denominator ${B.d2} means ${B.d2} equal jars.`;
+  if(e===5) return `${B.hid?`${B.d2} equal jars`:`${B.d2} jars of ${B.j}`}. Each jar is ${frac(1,B.d2)} of the remaining marbles.<br>Her sister: the numerator ${B.n2} means ${rpS(B.n2,"jar")}.`;
+  if(e===6) return B.hid?`${fbCap(rpS(lu,"jar"))} are left, and that is ${B.lf} marbles.<br>Start here: share the ${B.lf} marbles into the ${lu} jars.`:`${fbCap(rpS(lu,"jar"))} of ${B.j} are left: ${B.lf} marbles.<br>The ${f1} was of all ${B.N}. The ${f2} was of the remaining ${B.Rm}.`;
+  if(e===7) return `${B.lf} ÷ ${lu} = ${B.j} marbles in a jar.<br>Every jar is the same size, so fill them all.`;
+  if(e===8) return !s.pm?`The remaining pile: ${B.d2} jars × ${B.j} = ${B.Rm} marbles.<br>To fill the ${rpS(B.rest,"bag")} again, what do you do with the ${B.x}?`
+    :s.pm==="s"?`Not take away: the ${B.x} came OUT of these bags.<br>To fill the bags again, put them back.`
+    :`Yes! Put the ${B.x} back with the ${B.Rm}.<br>Then the ${rpS(B.rest,"bag")} are full again.`;
+  if(e===9) return `${fbCap(rpS(B.rest,"full bag"))} = ${B.Rm} + ${B.x} = ${B.Rm+B.x} marbles.<br>So 1 bag = ${B.Rm+B.x} ÷ ${B.rest} = ${B.u}. Her brother's bags are the same.`;
+  return `Every bag has ${B.u} marbles.<br>At first: ${B.d1} bags × ${B.u} = ${B.N} marbles.`; }
+const rpSet=s=>{ if(s._k){ s._k=0; return {}; } return {ph:0,pp:1,of:"",og:"",pm:""}; };
+const rpHM=s=>s.ph===3&&s.pp>=1?(!s.of?"↓ Tap a pile, or pick one below":s.of==="w"?"↓ Pick again":""):"";
+const rpHB=s=>s.ph===4&&s.pp>=1?(!s.og?"↓ Tap a pile, or pick one below":s.og==="w"?"↓ Pick again":""):s.ph===8&&s.pp>=1?(!s.pm?"↓ Pick one below":s.pm==="s"?"↓ Pick again":""):"";
+const restPiles=aid({
+  init:{ea:0,eb:0,ec:0,ed:0,ph:0,pp:1,of:"",og:"",pm:""}, jump:true, nxWait:true, vb:"0 0 140 82", label:"Piles and groups", link:["ph"],
+  fix:s=>{ s.pp=1; s._k=1; }, nxOk:s=>s.pp>=1&&s.ph>=[5,8,6,10][s.step],
+  pills:[{k:"ea",label:"Example",opts:RPMV.map((Q,i)=>[i,`${Q.N} melons`]),show:s=>s.step===0,on:rpR},
+    {k:"eb",label:"Example",opts:RPMH.map((Q,i)=>[i,`${Q.left} left`]),show:s=>s.step===1,on:rpR},
+    {k:"ec",label:"Example",opts:RPBV.map((Q,i)=>[i,`${Q.N} marbles`]),show:s=>s.step===2,on:rpR},
+    {k:"ed",label:"Example",opts:RPBH.map((Q,i)=>[i,`${Q.left} left`]),show:s=>s.step===3,on:rpR},
+    {k:"of",label:"Of who?",opts:[["w","All the melons"],["r","The remaining melons"]],show:s=>s.step<2&&s.ph===3},
+    {k:"og",label:"Of who?",opts:[["w","All the marbles"],["r","The remaining marbles"]],show:s=>s.step>1&&s.ph===4},
+    {k:"pm",label:"The marbles she gave away",opts:[["a","Put them back"],["s","Take them away"]],show:s=>s.step===3&&s.ph===8}],
+  buttons:[{label:"▶ Pack into equal crates",fn:rpGo(1,1100),show:s=>s.step<2&&s.ph===0},
+    {label:"▶ Sell Monday's",fn:rpGo(2,600),show:s=>s.step<2&&s.ph===1},
+    {label:"▶ Push the rest together",fn:rpGo(3,1100),show:s=>s.step<2&&s.ph===2},
+    {label:"▶ Pack into equal baskets",fn:rpGo(4,1000),show:s=>s.step<2&&s.ph===3&&s.of==="r"},
+    {label:"▶ Sell Tuesday's",fn:rpGo(5,600),show:s=>s.step<2&&s.ph===4},
+    {label:"▶ Share them out",fn:rpGo(6,900),show:s=>s.step===1&&s.ph===5},
+    {label:"▶ Fill every basket",fn:rpGo(7,700),show:s=>s.step===1&&s.ph===6},
+    {label:"▶ Put them back up",fn:rpGo(8,1300),show:s=>s.step===1&&s.ph===7},
+    {label:"↺ Start again",fn:rpR,show:s=>s.step<2&&(s.ph>0||!!s.of)},
+    {label:"▶ Pack into equal bags",fn:rpGo(1,1100),show:s=>s.step>1&&s.ph===0},
+    {label:"▶ Give her brother his",fn:rpGo(2,600),show:s=>s.step>1&&s.ph===1},
+    {label:"▶ Give away the others",fn:rpGo(3,600),show:s=>s.step>1&&s.ph===2},
+    {label:"▶ Push the rest together",fn:rpGo(4,1100),show:s=>s.step>1&&s.ph===3},
+    {label:"▶ Pack into equal jars",fn:rpGo(5,1000),show:s=>s.step>1&&s.ph===4&&s.og==="r"},
+    {label:"▶ Her sister takes hers",fn:rpGo(6,600),show:s=>s.step>1&&s.ph===5},
+    {label:"▶ Share them out",fn:rpGo(7,900),show:s=>s.step===3&&s.ph===6},
+    {label:"▶ Fill every jar",fn:rpGo(8,700),show:s=>s.step===3&&s.ph===7},
+    {label:"▶ Put them back up",fn:rpGo(9,1300),show:s=>s.step===3&&s.ph===8&&s.pm==="a"},
+    {label:"▶ Open every bag",fn:rpGo(10,800),show:s=>s.step===3&&s.ph===9},
+    {label:"↺ Start again",fn:rpR,show:s=>s.step>1&&(s.ph>0||!!s.og)}],
+  steps:[{name:"See the melons",set:rpSet,q:s=>rpQM(rpMel(s)),hint:rpHM,t:rpTM},
+    {name:"Hidden melons",set:rpSet,q:s=>rpQM(rpMel(s)),hint:rpHM,t:rpTM},
+    {name:"See the marbles",set:rpSet,q:s=>rpQB(rpMar(s)),hint:rpHB,t:rpTB},
+    {name:"Hidden marbles",set:rpSet,q:s=>rpQB(rpMar(s)),hint:rpHB,t:rpTB}],
+  draw(svg,s){ (s.step<2?rpDM:rpDB)(svg,s); },
+  drag(id,p,s,start){ if(!start||s.pp<1) return; if(s.step<2&&s.ph===3) s.of=id; else if(s.step>1&&s.ph===4) s.og=id; },
+  key:rpK
+});
 const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid,vecAreas,angPar,bearAid,crossAid,balanceEq,pythSq,pointyThird,quadIneq,vennAid,parPerp,polyAng,areaCut,speedConv,idxCollect,arcRad,sixRatios,addProof,whyLogs,firstPrin,areaRect,whereE,quadProof,zeroPow,pascalPaths,centreProof};
 Object.assign(PLAYS,{simRatios});
 PLAYS.dataDots=dataDots;
@@ -5577,6 +6005,464 @@ PLAYS.probAid=probAid;
 PLAYS.toiletPaper=toiletPaper;
 PLAYS.coneSector=coneSector;
 PLAYS.fracBars=fracBars;
+PLAYS.restPiles=restPiles;
+const otRows=lv=>{ const c=(t,x)=>`<span style="padding:0 4px${x?";"+x:""}">${t}</span>`, mu="color:var(--muted);font-weight:600", ln="border-top:1.5px solid var(--ink);align-self:stretch;justify-self:stretch;text-align:center", e=c("");
+  const g=[c("Total",mu),c(":",mu),c("Mon",mu),c(":",mu),c("Rest",mu+";border:1.5px solid var(--ink);border-radius:5px"),c(":",mu),c("Tue",mu),c(":",mu),c("Left",mu),e,
+    c(4),c(":"),c(1),c(":"),c(3),e,e,e,e,c(lv>1?"↓ × 3":"",mu)];
+  if(lv>0) g.push(e,e,e,e,c(9),c(":"),c(2),c(":"),c(7),e);
+  if(lv>1) g.push(...[12,":",3,":",9,":",2,":",7].map(v=>c(v,ln)),e);
+  return `<span style="display:inline-grid;grid-template-columns:repeat(10,auto);gap:1px 0;justify-items:center;align-items:center;line-height:1.3">${g.join("")}</span>`; };
+const OTMB=[121,31], OTTB=[121,69], OTR=14, OTBX=[15.25,39.75,64.25,88.75], OTBY=50;
+const OTP4=OTBX.map(x=>[x,49]), OTP9=[...Array(9)].map((_,i)=>[19.33+32.67*(i%3),25.67+23.33*Math.floor(i/3)]), OTTP=[[114.4,69],[127.6,69]];
+const OTG=i=>[(i%3-1)*5.2,(Math.floor(i/3)-1)*5.2], OTTR=[[0,-2.9],[-2.9,2.1],[2.9,2.1]], OTSL=[[0,-19],[0,0],[0,19]], OTSM=[[-5.6,4.6],[5.6,4.6],[0,-5.4]], OTTS=[[114.2,70],[127.8,70]];
+const otL=(a,b,p)=>[rpL(a[0],b[0],p),rpL(a[1],b[1],p)], otA=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k];
+const otHp=n=>[...Array(n)].map((_,i)=>{ const r=2.55*Math.sqrt(i+.5), t=i*2.39996; return [52+r*Math.cos(t),49+r*Math.sin(t)*.92]; });
+const otE=s=>s.pp>=1?s.ph:s.ph-1;
+const otZ=()=>({ph:0,pp:1,of:"",w:0,tr:"",mp:-1,t1:-1,t2:-1,ln:0});
+const otR=s=>{ Object.assign(s,otZ()); };
+const otGo=(s,an,k,d)=>{ s.ph=k; s.pp=0; s.w=0; s.tr=""; an(d,p=>{ s.pp=p; }); };
+const otC=(v,ok,k,d)=>(s,an)=>{ if(v!==ok){ s.w=v; if(!otTr(s,v)) s.tr+=","+v; return; } otGo(s,an,k,d); };
+const otTr=(s,v)=>(s.tr+",").includes(","+v+",");
+const otFx=s=>{ const z=s.step, I=(v,a,b)=>clamp(Math.round(+v||0),a,b); s.ph=I(s.ph,0,[7,9,0,0][z]); s.ln=I(s.ln,0,[0,0,6,4][z]); s.mp=I(s.mp,-1,3); s.w=0; s.tr="";
+  if(z>1){ s.mp=-1; s.t1=-1; s.t2=-1; s.of=""; return; }
+  if(s.ph<2) s.mp=-1; else if(s.mp<0) s.mp=0;
+  if(s.of!=="t"&&s.of!=="b") s.of=""; if(s.ph>=(z?3:4)) s.of="t";
+  const ok=z?[...Array(12).keys()].filter(i=>Math.floor(i/3)!==s.mp):[...Array(9).keys()], k1=z?4:5;
+  s.t1=ok.includes(+s.t1)?+s.t1:-1; s.t2=ok.includes(+s.t2)&&+s.t2!==s.t1?+s.t2:-1;
+  if(s.ph<k1){ s.t1=-1; s.t2=-1; return; } if(s.t1<0) s.t1=ok.find(i=>i!==s.t2);
+  if(s.ph<k1+1) s.t2=-1; else if(s.t2<0) s.t2=ok.find(i=>i!==s.t1); };
+const otSet=s=>{ if(s._k){ s._k=0; otFx(s); return {}; } return otZ(); };
+const otQ=(n,lf)=>`Mr Ong had ${n||"some"} melons. On Monday, he sold ${frac(1,4)} of the melons. On Tuesday, he sold ${frac(2,9)} of the remaining melons. ${n?"How many melons were left?":`After that, there were ${lf} melons left. How many melons did he have at first?`}`;
+const otMel=(svg,x,y,r,op=1)=>{ if(op<.02) return; S_(svg,"circle",{cx:x,cy:y,r,fill:GR,"fill-opacity":op});
+  if(r>1.3) [-.42,.42].forEach(d=>S_(svg,"path",{d:`M${x+d*r} ${y-r*.8}Q${x+d*r*2.1} ${y} ${x+d*r} ${y+r*.8}`,fill:"none",stroke:"var(--green-fill)","stroke-width":r*.15,"stroke-opacity":op*.8,"stroke-linecap":"round"})); };
+const otPl=(svg,x,y,r,op=1)=>{ if(op<.02) return; S_(svg,"circle",{cx:x,cy:y,r,fill:"var(--card)","fill-opacity":op,stroke:"var(--muted)","stroke-width":.5,"stroke-opacity":op});
+  S_(svg,"circle",{cx:x,cy:y,r:r*.76,fill:"none",stroke:"var(--line)","stroke-width":.5,"stroke-opacity":op}); };
+const otBdg=(svg,x,y,t,col)=>{ const s=String(t), w=3.6+s.length*2.5; fbRc(svg,x,y-3.7,w,7.4,{rx:3.7,fill:col}); lab(svg,[x+w/2,y+1.6],s,{"font-size":4.6,"font-weight":700,fill:"var(--card)",style:"stroke:none"}); };
+const otBw=(svg,c,col,fl,t,n,on)=>{ const op=on?1:.32, x=c[0], y=c[1]-1.5, w=OTR+1.5, b=c[1]+OTR-.5, hn=n!==""&&n!=null, ly=c[1]-OTR-3;
+  S_(svg,"path",{d:`M${x-w} ${y}C${x-w} ${b-2} ${x-w*.55} ${b} ${x} ${b}C${x+w*.55} ${b} ${x+w} ${b-2} ${x+w} ${y}Z`,fill:fl,"fill-opacity":.8*op,stroke:col,"stroke-width":1.1,"stroke-opacity":op,"stroke-linejoin":"round"});
+  S_(svg,"ellipse",{cx:x,cy:y,rx:w,ry:2.2,fill:"none",stroke:col,"stroke-width":.7,"stroke-opacity":op*.8});
+  lab(svg,[hn?x-4:x,ly],t,{"font-size":4.4,"font-weight":700,fill:col,"fill-opacity":op,"letter-spacing":.25});
+  if(hn) otBdg(svg,x+10.5,ly-1.6,n,col); };
+const otSk=(svg,x,y,w,h,o={})=>{ const op=o.op??1; if(op<.02) return; const a=w/2, b=h/2, st=o.stroke||"var(--ink)", sw=o.sw||.6;
+  S_(svg,"path",Object.assign({d:`M${x-a*.42} ${y-b*.62}C${x-a*1.05} ${y-b*.2} ${x-a*1.08} ${y+b} ${x} ${y+b}C${x+a*1.08} ${y+b} ${x+a*1.05} ${y-b*.2} ${x+a*.42} ${y-b*.62}Z`,fill:o.open?"none":o.fill,"fill-opacity":op,stroke:st,"stroke-width":sw,"stroke-opacity":op},o.dash?{"stroke-dasharray":"1.6 1.1"}:{}));
+  if(o.open) return;
+  S_(svg,"path",{d:`M${x-a*.42} ${y-b*.62}L${x-a*.62} ${y-b}L${x} ${y-b*.76}L${x+a*.62} ${y-b}L${x+a*.42} ${y-b*.62}Z`,fill:o.fill,"fill-opacity":op,stroke:st,"stroke-width":sw,"stroke-opacity":op,"stroke-linejoin":"round"});
+  seg(svg,[x-a*.46,y-b*.6],[x+a*.46,y-b*.6],{stroke:st,"stroke-width":sw*1.8,"stroke-opacity":op,"stroke-linecap":"round"});
+  if(o.t) lab(svg,[x,y+b*.4],o.t,{"font-size":o.fs||4.8,"font-weight":700,fill:o.tc||"var(--muted)","fill-opacity":op}); };
+const otHit=(svg,x,y,w,h,id)=>fbRc(svg,x,y,w,h,{fill:"transparent","data-drag":id,style:"cursor:pointer"});
+function otBase(svg,o){ svg.setAttribute("viewBox","0 0 140 88"); const pk=o.pk;
+  fbRc(svg,3,14,98,70,{rx:4,fill:"var(--wood)",stroke:"var(--wood-edge)","stroke-width":.9});
+  [30,52,74].forEach(y=>seg(svg,[6,y],[98,y],{stroke:"var(--wood-edge)","stroke-width":.3,"stroke-opacity":.35}));
+  lab(svg,[4,10.5],pk==="t"?"✓ The remaining = what's on the table":"On the table",{"font-size":4.8,"font-weight":700,"text-anchor":"start",fill:pk==="t"?GR:"var(--ink)"});
+  if(pk!=="t"&&o.tn!==""&&o.tn!=null) otBdg(svg,35,9,o.tn,"var(--ink)");
+  otBw(svg,OTMB,BL,"var(--blue-fill)",pk==="b"?"SOLD ALREADY":"MON SOLD",pk==="b"?"":o.mn,o.mo!==false); otBw(svg,OTTB,AMB,"var(--amber-fill)","TUE SOLD",o.un,!!o.uo);
+  if(pk==="b") S_(svg,"circle",{cx:OTMB[0],cy:OTMB[1]+1,r:OTR+3.2,fill:"none",stroke:AMB,"stroke-width":1,"stroke-dasharray":"2 1.4"});
+  if(pk==="t") fbRc(svg,1.4,12.4,101.2,73.2,{rx:5,fill:"none",stroke:GR,"stroke-width":1.2}); }
+const otGlw=(svg,a)=>S_(svg,a.r?"circle":"rect",Object.assign({fill:"none",stroke:"var(--accent)","stroke-width":1.3,class:"kglow","pointer-events":"none"},a.r?{cx:a.x,cy:a.y,r:a.r}:{x:a.x,y:a.y,width:a.w,height:a.h,rx:a.rx||4}));
+const otTapT=(svg,id)=>{ otGlw(svg,{x:2,y:13,w:100,h:72,rx:5}); otHit(svg,3,14,98,70,id); };
+const otTapOf=svg=>{ otHit(svg,3,14,98,70,"tab"); otHit(svg,OTMB[0]-OTR-2,OTMB[1]-OTR-4,2*OTR+4,2*OTR+6,"mon"); };
+function otD0(svg,s){ const R=k=>s.ph>k?1:s.ph===k?s.pp:0, P=k=>fbE(R(k)), p2=P(2), p3=P(3), p5=P(5), p6=P(6), p7=P(7), idle=s.pp>=1,
+    dl=(k,i,n)=>fbE(clamp((R(k)-.7*i/n)/.3,0,1)), H36=otHp(36), H27=otHp(27), H21=otHp(21), ra=[0,1,2,3].filter(a=>a!==s.mp), rb=[...Array(9).keys()].filter(b=>b!==s.t1&&b!==s.t2);
+  otBase(svg,{tn:p6>=1?21:p5>=1?24:p2>=1?27:36,mn:p2>=1?9:"",un:p6>=1?6:p5>=1?3:"",pk:s.ph===3&&idle?s.of:"",uo:s.ph>=3});
+  const f4=Math.min(1,R(1)/.15), f9=Math.min(1,R(4)/.15);
+  if(f4>0) OTP4.forEach((c,a)=>{ const m=a===s.mp, q=m?otL(c,OTMB,p2):c; otPl(svg,q[0],q[1],10.8,f4*(m?1:1-p3)); });
+  if(f9>0) OTP9.forEach((c,b)=>{ const t=b===s.t1?0:b===s.t2?1:-1, k=t<0?0:t?p6:p5, q=t<0?c:otL(c,OTTP[t],k); otPl(svg,q[0],q[1],rpL(10,6.3,k),f9*(t<0?1-p7:1)); });
+  for(let i=0;i<36;i++){ const a=i%4, sa=Math.floor(i/4), pB=otA(OTP4[a],OTG(sa)); let p=otL(H36[i],pB,dl(1,i,36)), r=2.25;
+    if(a===s.mp) p=otL(pB,otA(OTMB,OTG(sa)),p2);
+    else if(R(3)>0){ const j=ra.indexOf(a)*9+sa, b=j%9, sb=Math.floor(j/9), pD=otA(OTP9[b],OTTR[sb]), t=b===s.t1?0:b===s.t2?1:-1; p=otL(pB,H27[j],p3);
+      if(R(4)>0) p=otL(H27[j],pD,dl(4,j,27));
+      if(t>=0){ const k=t?p6:p5; p=otL(pD,otA(OTTP[t],OTTR[sb],.63),k); r=rpL(2.25,1.42,k); }
+      else if(R(7)>0) p=otL(pD,H21[rb.indexOf(b)*3+sb],p7); }
+    otMel(svg,p[0],p[1],r); }
+  if(!idle) return;
+  if(s.ph===1&&s.mp<0) OTP4.forEach((c,a)=>{ otGlw(svg,{x:c[0],y:c[1],r:11.8}); otHit(svg,c[0]-11.5,c[1]-11.5,23,23,"p"+a); });
+  if(s.ph===4&&s.t1<0||s.ph===5&&s.t2<0) OTP9.forEach((c,b)=>{ if(b!==s.t1){ otGlw(svg,{x:c[0],y:c[1],r:10.9}); otHit(svg,c[0]-10.5,c[1]-10.5,21,21,"q"+b); } });
+  if(s.ph===2||s.ph===6) otTapT(svg,"tip");
+  if(s.ph===3&&s.of!=="t") otTapOf(svg); }
+function otScene(svg,V,o){ const C=[52,50], mp=o.mp, sm=[];
+  const SK={fill:"var(--sack)",stroke:"var(--sack-edge)",sw:.8,tc:"var(--sack-edge)"};
+  if(V.bags<1) otSk(svg,C[0],C[1],44,52,Object.assign({op:1-V.bags,t:"?",fs:12},SK));
+  let one=-1; for(let a=0;a<4&&one<0;a++) if(a!==mp) for(let l=0;l<3;l++){ const id=a*3+l; if(id!==o.t1&&id!==o.t2){ one=id; break; } }
+  if(V.bags>0) for(let a=0;a<4;a++){ const isM=a===mp, k0=rpL(.5,1,V.bags), c0=otL(C,[OTBX[a],OTBY],V.bags), c=isM?otL(c0,OTMB,V.mon):c0, k=isM?rpL(k0,.78,V.mon):k0, op=Math.min(1,V.bags*1.5), ou=isM?V.mopen:V.split;
+    otSk(svg,c[0],c[1],20*k,26*k,Object.assign({op:op*(1-ou),t:"?",fs:7*k},SK));
+    if(ou>0){ if(isM) otSk(svg,c[0],c[1],20*k,26*k,{open:1,dash:1,stroke:"var(--muted)",op:ou}); else fbRc(svg,c[0]-11*k,c[1]-29*k,22*k,58*k,{rx:5*k,fill:"none",stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.6 1.1","stroke-opacity":ou});
+      for(let l=0;l<3;l++){ const id=a*3+l, tp=id===o.t1?OTTS[0]:id===o.t2?OTTS[1]:null, tq=id===o.t1?V.tu1:id===o.t2?V.tu2:0, onT=!isM&&!tp;
+        let p=isM?otA(c,OTSM[l]):otA(c,OTSL[l],k), kk=(isM?.7:k)*rpL(.4,1,ou); if(tp){ p=otL(p,tp,tq); kk=rpL(kk,1,tq); }
+        const so=Math.max(V.all,id===one?V.one:0), W=12*kk, H=15*kk;
+        otSk(svg,p[0],p[1],W,H,{fill:"var(--teal-fill)",stroke:"var(--teal)",op:ou*(1-so),t:o.uq,fs:5*kk,tc:"var(--teal)"});
+        if(so>0){ otSk(svg,p[0],p[1],W,H,{open:1,dash:1,stroke:"var(--teal)",op:so});
+          if(o.u) [-1,1].forEach(d=>otMel(svg,p[0]+d*2.7*kk,p[1]+2.2*kk,2.3*kk,so)); else lab(svg,[p[0],p[1]+3.4*kk],o.num,{"font-size":5*kk,"font-weight":700,fill:"var(--teal)","fill-opacity":so}); }
+        if(onT&&V.hl>0) otSk(svg,p[0],p[1],W+2,H+2,{open:1,stroke:GR,sw:1,op:V.hl});
+        if(o.tap==="s"&&onT) sm.push([id,p]); } }
+    if(o.tap==="b"&&!isM){ otGlw(svg,{x:c[0]-12,y:c[1]-15,w:24,h:30,rx:6}); otHit(svg,c[0]-11,c[1]-14,22,28,"b"+a); } }
+  sm.forEach(([id,p])=>{ otGlw(svg,{x:p[0]-7.2,y:p[1]-8.8,w:14.4,h:17.6,rx:3}); otHit(svg,p[0]-7.5,p[1]-9,15,18,"s"+id); });
+  if(o.tap==="mon"){ otGlw(svg,{x:OTMB[0],y:OTMB[1]+1,r:OTR+3}); otHit(svg,OTMB[0]-OTR,OTMB[1]-OTR,2*OTR,2*OTR,"mon"); }
+  if(o.tap==="open") otTapT(svg,"open");
+  if(o.tap==="of") otTapOf(svg); }
+function otD1(svg,s){ const P=k=>s.ph>k?1:s.ph===k?fbE(s.pp):0, idle=s.pp>=1, cnt=P(8);
+  otBase(svg,{tn:cnt>=1?"7 small bags":"",mn:cnt>=1?3:"",un:cnt>=1?2:"",pk:s.ph===2&&idle?s.of:"",uo:s.ph>=2});
+  otScene(svg,{bags:P(1),mon:P(2),split:P(3),tu1:P(4),tu2:P(5),one:P(6),mopen:P(7),all:P(9),hl:0},{mp:s.mp,t1:s.t1,t2:s.t2,uq:"?",u:2,
+    tap:!idle?"":s.ph===1&&s.mp<0?"b":s.ph===2&&s.of!=="t"?"of":s.ph===3&&s.t1<0||s.ph===4&&s.t2<0?"s":s.ph===6?"mon":s.ph===8?"open":""}); }
+function otDL(svg,s){ const n=s.ln, q1=s.step===3, raw=T=>n>T?1:n===T?Math.min(1,s.pp*31/11):0, W=(T,a,b)=>fbE(clamp((raw(T)-a)/(b-a),0,1));
+  const V=q1?{bags:1,mon:1,split:1,tu1:1,tu2:1,mopen:1,hl:W(1,0,1),one:W(2,0,1),all:W(3,0,1)}
+    :{bags:1,mon:1,split:W(1,0,.5),tu1:W(1,.5,1),tu2:W(1,.5,1),mopen:W(2,0,.6),hl:W(3,0,1),one:W(4,0,1),all:W(5,0,1)}, cnt=q1?1:W(2,.6,1);
+  otBase(svg,{tn:cnt>=1?`7 small bags${V.hl>=1?` = ${q1?84:14} melons`:""}`:"",mn:cnt>=1?3:"",un:cnt>=1?2:"",pk:"",uo:true});
+  otScene(svg,V,{mp:0,t1:3,t2:4,uq:q1||n>=3?"u":"?",u:q1?0:2,num:"12",tap:""}); }
+function otT0(s){ const e=otE(s), f1=frac(1,4), f2=frac(2,9);
+  if(e<=0) return s.w===1?`1 is how many plates he sells.<br>The denominator 4 says how many equal plates.`
+    :s.w===9?`The 9 is for Tuesday. Monday is ${f1}.<br>The denominator 4 says how many equal plates.`
+    :`${f1} of the melons: all 36 melons are on the table.<br>How many equal plates do you need?`;
+  if(e===1) return `4 equal plates of 9. Each plate is ${f1} of the melons.<br>Monday: he sold ${f1}. Tap a plate to sell it.`;
+  if(e===2) return `That plate is in Monday's bowl. Those melons are sold.<br>Tap the table to tip the other plates into one pile.`;
+  if(e===3) return !s.of?`Tuesday: he sold ${f2} of the remaining melons.<br>The ${f2}: of which melons? Tap them.`
+    :s.of==="b"?`Monday's melons are sold already.<br>The remaining = what's on the table. Tap the table.`
+    :s.w===2?`2 is how many plates he sells.<br>The denominator 9 says how many equal plates.`
+    :s.w===4?`The 4 was Monday's. Tuesday is ${f2}.<br>The denominator 9 says how many equal plates.`
+    :`Yes! The remaining = what's on the table: 27 melons.<br>${f2} of these 27: how many equal plates?`;
+  if(e===4) return `9 equal plates of 3. Each plate is ${frac(1,9)} of the remaining.<br>Tuesday: he sold ${f2}. Tap 2 plates to sell them.`;
+  if(e===5) return `One plate is in Tuesday's bowl.<br>He sold ${f2}: tap 1 more plate.`;
+  if(e===6) return `Both plates are in Tuesday's bowl. Those melons are sold.<br>Tap the table to tip the other plates into one pile.`;
+  return `21 melons are left on the table.<br>The ${f1} was of all 36. The ${f2} was of the 27 on the table.`; }
+function otT1(s){ const e=otE(s), f1=frac(1,4), f2=frac(2,9);
+  if(e<=0) return s.w===1?`1 is how many bags he sells.<br>The denominator 4 says how many equal bags.`
+    :s.w===9?`The 9 is for Tuesday. Monday is ${f1}.<br>The denominator 4 says how many equal bags.`
+    :`Now we don't know how many melons, so they are in bags.<br>${f1} of the melons: how many equal bags?`;
+  if(e===1) return `4 equal bags, the same number of melons in each.<br>Monday: he sold ${f1}. Tap a bag to sell it.`;
+  if(e===2) return !s.of?`Tuesday: he sold ${f2} of the remaining melons.<br>The ${f2}: of which melons? Tap them.`
+    :s.of==="b"?`Monday's bag is sold already.<br>The remaining = what's on the table. Tap the table.`
+    :s.w===2?`3 bags with 2 small bags in each = 6 small bags.<br>We need 9 equal parts. Try again.`
+    :s.w===9?`3 bags with 9 small bags in each = 27 small bags.<br>We need 9 equal parts. Try again.`
+    :`Yes! The remaining = the 3 bags on the table.<br>Make 9 equal parts: how many small bags in each bag?`;
+  if(e===3) return `Each bag holds 3 small bags: 9 small bags, all the same.<br>Tuesday: he sold ${f2}. Tap 2 small bags to sell them.`;
+  if(e===4) return `One small bag is in Tuesday's bowl.<br>He sold ${f2}: tap 1 more small bag.`;
+  if(e===5) return s.w===7?`7 small bags of 7 = 49 melons, not 14.<br>Try again: 14 melons in 7 small bags.`
+    :s.w===14?`7 small bags of 14 = 98 melons, not 14.<br>Try again: 14 melons in 7 small bags.`
+    :`7 small bags are on the table, and 14 melons are left.<br>How many melons are in one small bag?`;
+  if(e===6) return `14 ÷ 7 = 2 melons in every small bag. Look inside one.<br>Monday's bag is the same size. Tap it to open it.`;
+  if(e===7) return s.w===7?`7 is only the table. Count the bowls too.<br>How many small bags were there at first?`
+    :s.w===9?`9 is the table and Tuesday. Count Monday's too.<br>How many small bags were there at first?`
+    :`Monday's bag has 3 small bags too.<br>How many small bags were there at first?`;
+  if(e===8) return `3 + 2 + 7 = 12 small bags, with 2 melons in each.<br>Tap the table to open every bag and check.`;
+  return `12 small bags of 2 = 24 melons at first.<br>Check: Monday ${f1} of 24 = 6. Tuesday ${f2} of 18 = 4. 14 left ✓`; }
+const otT2=s=>[`Write the label line and row 1 on paper first.<br>Use the big bags: 4 at first, and Monday took 1.`,
+  `Row 2 starts under the boxed Rest: the small bags.<br>The Rest became 9 small bags, and Tuesday took 2.`,
+  `Monday's bag is 3 small bags too, so row 1 × 3.<br>Write the arrow and the last row: every bag is small now.`,
+  `1u = 1 small bag. The 7 on the table hold the 14 left.<br>Write it with u.`,
+  `Now find 1u: the melons in one small bag.<br>Write it with u.`,
+  `At first: every small bag in the last row.<br>Write it with u.`,
+  `Every line came from what the bags did.<br>24 melons at first.`][s.ln];
+const otT3=s=>[`The real Q1: the same story, but 84 melons are left.<br>Write all your lines on paper first. Then check them.`,
+  `The rows are the same as before: the same bags.<br>Only the number left is new. Check your next line.`,
+  `7 small bags hold the 84 left.<br>Check your next line.`,
+  `1u = 12: one small bag holds 12 melons now.<br>Check your last line.`,
+  `12 small bags of 12 = 144 melons at first.<br>The same bags as before, just bigger.`][s.ln];
+function otK(s){ const e=otE(s), f1=frac(1,4), f2=frac(2,9), z=s.step, b=[], R=(c,a,x)=>b.push(`<div class="kr ${c}"><b>${a}</b>${x?`<span class="kx">${x}</span>`:""}</div>`);
+  if(z<2){ R(e<=0?"ask":"tab",`${f1} of the melons`,z?"we don't know how many, so they are in bags":"the melons are the denominator, 4");
+    const of=e>3||e===3&&s.of==="t"?["tab",z?`${f2} of the 3 bags on the table`:`${f2} of the 27 on the table`,"the remaining melons are the denominator, 9"]
+      :s.of==="b"?["oops",z?`${f2} of all 4 bags?`:`${f2} of all 36?`,"Monday's are sold already"]:["ask",`${f2} of …?`,"every fraction is OF something"];
+    if(z===0){ if(e>=1) R("tab",nw("36 ÷ 4 = 9"),`4 equal plates, each is ${f1}`);
+      if(e>=2){ R("mon",`Mon: ${nw("1 plate = 9")}`,"sold"); R("tab",`Table: ${nw("36 − 9 = 27")}`,"the remaining melons"); }
+      if(e>=3) R(...of);
+      if(e>=4) R("tab",nw("27 ÷ 9 = 3"),`9 equal plates, each is ${frac(1,9)} of the remaining`);
+      if(e>=5) R("tue",`Tue: ${nw(e===5?"1 plate = 3":"2 plates = 6")}`,e>5?"sold":"");
+      if(e>=7) R("lft",`Left: ${nw("27 − 6 = 21")}`,"on the table");
+      return `<div class="kwl">${b.join("")}</div>`; }
+    if(e>=1) R("tab","4 equal bags",`each bag is ${f1}`);
+    if(e>=2){ R("mon","Mon: 1 bag","sold"); R(...of); }
+    if(e>=3) R("tab",nw("3 bags = 9 small bags"),"1 bag = 3 small bags");
+    if(e>=4) R("tue",`Tue: ${e>4?"2 small bags":"1 small bag"}`,e>4?"sold":"");
+    if(e>=5) R("lft",`Left: ${nw("7 small bags = 14")}`,"start here");
+    if(e>=6) R("lft",`1 small bag: ${nw("14 ÷ 7 = 2")}`,"2 melons in each");
+    if(e>=7) R("mon","Monday's bag = 3 small bags","the same size as the others");
+    if(e>=8) R("tab",`At first: ${nw("3 + 2 + 7 = 12")} small bags`);
+    if(e>=9) R("lft",`At first: ${nw("12 × 2 = 24")} melons`);
+    return `<div class="kwl">${b.join("")}</div>`; }
+  const q1=z===3, lf=q1?84:14, u=lf/7, n=s.ln, rl=q1?(n>=1?2:-1):n>=3?2:n>=2?1:n>=1?0:-1;
+  if(rl>=0) b.push(`<div class="kr tab rrw">${otRows(rl)}${rl>1?`<span class="kx">check: 3 + 2 + 7 = 12 ✓</span>`:""}</div>`);
+  const ul=[`7u = ${lf}`,`1u = ${u}`,`12u = ${12*u}`].slice(0,Math.max(0,n-(q1?1:3)));
+  ul.forEach((t,i)=>R("lft",nw(t),i===2?`${12*u} melons at first`:i?"":"1u = 1 small bag"));
+  if(n<(q1?4:6)) R("ask",n||q1?"Your next line":"Your first lines","write on paper first");
+  return `<div class="kwl">${b.join("")}</div>`; }
+const otH=s=>{ if(s.pp<1) return ""; const p=s.ph, P="↓ Pick one below", O="↓ Tap them in the picture, or pick below";
+  if(s.step===0) return p===1&&s.mp<0||p===4&&s.t1<0||p===5&&s.t2<0?"↓ Tap a plate":p===3&&s.of!=="t"?O:p===0||p===3?P:"";
+  if(s.step===1) return p===1&&s.mp<0?"↓ Tap a bag":p===2&&s.of!=="t"?O:p===3&&s.t1<0||p===4&&s.t2<0?"↓ Tap a small bag":p===6?"↓ Tap Monday's bag":[0,2,5,7].includes(p)?P:"";
+  return ""; };
+const otCB=(z,ph,ok,k,d,L,extra)=>L.map(([v,l])=>({label:l,pill:true,fn:otC(v,ok,k,d),show:s=>s.step===z&&s.ph===ph&&s.pp>=1&&(!extra||extra(s)),
+  tried:s=>v!==ok&&otTr(s,v),glow:s=>v===ok&&s.tr.split(",").filter(Boolean).length>=2}));
+const otQS=(n,lf)=>{ const c=(k,t)=>`<span class="kqc${k?" "+k:""}">${t}</span>`;
+  return c("",n?`🍈 ${n} melons`:"🍈 ? melons")+c("mon",`Mon: sold ${frac(1,4)}`)+c("tue",`Tue: sold ${frac(2,9)} of the remaining`)+(n?c("lft","How many left?"):c("lft",`${lf} left`)+c("","How many at first?")); };
+const otW=(s,an)=>{ s.ln++; s.pp=0; an(3100,p=>{ s.pp=p; }); };
+const onTable=aid({
+  init:otZ(), jump:true, nxWait:true, vb:"0 0 140 88", label:"Melons on a table", link:["ph","mp","t1","t2","of","ln"],
+  fix:s=>{ s.pp=1; s._k=1; }, nxOk:s=>s.pp>=1&&(s.step===0?s.ph>=7:s.step===1?s.ph>=9:s.ln>=(s.step===2?6:4)),
+  buttons:[...otCB(0,0,4,1,1800,[[1,"1 plate"],[4,"4 plates"],[9,"9 plates"]]),
+    ...otCB(0,3,9,4,1800,[[2,"2 plates"],[4,"4 plates"],[9,"9 plates"]],s=>s.of==="t"),
+    ...otCB(1,0,4,1,900,[[1,"1 bag"],[4,"4 bags"],[9,"9 bags"]]),
+    ...otCB(1,2,3,3,1300,[[2,"2 in each"],[3,"3 in each"],[9,"9 in each"]],s=>s.of==="t"),
+    ...otCB(1,5,2,6,800,[[2,"2 melons"],[7,"7 melons"],[14,"14 melons"]]),
+    ...otCB(1,7,12,8,700,[[7,"7 small bags"],[9,"9 small bags"],[12,"12 small bags"]]),
+    {label:"I've written it ✏️",fn:otW,show:s=>s.step===2&&s.ln<6&&s.pp>=1},
+    {label:"I've written them all ✏️",fn:otW,show:s=>s.step===3&&s.ln===0&&s.pp>=1},
+    {label:"Check my next line ✓",fn:otW,show:s=>s.step===3&&s.ln>0&&s.ln<4&&s.pp>=1},
+    {label:"↺ Start again",fn:otR,show:s=>s.ph>0||s.ln>0||!!s.of||!!s.w}],
+  steps:[{name:"On plates",set:otSet,q:()=>otQ(36),qs:()=>otQS(36),hint:otH,t:otT0},
+    {name:"In bags",set:otSet,q:()=>otQ(0,14),qs:()=>otQS(0,14),hint:otH,t:otT1},
+    {name:"Write it",set:otSet,q:()=>otQ(0,14),qs:()=>otQS(0,14),t:otT2},
+    {name:"Q1 on paper",set:otSet,q:()=>otQ(0,84),qs:()=>otQS(0,84),t:otT3}],
+  draw(svg,s){ (s.step===0?otD0:s.step===1?otD1:otDL)(svg,s); },
+  drag(id,p,s,start){ if(start&&s.pp<1){ s.pp=1; s._sk=1; } },
+  drop(id,s,an){ if(s._sk){ s._sk=0; return; } if(s.pp<1) return; const z=s.step, p=s.ph, n=+id.slice(1), of=id==="tab"||id==="mon";
+    if(id==="tip"&&z===0&&(p===2||p===6)){ otGo(s,an,p+1,1000); return; }
+    if(id==="open"&&z===1&&p===8){ otGo(s,an,9,1300); return; }
+    if(z===0){ if(p===1&&s.mp<0&&id[0]==="p"){ s.mp=n; otGo(s,an,2,800); }
+      else if(p===3&&s.of!=="t"&&of){ s.of=id==="tab"?"t":"b"; s.w=0; }
+      else if(id[0]==="q"&&(p===4&&s.t1<0||p===5&&s.t2<0)&&n!==s.t1){ if(p===4) s.t1=n; else s.t2=n; otGo(s,an,p+1,650); } }
+    else if(z===1){ if(p===1&&s.mp<0&&id[0]==="b"){ s.mp=n; otGo(s,an,2,800); }
+      else if(p===2&&s.of!=="t"&&of){ s.of=id==="tab"?"t":"b"; s.w=0; }
+      else if(id[0]==="s"&&(p===3&&s.t1<0||p===4&&s.t2<0)&&n!==s.t1){ if(p===3) s.t1=n; else s.t2=n; otGo(s,an,p+1,650); }
+      else if(p===6&&id==="mon") otGo(s,an,7,900); } },
+  key:otK
+});
+PLAYS.onTable=onTable;
+const SGG={ghost:{x:34,y:24,w:32,h:36},pan:{x:18,y:60,w:64,h:3},ped:{x:40,y:63,w:20,h:22},win:{x:30,y:86,w:40,h:11},tray:{x:94,y:48,w:64,h:30},moulds:[102,114,126,138,150],my:63};
+const SGR=[
+ {id:1,name:"Story 1",a:[2,5],b:[5,8],W:400,cut:8,go:5,stay:3,u:50,ask:"left",ansU:3,ans:150,boxAt:"pan",
+  q:"Mr Ali bought {p:bag|{f:a} kg of sugar}. He used {p:fr|{f:b} of it} to make some {p:kuih|kuih}. {p:how|How much sugar} did he have {p:left|left}? Give your answer in {p:gram|grams}.",
+  gLine:"{f:a} kg = 1000 ÷ 5 × 2 = <?>",m1aCap:"{f:a} kg is how much he BOUGHT.",m1b:["bag","fr","kuih"],m5:["how","left","gram"],m5Right:"left",askWord:"LEFT",
+  m5HowCap:"The sugar is the whole. It asks what's LEFT."},
+ {id:2,name:"Story 2",a:[3,4],b:[5,6],W:750,cut:6,go:5,stay:1,u:125,ask:"use",ansU:5,ans:625,boxAt:"tray",
+  q:"To make {p:kuih|kuih}, he used {p:fr|{f:b}} of {p:bag|the sugar in a {f:a} kg bag}. {p:how|How much sugar} did he {p:use|use}, in {p:gram|grams}?",
+  gLine:"{f:a} kg = <?>",m1aCap:"{f:a} kg is the bag he had.",m1b:["kuih","fr","bag"],m5:["how","use","gram"],m5Right:"use",askWord:"USE",
+  m5HowCap:"The sugar is the whole. It asks what he USED.",noL3:true},
+ {id:3,name:"On paper",a:[3,8],b:[2,3],W:375,cut:3,go:2,stay:1,u:125,ask:"left",ansU:1,ans:125,boxAt:"pan",askWord:"LEFT",
+  q:"Mr Ali bought {f:a} kg of sugar. He used {f:b} of it. How much sugar did he have left? Give your answer in grams.",twin:true}
+];
+const sgLoad=()=>{ try{ return JSON.parse(localStorage.getItem("mf:S")||"{}"); }catch(e){ return {}; } };
+const sgSave=o=>{ try{ localStorage.setItem("mf:S",JSON.stringify(o)); }catch(e){} };
+const sgLS=(k,v)=>{ try{ if(v===undefined) return localStorage.getItem(k)||""; localStorage.setItem(k,v); }catch(e){ return ""; } };
+const sgMute=()=>sgLS("mf:mute")==="1";
+let sgA=null;
+function sgChime(ok){ if(sgMute()) return; try{ sgA=sgA||new (window.AudioContext||window.webkitAudioContext)(); const c=sgA, t=c.currentTime, g=c.createGain(); g.connect(c.destination); g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(ok?.18:.08,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+(ok?.6:.22));
+  const o=c.createOscillator(); o.type=ok?"sine":"triangle"; o.frequency.value=ok?880:180; o.connect(g); o.start(t); o.stop(t+(ok?.65:.25));
+  if(ok){ const o2=c.createOscillator(); o2.frequency.value=1320; o2.connect(g); o2.start(t+.14); o2.stop(t+.65); } }catch(e){} }
+const SGFN={2:"half",3:"third",4:"quarter",5:"fifth",6:"sixth",8:"eighth",10:"tenth"};
+const sgFracSay=(a,b)=>{ const n=SGFN[b]||`over ${b}`; return SGFN[b]?`${a} ${n}${a>1?"s":""}`:`${a} ${n}`; };
+function sgSay(html){ try{ const t=String(html).replace(/<span class="frac"><span>(\d+)<\/span><span>(\d+)<\/span><\/span>/g,(m,a,b)=>" "+sgFracSay(+a,+b)+" ").replace(/<[^>]+>/g," ").replace(/\?u/g,"how many u").replace(/\s+/g," ").trim(); if(!t) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="en-GB"; u.rate=.95; speechSynthesis.speak(u); }catch(e){} }
+const sgF=(R,k)=>frac(R[k][0],R[k][1]);
+const sgQ=(R,live)=>R.q.replace(/\{f:(a|b)\}/g,(m,k)=>`<span class="sgf${live==="m1a"?" live":""}" data-f="f${k}">${sgF(R,k)}</span>`).replace(/\{p:(\w+)\|([^{}]*)\}/g,(m,id,c)=>`<span class="sgp" data-p="${id}">${c}</span>`);
+const sgT=(R,s)=>String(s).replace(/\{f:(a|b)\}/g,(m,k)=>sgF(R,k));
+const sgPos=(N,i)=>{ const G=SGG.ghost, c=N<=8?2:N<=12?3:4, r=Math.ceil(N/c), cw=(G.w-4)/c, ch=(G.h-4)/r; return {x:G.x+2+cw*(i%c)+cw/2,y:G.y+2+ch*Math.floor(i/c)+ch/2,r:Math.max(1.6,Math.min(4,cw/2-.7,ch/2-.7))}; };
+const sgRing=(svg,a,pulse)=>S_(svg,a.r!=null?"circle":"rect",Object.assign({fill:"none",stroke:"var(--accent)","stroke-width":1.2,class:"kglow"+(pulse?" sgpart":""),"pointer-events":"none"},a.r!=null?{cx:a.x,cy:a.y,r:a.r}:{x:a.x,y:a.y,width:a.w,height:a.h,rx:a.rx==null?3:a.rx}));
+const sgBoxAt=(S,R,t)=>{ const G=SGG; if(t==="tray") return {x:G.tray.x-2,y:G.tray.y-2,w:G.tray.w+4,h:G.tray.h+4};
+  if(t==="win") return {x:G.win.x-2,y:G.win.y-2,w:G.win.w+4,h:G.win.h+4};
+  if(t==="whole") return {x:G.ghost.x-4,y:G.ghost.y-9,w:G.ghost.w+8,h:G.ghost.h+13};
+  const stay=S.cut?[...Array(S.cut).keys()].filter(i=>!S.gone.includes(i)):[]; if(!stay.length) return {x:G.ghost.x-1,y:G.ghost.y-1,w:G.ghost.w+2,h:G.ghost.h+2};
+  const ps=stay.map(i=>sgPos(S.cut,i)); const x0=Math.min(...ps.map(p=>p.x-p.r))-1.5, x1=Math.max(...ps.map(p=>p.x+p.r))+1.5, y0=Math.min(...ps.map(p=>p.y-p.r))-1.5, y1=Math.max(...ps.map(p=>p.y+p.r))+1.5; return {x:x0,y:y0,w:x1-x0,h:y1-y0}; };
+const sgWhere=(st)=>{ const G=SGG, S=st.S, mv=st.mv||{}, w=mv.where; if(w==="win") return {x:G.win.x,y:G.win.y,w:G.win.w,h:G.win.h,win:1};
+  if(w==="bag") return {x:42,y:G.ghost.y-9,w:16,h:7.5}; if(w==="pan") return {x:42,y:66,w:16,h:7.5};
+  if(w==="scoop"){ const i=[...Array(S.cut||1).keys()].find(i=>!S.gone.includes(i)); const p=sgPos(S.cut||1,i||0); return {x:G.ghost.x+G.ghost.w+3,y:p.y-3.75,w:16,h:7.5,from:p}; }
+  if(w==="box"){ const b=sgBoxAt(S,st.R,S.box||st.R.boxAt); return {x:b.x+b.w/2-8,y:b.y-9,w:16,h:7.5}; } return null; };
+function sgScene(svg,st){
+  svg.innerHTML=""; svg.setAttribute("viewBox","0 0 160 100"); const R=st.R, S=st.S, G=SGG, fx=st.fx||{}, p=fx.p==null?1:fx.p, mv=st.mv||{}, live=st.liveKind, tan="var(--sack,#e2c391)", edge="var(--sack-edge,#8a6a3a)", ink="var(--ink)", mu="var(--muted)", acc="var(--accent)", grn="var(--green)", red="var(--red)";
+  const shake=fx.t==="slam"?Math.sin(p*40)*1.5:0;
+  fbRc(svg,G.tray.x,G.tray.y,G.tray.w,G.tray.h,{rx:3,fill:"var(--card)",stroke:mu,"stroke-width":.7}); lab(svg,[G.tray.x+G.tray.w/2,G.tray.y-3],"kuih tray",{"font-size":4.4,fill:mu});
+  const mouldBlink=fx.t==="tooFew"?fx.k:null;
+  G.moulds.forEach((mx,k)=>{ const bl=mouldBlink!=null&&k>=mouldBlink, on=st.hint>=2&&mv.k==="mark"; S_(svg,"circle",{cx:mx,cy:G.my,r:5.2,fill:"none",stroke:bl||on?acc:mu,"stroke-width":bl||on?1.1:.6,"stroke-dasharray":"1.2 1",opacity:bl?.4+.6*Math.abs(Math.sin(p*9)):1,class:on?"kglow sgpart":""}); });
+  const g=S_(svg,"g",{transform:`translate(${shake} 0)`});
+  fbRc(g,G.pan.x,G.pan.y,G.pan.w,G.pan.h,{rx:1,fill:mu}); fbRc(g,G.ped.x,G.ped.y,G.ped.w,G.ped.h,{rx:2,fill:"var(--line)"}); fbRc(g,G.win.x,G.win.y,G.win.w,G.win.h,{rx:2,fill:"var(--card)",stroke:ink,"stroke-width":.7});
+  let wt="? g"; if(fx.t==="slam") wt=`${fx.N} kg !!`; else if(S.ans!=null&&S.unit==="g") wt=`${S.ans} g`; else if(mv.where==="win"&&live==="num") wt=`${st.echo||"?"} g`; else if(S.grams&&!S.cut) wt=`${S.grams} g`;
+  lab(g,[50,G.win.y+8],wt,{"font-size":6.2,"font-weight":700,fill:fx.t==="slam"?red:ink});
+  fbRc(svg,G.ghost.x,G.ghost.y,G.ghost.w,G.ghost.h,{rx:4,fill:"none",stroke:edge,"stroke-width":.8,"stroke-dasharray":"2 1.4"});
+  if(S.grams&&(S.cut||st.R.twin)) lab(svg,[50,G.ghost.y-3.2],`${S.grams} g`,{"font-size":5,"font-weight":700,fill:edge});
+  if(fx.t==="glowBag") sgRing(svg,{x:G.ghost.x-2,y:G.ghost.y-2,w:G.ghost.w+4,h:G.ghost.h+4,rx:5});
+  if(!S.cut&&fx.t!=="cut"){ const op=fx.t==="cutOk"?1-p:1; fbRc(svg,G.ghost.x+1,G.ghost.y+1,G.ghost.w-2,G.ghost.h-2,{rx:4,fill:tan,stroke:edge,"stroke-width":.8,opacity:op});
+    S_(svg,"text",{x:50,y:G.ghost.y+G.ghost.h/2+2,"font-size":6,"font-weight":700,"text-anchor":"middle",fill:ink,opacity:op},`{${R.a[0]}/${R.a[1]}} kg`); }
+  const scoop=(x,y,r,o={})=>{ S_(svg,"circle",{cx:x,cy:y,r,fill:o.fill||tan,stroke:o.stroke||edge,"stroke-width":.7,opacity:o.op==null?1:o.op,"stroke-dasharray":o.dash||""}); if(o.lbl&&r>=2.6) lab(svg,[x,y+1.1],o.lbl,{"font-size":2.7,fill:ink}); };
+  if(fx.t==="cutOk"){ for(let i=0;i<fx.N;i++){ const P=sgPos(fx.N,i); scoop(P.x,P.y,Math.max(.3,P.r*fbE(p))); } }
+  const N=S.cut; if(N&&fx.t!=="cut"){ const mould=k=>({x:G.moulds[k],y:G.my,r:4.3}), gone=S.gone, marked=S.marked||[];
+    for(let i=0;i<N;i++){ const P=sgPos(N,i); let x=P.x,y=P.y,r=P.r; const gi=gone.indexOf(i);
+      if(fx.t==="fly"&&marked.includes(i)){ const m=mould(marked.indexOf(i)), e=fbE(p); x=rpL(P.x,m.x,e); y=rpL(P.y,m.y,e); r=rpL(P.r,m.r,e); }
+      else if(fx.t==="tooFew"&&marked.includes(i)){ const m=mould(marked.indexOf(i)), e=fbE(p<.5?p*2:2-p*2); x=rpL(P.x,m.x,e); y=rpL(P.y,m.y,e); r=rpL(P.r,m.r,e); }
+      else if(gi>=0){ const m=mould(gi); x=m.x; y=m.y; r=m.r; }
+      if(fx.t==="bounce"&&fx.i===i) y-=6*Math.sin(Math.PI*p);
+      const stay=gi<0, lbl=S.u&&stay?`${S.u} g`:(S.u&&st.phase==="end"?`${S.u} g`:""); scoop(x,y,r,{lbl});
+      if(live==="mark"&&stay){ const mk=marked.includes(i); S_(svg,"circle",{cx:x+r*.75,cy:y-r*.75,r:1.5,fill:mk?acc:"var(--card)",stroke:acc,"stroke-width":.5}); if(mk) lab(svg,[x+r*.75,y-r*.75+.9],"✓",{"font-size":2.4,fill:"var(--accent-ink)",style:"stroke:none"}); }
+      if(stay&&live==="mark") S_(svg,"circle",{cx:x,cy:y,r:r+1.6,fill:"transparent","data-sc":i,style:"cursor:pointer"});
+      if(fx.t==="number"&&(fx.tray?gi>=0:stay)){ const k=fx.tray?gi:[...Array(N).keys()].filter(j=>!gone.includes(j)).indexOf(i); if(k<Math.floor(p*(fx.n+.001))) lab(svg,[x,y-r-1.2],String(k+1),{"font-size":4.2,"font-weight":700,fill:acc}); } } }
+  if(fx.t==="slivers"){ for(let k=0;k<8;k++){ const x=G.ghost.x+2+k*4, y=G.ghost.y-6-p*5; fbRc(svg,x,y,3,2.4,{rx:1,fill:k<5?"var(--blue-fill)":"none",stroke:"var(--blue)","stroke-width":.5,"stroke-dasharray":"1 .8",opacity:1-p*.8}); } }
+  if(fx.t==="scoopDrop"){ const q=p<.6?p/.6:1, x=rpL(50,126,fbE(q)), y=p<.6?rpL(G.ghost.y-4,30,fbE(q))-10*Math.sin(Math.PI*q):rpL(30,96,(p-.6)/.4); scoop(x,y,3.4,{op:p<.6?1:1-(p-.6)/.4}); }
+  if(fx.t==="kg"){ const KX=4,KY=8,KW=24,KH=52; fbRc(svg,KX,KY,KW,KH,{rx:3,fill:"none",stroke:edge,"stroke-width":.7,"stroke-dasharray":"2 1.4"}); lab(svg,[KX+KW/2,KY-2],"1 kg",{"font-size":4.6,"font-weight":700,fill:edge});
+    const hh=Math.min(90,Math.max(1.5,fx.N/1000*KH))*fbE(p); fbRc(svg,KX+2,KY+KH-hh,KW-4,hh,{rx:2,fill:fx.N>1000?"var(--red-fill)":tan,stroke:fx.N>1000?red:edge,"stroke-width":.7}); lab(svg,[KX+KW/2,KY+KH+5],`${fx.N} g`,{"font-size":4.4,"font-weight":700,fill:fx.N>1000?red:ink}); }
+  if(fx.t==="cut"){ const n=fx.N, e=fbE(p); for(let k=0;k<R.cut;k++){ const empty=k>=n; S_(svg,"circle",{cx:22+k*8,cy:14,r:3,fill:"none",stroke:empty?acc:mu,"stroke-width":empty?1:.5,"stroke-dasharray":"1 .8",opacity:empty?.4+.6*Math.abs(Math.sin(p*9)):1}); }
+    for(let i=0;i<n;i++){ const P=sgPos(n,i); let x=P.x,y=P.y,r=P.r,op=1; if(i<R.cut){ x=rpL(P.x,22+i*8,e); y=rpL(P.y,14,e); r=rpL(P.r,2.6,e); } else { y=P.y+e*60; op=1-e; } scoop(x,y,r,{op}); }
+    lab(svg,[50,8],`${sgT(R,"{f:b}")} needs ${R.cut} parts`,{"font-size":4.2,fill:acc}); }
+  if(fx.t==="stack"){ const hb=fx.N/R.W*G.ghost.h, x=G.ghost.x+G.ghost.w+4; for(let k=0;k<R.cut;k++){ const yb=G.pan.y-hb*(k+1), over=yb<G.ghost.y-.5; if(k<Math.ceil(p*R.cut)) fbRc(svg,x,yb,8,Math.max(.6,hb-.4),{rx:.6,fill:over?"var(--red-fill)":tan,stroke:over?red:edge,"stroke-width":.5}); } lab(svg,[x+4,G.pan.y+5.5],`${fx.N} g`,{"font-size":3.6,fill:ink}); }
+  if(fx.t==="ghosts"){ const n=Math.min(12,fx.N); for(let k=0;k<n;k++) if(k<Math.ceil(p*n)) scoop(20+k*7.5,72,2.8,{fill:"none",stroke:acc,dash:"1 .8"}); }
+  if(fx.t==="box"||S.box){ const t=fx.t==="box"?fx.at:S.box, b=sgBoxAt(S,R,t); fbRc(svg,b.x,b.y,b.w,b.h,{rx:3,fill:"none",stroke:fx.t==="box"&&!fx.ok?red:grn,"stroke-width":1.1,"stroke-dasharray":"2 1.2",opacity:fx.t==="box"?fbE(p):1}); if(t==="whole") lab(svg,[b.x+b.w/2,b.y-1.5],"the whole bag",{"font-size":3.8,fill:red}); }
+  if(fx.t==="pour"){ const b=sgBoxAt(S,R,S.box||R.boxAt), n=Math.min(14,fx.N), e=fbE(p); for(let k=0;k<n;k++){ const x=b.x+3+k*(b.w<30?6:8), fits=x<b.x+b.w-2; scoop(x,fits?b.y+b.h-4:b.y+b.h-4+e*30,2.6,{stroke:fits?grn:red,op:fits?1:1-e*.6}); } }
+  if(fx.t==="pile"){ const n=Math.min(60,Math.round(fx.N/10)), m=Math.ceil(p*n); for(let k=0;k<m;k++){ const c=k%6, r=Math.floor(k/6); fbRc(svg,84+c*3.1,56-r*3.1,2.6,2.6,{rx:.4,fill:"var(--blue-fill)",stroke:"var(--blue)","stroke-width":.4}); } lab(svg,[93,62],`${fx.N} g`,{"font-size":3.8,fill:ink}); }
+  if(fx.t==="deal"){ const d=fx.d, dealt=p*d.piles, gap=140/d.piles; for(let k=0;k<d.piles;k++){ const full=k<Math.floor(dealt), part=k===Math.floor(dealt)?dealt-k:0, nb=full?d.per:Math.floor(part*d.per+.001), gl=k<d.glow; for(let j=0;j<nb;j++) fbRc(svg,10+k*gap,20-j*2.9,6,2.5,{rx:.5,fill:gl?"var(--blue-fill)":"var(--card)",stroke:gl?"var(--blue)":mu,"stroke-width":.45}); } lab(svg,[80,27.5],`each block = ${d.block} g`,{"font-size":3.8,fill:mu}); }
+  if(fx.t==="eight"){ S_(svg,"text",{x:50,y:G.ghost.y+G.ghost.h/2+6,"font-size":16,"font-weight":700,"text-anchor":"middle",fill:"var(--blue)",opacity:Math.max(0,.9-p)},String(R.cut)); }
+  const W=live==="num"&&sgWhere(st); if(W&&!W.win){ if(W.from) S_(svg,"line",{x1:W.from.x+W.from.r,y1:W.from.y,x2:W.x,y2:W.y+W.h/2,stroke:acc,"stroke-width":.5});
+    fbRc(svg,W.x,W.y,W.w,W.h,{rx:2,fill:"var(--blue-fill)",stroke:acc,"stroke-width":.9,"stroke-dasharray":"1.6 1",class:st.idle?"kglow sgpart":""}); lab(svg,[W.x+W.w/2,W.y+W.h/2+1.9],`${st.echo||"?"}${mv.unit==="u"?"u":" g"}`,{"font-size":4.6,"font-weight":700,fill:acc}); }
+  if(W&&W.win&&st.idle) sgRing(svg,{x:W.x-1.5,y:W.y-1.5,w:W.w+3,h:W.h+3},true);
+  if(st.hint>=2&&live==="num"){ const t=mv.where==="win"?{x:G.win.x-1.5,y:G.win.y-1.5,w:G.win.w+3,h:G.win.h+3}:mv.where==="bag"?{x:G.ghost.x-2,y:G.ghost.y-2,w:G.ghost.w+4,h:G.ghost.h+4}:mv.where==="box"?sgBoxAt(S,R,S.box||R.boxAt):null; if(t) sgRing(svg,t,true);
+    if(mv.where==="scoop"||mv.where==="pan") [...Array(N||0).keys()].filter(i=>!S.gone.includes(i)).forEach(i=>{ const P=sgPos(N,i); sgRing(svg,{x:P.x,y:P.y,r:P.r+1.4},true); }); }
+  if(typeof layoutFracs==="function") layoutFracs(svg);
+}
+function sgMoves(R){ const fa=sgF(R,"a"), fb=sgF(R,"b"), M=[], cutW=(N)=>({t:"cut",N,cap:N<R.cut?`${fb} needs ${R.cut} parts. The bag has ${N}.`:`${fb} needs ${R.cut} parts. ${N} is too many.`});
+  if(!R.twin){
+    M.push({k:"pills",dot:0,ask:"He USED a fraction. Tap it.",live:["fa","fb"],right:"fb",wrong:{fa:{t:"glowBag",cap:sgT(R,R.m1aCap)}},nudge:"Which fraction did he USE?",say:`he used ${fb}`,onRight:st=>{ st.fx={t:"eight",p:0}; }});
+    M.push({k:"pills",dot:0,ask:`${fb} of what? Tap the thing that gets cut.`,live:R.m1b,right:"bag",wrong:{fr:{t:"slivers",cap:`${fb} of… what? Tap the thing it cuts.`},kuih:{t:"scoopDrop",cap:`Kuih is what he makes. ${fb} cuts the sugar.`}},nudge:`The ${fb} cuts the sugar.`,say:`${fb} of the sugar`,bubble:"Of the sugar: the sugar is the denominator."}); }
+  M.push({k:"num",dot:1,ask:R.twin?`${fa} kg is how many grams? Type it.`:`${fa} kg is how many grams? Work it out, type it.`,line:R.twin?`${fa} kg = <?>`:sgT(R,R.gLine),unit:"g",kind:"size",cap:2000,ans:R.W,where:R.twin?"twin":"win",
+    wrong:N=>({t:"kg",N,cap:N>R.W?`${N} g is more than his bag.`:`${N} g is less than his bag.`}),deal:{piles:R.a[1],per:1000/R.a[1]/50,block:50,glow:R.a[0]},nudge:`1 kg = 1000 g. ${fa} of that.`,say:`${fa} kg is ${R.W} g`,apply:S=>{ S.grams=R.W; }});
+  if(R.twin){
+    M.push({k:"num",dot:2,ask:"The whole bag is how many equal parts? Type it.",line:"whole = <?>",unit:"u",kind:"count",cap:20,ans:R.cut,where:"twin",wrong:N=>cutW(N),nudge:`Look at the ${R.b[1]} of ${fb}.`,say:`${R.cut} equal parts`,apply:S=>{ S.cut=R.cut; S.gone=[...Array(R.go).keys()]; }});
+    M.push({k:"num",dot:3,ask:"LEFT is how many parts? Type it.",line:"LEFT = <?>",unit:"u",kind:"count",cap:20,ans:R.stay,where:"twin",wrong:N=>({t:"ghosts",N,cap:`${R.go} went. Count what stays.`}),nudge:"Count the parts that stay.",say:`${R.stay}u left`,apply:S=>{ S.box="pan"; }});
+    M.push({k:"num",dot:4,ask:"How much is left, in grams? Type it.",line:"Ans = <?>",unit:"g",kind:"size",cap:2000,ans:R.ans,where:"twin",wrong:N=>({t:"pile",N,cap:`Your pile is ${N} g. ${R.cut} parts make ${R.W} g.`}),deal:{piles:R.cut,per:5,block:R.u/5,glow:R.stay},nudge:`${R.cut}u = ${R.W} g. 1u first.`,say:`${R.ans} g`,apply:S=>{ S.ans=R.ans; S.unit="g"; S.u=R.u; }});
+    return M; }
+  M.push({k:"num",dot:1,ask:"How many equal parts? Type it.",line:null,unit:"u",kind:"cut",cap:20,ans:R.cut,where:"bag",wrong:N=>cutW(N),nudge:`Look at the ${R.b[1]} of ${fb}.`,say:`${R.cut} equal parts`,apply:S=>{ S.cut=R.cut; },then:"copy"});
+  M.push({k:"mark",dot:2,ask:`Tap the ${R.go} that go. Then Go.`,n:R.go,nudge:`${fb}: ${R.go} of them go.`,say:`${R.go} of the ${R.cut} go`,apply:S=>{ S.gone=S.marked.slice(0,R.go); if(S.gone.length<R.go) S.gone=[...Array(R.go).keys()]; S.marked=[]; }});
+  M.push({k:"auto",dot:3,line:`${R.cut}u = ${R.W} g`,cap:"Copy this onto your paper"});
+  M.push({k:"num",dot:3,ask:"On paper: 1u = ? g. Type the number here.",line:"1u = <?>",unit:"g",kind:"size",cap:1000,ans:R.u,where:"scoop",wrong:N=>({t:"stack",N,cap:N>R.u?`${R.cut} scoops of ${N} g overflow the bag.`:`${R.cut} scoops of ${N} g don't fill the bag.`}),deal:{piles:R.cut,per:5,block:R.u/5,glow:1},nudge:`${R.cut} scoops make ${R.W} g.`,say:`1u is ${R.u} g`,apply:S=>{ S.u=R.u; }});
+  if(!R.noL3) M.push({k:"num",dot:3,ask:`On paper: ${R.cut}u − ${R.go}u = ?u left`,line:`${R.cut}u − ${R.go}u = <?> left`,unit:"u",kind:"count",cap:20,ans:R.stay,where:"pan",wrong:N=>({t:"ghosts",N,cap:`${R.go} went to the tray. Count the pan.`}),show:"number",nudge:"Count the scoops on the pan.",say:`${R.stay}u are left`});
+  M.push({k:"pills",dot:4,ask:"What does the question want? Tap those words.",live:R.m5,right:R.m5Right,wrong:{how:{t:"box",at:"whole",cap:R.m5HowCap},gram:{t:"box",at:"win",cap:"Grams is the unit. What THING does it want?"}},nudge:"Which word says what's wanted?",say:`it wants what's ${R.askWord}`,onRight:st=>{ st.S.box=R.boxAt; }});
+  M.push({k:"num",dot:4,ask:`${R.askWord} is how many parts? Count them, type it.`,line:`Ask: ${R.askWord} → <?>`,unit:"u",kind:"count",cap:20,ans:R.ansU,where:"box",wrong:N=>({t:"pour",N,cap:N>R.ansU?`${N} scoops don't fit the ${R.boxAt}.`:`Only ${N} in the box. The ${R.boxAt} has more.`}),show:"number",nudge:"Count what's in the box.",say:`${R.askWord} is ${R.ansU}u`});
+  M.push({k:"num",dot:4,ask:`On paper: ${R.ansU}u = ? g`,line:`${R.ansU}u = <?>`,unit:"g",kind:"size",cap:5000,ans:R.ans,where:"box",wrong:N=>({t:"pile",N,cap:`Your pile is ${N} g. Count the blocks in ${R.ansU} scoops.`}),deal:{piles:R.ansU,per:5,block:R.u/5,glow:R.ansU},nudge:`Each scoop is ${R.u} g.`,say:`${R.ansU}u is ${R.ans} g`,apply:S=>{ S.ans=R.ans; }});
+  M.push({k:"chips",dot:4,ask:`${R.ans} — kg or g? Tap.`,opts:[{t:"kg",cap:`${R.ans} kg is ${R.ans} big bags.`,fx:{t:"slam",N:R.ans}},{t:"g",right:true}],line:`Ans: ${R.ans} g`,nudge:"The question says grams.",say:`${R.ans} g`,apply:S=>{ S.unit="g"; }});
+  return M; }
+function sgTwinPic(R){ const s=svgEl("svg",{viewBox:"0 0 160 70"}); fbRc(s,30,8,60,40,{rx:4,fill:"none",stroke:"var(--sack-edge,#8a6a3a)","stroke-width":.9,"stroke-dasharray":"2 1.4"}); const c=R.cut, cw=60/c;
+  for(let k=1;k<c;k++) S_(s,"line",{x1:30+k*cw,y1:8,x2:30+k*cw,y2:48,stroke:"var(--ink)","stroke-width":.7});
+  for(let k=0;k<R.go;k++){ const x=30+k*cw; S_(s,"line",{x1:x+2,y1:11,x2:x+cw-2,y2:45,stroke:"var(--red)","stroke-width":1}); S_(s,"line",{x1:x+cw-2,y1:11,x2:x+2,y2:45,stroke:"var(--red)","stroke-width":1}); }
+  lab(s,[30+R.go*cw/2,55],"OUT",{"font-size":5,"font-weight":700,fill:"var(--red)"}); lab(s,[30+R.go*cw+(c-R.go)*cw/2,55],"LEFT",{"font-size":5,"font-weight":700,fill:"var(--green)"});
+  lab(s,[60,4.5],"the whole, dotted",{"font-size":4.2,fill:"var(--muted)"}); lab(s,[125,20],"Draw it like this.",{"font-size":5,"font-weight":700}); lab(s,[125,28],"Cross out what went.",{"font-size":4.2,fill:"var(--muted)"}); lab(s,[125,35],"Label LEFT.",{"font-size":4.2,fill:"var(--muted)"}); lab(s,[125,42],"Underline the ask.",{"font-size":4.2,fill:"var(--muted)"});
+  S_(s,"line",{x1:103,y1:64,x2:147,y2:64,stroke:"var(--ink)","stroke-width":.8}); lab(s,[125,62],"left?",{"font-size":5.2,"font-weight":700}); return s; }
+const sugarLeft={ steps:[],
+  mount(stage,panel,key,prm){ const self=this, root=stage.closest(".play"), left=stage.parentElement; root.classList.add("sgplay","sgaid"); key.remove(); kidBtn.dataset.lp="1";
+    const P=sgLoad(); P.done=P.done||{}; const st={P,phase:"doors",R:null,M:[],mi:0,S:null,miss:0,hint:0,fx:null,frozen:false,busy:false,echo:"",reask:false,help:false,lines:[],liveKind:"",idle:0,nudgeOn:false,spoke:false,hold:null,bub:"",anim:0,tm:[],marked:[]};
+    const top=h("div",{class:"sgtop"},`<button class="sghome" type="button" aria-label="My fractions">⌂</button><div class="sgdots" aria-hidden="true"></div><span style="width:44px"></span>`), qb=h("div",{class:"sgq"},`<div class="sgqt"></div><button class="sgspk" type="button" aria-label="Read the question">🔊</button>`), ak=h("div",{class:"sgask"},`<div class="sgat"></div><button class="sgspk" type="button" aria-label="Read this">🔊</button>`), cap=h("div",{class:"sgcap"}), rt=h("div",{class:"sgright"});
+    left.prepend(top); stage.before(qb,ak); stage.append(cap); panel.innerHTML=""; panel.append(rt);
+    const svg=svgEl("svg",{"aria-label":"A kitchen scale with a bag of sugar and a kuih tray"}); stage.prepend(svg);
+    const qt=qb.querySelector(".sgqt"), at=ak.querySelector(".sgat"), dots=top.querySelector(".sgdots");
+    top.querySelector(".sghome").onclick=e=>{ e.sgOk=1; sgSaveCur(); location.hash="my-fractions"; };
+    qb.querySelector(".sgspk").onclick=e=>{ e.sgOk=1; sgSay(qt.innerHTML); }; ak.querySelector(".sgspk").onclick=e=>{ e.sgOk=1; sgSay(at.innerHTML); };
+    const clearT=()=>{ st.tm.forEach(clearTimeout); st.tm=[]; }, later=(f,ms)=>{ const t=setTimeout(f,ms); st.tm.push(t); return t; };
+    const mv=()=>st.M[st.mi]||null;
+    const sgSaveCur=()=>{ if(st.phase==="run"||st.phase==="twin"){ st.P.cur={run:st.R.id,mi:st.mi,help:st.help,lines:st.lines,log:st.log||[]}; } sgSave(st.P); };
+    const idleStop=()=>{ st.tm.filter(t=>t._idle).forEach(clearTimeout); root.classList.remove("sgidle"); st.idle=0; };
+    const idleArm=()=>{ idleStop(); if(st.phase!=="run"&&st.phase!=="twin") return; const m=mv(); if(!m) return; const a=setTimeout(()=>{ st.idle=1; root.classList.add("sgidle"); draw(); },6000), b=setTimeout(()=>{ st.nudgeOn=true; render(); root.querySelectorAll(".sgp.live,.sgf.live,.sgbox.sglive,.sgbtn.sglive,.sgchips button").forEach(x=>{ x.classList.add("sgwig"); setTimeout(()=>x.classList.remove("sgwig"),700); }); },15000), c=setTimeout(()=>{ if(!st.spoke){ st.spoke=true; sgSay(m.nudge||m.ask||""); } },30000); [a,b,c].forEach(t=>{ t._idle=1; st.tm.push(t); }); };
+    const say=t=>sgSay(t);
+    const caption=(t,ok)=>{ cap.innerHTML=t||""; cap.classList.toggle("on",!!t); cap.classList.toggle("ok",!!ok); };
+    const anim=(dur,fn,done)=>{ st.busy=true; render(); const id=++st.anim, t0=performance.now(); const step=now=>{ if(id!==st.anim) return; const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) requestAnimationFrame(step); else { st.busy=false; done&&done(); } }; requestAnimationFrame(step); };
+    const draw=()=>{ st.mv=mv(); if(st.phase==="run"||st.phase==="end"||(st.phase==="twin"&&st.showScene)) sgScene(svg,st); };
+    const lineHtml=(m,val)=>m.line?m.line.replace("<?>",val==null?`<span class="sgbox sglive">${st.echo||"?"}${m.unit==="u"?"u":" g"}</span>`:`<b>${val}${m.unit==="u"?"u":" g"}</b>`):"";
+    const pushLine=(html,help)=>{ st.lines.push({h:html,help:!!help}); };
+    const dotsDraw=()=>{ const m=mv(); dots.innerHTML=[0,1,2,3,4].map(i=>`<i class="${m&&m.dot===i?"on":m&&i<m.dot?"done":""}"></i>`).join(""); };
+    function render(){ const m=mv(); st.mv=m; root.classList.toggle("sgidle",!!st.idle);
+      if(st.phase==="doors"){ renderDoors(); return; }
+      if(st.phase==="end"){ renderEnd(); return; }
+      top.hidden=false; qb.hidden=false; ak.hidden=false; rt.hidden=false; stage.hidden=false; dotsDraw();
+      const liveP=m&&m.k==="pills"?m.live:[]; const m1a=m&&m.k==="pills"&&m.live.includes("fa"); qb.classList.toggle("m1a",!!m1a);
+      if(qt.dataset.r!==String(st.R.id)+(m1a?"a":"b")){ qt.innerHTML=sgQ(st.R,m1a?"m1a":""); qt.dataset.r=String(st.R.id)+(m1a?"a":"b"); }
+      qt.querySelectorAll(".sgp").forEach(e=>{ const id=e.dataset.p; e.classList.toggle("live",liveP.includes(id)&&!st.frozen&&!st.busy); e.classList.toggle("sghint",st.hint===2&&m.right===id); e.classList.toggle("sgglow",st.hint>=3&&m.right===id); if(st.S.units){ if(id==="bag") e.dataset.u=`${st.R.cut}u`; if(id==="fr") e.dataset.u=`${st.R.go}u`; } });
+      qt.querySelectorAll(".sgf").forEach(e=>{ e.classList.toggle("live",!!m1a&&!st.frozen&&!st.busy); e.classList.toggle("sghint",!!m1a&&st.hint===2&&e.dataset.f==="fb"); e.classList.toggle("sgglow",!!m1a&&st.hint>=3&&e.dataset.f==="fb"); });
+      if(st.bub){ ak.classList.add("bub"); at.innerHTML=`<img class="sgav" src="avatar.png" alt=""> ${st.bub}`; }
+      else { ak.classList.remove("bub"); const askT=st.reask?"Now you type it.":m?(m.k==="auto"?m.cap:m.ask):""; at.innerHTML=`${askT||""}${st.nudgeOn&&m&&m.nudge&&!st.reask?`<span class="sgnud">${m.nudge}</span>`:""}`; }
+      st.liveKind=st.busy||st.frozen?"":m?(m.k==="num"?"num":m.k==="mark"?"mark":m.k==="chips"?"chips":m.k==="pills"?"pills":"auto"):"";
+      rt.innerHTML=""; const phone=root.classList.contains("kstack");
+      if(m&&m.k==="num"){ const ln=h("div",{class:"sgline"},st.R.twin||!m.line?`<span class="sgbox sglive">${st.echo||"?"}${m.unit==="u"?"u":" g"}</span>`:lineHtml(m)); if(st.R.twin&&m.line) ln.innerHTML=m.line.replace("<?>",`<span class="sgbox sglive">${st.echo||"?"}${m.unit==="u"?"u":" g"}</span>`);
+        const pad=h("div",{class:"sgpad"},["1","2","3","4","5","6","7","8","9",".","0","⌫","✓"].map(k=>`<button type="button" data-k="${k}" class="${k==="✓"?"ok":""}${k==="."&&m.kind!=="size"?" dis":""}">${k}</button>`).join("")); rt.append(ln,pad);
+        if(!st.padOn){ pad.style.opacity=0; pad.style.pointerEvents="none"; const hint=h("div",{class:"sghint2"},"Write it first"); rt.append(hint); if(!st.padT) st.padT=later(()=>{ st.padT=0; st.padOn=true; render(); },st.R.twin||st.reask?600:4000); }
+        pad.onclick=e=>{ const b=e.target.closest("button"); if(!b) return; e.sgOk=1; padKey(b.dataset.k); }; }
+      else if(m&&m.k==="mark"){ const k=st.S.marked.length; rt.append(h("div",{class:"sgline"},`${k} of ${m.n}`),h("div",{class:"sgbtnrow"},`<button class="sgbtn sglive${k?"":" dis"}" type="button">Go</button>`)); rt.querySelector(".sgbtn").onclick=e=>{ e.sgOk=1; go(); }; }
+      else if(m&&m.k==="chips"){ rt.append(h("div",{class:"sgline"},`${st.R.ans} <span class="sgbox sglive">?</span>`),h("div",{class:"sgchips"},m.opts.map(o=>`<button type="button" data-c="${o.t}" class="${(st.hint>=2&&o.right)?"sgglow":""}">${o.t}</button>`).join(""))); rt.querySelector(".sgchips").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; e.sgOk=1; chip(b.dataset.c); }; }
+      if(st.lines.length){ const L=h("div",{class:"sglines"+(phone&&m&&m.k==="num"?" hide":"")},st.lines.map(l=>`<div class="${l.help?"help":""}">${l.h}</div>`).join("")); rt.append(L); } else if(!rt.children.length) rt.append(h("div",{class:"sghint2"},"Your lines will show here"));
+      if(st.phase==="twin"&&!st.showScene){ stage.querySelectorAll(".sgtwin").forEach(x=>x.remove()); svg.style.display="none"; const tw=h("div",{class:"sgtwin"}); tw.append(sgTwinPic(st.R)); stage.prepend(tw); } else { svg.style.display=""; stage.querySelectorAll(".sgtwin").forEach(x=>x.remove()); }
+      draw(); }
+    function renderDoors(){ top.hidden=false; qb.hidden=true; ak.hidden=true; rt.hidden=true; stage.hidden=false; svg.style.display="none"; stage.querySelectorAll(".sgtwin,.sgdoors,.sgend").forEach(x=>x.remove()); caption(""); dots.innerHTML="";
+      const d=st.P.done, cur=st.P.cur, nextId=[1,2,3].find(i=>!d[i])||0; const wrap=h("div",{class:"sgdoors"});
+      SGR.forEach(R=>{ const dn=d[R.id], isCur=cur&&cur.run===R.id, np=R.twin&&st.P.nopaper&&!dn; const b=h("button",{type:"button",class:"sgdoor"+(R.id===nextId&&!cur||isCur?" next":"")+(np?" grey":""),"data-run":R.id},`<div class="m">${dn===1?"✓":dn===2?"◯":R.twin?"✎":"▢"}</div><div class="t">${R.name}</div><div class="s">${isCur?"Carry on":dn===1?"done":dn===2?"done, with help":np?"needs paper":R.twin?"your paper":R.id===1?"start here":"a bigger bag"}</div>`); b.onclick=e=>{ e.sgOk=1; openRun(R.id,{}); }; wrap.append(b); });
+      if(d[1]&&d[2]&&d[3]){ const a=h("a",{class:"sgdoor next",href:"#my-fractions"},`<div class="m">⌂</div><div class="t">Back to my fractions</div>`); wrap.append(a); }
+      stage.append(wrap); }
+    function renderEnd(){ top.hidden=false; qb.hidden=false; ak.hidden=false; rt.hidden=false; dotsDraw(); ak.classList.remove("bub"); at.innerHTML=st.R.twin?"Show Coach your paper at the next class.":"Tick each line on your paper."; svg.style.display=""; stage.querySelectorAll(".sgtwin").forEach(x=>x.remove()); draw();
+      rt.innerHTML=""; const e=h("div",{class:"sgend"}); if(!st.R.twin){ e.innerHTML=`<h3>Your lines</h3><div class="sgcmp">${st.lines.map((l,i)=>`<button type="button" data-i="${i}">Line ${i+1}</button>`).join("")}</div>`; e.querySelector(".sgcmp").onclick=ev=>{ const b=ev.target.closest("button"); if(!b) return; ev.sgOk=1; b.classList.add("open"); b.innerHTML=st.lines[+b.dataset.i].h; }; }
+      e.append(h("div",{class:"sgbtnrow"},`<button class="sgbtn sglive" type="button">${st.R.twin?"Back to my fractions":"Done"}</button>`)); e.querySelector(".sgbtn").onclick=ev=>{ ev.sgOk=1; if(st.R.twin){ location.hash="my-fractions"; return; } st.phase="doors"; render(); }; rt.append(e); }
+    function openRun(id,o={}){ const R=SGR.find(r=>r.id===id), mi=o.mi; st.R=R; st.M=sgMoves(R); st.S={cut:0,gone:[],marked:[],grams:0,u:0,box:null,ans:null,unit:null,units:false}; st.lines=[]; st.help=false; st.log=[]; st.mi=0; st.miss=0; st.hint=0; st.fx=null; st.frozen=false; st.echo=""; st.reask=false; st.bub=""; st.nudgeOn=false; st.spoke=false; st.padOn=false; st.showScene=false; clearT(); stage.querySelectorAll(".sgdoors,.sgend").forEach(x=>x.remove());
+      const cur=st.P.cur, resume=cur&&cur.run===id&&mi==null&&!o.fresh; st.phase=R.twin?"twin":"run"; st.padT=0;
+      if(resume){ st.mi=Math.min(cur.mi,st.M.length-1); st.help=!!cur.help; st.lines=cur.lines||[]; st.log=cur.log||[]; for(let i=0;i<st.mi;i++){ const m=st.M[i]; if(m.apply) m.apply(st.S); if(m.then==="copy") st.S.units=true; if(m.k==="pills"&&m.right===R.m5Right) st.S.box=R.boxAt; } }
+      else if(mi!=null){ st.mi=Math.min(mi,st.M.length-1); for(let i=0;i<st.mi;i++){ const m=st.M[i]; if(m.apply) m.apply(st.S); if(m.then==="copy") st.S.units=true; if(m.k==="pills"&&m.right===R.m5Right) st.S.box=R.boxAt; if(m.line&&m.k!=="pills") st.lines.push({h:m.line.replace("<?>",`<b>${m.ans}${m.unit==="u"?"u":" g"}</b>`)}); else if(m.k==="auto") st.lines.push({h:m.line}); } }
+      render(); sgSaveCur();
+      if(resume&&st.lines.length){ caption("Your lines so far: copy them down.",true); later(()=>caption(""),6000); }
+      else if(!o.noOv) overlay();
+      const m=mv(); if(m&&m.k==="auto") autoLine(); idleArm(); }
+    function overlay(){ const ov=h("div",{class:"sgov"},`<div class="sgovc"><p>Paper and pencil ready?</p><div class="sgchips"><button type="button" data-o="y">Got paper</button><button type="button" data-o="n">No paper</button></div><small>No paper? Coach sees your book next class.</small></div>`); ov.onclick=e=>{ e.sgOk=1; const b=e.target.closest("button"); if(!b) return; if(b.dataset.o==="n"){ st.P.nopaper=1; (st.log=st.log||[]).push("no paper"); } else st.P.nopaper=0; sgSave(st.P); ov.remove(); idleArm(); }; stage.append(ov); }
+    function next(){ st.mi++; st.miss=0; st.hint=0; st.fx=null; st.frozen=false; st.echo=""; st.reask=false; st.nudgeOn=false; st.spoke=false; st.padOn=false; caption("");
+      if(st.mi>=st.M.length){ st.P.done[st.R.id]=st.help?2:1; delete st.P.cur; sgSave(st.P); st.phase="end"; sgChime(true); render(); return; }
+      sgSaveCur(); render(); const m=mv(); if(m.k==="auto") autoLine(); idleArm(); }
+    function autoLine(){ const m=mv(); pushLine(m.line); render(); caption(m.cap,true); st.holdT=later(()=>{ if(mv()===m) next(); },3500); }
+    function copyHold(){ st.S.units=true; render(); caption("Copy this onto your paper",true); st.holdOn=true; st.holdT=later(()=>{ st.holdOn=false; next(); },5000); }
+    function right(fillText){ const m=mv(); idleStop(); sgChime(true); st.frozen=false; st.fx=null;
+      if(m.k==="pills"){ const el=qt.querySelector(m.live.includes("fa")?`.sgf[data-f="${m.right}"]`:`.sgp[data-p="${m.right}"]`); if(el) el.classList.add("hit"); if(m.onRight) m.onRight(st); if(m.bubble){ st.bub=m.bubble; render(); say(m.bubble); st.bubT=later(()=>{ st.bub=""; render(); },4000); } if(st.fx&&st.fx.t==="eight"){ anim(1800,p=>{ st.fx.p=p; },()=>{ st.fx=null; next(); }); return; } later(next,m.bubble?900:500); return; }
+      if(m.k==="num"){ if(m.apply) m.apply(st.S); if(m.line) pushLine(m.line.replace("<?>",`<b>${m.ans}${m.unit==="u"?"u":" g"}</b>`),fillText); st.echo="";
+        if(m.then==="copy"){ st.S.cut=0; st.fx={t:"cutOk",N:m.ans,p:0}; anim(900,p=>{ st.fx.p=p; },()=>{ st.fx=null; st.S.cut=m.ans; copyHold(); }); return; }
+        if(st.phase==="twin"&&st.showScene){ draw(); } later(next,700); return; }
+      if(m.k==="mark"){ st.fx={t:"fly",p:0}; anim(1000,p=>{ st.fx.p=p; },()=>{ m.apply(st.S); st.fx=null; next(); }); return; }
+      if(m.k==="chips"){ if(m.apply) m.apply(st.S); pushLine(m.line,fillText); later(next,900); return; } }
+    function wrong(w,shown){ const m=mv(); st.miss++; sgChime(false); (st.log=st.log||[]).push(`miss ${st.R.id}/${st.mi}: ${shown||w.t}`); idleArm(); st.echo="";
+      if(st.phase==="twin") st.showScene=true;
+      if(st.miss===1||(st.miss===2&&m.k!=="num")){ if(st.miss===2) st.hint=2; st.fx=Object.assign({p:0},w); render(); anim(w.t==="glowBag"||w.t==="box"?900:1400,p=>{ st.fx.p=p; },()=>{ st.frozen=true; caption(w.cap); render(); }); return; }
+      if(st.miss===2){ st.hint=2; render(); caption(w.cap); shakeBox(); return; }
+      if(st.miss===3){ st.hint=3; if(m.k==="num"&&m.deal){ st.fx={t:"deal",d:m.deal,p:0,keep:1}; render(); anim(700*m.deal.piles,p=>{ st.fx.p=p; },()=>{ caption("Count the blocks. Then type."); render(); }); return; }
+        if(m.k==="num"&&m.show==="number"){ const n=m.ans; st.fx={t:"number",n,p:0,keep:1,tray:m.where==="box"&&st.S.box==="tray"}; render(); anim(600*n,p=>{ st.fx.p=p; },()=>{ caption("Count them. Then type."); render(); }); return; }
+        render(); caption(w.cap); return; }
+      st.help=true; (st.log=st.log||[]).push(`filled ${st.R.id}/${st.mi}`); st.fx=null; st.hint=0;
+      if(m.k==="num"){ st.echo=String(m.ans); render(); caption(`Say it: ${m.say}`,true); later(()=>{ st.reask=true; st.echo=""; st.padOn=false; st.padT=0; caption(`Now you type it: ${m.ans}`,true); render(); idleArm(); },1800); return; }
+      if(m.k==="pills"){ caption(`Say it: ${m.say}`,true); later(()=>right(true),1200); return; }
+      if(m.k==="mark"){ st.S.marked=[...Array(m.n).keys()]; render(); caption(`Say it: ${m.say}`,true); later(()=>right(true),1200); return; }
+      if(m.k==="chips"){ caption(`Say it: ${m.say}`,true); later(()=>right(true),1200); } }
+    const shakeBox=()=>{ const b=rt.querySelector(".sgbox"); if(b){ b.classList.add("sgshake"); setTimeout(()=>b.classList.remove("sgshake"),450); } };
+    function padKey(k){ const m=mv(); if(!m||m.k!=="num"||st.busy) return; if(st.frozen){ unfreeze(); } idleArm();
+      if(k==="⌫"){ st.echo=st.echo.slice(0,-1); render(); return; }
+      if(k==="."){ if(m.kind!=="size"){ caption("Try a whole number."); shakeBox(); return; } if(st.echo.includes(".")||!st.echo) return; st.echo+="."; render(); return; }
+      if(k!=="✓"){ if(st.echo.length>=5) return; if(st.echo==="0") st.echo=""; st.echo+=k; render(); return; }
+      if(!st.echo){ shakeBox(); return; } const N=parseFloat(st.echo); if(st.fx&&st.fx.keep){ st.fx=null; }
+      if(st.reask){ if(N===m.ans){ st.reask=false; right(true); } else { st.echo=""; caption(`It's ${m.ans}.`); shakeBox(); render(); } return; }
+      if(N===0){ st.echo=""; caption(m.kind==="cut"?"A bag can't be cut into 0.":"0? Try again."); shakeBox(); render(); return; }
+      if(N>m.cap){ st.echo=""; caption(m.unit==="u"?"u counts parts, not grams. How many parts?":"Try a smaller number."); shakeBox(); render(); return; }
+      if(m.kind!=="size"&&N!==Math.round(N)){ st.echo=""; caption("Try a whole number."); shakeBox(); render(); return; }
+      if(N===m.ans){ right(); return; } wrong(m.wrong(N),String(N)); }
+    function go(){ const m=mv(); if(!m||m.k!=="mark"||st.busy) return; if(st.frozen) unfreeze(); idleArm(); const k=st.S.marked.length; if(!k) return;
+      if(k===m.n){ right(); return; } wrong({t:"tooFew",k,cap:`${sgF(st.R,"b")} is ${m.n} of the ${st.R.cut}. ${m.n-k} more.`},`go with ${k}`); }
+    function chip(c){ const m=mv(); if(!m||m.k!=="chips"||st.busy) return; if(st.frozen) unfreeze(); idleArm(); const o=m.opts.find(x=>x.t===c); if(o.right){ right(); return; } wrong(Object.assign({cap:o.cap},o.fx),c); }
+    function pill(id){ const m=mv(); if(!m||m.k!=="pills"||st.busy) return false; if(st.frozen){ unfreeze(); } if(!m.live.includes(id)) return false; idleArm(); if(id===m.right){ right(); return true; } wrong(m.wrong[id]||{t:"glowBag",cap:"Not that one."},id); return true; }
+    function scoopTap(i){ const m=mv(); if(!m||m.k!=="mark"||st.busy) return false; if(st.frozen) unfreeze(); idleArm(); const M=st.S.marked, j=M.indexOf(i); if(j>=0){ M.splice(j,1); render(); return true; }
+      if(M.length>=m.n){ st.fx={t:"bounce",i,p:0}; anim(500,p=>{ st.fx.p=p; },()=>{ st.fx=null; draw(); }); caption(`${sgF(st.R,"b")} is ${m.n} of the ${st.R.cut}.`); later(()=>caption(""),1800); return true; }
+      M.push(i); render(); return true; }
+    function unfreeze(){ st.frozen=false; if(!(st.fx&&st.fx.keep)) st.fx=null; caption(""); render(); }
+    const point=el=>{ if(el){ el.classList.add("sgshake"); setTimeout(()=>el.classList.remove("sgshake"),450); } root.classList.add("sgidle"); st.idle=1; draw(); setTimeout(()=>{ if(st.idle===1){ st.idle=0; root.classList.remove("sgidle"); draw(); } },1500); };
+    root.addEventListener("click",e=>{ if(e.sgOk) return; const t=e.target; if(t.closest(".sgspk,.sghome,.sgov,.sgdoor,.sgdoors,.sgend,.sgpad,.sgchips,.sgbtn")) return; if(stage.querySelector(".sgov")){ const o=stage.querySelector(".sgovc"); if(o){ o.classList.add("sgshake"); setTimeout(()=>o.classList.remove("sgshake"),450); } return; }
+      if(st.holdOn){ st.holdOn=false; clearTimeout(st.holdT); next(); return; } const m=mv(); if(m&&m.k==="auto"){ clearTimeout(st.holdT); next(); return; }
+      if(st.frozen){ unfreeze(); return; } if(st.busy) return;
+      const f=t.closest(".sgf"), pl=t.closest(".sgp"), sc=t.closest("[data-sc]");
+      if(f&&qb.classList.contains("m1a")){ if(pill(f.dataset.f)) return; point(f); return; }
+      if(pl&&!qb.classList.contains("m1a")){ if(pill(pl.dataset.p)) return; point(pl); return; }
+      if(sc){ if(scoopTap(+sc.dataset.sc)) return; point(null); return; }
+      if(st.phase==="run"||st.phase==="twin") point(t.closest(".sgq,.sgask,.stage,.sgright")||null); });
+    this.kmenu=B=>{ let m=""; if(st.phase==="run"||st.phase==="twin"){ m+=`<div class="kmh">Go to a move</div>${st.M.map((x,i)=>B("x:j"+i,`<b>${i+1}</b> ${(x.ask||x.cap||"").replace(/<[^>]+>/g,"").slice(0,26)}`,i===st.mi?' aria-current="step"':"")).join("")}<hr>`; }
+      m+=`<div class="kmh">Start again</div>${B("x:rs","Same child: this story again")}${B("x:rn","New child: clear everything")}<hr>${B("x:her","Her lines and misses")}${B("x:pulse",sgLS("mf:pulse")==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:mute",sgMute()?"Sound on":"Mute")}<div class="kmh">Progress lives on this device</div><hr>`; return m; };
+    this.kact=k=>{ if(k[0]==="j"){ openRun(st.R.id,{mi:+k.slice(1),noOv:true,fresh:true}); return; } if(k==="rs"){ delete st.P.cur; sgSave(st.P); openRun(st.R?st.R.id:1,{mi:0,noOv:true,fresh:true}); return; } if(k==="rn"){ sgSave({done:{}}); st.P={done:{}}; st.phase="doors"; st.R=null; render(); return; }
+      if(k==="her"){ const o=h("div",{class:"sgov"},`<div class="sgovc"><p>Her lines</p><div class="sgher">${(st.lines||[]).map(l=>`<div>${l.h}${l.help?" (filled)":""}</div>`).join("")||"<div>none yet</div>"}<hr>${(st.log||[]).map(x=>`<div>${x}</div>`).join("")||"<div>no misses</div>"}</div><div class="sgchips"><button type="button">Close</button></div></div>`); o.onclick=e=>{ e.sgOk=1; if(e.target.closest("button")) o.remove(); }; stage.append(o); return; }
+      if(k==="pulse"){ sgLS("mf:pulse",sgLS("mf:pulse")==="S"?"":"S"); return; } if(k==="mute"){ sgLS("mf:mute",sgMute()?"0":"1"); } };
+    const run=+prm.get("run")||0, mi=prm.get("mi"); if(run){ openRun(run,{mi:mi==null?undefined:+mi,noOv:prm.get("np")==="1",fresh:mi!=null}); } else render();
+    if(cur) cur.state=()=>({run:st.R?st.R.id:0});
+  } };
+const myFractions={ steps:[],
+  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("sgplay","sgaid"); key.remove(); panel.innerHTML=""; stage.innerHTML=""; const P=sgLoad(), d=P.done||{}, pulse=sgLS("mf:pulse"), done=d[1]&&d[2]&&d[3];
+    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a>`);
+    stage.append(h("div",{class:"sgq",style:"order:0"},`<div class="sgqt" style="line-height:1.4;font-weight:700">My fractions</div>`),cards);
+    if(!sgLS("mf:seen")){ stage.append(h("div",{class:"sgnote"},`Progress lives on this iPad. In Safari, tap <b>Share</b> then <b>Add to Home Screen</b> to keep this link.`)); sgLS("mf:seen","1"); }
+    kidBtn.dataset.lp="1"; this.kmenu=B=>`${B("x:pulse",pulse==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:rn","New child: clear everything")}<div class="kmh">Progress lives on this device</div><hr>`; this.kact=k=>{ if(k==="pulse") sgLS("mf:pulse",pulse==="S"?"":"S"); if(k==="rn") sgSave({done:{}}); route(); }; } };
+PLAYS.sugarLeft=sugarLeft; PLAYS.myFractions=myFractions;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -9717,7 +10603,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
 const STRANDS=[["graph","Graphs"],["alg","Algebra"],["trig","Trigonometry"],["geo","Geometry"],["calc","Calculus"],["num","Numbers"]];
 STRANDS.push(["stats","Statistics"]);
 if(!STRANDS.some(([k])=>k==="stats")) STRANDS.push(["stats","Statistics & Probability"]);
-const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math",p5:"P5"};
+const SHORT={sec1:"Sec 1",sec2:"Sec 2",emath:"E-Math",amath:"A-Math",p5:"P5",p6:"P6"};
 function cardFor(t){ return h("a",{class:"card",href:"#"+t.id},
   `${thumbFor(t)}<div class="txt"><span class="chap">${t.chapter}</span><b>${t.title}</b><span class="blurb">${t.blurb}</span><div class="tags">${t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join("")}${t.tier==="curious"?CURTAG:""}</div></div>`); }
 const CONTACT={wa:"https://wa.me/message/U6WIMYI7KU7LG1"}, CF_TOKEN="f1a8bfe680d94826ac08e3b90e257753";
@@ -9854,8 +10740,9 @@ function renderTopic(t,tab,prm){
   if(tab==="play"){
     const wrap=h("div",{class:"play"}), left=h("div",{class:"left"}), stage=h("div",{class:"stage"}), key=h("div",{class:"key empty"}), panel=h("div",{class:"panel"});
     left.append(stage,key); wrap.append(left,panel); app.append(wrap);
-    cur.stage=stage;
+    cur.stage=stage; setKid(kidOf(t.levels)); kidStack(wrap);
     PLAYS[t.play].mount(stage,panel,key,prm||new URLSearchParams());
+    if(isKidOn()){ const ask=panel.querySelector(".asktx"), ex=panel.querySelector(".exbox"); if(ask) stage.before(ask); if(ex) ex.insertBefore(key,ex.querySelector(".dohint")||ex.querySelector(".nxrow")); }
     const stabs=panel.querySelector(".steptabs"); if(stabs){ wrap.before(stabs); const sb=stabs.querySelector('[aria-selected="true"]'); if(sb&&stabs.scrollWidth>stabs.clientWidth) stabs.scrollLeft=Math.max(0,sb.offsetLeft-stabs.offsetLeft-(stabs.clientWidth-sb.offsetWidth)/2); }
     if(src&&!src.own) panel.append(h("a",{class:"pill sheetlink",href:"#"+src.hash},`← Back to ${src.title}`));
     else if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
@@ -11254,7 +12141,7 @@ function renderCards(kind,id,sub){ if(kind==="mist"&&!cdMistOn) return false;
   const bk=s.back||"#sheet/"+s.id;
   cur={t:null,tab:"cards",state:null,stage:null,sheet:{id:s.id,title:`${name} · ${s.title}`},cards:key,back:bk}; setPage("cards"); setNav(s.exam?"exam":s.back?"play":"sheets");
   app.innerHTML=`<div class="cdeck"></div>`; app.firstChild.onclick=cdClick;
-  cdS={kind,key,cards,id:s.id,back:bk}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
+  setKid(kidOf(s.levels)); cdS={kind,key,cards,id:s.id,back:bk}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, e=app.querySelector(".sheetend"); if(e) e.insertAdjacentHTML("beforebegin",b); }
   if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, p=app.querySelector("p.tiny"), e=app.querySelector(".sheetend");
@@ -11276,7 +12163,7 @@ function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURICompo
   if(s&&!s.exam) srcFrom={topic:t.id,hash:op.join("/"),title:s.title,own:(sheetForTopic(t)||{}).id===s.id}; }
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
-  const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||"");
+  const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||""); setKid(false);
   const t0=TOPICS.find(x=>x.id===parts[0])||(parts[0]==="sheet"&&parts[1]&&(()=>{ const s=sheetOf(parts[1]); return s&&s.aid&&TOPICS.find(x=>x.id===s.aid); })())||null; noteSrc(t0);
   hubHit(parts[0]==="sheet"&&parts[1]?"sheet/"+parts[1]:parts[0]==="cards"?"cards/"+(parts[1]||"")+"/"+(parts[2]||""):parts[0]==="lessons"?"tuition":t0?(parts[1]==="sheet"?"sheet/"+((sheetForTopic(t0)||{}).id||t0.id):"aid/"+t0.id):"home/"+(VIEWS.some(([k])=>k===parts[0])?parts[0]:"start"));
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
@@ -11321,13 +12208,13 @@ const exitBtn=$("#exitPresent");
 function enterPresent(){
   document.documentElement.setAttribute("data-present","1");
   try{ const el=document.documentElement, f=el.requestFullscreen||el.webkitRequestFullscreen; const p=f&&f.call(el); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
-  fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
+  placeDock(); fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
 }
 function exitPresent(){
   if(!document.documentElement.hasAttribute("data-present")) return;
   document.documentElement.removeAttribute("data-present");
   try{ if(document.fullscreenElement||document.webkitFullscreenElement){ const f=document.exitFullscreen||document.webkitExitFullscreen; const p=f&&f.call(document); if(p&&p.catch) p.catch(()=>{}); } }catch(e){}
-  fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
+  placeDock(); fitSoon(); requestAnimationFrame(()=>settleKey(document.querySelector(".keybox"),true));
 }
 presentBtn.onclick=enterPresent; exitBtn.onclick=exitPresent; printBtn.onclick=printSheet;
 function setAsk(on,save){ const b=$("#askBtn"); document.documentElement.toggleAttribute("data-ask",!!on); b.setAttribute("aria-pressed",String(!!on)); b.textContent=on?"Ask first: on":"Ask first: off"; if(on) document.querySelectorAll(".askw").forEach(w=>w.classList.add("shut")); if(save){ try{ localStorage.setItem("hubAsk",on?"1":"0"); }catch(e){} } }
@@ -11367,6 +12254,28 @@ let themeBeforePrint=null;
 window.addEventListener("beforeprint",()=>{ themeBeforePrint=document.documentElement.getAttribute("data-theme"); hubTheme("light"); });
 window.addEventListener("afterprint",()=>{ if(themeBeforePrint) hubTheme(themeBeforePrint); themeBeforePrint=null; });
 paintThemeBtn();
+const KIDLV=["p5","p6"], kidOf=lv=>!!(lv&&lv.length)&&lv.every(l=>KIDLV.includes(l)), isKidOn=()=>document.documentElement.hasAttribute("data-kid"), kidBtn=$("#kidBtn"), kidMenu=$("#kidMenu");
+function kidShut(){ kidMenu.hidden=true; kidBtn.setAttribute("aria-expanded","false"); }
+function setKid(on){ document.documentElement.toggleAttribute("data-kid",!!on); kidBtn.dataset.lp=""; kidShut(); }
+function kidOpen(){ const tabs=[...document.querySelectorAll(".steptabs .stab")], ci=tabs.findIndex(b=>b.getAttribute("aria-selected")==="true"), B=(k,t,x="")=>`<button type="button" role="menuitem" data-k="${k}"${x}>${t}</button>`;
+  const KP=cur&&cur.t&&cur.t.play&&PLAYS[cur.t.play], KM=!!(KP&&KP.kmenu); let m=KM?KP.kmenu(B):tabs.length?`<div class="kmh">Go to a step</div>${tabs.map((b,i)=>B("j"+i,`<b>${i+1}</b> ${b.textContent.replace(/^\d+/,"")}`,i===ci?' aria-current="step"':"")).join("")}<hr>`:"";
+  if(cur&&cur.t&&!KM) m+=`${B("r","↺ Start this step again")}<div class="kmc" hidden><span>Start again?</span><button type="button" class="y" data-k="ry">Yes</button><button type="button" data-k="rn">No</button></div><hr>`;
+  if(cur&&cur.t&&!KM&&innerWidth>=900) m+=B("p","Present on a big screen");
+  m+=B("d",isDark()?"Light mode":"Dark mode")+B("l","Copy link")+B("h","Home");
+  kidMenu.innerHTML=m; kidMenu.hidden=false; kidBtn.setAttribute("aria-expanded","true"); }
+let kidLpT=0, kidLpOk=false;
+kidBtn.onpointerdown=e=>{ if(!kidBtn.dataset.lp) return; kidLpOk=false; clearTimeout(kidLpT); kidLpT=setTimeout(()=>{ kidLpOk=true; kidOpen(); },1500); };
+kidBtn.onpointerup=kidBtn.onpointerleave=kidBtn.onpointercancel=()=>clearTimeout(kidLpT);
+kidBtn.onclick=e=>{ e.stopPropagation(); if(kidBtn.dataset.lp){ if(kidLpOk){ kidLpOk=false; return; } kidBtn.classList.add("sgshake"); setTimeout(()=>kidBtn.classList.remove("sgshake"),450); return; } if(kidMenu.hidden) kidOpen(); else kidShut(); };
+kidMenu.onclick=e=>{ e.stopPropagation(); const b=e.target.closest("button[data-k]"); if(!b) return; const k=b.dataset.k; if(k.startsWith("x:")){ kidShut(); const KP=cur&&cur.t&&PLAYS[cur.t.play]; if(KP&&KP.kact) KP.kact(k.slice(2)); return; }
+  if(k==="r"){ b.hidden=true; const c=kidMenu.querySelector(".kmc"); c.hidden=false; c.querySelector(".y").focus(); return; }
+  if(k==="rn"){ kidMenu.querySelector(".kmc").hidden=true; kidMenu.querySelector('[data-k="r"]').hidden=false; return; }
+  kidShut();
+  if(k[0]==="j"){ const t=document.querySelectorAll(".steptabs .stab")[+k.slice(1)]; if(t) t.click(); window.scrollTo(0,0); }
+  else if(k==="ry"){ const t=document.querySelector('.steptabs .stab[aria-selected="true"]'); if(t) t.click(); else route(); window.scrollTo(0,0); }
+  else if(k==="p") enterPresent(); else if(k==="d") themeBtn.click(); else if(k==="l") shareBtn.click(); else if(k==="h") location.hash=""; };
+document.addEventListener("click",e=>{ if(!kidMenu.hidden&&!kidMenu.contains(e.target)) kidShut(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!kidMenu.hidden){ kidShut(); kidBtn.focus(); } });
 
 const numOf=t=>parseFloat(String(t).replace(/−/g,"-").replace(/[^0-9.\-]/g,""));
 function addNumBox(row){
@@ -11418,9 +12327,12 @@ function fitStage(){fitQ=0; const left=document.querySelector(".left"), st=docum
   const top=left.getBoundingClientRect().top+scrollY, other=left.getBoundingClientRect().height-svg.getBoundingClientRect().height;
   const m=Math.max(240, Math.floor(innerHeight-12-top-other)); if(svg.style.maxHeight!==m+"px"){ svg.style.maxHeight=m+"px"; bumpText(svg); layoutFracs(svg); }}
 const fitSoon=()=>{if(!fitQ) fitQ=requestAnimationFrame(fitStage)};
+function kidStack(play){ const kid=isKidOn(); play.classList.toggle("kstack",kid&&(innerWidth<900||(innerHeight>innerWidth&&!document.documentElement.hasAttribute("data-present")))); return kid; }
 function placeDock(){
   const play=document.querySelector(".play"); if(!play) return;
   const dock=play.querySelector(".box.dock"), panel=play.querySelector(".panel"), slot=play.querySelector(".dockslot"); if(!dock||!panel) return;
+  const kid=kidStack(play), sg=play.querySelector(".left>.stage");
+  if(kid&&sg){ if(sg.nextElementSibling!==dock) sg.after(dock); return; }
   const docked=innerWidth<900&&innerHeight>=600;
   if(docked){ if(dock.parentElement!==play) play.append(dock); }
   else if(dock.parentElement!==panel){ if(slot) slot.after(dock); else panel.prepend(dock); }
