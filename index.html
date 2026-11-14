@@ -1315,7 +1315,9 @@ const TOPICS = [
   {id:"beads-video", strand:"num", levels:["p6"], chapter:"Ratio", unlisted:true,
    title:"Vivian's beads: the video", blurb:"Bags of beads pour into one bag. Stop and write each line.", play:"beadsVideo"},
   {id:"sugar-video", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
-   title:"Mr Ali's sugar: the video", blurb:"4 bags pour into one jar. ⅝ of HIS sugar. Stop twice and write the line.", play:"sugarVideo"}
+   title:"Mr Ali's sugar: the video", blurb:"4 bags pour into one jar. ⅝ of HIS sugar. Watch how the fractions work.", play:"sugarVideo"},
+  {id:"dog-video", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
+   title:"Mia's dog food: the video", blurb:"3 bags pour into one jar. ⅙ of HER dog food. Watch how the fractions work.", play:"dogVideo"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -6501,7 +6503,7 @@ const sugarLeft={ steps:[],
   } };
 const myFractions={ steps:[],
   mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("sgplay","sgaid"); key.remove(); panel.innerHTML=""; stage.innerHTML=""; const P=sgLoad(), d=P.done||{}, pulse=sgLS("mf:pulse"), done=d[1]&&d[2]&&d[3];
-    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a><a class="sgcard" href="#sugar-video"><div class="m">🎬</div><div class="t">Sugar: the video</div><div class="s">Mr Ali's 4 bags pour into one jar. Watch how the fractions work.</div></a>`);
+    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a><a class="sgcard" href="#sugar-video"><div class="m">🎬</div><div class="t">Sugar: the video</div><div class="s">Mr Ali's 4 bags pour into one jar. Watch how the fractions work.</div></a><a class="sgcard" href="#dog-video"><div class="m">🐶</div><div class="t">Dog food: the video</div><div class="s">Mia's 3 bags pour into one jar. Watch how the fractions work.</div></a>`);
     stage.append(h("div",{class:"sgq",style:"order:0"},`<div class="sgqt" style="line-height:1.4;font-weight:700">My fractions</div>`),cards);
     if(!sgLS("mf:seen")){ stage.append(h("div",{class:"sgnote"},`Progress lives on this iPad. In Safari, tap <b>Share</b> then <b>Add to Home Screen</b> to keep this link.`)); sgLS("mf:seen","1"); }
     kidBtn.dataset.lp="1"; this.kmenu=B=>`${B("x:pulse",pulse==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:rn","New child: clear everything")}<div class="kmh">Progress lives on this device</div><hr>`; this.kact=k=>{ if(k==="pulse") sgLS("mf:pulse",pulse==="S"?"":"S"); if(k==="rn") sgSave({done:{}}); route(); }; } };
@@ -6553,6 +6555,10 @@ const sugarVideo=vidPlay({src:"sugar-video.mp4",poster:"sugar-video-poster.jpg",
   idle:"🔊 Turn your sound on, then tap <b>▶ Watch</b>.",
   end:`Well done! Now <b>Your turn</b> on paper: ${frac(3,8)} kg of sugar, ${frac(2,3)} of it used. How much is left, in grams?`});
 PLAYS.sugarVideo=sugarVideo;
+const dogVideo=vidPlay({src:"dog-video.mp4",poster:"dog-video-poster.jpg",cues:[],
+  idle:"🔊 Turn your sound on, then tap <b>▶ Watch</b>.",
+  end:`Well done! Now <b>Your turn</b> on paper: ${frac(2,5)} kg of dog food, the dog ate ${frac(3,4)} of it. How much is left, in grams?`});
+PLAYS.dogVideo=dogVideo;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
