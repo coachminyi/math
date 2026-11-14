@@ -6501,7 +6501,7 @@ const sugarLeft={ steps:[],
   } };
 const myFractions={ steps:[],
   mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("sgplay","sgaid"); key.remove(); panel.innerHTML=""; stage.innerHTML=""; const P=sgLoad(), d=P.done||{}, pulse=sgLS("mf:pulse"), done=d[1]&&d[2]&&d[3];
-    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a><a class="sgcard" href="#sugar-video"><div class="m">🎬</div><div class="t">Sugar: the video</div><div class="s">Mr Ali's 4 bags pour into one jar. Stop twice, write the line.</div></a>`);
+    const cards=h("div",{class:"sgcards"},`<a class="sgcard${pulse==="S"?" next":""}" href="#sugar-left"><div class="m">🍚</div><div class="t">Sugar</div><div class="s">${done?"all three done":P.cur?"carry on":d[1]?"Story 2 next":`${frac(2,5)} kg, ${frac(5,8)} used, left in grams`}</div><div class="s">${[1,2,3].map(i=>d[i]===1?"✓":d[i]===2?"◯":"▢").join(" ")}</div></a><a class="sgcard" href="#sugar-video"><div class="m">🎬</div><div class="t">Sugar: the video</div><div class="s">Mr Ali's 4 bags pour into one jar. Watch how the fractions work.</div></a>`);
     stage.append(h("div",{class:"sgq",style:"order:0"},`<div class="sgqt" style="line-height:1.4;font-weight:700">My fractions</div>`),cards);
     if(!sgLS("mf:seen")){ stage.append(h("div",{class:"sgnote"},`Progress lives on this iPad. In Safari, tap <b>Share</b> then <b>Add to Home Screen</b> to keep this link.`)); sgLS("mf:seen","1"); }
     kidBtn.dataset.lp="1"; this.kmenu=B=>`${B("x:pulse",pulse==="S"?"Stop the Sugar card pulsing":"Make the Sugar card pulse")}${B("x:rn","New child: clear everything")}<div class="kmh">Progress lives on this device</div><hr>`; this.kact=k=>{ if(k==="pulse") sgLS("mf:pulse",pulse==="S"?"":"S"); if(k==="rn") sgSave({done:{}}); route(); }; } };
@@ -6548,9 +6548,9 @@ function vidPlay(cfg){ return { steps:[],
     v.addEventListener("seeking",sk); v.addEventListener("seeked",sk);
     v.addEventListener("ended",()=>{ say(cfg.end); again.hidden=false; });
     if(cur) cur.state=()=>({}); } }; }
-const SV_CUES=[[51.0,59.5],[98.6,107.1]];
-const sugarVideo=vidPlay({src:"sugar-video.mp4",poster:"sugar-video-poster.jpg",cues:SV_CUES,wait:5,
-  idle:"It stops 2 times. Each time, write the line on paper, then tap <b>Done</b>.",
+const SV_CUES=[];
+const sugarVideo=vidPlay({src:"sugar-video.mp4",poster:"sugar-video-poster.jpg",cues:SV_CUES,
+  idle:"🔊 Turn your sound on, then tap <b>▶ Watch</b>.",
   end:`Well done! Now <b>Your turn</b> on paper: ${frac(3,8)} kg of sugar, ${frac(2,3)} of it used. How much is left, in grams?`});
 PLAYS.sugarVideo=sugarVideo;
 
