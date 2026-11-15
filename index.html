@@ -7813,6 +7813,7 @@ diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup>
       <tr><td>7 <span class="anno">(constant)</span></td><td>0</td></tr>
     </table>
     <p class="anno">* a number in front stays in front: 5${V("x")}⁴ → 5 × 4${V("x")}³ = 20${V("x")}³</p>
+    ${PLAYLINK("#first-principles","For the curious: why it works")}
   </div>
 
   <div class="panelc"><h4>Rewrite first, then differentiate</h4>
@@ -7829,23 +7830,30 @@ diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup>
     <div class="note"><b>Note!</b> Change to a negative power first.</div>
   </div>
 
-  <div class="panelc"><h4>All the rules <span class="badge">memorise: not on the formula sheet</span></h4>
+  <div class="panelc"><h4>Trig, e, ln <span class="badge">memorise: not on the formula sheet</span></h4>
     <table>
       <tr><th>${V("y")}</th><th>${frac("d"+V("y"),"d"+V("x"))}</th></tr>
       <tr><td>sin ${X1}</td><td>cos ${X1}</td></tr>
-      <tr><td>cos ${X1}</td><td>−sin ${X1}</td></tr>
+      <tr><td>cos ${X1}</td><td><b class="k-amber">−</b>sin ${X1}</td></tr>
       <tr><td>tan ${X1}</td><td>sec² ${X1}</td></tr>
       <tr><td>e<sup>${X1}</sup></td><td>e<sup>${X1}</sup></td></tr>
       <tr><td>ln ${X1}</td><td>${frac("1",X1)}</td></tr>
-      <tr><td>Chain rule: <span class="nw">(2${X1} + 1)⁵</span></td><td><span class="nw">5(2${X1} + 1)⁴ × 2</span> = <span class="nw">10(2${X1} + 1)⁴</span></td></tr>
-      <tr><td><span class="nw">sin(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw">${V("a")} cos(${V("a")}${X1} + ${V("b")})</span></td></tr>
-      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td>${V("a")}e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
-      <tr><td><span class="nw">ln(${V("a")}${X1} + ${V("b")})</span></td><td>${frac(V("a"),V("a")+X1+" + "+V("b"))}</td></tr>
-      <tr><td>Product: ${V("uv")}</td><td>${frac("d"+V("u"),"d"+V("x"))}${V("v")} + ${frac("d"+V("v"),"d"+V("x"))}${V("u")}</td></tr>
-      <tr><td>Quotient: ${frac(V("u"),V("v"))}</td><td>${frac(frac("d"+V("u"),"d"+V("x"))+V("v")+" − "+frac("d"+V("v"),"d"+V("x"))+V("u"),V("v")+"²")}</td></tr>
+      <tr><td><span class="nw">sin(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw"><b class="k-amber">${V("a")}</b> cos(${V("a")}${X1} + ${V("b")})</span></td></tr>
+      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td><b class="k-amber">${V("a")}</b>e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
+      <tr><td><span class="nw">ln(${V("a")}${X1} + ${V("b")})</span></td><td>${frac(`<b class="k-amber">${V("a")}</b>`,V("a")+X1+" + "+V("b"))}</td></tr>
     </table>
-    <p class="anno">* chain rule: count the layers first · one factor for every layer · ${nw(`(2${X1} + 1)⁵ has 2 layers`)} ${nw("→ 2 factors")}</p>
+    <p class="anno">* the extra factor: ${nw(`sin 3${X1} → <b class="k-amber">3</b> cos 3${X1}`)}</p>
     <p class="anno">* trig rules need ${X1} in radians</p>
+  </div>
+
+  <div class="panelc"><h4>Which rule?</h4>
+    <table>
+      <tr><th>${V("y")}</th><th>Use</th></tr>
+      <tr><td>${nw(`(2${X1} + 1)⁵`)} <span class="anno">(something inside)</span></td><td>chain</td></tr>
+      <tr><td>${nw(`${X2} sin ${X1}`)} <span class="anno">(two things multiplied)</span></td><td>product</td></tr>
+      <tr><td>${frac(`sin ${X1}`,X2)} <span class="anno">(a fraction)</span></td><td>quotient</td></tr>
+      <tr><td>${nw(`${X1}(2${X1} + 1)⁵`)}</td><td>product, with chain inside</td></tr>
+    </table>
   </div>
 
   <div class="panelc"><h4>Logs: split first</h4>
@@ -7853,40 +7861,13 @@ diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup>
     <p class="anno">* a product, quotient or power inside ln? Break it up with the log laws first · there's no law for ${nw("ln(A + B)")}</p>
   </div>
 
-  <div class="panelc"><h4>Term by term</h4>
-    <ul class="steps">
-      <li>${V("y")} = 4${V("x")}³ − 6${V("x")}² + 5${V("x")} − 9</li>
-      <li>${frac("d"+V("y"),"d"+V("x"))} = 12${V("x")}² − 12${V("x")} + 5 <span class="tagop">the −9 becomes 0</span></li>
-    </ul>
-  </div>
-
-  <div class="panelc"><h4>What ${frac("d"+V("y"),"d"+V("x"))} means</h4>
-    <ul class="steps">
-      <li>① gradient of the tangent at a point</li>
-      <li>② rate of change of ${V("y")} as ${V("x")} changes</li>
-    </ul>
-    ${EG(`e.g. gradient of ${V("y")} = ${V("x")}² at ${V("x")} = 3`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 2${V("x")}`)}`,`${nw(`= 2(3) = <b>6</b>`)}`])}
-  </div>
-
-  <div class="panelc"><h4>Why ${V("x")}² → 2${V("x")}</h4>
-    <p class="anno">Not needed in the exam. It shows why the power rule works.</p>
-    <a href="#diff-x-squared?x=1&h=1.5" class="piclink"><svg viewBox="0 0 220 100" style="width:100%;max-width:300px;display:block;margin:0 auto">
-      <path d="M21.5 88.6L29.8 91.1L38.0 92.9L46.2 94.2L54.5 94.9L62.8 95.0L71.0 94.5L79.2 93.4L87.5 91.8L95.8 89.5L104.0 86.7L112.2 83.3L120.5 79.3L128.8 74.7L137.0 69.5L145.2 63.8L153.5 57.4L161.8 50.5L170.0 43.0L178.2 34.9L186.5 26.2L194.8 17.0L203.0 7.1" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <line x1="87.5" y1="97.6" x2="186.5" y2="32" stroke="var(--amber)" stroke-width="2"/>
-      <line x1="76.5" y1="97.1" x2="197.5" y2="51.3" stroke="var(--green)" stroke-width="2" stroke-dasharray="4 3"/>
-      <circle cx="104" cy="86.7" r="4" fill="var(--accent)"/><circle cx="170" cy="43" r="4" fill="var(--amber)"/>
-      <text x="94" y="80" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="end">P</text><text x="162" y="38" font-size="13" font-weight="700" fill="var(--amber)" text-anchor="end">Q</text>
-      <text x="10" y="22" font-size="12" fill="var(--amber)">chord PQ</text><text x="10" y="38" font-size="12" fill="var(--green)">tangent at P</text>
-    </svg></a>
-    <ul class="steps">
-      <li>Chord PQ: gradient ${nw(`= ${frac(`(${V("x")} + ${V("h")})² − ${V("x")}²`,V("h"))}`)}</li>
-      <li>${nw(`= ${frac(`2${V("x")}${V("h")} + ${V("h")}²`,V("h"))}`)}</li>
-      <li>${nw(`= 2${V("x")} + ${V("h")}`)}</li>
-      <li>Slide Q into P ${nw(`(${V("h")} → 0)`)}: the chord becomes the <b>tangent</b></li>
-      <li>${nw(`Gradient → <b>2${V("x")}</b>`)}, so ${frac("d","d"+V("x"))}(${V("x")}²) = 2${V("x")}</li>
-    </ul>
-    ${PLAYLINK("#diff-x-squared","Interactive: slide Q into P")}
-    ${PLAYLINK("#first-principles","For the curious: first principles")}
+  <div class="panelc"><h4>Common mistakes</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`${frac("d","d"+X1)}(sin 3${X1}) = cos 3${X1}`)}</div>
+      <div class="ok">✓ ${nw(`${frac("d","d"+X1)}(sin 3${X1}) = 3 cos 3${X1}`)}</div>
+      <div class="x">✗ ${nw(`${frac("d","d"+X1)}(cos ${X1}) = sin ${X1}`)}</div>
+      <div class="ok">✓ ${nw(`${frac("d","d"+X1)}(cos ${X1}) = −sin ${X1}`)}</div>
+    </div>
   </div>
 </div>`,
 
@@ -8343,7 +8324,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
   </div>
 </div>`,
 
-diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"+V("y"),"d"+V("x"))}`),`normal: gradient ${nw(`−${frac("1",V("m"))}`)}`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"mk"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y","","mk"),FB("green","Max or min?",`<span style="display:inline-flex;align-items:center;gap:10px">${frac("d²"+V("y"),"d"+V("x")+"²")}<span style="display:inline-grid;gap:3px;text-align:left"><span>&lt; 0 max ∩</span><span>&gt; 0 min ∪</span></span></span>`,nw("= 0: first derivative test"),"","mk")])}
+diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"+V("y"),"d"+V("x"))}`),`normal: gradient ${nw(`−${frac("1",V("m"))}`)}`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"mk"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,`then find ${X1} <b>AND</b> ${V("y")}`,"","mk"),FB("green","Max or min?",`<span style="display:inline-flex;align-items:center;gap:10px">${frac("d²"+V("y"),"d"+V("x")+"²")}<span style="display:inline-grid;gap:3px;text-align:left"><span>&lt; 0 max ∩</span><span>&gt; 0 min ∪</span></span></span>`,nw("= 0: first derivative test"),"","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Tangent and normal</h4>
     <a href="#tangent-gradient?cv=cubic&x=-1.5&nm=nor" class="piclink"><svg viewBox="0 -12 200 92" style="width:100%;max-width:260px;display:block;margin:0 auto">
@@ -8353,24 +8334,13 @@ diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"
       <circle cx="55.4" cy="34.4" r="3" fill="var(--ink)"/>
       <text x="95" y="1" font-size="12" fill="var(--green)">tangent</text><text x="80" y="66" font-size="12" fill="var(--amber)">normal</text>
     </svg></a>
-    <ul class="steps">
-      <li>Gradient of tangent ${V("m")} = ${frac("d"+V("y"),"d"+V("x"))} at that point</li>
-      <li>Gradient of normal = −${frac("1",V("m"))} <span class="tagop">normal ⊥ tangent</span></li>
-      <li>Equation: <span class="nw">${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)</span></li>
-    </ul>
+    ${EG(`e.g. ${V("y")} = ${X2} at (1, 1)`,[nw(`${frac("d"+V("y"),"d"+X1)} = 2${X1}`),`${nw(`${V("m")} = 2(1) = 2`)} <span class="anno" style="margin-left:10px">put in ${X1} = 1 first</span>`,`tangent: ${nw(`${V("y")} − 1 = 2(${X1} − 1)`)}`,nw(`${V("y")} = 2${X1} − 1`),`normal gradient: ${nw(`−${frac("1","2")}`)}`,`normal: ${nw(`${V("y")} − 1 = −${frac("1","2")}(${X1} − 1)`)}`,nw(`${V("y")} = −${frac("1","2")}${X1} + ${frac("3","2")}`)])}
     <p class="anno">* if ${V("m")} = 0: · tangent ${nw(`${V("y")} = ${V("y")}₁`)} (flat) · normal ${nw(`${X1} = ${X1}₁`)} (vertical)</p>
-    ${EG(`e.g. ${V("y")} = ${X2} at (1, 1)`,[`${nw(`${V("m")} = 2(1) = 2`)}`,`tangent: ${nw(`${V("y")} − 1 = 2(${X1} − 1)`)}`,nw(`${V("y")} = 2${X1} − 1`),`normal gradient: ${nw(`−${frac("1","2")}`)}`,`normal: ${nw(`${V("y")} − 1 = −${frac("1","2")}(${X1} − 1)`)}`,nw(`${V("y")} = −${frac("1","2")}${X1} + ${frac("3","2")}`)])}
     ${PLAYLINK("#tangent-gradient","Interactive: slide the tangent")}
   </div>
 
   <div class="panelc"><h4>Increasing, decreasing, stationary</h4>
     ${diffSigns()}
-    <table>
-      <tr><th>${frac("d"+V("y"),"d"+V("x"))}</th><th>Meaning</th></tr>
-      <tr><td>&gt; 0</td><td><span class="k-green">increasing ↗</span></td></tr>
-      <tr><td>&lt; 0</td><td><span class="k-red">decreasing ↘</span></td></tr>
-      <tr><td>= 0</td><td><span class="k-amber">stationary point</span> (find both ${X1} and ${V("y")})</td></tr>
-    </table>
     ${EG(`"Show ${V("y")} = ${V("x")}³ + 3${X1} is increasing for all ${X1}"`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 3${X2} + 3`)}`,`${nw(`${X2} ≥ 0`)}, so ${nw(`3${X2} + 3 ≥ 3 &gt; 0`)} ✓`])}
     ${EG(`"Range of ${X1} for which ${V("y")} is increasing"`,[`solve ${nw(`${frac("d"+V("y"),"d"+V("x"))} &gt; 0`)}`])}
   </div>
@@ -8384,12 +8354,11 @@ diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"
     <div class="note"><b>Note!</b> ${frac("d²"+V("y"),"d"+V("x")+"²")} = 0 does <b>not</b> mean inflexion. Use the first derivative test.</div>
     ${EG(`e.g. ${nw(`${V("y")} = ${V("x")}³ − 3${X1} + 1`)}`,[`${nw(`${frac("d"+V("y"),"d"+V("x"))} = 3${X2} − 3 = 0`)} <span class="nw">→ ${X1} = ±1</span>`,`${nw(`${frac("d²"+V("y"),"d"+V("x")+"²")} = 6${X1}`)} <span class="anno" style="margin-left:10px">differentiate ${frac("d"+V("y"),"d"+V("x"))} again</span>`,`${nw(`${X1} = 1: 6(1) = 6 &gt; 0`)} → <b>min (1, −1)</b>`,`${nw(`${X1} = −1: 6(−1) = −6 &lt; 0`)} → <b>max (−1, 3)</b>`])}
     <p class="anno">* first derivative test: find the sign of ${frac("d"+V("y"),"d"+V("x"))} just before and just after the point</p>
-    ${EG(`Same curve, first derivative test at ${nw(`${X1} = 1`)}`,[fdTable(["0.9","1","1.1"],["−0.57","0","0.63"],["−","0","+"]),`(1, −1) is a <b>minimum point</b>.`])}
-    ${EG(`At ${nw(`${X1} = −1`)}`,[fdTable(["−1.1","−1","−0.9"],["0.63","0","−0.57"],["+","0","−"]),`(−1, 3) is a <b>maximum point</b>.`])}
-  </div>
+    ${EG(`Same curve, first derivative test at ${nw(`${X1} = 1`)}`,[fdTable(["0.9","1","1.1"],["−0.57","0","0.63"],["−","0","+"]),`(1, −1) is a <b>minimum point</b>.`])}  </div>
 
   <div class="panelc"><h4>Connected rates</h4>
-    <p class="big">${frac("d"+V("A"),"d"+V("t"))} = ${frac("d"+V("A"),"d"+V("r"))} × ${frac("d"+V("r"),"d"+V("t"))}</p>
+    <p class="big">${frac("d"+V("A"),"d"+V("t"))} = ${frac("d"+V("A"),`<span class="k-amber">d${V("r")}</span>`)} × ${frac(`<span class="k-amber">d${V("r")}</span>`,"d"+V("t"))}</p>
+    <p class="anno">* the middle letters <span class="k-amber">match</span></p>
     ${EG(`e.g. circle: radius grows at 0.5 cm/s. Rate of change of area when ${nw(`${V("r")} = 4 cm`)}?`,[nw(`${frac("d"+V("r"),"d"+V("t"))} = 0.5`),`${nw(`${V("A")} = π${V("r")}²`)} → ${nw(`${frac("d"+V("A"),"d"+V("r"))} = 2π${V("r")}`)}`,`${nw(`${frac("d"+V("A"),"d"+V("t"))} = 2π(4) × 0.5`)}`,`${nw(`= <b>4π cm²/s</b>`)}`])}
     <p class="anno">* a decrease is a negative rate: leaking at 6 cm³/s means ${nw(`${frac("d"+V("V"),"d"+V("t"))} = −6`)}</p>
   </div>
@@ -8401,9 +8370,7 @@ diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"
       <li>③ Check max or min with ${frac("d²"+V("y"),"d"+V("x")+"²")}</li>
       <li>④ Answer the question asked (often the max value, not ${X1})</li>
     </ul>
-    ${EG("20 m of fence makes a rectangle. Find the greatest area.",[`<svg viewBox="0 0 150 62" style="width:100%;max-width:210px;display:block"><rect x="14" y="8" width="96" height="36" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.4"/><text x="62" y="58" font-size="12" text-anchor="middle" fill="var(--ink)">10 − <tspan font-style="italic">x</tspan></text><text x="116" y="30" font-size="12" font-style="italic" fill="var(--ink)">x</text></svg>`,`half the fence is 10 m: sides ${X1} and ${nw(`10 − ${X1}`)}`,nw(`${V("A")} = ${X1}(10 − ${X1}) = 10${X1} − ${X2}`),nw(`${frac("d"+V("A"),"d"+X1)} = 10 − 2${X1} = 0`),nw(`${X1} = 5`),`${nw(`${frac("d²"+V("A"),"d"+X1+"²")} = −2 &lt; 0`)}: max`,`greatest area ${nw("= 5 × 5 = <b>25 m²</b>")}`])}
-    <p class="anno">* the differentiation rules themselves: see <a href="#sheet/differentiation-rules" style="color:inherit">Differentiation rules</a></p>
-  </div>
+    ${EG("20 m of fence makes a rectangle. Find the greatest area.",[`<svg viewBox="0 0 150 62" style="width:100%;max-width:210px;display:block"><rect x="14" y="8" width="96" height="36" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.4"/><text x="62" y="58" font-size="12" text-anchor="middle" fill="var(--ink)">10 − <tspan font-style="italic">x</tspan></text><text x="116" y="30" font-size="12" font-style="italic" fill="var(--ink)">x</text></svg>`,`half the fence is 10 m: sides ${X1} and ${nw(`10 − ${X1}`)}`,nw(`${V("A")} = ${X1}(10 − ${X1}) = 10${X1} − ${X2}`),nw(`${frac("d"+V("A"),"d"+X1)} = 10 − 2${X1} = 0`),nw(`${X1} = 5`),`${nw(`${frac("d²"+V("A"),"d"+X1+"²")} = −2 &lt; 0`)}: max`,`greatest area ${nw("= 5 × 5 = <b>25 m²</b>")}`])}  </div>
 </div>`,
 
 speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration","m/s² · flat = steady speed · downhill = slowing down"),FB("blue","Area under speed–time graph","= distance travelled","triangle · rectangle · trapezium"),FB("amber","km/h ↔ m/s",nw(`72 km/h = ${frac("72 km","1 h")}`),"change the top and the bottom separately")])}
