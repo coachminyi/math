@@ -1241,6 +1241,17 @@ html[data-theme="dark"] .sgp.live{box-shadow:inset 0 0 0 1.5px var(--blue)}
 }
 @media (max-width:899px){ .rmact .rmbtn{width:100%} .rmcard{padding:10px} }
 @media (prefers-reduced-motion:reduce){.rmbx.live,.rmab,.rmj.go .rmjn,.rmbtn.rmgo{animation:none}}
+#app .play.cwplay .stage svg{touch-action:pan-y}
+#app .play.cwplay .ctrl label{font-style:normal}
+#app .play.cwplay .ctrl output{min-width:2.2em;font-variant-numeric:tabular-nums}
+#app .play.taplay .stage svg{touch-action:pan-y;overflow:visible}
+#app .play.taplay .ctrl label{font-style:normal}
+#app .play.taplay .ctrl output{min-width:2.2em;font-variant-numeric:tabular-nums}
+#app .play.taplay .pillrow[data-pk="g"] .pill[data-v="0"]{border-color:var(--blue);color:var(--blue)}
+#app .play.taplay .pillrow[data-pk="g"] .pill[data-v="1"]{border-color:var(--amber);color:var(--amber)}
+#app .play.taplay .pillrow[data-pk="g"] .pill[data-v="2"]{border-color:var(--green);color:var(--green)}
+#app .play.taplay .pillrow[data-pk="g"] .pill:not([data-v="3"])::before{content:"";display:inline-block;width:.75em;height:.75em;border-radius:4px;margin-right:.45em;background:currentColor;opacity:.4}
+#app .play.taplay .stage svg .tapick{cursor:pointer}
 .kq>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .kq>summary::-webkit-details-marker{display:none}
 .kqc{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 11px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:15px;white-space:nowrap}
@@ -1414,7 +1425,11 @@ const TOPICS = [
   {id:"dog-video", strand:"num", levels:["p6"], chapter:"Fractions", p6g:"Fractions",
    title:"Mia's dog food: the video", blurb:"Mia's 3 bags pour into one jar. Watch how the fractions work.", play:"dogVideo"},
   {id:"rest-model", strand:"num", levels:["p6"], chapter:"Fractions", p6g:"Fractions",
-   title:"Fraction of the rest: draw the model", blurb:"Type two fractions. The bar model draws itself.", play:"restModel"}
+   title:"Fraction of the rest: draw the model", blurb:"Type two fractions. The bar model draws itself.", play:"restModel"},
+  {id:"circle-why", strand:"geo", levels:["p6"], chapter:"Circles", p6g:"Circles",
+   title:"Circles: where π\u00a0×\u00a0d and π\u00a0×\u00a0r\u00a0×\u00a0r come from",blurb:"Roll a wheel, then cut up a pizza. That's where both circle formulas come from.", play:"circleWhy"},
+  {id:"triangle-same-area", strand:"geo", levels:["p6"], chapter:"Area of triangle", p6g:"Area of triangle",
+   title:"Triangles: same base, same height, same area", blurb:"Guess which triangle is biggest. Then cut, turn and slide to see why.", play:"triangleSameArea"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -6812,6 +6827,281 @@ const restModel={ steps:[],
     if(cur) cur.state=()=>{ if(!ok()) return {}; const [a,b,c,d]=N(), o={a,b,c,d}; if(st.beat) o.beat=st.beat; if(st.sol){ o.tap=st.sol.i; o.n=st.sol.n; } return o; };
   } };
 PLAYS.restModel=restModel;
+const CWD=[30,23,16], CWX=18, CWG=[33,69,98];
+let cwKeep=0;
+const cwEz=t=>t<=0?0:t>=1?1:t*t*(3-2*t), cwCl=(x,a,b)=>Math.max(0,Math.min(1,(x-a)/(b-a))), cwF=v=>v[0].toFixed(3)+" "+v[1].toFixed(3);
+function cwFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,15/u); }
+function cwTx(svg,a,parts){ const t=svgEl("text",a); parts.forEach(q=>{ const it=Array.isArray(q); t.append(svgEl("tspan",it?{"font-style":"italic"}:{},it?q[0]:q)); }); svg.append(t); return t; }
+function cwStrip(N,R){ const a=2*Math.PI/N, h=a/2, c=2*R*Math.sin(h), H=R*Math.cos(h), n=N/2, P=[];
+  for(let k=0;k<n;k++) P.push({col:"b",u0:-h,u1:h,phc:Math.PI+(k+.5)*a,phs:1.5*Math.PI,pS:[(k+.5)*c,H],cS:[(k+.5)*c,H]});
+  for(let j=0;j<n;j++){ const phc=(j+.5)*a, at=[(n-j)*c,0];
+    if(j) P.push({col:"a",u0:-h,u1:h,phc,phs:Math.PI/2,pS:at,cS:at});
+    else { P.push({col:"a",u0:0,u1:h,phc,phs:Math.PI/2,pS:at,cS:at,half:"stay"}); P.push({col:"a",u0:-h,u1:0,phc,phs:Math.PI/2,pS:at,cS:[0,0],half:"move"}); } }
+  return {N,R,a,h,c,H,W:n*c,P}; }
+const cwLay=(nar,W)=>nar?{vb:"0 0 140 117",R:32,C:[60,36],x0:70-W/2,yT:81,nar:1}:{vb:"0 0 140 58",R:22,C:[26,26],x0:95-W/2,yT:15,nar:0};
+const cwNar=svg=>{ const w=svg.getBoundingClientRect().width; return w>0&&w<520; };
+function cwPiece(svg,o,f,q,R,hl){ const A=g=>[o[0]+R*Math.cos(g),o[1]+R*Math.sin(g)], p0=A(f+q.u0), p1=A(f+q.u1), b=q.col==="b";
+  S_(svg,"path",{d:`M${cwF(o)}L${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}Z`,fill:b?"var(--blue-fill)":"var(--amber-fill)",stroke:hl?"var(--ink)":"var(--card)","stroke-width":hl?.6:.3,"stroke-linejoin":"round",class:"cwsl","data-c":q.col});
+  S_(svg,"path",{d:`M${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}`,fill:"none",stroke:b?"var(--blue)":"var(--amber)","stroke-width":1.1}); }
+function cwEnds(svg,L,S,x0,fs,lab){ [x0,x0+S.W].forEach((x,i)=>{ S_(svg,"line",{x1:x,y1:L.yT,x2:x,y2:L.yT+L.R,stroke:"var(--ink)","stroke-width":.8,class:"cwend","data-end":i?"R":"L"});
+  cwTx(svg,{x:i?x+2.2:x-2.2,y:L.yT+L.R/2+fs*.35,"text-anchor":i?"start":"end","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwendl"},lab==="r"?[["r"]]:[lab]); }); }
+function cwRow(svg,i,t,k,al,fs,sp){ const d=CWD[i], a=CWX, G=CWG[i], r=d/2, L=Math.PI*d, X=a+t*L, Y=G-r, th=2*Math.PI*t, g=svgEl("g",{opacity:al,class:"cwrow","data-row":i}); svg.append(g);
+  const E=(tag,o,tx)=>{ const e=svgEl(tag,o,tx); g.append(e); if(tag==="text"&&tx!=null&&/\{[^}]*\/[^}]*\}/.test(tx)) fracify(e); return e; };
+  E("line",{x1:2,y1:G,x2:138,y2:G,stroke:"var(--grid2)","stroke-width":.6});
+  if(k>0){ const y=G+1.7, tk=x=>E("line",{x1:x,y1:G-1.2,x2:x,y2:G+3,stroke:"var(--ink)","stroke-width":.5});
+    tk(a);
+    for(let j=0;j<3;j++){ const q=cwCl(k,j/4,(j+1)/4); if(q<=0) continue; const x0=a+j*d;
+      E("line",{x1:x0,y1:y,x2:x0+q*d,y2:y,stroke:"var(--amber)","stroke-width":1.4,class:"cwstamp"});
+      if(q>=1){ tk(x0+d); E("text",{x:x0+d,y:G+7.8,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwnum"},String(j+1)); } }
+    const q=cwCl(k,.75,1); if(q>0){ const x0=a+3*d;
+      E("line",{x1:x0,y1:y,x2:x0+q*d,y2:y,stroke:"var(--amber)","stroke-width":1,"stroke-dasharray":"1.4 1",class:"cwfourth"});
+      for(let m=1;m<=7;m++) if(q>=m/7-1e-9) E("line",{x1:x0+m*d/7,y1:G+.5,x2:x0+m*d/7,y2:G+3,stroke:"var(--ink)","stroke-width":m===7?.5:.35,class:m<7?"cw7":"cw7e"});
+      if(q>=1) E("text",{x:x0+d/7+.5,y:G+7.8,"text-anchor":"start","font-size":fs,"font-weight":700,fill:"var(--blue)",class:"cwfr"},"{1/7}"); } }
+  if(t>0) E("line",{x1:a,y1:G,x2:X,y2:G,stroke:"var(--blue)","stroke-width":1.6,class:"cwedge","data-row":i});
+  E("circle",{cx:X,cy:Y,r,fill:"var(--card)"});
+  const pt=g=>[X+r*Math.cos(g),Y+r*Math.sin(g)], b=Math.PI/2;
+  const arc=(a0,a1,o)=>{ const w=a1-a0; if(w<=1e-4) return; if(w>=2*Math.PI-1e-4){ E("circle",Object.assign({cx:X,cy:Y,r,fill:"none"},o)); return; } E("path",Object.assign({d:`M${cwF(pt(a0))}A${r} ${r} 0 ${w>Math.PI?1:0} 1 ${cwF(pt(a1))}`,fill:"none"},o)); };
+  arc(b,b+th,{stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.2 1"});
+  arc(b+th,b+2*Math.PI,{stroke:"var(--blue)","stroke-width":1.6,class:"cwrim"});
+  const c1=pt(th), c2=pt(th+Math.PI);
+  if(sp>0){ E("line",{x1:X,y1:Y,x2:c2[0],y2:c2[1],stroke:"var(--amber)","stroke-width":1.4,"stroke-linecap":"round",class:"cwrad"}); E("line",{x1:X,y1:Y,x2:c1[0],y2:c1[1],stroke:"var(--green)","stroke-width":1.4,"stroke-linecap":"round",class:"cwrad"}); }
+  else E("line",{x1:c1[0],y1:c1[1],x2:c2[0],y2:c2[1],stroke:"var(--amber)","stroke-width":1.4,"stroke-linecap":"round",class:"cwdia"});
+  E("circle",{cx:X,cy:Y,r:sp>0?1.1:.8,fill:"var(--ink)"});
+  if(t===0||t===1){ if(sp>0) [[-1,"var(--amber)"],[1,"var(--green)"]].forEach(([sg,c])=>E("text",{x:X+sg*r/2,y:Y-1.8,"text-anchor":"middle","font-size":fs,"font-style":"italic","font-weight":700,fill:c,opacity:sp,class:"cwr"},"r"));
+    else E("text",{x:X,y:Y-1.8,"text-anchor":"middle","font-size":fs,"font-style":"italic","font-weight":700,fill:"var(--amber)",class:"cwd"},"d"); } }
+function cwRoll(svg,s){ svg.setAttribute("viewBox","0 0 140 110"); const fs=cwFs(svg), ph=s.ph, p=s.p, cu=ph<3?0:Math.min(2,ph-2);
+  CWD.forEach((d,i)=>{ let t=0, k=0;
+    if(i<cu||ph>=5){ t=1; k=1; }
+    else if(i===cu){ if(i===0){ t=ph===1?p:ph>=2?1:0; k=ph===2?p:ph>2?1:0; } else { t=cwCl(p,0,.6); k=cwCl(p,.6,1); } }
+    cwRow(svg,i,t,k,i>cu&&ph<5?.4:1,fs,i===0&&ph>=5?p:0); }); }
+function cwPizza(svg,s){ const N=8<<s.lv, nar=cwNar(svg), S=cwStrip(N,nar?32:22), L=cwLay(nar,S.W); svg.setAttribute("viewBox",L.vb);
+  const fs=cwFs(svg), x0=L.x0, R=L.R, p=s.ph>=1?s.p:0, pull=2.2*cwEz(cwCl(p,0,.15)), e=cwEz(cwCl(p,.15,.7)), e2=cwEz(cwCl(p,.75,1));
+  if(p>.12) S_(svg,"circle",{cx:L.C[0],cy:L.C[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.5 1.2",class:"cwghost"});
+  const whole=p<.74; S.P.forEach(q0=>{ if(whole&&q0.half==="move") return; const q=whole&&q0.half==="stay"?Object.assign({},q0,{u0:-S.h}):q0, c0=[L.C[0]+pull*Math.cos(q.phc),L.C[1]+pull*Math.sin(q.phc)], s0=[x0+q.pS[0],L.yT+q.pS[1]];
+    let o=[c0[0]+(s0[0]-c0[0])*e,c0[1]+(s0[1]-c0[1])*e]; const f=q.phc+(q.phs-q.phc)*e;
+    if(q.half==="move"&&e2>0){ const s1=[x0+q.cS[0],L.yT+q.cS[1]]; o=[s0[0]+(s1[0]-s0[0])*e2,s0[1]+(s1[1]-s0[1])*e2-7*Math.sin(Math.PI*e2)]; }
+    cwPiece(svg,o,f,q,R,q.half==="move"&&p>.72&&p<1); });
+  if(p===0){ S_(svg,"line",{x1:L.C[0],y1:L.C[1],x2:L.C[0]+R,y2:L.C[1],stroke:"var(--ink)","stroke-width":.7});
+    cwTx(svg,{x:L.C[0]+R/2,y:L.C[1]-1.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)"},[["r"]]); }
+  if(p>=1) cwEnds(svg,L,S,x0,fs,"r"); }
+function cwMeasure(svg,s){ const nar=cwNar(svg), S=cwStrip(64,nar?32:22), L=cwLay(nar,S.W); svg.setAttribute("viewBox",L.vb);
+  const fs=cwFs(svg), x0=L.x0, R=L.R, C=L.C, ph=s.ph, e=ph===1?cwEz(s.p):ph>1?1:0, top=e>0, ten=ph===2;
+  S_(svg,"circle",{cx:C[0],cy:C[1],r:R,fill:"var(--card)"});
+  S_(svg,"path",{d:`M${C[0]+R} ${C[1]}A${R} ${R} 0 0 1 ${C[0]-R} ${C[1]}`,fill:"none",stroke:"var(--amber)","stroke-width":1.6});
+  S_(svg,"path",{d:`M${C[0]-R} ${C[1]}A${R} ${R} 0 0 1 ${C[0]+R} ${C[1]}`,fill:"none",stroke:top?"var(--muted)":"var(--blue)","stroke-width":top?.6:1.6,"stroke-dasharray":top?"1.5 1.2":"none"});
+  S_(svg,"line",{x1:C[0],y1:C[1],x2:C[0]+R,y2:C[1],stroke:"var(--ink)","stroke-width":.7}); S_(svg,"circle",{cx:C[0],cy:C[1],r:.8,fill:"var(--ink)"});
+  cwTx(svg,{x:C[0]+R/2,y:C[1]-1.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwrl"},ten?[["r"]," = 10"]:[["r"]]);
+  if(ten) S_(svg,"text",L.nar?{x:C[0]+R+3,y:C[1]+fs*.35,"text-anchor":"start","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwedgel"}:{x:C[0],y:C[1]+R+6.2,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwedgel"},"edge = 62.8");
+  S.P.forEach(q=>cwPiece(svg,[x0+q.cS[0],L.yT+q.cS[1]],q.phs,q,R,false));
+  cwEnds(svg,L,S,x0,fs,ten?"10":"r");
+  if(e>0){ const k=(1-e)/R, lift=ph===1?8*Math.sin(Math.PI*s.p):0, M=[C[0]+(x0+Math.PI*R/2-C[0])*e,C[1]-R+(L.yT-.35-(C[1]-R))*e-lift], pts=[];
+    for(let i=0;i<=64;i++){ const u=-Math.PI*R/2+Math.PI*R*i/64; pts.push(k>1e-6?[M[0]+Math.sin(k*u)/k,M[1]+(1-Math.cos(k*u))/k]:[M[0]+u,M[1]]); }
+    S_(svg,"path",{d:"M"+pts.map(cwF).join("L"),fill:"none",stroke:"var(--blue)","stroke-width":1.8,"stroke-linecap":"round",class:"cwlift"}); }
+  if(ph>1||(ph===1&&s.p>=1)) cwTx(svg,{x:x0+S.W/2,y:L.yT-3.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--blue)",class:"cwhalf"},ph===2?["half the edge = 31.4"]:ph===3?["half the edge = π × ",["r"]]:["half the edge"]);
+  if(ph===3) cwTx(svg,{x:x0+S.W/2,y:L.yT+R/2+fs*.35,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwarea"},["Area = π × ",["r"]," × ",["r"]]); }
+const cwGo=(ph,dur)=>(s,an)=>{ s.ph=ph; s.p=0; const red=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches); an(red?1:dur,p=>{ s.p=p; }); };
+const cwSet=s=>{ if(s._k){ s._k=0; s.ph=clamp(s.ph,0,[5,1,3][s.step]); if(s.step===2) s.lv=3; s.hi=Math.max(s.hi,s.lv); s.p=1; return {}; } return {ph:0,p:1,lv:s.step===2?3:0,hi:s.step===2?3:0}; };
+const cwF7=`3${frac(1,7)}`;
+const cwT=[s=>[`Roll the wheel one full turn.`,`Its edge leaves a blue line. How many diameters long?`,s.p<1?`Lay the diameter along the line.`:`3 and a bit. The bit is about ${frac(1,7)}.`,s.p<1?`A smaller wheel.`:`Still about ${cwF7} diameters.`,s.p<1?`The smallest wheel.`:`Every wheel gives about 3.14. That number is π.`,`The diameter is two radii: ${V("d")} = ${V("r")} + ${V("r")}.`][s.ph],
+  s=>s.ph===0?`${8<<s.lv} slices. Top half blue, bottom half amber.`:s.p<1?`Tips up, tips down.`:s.lv===0?`Same pizza, same area. Slide for more slices.`:`Closer and closer to a rectangle.`,
+  s=>[`64 slices. Now measure the long side.`,s.p<1?`The blue half of the edge lifts off.`:`The long side is half the edge.`,`Say ${V("r")} = 10.`,`Area = long side × short side.`][s.ph]];
+function cwKey(s){ const C=nw(`Circumference = π × ${V("d")}`), C2=nw(`Circumference = 2 × π × ${V("r")}`);
+  if(s.step===0){ if(s.ph<2||(s.ph===2&&s.p<1)) return "";
+    if(s.ph<4||(s.ph===4&&s.p<1)) return FORMS([FB("blue","The edge",`about ${cwF7} diameters`,`${cwF7} = ${frac(22,7)} ≈ 3.14`,"","wide")],true);
+    if(s.ph===4) return FORMS([FB("blue","The edge",C,`π ≈ 3.14 or ${frac(22,7)}. Use the one the question gives.`,"","wide")],true);
+    return FORMS([FB("blue","The edge",C,"","","wide"),FB("amber",`${V("d")} = ${V("r")} + ${V("r")}`,C2,"","","wide")],true); }
+  if(s.step===2){ if(s.ph===2) return EG(null,[`${V("r")} = 10`,`Edge = 2 × 3.14 × 10 = 62.8`,`${kc("blue","Half the edge")} = 31.4`,`31.4 = 3.14 × 10`]);
+    if(s.ph===3) return EG(null,[`Long side = ${kc("blue","half the edge")} = π × ${V("r")}`,`Short side = ${V("r")}`])+FORMS([FB("ink","Area of a circle",nw(`Area = π × ${V("r")} × ${V("r")}`),"","","wide")],true); }
+  return ""; }
+const circleWhyAid=aid({
+  init:{ph:0,p:1,lv:0,hi:0}, jump:true, nxWait:true, vb:"0 0 140 110", label:"A wheel rolls out its edge, then a circle is cut into slices and laid out", link:["ph"],
+  fix:s=>{ s._k=cwKeep; s.ph=Math.max(0,Math.round(s.ph)||0); s.lv=clamp(Math.round(s.lv)||0,0,3); s.hi=s.lv; s.p=1; },
+  nxOk:s=>s.p>=1&&(s.step===0?s.ph>=5:s.step===1?s.ph>=1&&s.hi>=3:true),
+  sliders:[{k:"lv",label:"Slices",min:0,max:3,step:1,f:v=>String(8<<v),show:s=>s.step===1&&s.ph>=1,on:s=>{ s.p=1; s.hi=Math.max(s.hi,s.lv); }}],
+  buttons:[{label:"▶ Roll it",show:s=>s.step===0&&s.ph===0,fn:cwGo(1,2200)},
+    {label:"▶ Measure with the diameter",show:s=>s.step===0&&s.ph===1,fn:cwGo(2,2000)},
+    {label:"▶ Roll a smaller wheel",show:s=>s.step===0&&s.ph===2,fn:cwGo(3,3000)},
+    {label:"▶ Roll the smallest wheel",show:s=>s.step===0&&s.ph===3,fn:cwGo(4,3000)},
+    {label:"▶ Split the diameter",show:s=>s.step===0&&s.ph===4,fn:cwGo(5,700)},
+    {label:"▶ Rearrange",show:s=>s.step===1&&s.ph===0,fn:cwGo(1,2600)},
+    {label:"▶ Lift the blue edge",show:s=>s.step===2&&s.ph===0,fn:cwGo(1,1800)},
+    {label:"▶ Try r = 10",show:s=>s.step===2&&s.ph===1,fn:s=>{ s.ph=2; s.p=1; }},
+    {label:"▶ Now in letters",show:s=>s.step===2&&s.ph===2,fn:s=>{ s.ph=3; s.p=1; }}],
+  steps:[{name:"Roll it",set:cwSet,t:cwT[0]},{name:"Cut the pizza",set:cwSet,t:cwT[1]},{name:"Measure it",set:cwSet,t:cwT[2]}],
+  draw(svg,s){ (s.step===0?cwRoll:s.step===1?cwPizza:cwMeasure)(svg,s); },
+  key:cwKey });
+const circleWhy={steps:circleWhyAid.steps, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("cwplay");
+  const q=new URLSearchParams(prm?prm.toString():""); cwKeep=q.has("ph")||q.has("slices")?1:0; q.delete("lv");
+  if(q.has("slices")){ const i=[8,16,32,64].indexOf(parseInt(q.get("slices"),10)); q.set("lv",String(Math.max(0,i))); q.delete("slices"); }
+  circleWhyAid.mount(stage,panel,key,q); cwKeep=0;
+  if(cur&&cur.state){ const f=cur.state; cur.state=()=>{ const o=f(), r={step:o.step||0}; if(o.ph) r.ph=o.ph; if(r.step===1&&o.ph>=1) r.slices=8<<(o.lv||0); return r; }; } } };
+PLAYS.circleWhy=circleWhy;
+const TAG=[-2,2,9], TAK=["blue","amber","green"], TAR=[[-4,10],[0,6],[-4,10],[0,6],[-4,10]];
+let taKeep=0, taV=null;
+const taVw=w=>w?{g0:-5,g1:11,U:8,X0:6,YB:43.6,vb:"0 0 140 61",yt:5}:{g0:-1,g1:7,U:14,X0:14,YB:72,vb:"0 0 140 97",yt:5};
+const taEz=t=>t<=0?0:t>=1?1:t*t*(3-2*t), taH=frac(1,2);
+const taP=(v,x,y)=>[+(v.X0+(x-v.g0)*v.U).toFixed(3),+(v.YB-y*v.U).toFixed(3)];
+const taPts=(v,Q)=>Q.map(q=>taP(v,q[0],q[1]).join(",")).join(" ");
+const taRot=(Q,M,t)=>Q.map(([x,y])=>{ const c=Math.cos(t), sn=Math.sin(t), dx=x-M[0], dy=y-M[1]; return [M[0]+dx*c-dy*sn,M[1]+dx*sn+dy*c]; });
+const taQ=Q=>Q.map(q=>q.map(n=>+n.toFixed(4)).join(",")).join(" ");
+const taRun=(an,dur,f)=>an(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches?1:dur,f);
+function taFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,14/u); }
+function taTx(svg,x,y,t,fs,a){ return S_(svg,"text",Object.assign({x,y,"text-anchor":"middle","font-size":+fs.toFixed(2),"font-weight":700,fill:"var(--ink)",stroke:"var(--card)","stroke-width":+(fs*.3).toFixed(2),"stroke-linejoin":"round","paint-order":"stroke"},a||{}),t); }
+function taGrid(svg,v){ let d=""; const yt=taP(v,0,v.yt)[1];
+  for(let i=v.g0;i<=v.g1;i++){ const x=taP(v,i,0)[0]; d+=`M${x} ${v.YB}V${yt}`; }
+  for(let j=0;j<=v.yt;j++){ const y=taP(v,0,j)[1]; d+=`M${taP(v,v.g0,0)[0]} ${y}H${taP(v,v.g1,0)[0]}`; }
+  S_(svg,"path",{d,fill:"none",stroke:"var(--grid2)","stroke-width":.35,class:"tagrid"}); }
+function taPar(svg,v){ [0,4].forEach(y=>{ const a=taP(v,v.g0,y), b=taP(v,v.g1,y), m=taP(v,v.g0+.45,y), k=1.3;
+  S_(svg,"line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"var(--muted)","stroke-width":y?.7:.6,"stroke-dasharray":y?"1.6 1.2":"none",class:y?"tatopl":"taline"});
+  S_(svg,"path",{d:`M${m[0]-k} ${m[1]-k}L${m[0]} ${m[1]}L${m[0]-k} ${m[1]+k}`,fill:"none",stroke:"var(--muted)","stroke-width":.7,class:"taarr"}); }); }
+function taBase(svg,v,b0,b1,col){ const a=taP(v,b0,0), b=taP(v,b1,0); S_(svg,"line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:col||"var(--ink)","stroke-width":1.3,"stroke-linecap":"round",class:"tabase"}); }
+function taTri(svg,v,Q,col,a){ return S_(svg,"polygon",Object.assign({points:taPts(v,Q),fill:`var(--${col}-fill)`,stroke:`var(--${col})`,"stroke-width":.9,"stroke-linejoin":"round",class:"tatri","data-c":col,"data-q":taQ(Q)},a||{})); }
+function taHt(svg,v,x,o){ o=o||{}; const T=taP(v,x,4), F=taP(v,x,0), c=o.col||"var(--ink)", b0=o.b0??0, b1=o.b1??6, g=svgEl("g",{class:"taht","data-x":x,opacity:o.op??1}); svg.append(g);
+  const E=(t,a)=>{ const e=svgEl(t,a); g.append(e); return e; };
+  if(x<b0-1e-9||x>b1+1e-9){ const e=taP(v,x<b0?b0:b1,0); E("line",{x1:e[0],y1:e[1],x2:F[0],y2:F[1],stroke:"var(--ink)","stroke-width":.7,"stroke-dasharray":"1.4 1",class:"taext"}); }
+  E("line",{x1:T[0],y1:T[1],x2:F[0],y2:F[1],stroke:c,"stroke-width":.85,"stroke-dasharray":".9 1.1","stroke-linecap":"round",class:"tadrop"});
+  const d=x<(b0+b1)/2?1:-1, q=Math.min(2.4,v.U*.3); E("path",{d:`M${F[0]+d*q} ${F[1]}V${F[1]-q}H${F[0]}`,fill:"none",stroke:c,"stroke-width":.5,class:"taright"}); }
+function taHtLab(svg,v,x,fs){ let t="height 4"; const X=taP(v,x,0)[0], sd=x<3?-1:1, room=sd<0?X-1:140-X-1;
+  if(t.length*.52*fs+1.6>room) t="4";
+  return taTx(svg,X+sd*1.4,taP(v,0,2)[1]+fs*.35,t,fs,{"text-anchor":sd<0?"end":"start",class:"tahtl"}); }
+function taRow(svg,v,fs,r,x0,x1,t,col){ const a=taP(v,x0,0)[0], b=taP(v,x1,0)[0], y=v.YB+fs*(r?2.55:1.2);
+  if(r){ const ly=v.YB+fs*1.75; S_(svg,"path",{d:`M${a} ${ly-1.2}V${ly+1.2}M${a} ${ly}H${b}M${b} ${ly-1.2}V${ly+1.2}`,fill:"none",stroke:col||"var(--ink)","stroke-width":.6,class:"tadim"}); }
+  return taTx(svg,(a+b)/2,y,t,fs,{fill:col||"var(--ink)",class:"tawid","data-r":r}); }
+function taGuess(svg,s){ const v=taV=taVw(1); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg);
+  taGrid(svg,v); taPar(svg,v);
+  if(s.ph===0){ TAG.forEach((x,i)=>taTri(svg,v,[[0,0],[6,0],[x,4]],TAK[i],{"fill-opacity":.5,"data-drag":"g"+i,class:"tatri tapick"}));
+    TAG.forEach((x,i)=>taHt(svg,v,x,{col:`var(--${TAK[i]})`}));
+    TAG.forEach((x,i)=>{ const t=taP(v,x,4); S_(svg,"circle",{cx:t[0],cy:t[1],r:1.7,fill:`var(--${TAK[i]})`,"pointer-events":"none",class:"tatop"}); });
+    taBase(svg,v,0,6); taRow(svg,v,fs,0,0,6,"base 6"); taHtLab(svg,v,TAG[0],fs); return; }
+  const m=s.g<3?s.g:1;
+  TAG.forEach((x,i)=>{ if(i!==m) taTri(svg,v,[[0,0],[6,0],[x,4]],TAK[i],{fill:"none","stroke-dasharray":"1.5 1.2",opacity:.5,class:"tatri taghost"}); });
+  taTri(svg,v,[[0,0],[6,0],[s.x,4]],TAK[m],{class:"tatri tamain"});
+  taHt(svg,v,s.x); taBase(svg,v,0,6);
+  if(s.ck===s.x||s.chk.length>=3){ const c=taP(v,(6+s.x)/3,4/3); taTx(svg,c[0],c[1]+fs*.5,"12",fs*1.35,{fill:`var(--${TAK[m]})`,class:"taarea"}); }
+  TAG.forEach((x,i)=>{ if(i===m||Math.abs(x-s.x)<2||!s.chk.includes(x)) return; const t=taP(v,x,4); taTx(svg,t[0],t[1]-2.4,"12",fs,{fill:`var(--${TAK[i]})`,class:"tagh12"}); });
+  taRow(svg,v,fs,0,0,6,"base 6"); taHtLab(svg,v,s.x,fs);
+  const t=taP(v,s.x,4); handle(svg,t[0],t[1],"t",`var(--${TAK[m]})`); }
+function taBoxes(a){ const B=[]; if(a>1e-9) B.push({c:"blue",x0:0,x1:a,ins:[[0,0],[a,0],[a,4]],out:[[0,0],[a,4],[0,4]],M:[a/2,2]});
+  if(a<6-1e-9) B.push({c:"amber",x0:a,x1:6,ins:[[a,0],[6,0],[a,4]],out:[[a,4],[6,4],[6,0]],M:[(a+6)/2,2]});
+  if(B.length===1) B[0].c="blue"; return B; }
+function taCut(svg,s){ const v=taV=taVw(0); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg); taGrid(svg,v);
+  const a=s.x, mv=s.ph===1&&s.p<1, tn=s.ph===2, e=tn?taEz(s.p):0, B=taBoxes(a);
+  B.forEach((b,k)=>{ const p0=taP(v,b.x0,4), p1=taP(v,b.x1,0), col=`var(--${b.c})`, fl=`var(--${b.c}-fill)`;
+    S_(svg,"rect",{x:p0[0],y:p0[1],width:+(p1[0]-p0[0]).toFixed(3),height:+(p1[1]-p0[1]).toFixed(3),fill:"none",stroke:col,"stroke-width":.6,"stroke-dasharray":"1.6 1.1",class:"tabox","data-k":k});
+    S_(svg,"polygon",{points:taPts(v,b.ins),fill:fl,class:"tains","data-k":k,"data-q":taQ(b.ins)});
+    if(!tn) S_(svg,"polygon",{points:taPts(v,b.out),fill:fl,"fill-opacity":.45,stroke:col,"stroke-width":.5,"stroke-dasharray":"1.2 1",class:"taout","data-k":k,"data-q":taQ(b.out)});
+    else { const R=taRot(b.out,b.M,Math.PI*e); S_(svg,"polygon",{points:taPts(v,R),fill:fl,"fill-opacity":e>=1?.0:.85,stroke:col,"stroke-width":e>=1?1.3:.8,"stroke-linejoin":"round",class:"taturn","data-k":k,"data-q":taQ(R),"data-m":b.M.map(n=>+n.toFixed(4)).join(","),"data-o":taQ(b.out)});
+      if(e>=1) S_(svg,"polygon",{points:taPts(v,b.ins),fill:col,"fill-opacity":.22,class:"tadbl","data-k":k}); } });
+  S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[a,4]]),fill:"none",stroke:"var(--ink)","stroke-width":1,"stroke-linejoin":"round",class:"tatri tamain","data-q":taQ([[0,0],[6,0],[a,4]])});
+  taBase(svg,v,0,6); taHt(svg,v,a);
+  const r4=taP(v,6,2); taTx(svg,r4[0]+1.6,r4[1]+fs*.35,"4",fs,{"text-anchor":"start",class:"taside"});
+  if(!mv) B.forEach(b=>{ const w=Math.round(b.x1-b.x0); taRow(svg,v,fs,0,b.x0,b.x1,String(w),`var(--${b.c})`); });
+  if(s.ph>=1&&!mv&&!(tn&&s.p<1)){ const t=taP(v,a,4); handle(svg,t[0],t[1],"t"); } }
+function taStrips(N,x){ const h=4/N, S=[]; for(let i=0;i<N;i++){ const ym=(i+.5)*h; S.push({y0:i*h,h,l:x*ym/4,L:6*(1-ym/4)}); } return S; }
+function taHalf(x){ if(x>6) return {big:[[0,0],[x,0],[x,4]],bb:[0,x],sm:[[6,0],[x,0],[x,4]],sb:[6,x],B:x,m:x-6,op:"−"};
+  if(x<0) return {big:[[6,0],[x,0],[x,4]],bb:[x,6],sm:[[0,0],[x,0],[x,4]],sb:[x,0],B:6-x,m:-x,op:"−"};
+  return {big:[[0,0],[x,0],[x,4]],bb:[0,x],sm:[[x,0],[6,0],[x,4]],sb:[x,6],B:x,m:6-x,op:"+"}; }
+function taSlide(svg,s){ const v=taV=taVw(1); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg), x=s.x; taGrid(svg,v); taPar(svg,v);
+  if(s.ph===0){ taStrips(8<<s.lv,x).forEach((r,i)=>{ const p=taP(v,r.l,r.y0+r.h); S_(svg,"rect",{x:p[0],y:p[1],width:+(r.L*v.U).toFixed(4),height:+(r.h*v.U).toFixed(4),fill:i%2?"var(--blue-fill)":"var(--blue)","fill-opacity":i%2?1:.34,class:"tastrip","data-l":+r.L.toFixed(6),"data-i":i}); });
+    S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[x,4]]),fill:"none",stroke:"var(--ink)","stroke-width":.45,"stroke-linejoin":"round",class:"taexact tamain","data-q":taQ([[0,0],[6,0],[x,4]])});
+    taBase(svg,v,0,6); taHt(svg,v,x); taRow(svg,v,fs,0,0,6,"base 6"); }
+  else { const H=taHalf(x), box=(b,c)=>{ const p0=taP(v,b[0],4), p1=taP(v,b[1],0); if(b[1]-b[0]>1e-9) S_(svg,"rect",{x:p0[0],y:p0[1],width:+(p1[0]-p0[0]).toFixed(3),height:+(p1[1]-p0[1]).toFixed(3),fill:"none",stroke:`var(--${c})`,"stroke-width":.6,"stroke-dasharray":"1.6 1.1",class:"tahbox","data-c":c}); };
+    taTri(svg,v,[[0,0],[6,0],[x,4]],"blue",{class:"tatri tamain"});
+    box(H.bb,"amber"); box(H.sb,"green");
+    if(H.op==="−"){ taTri(svg,v,H.sm,"green",{"fill-opacity":.85,class:"tatri tasmall"}); S_(svg,"polygon",{points:taPts(v,H.big),fill:"none",stroke:"var(--amber)","stroke-width":1.2,"stroke-linejoin":"round",class:"tabig","data-q":taQ(H.big)}); }
+    else if(H.B>0&&H.m>0){ taTri(svg,v,H.big,"amber",{class:"tatri tabig"}); taTri(svg,v,H.sm,"green",{class:"tatri tasmall"}); }
+    taBase(svg,v,0,6); taHt(svg,v,x);
+    if(H.op==="−"){ taRow(svg,v,fs,0,0,6,"6"); taRow(svg,v,fs,0,H.sb[0],H.sb[1],String(H.m),"var(--green)"); taRow(svg,v,fs,1,H.bb[0],H.bb[1],String(H.B),"var(--amber)"); }
+    else if(H.B>0&&H.m>0){ taRow(svg,v,fs,0,0,x,String(x),"var(--amber)"); taRow(svg,v,fs,0,x,6,String(6-x),"var(--green)"); taRow(svg,v,fs,1,0,6,"6"); }
+    else taRow(svg,v,fs,0,0,6,"base 6"); }
+  taHtLab(svg,v,x,fs); const t=taP(v,x,4); handle(svg,t[0],t[1],"t"); }
+function taRect(svg,s){ const v=taV=taVw(0); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg), x=s.x, b=s.ph?[1,5]:[0,6]; taGrid(svg,v);
+  S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[6,4],[0,4]]),fill:"var(--amber-fill)","fill-opacity":.6,stroke:"var(--ink)","stroke-width":1,class:"tarect"});
+  taTri(svg,v,[[b[0],0],[b[1],0],[x,4]],"blue",{class:"tatri tamain"});
+  taBase(svg,v,b[0],b[1],"var(--blue)"); taHt(svg,v,x,{b0:b[0],b1:b[1]});
+  const r4=taP(v,6,2); taTx(svg,r4[0]+1.6,r4[1]+fs*.35,"4",fs,{"text-anchor":"start",class:"taside"});
+  if(s.ph){ taRow(svg,v,fs,0,1,5,"base 4","var(--blue)"); taRow(svg,v,fs,1,0,6,"6"); } else taRow(svg,v,fs,0,0,6,"base 6");
+  const t=taP(v,x,4); handle(svg,t[0],t[1],"t"); }
+function taX(P,Q){ const L=Math.min(P,Q), R=Math.max(P,Q), t=6/(6+R-L); return [R*t,4*t]; }
+function taWings(P,Q){ const X=taX(P,Q), w=T=>T===Math.min(P,Q)?[[0,0],[T,4],X]:[[6,0],[T,4],X]; return {X,sh:[[0,0],[6,0],X],bw:w(P),aw:w(Q)}; }
+function taTwo(svg,s){ const v=taV=taVw(1); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg), P=s.x, Q=s.q, W=taWings(P,Q), e=s.ph?taEz(s.p):0; taGrid(svg,v); taPar(svg,v);
+  if(!s.ph){ taTri(svg,v,[[0,0],[6,0],[P,4]],"blue",{"fill-opacity":.6}); taTri(svg,v,[[0,0],[6,0],[Q,4]],"amber",{"fill-opacity":.6}); }
+  else { taTri(svg,v,W.bw,"blue",{class:"tatri tawing"}); taTri(svg,v,W.aw,"amber",{class:"tatri tawing"});
+    S_(svg,"polygon",{points:taPts(v,W.sh),fill:"var(--muted)","fill-opacity":+(.3*(1-e)).toFixed(3),stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.4 1",class:"tashared","data-q":taQ(W.sh)});
+    if(e>=1){ const c=taP(v,(6+W.X[0])/3,W.X[1]/3); taTx(svg,c[0],c[1]+fs*.35,"shared",fs*.9,{fill:"var(--muted)",class:"tashl"}); }
+    [[P,"blue"],[Q,"amber"]].forEach(([T,c])=>S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[T,4]]),fill:"none",stroke:`var(--${c})`,"stroke-width":.9,"stroke-linejoin":"round"})); }
+  taHt(svg,v,P,{col:"var(--blue)"}); taHt(svg,v,Q,{col:"var(--amber)"}); taBase(svg,v,0,6);
+  taRow(svg,v,fs,0,0,6,"base 6"); taHtLab(svg,v,Math.abs(P-3)>=Math.abs(Q-3)?P:Q,fs);
+  [[P,"t","blue"],[Q,"q","amber"]].forEach(([T,id,c])=>{ const t=taP(v,T,4); handle(svg,t[0],t[1],id,`var(--${c})`); }); }
+function taPick(s,i){ s.g=i; s.ph=1; s.x=TAG[i<3?i:1]; s.ck=-99; s.chk=[]; s.dr=0; }
+const taSet=s=>{ const i=s.step;
+  if(s._k){ s._k=0; s.p=1; s.chk=[]; s.ck=-99; s.la=""; const r=TAR[i], R=n=>clamp(Math.round(+n)||0,r[0],r[1]);
+    s.x=R(s.x); s.q=R(s.q); s.lv=clamp(Math.round(s.lv)||0,0,3); s.ph=Math.max(0,Math.round(s.ph)||0);
+    if(i===0){ s.g=clamp(Math.round(s.g),-1,3); if(isNaN(s.g)) s.g=-1; s.ph=s.g>=0?1:0; }
+    else s.ph=Math.min(s.ph,[1,2,1,1,1][i]);
+    if(i===1){ if(s.ph===0) s.x=0; s.tx=s.x; }
+    if(i===4&&s.q===s.x) s.q=s.x<=7?s.x+3:s.x-3;
+    s.dr=i===3&&s.ph?1:0; return {}; }
+  const o={ph:0,p:1,dr:0,la:"",ck:-99,chk:[]};
+  if(i===0) Object.assign(o,{g:-1,x:2}); if(i===1) o.x=0; if(i===2) Object.assign(o,{x:clamp(Math.round(s.tx??2),0,6),lv:2}); if(i===3) o.x=3; if(i===4) Object.assign(o,{x:-1,q:5});
+  return o; };
+const taT=[s=>{ if(s.ph===0) return "Which triangle is biggest? Tap one.";
+    if(s.chk.length>=3) return s.g===3?"You were right. Always 12!":"Always 12! Same base, same height, same area.";
+    if(s.ck===s.x) return "12. Now drag the top, then check again.";
+    if(s.chk.length) return "Check this one too.";
+    return s.g===3?"You said all the same. Let's check.":`You picked ${TAK[s.g]}. Let's check.`; },
+  s=>s.ph===0?"A right-angled triangle is half a rectangle.":s.ph===1?(s.p<1?"Now the top moves.":"Cut along the height: two rectangles."):s.p<1?"Each outside half turns round.":"They match! The triangle is half the rectangles.",
+  s=>{ if(s.ph===1) return s.x<0||s.x>6?"Big half-box take away small half-box.":"Top above the base: add the two half-boxes.";
+    if(!s.dr) return `A stack of ${8<<s.lv} thin strips. Drag the top.`;
+    if(s.la==="s") return "Thinner strips: closer and closer to the triangle.";
+    return s.x<0||s.x>6?"No strip got longer or shorter. Same area.":"Each strip keeps its length. Go past the end."; },
+  s=>s.ph?"Shorter base: not half now.":s.dr?"Always half the rectangle.":"Drag the top along the top side.",
+  s=>s.ph?(s.p<1?"Take away the shared part.":"Take away the shared part. The wings are equal."):"Two triangles, same base, same height."];
+function taKey(s){ const H=taH, E=(...l)=>EG(null,l);
+  if(s.step===0){ if(s.ph===0||!(s.ck===s.x||s.chk.length>=3)) return ""; return FORMS([FB(TAK[s.g<3?s.g:1],"Area",nw(`${H} × 6 × 4 = 12`),"base 6, height 4","","wide")],true); }
+  if(s.step===1){ if(s.ph===0) return E("Rectangle: 6 × 4 = 24","Triangle: half of 24 = 12"); if(s.ph===1&&s.p<1) return "";
+    const a=Math.round(s.x), b=6-a, L=[]; if(a) L.push(kc("blue",`${a} × 4 = ${4*a}`)); if(b) L.push(kc(a?"amber":"blue",`${b} × 4 = ${4*b}`));
+    if(s.ph===2&&s.p>=1){ if(a&&b) L.push(`${4*a} + ${4*b} = 24`); L.push("Half of 24 = 12"); } return E(...L); }
+  if(s.step===2){ if(s.ph===0) return ""; const x=s.x, T=taHalf(x);
+    if(T.op==="+"&&!(T.B&&T.m)) return E(nw(`${H} × 6 × 4`)+" = 12");
+    return E(`${kc("amber",nw(`${H} × ${T.B} × 4`))} ${T.op} ${kc("green",nw(`${H} × ${T.m} × 4`))}`,`= ${kc("amber",2*T.B)} ${T.op} ${kc("green",2*T.m)}`,"= 12"); }
+  if(s.step===3) return s.ph?E("Rectangle: 6 × 4 = 24",kc("blue",`Triangle: ${nw(`${H} × 4 × 4`)} = 8`),"8 is not half of 24."):E("Rectangle: 6 × 4 = 24",kc("blue",`Triangle: ${nw(`${H} × 6 × 4`)} = 12`),"12 is half of 24.");
+  const A=[kc("blue",`Blue: ${nw(`${H} × 6 × 4`)} = 12`),kc("amber",`Amber: ${nw(`${H} × 6 × 4`)} = 12`)];
+  if(s.ph&&s.p>=1) A.push(kc("blue","Blue wing = 12 − shared part"),kc("amber","Amber wing = 12 − shared part"),"The two wings are equal.");
+  return E(...A); }
+const taAid=aid({
+  init:{ph:0,p:1,x:2,q:4,g:-1,ck:-99,chk:[],lv:2,dr:0,la:"",tx:2}, jump:true, nxWait:true, vb:"0 0 140 61", label:"Triangles on one base, with their tops on a line parallel to it", link:["x","q","ph"],
+  fix:s=>{ s._k=taKeep; s.p=1; },
+  nxOk:s=>s.p>=1&&[s.chk.length>=3,s.ph>=2,s.ph>=1,s.ph>=1,true][s.step],
+  pills:[{k:"g",opts:[[0,"Blue"],[1,"Amber"],[2,"Green"],[3,"All the same"]],show:s=>s.step===0&&s.ph===0,on:s=>taPick(s,s.g)}],
+  sliders:[{k:"lv",label:"Strips",min:0,max:3,step:1,f:v=>String(8<<v),show:s=>s.step===2&&s.ph===0,on:s=>{ s.la="s"; s.dr=1; }}],
+  buttons:[{label:"▶ Check the area",show:s=>s.step===0&&s.ph===1&&s.ck!==s.x&&s.chk.length<3,fn:s=>{ s.ck=s.x; if(!s.chk.includes(s.x)) s.chk.push(s.x); }},
+    {label:"▶ Move the top",show:s=>s.step===1&&s.ph===0,fn:(s,an)=>{ s.ph=1; s.p=0; taRun(an,1300,p=>{ s.p=p; s.x=p>=1?2:2*taEz(p); if(p>=1) s.tx=2; }); }},
+    {label:"▶ Turn the outside halves",show:s=>s.step===1&&s.ph===1&&s.p>=1,fn:(s,an)=>{ s.ph=2; s.p=0; taRun(an,2000,p=>{ s.p=p; }); }},
+    {label:"▶ Check with numbers",show:s=>s.step===2&&s.ph===0&&(s.x<0||s.x>6),fn:s=>{ s.ph=1; }},
+    {label:"▶ Shorter base",show:s=>s.step===3&&s.ph===0&&!!s.dr,fn:s=>{ s.ph=1; }},
+    {label:"▶ Take away the shared part",show:s=>s.step===4&&s.ph===0,fn:(s,an)=>{ s.ph=1; s.p=0; taRun(an,900,p=>{ s.p=p; }); }}],
+  steps:[{name:"Guess first",set:taSet,t:taT[0]},{name:"Cut and turn",set:taSet,t:taT[1]},{name:"Slide the slices",set:taSet,t:taT[2]},{name:"In a rectangle",set:taSet,t:taT[3]},{name:"Parallel lines",set:taSet,t:taT[4]}],
+  drag(id,pt,s,start){ const v=taV; if(!v) return;
+    if(/^g\d$/.test(id)){ if(start&&s.step===0&&s.ph===0) taPick(s,+id[1]); return; }
+    if(s.step===1&&(s.ph===0||s.p<1)) return;
+    const r=TAR[s.step], n=clamp(Math.round((pt.x-v.X0)/v.U+v.g0),r[0],r[1]);
+    if(id==="q"){ if(n!==s.x) s.q=n; } else if(!(s.step===4&&n===s.q)) s.x=n;
+    if(s.step===1) s.tx=s.x; s.dr=1; s.la="d"; },
+  draw(svg,s){ [taGuess,taCut,taSlide,taRect,taTwo][s.step](svg,s); svg.classList.toggle("nudge",!s.dr&&(s.step!==0||s.chk.length>0)&&!!svg.querySelector("circle[data-drag]")); },
+  key:taKey });
+const triangleSameArea={steps:taAid.steps, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("taplay");
+  const q=new URLSearchParams(prm?prm.toString():""); ["x","q","g","lv"].forEach(k=>q.delete(k));
+  taKeep=["top","top2","ph","guess","strips"].some(k=>q.has(k))?1:0;
+  if(q.has("strips")){ const i=[8,16,32,64].indexOf(parseInt(q.get("strips"),10)); q.set("lv",String(i<0?2:i)); q.delete("strips"); }
+  [["top","x"],["top2","q"],["guess","g"]].forEach(([a,b])=>{ if(q.has(a)){ q.set(b,q.get(a)); q.delete(a); } });
+  taAid.mount(stage,panel,key,q); taKeep=0;
+  if(cur&&cur.state){ const f=cur.state; cur.state=()=>{ const o=f(), i=o.step||0, r={step:i};
+    if(i===0){ if(o.g>=0){ r.guess=o.g; r.top=o.x; } }
+    else if(i===1){ if(o.ph){ r.ph=o.ph; r.top=Math.round(o.x); } }
+    else { r.top=o.x; if(i===4) r.top2=o.q; if(o.ph) r.ph=o.ph; if(i===2&&!o.ph) r.strips=8<<(o.lv||0); }
+    return r; }; } } };
+PLAYS.triangleSameArea=triangleSameArea;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -10897,6 +11187,8 @@ function thumbFor(t){
   if(!t.play) return `<svg class="thumb" viewBox="0 0 120 64"><text x="10" y="50" font-size="52" font-style="italic" fill="var(--blue)">∫</text><text x="44" y="40" font-size="16" fill="var(--muted)">cheatsheet</text></svg>`;
   const PV=PLAYS[t.play]; if(PV&&PV.poster) return `<svg class="thumb" viewBox="0 0 120 64"><svg width="120" height="64" overflow="hidden"><image href="${PV.poster}" x="0" y="-41" width="187.3" height="105.4" preserveAspectRatio="none"/></svg><circle cx="60" cy="32" r="13" fill="var(--accent)" opacity=".92"/><path d="M55.5 25 L68 32 L55.5 39 Z" fill="var(--accent-ink)"/></svg>`;
   const T={
+   triangleSameArea:`<line x1="4" y1="24" x2="116" y2="24" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 2.4"/><line x1="4" y1="56" x2="116" y2="56" stroke="var(--muted)" stroke-width="1"/><polygon points="30,56 78,56 14,24" fill="var(--blue-fill)" fill-opacity=".75" stroke="var(--blue)" stroke-width="1.6" stroke-linejoin="round"/><polygon points="30,56 78,56 102,24" fill="var(--amber-fill)" fill-opacity=".75" stroke="var(--amber)" stroke-width="1.6" stroke-linejoin="round"/><line x1="14" y1="24" x2="14" y2="56" stroke="var(--blue)" stroke-width="1.3" stroke-dasharray="1.6 2"/><line x1="102" y1="24" x2="102" y2="56" stroke="var(--amber)" stroke-width="1.3" stroke-dasharray="1.6 2"/><line x1="30" y1="56" x2="78" y2="56" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><circle cx="14" cy="24" r="2.6" fill="var(--blue)"/><circle cx="102" cy="24" r="2.6" fill="var(--amber)"/>`,
+   circleWhy:`<path d="M23.0 32.0L43.0 32.0A20 20 0 0 1 37.1 46.1Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L37.1 46.1A20 20 0 0 1 23.0 52.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L23.0 52.0A20 20 0 0 1 8.9 46.1Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L8.9 46.1A20 20 0 0 1 3.0 32.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L3.0 32.0A20 20 0 0 1 8.9 17.9Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L8.9 17.9A20 20 0 0 1 23.0 12.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L23.0 12.0A20 20 0 0 1 37.1 17.9Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L37.1 17.9A20 20 0 0 1 43.0 32.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M57.7 40.5L50.0 22.0A20 20 0 0 1 65.3 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M73.0 40.5L65.3 22.0A20 20 0 0 1 80.6 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M88.3 40.5L80.6 22.0A20 20 0 0 1 95.9 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M103.6 40.5L95.9 22.0A20 20 0 0 1 111.2 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M95.9 22.0L103.6 40.5A20 20 0 0 1 88.3 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M80.6 22.0L88.3 40.5A20 20 0 0 1 73.0 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M65.3 22.0L73.0 40.5A20 20 0 0 1 57.7 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M111.2 22.0L111.2 42.0A20 20 0 0 1 103.6 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M50.0 22.0L57.7 40.5A20 20 0 0 1 50.0 42.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/>`,
    restModel:`<rect x="6" y="6" width="108" height="20" fill="var(--card)"/><rect x="6" y="6" width="27" height="20" fill="var(--blue-fill)"/><path d="M33 6v20M60 6v20M87 6v20" stroke="var(--ink)" stroke-width="1.2"/><rect x="6" y="6" width="108" height="20" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M33 26v12M114 26v12" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 2"/><rect x="33" y="38" width="81" height="20" fill="var(--card)"/><rect x="33" y="38" width="18" height="20" fill="var(--amber-fill)"/><path d="M42 38v20M51 38v20M60 38v20M69 38v20M78 38v20M87 38v20M96 38v20M105 38v20" stroke="var(--ink)" stroke-width="1"/><rect x="33" y="38" width="81" height="20" fill="none" stroke="var(--ink)" stroke-width="1.6"/>`,
    bearAid:`<line x1="30" y1="60" x2="30" y2="10" stroke="var(--ink)" stroke-width="2"/><path d="M30 4 L25.5 13 L34.5 13 Z" fill="var(--ink)"/><path d="M30 42 A18 18 0 0 1 41.6 46.2" fill="none" stroke="var(--amber)" stroke-width="3"/><line x1="30" y1="60" x2="62" y2="22" stroke="var(--blue)" stroke-width="2.5"/><circle cx="62" cy="22" r="4" fill="var(--blue)"/><text x="70" y="44" font-size="17" font-weight="700" fill="var(--amber)">040°</text>`,
 balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" y1="57" x2="60" y2="49" stroke="var(--muted)" stroke-width="2.5"/><line x1="28" y1="49" x2="92" y2="49" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/><line x1="28" y1="49" x2="28" y2="43" stroke="var(--muted)" stroke-width="2.5"/><line x1="92" y1="49" x2="92" y2="43" stroke="var(--muted)" stroke-width="2.5"/><rect x="4" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><rect x="68" y="41" width="48" height="3" rx="1.5" fill="var(--muted)"/><path d="M9 41 H25 Q28 31 20.5 28 L23 23 H11 L13.5 28 Q6 31 9 41Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.5"/><rect x="29" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="40" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="30" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="76" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="87" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><rect x="98" y="19" width="10" height="10" rx="1.5" fill="var(--amber-fill)" stroke="var(--amber)" stroke-width="1.5"/><path d="M40 26 C44 2 96 0 102 12" fill="none" stroke="var(--amber)" stroke-width="2.2"/><polygon points="102,17.5 98.4,10.8 105.2,11.2" fill="var(--amber)"/>`,
