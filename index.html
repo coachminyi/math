@@ -1474,6 +1474,19 @@ html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%
 html[data-ip] svg.ipwig circle[data-drag]{stroke:var(--ink);animation:ipwig .6s ease-out 2}
 @keyframes ipwigb{0%,100%{transform:none}35%{transform:scale(1.07)}70%{transform:scale(.98)}}
 html[data-ip] .dock .pill.act.ipwigb{animation:ipwigb .5s ease-out 2 !important}
+.must .formbox.mk{display:flex;flex-direction:column;padding:9px 12px 10px}
+.must .formbox.mk .eq{font-size:21px;text-align:center;padding:10px 0 6px;white-space:normal;overflow:visible;line-height:1.4}
+.must .formbox.mk.mkw .eq{font-size:15.5px;line-height:1.5}
+.must .formbox.mk .rd{font-size:14px;font-weight:400;text-align:center;line-height:1.35}
+.must .formbox.mk .gen{order:9;margin-top:auto;padding-top:8px;font-size:13px;color:var(--muted);text-align:center}
+.mkq{display:inline-flex;flex-direction:column;align-items:center}
+.mkq>span:first-child{border-bottom:2px solid var(--ink);padding:0 6px 3px}
+.mkq>span:last-child{padding-top:2px}
+html[data-present] .must .formbox.mk .eq{font-size:32px}
+html[data-present] .must .formbox.mk.mkw .eq{font-size:25px}
+html[data-present] .must .formbox.mk .rd{font-size:20px}
+html[data-present] .must .formbox.mk .gen{font-size:18px}
+@media (max-width:599px){ .must .forms:has(.mk){grid-template-columns:1fr} .must .formbox.mk .eq{font-size:20px;padding:6px 0 4px} .must .formbox.mk.mkw .eq{font-size:16px} }
 </style>
 </head>
 <body>
@@ -7788,7 +7801,7 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
   </div>
 </div>`,
 
-diffBasics:`${MUST([FB("blue","Power rule",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,`power down in front, then power − 1 · ${nw(`<span class="k-blue">${X1}³ → 3${X1}²</span>`)}`),FB("amber","Chain rule",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup>`)} × ${nw(frac("d"+V("u"),"d"+X1))}`,`outside to inside: peel and multiply · <span class="k-amber">${nw(`(2${X1} + 1)⁵`)} ${nw(`→ 5(2${X1} + 1)⁴ × 2`)}</span>`),FB("green","Product and quotient",nw(`(${V("uv")})′ = ${V("u")}′${V("v")} + ${V("v")}′${V("u")}`),`${V("u")}′ means ${frac("d"+V("u"),"d"+X1)} · product: ${nw("diff front × copy back")} ${nw("+ diff back × copy front")} · quotient: ${nw("diff top × copy bottom")} ${nw("− diff bottom × copy top")}, over bottom²`)])}
+diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup> → <span class="k-amber">3</span>${X1}²`),"power down in front, then power − 1",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"mk"),FB("amber","Chain rule",`${nw(`(<span class="k-blue">2${X1}</span> + 1)⁵`)} ${nw(`→ 5(2${X1} + 1)⁴ <span class="k-blue">× 2</span>`)}`,"outside to inside: peel and multiply",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup> × ${frac("d"+V("u"),"d"+X1)}`)}`,"mk"),FB("green","Product rule",`${nw("diff front × copy back")}<br>${nw("+ diff back × copy front")}`,"",`${frac("d"+V("u"),"d"+X1)}${V("v")} + ${frac("d"+V("v"),"d"+X1)}${V("u")}`,"mk mkw"),FB("green","Quotient rule",`<span class="mkq"><span>${nw("diff top × copy bottom")}<br>${nw("− diff bottom × copy top")}</span><span>bottom²</span></span>`,"",frac(`${frac("d"+V("u"),"d"+X1)}${V("v")} − ${frac("d"+V("v"),"d"+X1)}${V("u")}`,`${V("v")}²`),"mk mkw")])}
 <div class="sheet">
   <div class="panelc"><h4>Power rule</h4>
     <table>
@@ -8330,7 +8343,7 @@ circles:`${MUST([FB("amber","Angle at centre","= 2 × angle at circumference","s
   </div>
 </div>`,
 
-diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"+V("y"),"d"+V("x"))}`),`${nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`)} · normal: gradient ${nw(`−${frac("1",V("m"))}`)}`),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y"),FB("green","Max or min?",`<span style="display:inline-flex;align-items:center;gap:10px">${frac("d²"+V("y"),"d"+V("x")+"²")}<span style="display:inline-grid;gap:3px;text-align:left"><span>&lt; 0 max ∩</span><span>&gt; 0 min ∪</span><span style="font-size:.82em;white-space:nowrap">= 0: first derivative test</span></span></span>`)])}
+diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"+V("y"),"d"+V("x"))}`),`normal: gradient ${nw(`−${frac("1",V("m"))}`)}`,nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"mk"),FB("amber","Stationary point",`${frac("d"+V("y"),"d"+V("x"))} = 0`,"flat tangent · find x AND y","","mk"),FB("green","Max or min?",`<span style="display:inline-flex;align-items:center;gap:10px">${frac("d²"+V("y"),"d"+V("x")+"²")}<span style="display:inline-grid;gap:3px;text-align:left"><span>&lt; 0 max ∩</span><span>&gt; 0 min ∪</span></span></span>`,nw("= 0: first derivative test"),"","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Tangent and normal</h4>
     <a href="#tangent-gradient?cv=cubic&x=-1.5&nm=nor" class="piclink"><svg viewBox="0 -12 200 92" style="width:100%;max-width:260px;display:block;margin:0 auto">
