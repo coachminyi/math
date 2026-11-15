@@ -1252,6 +1252,33 @@ html[data-theme="dark"] .sgp.live{box-shadow:inset 0 0 0 1.5px var(--blue)}
 #app .play.taplay .pillrow[data-pk="g"] .pill[data-v="2"]{border-color:var(--green);color:var(--green)}
 #app .play.taplay .pillrow[data-pk="g"] .pill:not([data-v="3"])::before{content:"";display:inline-block;width:.75em;height:.75em;border-radius:4px;margin-right:.45em;background:currentColor;opacity:.4}
 #app .play.taplay .stage svg .tapick{cursor:pointer}
+.rs .rsgr{display:grid;grid-template-columns:repeat(7,auto) 1fr;align-items:center;justify-content:start;gap:10px 5px;font-size:20px;font-weight:600}
+.rs .rsgr .rmh,.rs .rsgr .rmco{font-size:20px}
+.rs .rsgr>:nth-child(8n+1){justify-self:end}
+.rs .rseq{color:var(--muted);font-weight:700;padding:0 3px}
+.rs .rssw{justify-self:start;min-height:44px;padding:0 12px;margin-left:6px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap}
+.rs .rsnp .rmdel{grid-column:span 4;min-height:46px}
+.rs .rschip{flex-direction:column;align-items:flex-start;gap:2px;padding:6px 14px}
+.rs .rmchip>span.rscl{font-size:16px;font-weight:700;color:var(--ink)}
+.rs .rmchip>span.rscf{font-size:15px;font-weight:400;color:var(--muted)}
+.rs .rsl{display:block}
+.rs .rmg{grid-template-columns:repeat(4,auto)}
+.rs .rsbn{border:2px solid var(--ink);border-radius:999px;padding:0 7px;line-height:1.3}
+.rs .rmab.q{color:var(--muted);border-color:var(--line);background:var(--card)}
+.rs .rmab.soft{opacity:.5;border-style:dotted;animation:none}
+.rsgrey{font-size:16px;color:var(--muted);text-align:center;margin-top:8px}
+.rsgrey:empty{display:none}
+.rsbr{display:block;width:100%;max-width:520px;height:16px;margin:0 auto -6px;fill:none;stroke:var(--ink);stroke-width:2}
+.rs .rmj.rsj{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr) 14px minmax(0,1fr);border-top:0;padding-top:0;max-width:520px;margin:0 auto;width:100%}
+.rs .rssep{width:2px;height:30px;background:var(--line)}
+.rs .rsjh{border:0;background:none;padding:4px 0;font:inherit;font-size:16px;font-weight:700;color:var(--ink);cursor:pointer}
+.rs .rsjh.rmcb{color:var(--blue)}
+.rs .rsjh.rmca{color:var(--amber)}
+.rs .rsjs{display:flex;align-items:center;justify-content:center;cursor:default}
+.rsfact{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:20px;font-weight:700}
+.rsfl{padding:2px 12px;border-bottom:2px solid var(--line)}
+@media (max-width:419px){.rs .rsgr{gap:10px 3px}.rs .rsgr .rmh,.rs .rsgr .rmco{font-size:18px}.rs .rsgr .rmbx{min-width:44px;font-size:22px}.rs .rssw{padding:0 8px;margin-left:4px;font-size:15px}.rs .rsgr .rmov{padding:0 5px}}
+@media (min-width:900px){.rs .rsgr,.rs .rsgr .rmh,.rs .rsgr .rmco{font-size:22px}.rsfact{font-size:23px}.rs .rsjh{font-size:19px}}
 .kq>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .kq>summary::-webkit-details-marker{display:none}
 .kqc{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 11px;background:var(--bg);border:1px solid var(--line);font-weight:700;font-size:15px;white-space:nowrap}
@@ -1429,7 +1456,9 @@ const TOPICS = [
   {id:"circle-why", strand:"geo", levels:["p6"], chapter:"Circles", p6g:"Circles",
    title:"Circles: where π\u00a0×\u00a0d and π\u00a0×\u00a0r\u00a0×\u00a0r come from",blurb:"Roll a wheel, then cut up a pizza. That's where both circle formulas come from.", play:"circleWhy"},
   {id:"triangle-same-area", strand:"geo", levels:["p6"], chapter:"Area of triangle", p6g:"Area of triangle",
-   title:"Triangles: same base, same height, same area", blurb:"Guess which triangle is biggest. Then cut, turn and slide to see why.", play:"triangleSameArea"}
+   title:"Triangles: same base, same height, same area", blurb:"Guess which triangle is biggest. Then cut, turn and slide to see why.", play:"triangleSameArea"},
+  {id:"ratio-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
+   title:"Ratio: make the repeated name the same", blurb:"Two ratios share one name. Make it the same, then join them.", play:"ratioSame"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -7102,6 +7131,181 @@ const triangleSameArea={steps:taAid.steps, mount(stage,panel,key,prm){ const pl=
     else { r.top=o.x; if(i===4) r.top2=o.q; if(o.ph) r.ph=o.ph; if(i===2&&!o.ph) r.strips=8<<(o.lv||0); }
     return r; }; } } };
 PLAYS.triangleSameArea=triangleSameArea;
+const RSX=[{v:[3,4,2,5],sw:0,f:"d",V:63},{v:[4,5,2,1],sw:0,f:"a",V:46},{v:[5,6,9,4],sw:1,f:"s",V:111}];
+const RSN=["Ali","Ben","Cal","Total"], RSK={Ali:"rmcb",Cal:"rmca"};
+const rsOk=v=>v.length===4&&v.every(x=>Number.isInteger(x)&&x>=1&&x<=12);
+function rsMath(v,sw){ const A=v[0],B1=v[1],B2=sw?v[3]:v[2],C=sw?v[2]:v[3], g1=rmG(A,B1), g2=rmG(B2,C), a=A/g1, b1=B1/g1, b2=B2/g2, c=C/g2, L=b1*b2/rmG(b1,b2), k1=L/b1, k2=L/b2, R=[a*k1,L,c*k2], mx=Math.max(...R), mn=Math.min(...R);
+  return {a,b1,b2,c,g1,g2,L,k1,k2,R,T:R[0]+R[1]+R[2],eq:b1===b2,draw:L<=24&&mx<=30&&mn*15>=mx}; }
+function rsTry(M,N){ if(!(N>=Math.max(M.b1,M.b2))) return "less"; if(N%M.b1===0&&N%M.b2===0) return N===M.L?"ok":"big"; return "frac"; }
+function rsFact(x,R){ const V=x.V; let hd,lhs,k;
+  if(x.f==="d"){ hd="Cal − Ali"; k=R[2]-R[0]; lhs=`${R[2]}u − ${R[0]}u`; }
+  else if(x.f==="a"){ hd="All three"; k=R[0]+R[1]+R[2]; lhs=`${R[0]}u + ${R[1]}u + ${R[2]}u`; }
+  else { hd="Ali + Cal"; k=R[0]+R[2]; lhs=`${R[0]}u + ${R[2]}u`; }
+  return {line:`${hd} = ${V}`,grey:`${hd}: can't count yet`,L:[`${lhs} = ${k}u`,`${k}u = ${V}`,`1u = ${V} ÷ ${k} = ${V/k}`]}; }
+const ratioSame={ steps:[],
+  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","rsplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
+    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const st={v:["","","",""],sw:0,live:0,chip:-1,beat:0,M:null,p:1,anim:null,raf:0,msg:"",cut:0,big:0,wN:0,res:"",miss:0,help:0,nIn:"",nmsg:"",ln:0,tap:-1,amt:"",tmsg:"",sol:null,tried:false};
+    const W=h("div",{class:"rm rs"}), q=h("div",{class:"rmcard rmq"}), inp=h("div",{class:"rmin"}), pic=h("div",{class:"rmcard rmpic"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sv=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bars"}), gry=h("div",{class:"rsgrey"}), low=h("div",{class:"rmlow"}), rows=h("div",{class:"rmcard rmrows"}), side=h("div",{class:"rmside"});
+    sv.append(svg); pic.append(cap,sv,gry); low.append(rows,side); W.append(q,inp,pic,low); stage.append(W);
+    const N=()=>st.v.map(Number), ok=()=>rsOk(N()), n2=()=>st.sw?["Cal","Ben"]:["Ben","Cal"];
+    const nextEmpty=i=>{ for(let k=1;k<=4;k++){ const j=(i+k+4)%4; if(!st.v[j]) return j; } return -1; };
+    const shake=el=>{ if(!el) return; el.classList.remove("rmshk"); void el.offsetWidth; el.classList.add("rmshk"); setTimeout(()=>el.classList.remove("rmshk"),450); };
+    const pad=()=>`<div class="sgpad rmpad amt">${["1","2","3","4","5","6","7","8","9","0","⌫"].map(k=>`<button type="button" data-k="${k}"${k==="⌫"?' class="rmdel" aria-label="Delete"':""}>${k}</button>`).join("")}<button type="button" data-k="ok" class="ok" aria-label="Check">✓</button></div>`;
+    const npad=()=>`<div class="sgpad rmpad rsnp">${Array.from({length:12},(_,i)=>`<button type="button" data-n="${i+1}">${i+1}</button>`).join("")}<button type="button" data-n="0" class="rmdel" aria-label="Delete">⌫</button></div>`;
+    const nm=(k,ov)=>`<span class="rmh${RSK[k]?" "+RSK[k]:""}">${ov?`<span class="rmov">${k}</span>`:k}</span>`;
+    const line=(cells,tail)=>cells.map((x,i)=>(i?`<span class="rmco">:</span>`:"")+x).join("")+`<span class="rmx">${tail||""}</span>`;
+    const TT=()=>[...st.M.R,st.M.T];
+    function capText(){ const M=st.M, bt=st.beat, X="× ";
+      if(bt===3&&st.cut) return st.big?`Works. Fewest: ${M.L}`:M.k1>1&&M.k2>1?`${X}${M.k1} and ${X}${M.k2} on EVERY number`:`${X}${M.k1>1?M.k1:M.k2} on EVERY number in the row`;
+      if(!M.draw) return "Too big to draw";
+      if(bt===1) return M.eq?"Ben is already the same.":"Two Bens? Ben has one amount.";
+      if(bt===2) return "Same Ben. Now the boxes don't match.";
+      if(bt===3) return st.res||"Make Ben the same.";
+      return "1 box = 1 unit."; }
+    function rowsHtml(){ const M=st.M, bt=st.beat, cut=st.cut||bt>=4, ov=bt>=3, nn=n2();
+      const cell=(n,ben)=>`<span class="rmn${ben&&ov?" rsbn":""}">${n}</span>`;
+      const blk=(cls,names,r1,r2,k)=>`<div class="rmblk ${cls}"><div class="rmg">${line(names.map(x=>nm(x,x==="Ben")))}${line(r1.map((n,i)=>cell(n,names[i]==="Ben")))}${r2?line(r2.map((n,i)=>cell(n,names[i]==="Ben")),`↓ × ${k}`):""}</div></div>`;
+      const v2=st.sw?[M.c,M.b2]:[M.b2,M.c], m2=st.sw?[M.R[2],M.L]:[M.L,M.R[2]];
+      let s=`<div class="rmblks">${blk("rmb1",["Ali","Ben"],[M.a,M.b1],cut&&M.k1>1?[M.R[0],M.L]:null,M.k1)}${blk("rmb2",nn,v2,cut&&M.k2>1?m2:null,M.k2)}</div>`;
+      if(bt>=4){ const T=TT(), act=st.chip<0, co=`<span class="rmco">:</span>`, sep=`<span class="rssep"></span>`;
+        const hd=i=>act?`<button type="button" class="rsjh${RSK[RSN[i]]?" "+RSK[RSN[i]]:""}" data-i="${i}" tabindex="-1" aria-hidden="true">${i===1?`<span class="rmov">Ben</span>`:RSN[i]}</button>`:nm(RSN[i],i===1);
+        const cj=i=>act?`<button type="button" class="rmjn${st.tap===i||(st.sol&&st.sol.i===i)?" on":""}" data-i="${i}" aria-label="${RSN[i]}, ${rmU(T[i])}">${T[i]}u</button>`:`<span class="rmjn rsjs">${T[i]}u</span>`;
+        s+=`<svg class="rsbr" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 2C3 8 8 8 14 8H90C96 8 100 9 100 15C100 9 104 8 110 8H186C192 8 197 8 197 2" vector-effect="non-scaling-stroke"/></svg>`;
+        s+=`<div class="rmj rsj${act&&!st.tried?" go":""}">${hd(0)}${co}${hd(1)}${co}${hd(2)}${sep}${hd(3)}${cj(0)}${co}${cj(1)}${co}${cj(2)}${sep}${cj(3)}${st.sol?T.map((n,i)=>(i?"<span></span>":"")+`<span class="rmam">${n*st.sol.u}</span>`).join(""):""}</div>`;
+        if(st.sol){ const k=T[st.sol.i]; s+=`<div class="rmsol">${k===1?"":`<div>${k}u = ${st.sol.n}</div>`}<div>1u = ${st.sol.u}</div></div>`; }
+        if(act) s+=`<div class="rmhint">${st.tap>=0?"":st.sol?"Tap any name to try another.":"Tap a name. Type its amount."}</div>`;
+        else { const F=rsFact(RSX[st.chip],M.R); s+=`<div class="rsfact"><div class="rsfl">${F.line}</div>${F.L.slice(0,st.ln).map(x=>`<div class="rsln">${x}</div>`).join("")}</div>`; } }
+      return s; }
+    function sideHtml(){ let s=""; const bt=st.beat, M=st.M, ask=bt===3&&!st.cut;
+      if(ask){ const e=st.nIn, soft=!e&&st.help; s+=`<div class="rmcard rmtp rsask"><div class="rmtl">Cut Ben into <span class="rmab${soft?" soft":e?"":" q"}">${e||(soft?M.L:"?")}</span> boxes</div><div class="rmmsg" role="alert">${st.nmsg}</div>${pad()}</div>`; }
+      if(bt===4&&st.tap>=0){ const i=st.tap; s+=`<div class="rmcard rmtp"><div class="rmtl"><b class="${RSK[RSN[i]]||""}">${RSN[i]}</b> = <span class="rmab">${st.amt}</span></div><div class="rmmsg" role="alert">${st.tmsg}</div>${pad()}</div>`; }
+      if(!ask){ const chip=st.chip>=0, more=bt===4&&chip&&st.ln<3, lab=!bt?"▶ Draw":bt===4?(more?"▶ Next line":"↺ New ratios"):bt===3||(bt===1&&M.eq)?"▶ Join":"▶ Next", dis=!bt&&!ok(), go=!dis&&!st.anim&&(bt<4||more);
+        s+=`<div class="rmact"><button type="button" class="rmbtn${dis?" dis":""}${go?" rmgo":""}${bt===4&&st.tap>=0?" ghost":""}">${lab}</button></div>`; }
+      return s; }
+    function render(){ const bt=st.beat, M=st.M;
+      if(!bt){ const nn=n2(), bx=i=>`<button type="button" class="rmbx${st.live===i?" live":""}" data-b="${i}" aria-label="${["Ali","Ben",nn[0],nn[1]][i]} number">${st.v[i]}</button>`, co=`<span class="rmco">:</span>`, eq=`<span class="rseq">=</span>`;
+        q.innerHTML=`<div class="rmqh">Type two ratios, or pick one below.</div><div class="rsgr">${nm("Ali")}${co}${nm("Ben",1)}${eq}${bx(0)}${co}${bx(1)}<span></span>${nm(nn[0],nn[0]==="Ben")}${co}${nm(nn[1],nn[1]==="Ben")}${eq}${bx(2)}${co}${bx(3)}<button type="button" class="rssw" aria-label="Swap the names">⇄ swap</button></div><div class="rmmsg" role="alert">${st.msg}</div>`;
+        inp.hidden=false; inp.innerHTML=npad()+`<div class="rmchips"><span class="rmchl">Try one:</span>${RSX.map((x,i)=>{ const m=x.sw?["Cal","Ben"]:["Ben","Cal"]; return `<button type="button" class="rmchip rschip" data-x="${i}"><span class="rscl">Ali : Ben = ${x.v[0]} : ${x.v[1]}</span><span class="rscl">${m[0]} : ${m[1]} = ${x.v[2]} : ${x.v[3]}</span><span class="rscf">${rsFact(x,rsMath(x.v,x.sw).R).line}</span></button>`; }).join("")}</div>`;
+        pic.hidden=true; rows.hidden=true; rows.innerHTML=""; svg.innerHTML="";
+      } else { const v=N(), nn=n2(), rt=(a,b,x,y,g,ed)=>`<span class="rsl">${a} : ${b} = ${x} : ${y}${g>1?` = ${x/g} : ${y/g}`:""}${ed?` <span class="rmed" aria-hidden="true">✎</span>`:""}</span>`;
+        q.innerHTML=`<button type="button" class="rmsm" aria-label="Change the ratios">${rt("Ali","Ben",v[0],v[1],M.g1)}${rt(nn[0],nn[1],v[2],v[3],M.g2,1)}</button>`;
+        inp.hidden=true; inp.innerHTML=""; pic.hidden=false; rows.hidden=false; sv.hidden=!M.draw;
+        cap.innerHTML=capText(); cap.classList.toggle("warn",(!M.draw&&!(bt===3&&st.cut))||(bt===3&&!st.cut&&!!st.res));
+        gry.textContent=st.chip>=0&&bt<4?rsFact(RSX[st.chip],M.R).grey:"";
+        rows.innerHTML=rowsHtml(); rows.classList.remove("rmtight"); if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight"); }
+      side.innerHTML=sideHtml(); draw(); }
+    function draw(){ svg.innerHTML=""; const M=st.M; if(!M||!st.beat||pic.hidden||!M.draw) return;
+      const bt=st.beat, p=st.anim?st.p:1, cl=(x,lo,hi)=>Math.max(0,Math.min(1,(x-lo)/(hi-lo))), ez=t=>t*t*(3-2*t);
+      const cw=Math.max(260,Math.round(sv.clientWidth||320)), wide=cw>=560, fs=wide?17:15, BH=wide?50:36, G1=wide?8:6, G2=wide?24:16;
+      const tw=s=>{ const t=svgEl("text",{"font-size":fs,"font-weight":700,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*fs*.6; };
+      const OP=7, bw=tw("Ben"), LW=Math.ceil(bw)+2*OP, X0=4+LW+10, X1=cw-8, BW=X1-X0;
+      const r=M.b1/M.b2, e2=bt===2?ez(cl(p,0,.6)):bt>2&&!M.eq?1:0, s2=1+(r-1)*e2;
+      const col=bt===1?0:bt===2?cl(p,0,.3):bt===3?1:M.eq?cl(p,0,.3):1, g0=bt===1?cl(p,0,.5):1, al0=bt===1?cl(p,0,.3):1;
+      const lift=bt===4?ez(cl(p,.05,.7)):0, fadeB=bt===4?cl(p,.55,.8):0;
+      const lens=[M.a,M.b1,M.b2*s2,M.c*s2], px=BW/Math.max(...lens), U=M.b1/M.L;
+      const Y0=4, Y1=Y0+BH+G1, Y2=Y1+BH+G2, Y3=Y2+BH+G1, YF=Y1+BH+G1, yB=Y2+(Y1-Y2)*lift, yC=Y3+(YF-Y3)*lift, H=yC+BH+6;
+      svg.setAttribute("viewBox",`0 0 ${cw} ${H.toFixed(1)}`); svg.setAttribute("width",cw); svg.setAttribute("height",H.toFixed(1));
+      const cut=bt===3&&st.cut, cg=bt===3?p:1, wN=bt===3&&!st.cut?st.wN:0;
+      const bar=(o)=>{ const g=svgEl("g",{opacity:o.al,class:"rsbar","data-bar":o.id}); svg.append(g); const E=(t,a,x)=>{ const e=svgEl(t,a,x); g.append(e); return e; };
+        const w=o.len*px, y=o.y, ln=(x,w2,hh,c2)=>E("line",{x1:x,y1:y,x2:x,y2:y+BH*hh,stroke:c2||"var(--ink)","stroke-width":w2});
+        E("rect",{x:X0,y,width:w,height:BH,fill:"var(--card)"});
+        if(col<1) E("rect",{x:X0,y,width:w,height:BH,fill:"var(--line)",opacity:1-col});
+        if(col>0) E("rect",{x:X0,y,width:w,height:BH,fill:o.fill,opacity:col});
+        if(bt===4){ const n=Math.round(o.len/U); for(let k=1;k<n;k++) ln(X0+k*U*px,1.3,1); }
+        else { const n=Math.round(o.len/o.step); for(let k=1;k<n;k++) ln(X0+k*o.step*px,2.2,g0);
+          if(cut&&o.k>1){ const n2c=Math.round(o.len/U), gc=cl(cg,o.t0,o.t0+.4); for(let k=1;k<n2c;k++){ if(k%o.k===0) continue; E("line",{x1:X0+k*U*px,y1:y,x2:X0+k*U*px,y2:y+BH*gc,stroke:"var(--ink)","stroke-width":1,class:"rscut"}); } }
+          if(wN){ const wu=M.b1/wN, gw=cl(cg,o.t0,o.t0+.4); if(wu*px>=4){ for(let k=1;k*wu<o.len-1e-9;k++) E("line",{x1:X0+k*wu*px,y1:y,x2:X0+k*wu*px,y2:y+BH*gw,stroke:"var(--ink)","stroke-width":1,class:"rswcut"}); }
+            if(o.brk){ const xs=X0+o.full*wu*px; E("rect",{x:xs,y:y+1,width:Math.max(2,X0+w-xs),height:BH-2,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":2,opacity:cl(cg,.55,.9),class:"rssl"}); } } }
+        E("rect",{x:X0,y,width:w,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2});
+        const ty=y+BH/2+fs*.36, tx=X0-10;
+        if(o.name==="Ben") E("rect",{x:tx-bw-2*OP,y:y+BH/2-fs*.5-5,width:bw+2*OP,height:fs+10,rx:(fs+10)/2,fill:"none",stroke:"var(--ink)","stroke-width":1.6});
+        E("text",{x:o.name==="Ben"?tx-OP:tx,y:ty,"text-anchor":"end","font-size":fs,"font-weight":700,fill:col>.5&&o.tc?o.tc:"var(--ink)",class:"rsnm"},o.name); };
+      const brk=(n,b)=>wN&&(n*wN)%b!==0, full=(n,b)=>Math.floor(n*wN/b);
+      bar({id:"a",name:"Ali",len:lens[0],y:Y0,step:1,k:M.k1,fill:"var(--blue-fill)",tc:"var(--blue)",al:al0,t0:.35,brk:brk(M.a,M.b1),full:wN?full(M.a,M.b1):0});
+      bar({id:"b1",name:"Ben",len:lens[1],y:Y1,step:1,k:M.k1,fill:"var(--blue-fill)",al:al0,t0:0});
+      bar({id:"b2",name:"Ben",len:lens[2],y:yB,step:s2,k:M.k2,fill:"var(--amber-fill)",al:al0*(1-fadeB),t0:0});
+      bar({id:"c",name:"Cal",len:lens[3],y:yC,step:s2,k:M.k2,fill:"var(--amber-fill)",tc:"var(--amber)",al:al0,t0:.35,brk:brk(M.c,M.b2),full:wN?full(M.c,M.b2):0});
+      const xb=X0+M.b1*px, dop=(bt===1?cl(p,.5,.9):1)*(1-lift);
+      if(dop>0) svg.append(svgEl("line",{x1:xb,y1:Y1+BH,x2:xb,y2:Y2+BH+3,stroke:"var(--muted)","stroke-width":1.8,"stroke-dasharray":"3 4",opacity:dop,class:"rsdrop"}));
+      svg.setAttribute("aria-label",bt<4?`Four bars. Ali ${M.a}, Ben ${M.b1}; Ben ${M.b2}, Cal ${M.c}.`:`Three bars: Ali ${M.R[0]}, Ben ${M.R[1]}, Cal ${M.R[2]} units.`); }
+    const tick=now=>{ if(!st.anim) return; st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else { st.anim=null; done(); } };
+    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; }
+    function anim(dur){ if(!RED&&dur&&st.M&&st.M.draw){ st.p=0; st.anim={t0:performance.now(),dur}; } }
+    function done(){ side.innerHTML=sideHtml(); seen(); }
+    function seen(){ const tp=side.querySelector(".rmtp"), jr=rows.querySelector(".rsj"), t=tp||(st.beat?low:q), g=st.beat===3?pic:st.beat===4&&(tp||st.sol||st.ln)?jr:st.beat?pic:q; if(!t) return;
+      const bar=document.querySelector(".bar"), bh=bar?bar.getBoundingClientRect().bottom:56, over=t.getBoundingClientRect().bottom-(innerHeight-8); if(over<=1) return;
+      const room=g?g.getBoundingClientRect().top-bh-8:over, dy=Math.min(over,Math.max(0,room)); if(dy>1) window.scrollBy({top:dy,behavior:RED?"auto":"smooth"}); }
+    function go(n){ stop(); st.M=rsMath(N(),st.sw); st.beat=n; st.tap=-1; st.sol=null; st.tried=false; st.live=-1; st.msg="";
+      if(n<=3){ st.cut=0; st.big=0; st.wN=0; st.res=""; st.miss=0; st.help=0; st.nIn=""; st.nmsg=""; }
+      if(n===4) st.ln=0;
+      anim(n===1?800:n===2?1400:n===4?1400:0); render(); if(st.anim) st.raf=requestAnimationFrame(tick); seen(); }
+    function finish(){ stop(); draw(); done(); }
+    function toEdit(){ stop(); st.beat=0; st.M=null; st.tap=-1; st.sol=null; st.live=-1; st.cut=0; }
+    function newR(){ toEdit(); st.v=["","","",""]; st.sw=0; st.live=0; st.chip=-1; st.msg=""; render(); window.scrollTo(0,0); }
+    function numKey(n){ if(st.beat) return; let i=st.live;
+      if(!n){ if(i<0) i=3; if(!st.v[i]&&i>0) i--; st.v[i]=""; st.live=i; st.chip=-1; st.msg=""; render(); return; }
+      if(i<0) i=nextEmpty(-1); if(i<0) return;
+      st.v[i]=String(n); st.chip=-1; st.msg=""; st.live=nextEmpty(i); render(); }
+    function boxTap(i){ if(st.beat) toEdit(); st.live=i; st.msg=""; render(); }
+    function swap(){ if(st.beat) toEdit(); st.sw^=1; [st.v[2],st.v[3]]=[st.v[3],st.v[2]]; if(st.live>=0&&st.v[st.live]) st.live=nextEmpty(-1); st.chip=-1; render(); }
+    function nOk(){ const M=st.M; if(!st.nIn){ shake(side.querySelector(".rmab")); return; }
+      const n=+st.nIn, r=rsTry(M,n); st.nIn=""; st.nmsg=""; st.wN=0; st.res="";
+      if(r==="ok"||r==="big"){ st.cut=1; st.big=r==="big"?1:0; st.help=0; anim(1300); render(); if(st.anim) st.raf=requestAnimationFrame(tick); seen(); return; }
+      st.miss++; const bg=Math.max(M.b1,M.b2), sm=Math.min(M.b1,M.b2), said=r==="less"?`Ben has ${bg} boxes already. Cut into more.`:"Not a whole number of boxes.";
+      const hint=st.miss===2?(sm>1?`Count in ${bg}s. Which one is in ${sm}s?`:`Count in ${bg}s.`):st.miss>=3?"Now you type it.":"";
+      if(st.miss>=3) st.help=1;
+      if(r==="frac") st.wN=n;
+      if(M.draw){ st.res=said; st.nmsg=hint; } else st.nmsg=hint||said;
+      if(r==="frac") anim(1000); render(); if(st.anim) st.raf=requestAnimationFrame(tick); seen(); shake(side.querySelector(".rmab")); }
+    function nKey(k){ if(st.beat!==3||st.cut) return; if(st.anim) finish();
+      if(k==="⌫"){ st.nIn=st.nIn.slice(0,-1); side.innerHTML=sideHtml(); return; }
+      if(k==="ok"){ nOk(); return; }
+      if(st.nIn.length>=3||(st.nIn===""&&k==="0")) return; st.nIn+=k; side.innerHTML=sideHtml(); }
+    function act(){ if(st.anim){ finish(); return; } const bt=st.beat, M=st.M;
+      if(!bt){ if(ok()){ go(1); return; } if(st.live<0) st.live=nextEmpty(-1); st.msg="Fill in all four boxes."; render(); shake(q.querySelector(".rmbx.live")); return; }
+      if(bt===1){ go(M.eq?4:M.draw?2:3); return; }
+      if(bt===2){ go(3); return; }
+      if(bt===3){ if(st.cut) go(4); return; }
+      if(st.chip>=0&&st.ln<3){ st.ln++; render(); seen(); return; }
+      newR(); }
+    function jtap(i){ if(st.anim){ finish(); return; } if(st.beat<4||st.chip>=0) return; st.tried=true; st.tap=i; st.amt=""; st.tmsg=""; st.sol=null; render(); seen(); }
+    function amtKey(k){ const i=st.tap; if(i<0) return; const box=()=>side.querySelector(".rmab");
+      if(k==="⌫"){ st.amt=st.amt.slice(0,-1); st.tmsg=""; side.innerHTML=sideHtml(); return; }
+      if(k==="ok"){ const n=+st.amt, k0=TT()[i]; if(!st.amt){ shake(box()); return; }
+        if(n>0&&n%k0===0){ st.sol={i,n,u:n/k0}; st.tap=-1; render(); seen(); return; }
+        st.tmsg=`${RSN[i]} is ${rmU(k0)}. Try ${k0}, ${2*k0}, ${3*k0}…`; st.amt=""; side.innerHTML=sideHtml(); shake(box()); return; }
+      if(st.amt.length>=7||(st.amt===""&&k==="0")) return; st.amt+=k; st.tmsg=""; side.innerHTML=sideHtml(); }
+    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if(st.anim&&e.target.closest(".rmpic")) finish(); return; }
+      if(t.dataset.b!=null){ boxTap(+t.dataset.b); return; }
+      if(t.dataset.n!=null){ numKey(+t.dataset.n); return; }
+      if(t.dataset.k!=null){ if(st.beat===3) nKey(t.dataset.k); else amtKey(t.dataset.k); return; }
+      if(t.dataset.x!=null){ const x=RSX[+t.dataset.x]; st.v=x.v.map(String); st.sw=x.sw; st.chip=+t.dataset.x; go(1); return; }
+      if(t.dataset.i!=null){ jtap(+t.dataset.i); return; }
+      if(t.classList.contains("rssw")){ swap(); return; }
+      if(t.classList.contains("rmsm")){ toEdit(); render(); return; }
+      if(t.classList.contains("rmbtn")) act(); });
+    const onKey=e=>{ if(!root.isConnected){ document.removeEventListener("keydown",onKey); return; } if(e.ctrlKey||e.metaKey||e.altKey) return; const k=e.key;
+      if(/^[0-9]$/.test(k)||k==="Backspace"){ const kk=k==="Backspace"?"⌫":k;
+        if(st.beat===3&&!st.cut) nKey(kk); else if(st.tap>=0) amtKey(kk); else if(!st.beat){ if(kk==="⌫") numKey(0); else if(kk!=="0") numKey(+kk); } else return; e.preventDefault(); }
+      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ if(st.beat===3&&!st.cut) nKey("ok"); else if(st.tap>=0) amtKey("ok"); else act(); e.preventDefault(); } };
+    document.addEventListener("keydown",onKey);
+    let rzT=0, lw=innerWidth; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw) return; lw=innerWidth; clearTimeout(rzT); rzT=setTimeout(()=>{ if(st.beat){ rows.classList.remove("rmtight"); if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight"); } draw(); },120); };
+    addEventListener("resize",onRz);
+    const xi=parseInt(prm.get("x"),10), PK=["a","b","c","d"], P=PK.map(k=>prm.get(k)), PN=P.map(Number);
+    let got=false;
+    if(xi>=0&&xi<RSX.length){ const x=RSX[xi]; st.v=x.v.map(String); st.sw=x.sw; st.chip=xi; got=true; }
+    else if(P.every(x=>x!=null&&x!=="")&&rsOk(PN)){ st.v=PN.map(String); st.sw=prm.get("sw")==="1"?1:0; got=true; }
+    if(got){ st.live=-1; let bt=Math.min(4,Math.max(0,parseInt(prm.get("beat"),10)||0));
+      if(bt){ const M=rsMath(N(),st.sw); if(M.eq&&(bt===2||bt===3)) bt=1; if(!M.draw&&bt===2) bt=3; st.beat=bt; st.M=M;
+        if(bt===3&&prm.get("cut")==="1") st.cut=1;
+        if(bt===4){ if(st.chip>=0) st.ln=Math.min(3,Math.max(0,parseInt(prm.get("ln"),10)||0));
+          else { const ti=parseInt(prm.get("tap"),10), tn=+prm.get("n"), T=TT(); st.tried=prm.get("tap")!=null; if(ti>=0&&ti<4&&tn>0&&Number.isInteger(tn)&&tn%T[ti]===0) st.sol={i:ti,n:tn,u:tn/T[ti]}; } } } }
+    render();
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim) draw(); });
+    if(cur) cur.state=()=>{ if(!ok()) return {}; const v=N(), o=st.chip>=0?{x:st.chip}:{a:v[0],b:v[1],c:v[2],d:v[3]}; if(st.chip<0&&st.sw) o.sw=1; if(st.beat) o.beat=st.beat; if(st.beat===3&&st.cut) o.cut=1; if(st.beat===4&&st.chip>=0&&st.ln) o.ln=st.ln; if(st.sol){ o.tap=st.sol.i; o.n=st.sol.n; } return o; };
+  } };
+PLAYS.ratioSame=ratioSame;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
   return `<svg viewBox="0 0 60 32" class="miniq"><line x1="2" y1="20" x2="58" y2="20" stroke="var(--muted)"/><path d="M10 2 Q30 ${cy} 50 2" fill="none" stroke="var(--blue)" stroke-width="2"/>${n===2?`<circle cx="${30-11.1}" cy="20" r="2.2" fill="var(--red)"/><circle cx="${30+11.1}" cy="20" r="2.2" fill="var(--red)"/>`:n===1?`<circle cx="30" cy="20" r="2.2" fill="var(--red)"/>`:""}</svg>`;}
@@ -11187,6 +11391,7 @@ function thumbFor(t){
   if(!t.play) return `<svg class="thumb" viewBox="0 0 120 64"><text x="10" y="50" font-size="52" font-style="italic" fill="var(--blue)">∫</text><text x="44" y="40" font-size="16" fill="var(--muted)">cheatsheet</text></svg>`;
   const PV=PLAYS[t.play]; if(PV&&PV.poster) return `<svg class="thumb" viewBox="0 0 120 64"><svg width="120" height="64" overflow="hidden"><image href="${PV.poster}" x="0" y="-41" width="187.3" height="105.4" preserveAspectRatio="none"/></svg><circle cx="60" cy="32" r="13" fill="var(--accent)" opacity=".92"/><path d="M55.5 25 L68 32 L55.5 39 Z" fill="var(--accent-ink)"/></svg>`;
   const T={
+   ratioSame:`<rect x="8" y="3" width="54" height="12" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.4"/><path d="M26 3v12M44 3v12" stroke="var(--ink)" stroke-width="1"/><rect x="8" y="17" width="72" height="12" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.4"/><path d="M26 17v12M44 17v12M62 17v12" stroke="var(--ink)" stroke-width="1"/><rect x="8" y="35" width="72" height="12" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.4"/><path d="M44 35v12" stroke="var(--ink)" stroke-width="1"/><rect x="8" y="49" width="108" height="12" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.4"/><path d="M44 49v12M80 49v12" stroke="var(--ink)" stroke-width="1"/><path d="M80 29v19" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="2 2"/>`,
    triangleSameArea:`<line x1="4" y1="24" x2="116" y2="24" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 2.4"/><line x1="4" y1="56" x2="116" y2="56" stroke="var(--muted)" stroke-width="1"/><polygon points="30,56 78,56 14,24" fill="var(--blue-fill)" fill-opacity=".75" stroke="var(--blue)" stroke-width="1.6" stroke-linejoin="round"/><polygon points="30,56 78,56 102,24" fill="var(--amber-fill)" fill-opacity=".75" stroke="var(--amber)" stroke-width="1.6" stroke-linejoin="round"/><line x1="14" y1="24" x2="14" y2="56" stroke="var(--blue)" stroke-width="1.3" stroke-dasharray="1.6 2"/><line x1="102" y1="24" x2="102" y2="56" stroke="var(--amber)" stroke-width="1.3" stroke-dasharray="1.6 2"/><line x1="30" y1="56" x2="78" y2="56" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/><circle cx="14" cy="24" r="2.6" fill="var(--blue)"/><circle cx="102" cy="24" r="2.6" fill="var(--amber)"/>`,
    circleWhy:`<path d="M23.0 32.0L43.0 32.0A20 20 0 0 1 37.1 46.1Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L37.1 46.1A20 20 0 0 1 23.0 52.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L23.0 52.0A20 20 0 0 1 8.9 46.1Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L8.9 46.1A20 20 0 0 1 3.0 32.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L3.0 32.0A20 20 0 0 1 8.9 17.9Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L8.9 17.9A20 20 0 0 1 23.0 12.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L23.0 12.0A20 20 0 0 1 37.1 17.9Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M23.0 32.0L37.1 17.9A20 20 0 0 1 43.0 32.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M57.7 40.5L50.0 22.0A20 20 0 0 1 65.3 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M73.0 40.5L65.3 22.0A20 20 0 0 1 80.6 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M88.3 40.5L80.6 22.0A20 20 0 0 1 95.9 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M103.6 40.5L95.9 22.0A20 20 0 0 1 111.2 22.0Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M95.9 22.0L103.6 40.5A20 20 0 0 1 88.3 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M80.6 22.0L88.3 40.5A20 20 0 0 1 73.0 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M65.3 22.0L73.0 40.5A20 20 0 0 1 57.7 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M111.2 22.0L111.2 42.0A20 20 0 0 1 103.6 40.5Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/><path d="M50.0 22.0L57.7 40.5A20 20 0 0 1 50.0 42.0Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width=".8" stroke-linejoin="round"/>`,
    restModel:`<rect x="6" y="6" width="108" height="20" fill="var(--card)"/><rect x="6" y="6" width="27" height="20" fill="var(--blue-fill)"/><path d="M33 6v20M60 6v20M87 6v20" stroke="var(--ink)" stroke-width="1.2"/><rect x="6" y="6" width="108" height="20" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M33 26v12M114 26v12" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 2"/><rect x="33" y="38" width="81" height="20" fill="var(--card)"/><rect x="33" y="38" width="18" height="20" fill="var(--amber-fill)"/><path d="M42 38v20M51 38v20M60 38v20M69 38v20M78 38v20M87 38v20M96 38v20M105 38v20" stroke="var(--ink)" stroke-width="1"/><rect x="33" y="38" width="81" height="20" fill="none" stroke="var(--ink)" stroke-width="1.6"/>`,
