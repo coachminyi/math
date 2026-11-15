@@ -8845,48 +8845,48 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
   </div>
 </div>`,
 
-stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>, with 1 ≤ ${V("A")} &lt; 10`,"one digit before the decimal point"),FB("amber",`10 or more: ${V("n")} positive · less than 1: ${V("n")} negative`,`${nw(`345 000 = 3.45 × 10⁵`)} · ${nw(`0.00072 = 7.2 × 10<sup>−4</sup>`)}`,"count the jumps of the decimal point"),FB("green","Calculator",`use the ×10<sup>x</sup> key, not × 10 ^`,"answer to 3 s.f. unless told otherwise")])}
+stdForm:`${MUST([FB("blue","Standard form",nw(`345 000 = <b class="k-amber">3.45</b> × 10⁵`),"one digit before the point",nw(`${V("A")} × 10<sup>${V("n")}</sup>, 1 ≤ ${V("A")} &lt; 10`),"mk"),FB("amber","Less than 1",nw(`0.00072 = 7.2 × 10<sup><b class="k-amber">−4</b></sup>`),`the index is <b class="k-amber">negative</b>`,"","mk"),FB("green","+ and −",`take out the <b class="k-amber">lower</b> power`,`add what is left, then fix ${V("A")}`,"","mk mkw")])}
 <div class="sheet">
   <div class="panelc"><h4>Convert</h4>
     ${picHops()}
-    <table>
-      <tr><th>From</th><th>To</th><th>Why</th></tr>
-      <tr><td>6 200 000</td><td>${nw("6.2 × 10⁶")}</td><td>point moves 6 places left</td></tr>
-      <tr><td>0.000 038</td><td>${nw("3.8 × 10<sup>−5</sup>")}</td><td>point moves 5 places right</td></tr>
-      <tr><td>${nw("4.1 × 10³")}</td><td>4100</td><td>3 places right</td></tr>
-      <tr><td>${nw("9.05 × 10<sup>−2</sup>")}</td><td>0.0905</td><td>2 places left</td></tr>
-    </table>
+    <ul class="steps">
+      <li>${nw("4.1 × 10³ = 4100")} <span class="tagop">3 places right</span></li>
+      <li>${nw("9.05 × 10<sup>−2</sup> = 0.0905")} <span class="tagop">2 places left</span></li>
+    </ul>
   </div>
 
   <div class="panelc"><h4>× and ÷: use the index laws</h4>
     <ul class="steps">
       <li>${nw(`(3 × 10⁴) × (2 × 10<sup>−7</sup>)`)} = ${nw(`6 × 10<sup>−3</sup>`)} <span class="tagop">3 × 2, then 4 + (−7)</span></li>
-      <li>${nw(`(8 × 10⁵) ÷ (4 × 10²)`)} = ${nw(`2 × 10³`)} <span class="tagop">8 ÷ 4, then 5 − 2</span></li>
-      <li>${nw(`(5 × 10³) × (4 × 10²)`)} = 20 × 10⁵<br>= <b>${nw("2 × 10⁶")}</b> <span class="tagop">20 is not allowed: fix it</span></li>
+      <li>${nw(`(8 × 10⁵) ÷ (4 × 10<sup>−2</sup>)`)} = ${nw(`2 × 10⁷`)} <span class="tagop">8 ÷ 4, then <b class="k-amber">5 − (−2)</b></span></li>
+      <li>${nw(`(5 × 10³) × (4 × 10²)`)} = ${nw("20 × 10⁵")}</li>
+      <li>= <b>${nw("2 × 10⁶")}</b> <span class="tagop">fix ${V("A")} last</span></li>
     </ul>
+    <p class="anno">* calculator: the ${nw("×10<sup>x</sup>")} key, not ${nw("× 10 ^")}</p>
   </div>
 
-  <div class="panelc"><h4>+ and −: same power first</h4>
+  <div class="panelc"><h4>+ and −</h4>
     <ul class="steps">
-      <li>${nw(`3.2 × 10⁵ + 4 × 10⁴`)}</li>
-      <li>${nw(`= 3.2 × 10⁵ + 0.4 × 10⁵`)} <span class="tagop">change the smaller one</span></li>
-      <li>${nw(`= 3.6 × 10⁵`)}</li>
+      <li>${nw("7.94 × 10⁵ + 7.6 × 10⁴")}</li>
+      <li>${nw(`= <b class="k-amber">10⁴</b>(79.4 + 7.6)`)}</li>
+      <li>${nw("= 87 × 10⁴")}</li>
+      <li>${nw("= 8.7 × 10⁵")} <span class="tagop">fix ${V("A")}</span></li>
     </ul>
-    <p class="anno">* or just type both into the calculator with ${nw("the ×10<sup>x</sup> key")} and read the answer</p>
   </div>
 
   <div class="panelc"><h4>Prefixes</h4>
     <table>
-      <tr><th>Prefix</th><th>Power</th><th>Example</th></tr>
-      <tr><td>tera (T)</td><td>10¹²</td><td>3 TB = 3 × 10¹² bytes</td></tr>
-      <tr><td>giga (G)</td><td>10⁹</td><td>2 GB = 2 × 10⁹ bytes</td></tr>
-      <tr><td>mega (M)</td><td>10⁶</td><td>5 MW = 5 × 10⁶ W</td></tr>
-      <tr><td>kilo (k)</td><td>10³</td><td>3 km = 3 × 10³ m</td></tr>
-      <tr><td>milli (m)</td><td>10<sup>−3</sup></td><td>7 mm = 7 × 10<sup>−3</sup> m</td></tr>
-      <tr><td>micro (μ)</td><td>10<sup>−6</sup></td><td>4 μm = 4 × 10<sup>−6</sup> m</td></tr>
-      <tr><td>nano (n)</td><td>10<sup>−9</sup></td><td>2 nm = 2 × 10<sup>−9</sup> m</td></tr>
-      <tr><td>pico (p)</td><td>10<sup>−12</sup></td><td>5 ps = 5 × 10<sup>−12</sup> s</td></tr>
+      <tr><th>Prefix</th><th>Power</th></tr>
+      <tr><td>tera (T)</td><td>10¹²</td></tr>
+      <tr><td>giga (G)</td><td>10⁹</td></tr>
+      <tr><td>mega (M)</td><td>10⁶</td></tr>
+      <tr><td>kilo (k)</td><td>10³</td></tr>
+      <tr><td>milli (m)</td><td>10<sup>−3</sup></td></tr>
+      <tr><td>micro (μ)</td><td><b class="k-amber">10<sup>−6</sup></b></td></tr>
+      <tr><td>nano (n)</td><td>10<sup>−9</sup></td></tr>
+      <tr><td>pico (p)</td><td>10<sup>−12</sup></td></tr>
     </table>
+    <ul class="steps"><li>${nw("5 km = 5 × 10³ m")} <span class="tagop">swap the prefix</span></li></ul>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
@@ -8895,8 +8895,13 @@ stdForm:`${MUST([FB("blue","Standard form",`${V("A")} × 10<sup>${V("n")}</sup>,
       <div class="ok">✓ 1.2 × 10⁶</div>
       <div class="x">✗ 0.5 × 10<sup>−3</sup></div>
       <div class="ok">✓ 5 × 10<sup>−4</sup></div>
+      <div class="x">✗ ${nw("6 × 10⁵ + 2 × 10⁴")}<br>${nw("= 8 × 10⁵")}</div>
+      <div class="ok">✓ ${nw("6.2 × 10⁵")}</div>
+      <div class="x">✗ ${nw(`${frac("6 × 10⁵","2 × 10<sup>−2</sup>")} = 3 × 10³`)}</div>
+      <div class="ok">✓ ${nw("3 × 10⁷")}</div>
+      <div class="x">✗ ${nw("4 μm = 4 × 10<sup>−3</sup> m")}</div>
+      <div class="ok">✓ ${nw("4 × 10<sup>−6</sup> m")}</div>
     </div>
-    <div class="note"><b>Note!</b> ${V("A")} must be from 1 up to (not including) 10. Do the working, then fix ${V("A")} last: ${nw("10.8 × 10⁸ = 1.08 × 10⁹")}.</div>
   </div>
 </div>`,
 
@@ -12786,7 +12791,8 @@ const QQ_HI={
   return {q:`Calculate ${ex}, giving your answer in standard form.`,w,a:nw(t(qN(c),E)),n}; }},
 {t:"+ and −",g:R=>{ const n=qTry(()=>{ const a=R.int(11,99)/10, b=R.int(1,9), d=R.pick([1,1,2]), p=R.pick([3,4,5,6,7,8,-2,-3,-4,-5]), s=R.sign(), bb=+(b/Math.pow(10,d)).toPrecision(10), S=+(a+s*bb).toPrecision(10); return {a,b,d,p,s,bb,S}; },n=>n.a%1!==0&&n.S>=1&&n.S<10&&Math.abs(n.p-n.d)>=2,{a:3.2,b:4,d:1,p:5,s:1,bb:.4,S:3.6}),
   {a,b,d,p,s,bb,S}=n, o=s>0?"+":"−", ex=nw(`${qN(a)} × ${qP("10",p)} ${o} ${b} × ${qP("10",p-d)}`);
-  return {q:`Calculate ${ex}, giving your answer in standard form.`,w:[ex,qW(nw(`= ${qN(a)} × ${qP("10",p)} ${o} ${qN(bb)} × ${qP("10",p)}`),"same power first: change the smaller one"),nw(`= ${qN(S)} × ${qP("10",p)}`)],a:nw(`${qN(S)} × ${qP("10",p)}`),n}; }},
+  const lo=p-d, a10=+(a*Math.pow(10,d)).toPrecision(10), T=+(a10+s*b).toPrecision(10);
+  return {q:`Calculate ${ex}, giving your answer in standard form.`,w:[ex,qW(nw(`= ${qP("10",lo)}(${qN(a10)} ${o} ${b})`),"take out the lower power"),nw(`= ${qN(T)} × ${qP("10",lo)}`),qW(nw(`= ${qN(S)} × ${qP("10",p)}`),`fix ${V("A")}`)],a:nw(`${qN(S)} × ${qP("10",p)}`),n}; }},
 {t:"prefixes",g:R=>{ const [nm,sy,P,u,q]=R.pick([["giga","G",9,"bytes","A file is 2 GB. Write its size in bytes"],["tera","T",12,"bytes","A hard disk holds 2 TB. Write this in bytes"],["mega","M",6,"W","A power station produces 2 MW. Write this in watts"],["micro","μ",-6,"m","A cell is 2 μm wide. Write its width in metres"],["nano","n",-9,"m","A virus is 2 nm long. Write its length in metres"],["milli","m",-3,"s","A camera flash lasts 2 ms. Write this in seconds"]]),
   d1=R.int(1,9), d2=R.int(1,9), t=R.int(1,2), A=+(d1+"."+d2), v=+(A*Math.pow(10,t)).toPrecision(6), E=t+P, w=[qW(nw(`${qN(v)} ${sy}${u==="bytes"?"B":u} = ${qN(v)} × ${qP("10",P)} ${u}`),`${nm} = ${qP("10",P)}`)];
   if(t){ w.push(nw(`= ${qN(A)} × ${qP("10",t)} × ${qP("10",P)} ${u}`),nw(`= ${qN(A)} × ${qP("10",`${t} + ${qB(P)}`)} ${u}`),nw(`= ${qN(A)} × ${qP("10",E)} ${u}`)); }
