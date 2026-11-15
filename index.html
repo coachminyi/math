@@ -1470,6 +1470,10 @@ html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%
 .play.rdp:not(.rdwait) .dock .pill.act{background:none;color:var(--accent);border:1.5px solid var(--accent);box-shadow:none}
 .play.rdpre .iphint{opacity:0}
 @media (min-width:600px){ .rdk .formbox .eq{font-size:26px;height:auto} .rdk .rdr{height:60px} .rdk .rdd{height:34px} }
+@keyframes ipwig{0%{stroke-opacity:.95;stroke-width:.8}45%{stroke-opacity:.55;stroke-width:4}100%{stroke-opacity:0;stroke-width:6}}
+html[data-ip] svg.ipwig circle[data-drag]{stroke:var(--ink);animation:ipwig .6s ease-out 2}
+@keyframes ipwigb{0%,100%{transform:none}35%{transform:scale(1.07)}70%{transform:scale(.98)}}
+html[data-ip] .dock .pill.act.ipwigb{animation:ipwigb .5s ease-out 2 !important}
 </style>
 </head>
 <body>
@@ -1906,7 +1910,7 @@ function aid(def){return {steps:def.steps, ip:def.ip||"", mount(stage,panel,key,
   (def.sliders||[]).forEach(s=>$(`[data-sk="${s.k}"] input`,cbox).addEventListener("input",e=>{stopAnim(); const prev=st[s.k]; st[s.k]=+e.target.value; s.on&&s.on(st,prev); draw();}));
   (def.pills||[]).forEach(p=>$(`[data-pk="${p.k}"]`,cbox).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     const snap=kbSnap(); stopAnim(); const v=b.dataset.v; st[p.k]=isNaN(+v)?v:+v; p.on&&p.on(st); askShut(false); st._lastB=null; st._reset=true; draw(); showRes(snap,true);}));
-  const stopAnim=()=>{ if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
+  const stopAnim=()=>{ ipUser(); if(st._anim){ cancelAnimationFrame(st._anim); st._anim=null; } };
   const animate=(dur,fn)=>{ stopAnim(); const t0=performance.now(); const tick=now=>{ if(!svg.isConnected){ st._anim=null; return; } const p=Math.min(1,(now-t0)/dur); fn(p); draw(); if(p<1) st._anim=requestAnimationFrame(tick); else st._anim=null; }; st._anim=requestAnimationFrame(tick); };
   (def.buttons||[]).forEach((b,i)=>$(`[data-b="${i}"]`,cbox).addEventListener("click",()=>{const snap=kbSnap(); stopAnim(); b.fn(st,animate); st._acted=true; st._lastB=i; st._reset=true; draw(); showRes(snap);}));
   if(jb) jb.querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{stopAnim(); go(+b.dataset.j); if(b.scrollIntoView&&jb.scrollWidth>jb.clientWidth) b.scrollIntoView({block:"nearest",inline:"center"});});
@@ -1916,6 +1920,24 @@ function aid(def){return {steps:def.steps, ip:def.ip||"", mount(stage,panel,key,
   const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>{ if(st.step>=def.steps.length-1){ if(cur&&cur.done) location.hash=cur.done; } else stepTo(st.step+1); };
   const pvb=$(".prevstep",panel); if(pvb) pvb.onclick=()=>stepTo(st.step-1);
   if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{ if(start) st._snap=kbSnap(); svg.classList.remove("nudge"); stage.classList.add("ipdone"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } showRes(st._snap); st._snap=null; }); }
+  let dmo=null, dmT=0, dmN=0;
+  const endDemo=()=>{ if(!dmo) return; cancelAnimationFrame(dmo.raf); const z=JSON.parse(dmo.z); dmo=null; Object.keys(st).forEach(k=>{ if(!(k in z)) delete st[k]; }); Object.assign(st,z); };
+  const ipUser=()=>{ clearTimeout(dmT); endDemo(); st._usr=1; };
+  const runDemo=()=>{ if(dmo||st._usr||st._anim||!svg.isConnected||document.hidden) return; const c=svg.querySelector("circle[data-drag]"); if(!c) return;
+    const id=c.getAttribute("data-drag"), x=+c.getAttribute("cx"), y=+c.getAttribute("cy"), vb=svg.viewBox.baseVal, L=Math.min(vb.width,vb.height)*.17, z=JSON.stringify(st); let best=null;
+    (def.demo?[def.demo]:[[1,0],[.7,.7],[0,1],[-.7,.7],[-1,0],[-.7,-.7],[0,-1],[.7,-.7]]).forEach(d=>{ try{ const s2=JSON.parse(z), tx=x+d[0]*L, ty=y+d[1]*L; def.drag(id,{x:tx,y:ty},s2,true); if(JSON.stringify(s2)===z) return;
+      let e=L; try{ const g=svgEl("svg",{viewBox:svg.getAttribute("viewBox")}); def.draw(g,s2); const m=g.querySelector(`circle[data-drag="${id}"]`); if(m) e=Math.hypot(+m.getAttribute("cx")-tx,+m.getAttribute("cy")-ty); }catch(_){}
+      if(!best||e<best.e-1e-6) best={d,e}; }catch(_){} });
+    if(!best) return; dmN++; dmo={z,raf:0}; const t0=performance.now(); let f0=true;
+    const tick=now=>{ if(!dmo) return; if(!svg.isConnected){ dmo=null; return; } const q=Math.min(1,(now-t0)/1600), k=(1-Math.cos(2*Math.PI*q))/2;
+      try{ def.drag(id,{x:x+best.d[0]*L*k,y:y+best.d[1]*L*k},st,f0); }catch(_){} f0=false; draw();
+      if(q<1) dmo.raf=requestAnimationFrame(tick); else { endDemo(); draw(); if(dmN<4) dmT=setTimeout(runDemo,6000); } };
+    dmo.raf=requestAnimationFrame(tick); };
+  if(def.ip){ if(def.drag&&!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)) dmT=setTimeout(runDemo,900);
+    const wig=()=>{ const hs=svg.querySelector("circle[data-drag]"), el=hs?svg:[...cbox.querySelectorAll(".pill.act")].find(b=>b.offsetParent), cl=hs?"ipwig":"ipwigb"; if(!el) return;
+      el.classList.remove(cl); el.getBoundingClientRect(); el.classList.add(cl); clearTimeout(el._wg); el._wg=setTimeout(()=>el.classList.remove(cl),1300); };
+    const miss=e=>{ if(!e.target.closest("[data-drag],button,a,input,select,summary")) wig(); };
+    setTimeout(()=>{ const pl=stage.closest(".play"); (pl?[pl]:[stage,panel,key]).forEach(el=>{ if(el) el.addEventListener("pointerdown",miss); }); },0); }
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
@@ -4692,7 +4714,7 @@ const arEx=v=>Math.abs(v-+(+v).toPrecision(3))<1e-9, arN=v=>{ if(arEx(v)) return
 const arK=k=>Math.abs(k-PI)<1e-6?"π":N(k,2), arDg=a=>{ const d=deg(a); return Math.abs(d-Math.round(d))<1e-6?N(Math.round(d))+"°":n1(d)+"° (1 d.p.)"; };
 const arAt=(svg,P,a,t,col,gap=3.4,fs=4.2)=>{ const c=Math.cos(a), s=Math.sin(a); return lab(svg,[P[0]+c*gap,P[1]-s*gap+1.5+(s<-.3?2.6:0)],t,{"text-anchor":c>.3?"start":c<-.3?"end":"middle",fill:col,"font-size":fs,"font-weight":700}); };
 function arSector(svg,R,th,L){
-  const full=th>=2*PI-1e-9, m=th/2; let la=m; if(Math.abs(Math.cos(m))>.5) [PI/2,3*PI/2].forEach(a=>{ if(a<th&&Math.abs(Math.cos(a))<Math.abs(Math.cos(la))) la=a; });
+  const full=th>=2*PI-1e-9, m=th/2; let la=m; if(Math.abs(Math.cos(m))>.5) [PI/2,3*PI/2].forEach(a=>{ if(a<th-.49&&Math.abs(Math.cos(a))<Math.abs(Math.cos(la))) la=a; });
   const c=L.c||(Math.cos(la)>.3?[62,62]:arO), E=arPt(R,th,c), fs=L.fs||4.2, F={"font-size":fs,"font-weight":700};
   S_(svg,"circle",{cx:c[0],cy:c[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.2"});
   S_(svg,"path",{d:full?arArcD(R,0,th,c):`M${c}L${arPt(R,0,c)}${arArcD(R,0,th,c).replace(/^M[^A]+/,"")}Z`,fill:"var(--blue-fill)",stroke:"none"});
@@ -13343,8 +13365,10 @@ function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
 addEventListener("hashchange",e=>{ cdFrom=(e.oldURL||"").split("#")[1]||""; });
 addEventListener("resize",()=>{ if(cur&&cur.cards){ if(cdS&&cdS.kind==="quick") qqFit(); else cdFit(); } });
 let srcFrom=null;
-let hitLast="", hitOn=false;
-function hubHit(p){ p=String(p).replace(/[^a-zA-Z0-9\/-]/g,"").slice(0,80); if(!p||(hitOn&&p===hitLast)) return; hitLast=p; if(!hitOn) return;
+let hitLast="", hitOn=false, tchFor="";
+addEventListener("pointerdown",e=>{ const g=e.target; if(!cur||!cur.t||!g||!g.closest||!g.closest(".play")||!g.closest("[data-drag],button,input,select,video,a.pill")) return; const id=cur.t.id; if(tchFor===id) return; tchFor=id;
+  let n=0; const f=()=>{ if(!cur||!cur.t||cur.t.id!==id) return; if(hitOn) hubHit("aid/"+id+"/t"); else if(n++<6) setTimeout(f,900); }; f(); },true);
+function hubHit(p){ if(!String(p).endsWith("/t")) tchFor=""; p=String(p).replace(/[^a-zA-Z0-9\/-]/g,"").slice(0,80); if(!p||(hitOn&&p===hitLast)) return; hitLast=p; if(!hitOn) return;
   try{ const u=location.href; history.replaceState(history.state,"",location.pathname.replace(/[^\/]*$/,"")+"v/"+p); history.replaceState(history.state,"",u); }catch(e){} }
 function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURIComponent(old); }catch(e){} const op=old.replace(/^\//,"").split("/");
   if(t&&srcFrom&&srcFrom.topic===t.id&&op[0]===t.id) return;
