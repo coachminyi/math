@@ -1336,65 +1336,62 @@ html[data-kid] #app .play.lean:not(.kstack) .key{grid-column:2;grid-row:4;margin
 .rsfl{padding:0 12px;border-bottom:2px solid var(--line)}
 .rsls{display:flex;flex-direction:column;align-items:center;gap:2px}
 @media (min-width:900px) and (min-aspect-ratio:1/1){.rsfact{font-size:21px}.rs .rsjh{font-size:17px}}
-.ss .ssq{display:flex;flex-direction:column;gap:8px}
-.ss .ssdots{display:flex;gap:9px;justify-content:center}
+.ss .ssq{display:flex;flex-direction:column;gap:6px}
+.ss .ssside{display:flex;flex-direction:column;gap:10px;min-width:0}
+.ss .ssdots{display:flex;gap:2px;justify-content:center}
+.ss .ssdc{display:flex;flex-direction:column;align-items:center;gap:2px;width:44px}
 .ss .ssdot{width:14px;height:14px;border-radius:50%;border:2px solid var(--muted);background:transparent}
 .ss .ssdot.on{border-color:var(--accent);background:var(--accent)}
 .ss .ssdot.done{border-color:var(--green);background:var(--green)}
-.ss .ssst{font-size:19px;line-height:1.45;font-weight:600}
+.ss .ssdw{font-size:12px;font-weight:700;line-height:14px;height:14px;color:var(--green);white-space:nowrap}
+.ss .ssst{font-size:18px;line-height:1.4;font-weight:600}
 .ss .ssst u{text-decoration-thickness:2px;text-underline-offset:3px}
 .ss .ssst b{color:var(--accent);white-space:nowrap}
-.ss .sstop{display:flex;flex-direction:column;gap:12px}
-.ss .sspk{display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
-.ss .ssak{font-size:20px;font-weight:700;text-align:center}
-.ss .sspl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.ss .sspill{min-height:52px;min-width:70px;padding:0 16px;border:2px solid var(--line);border-radius:26px;background:var(--card);color:var(--ink);font:inherit;font-size:19px;font-weight:700;cursor:pointer}
+.ss .rmcap{min-height:1.4em}
+.ss .rmcap:empty{display:block}
+.ss .sspk{display:flex;flex-direction:column;gap:8px;align-items:center}
+.ss .ssak{font-size:19px;font-weight:700;text-align:center}
+.ss .sspl{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ss .sspill{min-height:48px;min-width:64px;padding:0 14px;border:2px solid var(--accent);border-radius:24px;background:var(--card);color:var(--ink);font:inherit;font-size:18px;font-weight:700;cursor:pointer}
 .ss .sspill.k{color:var(--blue)}
 .ss .sspill.l{color:var(--amber)}
 .ss .sspill.act{border-color:var(--blue);background:var(--blue-fill)}
-.ss .sspill.tried{border-style:dashed;color:var(--muted);background:var(--bg);cursor:default}
+.ss .sspill.tried{border:2px dashed var(--line);color:var(--muted);background:var(--bg);cursor:default}
 .ss .sspill:disabled{cursor:default}
-.ss .sshint{font-size:16px;color:var(--muted);text-align:center}
-.ss .sshint:empty{display:none}
-.ss .sssum{font-size:19px;font-weight:600;text-align:center}
-.ss .sssum b{color:var(--green)}
 .ss .rmg{grid-template-columns:repeat(var(--nc),auto)}
-.ss .rmbt{font-size:16px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:6px;white-space:nowrap}
-.ss .rmlow{display:flex;flex-direction:column;gap:12px}
-.ss .rmtl{font-size:22px;font-weight:600;text-align:center}
-.ss .rmbtn.dis{background:var(--card);color:var(--muted);border-color:var(--line);cursor:default}
+.ss .rmbt{font-size:15px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:4px;white-space:nowrap}
 .rm.ss .ssblks{justify-content:space-around}
 .ss .ssbk .rmco{padding:0 3px}
 .ss .sssep{width:2px;height:26px;background:var(--line);margin:0 4px}
 .ss .rmrows.ssrw{position:relative}
-.ss .ssblks{flex-wrap:nowrap}
-.ss .ssblks.ssv{flex-direction:column;align-items:flex-start;padding-left:46px;gap:14px}
+.ss .ssblks{flex-wrap:nowrap;gap:24px}
+.ss .ssblks.ssv{flex-direction:column;align-items:flex-start;padding-left:64px;gap:8px}
 .ss .ssv .sssep{margin-left:50px}
-.ss .rmrows.ssarrs{padding-bottom:80px}
-.ss .rmrows.ssarrs.ssvv{padding-bottom:12px}
+.ss .rmrows.ssarrs:not(.ssvv) .ssblks{margin-bottom:74px}
 .ss svg.ssarr{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.ss .sslines{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:21px;font-weight:700}
+.ss .sslines{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:20px;font-weight:700}
 .ss .sslines:empty{display:none}
-.ss .sslines.ss7{gap:12px}
+.ss .sslines.ss7{gap:8px}
 .ss .sssd{position:relative;display:inline-block}
-.ss .ssup{position:absolute;left:50%;bottom:92%;transform:translateX(-50%);font-size:16px;color:var(--red);line-height:1}
-.ss .ss7 .ssl:nth-child(3){margin-top:12px}
+.ss .ssup{position:absolute;left:50%;bottom:92%;transform:translateX(-50%);font-size:15px;color:var(--red);line-height:1}
+.ss .ss7 .ssl:nth-child(3){margin-top:10px}
 .ss .sseq{display:inline-block;position:relative;padding:0 4px}
 .ss .sseq.pv::after{content:"";position:absolute;left:50%;top:100%;margin-left:-7px;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid var(--muted)}
 .ss .ss7 .ssl:nth-child(4){margin-top:6px}
-.ss .rmab.q{color:var(--muted);border-color:var(--line);background:var(--card)}
-#app .play.ssplay .sgpad.sspad{grid-template-columns:repeat(5,1fr)}
-#app .play.ssplay .sgpad.sspad button{min-height:52px}
+#app .play.ssplay .sgpad.sspad{grid-template-columns:repeat(9,1fr);gap:5px;width:100%}
+#app .play.ssplay .sgpad.sspad button{min-height:52px;font-size:22px;border:2px solid var(--accent);border-radius:12px;padding:0}
 .ss svg .ssglow{animation:ssGlow 1.2s ease-in-out infinite}
 @keyframes ssGlow{50%{opacity:.35}}
+.ss .sstb{display:flex;flex-direction:column;gap:6px}
 .ss .ssct{width:100%;border-collapse:collapse;font-size:17px}
-.ss .ssct th{font-size:15px;color:var(--muted);text-align:left;padding:4px 8px;border-bottom:2px solid var(--line)}
-.ss .ssct td{padding:7px 8px;border-bottom:1px solid var(--line)}
+.ss .ssct th{font-size:14px;color:var(--muted);text-align:left;padding:3px 8px;border-bottom:2px solid var(--line)}
+.ss .ssct td{padding:6px 8px;border-bottom:1px solid var(--line)}
 .ss .ssct td:last-child{font-weight:700;white-space:nowrap}
 .ss .ssct th:last-child{white-space:nowrap}
 .ss .ssdone{font-size:20px;font-weight:700;color:var(--green);text-align:center}
-@media (max-width:419px){.ss .ssst{font-size:17px}}
-@media (min-width:900px){.rm.ss{display:flex;flex-direction:column;align-items:stretch;gap:12px}.ss .rmlow{flex-direction:row;align-items:flex-start}.ss .rmlow>.rmrows{flex:1;min-width:0}.ss .rmlow>.rmside{width:360px;flex:none}.ss .rmlow>.rmrows[hidden]+.rmside{width:auto;flex:1}.ss .sstop{flex-direction:row;align-items:stretch}.ss .sstop .rmpic{flex:1;min-width:0}.ss .sstop .sspk{width:340px;flex:none}.ss .ssst{font-size:21px}.ss .sslines{font-size:24px}.ss .ssct{font-size:19px}}
+@media (max-width:899px),(max-aspect-ratio:1/1){.ss .ssside{display:contents}.ss .ssq{order:-1}.ss .rmpic,.ss .sstb{order:0}.ss .sspk,.ss .rmrows{order:1}.ss .rmslot{order:2}}
+@media (max-width:599px){#app .play.ssplay .sgpad.sspad{grid-template-columns:repeat(5,1fr)}#app .play.ssplay .sgpad.sspad button{min-height:46px}.ss .ssst{font-size:17px;line-height:1.35}.ss .sspill{min-height:44px;font-size:17px;padding:0 12px;min-width:58px}.ss .ssak{font-size:18px}.ss .ssct{font-size:15px}.ss .ssct td{padding:5px 6px}.ss .sslines{font-size:18px}.ss .rmpic{padding:6px 6px 4px}.ss .rmcap{margin-bottom:2px}}
+@media (min-width:900px) and (min-aspect-ratio:1/1){.rml.ss{grid-template-columns:minmax(0,5fr) minmax(0,4fr)}.rml.ss .rmpic,.rml.ss .sstb{grid-column:1;grid-row:1}.rml.ss .ssside{grid-column:2;grid-row:1}.ss .ssst{font-size:19px}.ss .sslines{font-size:22px}.ss .ssct{font-size:19px}.ss .ssct td{padding:8px 10px}}
 @media (prefers-reduced-motion:reduce){.ss svg .ssglow{animation:none}}
 .kq>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .kq>summary::-webkit-details-marker{display:none}
@@ -1499,7 +1496,7 @@ const TOPICS = [
   {id:"venn-regions", strand:"alg", levels:["emath"], chapter:"Set Language & Notation",
    title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Then read a shaded diagram.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
-   title:"Arc length, sector area & radians", blurb:"A sector is a fraction of the circle. Wrap the radius round it to see what 1 radian is.", play:"arcRad", sheet:"emArcs", sheetTitle:"Arc length, sector area & radians"},
+   title:"Arc length, sector area & radians", blurb:"Drag the angle. Watch the arc and the area change.", play:"arcRad", sheet:"emArcs", sheetTitle:"Arc length, sector area & radians"},
   {id:"centre-angle-proof", strand:"geo", levels:["emath","amath"], chapter:"Properties of Circles", tier:"curious",
    title:"Proof: angle at centre = 2 × angle at circumference", blurb:"Two isosceles triangles and an exterior angle. That's the whole proof.", play:"centreProof", sheet:"circles", sheetTitle:"Circle properties"},
   {id:"diff-x-squared", strand:"calc", levels:["amath"], chapter:"Differentiation",
@@ -1577,7 +1574,7 @@ const TOPICS = [
   {id:"ratio-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
    title:"Ratio: repeated name", blurb:"Two ratios share one name. Make it the same, then join them.", play:"ratioSame"},
   {id:"stays-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
-   title:"Before and after: what stays the same?", blurb:"Something changes. Guess what stays the same, then watch it play.", play:"staysSame"}
+   title:"Before and after", blurb:"Something changes. Guess what stays the same, then watch it play.", play:"staysSame"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -4638,7 +4635,7 @@ const arK=k=>Math.abs(k-PI)<1e-6?"π":N(k,2), arDg=a=>{ const d=deg(a); return M
 const arAt=(svg,P,a,t,col,gap=3.4)=>{ const c=Math.cos(a), s=Math.sin(a); return lab(svg,[P[0]+c*gap,P[1]-s*gap+1.5+(s<-.3?2.6:0)],t,{"text-anchor":c>.3?"start":c<-.3?"end":"middle",fill:col,"font-size":4.2,"font-weight":700}); };
 function arSector(svg,R,th,L){
   const full=th>=2*PI-1e-9, m=th/2; let la=m; if(Math.abs(Math.cos(m))>.5) [PI/2,3*PI/2].forEach(a=>{ if(a<th&&Math.abs(Math.cos(a))<Math.abs(Math.cos(la))) la=a; });
-  const c=Math.cos(la)>.3?[62,62]:arO, E=arPt(R,th,c), F={"font-size":4.2,"font-weight":700};
+  const c=L.c||(Math.cos(la)>.3?[62,62]:arO), E=arPt(R,th,c), F={"font-size":4.2,"font-weight":700};
   S_(svg,"circle",{cx:c[0],cy:c[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.2"});
   S_(svg,"path",{d:full?arArcD(R,0,th,c):`M${c}L${arPt(R,0,c)}${arArcD(R,0,th,c).replace(/^M[^A]+/,"")}Z`,fill:"var(--blue-fill)",stroke:"none"});
   seg(svg,c,arPt(R,0,c),{"stroke-width":.9}); seg(svg,c,E,{"stroke-width":.9});
@@ -4652,63 +4649,20 @@ function arSector(svg,R,th,L){
   else lab(svg,[+al.getAttribute("x"),+al.getAttribute("y")+6.6],L.area,Object.assign({"text-anchor":al.getAttribute("text-anchor"),fill:"var(--blue)"},F));
 }
 const arSet=o=>s=>{ if(s._keep){ s._keep=0; return {}; } return o; }, arWork=rows=>rows.map(([a,b])=>`<div class="row hint">${nw(a)} ${nw("= "+b)}</div>`).join("");
+const arC=[72,62], arKey=s=>{ const r=s.r, rr=V("r"), th=kc("red","θ"), q=s.u==="rad", a=q?s.k:rad(s.d), ans=(v,u)=>nw(`= ${arN(v)} ${u}`), sf=v=>arEx(v)?"":"(3 s.f.)";
+  return `<div class="apwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(q?[FB("amber","Arc",`${nw(`${V("s")} = ${rr}${th}`)} ${ans(r*a,"cm")}`,nw(`${r} × ${N(s.k)}`),null,"wide"),FB("blue","Area",`${nw(`${V("A")} = ${frac("1","2")}${rr}²${th}`)} ${ans(r*r*a/2,"cm²")}`,nw(`${frac("1","2")} × ${r}² × ${N(s.k)}`),null,"wide")]:[FB("amber","Arc",`${nw(`${frac(th,"360°")} × 2π${rr}`)} ${ans(r*a,"cm")}`,sf(r*a),null,"wide"),FB("blue","Area",`${nw(`${frac(th,"360°")} × π${rr}²`)} ${ans(r*r*a/2,"cm²")}`,sf(r*r*a/2),null,"wide")],true)+`</div>`; };
 const arcRad=aid({
-  init:{d:75,r:6,k:1,t:1.4}, jump:true, vb:"0 0 150 120", label:"Sector of a circle with its arc and angle", fix:s=>{ s._keep=/[?&](?!step=)\w+=/.test(location.hash); }, nxOk:s=>s.step!==0||!!s._dr,
-  sliders:[{k:"d",label:"θ",min:10,max:350,step:5,f:v=>v+"°",show:s=>s.step===0,on:s=>{s._dr=1;}},
-    {k:"k",label:"θ",min:.1,max:3.15,step:.05,f:v=>`${N(v)} rad`,show:s=>s.step===1,on:s=>{ if(s.k>PI-.03) s.k=PI; }},
-    {k:"t",label:"θ",min:.6,max:2.4,step:.05,f:v=>`${N(v)} rad`,show:s=>s.step===2},
-    {k:"r",label:V("r"),min:3,max:10,step:1,f:v=>v+" cm",on:s=>{s._dr=1;}}],
-  buttons:[{label:"▶ Wrap to 180°",show:s=>s.step===1,pressed:s=>s.k>=PI-1e-6,fn:(s,anim)=>{ const W=900, H=450, T=3*(W+H)+(PI-3)*W; s.k=0;
-    anim(T,p=>{ let ms=p*T, k=null; for(let i=0;i<3&&k===null;i++){ if(ms<W) k=i+ms/W; else { ms-=W; if(ms<H) k=i+1; else ms-=H; } } s.k=p>=1?PI:k===null?Math.min(PI,3+ms/W):Math.max(.001,k); }); }}],
-  steps:[
-    {name:"Degrees",set:arSet({d:75,r:6}),t:s=>{ const g=gcd(s.d,360); return `Drag θ. ${nw(`${frac(s.d+"°","360°")} = ${frac(s.d/g,360/g)}`)} of the circle.`; }},
-    {name:"Radians",set:arSet({k:1,r:5}),t:()=>`Arc = radius: <b>1 rad</b>.`},
-    {name:"Segment",set:arSet({t:1.4,r:6}),t:()=>`Segment = sector − triangle.`}],
-  draw(svg,s){ const m=s.step;
-    if(m===0){ const th=rad(s.d), R=arR(s.r), F=s.d/360;
-      arSector(svg,R,th,{ang:s.d+"°",r:`${s.r} cm`,arc:arN(F*2*PI*s.r)+" cm",area:arN(F*PI*s.r*s.r)+" cm²"}); return; }
-    if(m===1){ const R=46, k=s.k, n=Math.floor(k+1e-9), fr=k-n, A=arPt(R,0);
-      if(k>1e-6) S_(svg,"path",{d:`M${arO}L${A}${arArcD(R,0,k).replace(/^M[^A]+/,"")}Z`,fill:"var(--blue-fill)",stroke:"none"});
-      S_(svg,"circle",{cx:arO[0],cy:arO[1],r:R,fill:"none",stroke:"var(--ink)","stroke-width":.7});
-      for(let i=1;i<=n&&i<k+1e-9;i++) seg(svg,arO,arPt(R,i),{stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.1"});
-      seg(svg,arO,A,{"stroke-width":.9}); if(k>1e-6) seg(svg,arO,arPt(R,k),{"stroke-width":.9});
-      if(k>1e-6) S_(svg,"path",{d:arArcD(R,0,k),fill:"none",stroke:"var(--amber)","stroke-width":2.4});
-      if(Math.abs(k-PI)>1e-6&&(fr>1e-6||k<1e-6)){ const E=arPt(R,k), dir=[-Math.sin(k),-Math.cos(k)], Lt=(1-fr)*R;
-        seg(svg,E,[E[0]+dir[0]*Lt,E[1]+dir[1]*Lt],{stroke:"var(--amber)","stroke-width":2.4,"stroke-dasharray":"2.4 1.2"}); }
-      for(let i=0;i<=n;i++){ if(i>k+1e-9) break; seg(svg,arPt(R-2.6,i),arPt(R+2.6,i),{"stroke-width":.8}); }
-      for(let i=0;i<n;i++) arAt(svg,arPt(R,i+.5),i+.5,"r","var(--amber)",2.6).setAttribute("font-style","italic");
-      if(k<1e-6) lab(svg,[A[0]+3,A[1]-R/2],"r",{"text-anchor":"start","font-size":4.6,"font-weight":700,fill:"var(--amber)","font-style":"italic"});
-      lab(svg,[arO[0]+R/2,arO[1]+5.6],"r",{"font-size":4.6,"font-weight":700,"font-style":"italic"});
-      S_(svg,"circle",{cx:arO[0],cy:arO[1],r:1,fill:"var(--ink)"}); lab(svg,[arO[0]-2.5,arO[1]+6.5],"O",{"font-size":4.6,"font-weight":700,"text-anchor":"end"});
-      if(k>1e-6){ arcMark(svg,arO,7,0,deg(k),"var(--red)"); const mid=k/2, sm=k<.7, P=sm?[arO[0]-3,arO[1]-9]:arPt(k<1.2?24:k>2.6?28:17,mid), y=P[1]+(sm?0:Math.sin(mid)>.3?-2:1.5), A2={"font-weight":700,fill:"var(--red)","text-anchor":sm?"end":"middle"};
-        lab(svg,[P[0],y],`${arK(k)} rad`,Object.assign({"font-size":4.2},A2));
-        lab(svg,[P[0],y+6.8],Math.abs(k-PI)<1e-6?"= 180°":`≈ ${n1(deg(k))}°`,Object.assign({"font-size":4},A2)); }
-      return; }
-    const R=arR(s.r), C=[75,68], a0=PI/2-s.t/2, a1=PI/2+s.t/2, A=arPt(R,a0,C), B=arPt(R,a1,C), h=R*Math.cos(s.t/2);
-    S_(svg,"circle",{cx:C[0],cy:C[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.2"});
-    S_(svg,"path",{d:`${arArcD(R,a0,a1,C)}Z`,fill:"var(--amber-fill)",stroke:"none"});
-    S_(svg,"path",{d:`M${C}L${A}L${B}Z`,fill:"var(--blue-fill)",stroke:"var(--blue)","stroke-width":.7});
-    S_(svg,"path",{d:`M${C}L${A}${arArcD(R,a0,a1,C).replace(/^M[^A]+/,"")}Z`,fill:"none",stroke:"var(--green)","stroke-width":1.2});
-    arcMark(svg,C,5,deg(a0),deg(s.t),"var(--red)");
-    lab(svg,[C[0],C[1]+6.4],`θ = ${N(s.t)} rad`,{"font-size":4.2,"font-weight":700,fill:"var(--red)"});
-    lab(svg,[C[0],C[1]-Math.max(h*.6,8)+1.5],"triangle",{"font-size":4.2,"font-weight":700,fill:"var(--blue)"});
-    lab(svg,[C[0],C[1]-R-3],"segment",{"font-size":4.2,"font-weight":700,fill:"var(--amber)"});
-    const n0=[Math.sin(a0),Math.cos(a0)], M1=[(C[0]+B[0])/2-n0[0]*2.6,(C[1]+B[1])/2+n0[1]*2.6+1.5];
-    lab(svg,M1,`${s.r} cm`,{"text-anchor":"end","font-size":4.2,"font-weight":700});
-  },
-  key(s){ const m=s.step, r=s.r, rr=V("r"), ans=(v,u)=>`${nw(`= ${arN(v)} ${u}`)}${arEx(v)?"":" "+nw("(3 s.f.)")}`;
-    if(m===0){ const F=s.d/360, arc=F*2*PI*r, area=F*PI*r*r;
-      return FORMS([FB("amber","Arc",nw(`${frac("θ","360°")} × 2π${rr}`),ans(arc,"cm")),
-        FB("blue","Area",nw(`${frac("θ","360°")} × π${rr}²`),ans(area,"cm²")),
-        FB("green","Perimeter",nw(`arc + 2${rr}`),ans(arc+2*r,"cm"))],true); }
-    if(m===1){ const k=s.k;
-      return FORMS([FB("amber","Arc",nw(`${V("s")} = ${rr}θ`),`${nw(`= ${r} × ${arK(k)}`)} ${ans(r*k,"cm")}`),
-        FB("blue","Area",nw(`${V("A")} = ${frac("1","2")}${rr}²θ`),ans(r*r*k/2,"cm²")),
-        FB("red","Half turn",nw("π rad = 180°"),`${nw("1 rad = 57.3°")} ${nw("(1 d.p.)")}`)],true); }
-    const sec=r*r*s.t/2, tri=r*r*Math.sin(s.t)/2;
-    return FORMS([FB("green","Sector",nw(`${frac("1","2")}${rr}²θ`),nw(`= ${N(sec,3)} cm²`)),
-      FB("blue","Triangle",nw(`${frac("1","2")}${rr}² sin θ`),`${nw(`= ${N(tri,3)} cm²`)}<br><b>RAD mode</b>`),
-      FB("amber","Segment",nw(`${N(sec,3)} − ${N(tri,3)}`),ans(sec-tri,"cm²"))],true); }
+  init:{u:"deg",_u:"deg",d:75,k:1.3,r:6}, jump:true, vb:"0 0 150 120", label:"Sector of a circle with its arc and angle", link:["d","k"],
+  fix:s=>{ s.d=clamp(snap(s.d,5),30,315); s.k=clamp(+snap(s.k,.1).toFixed(1),.5,5.5); },
+  pills:[{k:"u",label:"Angle in",opts:[["deg","Degrees"],["rad","Radians"]],on:s=>{ if(s.u===s._u) return; s._u=s.u;
+    if(s.u==="rad") s.k=clamp(+snap(rad(s.d),.1).toFixed(1),.5,5.5); else s.d=clamp(snap(deg(s.k),5),30,315); }}],
+  steps:[{name:"Sector",t:()=>`Drag the dot.`,w:s=>arKey(s)}],
+  draw(svg,s){ const R=arR(s.r), q=s.u==="rad", th=q?s.k:rad(s.d);
+    arSector(svg,R,th,{c:arC,ang:q?`${N(s.k)} rad`:s.d+"°",r:`${s.r} cm`,arc:arN(s.r*th)+" cm",area:arN(s.r*s.r*th/2)+" cm²"});
+    const E=arPt(R,th,arC); handle(svg,E[0],E[1],"p"); },
+  drag(id,p,s){ const a=norm(dirTo(arC,[p.x,p.y])), was=s.u==="rad"?deg(s.k):s.d, v=was>270&&a<90?360:was<90&&a>270?0:a;
+    if(s.u==="rad") s.k=clamp(+snap(rad(v),.1).toFixed(1),.5,5.5); else s.d=clamp(snap(v,5),30,315); },
+  key(){ return ""; }
 });
 const SR={sin:"blue",cos:"amber",tan:"green",sec:"red",cosec:"purple",cot:"teal"}, srCol=k=>`var(--${SR[k]})`, SRK=k=>CS(SR[k],k+" θ");
 const SRV1={O:[26,130],R:54}, SRV2={O:[70,75],R:40}, SRB=[3,137,4,146];
@@ -7393,14 +7347,14 @@ const ratioSame={ steps:[],
   } };
 PLAYS.ratioSame=ratioSame;
 const SSX=[
-  {n:1,ev:"Lee got 14 more",sl:"Lee got 14 more stickers.",end:"Now Kim : Lee = 1 : 2.",ask:"Kim at first?",keep:"k",A:[1,2],mB:1,mA:3,mv:[{w:"l",k:"in",d:1,v:14}],V:14,al:"Kim at first = 3u = 42"},
-  {n:2,ev:"Kim gave 6 to her brother",sl:"Kim gave 6 stickers to her brother.",end:"Now Kim : Lee = 2 : 5.",ask:"Kim at first?",keep:"l",A:[2,5],mB:1,mA:1,mv:[{w:"k",k:"out",d:1,v:6}],V:6,al:"Kim at first = 3u = 18"},
-  {n:3,ev:"Kim gave 20 to Lee",sl:"Kim gave 20 stickers to Lee.",end:"Now Kim : Lee = 1 : 7.",ask:"Lee in the end?",keep:"t",A:[1,7],mB:1,mA:1,mv:[{w:"k",k:"tx",d:2,v:20}],V:20,al:"Lee in the end = 7u = 70"},
-  {n:4,ev:"Lee gave 18 to Kim",sl:"Lee gave 18 stickers to Kim.",end:"Now Kim : Lee = 3 : 1.",ask:"Lee at first?",keep:"t",A:[3,1],mB:1,mA:2,mv:[{w:"l",k:"tx",d:3,v:18}],V:18,al:"Lee at first = 5u = 30"},
-  {n:5,ev:"Each got 12 more",sl:"Each of them got 12 more stickers.",end:"Now Kim : Lee = 2 : 3.",ask:"Kim at first?",keep:"d",A:[2,3],mB:1,mA:2,mv:[{w:"k",k:"in",d:1,v:12},{w:"l",k:"in",d:1,v:12}],V:12,al:"Kim at first = 3u = 36"},
-  {n:6,ev:"Each used 7",sl:"Each of them used 7 stickers.",end:"Now Kim : Lee = 4 : 7.",ask:"Kim at first?",keep:"d",A:[4,7],mB:3,mA:2,mv:[{w:"k",k:"use",d:1,v:7},{w:"l",k:"use",d:1,v:7}],V:7,al:"Kim at first = 9u = 63"},
-  {n:7,ev:"Kim got 11 more, Lee used 7",sl:"Kim got 11 more. Lee used 7.",end:"Then they had the same.",ask:"Kim at first?",keep:"n",A:null,mB:1,mA:1,mv:[{w:"k",k:"in",d:11/9,v:11},{w:"l",k:"use",d:7/9,v:7}],V:0,al:"Kim at first = 3u = 27"}];
-const SSN={k:"Kim",l:"Lee",t:"Total",d:"Difference",n:"Nothing"}, SSK=["k","l","t","d"];
+  {n:1,ev:"Lee got 14 more",sl:"Lee got 14 more.",end:"Now 1 : 2.",ask:"Kim at first?",keep:"k",A:[1,2],mB:1,mA:3,mv:[{w:"l",k:"in",d:1,v:14}],V:14,al:"Kim at first = 3u = 42"},
+  {n:2,ev:"Kim gave 6 to her brother",sl:"Kim gave 6 to her brother.",end:"Now 2 : 5.",ask:"Kim at first?",keep:"l",A:[2,5],mB:1,mA:1,mv:[{w:"k",k:"out",d:1,v:6}],V:6,al:"Kim at first = 3u = 18"},
+  {n:3,ev:"Kim gave 20 to Lee",sl:"Kim gave 20 to Lee.",end:"Now 1 : 7.",ask:"Lee in the end?",keep:"t",A:[1,7],mB:1,mA:1,mv:[{w:"k",k:"tx",d:2,v:20}],V:20,al:"Lee in the end = 7u = 70"},
+  {n:4,ev:"Lee gave 18 to Kim",sl:"Lee gave 18 to Kim.",end:"Now 3 : 1.",ask:"Lee at first?",keep:"t",A:[3,1],mB:1,mA:2,mv:[{w:"l",k:"tx",d:3,v:18}],V:18,al:"Lee at first = 5u = 30"},
+  {n:5,ev:"Each got 12 more",sl:"Each got 12 more.",end:"Now 2 : 3.",ask:"Kim at first?",keep:"d",A:[2,3],mB:1,mA:2,mv:[{w:"k",k:"in",d:1,v:12},{w:"l",k:"in",d:1,v:12}],V:12,al:"Kim at first = 3u = 36"},
+  {n:6,ev:"Each used 7",sl:"Each used 7.",end:"Now 4 : 7.",ask:"Kim at first?",keep:"d",A:[4,7],mB:3,mA:2,mv:[{w:"k",k:"use",d:1,v:7},{w:"l",k:"use",d:1,v:7}],V:7,al:"Kim at first = 9u = 63"},
+  {n:7,ev:"Kim got 11 more, Lee used 7",sl:"Kim got 11 more. Lee used 7.",end:"Then they had the same.",ask:"Kim at first?",keep:"n",A:null,mB:1,mA:1,mv:[{w:"k",k:"in",d:11/9,v:11},{w:"l",k:"use",d:7/9,v:7}],V:0,al:"Kim at first = 3u = 27"}];
+const SSN={k:"Kim",l:"Lee",t:"Total",d:"Difference",n:"Nothing"}, SSW={k:"Kim",l:"Lee",t:"Total",d:"Diff.",n:"—"}, SSK=["k","l","t","d"];
 const SSE=[`<span class="rmcb">Kim:</span> 3u + 11`,`<span class="rmca">Lee:</span> 5u − 7`,`<span class="sssd"><span class="ssup">+7</span>3u + 11</span> <span class="sseq pv">=</span> <span class="sssd"><span class="ssup">+7</span>5u − 7</span>`,`3u + 18 <span class="sseq pv">=</span> 5u`,`Spot: 2u = 18`,`1u = 9`,`Kim at first = 3u = 27`];
 function ssEnd(S){ const K0=3*S.mB, L0=5*S.mB; let Ka=K0, La=L0;
   S.mv.forEach(m=>{ const s=m.k==="in"?1:-1; if(m.w==="k") Ka+=s*m.d; else La+=s*m.d; if(m.k==="tx"){ if(m.w==="k") La+=m.d; else Ka+=m.d; } });
@@ -7410,53 +7364,50 @@ function ssArr(S){ if(S.keep==="n") return []; const E=ssEnd(S), a=[]; [["k",E.K
 function ssLines(S){ if(S.keep==="n") return SSE; const n=Math.abs(ssArr(S)[0].d), V=S.V; return (n===1?[`1u = ${V}`]:[`${n}u = ${V}`,`1u = ${V} ÷ ${n} = ${V/n}`]).concat([S.al]); }
 function ssRows(S){ const x=S.keep==="t"||S.keep==="d"?S.keep:"", f=(K,L)=>x?[K,L,ssVal(x,K,L)]:[K,L], m=S.mB, n=S.mA;
   return {x,B:f(3,5),Bm:f(3*m,5*m),A:f(S.A[0],S.A[1]),Am:f(S.A[0]*n,S.A[1]*n)}; }
-function ssMsCap(S){ const R=ssRows(S), j=S.keep==="k"?0:S.keep==="l"?1:2; return `${SSN[S.keep]}: ${R.B[j]} and ${R.A[j]}. `+(S.mB===1&&S.mA===1?"Already the same.":`Make both ${R.Bm[j]}.`); }
+function ssMsCap(S){ const R=ssRows(S), j=S.keep==="k"?0:S.keep==="l"?1:2; return `${SSN[S.keep]}: ${R.B[j]}, ${R.A[j]}. `+(S.mB===1&&S.mA===1?"Already the same.":`Make both ${R.Bm[j]}.`); }
 function ssVerb(S,x){ const E=ssEnd(S), a=ssVal(x,E.K0,E.L0), b=ssVal(x,E.Ka,E.La); return Math.abs(a-b)<1e-9?"stays the same":b>a?"grew":"shrank"; }
 const staysSame={ steps:[],
-  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","ssplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
-    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
-    const st={ord:[0,1,2,3,4,5,6],i:0,rows:[],ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",warn:0,outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,amsg:"",ln:0,p:1,anim:null,raf:0};
-    const W=h("div",{class:"rm ss"}), q=h("div",{class:"rmcard ssq"}), top=h("div",{class:"sstop"}), pic=h("div",{class:"rmcard rmpic"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sv=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bars"}), pk=h("div",{class:"rmcard sspk"}), low=h("div",{class:"rmlow"}), rows=h("div",{class:"rmcard rmrows ssrw"}), side=h("div",{class:"rmside"}), tb=h("div",{class:"rmcard sstb"});
-    sv.append(svg); pic.append(cap,sv); top.append(pic,pk); low.append(rows,side); W.append(q,top,low,tb); stage.append(W);
+  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","rmlean","ssplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
+    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches), PLAY=2400, SAME=1100, HOLD=1500, LINE=1000, LAST=2500;
+    const st={ord:[0,1,2,3,4,5,6],i:0,rows:[],ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,ln:0,p:1,anim:null,raf:0,tm:0,nx:null};
+    const W=h("div",{class:"rm rml ss"}), pic=h("div",{class:"rmcard rmpic"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sv=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bars"}), side=h("div",{class:"ssside"}), q=h("div",{class:"rmcard ssq"}), pk=h("div",{class:"rmcard sspk"}), rows=h("div",{class:"rmcard rmrows ssrw"}), slot=h("div",{class:"rmslot"}), tb=h("div",{class:"rmcard sstb"});
+    sv.append(svg); pic.append(cap,sv); side.append(q,pk,rows,slot); W.append(pic,tb,side); stage.append(W);
     const cS=()=>SSX[st.ord[st.i]], cl=(x,lo,hi)=>Math.max(0,Math.min(1,(x-lo)/(hi-lo))), ez=t=>t*t*(3-2*t);
-    const modeB=()=>cS().keep!=="n"&&["same","arrow","lines","fin"].includes(st.ph);
+    const modeB=()=>cS().keep!=="n"&&["same","arrow","fin"].includes(st.ph);
     const shake=el=>{ if(!el) return; el.classList.remove("rmshk"); void el.offsetWidth; el.classList.add("rmshk"); setTimeout(()=>el.classList.remove("rmshk"),450); };
     function capText(){ const S=cS(), ph=st.ph;
       if(ph==="pick") return "At first";
-      if(ph==="play") return S.ev+".";
+      if(ph==="play") return "";
       if(ph==="miss"||ph==="lock"||S.keep==="n") return st.res;
-      if(ph==="arrow") return "Count the glowing boxes.";
+      if(ph==="arrow") return st.amiss?"Count the numbered boxes.":"Count the glowing boxes.";
       return ssMsCap(S); }
-    function pkHtml(){ const S=cS(), ph=st.ph;
-      if(ph==="pick"||ph==="miss"||ph==="play") return `<div class="ssak">What stays the same?</div><div class="sspl">${["k","l","t","d","n"].map(x=>{ const tr=st.tried.includes(x); return `<button type="button" class="sspill ${x}${st.pick===x&&!tr?" act":""}${tr?" tried":""}" data-p="${x}"${tr||ph==="play"?" disabled":""}>${SSN[x]}</button>`; }).join("")}</div><div class="sshint">${ph==="miss"?"Try another one.":""}</div>`;
-      return `<div class="sssum">Stays the same: <b>✓ ${SSN[S.keep]}</b></div>`; }
-    function sideHtml(){ const S=cS(), ph=st.ph; let s="";
-      if(ph==="arrow"){ const a=ssArr(S)[0];
-        return `<div class="rmcard rmtp ssask"><div class="rmtl"><b class="${a.w==="k"?"rmcb":"rmca"}">${SSN[a.w]}</b>: ${a.d>0?"+":"−"}<span class="rmab${st.aIn?"":" q"}">${st.aIn||"?"}</span>u</div><div class="rmmsg" role="alert">${st.amsg}</div><div class="sgpad rmpad sspad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-d="${n}">${n}</button>`).join("")}<button type="button" data-d="ok" class="ok" aria-label="Check">✓</button></div></div>`; }
-      const all=ph==="fin"&&st.rows.length>=7;
-      if(all) s+=`<div class="ssdone">All 7 done</div>`;
-      const lab=ph==="pick"||ph==="miss"||ph==="play"?"▶ Play":ph==="lock"?"▶ Make it the same":ph==="same"?"▶ Next":ph==="lines"?"▶ Next line":all?"↺ Again":"▶ Next story";
-      const dis=(ph==="pick"&&!st.pick)||ph==="miss", go=!dis&&!st.anim;
-      return s+`<div class="rmact"><button type="button" class="rmbtn${dis?" dis":""}${go?" rmgo":""}">${lab}</button></div>`; }
+    function pkHtml(){ const ph=st.ph;
+      return `<div class="ssak">Stays the same?</div><div class="sspl">${["k","l","t","d","n"].map(x=>{ const tr=st.tried.includes(x); return `<button type="button" class="sspill ${x}${st.pick===x&&!tr?" act":""}${tr?" tried":""}" data-p="${x}"${tr||ph==="play"?" disabled":""}>${SSN[x]}</button>`; }).join("")}</div>`; }
+    function slotHtml(){ const ph=st.ph;
+      if(ph==="arrow") return `<div class="sgpad sspad" role="group" aria-label="How many u?">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-d="${n}">${n}</button>`).join("")}</div>`;
+      if(ph==="fin"&&st.rows.length<7) return `<div class="rmact"><button type="button" class="rmbtn rmgo" data-a="next">Next story →</button></div>`;
+      if(ph==="end") return `<div class="rmact"><button type="button" class="rmbtn ghost" data-a="again">↺ Again</button></div>`;
+      return ""; }
     function rowsHtml(){ const S=cS(), ph=st.ph; let s="";
       if(modeB()){ const R=ssRows(S), x3=!!R.x, nc=x3?6:4, kp=S.keep, ov=(k,t)=>kp===k?`<span class="rmov">${t}</span>`:t;
         const hdr=`<span class="rmh rmcb">${ov("k","Kim")}</span><span class="rmco">:</span><span class="rmh rmca">${ov("l","Lee")}</span>${x3?`<span class="sssep"></span><span class="rmh">${ov(kp,SSN[kp])}</span>`:""}<span class="rmx"></span>`;
         const row=(v,tag,tail)=>`<span class="rmn"${tag?` data-c="${tag}-k"`:""}>${v[0]}</span><span class="rmco">:</span><span class="rmn"${tag?` data-c="${tag}-l"`:""}>${v[1]}</span>${x3?`<span class="sssep"></span><span class="rmn">${v[2]}</span>`:""}<span class="rmx">${tail||""}</span>`;
         const blk=(t,tag,raw,ms,m)=>`<div class="rmblk ssbk" data-b="${tag}"><div class="rmbt">${t}</div><div class="rmg" style="--nc:${nc}">${hdr}${row(raw,m>1?"":tag)}${m>1?row(ms,tag,`↓ × ${m}`):""}</div></div>`;
         s+=`<div class="rmblks ssblks">${blk("Before","b",R.B,R.Bm,S.mB)}${blk("After","a",R.A,R.Am,S.mA)}</div>`; }
-      if(ph==="lines"||ph==="fin") s+=`<div class="sslines${S.keep==="n"?" ss7":""}">${ssLines(S).slice(0,st.ln).map(x=>`<div class="ssl">${x}</div>`).join("")}</div>`;
+      if(ph==="fin"||(ph==="lines"&&st.ln>0)) s+=`<div class="sslines${S.keep==="n"?" ss7":""}">${ssLines(S).slice(0,st.ln).map(x=>`<div class="ssl">${x}</div>`).join("")}</div>`;
       return s; }
     function fitRows(){ const bl=rows.querySelector(".ssblks"); rows.classList.remove("rmtight"); if(!bl) return; bl.classList.remove("ssv");
       if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight");
       if(rows.scrollWidth>rows.clientWidth+1) bl.classList.add("ssv"); }
-    function render(){ const S=cS(), ph=st.ph;
-      q.innerHTML=`<div class="ssdots" aria-label="Story ${st.i+1} of 7">${st.ord.map((x,j)=>`<span class="ssdot${j<st.i||(j===st.i&&ph==="fin")?" done":j===st.i?" on":""}"></span>`).join("")}</div><div class="ssst"><div>At first, Kim : Lee = 3 : 5.</div><div><u>${S.sl}</u></div><div>${S.end} <b>${S.ask}</b></div></div>`;
-      cap.innerHTML=capText(); cap.classList.toggle("warn",ph==="miss");
-      pk.innerHTML=pkHtml(); pk.hidden=modeB();
-      rows.innerHTML=rowsHtml(); rows.hidden=!rows.querySelector(".ssblks,.ssl"); if(!rows.hidden) fitRows();
-      side.innerHTML=sideHtml();
-      tb.hidden=!st.rows.length; tb.innerHTML=st.rows.length?`<table class="ssct"><thead><tr><th>What happened</th><th>Stays the same</th></tr></thead><tbody>${st.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`:"";
-      draw(); arcs(); }
+    function render(){ const S=cS(), ph=st.ph, end=ph==="end";
+      q.innerHTML=`<div class="ssdots" aria-label="Story ${st.i+1} of 7">${st.ord.map((x,j)=>{ const dn=end||j<st.i||(j===st.i&&ph==="fin"); return `<span class="ssdc"><span class="ssdot${dn?" done":j===st.i?" on":""}"></span><span class="ssdw">${dn?SSW[SSX[x].keep]:""}</span></span>`; }).join("")}</div>${end?"":`<div class="ssst"><div>Kim : Lee = 3 : 5. <u>${S.sl}</u></div><div>${S.end} <b>${S.ask}</b></div></div>`}`;
+      W.classList.toggle("ssend",end);
+      pic.hidden=end; cap.innerHTML=end?"":capText(); cap.classList.toggle("warn",ph==="miss"||(ph==="arrow"&&!!st.amiss));
+      pk.hidden=!["pick","play","miss"].includes(ph); if(!pk.hidden) pk.innerHTML=pkHtml();
+      rows.innerHTML=end?"":rowsHtml(); rows.hidden=end||!rows.querySelector(".ssblks,.ssl"); if(!rows.hidden) fitRows();
+      slot.innerHTML=slotHtml();
+      tb.hidden=!end; tb.innerHTML=end?`<div class="ssdone">All 7 done</div><table class="ssct"><thead><tr><th>What happened</th><th>Stays the same</th></tr></thead><tbody>${st.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`:"";
+      if(!end){ draw(); arcs(); } }
     function draw(){ svg.innerHTML=""; const S=cS(), En=ssEnd(S), ph=st.ph, mb=modeB(), p=st.anim?st.p:1;
       const cw=Math.max(260,Math.round(sv.clientWidth||320)), wide=cw>=560, fs=wide?17:15, sf=wide?15:13, BH=wide?44:34, BD=wide?34:28, G=wide?18:14;
       const tw=(s,f)=>{ const t=svgEl("text",{"font-size":f,"font-weight":700,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*f*.6; };
@@ -7468,7 +7419,7 @@ const staysSame={ steps:[],
       if(mb){ const bh=Math.round(BH*.62), c=ph==="same"&&st.anim?ez(p):1, Yk=sf+18, Yl=Yk+bh+4+BH+G, H=Yl+bh+4+BH+10;
         svg.setAttribute("viewBox",`0 0 ${cw} ${H}`); svg.setAttribute("width",cw); svg.setAttribute("height",H);
         add("rect",{x:X0,y:4,width:22,height:sf-1,fill:"none",stroke:"var(--ink)","stroke-width":1.6,"stroke-dasharray":"4 3"});
-        const t1=add("text",{x:X0+28,y:sf+2,"font-size":sf,fill:"var(--muted)"},"before"), w1=tw("before",sf);
+        add("text",{x:X0+28,y:sf+2,"font-size":sf,fill:"var(--muted)"},"before"); const w1=tw("before",sf);
         add("rect",{x:X0+40+w1,y:4,width:22,height:sf-1,fill:"none",stroke:"var(--ink)","stroke-width":2.2});
         add("text",{x:X0+68+w1,y:sf+2,"font-size":sf,fill:"var(--muted)"},"after");
         const bar=(id,y,hh,len,fill,base,gh)=>{ const g=add("g",{class:"ssbar","data-bar":id}); add("rect",{x:X0,y,width:len*px,height:hh,fill,"fill-opacity":gh?.5:1},null,g);
@@ -7521,7 +7472,7 @@ const staysSame={ steps:[],
         add("text",{x:X((En.La+En.L0)/2),y:Yl+BH/2+sf*.36,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)",class:"ssbl"},"7"); }
       svg.setAttribute("aria-label",`Kim ${+(e?Ke:En.K0).toFixed(2)} boxes, Lee ${+(e?Le:En.L0).toFixed(2)} boxes, Total under them.`); }
     function arcs(){ const old=rows.querySelector("svg.ssarr"); if(old) old.remove(); rows.classList.remove("ssarrs","ssvv");
-      const S=cS(); if(!modeB()||!["arrow","lines","fin"].includes(st.ph)||rows.hidden) return; const A=ssArr(S), shown=st.ph==="arrow"?1:A.length;
+      const S=cS(); if(!modeB()||!["arrow","fin"].includes(st.ph)||rows.hidden) return; const A=ssArr(S), shown=st.ph==="arrow"?1:A.length;
       const bl=rows.querySelector(".ssblks"), vert=bl.classList.contains("ssv"); rows.classList.add("ssarrs"); if(vert) rows.classList.add("ssvv");
       const R=rows.getBoundingClientRect(), s=svgEl("svg",{class:"ssarr","aria-hidden":"true"}); rows.append(s);
       const bb=[...rows.querySelectorAll(".ssbk")].map(b=>b.getBoundingClientRect()), yM=Math.max(bb[0].bottom,bb[1].bottom)-R.top;
@@ -7530,64 +7481,65 @@ const staysSame={ steps:[],
         if(!vert){ const sx=c0.left+c0.width/2-R.left, sy=c0.bottom-R.top+2, ex=c1.left+c1.width/2-R.left, ey=c1.bottom-R.top+2, yb=yM+(A.length>1?(a.w==="k"?62:24):30);
           d=`M${sx} ${sy}C${sx} ${yb} ${ex} ${yb} ${ex} ${ey+8}`; hd=`${ex},${ey} ${ex-5.5},${ey+10} ${ex+5.5},${ey+10}`; lx=(sx+ex)/2; ly=.125*sy+.75*yb+.125*ey; }
         else if(a.w==="k"){ const sx=c0.left-R.left-4, sy=c0.top+c0.height/2-R.top, ex=c1.left-R.left-4, ey=c1.top+c1.height/2-R.top, xb=Math.min(sx,ex)-28;
-          d=`M${sx} ${sy}C${xb} ${sy} ${xb} ${ey} ${ex-8} ${ey}`; hd=`${ex},${ey} ${ex-10},${ey-5.5} ${ex-10},${ey+5.5}`; lx=.75*xb+.125*(sx+ex); ly=(sy+ey)/2; }
+          d=`M${sx} ${sy}C${xb} ${sy} ${xb} ${ey} ${ex-8} ${ey}`; hd=`${ex},${ey} ${ex-10},${ey-5.5} ${ex-10},${ey+5.5}`; lx=xb-6; ly=(sy+ey)/2; }
         else { const sx=c0.right-R.left+4, sy=c0.top+c0.height/2-R.top, ex=c1.right-R.left+4, ey=c1.top+c1.height/2-R.top, xb=Math.max(sx,ex)+28;
           d=`M${sx} ${sy}C${xb} ${sy} ${xb} ${ey} ${ex+8} ${ey}`; hd=`${ex},${ey} ${ex+10},${ey-5.5} ${ex+10},${ey+5.5}`; lx=.75*xb+.125*(sx+ex); ly=(sy+ey)/2; }
         s.append(svgEl("path",{d,fill:"none",stroke:col,"stroke-width":2.2,class:"ssap","data-w":a.w}),svgEl("polygon",{points:hd,fill:col}));
-        const fill=st.ph!=="arrow"||i>0, txt=(a.d>0?"+":"−")+(fill?Math.abs(a.d):(st.aIn||"?"))+"u", g=svgEl("g",{class:"ssal","data-i":i,"data-w":a.w}); s.append(g);
+        const fill=st.ph!=="arrow"||i>0, txt=(a.d>0?"+":"−")+(fill?Math.abs(a.d):"?")+"u", g=svgEl("g",{class:"ssal","data-i":i,"data-w":a.w}); s.append(g);
         const t=svgEl("text",{x:lx,y:ly+5,"text-anchor":"middle","font-size":15,"font-weight":700,fill:col},txt); g.append(t); let w=40; try{ w=t.getComputedTextLength()+14; }catch(e){}
-        g.insertBefore(svgEl("rect",{x:lx-w/2,y:ly-12,width:w,height:24,rx:12,fill:"var(--card)",stroke:col,"stroke-width":fill?2:2.4,"stroke-dasharray":fill?"none":"4 3"}),t); } }
-    const tick=now=>{ if(!st.anim) return; st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else { st.anim=null; done(); } };
-    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; }
+        g.insertBefore(svgEl("rect",{x:lx-w/2,y:ly-12,width:w,height:24,rx:12,fill:fill?"var(--card)":"var(--blue-fill)",stroke:col,"stroke-width":fill?2:2.4,"stroke-dasharray":fill?"none":"4 3",class:fill?"":"ssq1"}),t); } }
+    const tick=now=>{ if(!st.anim) return; if(!root.isConnected){ st.anim=null; return; } st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else { st.anim=null; done(); } };
+    function later(ms,fn){ clearTimeout(st.tm); st.nx=fn; st.tm=setTimeout(()=>{ st.tm=0; st.nx=null; if(root.isConnected) fn(); },ms); }
+    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; clearTimeout(st.tm); st.tm=0; st.nx=null; }
     function anim(dur){ if(RED||!dur) return false; st.p=0; st.anim={t0:performance.now(),dur}; st.raf=requestAnimationFrame(tick); return true; }
-    function done(){ if(st.ph==="play") played(true); else { side.innerHTML=sideHtml(); draw(); } }
-    function finish(){ if(!st.anim) return; stop(); done(); }
-    function seen(t,g){ if(!t||t.hidden) return; const bar=document.querySelector(".bar"), bh=bar?bar.getBoundingClientRect().bottom:56, over=t.getBoundingClientRect().bottom-(innerHeight-8); if(over<=1) return;
-      const room=g?g.getBoundingClientRect().top-bh-8:over, dy=Math.min(over,Math.max(0,room)); if(dy>1) window.scrollBy({top:dy,behavior:RED?"auto":"smooth"}); }
+    function done(){ if(st.ph==="play") played(true); else if(st.ph==="same"){ draw(); later(HOLD,toArrow); } else draw(); }
+    function skip(){ if(st.anim){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; done(); return true; } if(st.tm&&st.nx){ const f=st.nx; clearTimeout(st.tm); st.tm=0; st.nx=null; f(); return true; } return false; }
     function played(live){ const S=cS(), p=st.pick, K=S.keep; st.after=1; st.vd=1;
-      if(p===K||st.rev){ st.res=K==="n"?"Nothing stays. The see-saw:":p===K?(S.n===5?"Difference stays. Ages work like this too.":`${SSN[K]} stays the same.`):p==="n"?`${SSN[K]} stayed.`:`${SSN[p]} ${ssVerb(S,p)}. Watch ${SSN[K]}.`;
-        if(p!==K&&p!=="n"){ st.miss++; st.tried.push(p); } st.ph=K==="n"?"lines":"lock"; st.ln=0; render(); if(live){ if(p!==K) shake(pic); seen(side,pic); } return; }
-      st.miss++; st.tried.push(p); st.res=`${SSN[p]} ${ssVerb(S,p)}.`; st.ph="miss"; render(); if(live){ shake(pic); seen(side,pic); } }
-    function play(){ const S=cS(); if(st.ph!=="pick"||!st.pick) return; const p=st.pick, rev=p==="n"||(p!==S.keep&&st.miss>=1);
-      st.pre=st.outl.slice(); st.outl=rev?SSK.slice():[p]; st.rev=rev?1:0; st.after=0; st.vd=0; st.res=""; st.ph="play";
-      const a=anim(2400); render(); seen(pic,pic); if(!a) played(true); }
-    function pill(x){ if(st.ph!=="pick"&&st.ph!=="miss") return; if(st.tried.includes(x)) return; stop(); st.pick=x; st.ph="pick"; st.after=0; st.vd=0; st.res=""; st.rev=0; st.outl=x==="n"?[]:[x]; render(); }
-    function reset(){ stop(); Object.assign(st,{ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",warn:0,outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,amsg:"",ln:0}); }
+      if(p===K||st.rev){ st.res=K==="n"?"Nothing stays. The see-saw:":p===K?(S.n===5?"Difference stays, like with ages.":`${SSN[K]} stays the same.`):p==="n"?`${SSN[K]} stayed.`:`${SSN[p]} ${ssVerb(S,p)}. Watch ${SSN[K]}.`;
+        if(p!==K&&p!=="n"){ st.miss++; st.tried.push(p); }
+        if(K==="n"){ st.ph="lines"; st.ln=0; render(); if(live) shake(pic); later(HOLD,lineStep); return; }
+        st.ph="lock"; render(); if(live){ if(p!==K) shake(pic); later(HOLD,toSame); } return; }
+      st.miss++; st.tried.push(p); st.res=`${SSN[p]} ${ssVerb(S,p)}.`; st.ph="miss"; render(); if(live) shake(pic); }
+    function toSame(){ st.ph="same"; const a=anim(SAME); render(); if(!a) later(HOLD,toArrow); }
+    function toArrow(){ st.ph="arrow"; st.aIn=""; st.amiss=0; render(); }
+    function lineStep(){ const L=ssLines(cS()); st.ln=Math.min(L.length,st.ln+1); if(st.ln>=L.length){ finishStory(true); return; } render(); later(LINE,lineStep); }
+    function finishStory(live){ const S=cS(); st.ph="fin"; st.ln=ssLines(S).length; if(!st.rows.some(r=>r[2]===S.n)) st.rows.push([S.ev,SSN[S.keep],S.n]);
+      if(st.rows.length>=7&&!live){ st.ph="end"; render(); return; }
+      render(); if(st.rows.length>=7) later(LAST,()=>{ st.ph="end"; render(); window.scrollTo(0,0); }); }
+    function pill(x){ if(st.ph!=="pick"&&st.ph!=="miss") return; if(st.tried.includes(x)) return; stop(); const S=cS();
+      st.pick=x; const rev=x==="n"||(x!==S.keep&&st.miss>=1); st.pre=[]; st.outl=rev?SSK.slice():[x]; st.rev=rev?1:0; st.after=0; st.vd=0; st.res=""; st.ph="play";
+      const a=anim(PLAY); render(); if(!a) played(true); }
+    function reset(){ stop(); Object.assign(st,{ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,ln:0}); }
     function again(){ const o=st.ord.slice(); let n; do{ n=o.slice(); for(let i=n.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [n[i],n[j]]=[n[j],n[i]]; } }while(n.join()===o.join());
       st.ord=n; st.i=0; st.rows=[]; reset(); render(); window.scrollTo(0,0); }
-    function act(){ if(st.anim){ finish(); return; } const S=cS(), ph=st.ph;
-      if(ph==="pick"){ play(); return; }
-      if(ph==="lock"){ st.ph="same"; anim(1100); render(); seen(rows,pic); return; }
-      if(ph==="same"){ st.ph="arrow"; st.aIn=""; st.amiss=0; st.amsg=""; render(); seen(side,pic); return; }
-      if(ph==="lines"){ const L=ssLines(S); st.ln=Math.min(L.length,st.ln+1); if(st.ln>=L.length){ st.ph="fin"; if(!st.rows.some(r=>r[2]===S.n)) st.rows.push([S.ev,SSN[S.keep],S.n]); } render(); seen(side,S.keep==="n"?rows:pic); return; }
-      if(ph==="fin"){ if(st.rows.length>=7) again(); else { st.i++; reset(); render(); window.scrollTo(0,0); } } }
+    function act(){ if(skip()) return; const ph=st.ph;
+      if(ph==="fin"&&st.rows.length<7){ st.i++; reset(); render(); window.scrollTo(0,0); return; }
+      if(ph==="end") again(); }
     function dkey(k){ if(st.ph!=="arrow") return; const n=Math.abs(ssArr(cS())[0].d);
-      if(k!=="ok"){ st.aIn=String(k); st.amsg=""; side.innerHTML=sideHtml(); arcs(); return; }
-      if(!st.aIn){ shake(side.querySelector(".rmab")); return; }
-      if(+st.aIn===n){ st.afill=1; st.ph="lines"; st.ln=0; render(); seen(side,pic); return; }
-      st.amiss++; st.aIn="";
-      if(st.amiss>=2){ st.afill=2; st.ph="lines"; st.ln=0; render(); seen(side,pic); return; }
-      st.amsg="Count the numbered boxes."; render(); shake(side.querySelector(".rmab")); seen(side,pic); }
-    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if(st.anim&&e.target.closest(".rmpic")) finish(); return; }
+      if(+k===n){ st.afill=1; finishStory(true); return; }
+      st.amiss++;
+      if(st.amiss>=2){ st.afill=2; finishStory(true); return; }
+      render(); shake(rows); }
+    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if(e.target.closest(".rmpic")) skip(); return; }
       if(t.dataset.p){ pill(t.dataset.p); return; }
       if(t.dataset.d){ dkey(t.dataset.d); return; }
       if(t.classList.contains("rmbtn")) act(); });
     const onKey=e=>{ if(!root.isConnected){ document.removeEventListener("keydown",onKey); return; } if(e.ctrlKey||e.metaKey||e.altKey) return; const k=e.key;
       if(/^[1-9]$/.test(k)&&st.ph==="arrow"){ dkey(k); e.preventDefault(); }
-      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ if(st.ph==="arrow") dkey("ok"); else act(); e.preventDefault(); } };
+      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ act(); e.preventDefault(); } };
     document.addEventListener("keydown",onKey);
-    let rzT=0, lw=innerWidth; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw) return; lw=innerWidth; clearTimeout(rzT); rzT=setTimeout(()=>{ if(!rows.hidden) fitRows(); draw(); arcs(); },120); };
+    let rzT=0, lw=innerWidth; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw) return; lw=innerWidth; clearTimeout(rzT); rzT=setTimeout(()=>{ if(st.ph==="end") return; if(!rows.hidden) fitRows(); draw(); arcs(); },120); };
     addEventListener("resize",onRz);
-    const sn=parseInt(prm.get("s"),10);
+    const sn=parseInt(prm.get("s")||prm.get("story"),10);
     if(sn>=1&&sn<=7){ st.i=sn-1; st.rows=SSX.slice(0,sn-1).map(S=>[S.ev,SSN[S.keep],S.n]); const S=cS(), ph=Math.max(0,Math.min(4,parseInt(prm.get("ph"),10)||0)), tr=prm.get("try");
-      if(ph>=1){ st.pick=S.keep; st.outl=S.keep==="n"?SSK.slice():[S.keep]; st.rev=S.keep==="n"?1:0; played(false);
-        if(S.keep!=="n"&&ph>=2) st.ph="same";
-        if(S.keep!=="n"&&ph>=3){ st.ph="lines"; st.afill=1; st.ln=0; }
-        if(ph>=4){ st.ln=ssLines(S).length; st.ph="fin"; st.rows.push([S.ev,SSN[S.keep],S.n]); } }
-      else if(tr&&/^[kltdn]$/.test(tr)){ st.pick=tr; st.rev=tr==="n"?1:0; st.outl=st.rev?SSK.slice():[tr]; played(false); } }
-    render();
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim){ draw(); arcs(); } });
-    if(cur) cur.state=()=>{ const S=cS(), ph=st.ph, o={s:S.n}, n=ph==="lock"||(S.keep==="n"&&ph==="lines")?1:ph==="same"||ph==="arrow"?2:ph==="lines"?3:ph==="fin"?4:0; if(n) o.ph=n; return o; };
+      if(ph>=1){ st.pick=S.keep; st.outl=S.keep==="n"?SSK.slice():[S.keep]; st.rev=S.keep==="n"?1:0; played(false); stop();
+        if(S.keep==="n"||ph>=3){ st.afill=1; finishStory(false); }
+        else { st.ph="arrow"; st.aIn=""; st.amiss=0; } }
+      else if(tr&&/^[kltdn]$/.test(tr)){ st.pick=tr; st.rev=tr==="n"?1:0; st.outl=st.rev?SSK.slice():[tr]; played(false); stop();
+        if(st.ph==="lock") later(HOLD,toSame); else if(st.ph==="lines") later(HOLD,lineStep); } }
+    if(st.ph!=="end") render();
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim&&st.ph!=="end"){ draw(); arcs(); } });
+    if(cur) cur.state=()=>{ const S=cS(), ph=st.ph, o={s:S.n}, n=ph==="fin"||ph==="end"?4:ph==="pick"||ph==="play"||ph==="miss"?0:S.keep==="n"?4:2; if(n) o.ph=n; return o; };
   } };
 PLAYS.staysSame=staysSame;
 
@@ -10635,7 +10587,7 @@ ${PAN("In degrees",picSector()+STEPS([nw(`arc = ${frac("θ","360°")} × 2π${V(
   +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm (3 s.f.)")}, keep 7.854 for the perimeter`,nw(`sector = ${frac("75°","360°")} × π(6)²`),nw("= 23.6 cm² (3 s.f.)"),nw("perimeter = 6 + 6 + 7.854"),nw("= 19.9 cm (3 s.f.)")])+`<p class="anno">* perimeter = the 2 radii + the arc</p>`+PLAYLINK("#cone-sector?step=1","Try it"))}
 ${PAN("Degrees and radians",pic1rad()+STEPS([[nw(`× ${frac("π","180°")}`),"degrees to radians"],[nw(`× ${frac("180°","π")}`),"radians to degrees"]])
   +FACTS("Worth knowing",[["",[nw("180° = π"),nw(`90° = ${frac("π","2")}`),nw(`60° = ${frac("π","3")}`),nw(`45° = ${frac("π","4")}`),nw(`30° = ${frac("π","6")}`)]]])
-  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad (3 s.f.)"),nw(`1.2 rad = 1.2 × ${frac("180°","π")}`),nw("= 68.8° (1 d.p.)")])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`+PLAYLINK("#arcs-radians?step=1","Interactive: wrap the radius round the circle"))}
+  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad (3 s.f.)"),nw(`1.2 rad = 1.2 × ${frac("180°","π")}`),nw("= 68.8° (1 d.p.)")])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`+PLAYLINK("#arcs-radians?u=rad","Interactive: arc and area in radians"))}
 ${PAN("In radians",EG(`${nw(`${V("r")} = 5 cm`)}, ${nw("θ = 1.2 rad")}`,[nw(`${V("s")} = 5 × 1.2 = 6 cm`),nw(`area = ${frac("1","2")} × 5² × 1.2 = 15 cm²`)])
   +EG(`Backwards: area 24 cm², ${nw(`${V("r")} = 4 cm`)}. Find θ.`,[nw(`${frac("1","2")} × 4² × θ = 24`),nw("8θ = 24"),nw("θ = 3 rad")])+`<p class="anno">* both radian formulas are on the <a href="#sheet/emath-formula-sheet">formula sheet</a></p>`)}
 ${PAN("Segment",picSegment()+STEPS([nw("segment = sector − triangle"),nw(`= ${frac("1","2")}${V("r")}²θ − ${frac("1","2")}${V("r")}² sin θ`)])
