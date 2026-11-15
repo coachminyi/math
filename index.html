@@ -979,8 +979,8 @@ html[data-kid] .bar .brand,html[data-kid] .bar .topnav,html[data-kid] .bar .back
 html[data-kid] .askw.shut>:not(.askcov){visibility:visible !important}
 html[data-kid] .bar .ttl{display:flex !important;cursor:default;pointer-events:none}
 html[data-kid] .bar h1{font-size:20px}
-html[data-kid] .kidbtn{display:inline-flex;align-items:center;justify-content:center;flex:none;margin-left:auto;width:50px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:24px;font-weight:700;line-height:1;cursor:pointer}
-html[data-kid] .kidmenu:not([hidden]){display:flex;flex-direction:column;position:fixed;top:calc(var(--barh,56px) + 4px);right:12px;z-index:30;min-width:250px;max-width:calc(100vw - 24px);max-height:calc(100vh - var(--barh,56px) - 16px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:6px}
+html[data-kid] .kidbtn,html[data-ip] .kidbtn{display:inline-flex;align-items:center;justify-content:center;flex:none;margin-left:auto;width:50px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:24px;font-weight:700;line-height:1;cursor:pointer}
+html[data-kid] .kidmenu:not([hidden]),html[data-ip] .kidmenu:not([hidden]){display:flex;flex-direction:column;position:fixed;top:calc(var(--barh,56px) + 4px);right:12px;z-index:30;min-width:250px;max-width:calc(100vw - 24px);max-height:calc(100vh - var(--barh,56px) - 16px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:6px}
 .kidmenu [hidden]{display:none !important}
 .kidmenu button{display:flex;align-items:center;gap:8px;text-align:left;background:none;border:0;border-radius:10px;min-height:44px;padding:0 12px;font:inherit;font-size:16px;color:var(--ink);cursor:pointer}
 .kidmenu button:hover{background:var(--line)}
@@ -1414,6 +1414,40 @@ html[data-kid] #app .play.lean:not(.kstack) .key{grid-column:2;grid-row:4;margin
 .kwl .kr.oops{--kc:var(--amber);border-left-style:dashed}
 .kwl .kr.rrw{display:block;overflow-x:auto;font-size:16px}
 .kwl .kr.rrw .kx{display:block;margin-top:2px}
+html[data-ip] .tryq,html[data-ip] .asktx{display:none !important}
+html[data-ip] .panel>.exbox{background:none;border:0;box-shadow:none;padding:0}
+html[data-ip] .exbox .stepwk{margin:0}
+html[data-ip] .panel{gap:10px}
+html[data-ip] .panel>.box.dock{background:none;border:0;box-shadow:none;padding:0;margin:0}
+html[data-ip] .dock .plbl{display:none}
+html[data-ip] .dock .pillrow[data-pk]{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:0;margin:0;padding:0;overflow:visible;-webkit-mask-image:none;mask-image:none}
+html[data-ip] .dock .pillrow[data-pk] .pill{min-height:48px;border-radius:0;justify-content:center;font-size:17px;font-weight:700;margin:0}
+html[data-ip] .dock .pillrow[data-pk] .pill:first-of-type{border-radius:12px 0 0 12px}
+html[data-ip] .dock .pillrow[data-pk] .pill:last-of-type{border-radius:0 12px 12px 0}
+html[data-ip] .dock .pillrow[data-pk] .pill+.pill{border-left:0}
+.iphint{position:absolute;left:16px;top:12px;font-size:20px;font-weight:700;line-height:1.2;pointer-events:none;transition:opacity .3s}
+.stage.ipdone .iphint{opacity:0}
+@keyframes ipnudge{0%,100%{stroke-opacity:.4;stroke-width:.8}50%{stroke-opacity:.9;stroke-width:2.2}}
+html[data-ip] svg.nudge circle.nudgeme{stroke:var(--ink);animation:ipnudge 1.4s ease-in-out infinite}
+.iplinks{display:flex;gap:28px;justify-content:center;padding:0 0 16px;font-size:14px}
+.iplinks a{color:var(--muted);text-decoration:none;padding:14px 6px;line-height:16px}
+.iplinks a:hover{color:var(--ink)}
+html[data-present] .iplinks{display:none}
+html[data-ip] .play{padding-bottom:4px}
+.ipk .formbox .gen{font-size:13px;color:var(--muted);text-align:center;height:32px;display:flex;align-items:center;justify-content:center;gap:4px;padding:0}
+.ipk .formbox .eq{height:54px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0 6px;white-space:normal;overflow:visible}
+.ipk .ipans{font-size:1.18em}
+.ipk .ipsf{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+.ipk .ipg{color:var(--muted)}
+@media (min-width:900px){ html[data-ip] .kidbtn{display:none} html[data-ip] .ptitle{margin-bottom:10px} html[data-ip] .panel{align-self:center} .ipk .formbox .eq{font-size:21px;height:66px} .ipk .formbox .gen{font-size:14px} .ipk .formbox{padding:8px 12px} }
+@media (max-width:899px){
+  html[data-ip] .bar .ibtn,html[data-ip] .bar .themebtn,html[data-ip] .bar .crumb{display:none !important}
+  html[data-ip] .panel>.exbox{padding:0}
+  .iphint{font-size:17px;left:12px;top:8px}
+  .iplinks{padding-bottom:10px}
+  html[data-ip] .stage{padding-top:30px}
+}
+@media (min-width:600px) and (max-width:899px){ .ipk .formbox .eq{font-size:21px;height:64px} .ipk .formbox .gen{font-size:14px} }
 </style>
 </head>
 <body>
@@ -1787,11 +1821,11 @@ graph.n=0;
 
 const ASKCOV='<button class="askcov" type="button">Tap to show</button>', TRYQ='<a class="pill tryq" style="display:none">Try 5 questions →</a>';
 const askOpen=e=>{ const c=e.target.closest(".askcov"); if(c) c.parentNode.classList.remove("shut"); };
-function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
+function aid(def){return {steps:def.steps, ip:def.ip||"", mount(stage,panel,key,prm){
   const st=Object.assign({step:0},JSON.parse(JSON.stringify(def.init)));
   const flat=!def.jump; if(flat) st.step=def.showStep??def.steps.length-1;
   const svg=svgEl("svg",{viewBox:def.vb||"0 0 140 120","aria-label":def.label||"diagram"});
-  stage.append(svg);
+  stage.append(svg); if(def.ip){ const ih=document.createElement("div"); ih.className="iphint"; ih.textContent=def.ip; stage.append(ih); }
   const stq=document.createElement("div"); stq.className="stepq stq"; stq.hidden=true; if(def.jump) stage.prepend(stq);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb){ key.append(kb); key.classList.add("askw"); key.insertAdjacentHTML("beforeend",ASKCOV); key.addEventListener("click",askOpen); } panel.addEventListener("click",askOpen);
   const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
@@ -1857,7 +1891,7 @@ function aid(def){return {steps:def.steps, mount(stage,panel,key,prm){
     const ex=$(".exbox",panel); if(ex&&portrait()){ const sr=stage.getBoundingClientRect(), r=ex.getBoundingClientRect(); if(r.top<sr.bottom+4) window.scrollBy({top:r.top-sr.bottom-8,behavior:"smooth"}); } };
   const nxb=$(".nextstep",panel); if(nxb) nxb.onclick=()=>{ if(st.step>=def.steps.length-1){ if(cur&&cur.done) location.hash=cur.done; } else stepTo(st.step+1); };
   const pvb=$(".prevstep",panel); if(pvb) pvb.onclick=()=>stepTo(st.step-1);
-  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{ if(start) st._snap=kbSnap(); svg.classList.remove("nudge"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } showRes(st._snap); st._snap=null; }); }
+  if(def.drag){ svg.classList.add("nudge"); dragger(svg,(id,p,start)=>{ if(start) st._snap=kbSnap(); svg.classList.remove("nudge"); stage.classList.add("ipdone"); stopAnim(); def.drag(id,p,st,start); draw();},id=>{ if(def.drop){ def.drop(id,st,animate); draw(); } showRes(st._snap); st._snap=null; }); }
   if(def.kbd) svg.addEventListener("keydown",e=>{ const t=e.target.closest&&e.target.closest("[data-drag][tabindex]"); if(!t||!/^Arrow(Up|Down|Left|Right)$/.test(e.key)) return;
     e.preventDefault(); const id=t.getAttribute("data-drag"); stopAnim(); def.kbd.move(id,e.key,e.shiftKey,st,p=>def.drag(id,p,st)); draw(); const n=svg.querySelector(`[data-drag="${id}"][tabindex]`); if(n) n.focus(); });
   const keys=[...(def.sliders||[]).map(s=>s.k),...(def.pills||[]).map(p=>p.k),...(def.link||[])];
@@ -4632,34 +4666,36 @@ const arO=[75,62], arPt=(R,a,c=arO)=>[c[0]+R*Math.cos(a),c[1]-R*Math.sin(a)], ar
 const arArcD=(R,a0,a1,c=arO)=>{ const P=arPt(R,a0,c), Q=arPt(R,a1,c); if(a1-a0>=2*PI-1e-9){ const M=arPt(R,a0+PI,c); return `M${P}A${R} ${R} 0 1 0 ${M}A${R} ${R} 0 1 0 ${P}`; } return `M${P}A${R} ${R} 0 ${a1-a0>PI?1:0} 0 ${Q}`; };
 const arEx=v=>Math.abs(v-+(+v).toPrecision(3))<1e-9, arN=v=>{ if(arEx(v)) return N(v,4); const e=Math.floor(Math.log10(Math.abs(v)))-2, q=Math.pow(10,e); return (Math.round(v/q*(1+1e-12))*q).toFixed(Math.max(0,-e)); }, arSF=v=>arEx(v)?"":"(3 s.f.)", arAns=(v,u)=>`${arN(v)} ${u}${arEx(v)?"":" (3 s.f.)"}`;
 const arK=k=>Math.abs(k-PI)<1e-6?"π":N(k,2), arDg=a=>{ const d=deg(a); return Math.abs(d-Math.round(d))<1e-6?N(Math.round(d))+"°":n1(d)+"° (1 d.p.)"; };
-const arAt=(svg,P,a,t,col,gap=3.4)=>{ const c=Math.cos(a), s=Math.sin(a); return lab(svg,[P[0]+c*gap,P[1]-s*gap+1.5+(s<-.3?2.6:0)],t,{"text-anchor":c>.3?"start":c<-.3?"end":"middle",fill:col,"font-size":4.2,"font-weight":700}); };
+const arAt=(svg,P,a,t,col,gap=3.4,fs=4.2)=>{ const c=Math.cos(a), s=Math.sin(a); return lab(svg,[P[0]+c*gap,P[1]-s*gap+1.5+(s<-.3?2.6:0)],t,{"text-anchor":c>.3?"start":c<-.3?"end":"middle",fill:col,"font-size":fs,"font-weight":700}); };
 function arSector(svg,R,th,L){
   const full=th>=2*PI-1e-9, m=th/2; let la=m; if(Math.abs(Math.cos(m))>.5) [PI/2,3*PI/2].forEach(a=>{ if(a<th&&Math.abs(Math.cos(a))<Math.abs(Math.cos(la))) la=a; });
-  const c=L.c||(Math.cos(la)>.3?[62,62]:arO), E=arPt(R,th,c), F={"font-size":4.2,"font-weight":700};
+  const c=L.c||(Math.cos(la)>.3?[62,62]:arO), E=arPt(R,th,c), fs=L.fs||4.2, F={"font-size":fs,"font-weight":700};
   S_(svg,"circle",{cx:c[0],cy:c[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.2"});
   S_(svg,"path",{d:full?arArcD(R,0,th,c):`M${c}L${arPt(R,0,c)}${arArcD(R,0,th,c).replace(/^M[^A]+/,"")}Z`,fill:"var(--blue-fill)",stroke:"none"});
   seg(svg,c,arPt(R,0,c),{"stroke-width":.9}); seg(svg,c,E,{"stroke-width":.9});
   S_(svg,"path",{d:arArcD(R,0,th,c),fill:"none",stroke:"var(--amber)","stroke-width":1.8});
   (L.ticks||[]).forEach(i=>{ seg(svg,c,arPt(R,i,c),{stroke:"var(--muted)","stroke-width":.4,"stroke-dasharray":"1.2 1"}); seg(svg,arPt(R-2.4,i,c),arPt(R+2.4,i,c),{stroke:"var(--ink)","stroke-width":.7}); });
   arcMark(svg,c,5,0,deg(th),"var(--red)");
-  if(th>=rad(40)) arAt(svg,c,m,L.ang,"var(--red)",8); else arAt(svg,c,m+PI,L.ang,"var(--red)",2.6);
-  lab(svg,[c[0]+R/2,c[1]+6.2],L.r,F);
-  const al=arAt(svg,arPt(R,la,c),la,L.arc,"var(--amber)",2.6);
+  if(th>=rad(40)) arAt(svg,c,m,L.ang,"var(--red)",8,fs); else arAt(svg,c,m+PI,L.ang,"var(--red)",2.6,fs);
+  lab(svg,[c[0]+R/2,c[1]+2+fs],L.r,F);
+  const al=arAt(svg,arPt(R,la,c),la,L.arc,"var(--amber)",2.6,fs);
   if(th>=rad(50)) lab(svg,[c[0]+Math.cos(m)*R*.62,c[1]-Math.sin(m)*R*.62+1.5-(Math.abs(Math.sin(m))<.5?7:0)],L.area,Object.assign({fill:"var(--blue)"},F));
-  else lab(svg,[+al.getAttribute("x"),+al.getAttribute("y")+6.6],L.area,Object.assign({"text-anchor":al.getAttribute("text-anchor"),fill:"var(--blue)"},F));
+  else lab(svg,[+al.getAttribute("x"),+al.getAttribute("y")+fs+2.4],L.area,Object.assign({"text-anchor":al.getAttribute("text-anchor"),fill:"var(--blue)"},F));
 }
 const arSet=o=>s=>{ if(s._keep){ s._keep=0; return {}; } return o; }, arWork=rows=>rows.map(([a,b])=>`<div class="row hint">${nw(a)} ${nw("= "+b)}</div>`).join("");
-const arC=[72,62], arKey=s=>{ const r=s.r, rr=V("r"), th=kc("red","θ"), q=s.u==="rad", a=q?s.k:rad(s.d), ans=(v,u)=>nw(`= ${arN(v)} ${u}`), sf=v=>arEx(v)?"":"(3 s.f.)";
-  return `<div class="apwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(q?[FB("amber","Arc",`${nw(`${V("s")} = ${rr}${th}`)} ${ans(r*a,"cm")}`,nw(`${r} × ${N(s.k)}`),null,"wide"),FB("blue","Area",`${nw(`${V("A")} = ${frac("1","2")}${rr}²${th}`)} ${ans(r*r*a/2,"cm²")}`,nw(`${frac("1","2")} × ${r}² × ${N(s.k)}`),null,"wide")]:[FB("amber","Arc",`${nw(`${frac(th,"360°")} × 2π${rr}`)} ${ans(r*a,"cm")}`,sf(r*a),null,"wide"),FB("blue","Area",`${nw(`${frac(th,"360°")} × π${rr}²`)} ${ans(r*r*a/2,"cm²")}`,sf(r*r*a/2),null,"wide")],true)+`</div>`; };
+const arC=[72,62], arKey=s=>{ const r=s.r, rr=V("r"), th=kc("red","θ"), q=s.u==="rad", a=q?s.k:rad(s.d), A=kc("red",q?N(s.k):s.d+"°"), g=`<span class="ipg">360°</span>`,
+    ans=(v,u,c)=>nw(`= <span class="ipans" style="color:var(--${c})">${arN(v)} ${u}</span>${arEx(v)?"":`<span class="ipsf">(3 s.f.)</span>`}`);
+  return `<div class="apwk ipk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(q?[FB("amber","Arc",`${nw(`${r} × ${A}`)} ${ans(r*a,"cm","amber")}`,null,nw(`${V("s")} = ${rr}${th}`),"wide"),FB("blue","Area",`${nw(`${frac("1","2")} × ${r}² × ${A}`)} ${ans(r*r*a/2,"cm²","blue")}`,null,nw(`${V("A")} = ${frac("1","2")}${rr}²${th}`),"wide")]:[FB("amber","Arc",`${nw(`${frac(A,g)} × 2 × π × ${r}`)} ${ans(r*a,"cm","amber")}`,null,nw(`${frac(th,"360°")} × 2π${rr}`),"wide"),FB("blue","Area",`${nw(`${frac(A,g)} × π × ${r}²`)} ${ans(r*r*a/2,"cm²","blue")}`,null,nw(`${frac(th,"360°")} × π${rr}²`),"wide")],true)+`</div>`; };
 const arcRad=aid({
-  init:{u:"deg",_u:"deg",d:75,k:1.3,r:6}, jump:true, vb:"0 0 150 120", label:"Sector of a circle with its arc and angle", link:["d","k"],
+  init:{u:"deg",_u:"deg",d:75,k:1.3,r:6}, jump:true, ip:"Drag the dot.", vb:"20 8 128 106", label:"Sector of a circle with its arc and angle", link:["d","k"],
   fix:s=>{ s.d=clamp(snap(s.d,5),30,315); s.k=clamp(+snap(s.k,.1).toFixed(1),.5,5.5); },
   pills:[{k:"u",label:"Angle in",opts:[["deg","Degrees"],["rad","Radians"]],on:s=>{ if(s.u===s._u) return; s._u=s.u;
     if(s.u==="rad") s.k=clamp(+snap(rad(s.d),.1).toFixed(1),.5,5.5); else s.d=clamp(snap(deg(s.k),5),30,315); }}],
   steps:[{name:"Sector",t:()=>`Drag the dot.`,w:s=>arKey(s)}],
   draw(svg,s){ const R=arR(s.r), q=s.u==="rad", th=q?s.k:rad(s.d);
-    arSector(svg,R,th,{c:arC,ang:q?`${N(s.k)} rad`:s.d+"°",r:`${s.r} cm`,arc:arN(s.r*th)+" cm",area:arN(s.r*s.r*th/2)+" cm²"});
-    const E=arPt(R,th,arC); handle(svg,E[0],E[1],"p"); },
+    arSector(svg,R,th,{c:arC,fs:innerWidth<600?5.6:4.4,ang:q?`${N(s.k)} rad`:s.d+"°",r:`${s.r} cm`,arc:arN(s.r*th)+" cm",area:arN(s.r*s.r*th/2)+" cm²"});
+    S_(svg,"path",{d:arArcD(R,0,2*PI,arC),fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"p",style:"cursor:pointer"});
+    const E=arPt(R,th,arC); handle(svg,E[0],E[1],"p","var(--ink)"); S_(svg,"circle",{cx:E[0],cy:E[1],r:3.7,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); },
   drag(id,p,s){ const a=norm(dirTo(arC,[p.x,p.y])), was=s.u==="rad"?deg(s.k):s.d, v=was>270&&a<90?360:was<90&&a>270?0:a;
     if(s.u==="rad") s.k=clamp(+snap(rad(v),.1).toFixed(1),.5,5.5); else s.d=clamp(snap(v,5),30,315); },
   key(){ return ""; }
@@ -11828,6 +11864,7 @@ function renderTopic(t,tab,prm){
   const src=srcFrom&&srcFrom.topic===t.id?srcFrom:null;
   cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t),back:src&&!(tab==="sheet"&&src.own)?src.hash:(cdFrom||"").split("?")[0].replace(/^\//,"")==="p6"?"p6":"",done:src?"#"+src.hash:(t.sheet?"#"+t.id+"/sheet":"")};
   app.innerHTML="";
+  const IP=tab==="play"&&!!(PLAYS[t.play]&&PLAYS[t.play].ip)&&!kidOf(t.levels); document.documentElement.toggleAttribute("data-ip",IP);
   const tabs=h("div",{class:"tabs",role:"tablist"});
   [["play","Interactive",t.play],["sheet","Cheatsheet",t.sheet]].forEach(([k,name,has])=>{
     if(!has) return;
@@ -11836,7 +11873,7 @@ function renderTopic(t,tab,prm){
     tabs.append(b);
   });
   if(tab==="play") app.append(h("div",{class:"ptitle wide-only"},`${t.title}${t.tier==="curious"?CURTAG:""}<span>${lvl.name} · ${t.chapter}</span>`));
-  if(t.play&&t.sheet) app.append(tabs); else app.append(h("div",{style:"height:12px"}));
+  if(t.play&&t.sheet&&!IP) app.append(tabs); else app.append(h("div",{style:"height:12px"}));
   if(tab==="play"){
     const wrap=h("div",{class:"play"}), left=h("div",{class:"left"}), stage=h("div",{class:"stage"}), key=h("div",{class:"key empty"}), panel=h("div",{class:"panel"});
     left.append(stage,key); wrap.append(left,panel); app.append(wrap);
@@ -11844,7 +11881,10 @@ function renderTopic(t,tab,prm){
     PLAYS[t.play].mount(stage,panel,key,prm||new URLSearchParams());
     if(isKidOn()){ const ask=panel.querySelector(".asktx"), ex=panel.querySelector(".exbox"); if(ask) stage.before(ask); if(ex) ex.insertBefore(key,ex.querySelector(".dohint")||ex.querySelector(".nxrow")); }
     const stabs=panel.querySelector(".steptabs"); if(stabs){ wrap.before(stabs); const sb=stabs.querySelector('[aria-selected="true"]'); if(sb&&stabs.scrollWidth>stabs.clientWidth) stabs.scrollLeft=Math.max(0,sb.offsetLeft-stabs.offsetLeft-(stabs.clientWidth-sb.offsetWidth)/2); }
-    if(src&&!src.own) panel.append(h("a",{class:"pill sheetlink",href:"#"+src.hash},`← Back to ${src.title}`));
+    if(IP){ const sid=cur.sheet&&cur.sheet.id&&qqMk(cur.sheet.id).length?cur.sheet.id:!cur.sheet&&qqMk(t.id).length?t.id:"", L=h("div",{class:"iplinks"});
+      if(src&&!src.own) L.append(h("a",{href:"#"+src.hash},`← ${src.title}`)); else if(t.sheet) L.append(h("a",{href:"#"+t.id+"/sheet"},"Cheatsheet →"));
+      if(sid) L.append(h("a",{href:"#cards/quick/"+sid},"Try 5 questions →")); wrap.after(L); }
+    else if(src&&!src.own) panel.append(h("a",{class:"pill sheetlink",href:"#"+src.hash},`← Back to ${src.title}`));
     else if(t.sheet) panel.append(h("a",{class:"pill sheetlink",href:"#"+t.id+"/sheet"},"Cheatsheet for this topic →"));
     placeDock();
   } else {
@@ -13263,7 +13303,7 @@ function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURICompo
   if(s&&!s.exam) srcFrom={topic:t.id,hash:op.join("/"),title:s.title,own:(sheetForTopic(t)||{}).id===s.id}; }
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
-  const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||""); setKid(false);
+  const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||""); setKid(false); document.documentElement.removeAttribute("data-ip");
   const t0=TOPICS.find(x=>x.id===parts[0])||(parts[0]==="sheet"&&parts[1]&&(()=>{ const s=sheetOf(parts[1]); return s&&s.aid&&TOPICS.find(x=>x.id===s.aid); })())||null; noteSrc(t0);
   hubHit(parts[0]==="sheet"&&parts[1]?"sheet/"+parts[1]:parts[0]==="cards"?"cards/"+(parts[1]||"")+"/"+(parts[2]||""):parts[0]==="lessons"?"tuition":parts[0]==="p6"?"p6":t0?(parts[1]==="sheet"?"sheet/"+((sheetForTopic(t0)||{}).id||t0.id):"aid/"+t0.id):"home/"+(VIEWS.some(([k])=>k===parts[0])?parts[0]:"start"));
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
@@ -13361,7 +13401,7 @@ function kidShut(){ kidMenu.hidden=true; kidBtn.setAttribute("aria-expanded","fa
 function setKid(on,p6){ document.documentElement.toggleAttribute("data-kid",!!on); document.documentElement.toggleAttribute("data-kp6",!!(on&&p6)); kidBtn.dataset.lp=""; kidShut(); }
 function kidOpen(){ const tabs=[...document.querySelectorAll(".steptabs .stab")], ci=tabs.findIndex(b=>b.getAttribute("aria-selected")==="true"), B=(k,t,x="")=>`<button type="button" role="menuitem" data-k="${k}"${x}>${t}</button>`;
   const KP=cur&&cur.t&&cur.t.play&&PLAYS[cur.t.play], KM=!!(KP&&KP.kmenu); let m=KM?KP.kmenu(B):tabs.length?`<div class="kmh">Go to a step</div>${tabs.map((b,i)=>B("j"+i,`<b>${i+1}</b> ${b.textContent.replace(/^\d+/,"")}`,i===ci?' aria-current="step"':"")).join("")}<hr>`:"";
-  if(cur&&cur.t&&!KM) m+=`${B("r","↺ Start this step again")}<div class="kmc" hidden><span>Start again?</span><button type="button" class="y" data-k="ry">Yes</button><button type="button" data-k="rn">No</button></div><hr>`;
+  if(cur&&cur.t&&!KM&&!document.documentElement.hasAttribute("data-ip")) m+=`${B("r","↺ Start this step again")}<div class="kmc" hidden><span>Start again?</span><button type="button" class="y" data-k="ry">Yes</button><button type="button" data-k="rn">No</button></div><hr>`;
   if(cur&&cur.t&&!KM&&innerWidth>=900) m+=B("p","Present on a big screen");
   m+=B("d",isDark()?"Light mode":"Dark mode")+B("l","Copy link")+B("h","Home");
   kidMenu.innerHTML=m; kidMenu.hidden=false; kidBtn.setAttribute("aria-expanded","true"); }
@@ -13433,6 +13473,7 @@ function kidStack(play){ const kid=isKidOn(); play.classList.toggle("kstack",kid
 function placeDock(){
   const play=document.querySelector(".play"); if(!play) return;
   const dock=play.querySelector(".box.dock"), panel=play.querySelector(".panel"), slot=play.querySelector(".dockslot"); if(!dock||!panel) return;
+  if(document.documentElement.hasAttribute("data-ip")){ const ex=panel.querySelector(".exbox"); if(ex&&ex.nextElementSibling!==dock) ex.after(dock); return; }
   const kid=kidStack(play), sg=play.querySelector(".left>.stage");
   if(kid&&sg){ if(sg.nextElementSibling!==dock) sg.after(dock); return; }
   const docked=innerWidth<900&&innerHeight>=600;
