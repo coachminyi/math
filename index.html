@@ -6714,7 +6714,7 @@ const restModel={ steps:[],
       if(big){ if(same){ lift=ez(cl(p,0,.6)); cnt=cl(p,.6,1); } else { gT=cT?cl(p,0,.3):0; gL=cL?cl(p,cT?.15:0,cT?.45:.3):0; lift=ez(cl(p,.5,.8)); cnt=cl(p,.8,1); } }
       if(cap) cnt=cl(p,.8,1);
       const tw=(s,bold,f)=>{ const t=svgEl("text",{"font-size":f||fs,"font-weight":bold?700:400,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*(f||fs)*.58; };
-      const nfs=fs-1, fitT=cap&&BW/b>=tw(String(M.m1),1)+6, fitL=cap&&RW/d>=tw(String(M.m2),1)+6, noteL=`each box = ${rmU(M.m2)}`, nL=cap&&!fitL?(xr-X0>=tw(noteL,0,nfs)+14?"side":"below"):"";
+      const nfs=fs-1, fitF=(s,w)=>{ for(let f=fs;f>=11;f--) if(tw(s,1,f)+6<=w) return f; return 0; }, fT=cap?fitF(M.m1+"u",BW/b):0, fL=cap?fitF(M.m2+"u",RW/d):0, fitT=fT>0, fitL=fL>0, bf=fitT&&fitL?Math.min(fT,fL):fT||fL, noteL=`each box = ${M.m2}u`, nL=cap&&!fitL?(xr-X0>=tw(noteL,0,nfs)+14?"side":"below"):"";
       const H=(bt===1?H1:bt===2?H1+(HF-H1)*e2:big?HF-(HF-H3)*lift:HF)+(nL==="below"?lh:0), yL=bt===2?Y1+(Y2-Y1)*e2:Y2-(Y2-Y1)*lift;
       svg.setAttribute("viewBox",`0 0 ${cw} ${H.toFixed(1)}`); svg.setAttribute("width",cw); svg.setAttribute("height",H.toFixed(1));
       const E=(t,o,x)=>{ const e=svgEl(t,o,x); svg.append(e); return e; }, ln=(x1,y1,x2,y2,o)=>E("line",Object.assign({x1,y1,x2,y2,stroke:"var(--ink)","stroke-width":1.5},o||{}));
@@ -6730,9 +6730,9 @@ const restModel={ steps:[],
         for(let k=1;k<d;k++){ const x=xr+k*RW/d; ln(x,yL,x,yL+BH*g2,{"stroke-width":Math.min(1.6,RW/d/3)}); }
         if(cL){ const n=d*M.m2; for(let k=1;k<n;k++){ if(k%M.m2===0) continue; const x=xr+k*RW/n; ln(x,yL,x,yL+BH*gL,{"stroke-width":1.1}); } }
         E("rect",{x:xr,y:yL,width:RW,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2}); }
-      if(cap){ const nb=(n0,x0,w,y,k,bar,t0,t1)=>{ for(let i=0;i<n0;i++){ const s0=t0+(t1-t0)*i/n0; E("text",{x:x0+w*(i+.5),y:y+BH/2+fs*.36,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",opacity:cl(p,s0,s0+.12),class:"rmbn","data-bar":bar},String(k)); } };
+      if(cap){ const nb=(n0,x0,w,y,k,bar,t0,t1)=>{ for(let i=0;i<n0;i++){ const s0=t0+(t1-t0)*i/n0; E("text",{x:x0+w*(i+.5),y:y+BH/2+bf*.36,"text-anchor":"middle","font-size":bf,"font-weight":700,fill:"var(--ink)",opacity:cl(p,s0,s0+.12),class:"rmbn","data-bar":bar},k+"u"); } };
         const nt=(t,x,y,anc,al)=>E("text",{x,y,"text-anchor":anc,"font-size":nfs,fill:"var(--muted)",opacity:al,class:"rmnote"},t);
-        if(fitT) nb(b,X0,BW/b,Y1,M.m1,"t",.02,.38); else nt(`each box = ${rmU(M.m1)}`,X0,Y1+BH+GAP/2+nfs*.36,"start",cl(p,.02,.38));
+        if(fitT) nb(b,X0,BW/b,Y1,M.m1,"t",.02,.38); else nt(`each box = ${M.m1}u`,X0,Y1+BH+GAP/2+nfs*.36,"start",cl(p,.02,.38));
         if(fitL) nb(d,xr,RW/d,yL,M.m2,"l",.42,.76); else if(nL==="side") nt(noteL,xr-8,yL+BH/2+nfs*.36,"end",cl(p,.42,.76)); else nt(noteL,X1,yL+BH+14+fs+2*lh,"end",cl(p,.42,.76)); }
       const R=M.row;
       const grp=(items,yT,below,al,ca)=>{ if(al<=0) return; const yb=below?yT+6:yT+2*lh+7, show=ca>0; let am=show&&!!st.sol;
