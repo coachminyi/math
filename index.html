@@ -1448,6 +1448,28 @@ html[data-ip] .play{padding-bottom:4px}
   html[data-ip] .stage{padding-top:30px}
 }
 @media (min-width:600px) and (max-width:899px){ .ipk .formbox .eq{font-size:21px;height:64px} .ipk .formbox .gen{font-size:14px} }
+html[data-ip] .dohint{display:none !important}
+.rdk .formbox{background:none;border:0;padding:0;box-shadow:none}
+.rdk .formbox .hd{display:none}
+.rdk .formbox .eq{height:auto;display:block;font-size:22px;white-space:normal;text-align:left}
+.rdk .rdr{display:flex;align-items:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font-weight:700;white-space:nowrap}
+.rdk .rdr+.rdr{margin-top:6px}
+.rdk .rdw{width:3.1em;text-align:right;flex:none}
+.rdk .rda{background:var(--amber-fill);color:var(--amber)}
+.rdk .rdb{background:var(--red-fill);color:var(--red)}
+.rdk .rdd{height:30px;font-size:.72em;color:var(--muted);font-weight:400}
+.rdk .rdn{margin-left:auto}
+@keyframes rdfl{0%,100%{stroke-width:2}30%,70%{stroke-width:4.4}50%{stroke-width:2.6}}
+.rdfl{animation:rdfl 1.2s ease-in-out 1}
+@keyframes rdn{0%,100%{stroke-opacity:.35;stroke-width:.35}50%{stroke-opacity:.9;stroke-width:.8}}
+html[data-ip] svg.rdsvg.nudge circle.nudgeme{animation:rdn 1.4s ease-in-out infinite}
+@keyframes rdbtn{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.5)}50%{box-shadow:0 0 0 10px rgba(37,99,235,0)}}
+html[data-ip] .dock .pillrow:not([data-pk]){margin:0;padding:0;overflow:visible;-webkit-mask-image:none;mask-image:none}
+html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%;justify-content:center;font-size:17px;font-weight:700;margin:0;border-radius:12px}
+.play.rdwait .dock .pill.act{animation:rdbtn 1.4s ease-in-out infinite}
+.play.rdp:not(.rdwait) .dock .pill.act{background:none;color:var(--accent);border:1.5px solid var(--accent);box-shadow:none}
+.play.rdpre .iphint{opacity:0}
+@media (min-width:600px){ .rdk .formbox .eq{font-size:26px;height:auto} .rdk .rdr{height:60px} .rdk .rdd{height:34px} }
 </style>
 </head>
 <body>
@@ -1531,6 +1553,8 @@ const TOPICS = [
    title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Then read a shaded diagram.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
    title:"Arc length, sector area & radians", blurb:"Drag the angle. Watch the arc and the area change.", play:"arcRad", sheet:"emArcs", sheetTitle:"Arc length, sector area & radians"},
+  {id:"what-is-a-radian", strand:"geo", levels:["emath","amath"], chapter:"Arc Length & Radians", tier:"curious",
+   title:"What is a radian?", blurb:"Wrap the radius round the circle. The angle it makes is 1 radian.", play:"radAid", sheet:"emArcs", sheetTitle:"Arc length, sector area & radians"},
   {id:"centre-angle-proof", strand:"geo", levels:["emath","amath"], chapter:"Properties of Circles", tier:"curious",
    title:"Proof: angle at centre = 2 × angle at circumference", blurb:"Two isosceles triangles and an exterior angle. That's the whole proof.", play:"centreProof", sheet:"circles", sheetTitle:"Circle properties"},
   {id:"diff-x-squared", strand:"calc", levels:["amath"], chapter:"Differentiation",
@@ -4700,6 +4724,31 @@ const arcRad=aid({
     if(s.u==="rad") s.k=clamp(+snap(rad(v),.1).toFixed(1),.5,5.5); else s.d=clamp(snap(v,5),30,315); },
   key(){ return ""; }
 });
+const rdC=[74,60], rdR=42, rdIs=(k,v)=>Math.abs(k-v)<1e-6, rdT=k=>rdIs(k,PI)?"π":rdIs(k,2*PI)?"2π":N(+(+k).toFixed(1)), rdSnap=v=>{ let k=+snap(v,.1).toFixed(1); if(k>=3.1&&k<=3.2) k=PI; if(k>6.2) k=2*PI; return clamp(k,.1,2*PI); };
+const rdKey=s=>{ const an=s.w!=null, k=an?Math.floor(Math.max(0,(s.w-.3)/.7)*10+1e-9)/10:s.pre?0:s.k, T=rdT(k), pi=rdIs(k,PI), tp=rdIs(k,2*PI), d=deg(k), whole=Math.abs(d-Math.round(d))<1e-6;
+  return `<div class="apwk ipk rdk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("ink","",`<div class="rdr rda"><span class="rdw">arc</span><span>= ${T} × radius</span></div><div class="rdr rdb"><span class="rdw">angle</span><span>= ${T} ${rdIs(k,1)?"radian":"radians"}</span></div><div class="rdr rdd"><span class="rdw"></span><span>${k>0?`${whole?"=":"≈"} ${whole?N(Math.round(d)):n1(d)}°`:""}</span>${pi||tp?`<span class="rdn">${T} ≈ ${pi?"3.142":"6.283"}</span>`:""}</div>`,null,null,"wide")],true)+`</div>`; };
+const radAid=aid({
+  init:{k:0,pre:1,w:null,_fl:0}, jump:true, ip:"Drag the dot.", vb:"10 8 128 104", label:"A circle with one radius wrapped along its edge", link:["k"],
+  fix:s=>{ if(s.k>0){ s.k=rdSnap(s.k); s.pre=0; } },
+  buttons:[{label:"▶ Wrap the radius",fn:(s,animate)=>{ s.pre=0; s.w=0; s._fl=0; animate(3200,p=>{ s.w=p; if(p>=1){ s.w=null; s.k=1; s._fl=1; } }); }}],
+  steps:[{name:"Radian",t:()=>`Drag the dot.`,w:s=>rdKey(s)}],
+  draw(svg,s){ const ph=innerWidth<600, c=rdC, R=rdR, an=s.w!=null, pre=!!s.pre&&!an, q=an?Math.max(0,(s.w-.3)/.7):0, th=pre?0:an?q*q*(3-2*q):s.k, A=arPt(R,0,c), E=arPt(R,th,c), fs=ph?5.2:4.4, F={"font-size":fs,"font-weight":700}, n=an?0:Math.floor(th+1e-6), one=!an&&!pre&&rdIs(th,1), fl=!an&&!pre&&s._fl&&n>=1&&rdIs(th,n);
+    svg.setAttribute("viewBox",ph?"21 7 106 106":"10 8 128 104"); svg.classList.add("rdsvg");
+    const mark=()=>{ const pl=svg.closest(".play"); if(!pl) return false; pl.classList.add("rdp"); pl.classList.toggle("rdpre",pre||an); pl.classList.toggle("rdwait",pre); return true; }; if(!mark()) setTimeout(mark,0);
+    S_(svg,"circle",{cx:c[0],cy:c[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.4 1.2"});
+    if(th>1e-6){ S_(svg,"path",{d:th>=2*PI-1e-9?arArcD(R,0,th,c):`M${c}L${A}${arArcD(R,0,th,c).replace(/^M[^A]+/,"")}Z`,fill:"var(--red-fill)","fill-opacity":.6,stroke:"none"}); seg(svg,c,E,{"stroke-width":.9}); arcMark(svg,c,11,0,deg(th),"var(--red)"); }
+    S_(svg,"line",{x1:c[0],y1:c[1],x2:A[0],y2:A[1],stroke:"var(--amber)","stroke-width":2,"stroke-linecap":"round",class:fl?"rdfl":""});
+    lab(svg,[c[0]+R/2,c[1]+2.4+fs],"radius",Object.assign({fill:"var(--amber)"},F));
+    const g=.022; for(let i=0;i<th-1e-6;i++){ const last=i+1>=th-1e-6, a0=i?i+g:0, a1=last?th:i+1-g; if(a1>a0+1e-6) S_(svg,"path",{d:arArcD(R,a0,a1,c),fill:"none",stroke:"var(--amber)","stroke-width":2,class:fl&&i===n-1?"rdfl":""}); }
+    if(an){ const P=s.w<.3?(()=>{ const f=rad(180-90*(s.w/.3)); return [A[0]+R*Math.cos(f),A[1]-R*Math.sin(f)]; })():[E[0]-(1-th)*R*Math.sin(th),E[1]-(1-th)*R*Math.cos(th)];
+      S_(svg,"line",{x1:E[0],y1:E[1],x2:P[0],y2:P[1],stroke:"var(--amber)","stroke-width":2,"stroke-linecap":"round"}); }
+    for(let i=1;i<=n;i++){ const P=arPt(R+5.2,i-.5,c); lab(svg,[P[0],P[1]+fs*.35],String(i),Object.assign({fill:"var(--amber)"},F)); }
+    if(one){ [[arPt(R/2-.9,0,c),PI/2],[arPt(R/2+.9,0,c),PI/2],[arPt(R,.5-.022,c),.5],[arPt(R,.5+.022,c),.5]].forEach(([M,a])=>seg(svg,[M[0]-2.7*Math.cos(a),M[1]+2.7*Math.sin(a)],[M[0]+2.7*Math.cos(a),M[1]-2.7*Math.sin(a)],{"stroke-width":.8})); }
+    if(!an&&!pre&&th>=.35){ const m=th/2, L=arPt(th<1.3?26:th>=2*PI-1e-9?21:20,m,c); lab(svg,[L[0],L[1]+fs*.35],`${rdT(s.k)} rad`,Object.assign({fill:"var(--red)"},F)); }
+    if(!an&&!pre){ S_(svg,"path",{d:arArcD(R,0,2*PI,c),fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"p",style:"cursor:pointer"}); handle(svg,E[0],E[1],"p","var(--ink)"); } },
+  drag(id,p,s){ if(s.w!=null){ s.w=null; s.k=1; } const a=norm(dirTo(rdC,[p.x,p.y])), was=deg(s.k), v=was>270&&a<90?360:was<90&&a>270?0:a; s.k=rdSnap(rad(v)); s._fl=rdIs(s.k,Math.round(s.k))?1:0; },
+  key(){ return ""; }
+});
 const SR={sin:"blue",cos:"amber",tan:"green",sec:"red",cosec:"purple",cot:"teal"}, srCol=k=>`var(--${SR[k]})`, SRK=k=>CS(SR[k],k+" θ");
 const SRV1={O:[26,130],R:54}, SRV2={O:[70,75],R:40}, SRB=[3,137,4,146];
 const s3=v=>v==null?"not defined":Math.abs(v)<5e-10?"0":(+v).toPrecision(3).replace("-","−");
@@ -6279,7 +6328,7 @@ const restPiles=aid({
   drag(id,p,s,start){ if(!start||s.pp<1) return; if(s.step<2&&s.ph===3) s.of=id; else if(s.step>1&&s.ph===4) s.og=id; },
   key:rpK
 });
-const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid,vecAreas,angPar,bearAid,crossAid,balanceEq,pythSq,pointyThird,quadIneq,vennAid,parPerp,polyAng,areaCut,speedConv,idxCollect,arcRad,sixRatios,addProof,whyLogs,firstPrin,areaRect,whereE,quadProof,zeroPow,pascalPaths,centreProof};
+const PLAYS={squareAB,diffChord,quadForms,complSq,discrim,trigGraphs,unitCircle,rFormula,circleProps,tangentAid,genTerm,speedTime,kinAid,eqLines,eqQuad,eqPower,eqExpLog,solveLine,circleEq,linLawAid,vecAreas,angPar,bearAid,crossAid,balanceEq,pythSq,pointyThird,quadIneq,vennAid,parPerp,polyAng,areaCut,speedConv,idxCollect,arcRad,radAid,sixRatios,addProof,whyLogs,firstPrin,areaRect,whereE,quadProof,zeroPow,pascalPaths,centreProof};
 Object.assign(PLAYS,{simRatios});
 PLAYS.dataDots=dataDots;
 PLAYS.probAid=probAid;
@@ -10623,7 +10672,7 @@ ${PAN("In degrees",picSector()+STEPS([nw(`arc = ${frac("θ","360°")} × 2π${V(
   +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm (3 s.f.)")}, keep 7.854 for the perimeter`,nw(`sector = ${frac("75°","360°")} × π(6)²`),nw("= 23.6 cm² (3 s.f.)"),nw("perimeter = 6 + 6 + 7.854"),nw("= 19.9 cm (3 s.f.)")])+`<p class="anno">* perimeter = the 2 radii + the arc</p>`+PLAYLINK("#cone-sector?step=1","Try it"))}
 ${PAN("Degrees and radians",pic1rad()+STEPS([[nw(`× ${frac("π","180°")}`),"degrees to radians"],[nw(`× ${frac("180°","π")}`),"radians to degrees"]])
   +FACTS("Worth knowing",[["",[nw("180° = π"),nw(`90° = ${frac("π","2")}`),nw(`60° = ${frac("π","3")}`),nw(`45° = ${frac("π","4")}`),nw(`30° = ${frac("π","6")}`)]]])
-  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad (3 s.f.)"),nw(`1.2 rad = 1.2 × ${frac("180°","π")}`),nw("= 68.8° (1 d.p.)")])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`+PLAYLINK("#arcs-radians?u=rad","Interactive: arc and area in radians"))}
+  +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad (3 s.f.)"),nw(`1.2 rad = 1.2 × ${frac("180°","π")}`),nw("= 68.8° (1 d.p.)")])+`<p class="anno">* 1 radian: the arc is as long as the radius</p>`+PLAYLINK("#arcs-radians?u=rad","Interactive: arc and area in radians")+PLAYLINK("#what-is-a-radian","For the curious: what a radian is"))}
 ${PAN("In radians",EG(`${nw(`${V("r")} = 5 cm`)}, ${nw("θ = 1.2 rad")}`,[nw(`${V("s")} = 5 × 1.2 = 6 cm`),nw(`area = ${frac("1","2")} × 5² × 1.2 = 15 cm²`)])
   +EG(`Backwards: area 24 cm², ${nw(`${V("r")} = 4 cm`)}. Find θ.`,[nw(`${frac("1","2")} × 4² × θ = 24`),nw("8θ = 24"),nw("θ = 3 rad")])+`<p class="anno">* both radian formulas are on the <a href="#sheet/emath-formula-sheet">formula sheet</a></p>`)}
 ${PAN("Segment",picSegment()+STEPS([nw("segment = sector − triangle"),nw(`= ${frac("1","2")}${V("r")}²θ − ${frac("1","2")}${V("r")}² sin θ`)])
@@ -11700,6 +11749,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
    eqPower:`<line x1="60" y1="2" x2="60" y2="62" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="4" y1="32" x2="116" y2="32" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M64 3 Q67 27 116 29" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M56 61 Q53 37 4 35" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
    solveLine:`<path d="M10 4 Q60 110 110 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="34" x2="116" y2="34" stroke="var(--green)" stroke-width="2"/><circle cx="27" cy="34" r="3.8" fill="var(--red)"/><circle cx="93" cy="34" r="3.8" fill="var(--red)"/>`,
    eqExpLog:`<line x1="6" y1="60" x2="62" y2="4" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M4 50 Q40 48 52 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M16 62 Q18 26 62 14" fill="none" stroke="var(--green)" stroke-width="2.5"/><text x="70" y="40" font-size="13" font-style="italic" fill="var(--ink)">y = x</text>`,
+   radAid:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--red-fill)" stroke="none"/><line x1="14" y1="58" x2="44.3" y2="10.9" stroke="var(--ink)" stroke-width="1.5"/><line x1="14" y1="58" x2="70" y2="58" stroke="var(--amber)" stroke-width="3.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
    arcRad:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><path d="M26 58 A12 12 0 0 0 20.5 47.9" fill="none" stroke="var(--red)" stroke-width="2"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
    circleEq:`<circle cx="60" cy="32" r="26" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="60" y1="32" x2="75.6" y2="32" stroke="var(--amber)" stroke-width="2.2"/><line x1="75.6" y1="32" x2="75.6" y2="11.2" stroke="var(--green)" stroke-width="2.2"/><line x1="60" y1="32" x2="75.6" y2="11.2" stroke="var(--red)" stroke-width="2.2"/><circle cx="60" cy="32" r="2.8" fill="var(--ink)"/>`,
    angPar:`<line x1="2" y1="18" x2="92" y2="18" stroke="var(--ink)" stroke-width="1.5"/><line x1="2" y1="46" x2="92" y2="46" stroke="var(--ink)" stroke-width="1.5"/><path d="M14 18 H58 L36 46 H80" fill="none" stroke="var(--green)" stroke-width="6" stroke-opacity=".4" stroke-linejoin="round" stroke-linecap="round"/><line x1="70" y1="2" x2="24" y2="62" stroke="var(--ink)" stroke-width="1.5"/><path d="M36 46 L44 46 A8 8 0 0 0 40.9 39.7 Z" fill="var(--amber)"/><path d="M58 18 L50 18 A8 8 0 0 0 53.1 24.3 Z" fill="var(--amber)"/><text x="107" y="43" font-size="32" font-weight="800" text-anchor="middle" fill="var(--green)">Z</text>`,
