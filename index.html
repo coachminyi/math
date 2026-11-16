@@ -1580,6 +1580,22 @@ html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%
 html[data-ip] svg.ipwig circle[data-drag]{stroke:var(--ink);animation:ipwig .6s ease-out 2}
 @keyframes ipwigb{0%,100%{transform:none}35%{transform:scale(1.07)}70%{transform:scale(.98)}}
 html[data-ip] .dock .pill.act.ipwigb{animation:ipwigb .5s ease-out 2 !important}
+.ip6ba .barows{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
+.bak .formbox.rrbox{padding:6px 8px}
+svg.baev .bapc{animation:bapc .8s ease-out both}
+svg.baev .bapo{animation:bapo .4s ease-out .5s both}
+@keyframes bapc{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes bapo{from{opacity:0}to{opacity:1}}
+.apk .formbox .rd,.apk .apr{font-size:17px;font-weight:700;color:var(--ink)}
+.apk .formbox .hd{color:var(--ink)}
+.apk .formbox.apx .eq{height:auto;display:block;padding:0}
+.apk .apr2{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:0 10px;min-height:38px;line-height:1.25}
+.apk .apr2+.apr2{border-top:1px solid var(--line);padding-top:3px}
+.apk .apne{display:inline-block;font-size:15px;font-weight:800;color:var(--amber);border:2px solid var(--amber);border-radius:9px;padding:1px 7px;letter-spacing:.02em}
+.apk .formbox{min-height:136px;box-sizing:border-box}
+@media (prefers-reduced-motion:reduce){svg.baev .bapc,svg.baev .bapo{animation:none}}
+@media (max-width:599px){.play.ip6ba .dock .pillrow[data-pk]{display:grid !important;grid-auto-flow:row !important;grid-template-columns:1fr 1fr;gap:6px;overflow:visible}.play.ip6ba .dock .pillrow[data-pk] .pill{border-radius:12px !important;border:1.5px solid var(--line);margin:0;width:auto;min-width:0}.play.apip .iptabs{grid-template-columns:repeat(3,minmax(0,1fr))}.apk .formbox .eq{font-size:20px}.apk .formbox .rd,.apk .apr{font-size:15px}.apk .formbox .hd{font-size:12.5px}.apk .apne{font-size:14px}.apk .apr{flex-basis:100%;text-align:center}}
+@media (max-height:500px) and (min-width:600px){#app .play.ip6ba .stage svg{max-height:none !important}}
 .play.kstack.ip6rr .stage{order:1}
 .play.kstack.ip6rr .stepwk{order:2}
 .play.kstack.ip6rr .box.dock{order:3}
@@ -1732,7 +1748,7 @@ const TOPICS = [
   {id:"vector-areas", strand:"geo", levels:["emath"], chapter:"Vectors",
    title:"Vectors: ratio of areas", blurb:"Same height? Use the bases. Similar? Square the length ratio.", play:"vecAreas", sheet:"emVectors", sheetTitle:"Vectors"},
   {id:"angles-parallel", strand:"geo", levels:["sec1","p6"], chapter:"Geometry", p6g:"Angles",
-   title:"Angles & parallel lines", blurb:"Drag the lines. Find the Z, C or F, then write the reason.", play:"angPar", sheet:"s1Angles", sheetTitle:"Angles & parallel lines"},
+   title:"Angles & parallel lines", blurb:"Lines crossing, at a point, parallel lines. Drag the dot.", play:"angPar", sheet:"s1Angles", sheetTitle:"Angles & parallel lines"},
   {id:"pythagoras-squares", strand:"geo", levels:["sec2"], chapter:"Pythagoras' theorem",
    title:"Pythagoras: squares on the sides", blurb:"The 2 smaller squares fill the big one exactly. Then: is it right-angled?", play:"pythSq", sheet:"s2Pyth", sheetTitle:"Pythagoras' theorem"},
   {id:"pointy-third", strand:"geo", levels:["sec2"], chapter:"Volume & surface area",
@@ -1820,7 +1836,7 @@ const TOPICS = [
   {id:"ratio-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
    title:"Ratio: repeated name", blurb:"Cut Ben into the same boxes. Watch the ratios join.", play:"ratioSame"},
   {id:"stays-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
-   title:"Before and after", blurb:"Something changes. Tap what stays the same.", play:"staysSame"}
+   title:"Before and after", blurb:"Make what stays the same match. The change is 1u.", play:"staysSame"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -3345,72 +3361,54 @@ function apLines(svg,G){ const thin={stroke:"var(--ink)","stroke-width":.9};
 const apAt=(G,w)=>w==="T"?G.T:G.B;
 const apWB=(eq,why)=>FB("ink","Write it like this",eq,why,null,"apw");
 const apDeg=v=>v+"°", apXV=V("x");
-const apStrKey=s=>`<div class="apwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("ink","On a straight line",`${nw(`${kc("amber",apDeg(s.t))} + ${kc("green",apDeg(s.t2-s.t))} + ${kc("blue",apDeg(180-s.t2))}`)} ${nw("= 180°")}`,cur&&cur.back==="p6"?"(str line)":"(adj. ∠s on a str. line)",null,"wide")],true)+`</div>`;
+const ap5=(a,lo,hi,no)=>{ let v=clamp(Math.round(a/5)*5,lo,hi); if(no!=null&&v===no) v=a<no?no-5:no+5; return v; };
+const apMini=k=>{ const L=(a,b)=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>`, W=(d,c)=>`<path d="${d}" fill="var(--${c}-fill)" stroke="var(--${c})" stroke-width="1.6"/>`;
+  if(k==="x") return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true">${W("M30 24L41 24A11 11 0 0 0 36.4 15.1Z","amber")}${W("M30 24L19 24A11 11 0 0 0 23.6 32.9Z","amber")}${L([4,24],[56,24])}${L([14,37],[46,11])}</svg>`;
+  if(k==="pt") return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true">${W("M30 24L40.3 20.2A11 11 0 0 0 20.5 18.5Z","amber")}${W("M30 24L20.5 18.5A11 11 0 0 0 25.4 34Z","green")}${W("M30 24L25.4 34A11 11 0 0 0 40.3 20.2Z","blue")}${L([30,24],[52,16])}${L([30,24],[9,12])}${L([30,24],[21,43])}</svg>`;
+  const sh={alt:"M18 11H35.7L26.3 33H44",int:"M52 11H35.7L26.3 33H52",corr:"M52 11H35.7L22.6 42M52 33H26.3"}[k], Lg=(a,b)=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--muted)" stroke-width="1.4" stroke-linecap="round"/>`;
+  return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true"><path d="${sh}" stroke="var(--green)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>${Lg([4,11],[56,11])}${Lg([4,33],[56,33])}<path d="M8 8L12 11L8 14M8 30L12 33L8 36" fill="none" stroke="var(--muted)" stroke-width="1.4"/>${Lg([22,43],[40,1])}</svg>`; };
+const apKd=s=>["alt","int","corr"][s.step-2]||"alt";
+const apP6=()=>!!(cur&&cur.back==="p6");
+const apBox=a=>`<div class="apwk ipk cpk apk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(a,true)+`</div>`;
+const apAns=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`;
+const apR3=s=>[20,150,s.r3], apD3=s=>{ const R=apR3(s); return [130,R[2]-150,380-R[2]]; };
+function apKey(s){ const m=s.step, A=t=>kc("amber",t), Bk=t=>kc("blue",t), Gk=t=>kc("green",t), d=apDeg;
+  if(m===0){ const v=s.v;
+    const R2=(e,r)=>`<div class="apr2">${nw(e)} <span class="apr">${r}</span></div>`;
+    return apBox([FB("ink","Straight line · vertically opposite",R2(`${A(d(v))} + ${Bk(d(180-v))} = 180°`,apP6()?"(str line)":"(adj. ∠s on a str. line)")+R2(`${A(d(v))} = ${A(d(v))}`,"(vert. opp. ∠s)"),null,null,"wide apx")]); }
+  if(m===1){ const D=apD3(s);
+    return apBox([FB("ink","At a point",nw(`${A(d(D[0]))} + ${Gk(d(D[1]))} + ${Bk(d(D[2]))} = 360°`),"(∠s at a pt.)",null,"wide")]); }
+  const z=apKd(s), th=s.th, K=apKind[z], hd={alt:"Z: alternate angles are equal",corr:"F: corresponding angles are equal",int:"C: interior angles add up to 180°"}[z];
+  return apBox([FB("ink",hd,z==="int"?nw(`${apXV} = 180° − ${A(d(th))} = ${apAns(d(180-th),"blue")}`)+` <b class="apne">NOT equal</b>`:nw(`${apXV} = ${apAns(d(z==="corr"?180-th:th),"amber")}`),`(${K[3]} ∠s, AB &#47;&#47; CD)`,null,"wide")]); }
 const angPar=aid({
-  init:{t:50,t2:120,r1:20,r2:150,r3:245,v:62,th:62,q:"q1",sh:0}, jump:true, vb:"0 0 150 100", label:"Angle facts: straight line, at a point, vertically opposite and parallel lines", link:["t","t2","r1","r2","r3","v","th","sh"],
-  fix:s=>{ s.t=clamp(Math.round(s.t),20,140); s.t2=Math.round(s.t2); if(!(s.t2-s.t>=20&&s.t2<=160)) s.t2=Math.round((s.t+180)/2); s.v=clamp(Math.round(s.v),25,155); s.th=clamp(Math.round(s.th),40,140); s.sh=s.sh?1:0;
-    let r=[s.r1,s.r2,s.r3].map(a=>norm(Math.round(a))); if(!(norm(r[1]-r[0])>=50&&norm(r[2]-r[1])>=50&&norm(r[0]-r[2])>=50&&norm(r[1]-r[0])+norm(r[2]-r[1])+norm(r[0]-r[2])===360)) r=[20,150,245]; [s.r1,s.r2,s.r3]=r; },
-  pills:[{k:"q",label:"Sample questions",opts:[["q1","Q1"],["q2","Q2"],["q3","Q3"],["q4","Q4"]],show:s=>s.step===6,on:s=>{s.sh=0; s.th=apFQ[s.q].th;}}],
-  buttons:[{label:"▶ Show working",show:s=>s.step===6&&!s.sh,fn:s=>{s.sh=1;}},{label:"Hide working",sec:true,show:s=>s.step===6&&!!s.sh,fn:s=>{s.sh=0;}}],
-  nxOk:s=>s.step!==0||!!s._d0,
+  init:{v:60,r3:245,th:65}, jump:true, ip:"Drag the dot.", vb:"0 0 150 100", label:"Angle facts: lines crossing, angles at a point, parallel lines", link:["v","r3","th"],
+  fix:s=>{ s.v=ap5(+s.v||60,25,155); s.r3=ap5(+s.r3||245,200,330); s.th=ap5(+s.th||65,40,140,90); },
   steps:[
-    {name:"Straight line", t:()=>`Drag the dots.`, w:s=>apStrKey(s)},
-    {name:"At a point", t:()=>`Angles at a point add up to <b>360°</b>.<br>Drag any dot.`},
-    {name:"Vert. opp.", t:()=>`Two straight lines cross. The opposite angles are <b>equal</b>.<br>Drag the dot.`},
-    {name:"F: corr.", t:()=>`<b class="k-green">F</b>: corresponding angles are <b>equal</b>.<br>AB &#47;&#47; CD (the arrows). Drag the dot.`},
-    {name:"Z: alt.", t:()=>`<b class="k-green">Z</b>: alternate angles are <b>equal</b>.<br>Drag the dot: the Z stays a Z.`},
-    {name:"C: int.", t:()=>`<b class="k-green">C</b>: interior angles add up to <b>180°</b>.<br>Drag the dot.`},
-    {name:"Find x", t:()=>`Find ${apXV}. Look for a Z, C or F first.<br>Then show the working.`}
+    {name:"Lines crossing",pic:apMini("x"),t:()=>"",w:apKey},
+    {name:"At a point",pic:apMini("pt"),t:()=>"",w:apKey},
+    {name:"Z: alternate",pic:apMini("alt"),t:()=>"",w:apKey},
+    {name:"C: interior",pic:apMini("int"),t:()=>"",w:apKey},
+    {name:"F: corresponding",pic:apMini("corr"),t:()=>"",w:apKey}
   ],
-  draw(svg,s){ const m=s.step, c={fs:apFs(svg),segs:[],lab:[]}, AM="var(--amber)", AF="var(--amber-fill)", BL="var(--blue)", BF="var(--blue-fill)", GN="var(--green)", GF="var(--green-fill)", thin={stroke:"var(--ink)","stroke-width":.9};
+  draw(svg,s){ const c={fs:apFs(svg),segs:[],lab:[]}, AM="var(--amber)", AF="var(--amber-fill)", BL="var(--blue)", BF="var(--blue-fill)", GN="var(--green)", GF="var(--green-fill)", thin={stroke:"var(--ink)","stroke-width":.9}, O=APO;
+    const pl=svg.closest&&svg.closest(".play"); if(pl){ pl.classList.add("apip"); pl.querySelectorAll(".iptab[data-j]").forEach(b=>{ if(+b.dataset.j>=2) b.style.display=apP6()?"none":""; }); }
     let hs=[];
-    if(m===0){ const O=[75,66], E=apP(O,s.t,44), E2=apP(O,s.t2,44); c.segs.push([[8,66],[142,66]],[O,E],[O,E2]);
-      apAng(svg,c,O,0,s.t,AM,AF,false,s.t); apAng(svg,c,O,s.t,s.t2-s.t,GN,GF,false,s.t2-s.t); apAng(svg,c,O,s.t2,180-s.t2,BL,BF,false,180-s.t2);
-      seg(svg,[8,66],[142,66],thin); seg(svg,O,E,thin); seg(svg,O,E2,thin); hs=[[E,"t"],[E2,"t2"]]; }
-    if(m===1){ const O=APO, R=[s.r1,s.r2,s.r3], E=R.map(a=>apP(O,a,42)), d=R.map((a,i)=>norm(R[(i+1)%3]-a));
-      E.forEach(e=>c.segs.push([O,e]));
-      apAng(svg,c,O,R[0],d[0],AM,AF,false,d[0]); apAng(svg,c,O,R[1],d[1],GN,GF,false,d[1]); apAng(svg,c,O,R[2],d[2],BL,BF,"x",d[2]);
-      E.forEach(e=>seg(svg,O,e,thin)); hs=E.map((e,i)=>[e,"r"+(i+1)]); }
-    if(m===2){ const O=APO, E1=apP(O,s.v,46), E2=apP(O,s.v+180,46); c.segs.push([[20,52],[130,52]],[E1,E2]);
-      apAng(svg,c,O,0,s.v,AM,AF,false,s.v); apAng(svg,c,O,180,s.v,AM,AF,"x",s.v);
-      seg(svg,[20,52],[130,52],thin); seg(svg,E1,E2,thin); hs=[[E1,"v"]]; }
-    if(m>=3){ const G=apPar(svg,s,c); G.th=s.th; const H=apP(APO,s.th,40);
-      let gq,xq,yq=null,kind,show=true;
-      if(m===3){ gq=["B","ur"]; xq=["T","ur"]; kind="corr"; }
-      if(m===4){ gq=["B","ur"]; xq=["T","dl"]; kind="alt"; }
-      if(m===5){ gq=["B","ur"]; xq=["T","dr"]; kind="int"; }
-      if(m===6){ const Q=apFQ[s.q]; gq=Q.g; xq=Q.x; yq=Q.y||null; kind=Q.k; show=!!s.sh; }
-      const sq=yq||gq, pT=xq[0]==="T"?xq[1]:sq[1], pB=xq[0]==="T"?sq[1]:xq[1];
-      if(show) apShape(svg,G,pT,pB,apKind[kind][0]);
-      apLines(svg,G);
-      const [ga,gs]=apQ(gq[1],s.th), [xa,xs]=apQ(xq[1],s.th), xc=kind==="int"||!show?BL:AM, xf=kind==="int"||!show?BF:AF;
-      apAng(svg,c,apAt(G,gq[0]),ga,gs,AM,AF,false,gs);
-      if(yq&&show){ const [ya,ys]=apQ(yq[1],s.th); apAng(svg,c,apAt(G,yq[0]),ya,ys,AM,AF,"y",ys); }
-      apAng(svg,c,apAt(G,xq[0]),xa,xs,xc,xf,"x",m===6&&!show?"?":xs);
-      hs=[[H,"th"]]; }
-    const boxes=hs.map(([P])=>[P[0]-4,P[1]-4,P[0]+4,P[1]+4]); if(m>=3) boxes.push([1,APT-8,9,APT-1],[141,APT-8,149,APT-1],[1,APB-8,9,APB-1],[141,APB-8,149,APB-1],s.th<=90?[5,8,19,24]:[131,8,145,24]); c.lab.forEach(L=>apLab(svg,c,...L,boxes));
-    hs.forEach(([P,id])=>handle(svg,P[0],P[1],id));
-  },
-  drag(id,p,s){ const m=s.step, O=m===0?[75,66]:APO, a=Math.round(dirTo(O,[p.x,p.y])); if(m===0) s._d0=1;
-    if(id==="t") s.t=a<0?(a<-90?s.t2-20:20):clamp(a,20,s.t2-20);
-    if(id==="t2") s.t2=a<0?(a<-90?160:s.t+20):clamp(a,s.t+20,160);
-    if(id==="v") s.v=clamp(a<0?a+180:a,25,155);
-    if(id==="th") s.th=clamp(a<0?a+180:a,40,140);
-    if(id[0]==="r"){ const K=["r1","r2","r3"], i=K.indexOf(id), b=norm(a), prev=s[K[(i+2)%3]], next=s[K[(i+1)%3]];
-      if(norm(b-prev)>=50&&norm(next-b)>=50&&norm(b-prev)+norm(next-b)===norm(next-prev)) s[id]=b; } },
-  key(s){ const m=s.step, A=t=>kc("amber",t), Bk=t=>kc("blue",t), Gk=t=>kc("green",t);
-    if(m===0) return "";
-    if(m===1){ const R=[s.r1,s.r2,s.r3], d=R.map((a,i)=>norm(R[(i+1)%3]-a));
-      return FORMS([FB("ink","At a point",`${nw(`${A(apDeg(d[0]))} + ${Gk(apDeg(d[1]))} + ${Bk(apXV)}`)} ${nw("= 360°")}`,"add up to 360°"),apWB(`${nw(`${apXV} = 360° − ${d[0]}° − ${d[1]}°`)} ${nw(`= ${d[2]}°`)}`,"(∠s at a pt.)")],true); }
-    if(m===2) return FORMS([FB("ink","Vertically opposite",nw(`${A(apDeg(s.v))} = ${A(apXV)}`),"are equal"),apWB(nw(`${apXV} = ${s.v}°`),"(vert. opp. ∠s)")],true);
-    const th=s.th;
-    if(m>=3&&m<=5){ const kind=["corr","alt","int"][m-3], K=apKind[kind], x=kind==="int"?180-th:th;
-      return FORMS([FB("green",`${K[0]} shape`,K[1],K[2]),apWB(kind==="int"?`${nw(`${apXV} = 180° − ${th}°`)} ${nw(`= ${x}°`)}`:nw(`${apXV} = ${th}°`),`(${K[3]} ∠s, AB &#47;&#47; CD)`)],true); }
-    const Q=apFQ[s.q], K=apKind[Q.k], g=apQ(Q.g[1],th)[1], xv=apQ(Q.x[1],th)[1];
-    if(!s.sh) return FORMS([FB("amber","Given",apDeg(g),""),FB("blue",`Find ${apXV}`,nw(`${apXV} = ?`),"Z, C or F?")],true);
-    const fin=Q.k==="int"?`${nw(`${apXV} = 180° − ${Q.y?th:g}°`)} ${nw(`= ${xv}°`)}`:nw(`${apXV} = ${g}°`), R=`(${K[3]} ∠s, AB &#47;&#47; CD)`;
-    if(Q.y) return FORMS([FB("amber","Step 1",nw(`${A(V("y"))} = ${th}°`),"(vert. opp. ∠s)"),apWB(fin,R)],true);
-    return FORMS([FB("green",`${K[0]} shape`,K[1],K[2]),apWB(fin,R)],true); }
+    if(s.step===0){ const v=s.v, E1=apP(O,v,46), E2=apP(O,v+180,46); c.segs.push([[8,52],[142,52]],[E1,E2]);
+      apAng(svg,c,O,0,v,AM,AF,false,v); apAng(svg,c,O,v,180-v,BL,BF,false,180-v); apAng(svg,c,O,180,v,AM,AF,false,v);
+      seg(svg,[8,52],[142,52],thin); seg(svg,E1,E2,thin); hs=[[apP(O,v,40),"v"]]; }
+    else if(s.step===1){ const R=apR3(s), D=apD3(s), E=R.map(a=>apP(O,a,42)); E.forEach(e=>c.segs.push([O,e]));
+      apAng(svg,c,O,R[0],D[0],AM,AF,false,D[0]); apAng(svg,c,O,R[1],D[1],GN,GF,false,D[1]); apAng(svg,c,O,R[2],D[2],BL,BF,false,D[2]);
+      E.forEach(e=>seg(svg,O,e,thin)); hs=[[E[2],"r3"]]; }
+    else { const G=apPar(svg,s,c); G.th=s.th; const kind=apKd(s), gq=kind==="corr"?["B","dr"]:["B","ur"], xq=kind==="corr"?["T","dr"]:kind==="alt"?["T","dl"]:["T","dr"], xc=kind==="int"?BL:AM, xf=kind==="int"?BF:AF;
+      apShape(svg,G,xq[1],gq[1],apKind[kind][0]); apLines(svg,G);
+      const [ga,gs]=apQ(gq[1],s.th), [xa,xs]=apQ(xq[1],s.th);
+      apAng(svg,c,apAt(G,gq[0]),ga,gs,AM,AF,false,gs); apAng(svg,c,apAt(G,xq[0]),xa,xs,xc,xf,"x",xs); hs=[[apP(O,s.th+180,40),"th"]]; }
+    const boxes=hs.map(([P])=>[P[0]-4,P[1]-4,P[0]+4,P[1]+4]); if(s.step>=2) boxes.push([1,APT-8,9,APT-1],[141,APT-8,149,APT-1],[1,APB-8,9,APB-1],[141,APB-8,149,APB-1],s.th<=90?[5,8,19,24]:[131,8,145,24]);
+    c.lab.forEach(L=>apLab(svg,c,...L,boxes)); hs.forEach(([P,id])=>handle(svg,P[0],P[1],id,"var(--ink)")); },
+  drag(id,p,s){ const a=Math.round(dirTo(APO,[p.x,p.y])), b=a<0?a+180:a;
+    if(id==="v") s.v=ap5(b,25,155); if(id==="th") s.th=ap5(b,40,140,90);
+    if(id==="r3"){ const r=norm(a); s.r3=ap5(r<90?330:r,200,330); } },
+  key(){ return ""; }
 });
 
 const BRG_A=[70,63], BRG_M=[70,62], BRG_H=32;
@@ -6999,103 +6997,104 @@ const ratioSame=aid({
   key(){ return ""; }
 });
 PLAYS.ratioSame=ratioSame;
-const SXS=[
-  {e:"Lee got 14 more.",keep:"k",mB:1,mv:[{w:"l",k:"in",d:1,v:14}]},
-  {e:"Kim gave 6 to her brother.",keep:"l",mB:1,mv:[{w:"k",k:"out",d:1,v:6}]},
-  {e:"Kim gave 20 to Lee.",keep:"t",mB:1,mv:[{w:"k",k:"tx",d:2,v:20}]},
-  {e:"Lee gave 18 to Kim.",keep:"t",mB:1,mv:[{w:"l",k:"tx",d:3,v:18}]},
-  {e:"each got 12 more.",keep:"d",mB:1,mv:[{w:"k",k:"in",d:1,v:12},{w:"l",k:"in",d:1,v:12}]},
-  {e:"each used 7.",keep:"d",mB:3,mv:[{w:"k",k:"use",d:1,v:7},{w:"l",k:"use",d:1,v:7}]}];
-const SXN={k:"Kim",l:"Lee",t:"Total",d:"Difference"}, SXT=["k","l","t","d"], SXA=2100, SXH=1200;
-function sxEnd(S){ const K0=3*S.mB, L0=5*S.mB; let Ka=K0, La=L0;
-  S.mv.forEach(m=>{ const g=m.k==="in"?1:-1; if(m.w==="k") Ka+=g*m.d; else La+=g*m.d; if(m.k==="tx"){ if(m.w==="k") La+=m.d; else Ka+=m.d; } });
-  return {K0,L0,Ka,La}; }
-const sxVal=(x,K,L)=>x==="k"?K:x==="l"?L:x==="t"?K+L:Math.abs(L-K);
-const sxCl=(x,a,b)=>Math.max(0,Math.min(1,(x-a)/(b-a))), sxEz=u=>u*u*(3-2*u);
-const sxHold=(S,x)=>{ const E=sxEnd(S); return Math.abs(sxVal(x,E.K0,E.L0)-sxVal(x,E.Ka,E.La))<1e-9; };
-function sxFrame(s){ const S=SXS[s.s-1];
-  if(s.ph===1){ let u=s.t, x=s.tap; if(s.last&&u>=SXA+SXH){ u-=SXA+SXH; x=S.keep; } else u=Math.min(u,SXA); return {who:x,al:sxCl(u,0,300),e:sxEz(sxCl(u,300,1800)),vd:sxCl(u,1800,SXA)}; }
-  if(s.ph>=2) return {who:S.keep,al:1,e:1,vd:1};
-  return {who:"",al:0,e:0,vd:0}; }
-function sxFin(s){ if(s.ok) s.ph=2; else if(s.last) s.ph=3; else Object.assign(s,{ph:0,tap:"",tried:s.tap,t:0}); }
-function sxDraw(svg,s){ const S=SXS[s.s-1], E=sxEnd(S), F=sxFrame(s), e=F.e, pl=svg.closest(".play"), stg=svg.closest(".stage");
-  if(pl) pl.classList.add("sxplay"); svg._st=s;
-  if(stg){ if(s.ph===0&&s.tried) stg.classList.remove("ipdone"); else if(s.ph) stg.classList.add("ipdone"); }
-  if(!svg._rz){ svg._rz=1; const rz=()=>{ if(!svg.isConnected){ removeEventListener("resize",rz); return; } const w=Math.round(svg.clientWidth); if(w&&Math.abs(w-svg._cw)>2){ svg.innerHTML=""; sxDraw(svg,svg._st); } }; addEventListener("resize",rz); }
-  const cw=Math.max(280,Math.round(svg.clientWidth||320)); svg._cw=cw;
-  const wide=cw>=560, fs=wide?19:16, sf=wide?16:14, qf=wide?21:17, BH=wide?44:40, P=5, GP=10, OH=BH+2*P;
-  const add=(tg,at,tx,par)=>{ const n=svgEl(tg,at,tx); (par||svg).append(n); return n; };
-  const tw=(tx,f,wt)=>{ const n=add("text",{"font-size":f,"font-weight":wt||700,x:0,y:-99},tx); let w=0; try{ w=n.getComputedTextLength(); }catch(_){} n.remove(); return w>0?w:tx.length*f*.6; };
-  const LW=Math.ceil(Math.max(tw("Kim",fs),tw("Lee",fs),tw("Total",fs))), X0=8+LW+12, X1=cw-16;
-  const mx=Math.max(E.K0+E.L0,E.Ka+E.La), px=(X1-X0)/mx, X=v=>X0+v*px;
-  const y1=qf+7, y2=y1+qf+10, Yk=y2+16+P, DT=Yk+BH+P+GP, bm=DT+OH/2, Yl=DT+OH+GP+P, Yt=Yl+BH+P+GP+P, H=Yt+BH+P+4;
+const BAS=[
+  {c:"Lee got 14",ev:["Then Lee ","got 14 more","."],now:[1,2],keep:"k",note:"Kim not touched",bb:1,ab:3,off:0,pc:[{r:1,a:5,b:6,v:"+14"}],u:14,hint:"Make Kim's boxes the same."},
+  {c:"Lee gave 18",ev:["Then Lee ","gave 18 to Kim","."],now:[3,1],keep:"t",note:"nothing came in or out",bb:1,ab:2,off:0,pc:[{r:1,a:3,b:6,v:"18",tx:1}],u:6,hint:"Make Total boxes the same."},
+  {c:"Each got 12",ev:["Then ","each got 12 more","."],now:[2,3],keep:"d",note:"both got the same",bb:1,ab:2,off:1,pc:[{r:0,a:0,b:1,v:"+12"},{r:1,a:0,b:1,v:"+12"}],u:12,hint:"Make Difference boxes the same."},
+  {c:"Kim got 9",ev:["Then Kim ","got 9 more","."],now:[7,10],keep:"l",note:"Lee not touched",bb:2,ab:1,off:0,pc:[{r:0,a:6,b:7,v:"+9"}],u:9,hint:"Make Lee's boxes the same."}];
+const baKV=(x,K,L)=>x==="k"?K:x==="l"?L:x==="t"?K+L:L-K;
+function baM(s){ const S=BAS[s.s-1], n=clamp(Math.round(s.n)||1,1,6), big=S.bb>S.ab?"b":"a", R=Math.max(S.bb,S.ab);
+  const B={K:3*S.bb,L:5*S.bb,o:S.off,box:big==="b"?R/n:1}, A={K:S.now[0]*S.ab,L:S.now[1]*S.ab,o:0,box:big==="a"?R/n:1};
+  const cB=baKV(S.keep,B.K,B.L)/B.box, cA=baKV(S.keep,A.K,A.L)/A.box;
+  return {S,n,big,R,B,A,cB:Math.round(cB*1e6)/1e6,cA:Math.round(cA*1e6)/1e6,ok:Math.abs(cB-cA)<1e-9}; }
+function baRows(s){ const M=baM(s), S=M.S, n=M.n, ok=M.ok, three=S.keep==="t"||S.keep==="d", kc3=S.keep==="t"?"Total":"Difference";
+  const hd=three?["Kim","Lee",kc3]:["Kim","Lee"], ki=S.keep==="k"?0:S.keep==="l"?1:2, X=c=>three?[c-62,c-16,c+50]:[c-36,c+36];
+  const r0=v=>three?[v[0],v[1],S.keep==="t"?v[0]+v[1]:v[1]-v[0]]:v, Bv=r0([3,5]), Av=r0(S.now), T=(x,y,t,a)=>`<text x="${x}" y="${y}" text-anchor="middle" ${a||""}>${t}</text>`;
+  const col=i=>i===0?"var(--blue)":i===1?"var(--amber)":"var(--ink)";
+  let o=`<svg class="barows" viewBox="0 0 400 236" role="img" aria-label="Before and After ratio rows">`;
+  o+=`<line x1="200" y1="6" x2="200" y2="126" stroke="var(--line)" stroke-width="2"/>`;
+  [[100,"Before",Bv,"b"],[300,"After",Av,"a"]].forEach(([c,tt,v,w])=>{ const xs=X(c), isBig=M.big===w;
+    o+=T(c,19,tt,`font-size="17" font-weight="700" fill="var(--ink)"`);
+    hd.forEach((h,i)=>{ const fs=h==="Difference"?14:17; if(i===ki){ const ww=h.length*fs*.55+(h==="Difference"?8:16); o+=`<rect x="${xs[i]-ww/2}" y="31" width="${ww}" height="24" rx="12" fill="none" stroke="var(--ink)" stroke-width="2"/>`; }
+      o+=T(xs[i],48,h,`font-size="${fs}" font-weight="700" fill="${col(i)}"`); });
+    if(three) o+=`<line x1="${c+18}" y1="62" x2="${c+18}" y2="122" stroke="var(--line)" stroke-width="1.5"/>`;
+    const row=(y,vals,st)=>vals.forEach((x,i)=>{ const kept=i===ki, f=st==="g"?(kept?"var(--red)":"var(--muted)"):kept&&st==="ok"?"var(--green)":col(i);
+      o+=T(xs[i],y,x,`font-size="26" font-weight="700" fill="${f}"`); if(i<vals.length-1&&!(three&&i===1)) o+=T((xs[i]+xs[i+1])/2,y-2,":",`font-size="18" font-weight="700" fill="var(--muted)"`); });
+    row(82,v,!isBig&&ok?"ok":""); if(isBig&&n>1){ row(116,v.map(x=>x*n),ok?"ok":"g"); o+=T(xs[xs.length-1]+(three?30:34),114,"× "+n,`font-size="18" font-weight="700" fill="${ok?"var(--green)":"var(--muted)"}"`); } });
+  if(ok){ const yB=M.big==="b"?116:82, yA=M.big==="a"?116:82, mB=M.big==="b"?n:1, mA=M.big==="a"?n:1, xb=X(100), xa=X(300); let j=0, lbs="";
+    [0,1].forEach(i=>{ const d=(i?S.now[1]:S.now[0])*mA-(i?5:3)*mB; if(!d) return; const x0=xb[i], x1=xa[i], cx=(x0+x1)/2, cy=154+j*30, y0=yB+9, y1=yA+9, t=j?.72:.28, lb=(d>0?"+":"−")+Math.abs(d)+"u";
+      const px=(1-t)*(1-t)*x0+2*(1-t)*t*cx+t*t*x1, py=(1-t)*(1-t)*y0+2*(1-t)*t*cy+t*t*y1;
+      o+=`<path d="M${x0} ${y0}Q${cx} ${cy} ${x1} ${y1}" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M${x1-6} ${y1+8}L${x1} ${y1}L${x1+5} ${y1+9}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+      lbs+=`<rect x="${px-25}" y="${py-13}" width="50" height="24" rx="7" fill="var(--card)" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="4 3"/>`+T(px,py+6,lb,`font-size="17" font-weight="700" fill="var(--ink)"`); j++; }); o+=lbs;
+    const D=Math.abs(S.now[0]*mA-3*mB)||Math.abs(S.now[1]*mA-5*mB), tot=S.u*D;
+    o+=T(200,226,D>1?`${D}u = ${tot},  1u = ${S.u}`:`1u = ${S.u}`,`font-size="24" font-weight="700" fill="var(--ink)"`); }
+  else o+=T(200,226,"1u = ?",`font-size="24" font-weight="700" fill="var(--muted)"`);
+  return `<div class="apwk ipk rrk bak"><div class="forms"><div class="formbox fb-ink rrbox${ok?" rrok":""}"><div class="eq">${o}</svg></div></div></div></div>`; }
+function baDraw(svg,s){ const M=baM(s), S=M.S, pl=svg.closest&&svg.closest(".play"), stg=svg.closest&&svg.closest(".stage"); svg._st=s;
+  if(pl) pl.classList.add("ip6rr","ip6ba"); if(stg){ const ih=stg.querySelector(".iphint"); if(ih&&ih.textContent!==S.hint) ih.textContent=S.hint; }
+  if(!svg._rz){ svg._rz=1; const rz=()=>{ if(!svg.isConnected){ removeEventListener("resize",rz); return; } const w=Math.round(svg.clientWidth); if(w&&Math.abs(w-svg._cw)>2){ svg.innerHTML=""; baDraw(svg,svg._st); } }; addEventListener("resize",rz); }
+  if(svg._evs!==s.s){ svg._evs=s.s; svg.classList.remove("baev"); svg.getBoundingClientRect(); svg.classList.add("baev"); clearTimeout(svg._evT); svg._evT=setTimeout(()=>svg.classList.remove("baev"),1400); }
+  const cw=Math.max(300,Math.round(svg.clientWidth||340)); svg._cw=cw;
+  const wide=cw>=520, sm=cw<380, fs=wide?18:15, sf=wide?15:13, tf=wide?16:14, qf=wide?20:16, BH=wide?42:sm?30:36, G1=sm?8:10, G2=wide?26:sm?16:22;
+  const add=(tg,at,tx,par)=>{ const e=svgEl(tg,at,tx); (par||svg).append(e); return e; };
+  const tw=(tx,f)=>[...String(tx)].reduce((a,c)=>a+(/[ .,:;'!]/.test(c)?.3:/[A-Z0-9]/.test(c)?.64:/[mw]/.test(c)?.82:/[il]/.test(c)?.3:.55),0)*f;
+  const ko=(x,y,t,f,a)=>{ const w=tw(t,f)+8, an=a["text-anchor"]||"start", lx=an==="middle"?x-w/2:an==="end"?x-w+4:x-4; add("rect",{x:lx,y:y-f*.95,width:w,height:f*1.3,fill:"var(--card)"}); return add("text",Object.assign({x,y,"font-size":f,"font-weight":700},a),t); };
+  const LW=Math.ceil(Math.max(tw("Total",fs),tw("Kim",fs),tw("Lee",fs)))+16, X0=6+LW+8, CWd=wide?34:28, X1=cw-8-CWd;
+  const line=S.keep==="t", maxU=line?Math.max(M.B.K+M.B.L,M.A.K+M.A.L):Math.max(M.B.o+M.B.L,M.B.o+M.B.K,M.A.L,M.A.K), px=(X1-X0)/maxU, X=v=>X0+v*px;
+  const lh=qf+(sm?6:9), hb=wide?30:sm?18:26, yq=[hb+qf+2,hb+qf+2+lh,hb+qf+2+2*lh];
+  const q=[[["At first, ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[" = 3 : 5.",""]],[[S.ev[0],""],[S.ev[1],"",1],[S.ev[2],""]],[["Now ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[` = ${S.now[0]} : ${S.now[1]}.`,""]]];
+  q.forEach((ln,i)=>{ const full=ln.map(x=>x[0]).join(""), w=tw(full,qf), f=w>cw-6?Math.floor(qf*(cw-6)/w*10)/10:qf, t=add("text",{x:2,y:yq[i],"font-size":f,"font-weight":500,fill:"var(--ink)",class:"baq"});
+    ln.forEach(([x,c,u])=>{ const a={}; if(c){ a.fill=c; a["font-weight"]=700; } if(u){ a["text-decoration"]="underline"; a["font-weight"]=800; } add("tspan",a,x,t); }); });
+  const yB0=yq[2]+(sm?10:14), yA0=yB0+sf+8+2*BH+G1+G2, kr=S.keep==="k"?0:1;
+  const mk=(y0,P,w)=>{ const yb=y0+sf+8, rows=[yb,yb+BH+G1]; return {y0,yb,rows,ry:r=>line?rows[1]:rows[r],P,w}; }, Bk=mk(yB0,M.B,"b"), Ak=mk(yA0,M.A,"a");
+  const span=P=>S.keep==="k"?[P.o,P.o+P.K]:S.keep==="l"?[P.o,P.o+P.L]:S.keep==="t"?[0,P.K+P.L]:[P.o+P.K,P.o+P.L];
+  { const fx=M.big==="a"?Bk:Ak, [a,b]=span(fx.P); for(let v=a;v<=b+1e-9;v+=1) add("line",{x1:X(v),y1:Bk.ry(kr)+BH,x2:X(v),y2:Ak.ry(kr),stroke:"var(--muted)","stroke-width":1.5,"stroke-dasharray":"3 4"}); }
+  [[Bk,"Before"],[Ak,"After"]].forEach(([K,tag])=>{ ko(2,K.y0+sf,tag,tf,{fill:"var(--ink)"}); if(K.w==="a"){ const nx=2+tw(tag,tf)+12; const e=ko(nx,K.y0+sf,S.note,sf,{fill:"var(--muted)","font-style":"italic","font-weight":600}); e.setAttribute("class","bapo"); } });
+  const wrong=!M.ok&&M.n>1, miss=v=>Math.abs(v-Math.round(v))>1e-6;
+  const cuts=(x0,len,y,box,big,ks)=>{ for(let v=box;v<len-1e-6;v+=box){ const at=x0+v, inK=ks&&at>ks[0]+1e-6&&at<ks[1]-1e-6, red=big&&wrong&&inK&&miss(at); add("line",{x1:X(at),y1:y,x2:X(at),y2:y+BH,stroke:red?"var(--red)":"var(--ink)","stroke-width":red?3:big?2.2:1.6}); } };
+  const nmL=(t,y,c,ov)=>{ const cx=X0-8; if(ov){ const w=tw(t,fs)+14; add("rect",{x:cx-w,y:y+BH/2-fs*.85,width:w,height:fs*1.7,rx:fs*.85,fill:"none",stroke:"var(--ink)","stroke-width":2,class:"bapo"}); add("text",{x:cx-w/2,y:y+BH/2+fs*.36,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:c},t); }
+    else add("text",{x:cx-6,y:y+BH/2+fs*.36,"text-anchor":"end","font-size":fs,"font-weight":700,fill:c},t); };
+  const DSH={fill:"none",stroke:"var(--ink)","stroke-width":2.4,"stroke-dasharray":"6 4",rx:3};
+  const drawBlk=K=>{ const P=K.P, big=M.big===K.w, okc=M.ok?"var(--green)":wrong&&big?"var(--red)":"var(--ink)", pcs=K.w==="a"?S.pc:[], ks=span(P);
+    if(line){ const y=K.ry(1), T=P.K+P.L;
+      const kb=pcs.length?pcs[0].a:P.K; add("rect",{x:X(0),y,width:kb*px,height:BH,fill:"var(--blue-fill)"}); add("rect",{x:X(kb),y,width:(T-kb)*px,height:BH,fill:"var(--amber-fill)"});
+      pcs.forEach(p=>{ const pg=add("g",{class:"bapc"}); add("rect",{x:X(p.a),y,width:(p.b-p.a)*px,height:BH,fill:"var(--blue-fill)"},null,pg); });
+      cuts(0,T,y,P.box,big,ks); pcs.forEach(p=>add("rect",Object.assign({x:X(p.a)+2,y:y+2,width:(p.b-p.a)*px-4,height:BH-4,class:"bapc"},DSH)));
+      add("line",{x1:X(P.K),y1:y-3,x2:X(P.K),y2:y+BH+3,stroke:"var(--ink)","stroke-width":3.4});
+      add("rect",{x:X(0),y,width:T*px,height:BH,fill:"none",stroke:okc,"stroke-width":M.ok||wrong&&big?3.4:2.2});
+      ko(X(P.K/2),y-6,"Kim",sf,{"text-anchor":"middle",fill:"var(--blue)"}); ko(X(P.K+P.L/2),y-6,"Lee",sf,{"text-anchor":"middle",fill:"var(--amber)"});
+      nmL("Total",y,"var(--ink)",1); }
+    else [["K","var(--blue-fill)","Kim","var(--blue)"],["L","var(--amber-fill)","Lee","var(--amber)"]].forEach(([k,fl,nm,ink],r)=>{ const y=K.ry(r), len=P[k], kept=S.keep===(r?"l":"k");
+      const mine=pcs.filter(p=>p.r===r); let b0=P.o, b1=P.o+len; mine.forEach(p=>{ if(p.a<=b0+1e-9) b0=p.b; else b1=Math.min(b1,p.a); });
+      add("rect",{x:X(b0),y,width:Math.max(0,b1-b0)*px,height:BH,fill:fl});
+      mine.forEach(p=>{ const pg=add("g",{class:"bapc"}); add("rect",{x:X(p.a),y,width:(p.b-p.a)*px,height:BH,fill:fl},null,pg); });
+      const kk=kept?[P.o,P.o+len]:S.keep==="d"&&r===1?ks:null; cuts(P.o,len,y,P.box,big,kk);
+      mine.forEach(p=>add("rect",Object.assign({x:X(p.a)+2,y:y+2,width:(p.b-p.a)*px-4,height:BH-4,class:"bapc"},DSH)));
+      add("rect",{x:X(P.o),y,width:len*px,height:BH,fill:"none",stroke:kept?okc:"var(--ink)","stroke-width":kept&&(M.ok||wrong&&big)?3.4:2.2});
+      nmL(nm,y,ink,kept); });
+    if(S.keep==="d"){ const y=K.ry(1), a=X(P.o+P.K), b=X(P.o+P.L), dc=M.ok?"var(--green)":wrong&&big?"var(--red)":"var(--ink)"; add("rect",{x:a,y:y-3,width:b-a,height:BH+6,rx:5,fill:"none",stroke:dc,"stroke-width":M.ok?3.4:2,"stroke-dasharray":M.ok?"none":"6 4",class:"bapo"});
+      const df=Math.min(sf,(b-a-16)/tw("Difference",1)), yt=K.ry(0)+BH/2, w=tw("Difference",df)+10; add("rect",{x:(a+b)/2-w/2,y:yt-df*.85,width:w,height:df*1.7,rx:df*.85,fill:"var(--card)",stroke:"var(--ink)","stroke-width":2,class:"bapo"}); add("text",{x:(a+b)/2,y:yt+df*.36,"text-anchor":"middle","font-size":df,"font-weight":700,fill:"var(--ink)"},"Difference"); }
+    pcs.forEach(p=>{ const y=K.ry(line?1:p.r), w=(p.b-p.a)*px, uu=(p.b-p.a)+"u", full=`${uu} = ${S.u*(p.b-p.a)}`, fit=t=>(w-8)/Math.max(1,tw(t,1)), t=!M.ok?p.v:fit(full)>=12?full:uu, f=Math.min(sf,fit(t));
+      const e=ko(X(p.a)+w/2,y+BH/2+f*.36,t,f,{"text-anchor":"middle",fill:"var(--ink)"}); e.setAttribute("class","bapc"); e.previousSibling.setAttribute("class","bapc"); e.previousSibling.setAttribute("fill","var(--card)"); e.previousSibling.setAttribute("fill-opacity",".85"); });
+    const cnt=K.w==="b"?M.cB:M.cA, cy=K.ry(kr)+BH/2+fs*.36, ex=X(ks[1]);
+    add("text",{x:Math.min(ex+8,cw-tw(String(cnt),fs+2)-2),y:cy,"font-size":fs+2,"font-weight":800,fill:M.ok?"var(--green)":wrong?"var(--red)":"var(--ink)",class:"bacnt"},String(+cnt.toFixed(2))); };
+  drawBlk(Bk); drawBlk(Ak);
+  const yK=yA0+sf+8+2*BH+G1+(wide?48:sm?40:44), TX0=X0, TX1=X1, hx=TX0+(M.n-1)/5*(TX1-TX0), H=yK+(wide?30:sm?21:28); s._g=[TX0,TX1];
   svg.setAttribute("viewBox",`0 0 ${cw} ${H}`);
-  const FILL={k:"var(--blue-fill)",l:"var(--amber-fill)"}, INK={k:"var(--blue)",l:"var(--amber)"};
-  { const af=tw("At first",sf)+12, q=add("text",{x:2,y:y1,"font-size":qf,"font-weight":700,fill:"var(--ink)"});
-    add("tspan",{"font-size":sf,"font-weight":600,fill:"var(--muted)"},"At first",q); add("tspan",{x:2+af,fill:INK.k},"Kim",q);
-    [[" : ",""],["Lee",INK.l],[" = 3 : 5.",""]].forEach(([w,c])=>add("tspan",c?{fill:c}:{},w,q));
-    const ev="Then "+S.e, ew=tw(ev,qf), q2=ew>cw-6?Math.floor(qf*(cw-6)/ew):qf; add("text",{x:2,y:y2,"font-size":q2,"font-weight":700,fill:"var(--ink)",class:"sxev"},ev);
-    for(let j=0;j<6;j++){ const cx=X1-(5-j)*13, cy=y1-qf*.33, on=j===s.s-1, dn=j<s.s-1;
-      add("circle",{cx,cy,r:on?4.5:3.5,fill:on?"var(--accent)":dn?"var(--muted)":"none",stroke:on?"var(--accent)":"var(--muted)","stroke-width":1.4}); } }
-  const before={k:E.K0,l:E.L0}, core={k:E.K0,l:E.L0}, fly=[];
-  if(e>=1){ core.k=E.Ka; core.l=E.La; } else if(e>0) S.mv.forEach(m=>{ if(m.k!=="in") core[m.w]-=m.d; fly.push(m); });
-  const Ke=E.K0+(E.Ka-E.K0)*e, Le=E.L0+(E.La-E.L0)*e;
-  const ln=(g,x,y,w)=>add("line",{x1:x,y1:y,x2:x,y2:y+BH,stroke:"var(--ink)","stroke-width":w||1.6},null,g);
-  const marks=len=>{ const r=[]; for(let j=S.mB;j<len-1e-6;j+=S.mB) r.push(j); return r; };
-  const bar=(id,y,len)=>{ const g=add("g",{}); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:FILL[id]},null,g);
-    marks(len).forEach(v=>ln(g,X(v),y)); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2},null,g); };
-  bar("k",Yk,core.k); bar("l",Yl,core.l);
-  { const g=add("g",{}); add("rect",{x:X0,y:Yt,width:Ke*px,height:BH,fill:FILL.k},null,g); add("rect",{x:X(Ke),y:Yt,width:Le*px,height:BH,fill:FILL.l},null,g);
-    marks(Ke).forEach(v=>ln(g,X(v),Yt)); marks(Le).forEach(v=>ln(g,X(Ke+v),Yt)); if(Ke>1e-6&&Le>1e-6) ln(g,X(Ke),Yt,2.8);
-    add("rect",{x:X0,y:Yt,width:(Ke+Le)*px,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2},null,g); }
-  const lc=x=>x===s.tried&&s.ph===0?"var(--muted)":x==="k"?INK.k:x==="l"?INK.l:"var(--ink)";
-  const lab=(x,y)=>add("text",{x:X0-12,y,"text-anchor":"end","font-size":fs,"font-weight":700,fill:lc(x)},SXN[x]);
-  lab("k",Yk+BH/2+fs*.36); lab("l",Yl+BH/2+fs*.36); lab("t",Yt+BH/2+fs*.36);
-  const a=Math.min(Ke,Le), b=Math.max(Ke,Le);
-  add("line",{x1:X(Ke),y1:Yk+BH,x2:X(Ke),y2:bm,stroke:"var(--muted)","stroke-width":1.5,"stroke-dasharray":"2 3"});
-  add("line",{x1:X(Le),y1:Yl,x2:X(Le),y2:bm,stroke:"var(--muted)","stroke-width":1.5,"stroke-dasharray":"2 3"});
-  add("line",{x1:X(a),y1:bm,x2:X(b),y2:bm,stroke:"var(--ink)","stroke-width":2.2});
-  if(b-a>1e-6) [a,b].forEach(v=>add("line",{x1:X(v),y1:bm-7,x2:X(v),y2:bm+7,stroke:"var(--ink)","stroke-width":2.2}));
-  const dw=tw("Difference",sf), dr=X(a)-10, dl=dr-dw>=2?dr-dw:X(b)+10+dw<=cw-2?X(b)+10:2;
-  add("text",{x:dl,y:bm+sf*.36,"font-size":sf,"font-weight":700,fill:lc("d")},"Difference");
-  const AMB={fill:"none",stroke:"var(--amber)","stroke-width":3,"stroke-dasharray":"6 4",class:"sxtr"};
-  if(e>=1) S.mv.forEach(m=>{ const o=m.k==="tx"?(m.w==="k"?"l":"k"):m.w, v=m.k==="in"?before[o]:m.k==="tx"?before[o]:before[o]-m.d, y=o==="k"?Yk:Yl;
-    add("rect",Object.assign({x:X(v)+2,y:y+2,width:m.d*px-4,height:BH-4,rx:3},AMB)); });
-  fly.forEach(m=>{ const yw=m.w==="k"?Yk:Yl, base=before[m.w], w=m.d*px; let x, y=yw, op=1;
-    if(m.k==="in"){ x=X(base); y=yw-(1-e)*BH*.45; op=sxCl(e,0,.35); }
-    else if(m.k==="use"){ x=X(base-m.d)+e*BH*.6; op=1-e; }
-    else if(m.k==="out"){ x=X(base-m.d)+e*e*cw; op=1-sxCl(e,.5,1); }
-    else { const o=m.w==="k"?"l":"k", yo=o==="k"?Yk:Yl, tx=X(before[o]), fx=X(base-m.d); x=fx+(tx-fx)*e; y=yw+(yo-yw)*e-Math.sin(Math.PI*e)*BH*.4; }
-    const g=add("g",{opacity:op}); add("rect",{x,y,width:w,height:BH,fill:FILL[m.w],stroke:"var(--ink)","stroke-width":2},null,g);
-    for(let j=1;j*S.mB<m.d-1e-6;j++) ln(g,x+j*S.mB*px,y);
-    add("rect",Object.assign({x:x+2,y:y+2,width:w-4,height:BH-4,rx:3},AMB),null,g);
-    const vt=String(m.v), wt=tw(vt,sf); add("text",{x:x+w/2,y:w>=wt+8?y+BH/2+sf*.36:y-6,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)"},vt,g); });
-  const rowY={k:Yk-P,l:Yl-P,t:Yt-P,d:DT}, rest={k:X(E.K0),l:X(E.L0),t:X(E.K0+E.L0),d:Math.max(X(b),dl+dw)};
-  const DOT={rx:9,fill:"none","stroke-dasharray":"6 5"};
-  if(F.who){ const x=F.who, v0=sxVal(x,E.K0,E.L0), cv=sxVal(x,Ke,Le), eq=sxHold(S,x), vd=F.vd, yy=x==="k"?Yk:x==="l"?Yl:Yt;
-    const s0=x==="d"?X(a):X0, ox=x==="d"?s0-7:2, ow=x==="d"?v0*px+14:X(v0)+7-2, ok=vd>0&&eq, bad=vd>0&&!eq;
-    add("rect",Object.assign({},DOT,{x:ox,y:rowY[x],width:ow,height:OH,stroke:ok?"var(--green)":bad?"var(--red)":"var(--ink)","stroke-width":ok?3.2:2.6,"stroke-dasharray":ok?"none":"6 5",opacity:F.al,class:"sxol","data-k":x,"data-v":ok?"ok":bad?"bad":""}));
-    if(bad){ const ry=x==="d"?bm-9:yy, rh=x==="d"?18:BH;
-      if(cv>v0) add("rect",{x:s0+v0*px,y:ry,width:(cv-v0)*px,height:rh,fill:"var(--red-fill)","fill-opacity":.85,stroke:"var(--red)","stroke-width":2.6,opacity:vd});
-      else add("rect",{x:s0+cv*px,y:ry,width:(v0-cv)*px,height:rh,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":2.6,"stroke-dasharray":"4 3",opacity:vd}); }
-    if(ok){ const cx=Math.min(ox+ow,cw-14), cy=Math.max(rowY[x],14), g=add("g",{opacity:vd,class:"sxok"}); add("circle",{cx,cy,r:13,fill:"var(--green)"},null,g); add("text",{x:cx,y:cy+5.5,"text-anchor":"middle","font-size":16,"font-weight":700,fill:"var(--card)",class:"sxbt"},"✓",g); } }
-  if(s.ph===0){ const av=["k","d","l","t"].filter(x=>x!==s.tried), og=add("g",{class:"sxog"+(svg.classList.contains("nudge")?" nudgeme":s.tried?" sxre":""),stroke:"var(--ink)","stroke-width":1.8,"pointer-events":"none"});
-    if(s.tried) add("rect",Object.assign({},DOT,{x:2,y:rowY[s.tried],width:rest[s.tried]+7-2,height:OH,stroke:"var(--muted)","stroke-width":1.4,"stroke-opacity":.6,"pointer-events":"none"}));
-    av.forEach(x=>add("rect",Object.assign({},DOT,{x:2,y:rowY[x],width:rest[x]+7-2,height:OH}),null,og));
-    av.forEach(x=>add("rect",{x:0,y:rowY[x]-GP/2,width:cw,height:OH+GP,fill:"transparent","data-drag":x,"data-tap":"1",role:"button","aria-label":SXN[x],style:"cursor:pointer"})); }
-  if(s.ph===1&&!s.ok&&s.t>=SXA&&s.t<SXA+SXH) add("rect",{x:0,y:0,width:cw,height:H,fill:"transparent","data-drag":"z","data-tap":"1",style:"cursor:pointer"});
-  svg.setAttribute("aria-label",`Kim ${+Ke.toFixed(2)} boxes, Lee ${+Le.toFixed(2)} boxes, Total under them, the Difference between their ends.`); }
+  add("line",{x1:TX0,y1:yK,x2:TX1,y2:yK,stroke:"var(--line)","stroke-width":6,"stroke-linecap":"round"});
+  for(let i=0;i<6;i++){ const x=TX0+i*(TX1-TX0)/5; add("line",{x1:x,y1:yK-5,x2:x,y2:yK+5,stroke:"var(--muted)","stroke-width":1.6}); }
+  add("path",{d:`M${TX0-14} ${yK}H${TX1+14}`,fill:"none",stroke:"transparent","stroke-width":34,"pointer-events":"stroke","data-drag":"n",style:"cursor:pointer"});
+  const kt=M.n===1?`${M.big==="a"?"After":"Before"}: not cut`:`${M.big==="a"?"After":"Before"}: cut into ${M.n}`, kw=tw(kt,sf), kx=Math.max(kw/2+2,Math.min(cw-kw/2-2,hx));
+  add("text",{x:kx,y:yK-27,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:M.ok?"var(--green)":"var(--ink)",class:"baknl"},kt);
+  add("circle",{cx:hx,cy:yK,r:22,fill:"transparent","data-drag":"n",style:"cursor:grab"}); add("circle",{cx:hx,cy:yK,r:11,fill:"var(--ink)",stroke:"var(--card)","stroke-width":3,"pointer-events":"none"});
+  svg.setAttribute("aria-label",`Before and After bars. ${S.hint} ${M.big==="a"?"After":"Before"} boxes cut into ${M.n}. ${M.ok?"Now the same.":"Not the same yet."}`); }
 const staysSame=aid({
-  init:{s:1,ph:0,tap:"",tried:"",t:0,last:0,ok:0,D:0}, jump:true, ip:"Tap what stays the same.", vb:"0 0 320 270", label:"Before and after bars", link:["s"],
-  fix:s=>{ const n=Math.round(+s.s); s.s=n>=1&&n<=6?n:1; Object.assign(s,{ph:0,tap:"",tried:"",t:0,last:0}); },
-  buttons:[{label:"Next story →",show:s=>s.ph>=2,fn:s=>{ Object.assign(s,{s:s.s%6+1,ph:0,tap:"",tried:"",t:0,last:0}); }}],
-  steps:[{name:"Before and after",t:()=>""}],
-  draw:sxDraw,
-  drag(){},
-  drop(id,s,animate){ const run=t0=>{ const D=s.D; if(t0>=D){ sxFin(s); return; } animate(D-t0,p=>{ s.t=t0+p*(D-t0); if(p>=1) sxFin(s); }); };
-    if(id==="z"){ if(s.ph===1&&!s.ok&&s.t>=SXA) run(SXA+SXH); return; }
-    if(s.ph!==0||!SXT.includes(id)||id===s.tried) return; const S=SXS[s.s-1], ok=id===S.keep, last=!ok&&!!s.tried;
-    Object.assign(s,{ph:1,tap:id,t:0,last:last?1:0,ok:ok?1:0,D:ok?SXA:last?2*SXA+SXH:SXA+SXH}); run(0); },
+  init:{s:1,n:1}, jump:true, ip:"Make Kim's boxes the same.", vb:"0 0 340 420", label:"Before and After bars", link:["n"],
+  fix:s=>{ const v=Math.round(+s.s); s.s=v>=1&&v<=4?v:1; s.n=clamp(Math.round(+s.n)||1,1,6); },
+  pills:[{k:"s",opts:BAS.map((S,i)=>[i+1,S.c]),on:s=>{ s.n=1; s._dr=0; }}],
+  steps:[{name:"Before and after",t:()=>"",w:baRows}],
+  draw:baDraw, demo:[1,0],
+  drag(id,p,s){ if(s._usr) s._dr=1; const g=s._g||[60,300]; s.n=clamp(Math.round(1+(p.x-g[0])/(g[1]-g[0])*5),1,6); },
   key(){ return ""; }
 });
 PLAYS.staysSame=staysSame;
