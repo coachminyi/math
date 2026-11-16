@@ -1468,6 +1468,38 @@ html[data-ip] .dohint{display:none !important}
 @media (min-width:900px){.play.qxp{grid-template-columns:minmax(0,1fr) 230px}.play.qxp .qxw{font-size:15.5px}.play.qxp .panel{align-self:start}}
 @media (max-width:599px){.qxa,.qxb{display:flex;flex-direction:column;align-items:flex-start}.qxo:empty{display:none}.qxw{font-size:13.5px}.qxh,.qxr{column-gap:6px}.qxr{padding:2px 4px;min-height:28px}.qxh span+span,.qxr>.qxb{padding-left:6px}.qxh{padding:0 4px 3px}}
 @media (prefers-reduced-motion:reduce){.qxr.qxin{animation:none}}
+.iptabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.iptab{display:flex;align-items:center;gap:8px;min-height:50px;padding:3px 10px 3px 4px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:15px;font-weight:700;line-height:1.15;text-align:left;cursor:pointer}
+.iptab .cmini{width:50px;min-width:0;height:40px;flex:none}
+.iptab small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.iptab[aria-pressed="true"]{border:2.5px solid var(--ink);color:var(--ink);background:var(--bg)}
+html[data-ip] .panel>.iptabs{order:9}
+@media (max-width:599px){.iptabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.iptab{flex-direction:column;justify-content:center;gap:1px;padding:3px 2px;min-height:62px;font-size:11.5px;text-align:center}.iptab .cmini{width:42px;height:32px}.iptab small{font-size:10px}}
+.cpk .formbox .rd{font-size:15px;color:var(--ink);text-align:center;margin-top:2px}
+.fpbox{background:none !important;border:0 !important;box-shadow:none !important;padding:0 !important}
+.fpbox .eq{display:block;height:auto;font-size:16.5px;white-space:normal;text-align:left;font-weight:400}
+.fpch{display:grid;grid-template-columns:auto minmax(9.5em,auto);justify-content:start;align-items:center;column-gap:18px;row-gap:4px}
+.fpch .fph{font-weight:700;grid-column:1/-1}
+.fpch .fpv,.fpch .fpq{font-size:13px;color:var(--muted)}
+.fpch .fpa{display:inline-block;font-size:1.5em;font-weight:800;background:var(--green-fill);border:2px solid var(--green);border-radius:10px;padding:0 14px;margin-top:2px}
+@media (max-width:599px){.fpbox .eq{font-size:13.5px}.fpch{column-gap:10px;row-gap:2px}.fpch .fpv,.fpch .fpq{font-size:12.5px}}
+.srk .formbox .eq{height:auto;min-height:88px}
+.srkr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;column-gap:8px;text-align:center}
+.srkl{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.srkg{font-size:17px;color:var(--ink);font-weight:700}
+.srkv{font-size:22px;font-weight:700}
+.vnk .formbox .eq{height:104px}
+:root{--vn-ok:rgba(31,140,80,.38)}
+:root[data-theme="dark"]{--vn-ok:rgba(80,200,130,.4)}
+.vnrow{display:inline-flex;align-items:center;gap:6px}
+.vnrow>b{font-size:20px}
+.vnc{display:inline-flex;flex-direction:column;align-items:center;font-size:13px;gap:1px}
+.vnc .vnmini{width:80px}
+@media (max-width:599px){.vnc .vnmini{width:54px}.vnrow{gap:3px}}
+@keyframes vnp{0%,100%{stroke-width:.9}50%{stroke-width:1.9}}
+html[data-ip] svg.nudge .vnout.nudgeme{animation:vnp 1.4s ease-in-out infinite}
+html[data-ip] svg.ipwig .vnout{animation:ipwig .6s ease-out 2}
+@media (prefers-reduced-motion:reduce){html[data-ip] svg.nudge .vnout.nudgeme{animation:none}}
 .rdk .formbox{background:none;border:0;padding:0;box-shadow:none}
 .rdk .formbox .hd{display:none}
 .rdk .formbox .eq{height:auto;display:block;font-size:22px;white-space:normal;text-align:left}
@@ -1574,9 +1606,9 @@ const TOPICS = [
   {id:"addition-proof", strand:"trig", levels:["amath"], chapter:"Trigonometry", tier:"curious",
    title:"Addition formulae: a picture proof", blurb:"Two right-angled triangles in a rectangle. Opposite sides are equal, and out come sin(A + B) and cos(A + B).", play:"addProof", sheet:"amTrigId", sheetTitle:"Trig identities & equations"},
   {id:"circle-props", strand:"geo", levels:["emath","amath"], chapter:"Properties of Circles",
-   title:"Circle angle properties", blurb:"Drag points and watch the angles stay true. 7 properties.", play:"circleProps", sheet:"circles", sheetTitle:"Circle properties"},
+   title:"Circle angle properties", blurb:"Drag the dot and watch the angle stay true. 7 properties, one picture each.", play:"circleProps", sheet:"circles", sheetTitle:"Circle properties"},
   {id:"similarity-ratios", strand:"geo", levels:["emath"], chapter:"Congruence & Similarity",
-   title:"Areas & volumes of similar figures", blurb:"Count the 1 cm squares and cubes to see why areas square the length ratio and volumes cube it.", play:"simRatios", sheet:"emCongSim", sheetTitle:"Congruence & similarity tests"},
+   title:"Areas & volumes of similar figures", blurb:"Drag the corner. Count the squares and cubes: lengths k, areas k², volumes k³.", play:"simRatios", sheet:"emCongSim", sheetTitle:"Congruence & similarity tests"},
   {id:"vector-areas", strand:"geo", levels:["emath"], chapter:"Vectors",
    title:"Vectors: ratio of areas", blurb:"Same height? Use the bases. Similar? Square the length ratio.", play:"vecAreas", sheet:"emVectors", sheetTitle:"Vectors"},
   {id:"angles-parallel", strand:"geo", levels:["sec1","p6"], chapter:"Geometry", p6g:"Angles",
@@ -1586,7 +1618,7 @@ const TOPICS = [
   {id:"pointy-third", strand:"geo", levels:["sec2"], chapter:"Volume & surface area",
    title:"Why a pyramid is one-third of a cuboid", blurb:"A cube cuts into 3 pyramids, so pointy solids get ⅓. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
   {id:"venn-regions", strand:"alg", levels:["emath"], chapter:"Set Language & Notation",
-   title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Then read a shaded diagram.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
+   title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Check, and get a second try.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
    title:"Arc length, sector area & radians", blurb:"Drag the angle. Watch the arc and the area change.", play:"arcRad", sheet:"emArcs", sheetTitle:"Arc length, sector area & radians"},
   {id:"what-is-a-radian", strand:"geo", levels:["emath","amath"], chapter:"Arc Length & Radians", tier:"curious",
@@ -1596,7 +1628,7 @@ const TOPICS = [
   {id:"diff-x-squared", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Why x² differentiates to 2x", blurb:"Slide Q into P: the chord becomes the tangent, and its gradient is 2x.", play:"diffChord", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"first-principles", strand:"calc", levels:["amath"], chapter:"Differentiation", tier:"curious",
-   title:"Differentiation from first principles", blurb:"The algebra behind the tangent. Shrink h and 2x + h becomes 2x.", play:"firstPrin", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
+   title:"Differentiation from first principles", blurb:"Drag Q into P: h shrinks, and 2x + h becomes 2x.", play:"firstPrin", sheet:"diffBasics", sheetTitle:"Differentiation rules"},
   {id:"tangent-gradient", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Tangents, gradient & stationary points", blurb:"Drag P. Green going up, red going down, amber flat. Gradient graph underneath.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Uses of differentiation"},
   {id:"speed-time", strand:"graph", levels:["emath"], chapter:"Speed–time graphs",
@@ -1888,17 +1920,17 @@ function aid(def){return {steps:def.steps, ip:def.ip||"", mount(stage,panel,key,
   stage.append(svg); if(def.ip){ const ih=document.createElement("div"); ih.className="iphint"; ih.textContent=def.ip; stage.append(ih); }
   const stq=document.createElement("div"); stq.className="stepq stq"; stq.hidden=true; if(def.jump) stage.prepend(stq);
   const kb=def.key?h("div",{class:"keybox"}):null; if(kb){ key.append(kb); key.classList.add("askw"); key.insertAdjacentHTML("beforeend",ASKCOV); key.addEventListener("click",askOpen); } panel.addEventListener("click",askOpen);
-  const jump=def.jump&&def.steps.length>1?`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
+  const jump=def.jump&&def.steps.length>1?def.ip?`<div class="iptabs" role="tablist">${def.steps.map((s,i)=>`<button class="iptab" role="tab" data-j="${i}">${s.pic||""}<span>${s.name}</span></button>`).join("")}</div>`:`<div class="steptabs" role="tablist">${def.steps.map((s,i)=>`<button class="stab" role="tab" data-j="${i}"><span class="sn">${i+1}</span>${s.name}</button>`).join("")}</div>`:"";
   panel.innerHTML=`${jump}${flat?`<div class="box flathint" hidden></div><div class="exwrap askw"></div>`:""}<span class="dockslot" hidden></span>
     <div class="box dock">
       ${(def.pills||[]).map(p=>`<div class="pillrow" data-pk="${p.k}">${p.label?`<span class="plbl">${p.label}</span>`:""}${p.opts.map(([v,l])=>`<button class="pill" data-v="${v}">${l}</button>`).join("")}</div>`).join("")}
       ${(def.sliders||[]).map(s=>`<div class="ctrl" data-sk="${s.k}"><label>${s.label}</label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" aria-label="${strip(s.label)}"><output></output></div>`).join("")}
       ${def.buttons?`<div class="pillrow">${def.buttons.map((b,i)=>`<button class="pill${b.pill?"":" act"}${!b.pill&&(b.sec||/^(↺|◀|Clear|Empty|Reset|Start again|Put back)/.test(b.label))?" sec":""}${/^↺/.test(b.label)?" rst":""}" data-b="${i}">${b.label}</button>`).join("")}</div>`:""}
     </div>
-    ${flat?"":`<div class="box exbox">${jump?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="stepwk" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
+    ${flat?"":`<div class="box exbox">${jump&&!def.ip?`<div class="stepof"></div>`:""}<div class="stepq" hidden></div><div class="stepwk" hidden></div><div class="askw asktx"><p class="steptext"></p>${ASKCOV}</div><div class="dohint" hidden></div>${jump&&!def.ip?`<div class="nxrow"><button class="prevstep" type="button">← Back</button><button class="nextstep" type="button"></button></div>`:""}${TRYQ}</div>`}
     <div class="box robox askw"><div class="readout"></div>${ASKCOV}</div>${flat?TRYQ:""}
     ${def.hint?`<p class="hint">${def.hint}</p>`:""}`;
-  const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs",panel), stxE=$(".steptext",panel);
+  const ro=$(".readout",panel), cbox=$(".box.dock",panel), jb=$(".steptabs,.iptabs",panel), stxE=$(".steptext",panel);
   const KSEL=".formbox, .khead, .kpair, .egl, .kr", kbSnap=()=>kb?[...kb.querySelectorAll(KSEL)].map(e=>e.textContent):null, portrait=()=>innerWidth<900&&innerHeight>innerWidth, kidOn=()=>document.documentElement.hasAttribute("data-kid");
   const showRes=(snap,first)=>{ if(!kb||!snap||!portrait()) return; let n=0; const wait=()=>{ if(st._anim&&n++<400){ requestAnimationFrame(wait); return; }
     const bs=[...kb.querySelectorAll(KSEL)]; let tg=null; bs.forEach((e,i)=>{ if((i>=snap.length||e.textContent!==snap[i])&&!(first&&tg)) tg=e; }); if(!tg||!tg.isConnected) return;
@@ -1966,7 +1998,7 @@ function aid(def){return {steps:def.steps, ip:def.ip||"", mount(stage,panel,key,
       if(q<1) dmo.raf=requestAnimationFrame(tick); else { endDemo(); draw(); if(dmN<4) dmT=setTimeout(runDemo,6000); } };
     dmo.raf=requestAnimationFrame(tick); };
   if(def.ip){ if(def.drag&&!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)) dmT=setTimeout(runDemo,900);
-    const wig=()=>{ const hs=svg.querySelector("circle[data-drag]"), el=hs?svg:[...cbox.querySelectorAll(".pill.act")].find(b=>b.offsetParent), cl=hs?"ipwig":"ipwigb"; if(!el) return;
+    const wig=()=>{ const hs=svg.querySelector("circle[data-drag],[data-tap]"), el=hs?svg:[...cbox.querySelectorAll(".pill.act")].find(b=>b.offsetParent), cl=hs?"ipwig":"ipwigb"; if(!el) return;
       el.classList.remove(cl); el.getBoundingClientRect(); el.classList.add(cl); clearTimeout(el._wg); el._wg=setTimeout(()=>el.classList.remove(cl),1300); };
     const miss=e=>{ if(!e.target.closest("[data-drag],button,a,input,select,summary")) wig(); };
     setTimeout(()=>{ const pl=stage.closest(".play"); (pl?[pl]:[stage,panel,key]).forEach(el=>{ if(el) el.addEventListener("pointerdown",miss); }); },0); }
@@ -2283,89 +2315,91 @@ const CP=d=>[CO[0]+CR*Math.cos(rad(d)),CO[1]-CR*Math.sin(rad(d))];
 const ptLab=(svg,d,t)=>lab(svg,[CO[0]+(CR+5.5)*Math.cos(rad(d)),CO[1]-(CR+5.5)*Math.sin(rad(d))+1.6],t,{"font-size":4.6,"font-weight":700});
 const onArc=(P,A,B)=>norm(P-A)<norm(B-A);
 const n1=v=>N(Math.round(v*10)/10,1);
+const cpArc=(Vx,r,d1,sw)=>{ const a=rad(d1), b=rad(d1+sw), f=v=>v.toFixed(2); return `M${f(Vx[0])} ${f(Vx[1])}L${f(Vx[0]+r*Math.cos(a))} ${f(Vx[1]-r*Math.sin(a))}A${r} ${r} 0 ${sw>180?1:0} 0 ${f(Vx[0]+r*Math.cos(b))} ${f(Vx[1]-r*Math.sin(b))}Z`; };
+const cpWedge=(svg,Vx,d1,sw,col,r,t,lr=6)=>{ S_(svg,"path",{d:cpArc(Vx,r,d1,sw),fill:`var(--${col}-fill)`,stroke:`var(--${col})`,"stroke-width":1}); if(t!=null){ const m=rad(d1+sw/2), R=r+lr; lab(svg,[Vx[0]+R*Math.cos(m),Vx[1]-R*Math.sin(m)+2.1],t,{"font-size":6,"font-weight":700,fill:`var(--${col})`}); } };
+const cpIn=(svg,Vx,A,B,col,r,lr)=>{ let a=dirTo(Vx,A), b=dirTo(Vx,B), sw=norm(b-a), st=a; if(sw>180){ st=b; sw=360-sw; } const v=Math.round(sw*2)/2; cpWedge(svg,Vx,st,sw,col,r,N(v,1)+"°",lr); return v; };
+const cpRt=(svg,Vx,A,B,col,z=5.5)=>{ const u=P=>{ const dx=P[0]-Vx[0], dy=P[1]-Vx[1], L=Math.hypot(dx,dy)||1; return [dx/L,dy/L]; }, a=u(A), b=u(B), f=v=>v.toFixed(2), p1=[Vx[0]+a[0]*z,Vx[1]+a[1]*z], p2=[p1[0]+b[0]*z,p1[1]+b[1]*z], p3=[Vx[0]+b[0]*z,Vx[1]+b[1]*z];
+  S_(svg,"path",{d:`M${f(Vx[0])} ${f(Vx[1])}L${f(p1[0])} ${f(p1[1])}L${f(p2[0])} ${f(p2[1])}L${f(p3[0])} ${f(p3[1])}Z`,fill:`var(--${col}-fill)`,stroke:`var(--${col})`,"stroke-width":1});
+  const mx=a[0]+b[0], my=a[1]+b[1], L=Math.hypot(mx,my)||1; lab(svg,[Vx[0]+mx/L*(z*1.42+7),Vx[1]+my/L*(z*1.42+7)+2.1],"90°",{"font-size":6,"font-weight":700,fill:`var(--${col})`}); };
+const CPR=3, CPK=CR/CPR;
+const cpT=s=>{ const ot=Math.hypot(s.tl,CPR), d=ot*CPK, T=[CO[0]+d*Math.cos(rad(s.td)),CO[1]-d*Math.sin(rad(s.td))], ph=deg(Math.acos(CPR/ot)); return {T,ph}; };
+const cpOk=s=>{ const {T}=cpT(s); return T[0]>=18&&T[0]<=122&&T[1]>=18&&T[1]<=100; };
+const cpGap=(a,b)=>Math.abs(((a-b+540)%360)-180);
+const CPST=[
+  {name:"Angle at centre",pic:cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),set:{cb:330}},
+  {name:"Same segment",pic:cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]}),set:{cq:150}},
+  {name:"Semicircle",pic:cmini({p:{A:180,B:0,P:60},l:["AB","AP","BP"],o:1,rt:"P"}),set:{cp:60}},
+  {name:"Cyclic quad",pic:cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]}),set:{cd:40}},
+  {name:"Tangent ⊥ radius",pic:cmini({p:{P:60},l:["OP"],o:1,tan:"P",rt:"P"}),set:{ct:50}},
+  {name:"Two tangents",pic:cmini({p:{},o:1,ext:1}),set:{td:40,tl:4}},
+  {name:`Alt. segment <small>A-Math</small>`,pic:cmini({p:{A:270,B:40,C:150},l:["AB","AC","BC"],tan:"A",arcs:[["A","T","C","var(--red)"],["B","A","C","var(--red)"]]}),set:{ab:40}}];
+const cpK=s=>{ const m=s.step, ans=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`, d=v=>N(v,1)+"°", W=(c,hd,eq,rs,g)=>`<div class="apwk ipk cpk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB(c,hd,eq,rs,g,"wide")],true)+`</div>`;
+  if(m===0){ const c=norm(s.cb-210); return W("amber",c>180?"Reflex angle at centre":"Angle at centre",`${nw(`${ans(d(c),"amber")} = 2 × ${kc("blue",d(c/2))}`)}`,c>180?"(∠ at centre = 2∠ at circumference)":"(∠ at centre = 2∠ at circumference)",c>180?"reflex ∠AOB = 2 × ∠APB":"∠AOB = 2 × ∠APB"); }
+  if(m===1){ const opp=s.cq>220&&s.cq<320; return opp?W("green","Opposite segments",nw(`${kc("blue","50°")} + ${ans("130°","green")} = 180°`),"(∠s in opp. segments are supp.)","∠APB + ∠AQB = 180°"):W("blue","Same segment",nw(`${kc("blue","50°")} = ${ans("50°","green")}`),"(∠s in the same segment)","∠APB = ∠AQB"); }
+  if(m===2) return W("blue","Angle in a semicircle",nw(`∠APB = ${ans("90°","blue")}`),"(rt. ∠ in a semicircle)","AB is a diameter");
+  if(m===3){ const a=norm(s.cd-210)/2, c=180-a; return W("blue","Cyclic quadrilateral",nw(`${kc("blue",d(a))} + ${kc("blue",d(c))} = ${ans("180°","blue")}`),"(∠s in opp. segments are supp.)","∠A + ∠C = 180°"); }
+  if(m===4) return W("blue","Tangent ⊥ radius",nw(`∠OPT = ${ans("90°","blue")}`),"(tan ⊥ rad)","OP is a radius");
+  if(m===5) return W("green","Two tangents from T",nw(`${ans(N(s.tl)+" cm","green")} = ${ans(N(s.tl)+" cm","green")}`),"(tangents from an external pt.)","TA = TB");
+  const v=norm(s.ab-270)/2; return W("red","Alternate segment",nw(`${ans(d(v),"red")} = ${ans(d(v),"red")}`),"(∠s in alt. seg.)","∠TAB = ∠ACB"); };
 const circleProps=aid({
-  init:{A:210,B:330,P:90,Q:130,C:300,D:40,Tx:126,Ty:22,pt:""}, jump:true, label:"Circle with draggable points", link:["pt"], save:cpSave,
-  steps:[
-    {name:"Centre",set:{A:210,B:330,P:96}, t:()=>`Angle at the centre = 2 × angle at the circumference (both standing on arc AB).<br>Drag A, B or P.`},
-    {name:"Same segment",set:{A:210,B:330,P:70,Q:130}, t:()=>`Angles in the same segment are equal: ∠APB = ∠AQB.<br>Drag P or Q to the other side of AB: what happens?`},
-    {name:"Semicircle",set:{A:180,B:0,P:60}, t:()=>`AB is a diameter. The angle in a semicircle is always <b>90°</b>.<br>Drag P anywhere.`},
-    {name:"Cyclic quad",set:{A:140,B:210,C:300,D:40}, t:()=>`Cyclic quadrilateral: all 4 corners on the circle.<br>Opposite angles add up to <b>180°</b>.`},
-    {name:"Tangent ⊥ radius",set:{P:50}, t:()=>`A tangent touches the circle at one point P.<br>Tangent ⊥ radius: they meet at <b>90°</b>. Drag P.`},
-    {name:"2 tangents",set:{Tx:126,Ty:22}, t:()=>`Two tangents from the same outside point T are <b>equal</b>: TA = TB.<br>Drag T.`},
-    {name:"Alt. segment (A-Math)",set:{B:40,C:150}, t:()=>`<b>A-Math only.</b> Alternate segment theorem: angle between tangent and chord = angle in the <b>alternate</b> (opposite) segment.<br>Drag B or C.`}
-  ].map(S=>Object.assign({},S,{base:S.set,set:s=>cpSet(s,S.set)})),
-  draw(svg,s){
-    S_(svg,"circle",{cx:CO[0],cy:CO[1],r:CR,fill:"none",stroke:"var(--ink)","stroke-width":.8});
-    const m=s.step, dot=(P,id,col="var(--accent)")=>handle(svg,P[0],P[1],id,col);
-    S_(svg,"circle",{cx:CO[0],cy:CO[1],r:.9,fill:"var(--ink)"});
-    const Oname=()=>lab(svg,[CO[0]+2.5,CO[1]+4.5],"O",{"font-size":4,fill:"var(--muted)"});
-    if(m===0){const A=CP(s.A),B=CP(s.B),P=CP(s.P); lab(svg,[CO[0]+6*Math.cos(rad(s.P)),CO[1]-6*Math.sin(rad(s.P))+1.4],"O",{"font-size":4,fill:"var(--muted)"});
-      seg(svg,CO,A,{stroke:"var(--amber)"}); seg(svg,CO,B,{stroke:"var(--amber)"}); seg(svg,P,A); seg(svg,P,B);
-      const mAB=norm(s.B-s.A), pOn=onArc(s.P,s.A,s.B); const st=pOn?s.B:s.A, sw=pOn?360-mAB:mAB;
-      arcMark(svg,CO,7,st,sw,"var(--amber)",n1(sw)+"°"); angAt(svg,P,A,B,"var(--blue)",8);
-      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); dot(A,"A"); dot(B,"B"); dot(P,"P");}
-    if(m===1){const A=CP(s.A),B=CP(s.B),P=CP(s.P),Q=CP(s.Q);
-      seg(svg,P,A); seg(svg,P,B); seg(svg,Q,A,{stroke:"var(--green)"}); seg(svg,Q,B,{stroke:"var(--green)"}); seg(svg,A,B,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2"});
-      angAt(svg,P,A,B,"var(--blue)",7); angAt(svg,Q,A,B,"var(--green)",7);
-      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); ptLab(svg,s.Q,"Q"); dot(A,"A"); dot(B,"B"); dot(P,"P"); dot(Q,"Q","var(--green)");}
-    if(m===2){const A=CP(s.A),B=CP(s.B),P=CP(s.P); Oname();
-      seg(svg,A,B,{stroke:"var(--amber)"}); seg(svg,P,A); seg(svg,P,B); rightMark(svg,P,A,B,3.6,"var(--blue)");
-      lab(svg,[P[0]+(P[0]>CO[0]?-9:9),P[1]+(P[1]<CO[1]?9:-6)],"90°",{"font-size":4,fill:"var(--blue)","font-weight":700});
-      ptLab(svg,s.A,"A"); ptLab(svg,s.B,"B"); ptLab(svg,s.P,"P"); dot(A,"A"); dot(P,"P");}
-    if(m===3){const K=["A","B","C","D"], Pt=K.map(k=>CP(s[k])), cols=["var(--blue)","var(--green)","var(--blue)","var(--green)"];
-      S_(svg,"polygon",{points:Pt.map(p=>p.join(",")).join(" "),fill:"var(--blue-fill)","fill-opacity":.5,stroke:"var(--ink)","stroke-width":.7});
-      K.forEach((k,i)=>{angAt(svg,Pt[i],Pt[(i+3)%4],Pt[(i+1)%4],cols[i],6.5); ptLab(svg,s[k],k); dot(Pt[i],k,cols[i]);});}
-    if(m===4){const P=CP(s.P), u=[Math.cos(rad(s.P)),-Math.sin(rad(s.P))], t=[-u[1],u[0]], L=38; Oname();
-      const T1=[P[0]+t[0]*L,P[1]+t[1]*L], T2=[P[0]-t[0]*L,P[1]-t[1]*L];
-      seg(svg,T1,T2,{stroke:"var(--green)","stroke-width":1}); seg(svg,CO,P,{stroke:"var(--amber)","stroke-width":1});
-      rightMark(svg,P,CO,T1,3.6,"var(--blue)"); ptLab(svg,s.P,"P"); lab(svg,[T1[0]+t[0]*4,T1[1]+t[1]*4+1.5],"T",{"font-size":4.6,"font-weight":700}); dot(P,"P");
-      lab(svg,[(CO[0]+P[0])/2-u[1]*7,(CO[1]+P[1])/2+u[0]*7],"radius",{"font-size":3.6,fill:"var(--amber)"});}
-    if(m===5){const T=[s.Tx,s.Ty], d=Math.hypot(T[0]-CO[0],T[1]-CO[1]), be=dirTo(CO,T), ph=deg(Math.acos(CR/d)), A=CP(be+ph), B=CP(be-ph); Oname();
-      seg(svg,T,A,{stroke:"var(--green)","stroke-width":1}); seg(svg,T,B,{stroke:"var(--green)","stroke-width":1});
-      seg(svg,CO,A,{stroke:"var(--amber)"}); seg(svg,CO,B,{stroke:"var(--amber)"}); seg(svg,CO,T,{stroke:"var(--muted)","stroke-dasharray":"1.5 1.2"});
-      rightMark(svg,A,CO,T,3); rightMark(svg,B,CO,T,3);
-      ptLab(svg,be+ph,"A"); ptLab(svg,be-ph,"B"); lab(svg,[T[0],T[1]-4],"T",{"font-size":4.6,"font-weight":700}); dot(T,"T");}
-    if(m===6){const A=CP(270),B=CP(s.B),C=CP(s.C);
-      const arcNotC=onArc(s.C,270,s.B)?[s.B,norm(270-s.B)]:[270,norm(s.B-270)], Mdeg=arcNotC[0]+arcNotC[1]/2, M=CP(Mdeg);
-      const dir=(M[0]-A[0])>=0?1:-1, Tend=[A[0]+dir*45,A[1]], Tother=[A[0]-dir*45,A[1]];
-      seg(svg,Tother,Tend,{stroke:"var(--green)","stroke-width":1}); seg(svg,A,B,{stroke:"var(--ink)","stroke-width":.9}); seg(svg,C,A); seg(svg,C,B);
-      angAt(svg,A,[A[0]+dir*10,A[1]],B,"var(--red)",8); angAt(svg,C,A,B,"var(--red)",7);
-      lab(svg,[Tend[0],Tend[1]+5],"T",{"font-size":4.4,"font-weight":700}); lab(svg,[A[0],A[1]+6],"A",{"font-size":4.6,"font-weight":700});
-      ptLab(svg,s.B,"B"); ptLab(svg,s.C,"C"); dot(B,"B"); dot(C,"C","var(--red)");}
-  },
-  drag(id,p,s){
-    if(id==="T"){let x=clamp(p.x,6,134), y=clamp(p.y,6,114), d=Math.hypot(x-CO[0],y-CO[1]); if(d<CR+5){const k=(CR+5)/(d||1); x=CO[0]+(x-CO[0])*k; y=CO[1]+(y-CO[1])*k;} s.Tx=+x.toFixed(1); s.Ty=+y.toFixed(1); return;}
-    const a=norm(snap(dirTo(CO,[p.x,p.y]),2)), m=s.step;
-    if(m===2&&id==="A"){s.A=a; s.B=norm(a+180); return;}
-    if(m===2&&id==="P"){ if(Math.abs(norm(a-s.A))<4||Math.abs(norm(a-s.B))<4) return; }
-    if(m===3){const K=["A","B","C","D"], i=K.indexOf(id), prev=s[K[(i+3)%4]], next=s[K[(i+1)%4]];
-      if(!(norm(a-prev)>4&&norm(a-prev)<norm(next-prev)-4)) return;}
-    if(m===6&&id==="B"&&(norm(a-270)<8||norm(270-a)<8)) return;
-    const VIS={0:"ABP",1:"ABPQ",2:"ABP",4:"P"}, others=[..."ABPQC"].filter(k=>k!==id&&(VIS[m]==null||VIS[m].includes(k))&&!(m===6&&k==="A"));
-    if(m!==3&&m!==6&&others.some(k=>s[k]!=null&&Math.abs(((a-s[k]+540)%360)-180)<4)) return;
-    if(m===6&&(Math.abs(((a-270+540)%360)-180)<4||Math.abs(((a-s[id==="B"?"C":"B"]+540)%360)-180)<4)) return;
-    s[id]=a;
-  },
-  kbd:{label:(id,s)=>id==="T"?["Point T: arrow keys move it, Shift + arrow moves faster",`T at (${N(s.Tx,1)}, ${N(s.Ty,1)})`]:[`Point ${id}: arrow keys move it round the circle, Shift + arrow moves faster`,`${N(s[id],1)}° round the circle`],
-    move:(id,k,sh,s,drag)=>{const d=/Right|Up/.test(k)?1:-1;
-      if(id==="T"){const v=sh?5:1, x=/Left|Right/.test(k)?d*v:0, y=/Up|Down/.test(k)?-d*v:0; drag({x:s.Tx+x,y:s.Ty+y}); return;}
-      const a=s[id]; for(const o of sh?[10,12,14,8,6,4,2]:[2,4,6,8,10]){const P=CP(norm(a+d*o)); drag({x:P[0],y:P[1]}); if(s[id]!==a) return;}}},
-  key(s){const m=s.step, RB=t=>`<div class="formbox fb-ink reasonbox"><div class="hd">Write this reason</div><div class="eq">${t}</div></div>`;
-    if(m===0){const mAB=norm(s.B-s.A), c=onArc(s.P,s.A,s.B)?360-mAB:mAB, i=c/2;
-      return FORMS([FB("amber",`${c>180?"Reflex ":""}∠AOB (centre)`,n1(c)+"°",`= 2 × ${n1(i)}° ✓`),FB("blue","∠APB (circumference)",n1(i)+"°","half of the centre angle"),RB("(∠ at centre = 2∠ at circ.)")]);}
-    if(m===1){const same=onArc(s.P,s.A,s.B)===onArc(s.Q,s.A,s.B), mAB=norm(s.B-s.A);
-      const aP=180-(onArc(s.P,s.A,s.B)?mAB:360-mAB)/2, aQ=180-(onArc(s.Q,s.A,s.B)?mAB:360-mAB)/2;
-      return same?FORMS([FB("blue","∠APB",n1(aP)+"°","same segment"),FB("green","∠AQB",n1(aQ)+"°","equal ✓"),RB("(∠s in same seg.)")])
-        :FORMS([FB("blue","∠APB",n1(aP)+"°","opposite segments"),FB("green","∠AQB",n1(aQ)+"°",`add to 180° (${n1(aP)}° + ${n1(aQ)}°)`),RB("(∠s in opp. segments are supp.)")]);}
-    if(m===2) return FORMS([FB("blue","∠APB","90°","for every P"),RB("(rt. ∠ in semicircle)")]);
-    if(m===3){const ang=k=>{const K=["A","B","C","D"],i=K.indexOf(k),p=s[K[(i+3)%4]],n=s[K[(i+1)%4]]; return norm(p-n)/2;};
-      return FORMS([FB("blue","∠A + ∠C","180°",`${n1(ang("A"))}° + ${n1(ang("C"))}°`),FB("green","∠B + ∠D","180°",`${n1(ang("B"))}° + ${n1(ang("D"))}°`),RB("(∠s in opp. segments are supp.)")]);}
-    if(m===4) return FORMS([FB("blue","∠OPT","90°","wherever P is"),RB("(tan ⊥ rad)")]);
-    if(m===5){const d=Math.hypot(s.Tx-CO[0],s.Ty-CO[1]), L=Math.sqrt(d*d-CR*CR)*5/CR, ang=deg(Math.asin(CR/d));
-      return FORMS([FB("green","TA = TB",sf3(L)+" cm","if the radius is 5 cm"),FB("amber","∠OTA = ∠OTB",n1(ang)+"°","OT cuts ∠ATB in half"),RB("(tangents from ext. pt.)")]);}
-    if(m===6){const arc=onArc(s.C,270,s.B)?norm(270-s.B):norm(s.B-270), v=arc/2;
-      return FORMS([FB("red","∠ tangent AT & chord AB",n1(v)+"°",""),FB("red","∠ACB",n1(v)+"°","equal ✓"),RB("(∠s in alt. seg.)")]);}
-    return "";}
+  init:{cb:330,cq:150,cp:60,cd:40,ct:50,td:40,tl:4,ab:40}, jump:true, ip:"Drag the dot.", vb:"0 2 140 116", label:"Circle property: drag the black dot",
+  steps:CPST.map(S=>({name:S.name,pic:S.pic,set:S.set,t:()=>"",w:s=>cpK(s)})),
+  draw(svg,s){ const m=s.step, P=CP, ink="var(--ink)";
+    const ln=(a,b,c=ink,w=.9,x={})=>seg(svg,a,b,Object.assign({stroke:c,"stroke-width":w},x));
+    const dotO=dd=>{ S_(svg,"circle",{cx:CO[0],cy:CO[1],r:1.3,fill:ink}); lab(svg,[CO[0]+6.5*Math.cos(rad(dd)),CO[1]-6.5*Math.sin(rad(dd))+1.7],"O",{"font-size":4.6,"font-weight":700,fill:"var(--muted)"}); };
+    const fix=(dd,t)=>{ const X=P(dd); S_(svg,"circle",{cx:X[0],cy:X[1],r:1.4,fill:ink}); ptLab(svg,dd,t); return X; };
+    const trk=id=>S_(svg,"path",{d:`M${CO[0]-CR} ${CO[1]}a${CR} ${CR} 0 1 0 ${2*CR} 0a${CR} ${CR} 0 1 0 ${-2*CR} 0`,fill:"none",stroke:"transparent","stroke-width":12,"pointer-events":"stroke","data-drag":id,style:"cursor:pointer"});
+    const hd=(X,id)=>{ handle(svg,X[0],X[1],id,ink); S_(svg,"circle",{cx:X[0],cy:X[1],r:3.2,fill:ink,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); };
+    const mv=(dd,id,t)=>{ trk(id); lab(svg,[CO[0]+(CR+11)*Math.cos(rad(dd)),CO[1]-(CR+11)*Math.sin(rad(dd))+1.6],t,{"font-size":4.6,"font-weight":700}); hd(P(dd),id); };
+    if(m===5){ S_(svg,"rect",{x:0,y:2,width:140,height:116,fill:"transparent","data-drag":"t",style:"cursor:pointer"}); }
+    S_(svg,"circle",{cx:CO[0],cy:CO[1],r:CR,fill:"none",stroke:ink,"stroke-width":.9});
+    if(m===0){ const A=P(210), Pp=P(90), B=P(s.cb), c=norm(s.cb-210);
+      ln(CO,A,"var(--amber)",1.2); ln(CO,B,"var(--amber)",1.2); ln(Pp,A); ln(Pp,B);
+      cpWedge(svg,CO,210,c,"amber",8,N(c,1)+"°",6); cpIn(svg,Pp,A,B,"blue",8,6);
+      dotO(210+c/2+180); fix(210,"A"); fix(90,"P"); mv(s.cb,"cb","B"); }
+    if(m===1){ const A=P(220), B=P(320), Pp=P(100), Q=P(s.cq);
+      ln(A,B,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); ln(Pp,A,"var(--blue)",1.1); ln(Pp,B,"var(--blue)",1.1); ln(Q,A,"var(--green)",1.1); ln(Q,B,"var(--green)",1.1);
+      cpIn(svg,Pp,A,B,"blue",8,6); cpIn(svg,Q,A,B,"green",8,6);
+      fix(220,"A"); fix(320,"B"); fix(100,"P"); mv(s.cq,"cq","Q"); }
+    if(m===2){ const A=P(180), B=P(0), Pp=P(s.cp);
+      ln(A,B,"var(--amber)",1.2); ln(Pp,A,"var(--blue)",1.1); ln(Pp,B,"var(--blue)",1.1); cpRt(svg,Pp,A,B,"blue");
+      dotO(s.cp<180?270:90); fix(180,"A"); fix(0,"B"); mv(s.cp,"cp","P"); }
+    if(m===3){ const K={A:130,B:210,C:300,D:s.cd}, Pt=["A","B","C","D"].map(k=>P(K[k]));
+      S_(svg,"polygon",{points:Pt.map(p=>p.map(v=>v.toFixed(2)).join(",")).join(" "),fill:"none",stroke:ink,"stroke-width":1});
+      [0,2].forEach(i=>cpIn(svg,Pt[i],Pt[(i+3)%4],Pt[(i+1)%4],"blue",8,6));
+      fix(130,"A"); fix(210,"B"); fix(300,"C"); mv(s.cd,"cd","D"); }
+    if(m===4){ const Pp=P(s.ct), u=[Math.cos(rad(s.ct)),-Math.sin(rad(s.ct))], t=[-u[1],u[0]], L=36, T1=[Pp[0]+t[0]*L,Pp[1]+t[1]*L], T2=[Pp[0]-t[0]*L,Pp[1]-t[1]*L];
+      const out=E=>E[0]<10||E[0]>130||E[1]<12||E[1]>112, Te=out(T1)?T2:T1, ts=out(T1)?-1:1;
+      ln(T1,T2,"var(--green)",1.2); ln(CO,Pp,"var(--amber)",1.2); cpRt(svg,Pp,CO,Te,"blue");
+      lab(svg,[Te[0]+ts*t[0]*4,Te[1]+ts*t[1]*4+1.7],"T",{"font-size":4.6,"font-weight":700}); dotO(s.ct+180); mv(s.ct,"ct","P"); }
+    if(m===5){ const {T,ph}=cpT(s), aA=s.td+ph, aB=s.td-ph, A=P(aA), B=P(aB), mid=(X,Y,o)=>[(X[0]+Y[0])/2+o[0],(X[1]+Y[1])/2+o[1]], out=(X,Y,dd)=>{ const dx=Y[0]-X[0], dy=Y[1]-X[1], L=Math.hypot(dx,dy)||1; return [dy/L*dd,-dx/L*dd]; };
+      ln(CO,T,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); ln(CO,A,"var(--amber)",1.1); ln(CO,B,"var(--amber)",1.1); ln(T,A,"var(--green)",1.6); ln(T,B,"var(--green)",1.6);
+      rightMark(svg,A,CO,T,2.8); rightMark(svg,B,CO,T,2.8);
+      const oA=out(T,A,4.2), oB=out(B,T,4.2), lA=mid(T,A,oA), lB=mid(T,B,oB);
+      lab(svg,[lA[0],lA[1]+2],`${N(s.tl)} cm`,{"font-size":5.4,"font-weight":700,fill:"var(--green)"}); lab(svg,[lB[0],lB[1]+2],`${N(s.tl)} cm`,{"font-size":5.4,"font-weight":700,fill:"var(--green)"});
+      const rA=mid(CO,A,out(CO,A,-3.6)); lab(svg,[rA[0],rA[1]+1.6],"3 cm",{"font-size":4.4,"font-weight":700,fill:"var(--amber)"});
+      dotO(s.td+180); ptLab(svg,aA,"A"); ptLab(svg,aB,"B");
+      const tu=[Math.cos(rad(s.td)),-Math.sin(rad(s.td))]; lab(svg,[T[0]+tu[0]*11,T[1]+tu[1]*11+1.7],"T",{"font-size":4.6,"font-weight":700}); hd(T,"t"); }
+    if(m===6){ const A=P(270), B=P(s.ab), C=P(150), v=norm(s.ab-270)/2, T1=[A[0]+44,A[1]], T2=[A[0]-44,A[1]];
+      ln(T2,T1,"var(--green)",1.2); ln(A,B,ink,1.1); ln(C,A); ln(C,B);
+      cpWedge(svg,A,0,v,"red",9,N(v,1)+"°",6); cpIn(svg,C,A,B,"red",8,6);
+      lab(svg,[T1[0]+3,T1[1]+1.7],"T",{"font-size":4.6,"font-weight":700,"text-anchor":"start"}); lab(svg,[A[0],A[1]+7],"A",{"font-size":4.6,"font-weight":700});
+      fix(150,"C"); mv(s.ab,"ab","B"); } },
+  drag(id,p,s){ const m=s.step;
+    if(id==="t"){ const dx=p.x-CO[0], dy=CO[1]-p.y, dd=Math.hypot(dx,dy)/CPK, o={td:norm(snap(deg(Math.atan2(dy,dx)),10)),tl:clamp(snap(Math.sqrt(Math.max(0,dd*dd-CPR*CPR)),.5),2.5,4)};
+      while(!cpOk(o)&&o.tl>2.5) o.tl-=.5; if(cpOk(o)){ s.td=o.td; s.tl=o.tl; } return; }
+    const a=norm(snap(dirTo(CO,[p.x,p.y]),10));
+    if(m===0){ const c=norm(a-210); if(c>=20&&c<=220) s.cb=a; return; }
+    if(m===1){ const c=norm(a-320); if(c>=15&&c<=245&&cpGap(a,100)>=30) s.cq=a; return; }
+    if(m===2){ if(cpGap(a,0)>=15&&cpGap(a,180)>=15) s.cp=a; return; }
+    if(m===3){ const c=norm(a-300); if(c>=50&&c<=150) s.cd=a; return; }
+    if(m===4){ s.ct=a; return; }
+    if(m===6){ const c=norm(a-270); if(c>=60&&c<=200) s.ab=a; } },
+  kbd:{label:id=>[id==="t"?"Point T: arrow keys turn it round the circle":"The black dot: arrow keys move it round the circle",""],
+    move:(id,k,sh,s,drag)=>{ const dd=(/Right|Up/.test(k)?1:-1)*(sh?30:10);
+      if(id==="t"){ const o={td:norm(s.td+dd),tl:s.tl}; if(cpOk(o)) s.td=o.td; return; }
+      const a=s[id]; for(const o of [dd,2*dd,3*dd]){ const X=CP(norm(a+o)); drag({x:X[0],y:X[1]}); if(s[id]!==a) return; } }},
+  key(){ return ""; }
 });
 function cpSave(s){ const b=circleProps.steps[s.step].base, ks=Object.keys(b);
   s.pt=ks.some(k=>Math.abs(s[k]-b[k])>1e-9)?ks.map(k=>(k==="Tx"?"x":k==="Ty"?"y":k)+(+(+s[k]).toFixed(1))).join("_"):""; }
@@ -2962,35 +2996,39 @@ const circleEq=aid({
 const LLX=[1,2,3,4,5];
 const niceTop=v=>[5,10,20,25,50,100,150,200,250,300,400,500,600,800,1000,1200].find(x=>x>=v)||Math.ceil(v/100)*100;
 const llY=s=>x=>s.fm==="pow"?s.a*Math.pow(x,s.n):s.a*Math.pow(s.b,x);
+const LLA=3;
+const llW=()=>innerWidth>=600;
+const llB=s=>Object.assign(llW()?{l:105,t:12,w:47,h:58}:{l:16,t:90,w:116,h:58},s.fm==="pow"?{x0:0,x1:.8,y0:0,y1:2.4,xs:.1,xl:.2,ys:.2,yl:.4,xn:"lg x",yn:"lg y"}:{x0:0,x1:6,y0:0,y1:2.8,xs:1,xl:1,ys:.2,yl:.4,yn:"lg y"});
+const llM=s=>s.fm==="pow"?s.n:Math.log10(s.b);
+const llK=s=>{ const pw=s.fm==="pow", m=llM(s), C=Math.log10(LLA), run=pw?Math.log10(5):4, rise=m*run, ans=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`, A=t=>kc("amber",t), R=t=>kc("red",t);
+  const g1=pw?nw(`lg ${V("y")} = ${A(V("n"))} lg ${X1} + lg ${V("a")}`):nw(`lg ${V("y")} = ${A(`(lg ${V("b")})`)}${X1} + lg ${V("a")}`);
+  const e1=pw?`${nw(`${A(f2(rise))} ÷ ${A(f2(run))}`)} ${nw(`→ ${V("n")} = ${ans(N(s.n),"amber")}`)}`:`${nw(`${A(f2(rise))} ÷ ${A("4")} = ${f2(m)}`)} ${nw(`→ ${V("b")} = 10<sup>${f2(m)}</sup> ≈ ${ans(N(s.b),"amber")}`)}`;
+  const e2=`${nw(R(f2(C)))} ${nw(`→ ${V("a")} = 10<sup>${f2(C)}</sup> ≈ ${ans(N(LLA),"red")}`)}`;
+  return `<div class="apwk ipk llk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("amber","Gradient",e1,null,g1,"wide"),FB("red","Y-intercept",e2,null,nw(`intercept = lg ${V("a")}`),"wide")],true)+`</div>`; };
 const linLawAid=aid({
-  init:{fm:"pow",a:2,n:1.5,b:2}, vb:"0 0 140 176", label:"Linear law: a curve becomes a straight line",
+  init:{fm:"pow",n:1.5,b:2}, jump:true, ip:"Drag the line's end.", vb:"4 8 134 152", label:"Linear law: a curve and the straight line you get after taking lg of both sides", link:["n","b"],
   pills:[{k:"fm",label:"Equation",opts:[["pow",`<span>${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup></span>`],["exp",`<span>${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup></span>`]]}],
-  sliders:[{k:"a",label:V("a"),min:1,max:4,step:.5},{k:"n",label:V("n"),min:.5,max:2.5,step:.5,show:s=>s.fm==="pow"},{k:"b",label:V("b"),min:1.5,max:3,step:.5,show:s=>s.fm==="exp"}],
-  steps:[{t:()=>""}],
-  explain:s=>s.fm==="pow"?[`Top: the curve. Bottom: lg ${V("y")} against lg ${X1} (${V("Y")} = lg ${V("y")}, ${V("X")} = lg ${X1}). It's a <b>straight line</b>.`,`Its gradient ${V("m")} and ${V("Y")}-intercept ${V("C")} give you ${V("n")} and ${V("a")}.`]
-    :[`Top: the curve. Bottom: lg ${V("y")} against ${X1} (only ${V("y")} is logged: ${V("X")} = ${X1}). It's a <b>straight line</b>.`,`Its gradient ${V("m")} and ${V("Y")}-intercept ${V("C")} give you ${V("b")} and ${V("a")}.`],
-  draw(svg,s){ const f=llY(s), ys=LLX.map(f), top=niceTop(Math.max(...ys)*1.05), pw=s.fm==="pow";
-    const g1=graph(svg,{l:16,t:4,w:118,h:70,x0:0,x1:6,y0:0,y1:top,xs:1,xl:1,ys:top/10,yl:top/5});
-    g1.plot(f,{stroke:BL,"stroke-width":1,"stroke-dasharray":"2 1.4"},.05,6); LLX.forEach((x,i)=>g1.dot(x,ys[i],RD,1.6));
-    lab(svg,[133,12],"y against x",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"});
-    const X=pw?LLX.map(x=>Math.log10(x)):LLX, Y=ys.map(y=>Math.log10(y)), m=pw?s.n:Math.log10(s.b), C=Math.log10(s.a);
-    const B2=pw?{l:16,t:98,w:118,h:72,x0:0,x1:.8,y0:-.2,y1:3.2,xs:.1,xl:.2,ys:.2,yl:1,xn:"lg x",yn:"lg y"}:{l:16,t:98,w:118,h:72,x0:0,x1:6,y0:-.2,y1:3.2,xs:1,xl:1,ys:.2,yl:1,yn:"lg y"};
-    const g2=graph(svg,B2); g2.line(B2.x0,C,B2.x1,C+m*B2.x1,{stroke:GR,"stroke-width":1.2});
-    const xa=X[0], xb=X[4], run=xb-xa, rise=m*run; g2.line(xa,C+m*xa,xb,C+m*xa,{stroke:AMB,"stroke-width":.9}); g2.line(xb,C+m*xa,xb,C+m*xb,{stroke:AMB,"stroke-width":.9,"stroke-dasharray":"1.4 1"});
-    g2.text((xa+xb)/2,C+m*xa,`run ${pw?f2(run):N(run)}`,{dy:4.4,"text-anchor":"middle",fill:AMB,"font-size":3.8,"font-weight":700});
-    g2.text(xb,C+m*xa+rise/2,`rise ${f2(rise)}`,{dx:-1.6,dy:1.3,"text-anchor":"end",fill:AMB,"font-size":3.8,"font-weight":700});
-    X.forEach((x,i)=>g2.dot(x,Y[i],RD,1.6)); gpt(g2,0,C,`C ≈ ${f2(C)}`,GR,{dy:-2.6});
-    lab(svg,[133,106],pw?"lg y against lg x":"lg y against x",{"text-anchor":"end","font-size":3.8,fill:"var(--muted)"}); },
-  key(s){ const pw=s.fm==="pow", m=pw?s.n:Math.log10(s.b), C=Math.log10(s.a), run=pw?Math.log10(5):4, rise=m*run, cEx=Math.abs(C-r2(C))<1e-9, mEx=Math.abs(m-r2(m))<1e-9;
-    const r1=pw?nw(`${kc("blue","lg "+V("y"))} = ${kc("amber",V("n"))} ${kc("green","lg "+X1)} + ${kc("red","lg "+V("a"))}`):nw(`${kc("blue","lg "+V("y"))} = ${kc("amber","(lg "+V("b")+")")}${kc("green",X1)} + ${kc("red","lg "+V("a"))}`);
-    const r2r=nw(`${kc("blue",V("Y"))} = ${kc("amber",V("m"))}${kc("green",V("X"))} + ${kc("red",V("C"))}`);
-    return KHEAD(pw?`${V("y")} = ${N(s.a)}${X1}<sup>${N(s.n)}</sup>`:`${V("y")} = ${N(s.a)}(${N(s.b)})<sup>${X1}</sup>`)
-      +`<div class="row">take lg of both sides: ${r1}</div><div class="row">${r2r}, with ${kc("blue",`${V("Y")} = lg ${V("y")}`)} and ${kc("green",`${V("X")} = ${pw?"lg "+X1:X1}`)}</div>`
-      +FORMS([FB("amber","Gradient",nw(`${V("m")} = ${frac(f2(rise),pw?f2(run):N(run))} ${mEx?"=":"≈"} ${pw?N(s.n):f2(m)}`),pw?`so ${nw(`${V("n")} = ${N(s.n)}`)}`:`so ${nw(`${V("b")} = 10<sup>${f2(m)}</sup> ≈ ${Math.pow(10,r2(m)).toPrecision(3)}`)}`),
-        FB("red",`${V("Y")}-intercept`,nw(`${V("C")} = lg ${V("a")} ${cEx?"=":"≈"} ${f2(C)}`),`so ${nw(`${V("a")} = 10<sup>${f2(C)}</sup> ${cEx?"=":"≈"} ${Math.pow(10,r2(C)).toPrecision(3)}`)}`)],true)
-      +`<div class="row hint">${V("Y")}-axis doesn't start at ${V("X")} = 0? Put a point on the line in: ${nw(`${V("C")} = ${V("Y")} − ${V("m")}${V("X")}`)}</div>`; },
-  readout(s){ const f=llY(s), pw=s.fm==="pow", row=(h,fn)=>`<tr><th>${h}</th>${LLX.map(x=>`<td>${fn(x)}</td>`).join("")}</tr>`;
-    return `<div class="vtab"><table>${row(X1,x=>x)}${row(V("y"),x=>N(f(x),2))}${pw?row("lg "+X1,x=>f2(Math.log10(x))):""}${row("lg "+V("y"),x=>f2(Math.log10(f(x))))}</table></div>`; }
+  fix:s=>{ s.n=clamp(Math.round((+s.n||1.5)*2)/2,1,2.5); const bs=[1.5,2,2.5,3]; if(!bs.includes(+s.b)) s.b=2; else s.b=+s.b; },
+  steps:[{name:"Linear law",t:()=>"",w:s=>llK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9500; const pw=s.fm==="pow", f=x=>pw?LLA*Math.pow(x,s.n):LLA*Math.pow(s.b,x), ys=LLX.map(f), top=niceTop(Math.max(...ys)*1.05), fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700};
+    svg.setAttribute("viewBox",llW()?"0 4 156 84":"4 8 134 152"); const g1=graph(svg,Object.assign(llW()?{l:15,t:12,w:52,h:58}:{l:16,t:14,w:116,h:52},{x0:0,x1:6,y0:0,y1:top,xs:1,xl:1,ys:top/10,yl:top/5}));
+    g1.plot(f,{stroke:BL,"stroke-width":1.3},.05,6); LLX.forEach((x,i)=>g1.dot(x,ys[i],"var(--ink)",1.5));
+    const et=S_(svg,"text",{x:g1.X(.3),y:g1.Y(top*.72),"text-anchor":"start","font-size":fs,"font-weight":700,"font-style":"italic",fill:BL});
+    [[`y = ${N(LLA)}${pw?"x":`(${N(s.b)})`}`],[pw?N(s.n):"x",1]].forEach(([t,u])=>et.append(svgEl("tspan",u?{dx:.8,dy:-fs*.42,"font-size":fs*.75}:{},t)));
+    if(llW()){ [["take lg of",33],["both sides",39.5]].forEach(([t,y])=>lab(svg,[85.5,y],t,{"font-size":3.3,"font-weight":700,fill:"var(--muted)"})); lab(svg,[85.5,52],"→",{"font-size":10,"font-weight":700,fill:"var(--muted)"}); } else lab(svg,[74,80],"↓ take lg of both sides",Object.assign({fill:"var(--muted)"},F));
+    const B=llB(s), g2=graph(svg,B), m=llM(s), C=Math.log10(LLA), X=pw?LLX.map(Math.log10):LLX, Y=ys.map(Math.log10), xa=X[0], xb=X[4];
+    g2.line(B.x0,C+m*B.x0,B.x1,C+m*B.x1,{stroke:BL,"stroke-width":1.3});
+    g2.line(xa,Y[0],xb,Y[0],{stroke:AMB,"stroke-width":1.4}); g2.line(xb,Y[0],xb,Y[4],{stroke:AMB,"stroke-width":1.4,"stroke-dasharray":"1.6 1.1"});
+    lab(svg,[(g2.X(xa)+g2.X(xb))/2,g2.Y(Y[0])+fs+1.2],pw?f2(xb-xa):"4",Object.assign({fill:AMB},F));
+    lab(svg,[g2.X(xb)-2,(g2.Y(Y[0])+g2.Y(Y[4]))/2+fs*.35],f2(m*(xb-xa)),Object.assign({fill:AMB,"text-anchor":"end"},F));
+    X.forEach((x,i)=>g2.dot(x,Y[i],"var(--ink)",1.5)); g2.dot(0,C,RD,2.2);
+    lab(svg,[g2.X(0)+2.6,pw?g2.Y(C)-2.4:g2.Y(C)+fs+.6],f2(C),Object.assign({fill:RD,"text-anchor":"start"},F));
+    S_(svg,"path",{d:`M${g2.X(xb).toFixed(2)} ${B.t} V${B.t+B.h}`,fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"m",style:"cursor:pointer"});
+    handle(svg,g2.X(xb),g2.Y(Y[4]),"m","var(--ink)"); S_(svg,"circle",{cx:g2.X(xb),cy:g2.Y(Y[4]),r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const B=llB(s), y=ginv(B,p)[1], C=Math.log10(LLA);
+    if(s.fm==="pow") s.n=clamp(Math.round((y-C)/Math.log10(5)*2)/2,1,2.5);
+    else { const mm=(y-C)/5; let b=2, bd=9; [1.5,2,2.5,3].forEach(v=>{ const d=Math.abs(Math.log10(v)-mm); if(d<bd){ bd=d; b=v; } }); s.b=b; } },
+  key(){ return ""; }
 });
 const SRR=[["1-2","1 : 2"],["2-3","2 : 3"],["3-4","3 : 4"],["1-3","1 : 3"]];
 const SRG=[["a4-9","area 4 : 9"],["a16-25","area 16 : 25"],["a9-49","area 9 : 49"],["v8-27","volume 8 : 27"],["v1-64","volume 1 : 64"]];
@@ -3018,52 +3056,26 @@ function srCount(svg,F,ns,cube,cm){ const u=F.u, B=F.base, un=cm?" cm":"";
     if(cube) srCubes(svg,x0,B,n,u,SRF[i]); else srSq(svg,x0,B,n,n,u,SRF[i]);
     srT(svg,x0+W/2,B+6.5,n+un,c); srT(svg,x0-1.6,B-W/2+1.6,n+un,c,{"text-anchor":"end"});
     srT(svg,x0+W/2,B+14,cube?`${n} × ${n} × ${n} = ${n**3}`:`${n} × ${n} = ${n*n}`,c); }); }
+const srL=()=>({u:6,x1:10,x2:25,b1:64,c1:70,c2:85,b2:64,vb:"4 10 132 70"});
+const srK=s=>{ const k=s.k, B=t=>kc("blue",t), A=t=>`<span class="ipans" style="color:var(--amber)">${t}</span>`;
+  const col=(lb,g,v)=>`<div class="srkc"><div class="srkl">${lb}</div><div class="srkg">${g}</div><div class="srkv">${nw(`${B("1")} : ${A(v)}`)}</div></div>`;
+  return `<div class="apwk ipk srk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("amber","Small : big",`<div class="srkr">${col("Length",k,k)}${col("Area",k+"²",k*k)}${col("Volume",k+"³",k**3)}</div>`,null,null,"wide")],true)+`</div>`; };
 const simRatios=aid({
-  init:{r:"2-3",sh:"sq",g:"a4-9"}, jump:true, vb:"0 0 140 88", label:"Two similar shapes drawn to scale",
-  pills:[{k:"sh",label:"Sample shapes",opts:[["sq","Square"],["rect","Rectangle"],["tri","Triangle"]],show:s=>s.step<2},
-    {k:"r",label:"Length ratio",opts:SRR,show:s=>s.step!==3},
-    {k:"g",label:"Given",opts:SRG,show:s=>s.step===3}],
-  steps:[{name:"Lengths",t:s=>{const [a,b]=srAB(s); return `Same shape, and every length is × the same number.<br>Matching sides are all in the ratio <b>${a} : ${b}</b>.`;}},
-    {name:"Areas",t:s=>`${s.sh==="tri"?"Cut each into copies of one small triangle. Count them.":"Area = length × length. Count the 1 cm squares."}<br>The count is the length ratio <b>squared</b>.`},
-    {name:"Volumes",t:()=>`Volume = length × length × length. Count the 1 cm cubes.<br>The count is the length ratio <b>cubed</b>, for any similar solids.`},
-    {name:"Work backwards",t:s=>srGv(s).vol?`Volume ratio given? <b>Cube-root</b> both numbers → length ratio.<br>Square that → area ratio.`:`Area ratio given? <b>Square-root</b> both numbers → length ratio.<br>Cube that → volume ratio.`},
-    {name:"Mass",t:()=>`Same material: every cm³ has the same mass.<br>So ${nw("mass ratio = volume ratio")}.`}],
-  draw(svg,s){ const m=s.step;
-    if(m===3){ const G=srGv(s), F=srFit(G.a,G.b,G.vol?1.5:1,G.vol?1.5:1); srCount(svg,F,[G.a,G.b],G.vol,false); return; }
-    const [a,b]=srAB(s), ns=[a,b];
-    if(m===2){ srCount(svg,srFit(a,b,1.5,1.5),ns,true,true); return; }
-    if(m===4){ const F=srFit(a,b,3,4.96), u=F.u;
-      ns.forEach((n,i)=>{ const r=1.5*n*u, h=4*n*u, cx=F.xs[i]+r, B=F.base-.32*r;
-        srCan(svg,cx,B,r,h,SRF[i]); srT(svg,cx-r-1.6,B-h/2+1.6,`${4*n} cm`,SRC[i],{"text-anchor":"end"});
-        srT(svg,cx,F.base+7,`${10*n**3} g`,i?GR:SRC[0]); });
-      return; }
-    const tri=s.sh==="tri", D=tri?[4,3]:s.sh==="rect"?[2,1]:[1,1], F=srFit(a,b,D[0],D[1]), u=F.u, B=F.base;
-    ns.forEach((n,i)=>{ const x0=F.xs[i], W=D[0]*n*u, H=D[1]*n*u, c=SRC[i];
-      if(tri) srTri(svg,x0,B,n,D[0]*u,D[1]*u,SRF[i],m===1); else if(m===1) srSq(svg,x0,B,D[0]*n,D[1]*n,u,SRF[i]);
-      else S_(svg,"rect",{x:x0,y:B-H,width:W,height:H,fill:SRF[i],stroke:"var(--ink)","stroke-width":.9});
-      if(m===0){ seg(svg,[x0,B],[x0+W,B],{stroke:RD,"stroke-width":1.8}); seg(svg,[x0,B],[x0,B-H],{stroke:GR,"stroke-width":1.8});
-        srT(svg,x0+W/2,B+6.5,`${D[0]*n} cm`,RD); srT(svg,x0-1.6,B-H/2+1.6,`${D[1]*n} cm`,GR,{"text-anchor":"end"});
-        if(tri){ const L=Math.hypot(W,H); seg(svg,[x0,B-H],[x0+W,B],{stroke:"var(--ink)","stroke-width":1.8}); rightMark(svg,[x0,B],[x0+W,B],[x0,B-H],3);
-          srT(svg,x0+W/2+H/L*2.6,B-H/2-W/L*2.6,`${5*n} cm`,"var(--ink)",{"text-anchor":"start"}); }
-        srT(svg,x0+W/2,B+14,`perimeter ${(tri?12:2*(D[0]+D[1]))*n} cm`,"var(--muted)",{"font-size":4.2,"font-weight":400}); }
-      else { srT(svg,x0+W/2,B+6.5,`${D[0]*n} cm`,c); srT(svg,x0-1.6,B-H/2+1.6,`${D[1]*n} cm`,c,{"text-anchor":"end"});
-        srT(svg,x0+W/2,B+14,tri?srOdd(n):`${D[0]*n} × ${D[1]*n} = ${D[0]*D[1]*n*n}`,c); } }); },
-  key(s){ const m=s.step;
-    if(m===3){ const G=srGv(s), {a,b,p,q}=G, R=e=>SQRT(e,G.vol?3:null);
-      return FORMS([FB("ink",G.vol?"Volume ratio":"Area ratio",srRt(p,q),"given"),
-        FB("ink","Length ratio",srRt(a,b),nw(`${R(kc("blue",p))} : ${R(kc("amber",q))}`)),
-        FB("green",G.vol?"Area ratio":"Volume ratio",G.vol?srRt(a*a,b*b):srRt(a**3,b**3),G.vol?`${a}² : ${b}²`:`${a}³ : ${b}³`)],true); }
-    const [a,b]=srAB(s);
-    if(m===0){ const tri=s.sh==="tri", D=tri?[4,3]:s.sh==="rect"?[2,1]:[1,1], P=tri?12:2*(D[0]+D[1]), eq=(k,lb,c,w)=>FB(c,lb,srRt(k*a,k*b),k>1?`= ${a} : ${b}`:"",null,w);
-      return KHEAD(`length ratio = ${srRt(a,b)}`)+FORMS([eq(D[0],tri?"Base":"Length","red"),eq(D[1],tri?"Height":"Width","green"),...(tri?[eq(5,"Slant side","ink")]:[]),eq(P,"Perimeter","ink",tri?"wide":null)],true); }
-    if(m===1){ const tri=s.sh==="tri", rect=s.sh==="rect", c=rect?2:1;
-      return KHEAD(`area ratio = (length ratio)²`)+FORMS([FB("ink","Length ratio",srRt(a,b),tri?`bases ${4*a} : ${4*b}`:rect?`lengths ${2*a} : ${2*b}`:"sides"),
-        FB("ink",tri?"Count the triangles":"Count the squares",srRt(c*a*a,c*b*b),rect?`= ${a*a} : ${b*b}`:""),
-        FB("green","Area ratio",srRt(a*a,b*b),`${a}² : ${b}²`)],true); }
-    if(m===2) return KHEAD(`volume ratio = (length ratio)³`)+FORMS([FB("ink","Length ratio",srRt(a,b),"edges"),FB("ink","Count the cubes",srRt(a**3,b**3),""),FB("green","Volume ratio",srRt(a**3,b**3),`${a}³ : ${b}³`)],true);
-    const mS=10*a**3, mB=10*b**3;
-    return KHEAD(`mass ratio = volume ratio`)+FORMS([FB("ink","Length ratio",srRt(a,b),`heights ${4*a} : ${4*b}`),FB("ink","Mass ratio",srRt(a**3,b**3),`${a}³ : ${b}³`),
-      FB("green","Big mass",`${mB} g`,nw(a===1?`${mS} × ${b**3}`:`${mS} × ${frac(b**3,a**3)}`))],true); }
+  init:{k:3}, jump:true, ip:"Drag the corner.", vb:"10 8 126 120", label:"A small and a big square and cube: count the squares and cubes", link:["k"],
+  fix:s=>{ s.k=clamp(Math.round(+s.k||3),2,5); },
+  steps:[{name:"Scale factor",t:()=>"",w:s=>srK(s)}],
+  draw(svg,s){ const k=s.k, L=srL(), {u,x1,x2,b1}=L, W=k*u, fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700}, Bc="var(--blue)", Ac="var(--amber)", dn=fs+1.6;
+    svg.setAttribute("viewBox",L.vb);
+    srSq(svg,x1,b1,1,1,u,"var(--blue-fill)"); srSq(svg,x2,b1,k,k,u,"var(--amber-fill)");
+    lab(svg,[x1+u/2,b1+dn],"1 cm",Object.assign({fill:Bc},F)); lab(svg,[x2+W/2,b1+dn],`${k} cm`,Object.assign({fill:Ac},F));
+    lab(svg,[x2,b1+2*dn],`${k*k} squares`,Object.assign({fill:Ac,"text-anchor":"start"},F));
+    srCubes(svg,L.c1,L.b2,1,u,"var(--blue-fill)"); srCubes(svg,L.c2,L.b2,k,u,"var(--amber-fill)");
+    lab(svg,[L.c1+u/2,L.b2+dn],"1 cm",Object.assign({fill:Bc},F)); lab(svg,[L.c2+W/2,L.b2+dn],`${k} cm`,Object.assign({fill:Ac},F));
+    lab(svg,[L.c2,L.b2+2*dn],`${k**3} cubes`,Object.assign({fill:Ac,"text-anchor":"start"},F));
+    S_(svg,"path",{d:`M${x2+2*u+4} ${b1-2*u-4}L${x2+5*u+4} ${b1-5*u-4}`,fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"k",style:"cursor:pointer"});
+    const E=[x2+W+4,b1-W-4]; seg(svg,[x2+W,b1-W],E,{stroke:"var(--ink)","stroke-width":.9}); handle(svg,E[0],E[1],"k","var(--ink)"); S_(svg,"circle",{cx:E[0],cy:E[1],r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); },
+  drag(id,p,s){ const L=srL(), d=((p.x-L.x2-4)+(L.b1-4-p.y))/2/L.u; s.k=clamp(Math.round(d),2,5); },
+  key(){ return ""; }
 });
 const vecAreas=(()=>{
   const O=[63,102], A=[12,20], B=[126,20], H=[63,20];
@@ -4133,55 +4145,36 @@ function vnBuild(t){ const [parts,op]=VNB[t]||[[],""];
   bx.push(FB("green",t,vnMini(VNS[t],"var(--green)"),rd));
   return VNF(bx);
 }
+const VNP=["A ∩ B′","A ∪ B","(A ∪ B)′","A′ ∩ B","(A ∩ B)′","A′ ∪ B"];
+const VNP2={"A ∩ B′":[["A","B′"],"∩"],"A ∪ B":[["A","B"],"∪"],"(A ∪ B)′":[["A ∪ B"],"′"],"A′ ∩ B":[["A′","B"],"∩"],"(A ∩ B)′":[["A ∩ B"],"′"],"A′ ∪ B":[["A′","B"],"∪"]};
+const vnRule=op=>op==="∩"?"∩: keep only what is shaded twice":op==="∪"?"∪: keep everything shaded":"′: take the opposite";
+const vnRow=t=>{ const [ps,op]=VNP2[t], mm=(v,c)=>`<span class="vnc">${vnMini(VNS[v],`var(--${c})`)}<span>${v}</span></span>`;
+  return `<span class="vnrow">${ps.length===2?`${mm(ps[0],"blue")}<b>${op}</b>${mm(ps[1],"amber")}`:`${mm(ps[0],"blue")}<b>′</b>`}<b>=</b>${mm(t,"green")}</span>`; };
+const vnK=s=>{ const t=VNP[s.q], want=VNS[t], op=VNP2[t][1], W=(c,hd,eq,g)=>`<div class="apwk ipk vnk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB(c,hd,eq,null,g,"wide")],true)+`</div>`;
+  if(s.chk===3) return W("green","✓ Right",vnRow(t),vnRule(op));
+  if(s.chk===2) return W("green",`This is ${t}`,vnRow(t),vnRule(op));
+  if(s.chk===1){ const ex=VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])).length, ms=VNK.filter(k=>!(s.sh&VNR[k])&&(want&VNR[k])).length, pt=n=>`${n} ${n===1?"part":"parts"}`;
+    return W("red","Not yet",[ex?nw(`${pt(ex)} extra ${kc("red","✗")}`):"",ms?nw(`${pt(ms)} missing ${kc("amber","?")}`):""].filter(Boolean).join(", "),"fix it, then Check again"); }
+  return W("blue",`${t} means`,VNW[t],"∩ AND · ∪ OR · ′ NOT"); };
 const vennAid=aid({
-  init:{tg:"A ∩ B′",sh:0,chk:0,q:0,pick:-1,cs:"sub",t3:"A ∩ B"}, jump:true, vb:"0 0 140 100", label:"Venn diagram with regions to shade", link:["sh","chk","q"],
-  fix:s=>{s.sh=clamp(Math.round(s.sh),0,15); s.chk=clamp(Math.round(s.chk)||0,0,2); s.tries=s.chk; s.q=clamp(Math.round(s.q),0,VNQ.length-1);},
-  pills:[{k:"tg",label:"Shade",opts:VNT.map(t=>[t,t]),show:s=>s.step===0,on:s=>{s.sh=0;s.chk=0;s.tries=0;}},
-    {k:"pick",label:"Which one?",opts:[[0,"?"],[1,"?"],[2,"?"]],show:s=>s.step===1},
-    {k:"cs",label:"Case",opts:[["sub","B ⊂ A"],["dis","Disjoint"]],show:s=>s.step===2},
-    {k:"t3",label:"Shade",opts:[["A ∩ B","A ∩ B"],["A ∪ B","A ∪ B"],["A ∩ B′","A ∩ B′"]],show:s=>s.step===2}],
-  buttons:[{label:"Check",fn:s=>{ s.tries=(s.tries||0)+1; s.chk=(s.sh===VNS[s.tg]||s.tries>=2)?2:1; },show:s=>s.step===0},{label:"Clear",fn:s=>{s.sh=0;s.chk=0;s.tries=0;},show:s=>s.step===0},
-    {label:"Another one →",sec:true,fn:s=>{s.q=(s.q+1)%VNQ.length;s.pick=-1;},show:s=>s.step===1}],
-  steps:[{name:"Tap to shade",t:()=>`Tap the parts to shade them, then press Check.<br>∩ = AND · ∪ = OR · ′ = NOT`},
-    {name:"Read it",t:()=>`Which one matches the shading?`},
-    {name:"Special cases",t:s=>s.cs==="sub"?`B is inside A, so some answers are just A or B.`:`No overlap, so A ∩ B is empty.`}],
-  draw(svg,s){
-    const top=(t,c)=>lab(svg,[VNX.x0+VNX.w,VNX.y0-4],t,{"text-anchor":"end","font-size":6.5,"font-weight":700,fill:c||"var(--ink)"});
-    if(s.step===0){ const want=VNS[s.tg], f={};
-      const rev=s.chk===2; VNK.forEach(k=>{ const on=s.sh&VNR[k], ok=want&VNR[k]; if(rev?ok:on) f[k]=rev?"var(--green-fill)":"var(--vn-shade)"; });
-      const G=vnDraw(svg,"two",f);
-      if(s.chk){ const extra=VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])), miss=VNK.filter(k=>!(s.sh&VNR[k])&&(want&VNR[k]));
-        extra.forEach(k=>lab(svg,G.mk[k],"✗",{"font-size":8,"font-weight":700,fill:"var(--red)"}));
-        if(!rev) miss.forEach(k=>lab(svg,G.mk[k],"?",{"font-size":8,"font-weight":700,fill:"var(--amber)"}));
-        top(extra.length+miss.length?`${s.tg}`:`✓ ${s.tg}`,extra.length+miss.length?"var(--ink)":"var(--green)"); }
-      else top(`Shade ${s.tg}`);
-      const hit=S_(svg,"rect",{x:VNX.x0,y:VNX.y0,width:VNX.w,height:VNX.h,fill:"transparent","data-drag":"t",style:"cursor:pointer"});
-      hit.addEventListener("pointerdown",()=>{s._tap=1;});
-      return; }
-    if(s.step===1){ const [ans,ch]=VNQ[s.q], f={}; VNM(VNS[ans]).forEach(k=>f[k]=s.pick>=0&&ch[s.pick]===ans?"var(--green-fill)":"var(--blue-fill)");
-      vnDraw(svg,"two",f); top(s.pick>=0&&ch[s.pick]===ans?`✓ ${ans}`:`${s.q+1} of ${VNQ.length}`,s.pick>=0&&ch[s.pick]===ans?"var(--green)":"var(--muted)");
-      const row=document.querySelector('[data-pk="pick"]'); if(row) row.querySelectorAll("button").forEach((b,i)=>{ if(b.textContent!==ch[i]) b.textContent=ch[i]; });
-      return; }
-    const R=VN3[s.cs][s.t3], f={}; ["a","b","o"].forEach(k=>{ if(R[0]&VNR[k]) f[k]="var(--blue-fill)"; });
-    vnDraw(svg,s.cs,f); top(R[1],"var(--blue)"); },
-  drag(id,p,s){ if(s.step!==0||!s._tap) return; s._tap=0;
+  init:{q:0,sh:0,chk:0,tries:0}, jump:true, ip:"Tap to shade.", vb:"-2 -8 144 108", label:"Venn diagram: tap the parts to shade the set", link:["q"],
+  fix:s=>{ s.q=clamp(Math.round(+s.q||0),0,VNP.length-1); s.sh=0; s.chk=0; s.tries=0; },
+  buttons:[{label:"Check",show:s=>s.chk<2,fn:s=>{ const ok=s.sh===VNS[VNP[s.q]]; s.tries=(s.tries||0)+1; s.chk=ok?3:s.tries>=2?2:1; }},
+    {label:"Next one →",show:s=>s.chk>=2,fn:s=>{ s.q=(s.q+1)%VNP.length; s.sh=0; s.chk=0; s.tries=0; }}],
+  steps:[{name:"Tap to shade",t:()=>"",w:s=>vnK(s)}],
+  draw(svg,s){ const t=VNP[s.q], want=VNS[t], f={}, rev=s.chk===2;
+    VNK.forEach(k=>{ const on=s.sh&VNR[k], ok=want&VNR[k]; if(rev?ok:on) f[k]=rev||s.chk===3?"var(--vn-ok)":"var(--vn-shade)"; });
+    const G=vnDraw(svg,"two",f);
+    const go=S_(svg,"g",{class:"vnout"+(svg.classList.contains("nudge")?" nudgeme":""),fill:"none",stroke:"var(--ink)","stroke-width":.9,"pointer-events":"none"});
+    [G.A,G.B].forEach(([x,y,r])=>go.append(svgEl("circle",{cx:x,cy:y,r})));
+    if(s.chk===1){ VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])).forEach(k=>lab(svg,G.mk[k],"✗",{"font-size":8,"font-weight":700,fill:"var(--red)"}));
+      if(s.chk===1) VNK.filter(k=>!(s.sh&VNR[k])&&(want&VNR[k])).forEach(k=>lab(svg,G.mk[k],"?",{"font-size":8,"font-weight":700,fill:"var(--amber)"})); }
+    lab(svg,[VNX.x0+VNX.w,VNX.y0-3.5],s.chk===3?`✓ ${t}`:`Shade ${t}`,{"text-anchor":"end","font-size":8,"font-weight":700,fill:s.chk===3?"var(--green)":"var(--ink)"});
+    S_(svg,"rect",{x:VNX.x0,y:VNX.y0,width:VNX.w,height:VNX.h,fill:"transparent","data-drag":"t","data-tap":"1",style:"cursor:pointer"}); },
+  drag(id,p,s,start){ if(!start) return; if(s.chk>=2){ s.sh=0; s.tries=0; }
     const inA=Math.hypot(p.x-55,p.y-55)<=28, inB=Math.hypot(p.x-85,p.y-55)<=28, k=inA&&inB?"ab":inA?"a":inB?"b":"o";
     s.sh^=VNR[k]; s.chk=0; },
-  key(s){
-    if(s.step===0){ const want=VNS[s.tg], bad=VNK.filter(k=>(s.sh^want)&VNR[k]).length;
-      if(!s.chk) return FORMS([FB("blue","Shade",s.tg,VNW[s.tg],null,"wide")],true);
-      if(!bad) return KHEAD(`<span class="k-green">✓ Correct!</span>`)+vnBuild(s.tg);
-      const ex=VNK.filter(k=>(s.sh&VNR[k])&&!(want&VNR[k])).length, ms=bad-ex, pt=n=>`${n} ${n===1?"part":"parts"}`;
-      const what=[ex?`${pt(ex)} extra (✗)`:"",ms?`${pt(ms)} missing${s.chk===1?" (?)":""}`:""].filter(Boolean).join(", ");
-      if(s.chk===1) return FORMS([FB("red","Not yet",what,"fix it, then press Check again",null,"wide")],true);
-      return KHEAD(`<span class="k-red">✗ ${what}.</span> The green is ${s.tg}:`)+vnBuild(s.tg); }
-    if(s.step===1){ const [ans,ch]=VNQ[s.q];
-      if(s.pick<0) return FORMS([FB("ink","Read the shading","∩ AND · ∪ OR · ′ NOT","pick one of the 3 below",null,"wide")],true);
-      const p=ch[s.pick];
-      if(p===ans) return FORMS([FB("green","✓ Yes",ans,VNW[ans],null,"wide")],true);
-      return VNF([FB("red","✗ Not this one",p,VNW[p]),FB("red",`${p} looks like`,vnMini(VNS[p],"var(--red)"),"try again")]); }
-    const R=VN3[s.cs][s.t3];
-    return KHEAD(s.cs==="sub"?"B ⊂ A: B is inside A":"Disjoint: A and B don't overlap")+FORMS([FB("blue","Shaded",R[1],R[2],null,"wide")],true); }
+  key(){ return ""; }
 });
 const PPB={l:14,t:4,w:112,h:112,x0:-5,x1:5,y0:-5,y1:5,xs:1,xl:2,ys:1,yl:2}, PPR=5;
 const ppLR=s=>s.ax<s.bx?[[s.ax,s.ay],[s.bx,s.by]]:[[s.bx,s.by],[s.ax,s.ay]];
@@ -5086,72 +5079,38 @@ const fpRows=C=>{ const A=kc("amber",FPH), cx=`<span class="fpx">${C.fx}</span>`
 const fpWk=(s,old)=>fpRows(fpC(s)).filter(r=>old?r[0]<s.step:r[0]===s.step).map(r=>`<span class="fpr${r[2]?"":" fpc"}${!old&&s.step?" fpn":""}">${r[1]}</span>`).join("");
 const fpOld=s=>fpWk(s,1);
 function fpFs(svg,b){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb) return b; const ppu=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return ppu>=3.2?b:Math.max(b,12/ppu); }
+const FPB={l:14,t:14,w:120,h:94,x0:0,x1:4.5,y0:0,y1:20,xs:.5,xl:1,ys:2,yl:4};
+const FPHS=[1,.9,.8,.7,.6,.5,.4,.3,.2,.1,.01];
+const fpQ=p=>{ const g=FPB, X=x=>g.l+(x-g.x0)/(g.x1-g.x0)*g.w, Y=y=>g.t+(g.y1-y)/(g.y1-g.y0)*g.h; let best=.5, bd=1e9;
+  FPHS.forEach(v=>{ const d=Math.hypot(X(3+v)-p.x,Y((3+v)**2)-p.y); if(d<bd){ bd=d; best=v; } }); return best; };
+const fpK=s=>{ const h=s.h, n=v=>N(v,4), A=t=>kc("amber",t), G=t=>kc("green",t), R=t=>kc("red",t), Hl=A(V("h")), H=A(n(h)), xh=`${X1} + ${Hl}`, sx=`<span class="fpx">${X2}</span>`, s9=`<span class="fpx">9</span>`, G2=G(`2${V("xh")}`), R2=R(`${V("h")}²`);
+  const rows=[[`= ${frac(`(${xh})² − ${X2}`,`(${xh}) − ${X1}`)}`,`= ${frac(`${n(3+h)}² − 3²`,`${n(3+h)} − 3`)}`],
+    [`= ${frac(`(${xh})² − ${X2}`,Hl)}`,`= ${frac(`${n((3+h)**2)} − 9`,H)}`],
+    [`= ${frac(`${sx} + ${G2} + ${R2} − ${sx}`,Hl)}`,`= ${frac(`${s9} + ${G(n(6*h))} + ${R(n(h*h))} − ${s9}`,H)}`],
+    [`= ${frac(`${G2} + ${R2}`,Hl)}`,`= ${frac(`${G(n(6*h))} + ${R(n(h*h))}`,H)}`],
+    [nw(`= ${G(`2${X1}`)} + ${R(V("h"))}`),nw(`= ${G("6")} + ${R(n(h))} = ${n(6+h)}`)],
+    [`${nw(`→ ${G(`2${X1}`)}`)} ${nw(`as ${V("h")} → 0`)}`,`<span class="fpa">${nw(`→ ${G("6")}`)}</span>`]];
+  return `<div class="formbox fb-ink fpbox"><div class="eq"><div class="fpch"><div class="fph">Gradient of PQ ${nw(`= ${frac(`${V("y")}₂ − ${V("y")}₁`,`${X1}₂ − ${X1}₁`)}`)}</div><div class="fpq">${nw(`P(${X1}, ${X2})`)} ${nw(`Q(${xh}, (${xh})²)`)}</div><div class="fpv">${nw(`${X1} = 3`)}, ${nw(`${V("h")} = ${H}`)}</div>${rows.map(([a,b])=>`<div class="fpl">${a}</div><div class="fpn">${b}</div>`).join("")}</div></div></div>`; };
 const firstPrin=aid({
-  init:{cv:"sq",x:1.5,h:.5}, jump:true, vb:"0 0 140 112", label:"Chord PQ on a curve: rise over run, expanded and divided by h",
-  fix:s=>{ if(!FPC[s.cv]) s.cv="sq"; s.x=clamp(snap(s.x,.5),.5,fpC(s).xmax); s.h=clamp(snap(s.h,.01),.01,1); },
-  pills:[{k:"cv",label:"Curve",opts:[["sq",`<span>${V("y")} = ${X2}</span>`],["cube",`<span>${V("y")} = ${X1}³</span>`]],show:s=>s.step!==4}],
-  sliders:[{k:"x",label:X1,min:.5,max:2,step:.5,maxf:s=>fpC(s).xmax},{k:"h",label:FPH,min:.01,max:1,step:.01,show:s=>s.step!==5}],
-  buttons:[{label:"▶ Shrink h",show:s=>s.step===3||s.step===4,fn:(s,anim)=>{const h0=Math.max(s.h,.02); anim(3000,p=>{s.h=Math.max(.01,+(h0*Math.pow(.01/h0,p)).toFixed(2));});}},
-    {label:"↺ h = 0.5",show:s=>s.step===3||s.step===4,fn:s=>{s.h=.5}}],
-  steps:[
-    {name:"Rise over run",t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">${nw(`P(${X1}, ${C.fx})`)} and ${nw(`Q(${X1} + ${FPH}, ${C.fxh})`)}<br>${kc("red","Rise")} on top, ${kc("amber","run")} below: Q is ${kc("amber",FPH)} along from P.</span>`;}},
-    {name:"Expand",w:fpOld,t:s=>`${fpWk(s)}<span class="fpm">Expand the top: the ${fpC(s).fx} cancel.</span>`},
-    {name:"Divide by h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">Divide each term by ${kc("amber",FPH)}: ${nw(`${kc("green",C.G1)} + ${kc("red",C.R1)}`)} is the rise for every ${kc("amber","1")} along.</span>`;}},
-    {name:"Shrink h",w:fpOld,t:s=>{const C=fpC(s); return `${fpWk(s)}<span class="fpm">${nw(kc("red",C.R1)+" → 0")}: the chord PQ becomes the ${kc("green","tangent at P")}.<br>${FPH} is never 0: you can't divide by 0.</span>`;}},
-    {name:"Same for x³",set:{cv:"cube"},t:s=>{const C=fpC(s); return `${C.Y}: expand, divide by ${FPH}, then shrink ${FPH}.<br>Same steps, and out comes ${kc("green",C.G1)}.`;}},
-    {name:"So…",t:()=>`${nw(`(${X1} + ${FPH})<sup>${FPN}</sup> − ${X1}<sup>${FPN}</sup>`)} = ${nw(kc("green",`${FPN}${X1}<sup>${FPN} − 1</sup>${FPH}`))} + ${nw(kc("red",`${FPH}², ${FPH}³ … terms`))}<br>Divide by ${FPH}, shrink ${FPH}: only ${nw(kc("green",`${FPN}${X1}<sup>${FPN} − 1</sup>`))} is left.`}
-  ],
-  draw(svg,s){
-    const C=fpC(s), B=C.box, g=graph(svg,B), x=s.x, h=s.h, st=s.step, f=C.f, yP=f(x), xq=x+h, yQ=f(xq), d=C.d(x), m=st===5?d:(yQ-yP)/h, fs=fpFs(svg,3.9);
-    const T=(px,py,t,col,a={})=>lab(svg,[px,py],t,Object.assign({"font-size":3.9,"font-weight":700,"font-style":"italic",fill:col,stroke:"var(--card)","stroke-width":.9,"paint-order":"stroke"},a));
-    const Y0=g.Y(0), dash={stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5};
-    g.plot(f,{"stroke-width":1.2});
-    T(B.l+2,B.t+5,C.sv.y,BL,{"text-anchor":"start"});
-    if(st>=3) { g.line(B.x0,yP+d*(B.x0-x),B.x1,yP+d*(B.x1-x),{stroke:GR,"stroke-dasharray":"2 1.5","stroke-width":.9}); T(B.l+2,B.t+5+fs*1.25,"tangent at P",GR,{"text-anchor":"start","font-style":"normal"}); }
-    if(st!==5) g.line(B.x0,yP+m*(B.x0-x),B.x1,yP+m*(B.x1-x),{stroke:"var(--ink)","stroke-width":.8});
-    const vSplit=(xx,lo,a,b,la,lb)=>{ const ya=g.Y(lo+a/2)+fs*.35, yb=Math.min(g.Y(lo+a+b/2)+fs*.35,ya-fs*1.1), px=g.X(xx)+3.2;
-      g.line(xx,lo,xx,lo+a,{stroke:GR,"stroke-width":1.5}); if(b>0) g.line(xx,lo+a,xx,lo+a+b,{stroke:RD,"stroke-width":1.5});
-      T(px,ya,la,GR,{"text-anchor":"start"}); if(lb) T(px,yb,lb,RD,{"text-anchor":"start"}); };
-    const runLab=(xa,xb,t,a)=>{ const room=Y0-g.Y(yP)>fs*1.9, yy=room?g.Y(yP)+fs*.95:g.Y(yP)-1.2; T((g.X(xa)+g.X(xb))/2,yy,t,AMB,a); };
-    if(st<=1){
-      g.line(x,0,x,yP,dash); g.line(xq,0,xq,yQ,dash); g.line(0,yP,x,yP,dash); g.line(0,yQ,xq,yQ,dash);
-      const xl=g.X(x), xr=Math.max(g.X(xq),xl+fs*.9), ly=Y0+fs+.6;
-      T(xl+fs*.3,ly,"x","var(--ink)",{"text-anchor":"end"}); T(xr-fs*.3,ly,"x + h","var(--ink)",{"text-anchor":"start"});
-      const yb=g.Y(yP)+fs*.35, yt=Math.min(g.Y(yQ)+fs*.35,yb-fs*1.1), ax=g.X(0)-1.6;
-      T(ax,yb,C.sv.fx,"var(--ink)",{"text-anchor":"end"}); T(ax,yt,C.sv.fxh,"var(--ink)",{"text-anchor":"end"});
-      g.line(x,yP,xq,yP,{stroke:AMB,"stroke-width":1.5}); runLab(x,xq,"h");
-      if(st===0){ g.line(xq,yP,xq,yQ,{stroke:RD,"stroke-width":1.5}); g.line(0,yP,0,yQ,{stroke:RD,"stroke-width":1.6});
-        T(g.X(xq)+1.8,(g.Y(yP)+g.Y(yQ))/2+fs*.35,"rise",RD,{"text-anchor":"start","font-style":"normal"}); }
-      else vSplit(xq,yP,C.g(x,h),C.r(x,h),C.sv.G,C.sv.R);
-    } else {
-      if(st===2){ const o={"stroke-width":1.1,"stroke-opacity":.45}; g.line(x,yP,xq,yP,Object.assign({stroke:AMB},o)); g.line(xq,yP,xq,yP+C.g(x,h),Object.assign({stroke:GR},o)); g.line(xq,yP+C.g(x,h),xq,yQ,Object.assign({stroke:RD},o)); }
-      g.line(x,yP,x+1,yP,{stroke:AMB,"stroke-width":1.5}); runLab(x,x+1,"1",{"font-style":"normal"});
-      if(st===5){ g.line(x,yP,x+1,yP+d,{stroke:GR,"stroke-width":.9}); vSplit(x+1,yP,d,0,C.sv.G1,null); }
-      else vSplit(x+1,yP,d,C.r1(x,h),C.sv.G1,C.sv.R1);
-    }
-    if(st!==5){ g.dot(xq,yQ,"var(--ink)",1.5); T(g.X(xq)-2.4,Math.min(g.Y(yQ)-2.2,g.Y(yP)-2.2-fs*1.1),"Q","var(--ink)",{"text-anchor":"end","font-style":"normal"}); handle(svg,g.X(xq),g.Y(yQ),"q","var(--ink)"); }
-    T(g.X(x)-2.4,g.Y(yP)-2.2,"P","var(--accent)",{"text-anchor":"end","font-style":"normal"});
-    handle(svg,g.X(x),g.Y(yP),"p");
-  },
-  drag(id,p,s){ const [gx]=ginv(fpC(s).box,p); if(id==="p") s.x=clamp(snap(gx,.5),.5,fpC(s).xmax); else s.h=clamp(snap(gx-s.x,.01),.01,1); },
-  key(s){ const C=fpC(s), x=s.x, h=s.h, st=s.step, rise=C.f(x+h)-C.f(x), m=rise/h, g=C.g(x,h), r=C.r(x,h), g1=C.g1(x), r1=C.r1(x,h);
-    const H=KHEAD(`${C.Y} · ${nw(`${X1} = ${N(x)}`)}, ${nw(`${FPH} = ${N(h)}`)}`);
-    if(st===0) return H+FORMS([FB("red","Rise",fpN(rise),nw(`${N(x+h)}${C.pw} − ${N(x)}${C.pw}`)),FB("amber","Run",nw(`${FPH} = ${N(h)}`),"Q is this far along"),
-      FB("blue","Gradient of PQ",fpN(m),nw(frac(fpN(rise),N(h))))],true);
-    if(st===1) return H+FORMS([FB("green",C.G,fpN(g),C.gs(x,h)),FB("red",C.R,fpN(r),C.rs(x,h)),
-      FB("blue","Rise",fpN(rise),`${nw(`${fpN(g)} + ${fpN(r)}`)}, same as before`)],true);
-    if(st===2) return H+FORMS([FB("green",C.G1,fpN(g1),C.g1s(x)),FB("red",C.R1,fpN(r1),C.r1s(x,h)),
-      FB("blue","Gradient of PQ",fpN(m),`${nw(`${fpN(g1)} + ${fpN(r1)}`)}, same as before`)],true);
-    if(st===3) return H+FORMS([FB("blue","Gradient of PQ",fpN(m),nw(`${C.G1} + ${C.R1}`)),FB("red",C.R1,fpN(r1),"→ 0, but never 0"),
-      FB("green","Tangent at P",fpN(g1),nw(`${C.G1} = ${C.g1s(x)}`))],true);
-    if(st===4) return KHEAD(C.Y)+FORMS([FB("blue","① Expand",nw(`${C.fxh} − ${C.fx}`)+" = "+nw(`${kc("green",C.G)} + ${kc("red",C.R)}`),"",null,"wide"),
-      FB("blue",`② Divide by ${FPH}`,nw(`${kc("green",C.G1)} + ${kc("red",C.R1)}`),"",null,"wide"),
-      FB("green",`③ Shrink ${FPH}`,nw(`${kc("red",C.R1)} → 0`)+", gradient → "+nw(C.G1),nw(`at ${X1} = ${N(x)}: ${C.g1s(x)} = ${fpN(g1)}`),null,"wide")],true);
-    return FORMS([FB("green","So…",nw(`${frac("d","d"+X1)}(${X1}<sup>${FPN}</sup>) = ${FPN}${X1}<sup>${FPN} − 1</sup>`),`${nw(`${X2} → 2${X1}`)} · ${nw(`${X1}³ → 3${X2}`)} · also true when ${FPN} is a fraction or negative (that proof is beyond school level)`,null,"wide"),
-      FB("ink","In the exam","use the power rule","not needed in the exam: this shows why the rule works",null,"wide")],true); },
-  readout(s){ if(s.step!==3) return ""; const C=fpC(s), x=s.x, h=s.h;
-    const rows=[1,.1,.01,.001].map(v=>`<tr${Math.abs(h-v)<1e-9?' class="live"':""}><td>${v}</td><td>${fpN(C.g1(x)+C.r1(x,v))}</td></tr>`).join("");
-    return `<table class="mini"><tr><th>${FPH}</th><th>gradient of PQ</th></tr>${rows}<tr><td>→ 0</td><td class="k-green">→ ${fpN(C.g1(x))}</td></tr></table>`; }
+  init:{h:.5}, jump:true, ip:"Drag Q into P.", vb:"4 2 136 116", label:"Chord PQ on y = x squared, Q sliding into P, with the first-principles working beside it", link:["h"],
+  fix:s=>{ const v=+s.h||.5; s.h=FPHS.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)?x:b,.5); },
+  steps:[{name:"First principles",t:()=>"",w:s=>fpK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9400; const g=graph(svg,FPB), h=s.h, xq=3+h, yQ=xq*xq, m=6+h, fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700};
+    g.plot(t=>t*t,{stroke:"var(--blue)","stroke-width":1.4});
+    lab(svg,[g.X(.35),g.Y(7)],"y = x²",{"text-anchor":"start","font-size":fs,"font-style":"italic",fill:"var(--blue)","font-weight":700});
+    g.line(FPB.x0,9+6*(FPB.x0-3),FPB.x1,9+6*(FPB.x1-3),{stroke:"var(--green)","stroke-width":.9,"stroke-dasharray":"2 1.5"});
+    g.line(FPB.x0,9+m*(FPB.x0-3),FPB.x1,9+m*(FPB.x1-3),{stroke:"var(--ink)","stroke-width":1.1});
+    g.line(3,9,xq,9,{stroke:"var(--amber)","stroke-width":1.8}); g.line(xq,9,xq,9+6*h,{stroke:"var(--green)","stroke-width":1.8}); g.line(xq,9+6*h,xq,yQ,{stroke:"var(--red)","stroke-width":1.8});
+    if(h>=.3) lab(svg,[g.X(3+h/2),g.Y(9)+fs+1.2],N(h),Object.assign({fill:"var(--amber)"},F));
+    if(h>=.6) lab(svg,[g.X(xq)+2,g.Y(9+3*h)+fs*.35],N(6*h,4),Object.assign({fill:"var(--green)","text-anchor":"start"},F));
+    if(h>=.3) lab(svg,[g.X(xq)-(innerWidth<600?14:10),g.Y(yQ)-3.5],`Q (${N(xq,4)}, ${N(yQ,4)})`,Object.assign({fill:"var(--ink)","text-anchor":"end"},F));
+    if(h<=.5) lab(svg,[g.X(4.45),g.Y(9+6*1.45)+fs+1.6],"tangent",Object.assign({"text-anchor":"end",fill:"var(--green)"},F));
+    g.dot(3,9,"var(--ink)",1.7); lab(svg,[g.X(3)-4.5,g.Y(9)-2],"P (3, 9)",Object.assign({fill:"var(--ink)","text-anchor":"end"},F));
+    let d=""; for(let i=0;i<=30;i++){ const u=3+1.05*i/30; d+=(i?"L":"M")+g.X(u).toFixed(2)+" "+g.Y(u*u).toFixed(2); }
+    S_(svg,"path",{d,fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"q",style:"cursor:pointer"});
+    handle(svg,g.X(xq),g.Y(yQ),"q","var(--ink)"); S_(svg,"circle",{cx:g.X(xq),cy:g.Y(yQ),r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ s.h=fpQ(p); },
+  key(){ return ""; }
 });
 const AR_DA=frac("d"+V("A"),"d"+X1), AR_LIM=(lo,hi)=>`<span class="lim"><sup>${hi}</sup><sub>${lo}</sub></span>`;
 const AR_CV={
