@@ -7632,23 +7632,28 @@ function rainbow(vw,vh,y,toks,arcs){ let s=`<svg viewBox="0 0 ${vw} ${vh}" class
   toks.forEach(([x,t,c])=>{ s+=`<text x="${x}" y="${y}" font-size="10.5" text-anchor="middle" fill="${c||"var(--ink)"}"${c?` font-weight="700"`:""}>${t}</text>`; });
   return s+"</svg>"; }
 const SHEETS = {
-expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab")} + ${V("b")}²`,"square, double product, square"),FB("red",`(${V("a")} − ${V("b")})²`,`${V("a")}² − 2${V("ab")} + ${V("b")}²`,"only the middle sign changes"),FB("green",`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`,`${V("a")}² − ${V("b")}²`,"difference of two squares")])}
+expansion:`${MUST([FB("blue","Plus, squared",nw(`(${X1} + 3)² = ${X2} <b class="k-amber">+ 6${X1}</b> + 9`),"don't drop the middle term",nw(`(${V("a")} + ${V("b")})² = ${V("a")}² + 2${V("ab")} + ${V("b")}²`),"mk"),FB("amber","Minus, squared",nw(`(${X1} − 5)² = ${X2} − 10${X1} <b class="k-amber">+ 25</b>`),"the last term is still +",nw(`(${V("a")} − ${V("b")})² = ${V("a")}² − 2${V("ab")} + ${V("b")}²`),"mk"),FB("green","Plus × minus",nw(`(${X1} + 4)(${X1} − 4) = ${X2} − 16`),"no middle term",nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")}) = ${V("a")}² − ${V("b")}²`),"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Two brackets: the rainbow</h4>
     ${rainbow(126,48,27,[[24,"("],[33,`2${RX}`],[44.5,"+"],[53,"5"],[59,")"],[66,"("],[75,`3${RX}`],[86.5,"−"],[95,"1"],[101,")"]],[[35,75,1,6,"","var(--blue)"],[31,91,1,13,"","var(--green)"],[55,75,0,6,"","var(--amber)"],[51,91,0,13,"","var(--red)"]])}
     <ul class="steps"><li>${nw(`(2${X1} + 5)(3${X1} − 1)`)}</li><li>= <span class="k-blue">${nw(`6${X2}`)}</span> <span class="k-green">${nw(`− 2${X1}`)}</span> <span class="k-amber">${nw(`+ 15${X1}`)}</span> <span class="k-red">${nw("− 5")}</span> <span class="tagop">one product per arc</span></li><li>${nw(`= 6${X2} + 13${X1} − 5`)} <span class="tagop">then collect</span></li></ul>
-    <p class="anno">* each term in the first bracket multiplies each term in the second</p>
-    ${EG("A minus in front",[nw(`−(${X1} + 2)(${X1} − 3)`),nw(`= −(${X2} − 3${X1} + 2${X1} − 6)`),nw(`= −(${X2} − ${X1} − 6)`),nw(`= −${X2} + ${X1} + 6`)])}
-    <p class="anno">* bracket the product first, then flip every sign</p>
   </div>
-  <div class="panelc"><h4>The 3 special identities</h4>
-    <table>
-      <tr><th>Rule</th><th>Example</th></tr>
-      <tr><td>${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(3${V("x")} + 2)²`)} = ${nw(`9${V("x")}² + 12${V("x")} + 4`)}</td></tr>
-      <tr><td>${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}</td><td>${nw(`(${V("x")} − 5)²`)} = ${nw(`${V("x")}² − 10${V("x")} + 25`)}</td></tr>
-      <tr><td>${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}</td><td>${nw(`(${V("x")} + 4)(${V("x")} − 4)`)} = ${nw(`${V("x")}² − 16`)}</td></tr>
-    </table>
-    ${EG("The middle term",[`${nw(`(3${V("x")} + 2)²`)}: ${nw(`2 × 3${V("x")} × 2 = 12${V("x")}`)}`,`${nw(`(${V("x")} − 5)²`)}: ${nw(`2 × ${V("x")} × 5 = 10${V("x")}`)}, so ${nw(`− 10${V("x")}`)}`])}
+  <div class="panelc"><h4>A minus in front</h4>
+    <ul class="steps">
+      <li>${nw(`−(${X1} + 2)(${X1} − 3)`)}</li>
+      <li>${nw(`= −(${X2} − 3${X1} + 2${X1} − 6)`)} <span class="tagop">bracket it first</span></li>
+      <li>${nw(`= −(${X2} − ${X1} − 6)`)}</li>
+      <li>${nw(`= −${X2} <b class="k-amber">+ ${X1} + 6</b>`)} <span class="tagop">flip every sign</span></li>
+    </ul>
+  </div>
+
+  <div class="panelc"><h4>Write a and b first</h4>
+    <ul class="steps">
+      <li>${nw(`(3${X1} − 5)²`)}</li>
+      <li>${nw(`${V("a")} = 3${X1}, ${V("b")} = 5`)}</li>
+      <li>${nw(`= <b class="k-amber">(3${X1})²</b> − 2(3${X1})(5) + 5²`)} <span class="tagop">square all of 3${X1}</span></li>
+      <li>${nw(`= 9${X2} − 30${X1} + 25`)}</li>
+    </ul>
   </div>
 
   <div class="panelc"><h4>Picture it</h4>
@@ -7670,34 +7675,28 @@ expansion:`${MUST([FB("blue",`(${V("a")} + ${V("b")})²`,`${V("a")}² + 2${V("ab
     ${PLAYLINK("#a-plus-b-squared","Interactive: cut the square yourself")}
   </div>
 
-  <div class="panelc"><h4>Common mistakes</h4>
-    <div class="wrongright">
-      <div class="x">✗ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + ${V("b")}²`)}</div>
-      <div class="ok">✓ ${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</div>
-      <div class="x">✗ ${nw(`(${V("x")} − 3)²`)} = ${nw(`${V("x")}² − 9`)}</div>
-      <div class="ok">✓ ${nw(`(${V("x")} − 3)²`)} = ${nw(`${V("x")}² − 6${V("x")} + 9`)}</div>
-    </div>
-    <div class="note"><b>Note!</b> Squaring a bracket ≠ squaring each term. Don't forget the middle term.</div>
-  </div>
-
-  <div class="panelc"><h4>Use it for mental sums</h4>
+  <div class="panelc"><h4>Split off a round number</h4>
     <ul class="steps">
-      <li>51² = (50 + 1)² = 2500 + 100 + 1 = <b>2601</b></li>
-      <li>99² = (100 − 1)² = 10 000 − 200 + 1 = <b>9801</b></li>
-      <li>${nw("101 × 99")} = ${nw("(100 + 1)(100 − 1)")} = ${nw("10 000 − 1")} = <b>9999</b></li>
+      <li>${nw("99² = (100 − 1)²")}<br>${nw("= 10 000 − 200 + 1")} = <b>9801</b></li>
+      <li>${nw("101 × 99 = (100 + 1)(100 − 1)")}<br>${nw("= 10 000 − 1")} = <b>9999</b></li>
+      <li>${nw("53² − 47² = (53 − 47)(53 + 47)")}<br>${nw("= 6 × 100")} = <b>600</b></li>
     </ul>
   </div>
 
-  <div class="panelc"><h4>Work backwards = factorise</h4>
-    <table>
-      <tr><th>Spot the pattern</th><th>Factorised</th></tr>
-      <tr><td>${V("x")}² + 10${V("x")} + 25</td><td>(${V("x")} + 5)²</td></tr>
-      <tr><td>${V("x")}² − 8${V("x")} + 16</td><td>(${V("x")} − 4)²</td></tr>
-      <tr><td>4${V("x")}² − 9</td><td>(2${V("x")} + 3)(2${V("x")} − 3)</td></tr>
-    </table>
-    <p class="anno">* only when the first and last terms are perfect squares AND the middle is ${nw("2 × their")} square roots: ${nw(`10${V("x")} = 2 × ${V("x")} × 5`)}</p>
+  <div class="panelc"><h4>Common mistakes</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`(${V("y")} + 6)² = ${V("y")}² + 36`)}</div>
+      <div class="ok">✓ ${nw(`= ${V("y")}² + 12${V("y")} + 36`)}</div>
+      <div class="x">✗ ${nw(`(${X1} − 3)² = ${X2} − 6${X1} − 9`)}</div>
+      <div class="ok">✓ ${nw(`= ${X2} − 6${X1} + 9`)}</div>
+      <div class="x">✗ ${nw(`2(5${X1} − 7)²`)}<br>${nw(`= (10${X1} − 14)²`)}</div>
+      <div class="ok">✓ square first:<br>${nw(`2(25${X2} − 70${X1} + 49)`)}</div>
+      <div class="x">✗ a multiple of 3: stop at ${nw(`3(3${V("n")}² + 2${V("n")} + 3)`)}</div>
+      <div class="ok">✓ end with: ${nw(`3${V("n")}² + 2${V("n")} + 3`)} is an integer</div>
+    </div>
   </div>
 </div>`,
+
 
 diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup> → <span class="k-amber">3</span>${X1}²`),"power down in front, then power − 1",`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`,"mk"),FB("amber","Chain rule",`${nw(`(<span class="k-blue">2${X1}</span> + 1)⁵`)} ${nw(`→ 5(2${X1} + 1)⁴ <span class="k-blue">× 2</span>`)}`,"outside to inside: peel and multiply",`${nw(`(${V("u")})<sup>${V("n")}</sup>`)} → ${nw(`${V("n")}(${V("u")})<sup>${V("n")} − 1</sup> × ${frac("d"+V("u"),"d"+X1)}`)}`,"mk"),FB("green","Product rule",`${nw("diff front × copy back")}<br>${nw("+ diff back × copy front")}`,"",`${frac("d"+V("u"),"d"+X1)}${V("v")} + ${frac("d"+V("v"),"d"+X1)}${V("u")}`,"mk mkw"),FB("green","Quotient rule",`<span class="mkq"><span>${nw("diff top × copy bottom")}<br>${nw("− diff bottom × copy top")}</span><span>bottom²</span></span>`,"",frac(`${frac("d"+V("u"),"d"+X1)}${V("v")} − ${frac("d"+V("v"),"d"+X1)}${V("u")}`,`${V("v")}²`),"mk mkw")])}
 <div class="sheet">
@@ -10294,13 +10293,15 @@ ${PAN("Word problem",EG("Adult tickets $8, child tickets $5. 10 tickets cost $62
 ${MIST([["equations with no labels",`label them ① ②, then say what you did: ${nw("① × 2")}, ${nw(`Sub ${X1} = 4 into ①`)}`],["subtract when the signs are opposite","opposite signs: add"],[`find ${X1} and stop`,`find both and write both: ${nw(`${X1} = 4, ${VY} = 2`)}`],["× only some of the terms","× EVERY term in the equation"]])}
 </div>`,
 
-s2Factor:`${MUST([FB("blue","Common factor first",nw(`2${X2} + 6${X1} = 2${X1}(${X1} + 3)`),"always look for it first"),FB("amber","Count the terms",`2 terms: ${nw(`${V("a")}² − ${V("b")}²`)} · 3 terms: cross · 4 terms: grouping`,"expand back to check"),FB("green","Difference of squares",nw(`${V("a")}² − ${V("b")}² = (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`),nw(`${X2} − 9 = (${X1} + 3)(${X1} − 3)`))])}
+s2Factor:`${MUST([FB("blue","Common factor first",nw(`6${X2} + 9${X1} = <b class="k-amber">3${X1}</b>(2${X1} + 3)`),"the highest: number and letter","","mk"),FB("amber","Cross method",`factors first, signs <b class="k-amber">last</b>`,"the arrows add or subtract to the middle term","","mk mkw"),FB("green","Two squares",nw(`${X2} − 9 = (${X1} + 3)(${X1} − 3)`),`only with a <b class="k-amber">minus</b> between`,nw(`${V("a")}² − ${V("b")}² = (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`),"mk")])}
 <div class="sheet">
+${PAN("Count the terms",`<table><tr><th>Terms</th><th>Method</th></tr><tr><td>2</td><td>${nw(`${V("a")}² − ${V("b")}²`)}</td></tr><tr><td>3</td><td>cross method</td></tr><tr><td>4</td><td>grouping</td></tr></table>`)}
 ${PAN(`Cross method: every 3-term quadratic`,`<p class="big">${nw(`${X2} + 4${X1} − 5`)}</p>`+picCross()+STEPS([[`bottom row: ${nw(`${X2}, −5, 4${X1}`)}`,"write it first"],[`${nw(`${X2} → ${X1}, ${X1}`)} and ${nw("5 → 5, 1")}`,"factors, no signs yet"],[nw(`5${X1} and ${X1}`),"multiply along the arrows"],[nw(`5${X1} − ${X1} = 4${X1}`),"add or subtract to get the middle"],[`${nw(`−${X1}`)} needs a minus, so the 1 becomes ${nw("−1")}`,"signs go in last"],[nw(`(${X1} + 5)(${X1} − 1)`),"read across each row"]])
-  +picCrossG([[`2${RX}`,"1",RX],[RX,"3",`6${RX}`],[`2${RX}²`,"3",`7${RX}`]])+EG("Same steps when there's a number in front",[nw(`2${X2} + 7${X1} + 3 = (2${X1} + 1)(${X1} + 3)`),nw(`3${X2} − 10${X1} − 8 = (3${X1} + 2)(${X1} − 4)`)])+PLAYLINK("#cross-method"))}
-${PAN("Grouping",STEPS([nw(`3${X1} + 6${VY} + ${V("a")}${X1} + 2${V("a")}${VY}`),[nw(`= 3(${X1} + 2${VY}) + ${V("a")}(${X1} + 2${VY})`),"in pairs"],[nw(`= (${X1} + 2${VY})(3 + ${V("a")})`),"common bracket"]])+`<p class="anno">* check: expand your answer to get the question back · see also <a href="#sheet/expansion">the 3 special products</a></p>`)}
-${MIST([[nw(`${X2} − 9 = (${X1} − 3)²`),nw(`(${X1} + 3)(${X1} − 3)`)],[`stop at ${nw(`2(${X2} + 3${X1})`)}`,`factorise completely: ${nw(`2${X1}(${X1} + 3)`)}`],[nw(`${X2} − ${X1} − 12 = (${X1} + 4)(${X1} − 3)`),`expand back: the middle must be ${nw(`−${X1}`)}, so ${nw(`(${X1} − 4)(${X1} + 3)`)}`]])}
+  +picCrossG([[`2${RX}`,"1",RX],[RX,"3",`6${RX}`],[`2${RX}²`,"3",`7${RX}`]])+EG("Number in front: same steps",[nw(`2${X2} + 7${X1} + 3 = (2${X1} + 1)(${X1} + 3)`)])+PLAYLINK("#cross-method"))}
+${PAN("Grouping",STEPS([nw(`3${X1} − 6${VY} − ${V("a")}${X1} + 2${V("a")}${VY}`),[nw(`= 3(${X1} − 2${VY}) <b class="k-amber">− ${V("a")}</b>(${X1} − 2${VY})`),`take out −${V("a")}`],[nw(`= (${X1} − 2${VY})(3 − ${V("a")})`),"same bracket"]]))}
+${MIST([[nw(`${X2} − 9 = (${X1} − 3)²`),nw(`(${X1} + 3)(${X1} − 3)`)],[nw(`${X2} + 9 = (${X1} + 3)(${X1} − 3)`),`${nw(`${X2} + 9`)} stays as it is`],[`stop at ${nw(`2(${X2} + 3${X1})`)}`,`factorise completely: ${nw(`2${X1}(${X1} + 3)`)}`],[`stop at ${nw(`3(${X2} − 4)`)}`,`keep going: ${nw(`3(${X1} + 2)(${X1} − 2)`)}`],[`${nw(`${X2} − ${X1} − 12`)}<br>${nw(`= (${X1} + 4)(${X1} − 3)`)}`,`expand back: the middle must be ${nw(`−${X1}`)}, so ${nw(`(${X1} − 4)(${X1} + 3)`)}`]])}
 </div>`,
+
 
 s2AlgFrac:`${MUST([FB("blue","Simplify","factorise, then cancel FACTORS","never cancel terms"),FB("amber","Add / subtract","same denominator first","use the LCM of the bottoms"),FB("green","× and ÷","÷ = × by the flip","Keep, Change, Flip")])}
 <div class="sheet">
@@ -12179,7 +12180,8 @@ const QQ_LO={
   w.push(qW(nw(`= ${qJ(qT(a*c,X2),qT(a*d,X1),qT(b*c,X1),b*d)}`),"one product per arc"),qW(nw(`= ${qJ(qT(a*c,X2),qT(a*d+b*c,X1),b*d)}`),"then collect"));
   return {q:`Expand and simplify ${nw(`${e}.`)}`,w,a:nw(qJ(qT(a*c,X2),qT(a*d+b*c,X1),b*d)),n}; }},
 {t:"perfect square",g:R=>{ const n=qTry(()=>({a:R.int(1,5),b:R.nz(-9,9)}),n=>qGcd(n.a,n.b)===1,{a:3,b:-5}), {a,b}=n, f=qT(a,X1), e=`(${qJ(f,b)})²`, r=qJ(qT(a*a,X2),qT(2*a*b,X1),b*b);
-  return {q:`Expand ${nw(`${e}.`)}`,w:[nw(e),qW(nw(`middle: 2 × ${f} × ${qB(b)} = ${qT(2*a*b,X1)}`),"signs included"),qW(nw(`= ${r}`),"square, double product, square")],a:nw(r),n}; }},
+  const B=Math.abs(b), sg=b<0?"−":"+";
+  return {q:`Expand ${nw(`${e}.`)}`,w:[nw(e),qW(nw(`${V("a")} = ${f}, ${V("b")} = ${B}`),"write a and b first"),qW(nw(`= ${a===1?f:`(${f})`}² ${sg} 2(${f})(${B}) + ${B}²`),nw(`${V("a")}² ${sg} 2${V("ab")} + ${V("b")}²`)),nw(`= ${r}`)],a:nw(r),n}; }},
 {t:"difference of two squares",g:R=>{ const a=R.int(1,5), b=qTry(()=>R.int(1,9),v=>qGcd(a,v)===1,1), f=qT(a,X1), e=R.f()<.5?`(${f} + ${b})(${f} − ${b})`:`(${f} − ${b})(${f} + ${b})`, r=`${qT(a*a,X2)} − ${b*b}`;
   return {q:`Expand ${nw(`${e}.`)}`,w:[nw(e),qW(nw(`= ${a===1?f:`(${f})`}² − ${b}²`),"difference of two squares"),nw(`= ${r}`)],a:nw(r),n:{a,b}}; }},
 {t:"mental sums",g:R=>{ const B=R.pick([20,30,40,50,60,70,80,90,100,200]), d=R.int(1,3), ty=R.int(0,2), G=v=>v>=10000?String(v).replace(/\B(?=(\d{3})+(?!\d))/g," "):String(v), n={B,d,ty};
