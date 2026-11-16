@@ -1315,6 +1315,26 @@ html[data-kid] #app .play.lean:not(.kstack) .key{grid-column:2;grid-row:4;margin
 #app .play.taplay .pillrow[data-pk="g"] .pill[data-v="2"]{border-color:var(--green);color:var(--green)}
 #app .play.taplay .pillrow[data-pk="g"] .pill:not([data-v="3"])::before{content:"";display:inline-block;width:.75em;height:.75em;border-radius:4px;margin-right:.45em;background:currentColor;opacity:.4}
 #app .play.taplay .stage svg .tapick{cursor:pointer}
+#app .play.ip6ct .cwk .formbox .rd{font-size:15px;color:var(--muted);text-align:center;margin-top:4px;font-weight:600}
+#app .play.ip6ct .cwk .formbox .eq{height:auto;min-height:74px}
+#app .play.ip6ct .cwk .formbox .hd{color:var(--ink)}
+.cwm{display:inline-grid;grid-template-rows:auto auto;grid-auto-flow:column;column-gap:.32em;row-gap:2px;justify-items:center;align-items:end}
+.cwm .cwml{font-size:18px;line-height:1.15;color:var(--muted);font-weight:600;white-space:nowrap}
+.cwm .cwml .v{color:var(--muted)}
+.cwm .cwmn{line-height:1.25;white-space:nowrap}
+.play.ip6ct .panel>.iptabs{order:-1}
+@media (min-width:900px){html[data-ip] .play.ip6ct .panel{align-self:start}}
+.play.kstack.ip6ct .stepwk{order:4}
+.play.kstack.ip6ct .iptabs{order:0}
+.play.ip6ct .iptab .cmini{width:64px;height:50px}
+html[data-kid] #app .play.ip6ct:not(.rdwait) .dock .pill.act{animation:none}
+@keyframes cwping{0%{box-shadow:0 0 0 0 var(--accent)}70%{box-shadow:0 0 0 12px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.play.ip6ct .iptab.cwping{animation:cwping .9s ease-out 2}
+@keyframes tapu{0%,100%{transform:scale(1)}40%{transform:scale(1.35)}}
+.play.ip6ct .stage svg text.tapu{transform-box:fill-box;transform-origin:center;animation:tapu .7s ease-out 1}
+.play.ip6ct .tak .ipans.tapu{display:inline-block;animation:tapu .7s ease-out 1}
+@media (prefers-reduced-motion:reduce){.play.ip6ct .iptab.cwping,.play.ip6ct .stage svg text.tapu,.play.ip6ct .tak .ipans.tapu{animation:none}}
+@media (max-width:599px){.play.ip6ct .iptabs{grid-template-columns:repeat(2,minmax(0,1fr))}.play.ip6ct .iptab{flex-direction:row;justify-content:flex-start;gap:8px;padding:3px 10px 3px 4px;min-height:56px;font-size:15px;text-align:left}.play.ip6ct .iptab .cmini{width:56px;height:44px}.cwm .cwml{font-size:16px}}
 #app .play.rsplay .sgpad.rsnp{grid-template-columns:repeat(7,1fr)}
 .rs .rmg{grid-template-columns:repeat(4,auto)}
 .rs .rmg .rmbx{min-width:40px;height:34px;font-size:20px}
@@ -1449,6 +1469,7 @@ html[data-ip] .play{padding-bottom:4px}
 }
 @media (min-width:600px) and (max-width:899px){ .ipk .formbox .eq{font-size:21px;height:64px} .ipk .formbox .gen{font-size:14px} }
 html[data-ip] .dohint{display:none !important}
+@media (min-width:900px){ html[data-kid][data-ip] .kidbtn{display:inline-flex} }
 .qfsm{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline;font-size:14px;margin:10px 4px 0;color:var(--muted)}
 .qfsm .qfl{font-size:12px;text-align:right}
 .qfh{font-size:1.3em;font-weight:800}
@@ -1500,6 +1521,17 @@ html[data-ip] .panel>.iptabs{order:9}
 html[data-ip] svg.nudge .vnout.nudgeme{animation:vnp 1.4s ease-in-out infinite}
 html[data-ip] svg.ipwig .vnout{animation:ipwig .6s ease-out 2}
 @media (prefers-reduced-motion:reduce){html[data-ip] svg.nudge .vnout.nudgeme{animation:none}}
+@keyframes ip6ss{0%,30%,100%{stroke-width:1.8}12%{stroke-width:4.6}}
+@keyframes sxw{0%,100%{stroke-width:1.8}40%{stroke-width:5.5}}
+html[data-ip] svg.nudge .sxog.nudgeme rect,html[data-ip] svg .sxog.sxre rect{animation:ip6ss 2.8s ease-in-out infinite}
+html[data-ip] svg .sxog.sxre rect{animation-iteration-count:1}
+html[data-ip] svg .sxog rect:nth-child(2){animation-delay:.7s}
+html[data-ip] svg .sxog rect:nth-child(3){animation-delay:1.4s}
+html[data-ip] svg .sxog rect:nth-child(4){animation-delay:2.1s}
+html[data-ip] svg.ipwig .sxog rect{animation:sxw .6s ease-out 2;animation-delay:0s}
+@media (prefers-reduced-motion:reduce){html[data-ip] svg .sxog rect{animation:none !important}}
+.play.sxplay .stage svg text.sxbt{stroke:none}
+@media (min-width:900px){html[data-ip] #app .play.sxplay:not(.kstack){display:flex;flex-direction:column;align-items:stretch;gap:12px;max-width:800px;margin:0 auto}html[data-ip] #app .play.sxplay:not(.kstack) .panel{align-self:stretch}html[data-ip] .play.sxplay .stage{padding-top:46px}}
 .rdk .formbox{background:none;border:0;padding:0;box-shadow:none}
 .rdk .formbox .hd{display:none}
 .rdk .formbox .eq{height:auto;display:block;font-size:22px;white-space:normal;text-align:left}
@@ -1525,6 +1557,37 @@ html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%
 html[data-ip] svg.ipwig circle[data-drag]{stroke:var(--ink);animation:ipwig .6s ease-out 2}
 @keyframes ipwigb{0%,100%{transform:none}35%{transform:scale(1.07)}70%{transform:scale(.98)}}
 html[data-ip] .dock .pill.act.ipwigb{animation:ipwigb .5s ease-out 2 !important}
+.play.kstack.ip6rr .stage{order:1}
+.play.kstack.ip6rr .stepwk{order:2}
+.play.kstack.ip6rr .box.dock{order:3}
+.rrk .forms{grid-template-columns:minmax(0,1fr);gap:8px;margin:0}
+.rrk .formbox.rrbox{padding:8px 10px;container-type:inline-size}
+.rrk .formbox.rrbox.rrok{--fc:var(--green)}
+.rrk.ipk .formbox .eq{height:auto;display:block;overflow:visible;padding:0;white-space:nowrap}
+.rrbl{display:flex;justify-content:space-around;gap:4px 12px}
+.rrg{display:grid;font-size:14px;grid-template-rows:24px 34px 34px;column-gap:0;align-items:center;justify-items:center}
+.rrg.rrjg{grid-template-rows:24px 34px;justify-content:center}
+.rrh{font-size:14px;font-weight:700;white-space:nowrap;color:var(--ink)}
+.rrn{font-size:22px;font-weight:700;text-align:center;white-space:nowrap;color:var(--ink)}
+.rrh.rrbu,.rrn.rrbu{color:var(--blue)}
+.rrh.rram,.rrn.rram{color:var(--amber)}
+.rrov{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 6px;line-height:1.3}
+.rrco{color:var(--muted);font-weight:700;font-size:16px}
+.rrx{font-size:16px;font-weight:700;color:var(--accent);white-space:nowrap}
+.rre{grid-column:1/-1}
+.rrdv{border-top:2px solid var(--line);margin:4px 0 6px}
+.rrjs{height:62px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.rrok .rrjs{background:var(--green-fill)}
+.rrdot{margin:0 5px;color:inherit;opacity:.6}
+.ip6rr .dock .pillrow[data-pk] .pill{padding:0 6px;white-space:nowrap;min-width:0}
+.ip6rr .dock .pill .frac{font-size:.9em}
+@container (max-width:414px){ .rrA .rrbl{flex-direction:column;align-items:center} }
+@keyframes rrlift{from{transform:translateY(var(--rra))}to{transform:translateY(var(--rrb))}}
+.rrlift{animation:rrlift .7s cubic-bezier(.4,0,.2,1) both}
+@media (min-width:900px){ html[data-kid] .play.ip6rr:not(.kstack){grid-template-columns:minmax(0,1.15fr) minmax(300px,1fr)} html[data-ip] .play.ip6rr .panel{align-self:start} }
+@media (max-width:599px){ .rrn{font-size:20px} .rrg{grid-template-rows:22px 30px 30px} .rrg.rrjg{grid-template-rows:22px 30px} .rrjs{height:56px} .rrk .formbox.rrbox{padding:6px 6px} .ip6rr .dock .pillrow[data-pk] .pill{font-size:15px;padding:0 4px} }
+@media (max-width:399px){ .ip6rr .dock .pillrow[data-pk] .pill{font-size:14px;letter-spacing:0;padding:0 2px} .rrdot{margin:0 3px} }
+@media (prefers-reduced-motion:reduce){.rrlift{animation:none}}
 .must .formbox.mk{display:flex;flex-direction:column;padding:9px 12px 10px}
 .must .formbox.mk .eq{font-size:21px;text-align:center;padding:10px 0 6px;white-space:normal;overflow:visible;line-height:1.4}
 .must .formbox.mk.mkw .eq{font-size:15.5px;line-height:1.5}
@@ -1692,15 +1755,15 @@ const TOPICS = [
   {id:"dog-video", strand:"num", levels:["p6"], chapter:"Fractions", p6g:"Fractions",
    title:"Mia's dog food: the video", blurb:"Mia's 3 bags pour into one jar. Watch how the fractions work.", play:"dogVideo"},
   {id:"rest-model", strand:"num", levels:["p6"], chapter:"Fractions", p6g:"Fractions",
-   title:"Fraction of the rest", blurb:"Type two fractions. The bar model draws itself.", play:"restModel"},
+   title:"Fraction of the rest", blurb:"Cut the Rest into same-size pieces. Watch the bars join.", play:"restModel"},
   {id:"circle-why", strand:"geo", levels:["p6"], chapter:"Circles", p6g:"Circles",
-   title:"Circles: π\u00a0×\u00a0d, π\u00a0×\u00a0r\u00a0×\u00a0r",blurb:"Roll a wheel, then cut up a pizza. That's where both circle formulas come from.", play:"circleWhy"},
+   title:"Circles: π\u00a0×\u00a0d, π\u00a0×\u00a0r\u00a0×\u00a0r",blurb:"Roll a wheel, then slice a pizza. See both formulas.", play:"circleWhy"},
   {id:"triangle-same-area", strand:"geo", levels:["p6"], chapter:"Area of triangle", p6g:"Area of triangle",
-   title:"Same base and height", blurb:"Guess which triangle is biggest. Then slide, cut and turn to see why.", play:"triangleSameArea"},
+   title:"Same base and height", blurb:"Slide the top: same base, same height, same area.", play:"triangleSameArea"},
   {id:"ratio-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
-   title:"Ratio: repeated name", blurb:"Two ratios share one name. Make it the same, then join them.", play:"ratioSame"},
+   title:"Ratio: repeated name", blurb:"Cut Ben into the same boxes. Watch the ratios join.", play:"ratioSame"},
   {id:"stays-same", strand:"num", levels:["p6"], chapter:"Ratio", p6g:"Ratio",
-   title:"Before and after", blurb:"Something changes. Guess what stays the same, then watch it play.", play:"staysSame"}
+   title:"Before and after", blurb:"Something changes. Tap what stays the same.", play:"staysSame"}
 ];
 
 const $ = (s,el=document)=>el.querySelector(s);
@@ -6747,420 +6810,199 @@ function rmLay(L,lo,hi,gap){ const n=L.length; if(!n) return true; if(L.reduce((
   if(L[n-1].x>hi-L[n-1].w/2){ L[n-1].x=hi-L[n-1].w/2; for(let i=n-2;i>=0;i--){ const m=L[i+1].x-(L[i+1].w+L[i].w)/2-gap; if(L[i].x>m) L[i].x=m; } }
   return true; }
 const rmPad=ok=>`<div class="sgpad rmpad">${["1","2","3","4","5","6","7","8","9","0"].map(k=>`<button type="button" data-k="${k}">${k}</button>`).join("")}<button type="button" data-k="⌫" class="rmdel" aria-label="Delete">⌫</button>${ok?`<button type="button" data-k="ok" class="ok" aria-label="Check">✓</button>`:""}</div>`;
-const restModel={ steps:[],
-  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","rmlean"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
-    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
-    const st={v:["1","4","2","9"],dv:[1,4,2,9],live:-1,man:false,beat:2,M:null,p:1,anim:null,raf:0,msg:"",bad:-1,tap:-1,amt:"",tmsg:"",sol:null,tried:false};
-    const W=h("div",{class:"rm rml"}), pic=h("div",{class:"rmcard rmpic"}), q=h("div",{class:"rmq"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sw=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bar model"}), side=h("div",{class:"rmside"}), rows=h("div",{class:"rmcard rmrows"}), slot=h("div",{class:"rmslot"});
-    sw.append(svg); pic.append(q,cap,sw); side.append(rows,slot); W.append(pic,side); stage.append(W);
-    const N=()=>st.v.map(Number), ok=()=>{ const [a,b,c,d]=N(); return rmOk(a,b)&&rmOk(c,d); }, ed=()=>st.live>=0;
-    const nextEmpty=i=>{ for(let k=1;k<=4;k++){ const j=(i+k+4)%4; if(!st.v[j]) return j; } return -1; };
-    const shake=el=>{ if(!el) return; el.classList.remove("rmshk"); void el.offsetWidth; el.classList.add("rmshk"); setTimeout(()=>el.classList.remove("rmshk"),450); };
-    const nm=(k,ov)=>`<span class="rmh${RMK[k]?" "+RMK[k]:""}">${ov?`<span class="rmov">${k}</span>`:k}</span>`;
-    const line=(cells,tail)=>cells.map((x,i)=>(i?`<span class="rmco">:</span>`:"")+x).join("")+`<span class="rmx">${tail||""}</span>`;
-    const blk=(cls,names,ov,r1,r2,mul)=>`<div class="rmblk ${cls}"><div class="rmg">${line(names.map((k,i)=>nm(k,i===ov)))}${line(r1.map(n=>`<span class="rmn">${n}</span>`))}${r2?line(r2.map(n=>`<span class="rmn">${n}</span>`),`↓ × ${mul}`):""}</div></div>`;
-    function qHtml(){ const bx=i=>`<button type="button" class="rmbx${st.live===i?" live":""}${st.bad===i?" bad":""}" data-b="${i}" aria-label="${i%2?"Bottom":"Top"} number ${i<2?1:2}">${st.v[i]}</button>`, fr=i=>`<span class="rmf">${bx(i)}<i></i>${bx(i+1)}</span>`;
-      return `<div class="rmsen"><span class="rmgp">${fr(0)}<span>of the total,</span></span><span class="rmgp"><span>then</span>${fr(2)}<span>of the rest.</span></span></div><div class="rmchips">${RMX.map((x,i)=>`<button type="button" class="rmchip${!ed()&&x.join()===st.dv.join()?" on":""}" data-x="${i}">${frac(x[0],x[1])}<span>·</span>${frac(x[2],x[3])}</button>`).join("")}</div>`; }
-    function rowsHtml(){ const M=st.M, bt=st.beat, R=M.row;
-      let s=`<div class="rmblks">${blk("rmb1",["Total","First","Rest"],2,M.b1,bt>=3&&M.m1>1?[R[0],R[1],R[2]]:null,M.m1)}${blk("rmb2",["Rest","Second","Left"],0,M.b2,bt>=3&&M.m2>1?[R[2],R[3],R[4]]:null,M.m2)}</div>`;
-      if(bt>=3){ const am=i=>st.sol?`<span class="rmam">${R[i]*st.sol.u}</span>`:i===st.tap?`<span class="rmab">${st.amt||"?"}</span>`:"<span></span>";
-        s+=`<div class="rmj${st.tried||ed()?"":" go"}">${RMN.map((k,i)=>(i?`<span class="rmco">:</span>`:"")+nm(k)).join("")}${R.map((n,i)=>(i?`<span class="rmco">:</span>`:"")+`<button type="button" class="rmjn${st.tap===i||(st.sol&&st.sol.i===i)?" on":""}" data-i="${i}" aria-label="${RMN[i]}, ${rmU(n)}">${n}u</button>`).join("")}${st.sol||st.tap>=0?R.map((n,i)=>(i?"<span></span>":"")+am(i)).join(""):""}</div>`;
-        if(st.sol){ const k=R[st.sol.i]; s+=`<div class="rmsol">${k===1?"":`<div>${k}u = ${st.sol.n}</div>`}<div>1u = ${st.sol.u}</div></div>`; } }
-      return s; }
-    function slotHtml(){ const bt=st.beat;
-      if(ed()) return `<div class="rmtp"><div class="rmmsg" role="alert">${st.msg}</div>${rmPad(true)}</div>`;
-      if(st.tap>=0) return `<div class="rmtp"><div class="rmmsg" role="alert">${st.tmsg}</div>${rmPad(true)}</div>`;
-      if(bt===2) return `<div class="rmact"><button type="button" class="rmbtn rmgo" data-a="same">▶ Same size</button></div>`;
-      return `<div class="rmact"><button type="button" class="rmbtn ghost" data-a="again">↺ Again</button></div>`; }
-    function tight(){ rows.classList.remove("rmtight"); if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight"); }
-    function render(){ const M=st.M, bt=st.beat;
-      q.innerHTML=qHtml();
-      cap.innerHTML=bt===3?(!M.draw?"Too many pieces":M.m1===1&&M.m2===1?"Already the same size.":"Same-size pieces"):"";
-      cap.classList.toggle("warn",bt===3&&!M.draw);
-      W.classList.toggle("rmedit",ed()); W.classList.toggle("rmb3",bt===3);
-      rows.innerHTML=rowsHtml(); tight(); slot.innerHTML=slotHtml(); draw(); }
-    function draw(){ svg.innerHTML=""; const M=st.M; if(!M) return;
-      const [a,b,c,d]=st.dv, bt=st.beat, p=st.anim?st.p:1, cl=(x,lo,hi)=>Math.max(0,Math.min(1,(x-lo)/(hi-lo))), ez=t=>t*t*(3-2*t);
-      const cw=Math.max(260,Math.round(sw.clientWidth||320)), wide=cw>=540, fs=wide?17:14, lh=fs+3, BH=wide?56:44, GAP=wide?36:26, X0=wide?14:6, X1=cw-X0, BW=X1-X0, TA=2*lh+14;
-      const Y1=2*TA, Y2=Y1+BH+GAP, xr=X0+a*BW/b, RW=X1-xr, xs=xr+c*RW/d, BT=12+fs+lh+2, H3=Y1+BH+BT, HF=Y2+BH+BT;
-      const big=bt===3&&M.draw, cap=bt===3&&!M.draw, same=M.m1===1&&M.m2===1, cT=big&&M.m1>1, cL=big&&M.m2>1;
-      let g0=1, fB=1, bA=1, dr=1, e2=1, g2=1, fA=1, bB=1, gT=0, gL=0, lift=0, cnt=0;
-      if(bt===2){ const p1=cl(p,0,.42), p2=cl(p,.42,1); g0=cl(p1,.05,.45); fB=cl(p1,.4,.7); bA=cl(p1,.65,1); dr=cl(p2,0,.3); e2=ez(cl(p2,.1,.5)); g2=cl(p2,.45,.7); fA=cl(p2,.6,.85); bB=cl(p2,.8,1); }
-      if(big){ if(same){ lift=ez(cl(p,0,.6)); cnt=cl(p,.6,1); } else { gT=cT?cl(p,0,.3):0; gL=cL?cl(p,cT?.15:0,cT?.45:.3):0; lift=ez(cl(p,.5,.8)); cnt=cl(p,.8,1); } }
-      if(cap) cnt=cl(p,.8,1);
-      const tw=(s,bold,f)=>{ const t=svgEl("text",{"font-size":f||fs,"font-weight":bold?700:400,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*(f||fs)*.58; };
-      const nfs=fs-1, fitF=(s,w)=>{ for(let f=fs;f>=11;f--) if(tw(s,1,f)+6<=w) return f; return 0; }, fT=cap?fitF(M.m1+"u",BW/b):0, fL=cap?fitF(M.m2+"u",RW/d):0, fitT=fT>0, fitL=fL>0, bf=fitT&&fitL?Math.min(fT,fL):fT||fL, noteL=`each box = ${M.m2}u`, nL=cap&&!fitL?(xr-X0>=tw(noteL,0,nfs)+14?"side":"below"):"";
-      const H=(bt===2?HF:big?HF-(HF-H3)*lift:HF)+(nL==="below"?lh:0), yL=bt===2?Y1+(Y2-Y1)*e2:Y2-(Y2-Y1)*lift;
-      svg.setAttribute("viewBox",`0 0 ${cw} ${H.toFixed(1)}`); svg.setAttribute("width",cw); svg.setAttribute("height",H.toFixed(1));
-      const E=(t,o,x)=>{ const e=svgEl(t,o,x); svg.append(e); return e; }, ln=(x1,y1,x2,y2,o)=>E("line",Object.assign({x1,y1,x2,y2,stroke:"var(--ink)","stroke-width":1.5},o||{}));
-      E("rect",{x:X0,y:Y1,width:BW,height:BH,fill:"var(--card)"});
-      E("rect",{x:X0,y:Y1,width:xr-X0,height:BH,fill:"var(--blue-fill)",opacity:fB,class:"rmfirst"});
-      for(let k=1;k<b;k++){ const x=X0+k*BW/b; ln(x,Y1,x,Y1+BH*g0,{"stroke-width":1.6}); }
-      if(cT){ const n=b*M.m1; for(let k=1;k<n;k++){ if(k%M.m1===0) continue; const x=X0+k*BW/n; ln(x,Y1,x,Y1+BH*gT,{"stroke-width":1.1}); } }
-      E("rect",{x:X0,y:Y1,width:BW,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2});
-      { const op=dr*(1-lift), yb=Y1+BH, ye=Math.max(yb,yL);
-        if(op>0&&ye>yb+1) [xr,X1].forEach(x=>ln(x,yb,x,yb+(ye-yb)*Math.min(1,dr*1.4),{"stroke-dasharray":"3 4",stroke:"var(--muted)",opacity:op,class:"rmdrop"}));
-        const lo=bt===2?cl(p,.42,.5):1;
-        E("rect",{x:xr,y:yL,width:RW,height:BH,fill:"var(--card)",opacity:lo,class:"rmlowbar"});
-        E("rect",{x:xr,y:yL,width:xs-xr,height:BH,fill:"var(--amber-fill)",opacity:fA});
-        for(let k=1;k<d;k++){ const x=xr+k*RW/d; ln(x,yL,x,yL+BH*g2,{"stroke-width":Math.min(1.6,RW/d/3)}); }
-        if(cL){ const n=d*M.m2; for(let k=1;k<n;k++){ if(k%M.m2===0) continue; const x=xr+k*RW/n; ln(x,yL,x,yL+BH*gL,{"stroke-width":1.1}); } }
-        E("rect",{x:xr,y:yL,width:RW,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2,opacity:lo}); }
-      if(cap){ const nb=(n0,x0,w,y,k,bar,t0,t1)=>{ for(let i=0;i<n0;i++){ const s0=t0+(t1-t0)*i/n0; E("text",{x:x0+w*(i+.5),y:y+BH/2+bf*.36,"text-anchor":"middle","font-size":bf,"font-weight":700,fill:"var(--ink)",opacity:cl(p,s0,s0+.12),class:"rmbn","data-bar":bar},k+"u"); } };
-        const nt=(t,x,y,anc,al)=>E("text",{x,y,"text-anchor":anc,"font-size":nfs,fill:"var(--muted)",opacity:al,class:"rmnote"},t);
-        if(fitT) nb(b,X0,BW/b,Y1,M.m1,"t",.02,.38); else nt(`each box = ${M.m1}u`,X0,Y1+BH+GAP/2+nfs*.36,"start",cl(p,.02,.38));
-        if(fitL) nb(d,xr,RW/d,yL,M.m2,"l",.42,.76); else if(nL==="side") nt(noteL,xr-8,yL+BH/2+nfs*.36,"end",cl(p,.42,.76)); else nt(noteL,X1,yL+BH+12+fs+2*lh,"end",cl(p,.42,.76)); }
-      const R=M.row;
-      const grp=(items,yT,below,al,ca)=>{ if(al<=0) return; const yb=below?yT+6:yT+2*lh+7, show=ca>0; let am=show&&!!st.sol;
-        const txt=o=>am?`${rmU(o.k)} = ${o.k*st.sol.u}`:rmU(o.k);
-        const mk=()=>items.map(o=>({o,c:(o.x0+o.x1)/2,w:Math.max(tw(o.name,1),show?tw(txt(o),0):0)}));
-        let L=mk(); if(!rmLay(L,2,cw-2,12)&&am){ am=false; L=mk(); } if(!rmLay(L,2,cw-2,12)) rmLay(L,-1e4,1e4,12);
-        L.forEach(({o,x,w})=>{ const xm=(o.x0+o.x1)/2, col=RMF[o.name]||"var(--ink)";
-          E("path",{d:below?`M${o.x0} ${yb-5}V${yb}H${o.x1}V${yb-5}M${xm} ${yb}V${yb+4}`:`M${o.x0} ${yb+6}V${yb}H${o.x1}V${yb+6}M${xm} ${yb}V${yb-4}`,fill:"none",stroke:"var(--ink)","stroke-width":1.4,opacity:al});
-          const yN=below?yb+4+fs:yb-9-lh*ca, yC=below?yN+lh:yb-9;
-          if(x<o.x0-1||x>o.x1+1){ const ex=x<xm?x+w/2+3:x-w/2-3, ey=below?yN-fs*.35:yb-9-fs*.35; ln(xm,below?yb+4:yb-4,ex,ey,{stroke:"var(--muted)","stroke-width":1.2,opacity:al}); }
-          E("text",{x,y:yN,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:col,opacity:al,class:"rmnm"},o.name);
-          if(show) E("text",{x,y:yC,"text-anchor":"middle","font-size":fs,fill:"var(--ink)",opacity:ca,class:"rmcnt","data-n":o.name},txt(o)); }); };
-      const ca=big||cap?cnt:0;
-      grp([{x0:X0,x1:X1,name:"Total",k:R[0]}],0,false,bA,ca);
-      grp([{x0:X0,x1:xr,name:"First",k:R[1]},{x0:xr,x1:X1,name:"Rest",k:R[2]}],TA,false,bA,ca);
-      grp([{x0:xr,x1:xs,name:"Second",k:R[3]},{x0:xs,x1:X1,name:"Left",k:R[4]}],yL+BH,true,bB,ca);
-      svg.setAttribute("aria-label",bt<3?"Bar model":cap?`Two bars: each top box ${M.m1}, each lower box ${M.m2} units.`:!big?"Bar model":`One bar: ${R[0]} units. First ${R[1]}, Second ${R[3]}, Left ${R[4]}.`); }
-    const tick=now=>{ if(!st.anim) return; st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else st.anim=null; };
-    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; }
-    function go(n,still){ stop(); st.beat=n; st.M=rmMath(...st.dv); st.tap=-1; st.sol=null; st.tried=false; st.live=-1; st.msg=""; st.v=st.dv.map(String);
-      const big=n===3&&st.M.draw, dur=still?0:n===2?2000:big?(st.M.m1===1&&st.M.m2===1?1000:1900):1300;
-      if(!RED&&dur){ st.p=0; st.anim={t0:performance.now(),dur}; }
-      render(); if(st.anim) st.raf=requestAnimationFrame(tick); }
-    function finish(){ stop(); draw(); }
-    function apply(){ st.dv=N(); go(2); }
-    function reject(i,m){ st.v[i]=""; st.live=i; st.msg=m; st.bad=i; render(); st.bad=-1; }
-    const pairBad=i=>{ const j=i-i%2; if(i%2&&st.v[i]&&+st.v[i]<2) return "Bottom: 2 to 12"; if(st.v[j]&&st.v[j+1]&&+st.v[j]>=+st.v[j+1]) return "Top smaller than bottom"; return ""; };
-    function commit(i){ const m=pairBad(i); if(m){ reject(i,m); return false; }
-      st.man=false; st.msg=""; st.live=nextEmpty(i); if(st.live<0&&ok()) apply(); else render(); return true; }
-    function okKey(){ const i=st.live; if(i>=0&&st.v[i]){ const m=pairBad(i); if(m){ reject(i,m); return; } }
-      for(let j=0;j<4;j++) if(!st.v[j]) st.v[j]=String(st.dv[j]);
-      for(const j of [1,3]){ const m=pairBad(j); if(m){ reject(j,m); return; } }
-      if(ok()) apply(); else { st.msg="Fill all four"; render(); } }
-    function frKey(k){ let i=st.live; if(i<0) return;
-      if(k==="ok"){ okKey(); return; }
-      if(k==="⌫"){ if(st.v[i]) st.v[i]=st.v[i].slice(0,-1); else if(i>0){ i=st.live=i-1; st.v[i]=st.v[i].slice(0,-1); } st.msg=""; render(); return; }
-      const den=i%2===1, s=st.v[i].length>=2?k:st.v[i]+k, n=+s, oth=+st.v[den?i-1:i+1]||0;
-      if(!den&&n===0){ reject(i,"Top can't be 0"); return; }
-      if(!den&&n>11){ reject(i,"Top smaller than bottom"); return; }
-      if(!den&&oth&&n>=oth){ st.v[i]=s; st.v[i+1]=""; st.msg=""; st.man=false; st.live=i+1; render(); return; }
-      if(den&&(n===0||n>12)){ reject(i,"Bottom: 2 to 12"); return; }
-      st.v[i]=s; st.msg="";
-      if(s.length<2&&n*10<=(den?12:Math.min(11,oth?oth-1:11))&&(den||st.man)){ render(); return; }
-      commit(i); }
-    function boxTap(i){ if(st.anim) finish(); st.tap=-1; st.sol=st.beat===3?st.sol:null;
-      const c=st.live; if(c>=0&&c!==i&&st.v[c]){ const m=pairBad(c); if(m){ reject(c,m); return; } }
-      st.v[i]=""; st.live=i; st.man=true; st.msg=""; render(); }
-    function cancelEdit(){ st.live=-1; st.v=st.dv.map(String); st.msg=""; }
-    function jtap(i){ if(st.anim) finish(); if(st.beat<3) return; if(ed()) cancelEdit(); st.tried=true; st.tap=i; st.amt=""; st.tmsg=""; st.sol=null; render(); }
-    function amtKey(k){ const i=st.tap; if(i<0) return; const box=()=>rows.querySelector(".rmab");
-      if(k==="⌫"){ st.amt=st.amt.slice(0,-1); st.tmsg=""; render(); return; }
-      if(k==="ok"){ const n=+st.amt, k0=st.M.row[i]; if(!st.amt){ shake(box()); return; }
-        if(n>0&&n%k0===0){ st.sol={i,n,u:n/k0}; st.tap=-1; render(); return; }
-        st.tmsg=`Try ${k0}, ${2*k0}, ${3*k0}…`; st.amt=""; render(); shake(box()); return; }
-      if(st.amt.length>=7||(st.amt===""&&k==="0")) return; st.amt+=k; st.tmsg=""; render(); }
-    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if(st.anim&&e.target.closest(".rmpic")) finish(); return; }
-      if(t.dataset.b!=null){ boxTap(+t.dataset.b); return; }
-      if(t.dataset.k!=null){ if(ed()) frKey(t.dataset.k); else amtKey(t.dataset.k); return; }
-      if(t.dataset.x!=null){ st.dv=RMX[+t.dataset.x].slice(); go(2); return; }
-      if(t.dataset.i!=null){ jtap(+t.dataset.i); return; }
-      if(t.dataset.a==="same"){ go(3); return; }
-      if(t.dataset.a==="again"){ go(2,true); return; } });
-    const onKey=e=>{ if(!root.isConnected){ document.removeEventListener("keydown",onKey); return; } if(e.ctrlKey||e.metaKey||e.altKey) return; const k=e.key;
-      if(/^[0-9]$/.test(k)||k==="Backspace"){ const kk=k==="Backspace"?"⌫":k; if(ed()) frKey(kk); else if(st.tap>=0) amtKey(kk); else return; e.preventDefault(); }
-      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ if(ed()) frKey("ok"); else if(st.tap>=0) amtKey("ok"); else if(st.beat===2) go(3); else return; e.preventDefault(); } };
-    document.addEventListener("keydown",onKey);
-    let rzT=0, lw=innerWidth, lh0=innerHeight; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw&&innerHeight===lh0) return; lw=innerWidth; lh0=innerHeight; clearTimeout(rzT); rzT=setTimeout(()=>{ tight(); draw(); },120); };
-    addEventListener("resize",onRz);
-    const P=["a","b","c","d"].map(k=>prm.get(k)), PN=P.map(x=>+x);
-    const good=P.every(x=>x!=null)&&rmOk(PN[0],PN[1])&&rmOk(PN[2],PN[3]); if(good) st.dv=PN;
-    const bt=good?parseInt(prm.get("beat"),10):0;
-    if(bt===3){ go(3,true); const ti=parseInt(prm.get("tap"),10), tn=+prm.get("n"); st.tried=prm.get("tap")!=null; if(ti>=0&&ti<5&&tn>0&&tn%st.M.row[ti]===0) st.sol={i:ti,n:tn,u:tn/st.M.row[ti]}; render(); }
-    else go(2);
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim) draw(); });
-    if(cur) cur.state=()=>{ const [a,b,c,d]=st.dv, o={a,b,c,d}; if(st.beat===3) o.beat=3; if(st.sol){ o.tap=st.sol.i; o.n=st.sol.n; } return o; };
-  } };
+const rrE=(svg,t,a,x)=>{ const e=svgEl(t,a,x); svg.append(e); return e; };
+const rrTWc=new Map();
+const rrTW=(svg,s,fs)=>{ const k=s+"|"+fs; if(rrTWc.has(k)) return rrTWc.get(k); if(svg.isConnected){ const t=svgEl("text",{"font-size":fs,"font-weight":700,x:0,y:-99},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); if(w>0){ w=Math.ceil(w*4)/4; rrTWc.set(k,w); return w; } } return s.length*fs*.62; };
+const rrFs=()=>innerWidth<600?8:6, rrT0=()=>innerWidth<900?2:13;
+let rrPP=0;
+const rrPpu=()=>{ const iw=innerWidth, w=iw<900?iw-46:Math.min(iw,1310)*.487; rrPP=Math.max(1.25,Math.min(4,Math.round(w/50)/4)); return rrPP; };
+const rrRing=()=>{ const q=rrPpu(); return {q,R:22/q+1.2}; };
+function rrTrack(g,bot){ const {q,R}=rrRing(), fs=g.fs, yK=bot+fs*1.25+R+4/q; return {yK,H:yK+R+12/q,tx0:R+8/q,tx1:200-R-8/q,R,q}; }
+function rrLift(svg,s,ok,a,b){ const now=performance.now(); if(ok&&!s._ok) s._t0=now; s._ok=ok; const g=rrE(svg,"g",{}), el=now-(s._t0||0); if(!ok) return g;
+  g.style.transform=`translateY(${b.toFixed(2)}px)`;
+  if(el<700&&Math.abs(a-b)>.01&&svg.isConnected){ g.setAttribute("class","rrlift"); g.style.setProperty("--rra",a.toFixed(2)+"px"); g.style.setProperty("--rrb",b.toFixed(2)+"px"); g.style.animationDelay=-Math.round(el)+"ms"; } return g; }
+function rrBar(G,o){ const NS={"vector-effect":"non-scaling-stroke"}, E=(t,a,x)=>rrE(G,t,Object.assign({},NS,a),x), y=o.y, h=o.h, x0=o.x, x1=o.x+o.w, fine=!o.flat&&o.fine, ov=o.flat?0:fine?1:2;
+  E("rect",{x:x0,y,width:o.w,height:h,fill:"var(--card)"});
+  (o.fills||[]).forEach(([a,b,f])=>E("rect",{x:a,y,width:Math.max(0,b-a),height:h,fill:f}));
+  const cuts=[]; if(o.p){ const k0=Math.ceil((x0-o.a)/o.p-1e-6), k1=Math.floor((x1-o.a)/o.p+1e-6); for(let k=k0;k<=k1;k++){ const x=o.a+k*o.p; if(x>x0+.3&&x<x1-.3) cuts.push(x); } }
+  (o.sl||[]).forEach(([e,kind])=>{ if(!o.p) return; const t=(e-o.a)/o.p; let c=kind==="r"?o.a+Math.floor(t+1e-6)*o.p:kind==="l"?o.a+Math.ceil(t-1e-6)*o.p:o.a+Math.round(t)*o.p;
+    const lo=Math.max(x0,Math.min(e,c)), hi=Math.min(x1,Math.max(e,c)); if(hi-lo>.4) E("rect",{x:lo,y:y+1,width:hi-lo,height:h-2,fill:"var(--red-fill)","fill-opacity":.8,stroke:"var(--red)","stroke-width":1,class:"rrsl"}); });
+  if(!o.flat) for(let k=1;k<o.n;k++){ const x=x0+k*o.w/o.n; E("line",{x1:x,y1:y,x2:x,y2:y+h,stroke:fine?"var(--ink)":"var(--muted)","stroke-width":2}); }
+  cuts.forEach(x=>E("line",{x1:x,y1:y-ov,x2:x,y2:y+h+ov,stroke:o.ok?"var(--green)":fine?"var(--muted)":"var(--ink)","stroke-width":o.flat?1.5:fine?1:2.2,"stroke-opacity":fine?.6:1,class:"rrcut"}));
+  E("rect",{x:x0,y,width:o.w,height:h,fill:"none",stroke:o.ok?"var(--green)":"var(--ink)","stroke-width":o.ok?3:2.5}); }
+function rrLab(svg,x,y,nm,num,col,fs,anc){ const t=rrE(svg,"text",{x,y,"font-size":fs,"font-weight":700,"text-anchor":anc||"middle",fill:"var(--ink)",class:"rrlb"});
+  t.append(svgEl("tspan",{fill:col||"var(--ink)"},nm)); if(num!=="") t.append(svgEl("tspan",{}," "+num)); return t; }
+function rrBrk(svg,L,y,up,fs){ const it=L.map(o=>({o,c:(o.x0+o.x1)/2,w:rrTW(svg,o.nm+" "+o.num,fs)}));
+  if(!rmLay(it,1,199,fs*.8)) rmLay(it,-1e4,1e4,fs*.8);
+  it.forEach(({o,x})=>{ const xm=(o.x0+o.x1)/2, c=o.x0+.8, d=o.x1-.8;
+    rrE(svg,"path",{d:up?`M${c} ${y+3.5}V${y}H${d}V${y+3.5}M${xm} ${y}V${y-2.2}`:`M${c} ${y-3.5}V${y}H${d}V${y-3.5}M${xm} ${y}V${y+2.2}`,fill:"none",stroke:"var(--ink)","stroke-width":1.6,"vector-effect":"non-scaling-stroke"});
+    rrLab(svg,x,up?y-3.4:y+2.6+fs*.86,o.nm,o.num,o.col,fs); }); }
+function rrBadge(svg,cx,cy,A,B,ok,fs){ const eq=A===B, c=ok?"var(--green)":"var(--ink)", s=`${A} ${eq?"=":"≠"} ${B}`, w=rrTW(svg,s,fs)+fs*1.2, h=fs*1.5, x=Math.max(1,Math.min(199-w,cx-w/2));
+  rrE(svg,"rect",{x,y:cy-h/2,width:w,height:h,rx:h/2,fill:ok?"var(--green-fill)":"var(--card)",stroke:ok?"var(--green)":"var(--muted)","stroke-width":ok?2:1.5,"vector-effect":"non-scaling-stroke"});
+  const t=rrE(svg,"text",{x:x+w/2,y:cy+fs*.36,"font-size":fs,"font-weight":700,"text-anchor":"middle",fill:c,class:"rrbg"});
+  t.append(svgEl("tspan",{},String(A))); t.append(svgEl("tspan",{fill:ok?c:"var(--muted)"},` ${eq?"=":"≠"} `)); t.append(svgEl("tspan",{},String(B))); }
+function rrKnob(svg,g,n,ok,txt){ const fs=g.fs, y=g.yK, r=fs*.95;
+  rrE(svg,"line",{x1:g.tx0,y1:y,x2:g.tx1,y2:y,stroke:"var(--line)","stroke-width":5,"stroke-linecap":"round","vector-effect":"non-scaling-stroke"});
+  for(let i=0;i<g.mx;i++){ const x=g.tx0+i*(g.tx1-g.tx0)/(g.mx-1); rrE(svg,"line",{x1:x,y1:y-1.6,x2:x,y2:y+1.6,stroke:"var(--muted)","stroke-width":1.4,"vector-effect":"non-scaling-stroke"}); }
+  rrE(svg,"path",{d:`M${g.tx0-g.R} ${y}H${g.tx1+g.R}`,fill:"none",stroke:"transparent","stroke-width":fs*3,"pointer-events":"stroke","data-drag":"n",style:"cursor:pointer"});
+  const w=rrTW(svg,txt,fs), tx=Math.max(w/2+1,Math.min(199-w/2,g.hx));
+  rrE(svg,"text",{x:tx,y:y-g.R-4/g.q,"font-size":fs,"font-weight":700,"text-anchor":"middle",fill:ok?"var(--green)":"var(--ink)",class:"rrnl"},txt);
+  handle(svg,g.hx,y,"n","var(--ink)"); rrE(svg,"circle",{cx:g.hx,cy:y,r,fill:"var(--ink)",stroke:"var(--card)","stroke-width":3,"vector-effect":"non-scaling-stroke","pointer-events":"none"}); }
+const rrCut=(n,k)=>n%k===0?n:k;
+const RRW={Total:3.3,First:3.1,Rest:3.2,Second:4,Left:3,Ali:3.1,Ben:3,Cal:3.1};
+const rrNm=(k,cl,ov)=>`<span class="rrh${cl?" "+cl:""}">${ov?`<span class="rrov">${k}</span>`:k}</span>`, rrCo=`<span class="rrco">:</span>`, rrCols=N=>N.map(x=>(RRW[x[0]]+(x[2]?.9:0))+"em").join(" .7em ");
+const rrRow=(N,v)=>v.map((x,i)=>(i?rrCo:"")+`<span class="rrn${N[i][1]?" "+N[i][1]:""}">${x}</span>`).join("");
+function rrBlk(N,r1,r2,k){ return `<div class="rrg" style="grid-template-columns:${rrCols(N)} 2.1em">${N.map((x,i)=>(i?rrCo:"")+rrNm(...x)).join("")}<span></span>${rrRow(N,r1)}<span></span>${r2?rrRow(N,r2)+`<span class="rrx">× ${k}</span>`:`<span class="rre"></span>`}</div>`; }
+function rrKey(cls,b1,b2,J,vals,ok){
+  return `<div class="apwk ipk rrk ${cls}"><div class="forms"><div class="formbox fb-ink rrbox${ok?" rrok":""}"><div class="eq"><div class="rrbl">${b1}${b2}</div><div class="rrdv"></div>`+
+    `<div class="rrjs">${ok?`<div class="rrg rrjg" style="grid-template-columns:${rrCols(J)}">${J.map((x,i)=>(i?rrCo:"")+rrNm(...x)).join("")}${rrRow(J,vals.map(v=>v+"u"))}</div>`:""}</div></div></div></div></div>`; }
+const rrAk=s=>{ const [a,b,c,d]=RMX[s.x]||RMX[0], r=b-a, L=r*d/rmG(r,d); return {a,b,c,d,r,L,mx:Math.min(24,2*L-1)}; };
+function rrAg(s){ const K=rrAk(s), fs=rrFs(), X0=6, X1=194, BW=X1-X0, xr=X0+K.a*BW/K.b, RW=X1-xr, xs=xr+K.c*RW/K.d, BH=fs*3.2, G=fs*2.6;
+  const yT=rrT0()+fs, yTb=yT+3.4, yF=yTb+4.4+fs, yFb=yF+3.4, Y1=yFb+3.6, Y2=Y1+BH+G, yLb=Y2+BH+3.6, yLl=yLb+2.6+fs*.86, n=clamp(s.pc,1,K.mx), T=rrTrack({fs},yLl+fs*.25);
+  return Object.assign(K,T,{fs,X0,X1,BW,xr,RW,xs,BH,G,yT,yTb,yF,yFb,Y1,Y2,yLb,yLl,n,hx:T.tx0+(n-1)/(K.mx-1)*(T.tx1-T.tx0)}); }
+const restModel=aid({
+  init:{x:0,pc:3,a:"",b:"",c:"",d:""}, jump:true, ip:"Drag to cut the Rest.", vb:"0 0 200 150", label:"Total bar and Rest bar cut into pieces", demo:[1,0], link:["pc","a","b","c","d"],
+  fix:s=>{ const P=[s.a,s.b,s.c,s.d]; if(P.every(v=>v!==""&&v!=null)){ const i=RMX.findIndex(r=>r.join()===P.map(Number).join()); if(i>=0){ s.x=i; s.pc=rrAk(s).r; } } s.a=s.b=s.c=s.d=""; const K=rrAk(s); s.pc=clamp(Math.round(+s.pc)||K.r,1,K.mx); },
+  pills:[{k:"x",opts:RMX.map((r,i)=>[i,`${frac(r[0],r[1])}<span class="rrdot">·</span>${frac(r[2],r[3])}`]),on:s=>{ s.pc=rrAk(s).r; s._dr=0; }}],
+  steps:[{name:"Rest",t:()=>"Drag to cut the Rest.",w:s=>{ const K=rrAk(s), n=clamp(s.pc,1,K.mx), ok=n%K.r===0&&n%K.d===0, m1=n/K.r, m2=n/K.d, R=[K.b*m1,K.a*m1,n,K.c*m2,(K.d-K.c)*m2];
+    const b1=rrBlk([["Total"],["First","rrbu"],["Rest","",1]],[K.b,K.a,K.r],ok&&m1>1?R.slice(0,3):null,m1), b2=rrBlk([["Rest","",1],["Second","rram"],["Left"]],[K.d,K.c,K.d-K.c],ok&&m2>1?R.slice(2):null,m2);
+    return rrKey("rrA",b1,b2,[["Total"],["First","rrbu"],["Rest"],["Second","rram"],["Left"]],R,ok); }}],
+  draw(svg,s){ rrPpu(svg); const g=rrAg(s), n=g.n, ok=n%g.r===0&&n%g.d===0, fs=g.fs, p=g.RW/n, m1=n/g.r, m2=n/g.d, u=ok?"u":"", red=!!s._dr&&!ok, fine=n>12;
+    svg.setAttribute("viewBox",`0 0 200 ${g.H.toFixed(1)}`); const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("ip6rr");
+    const D=ok?(g.BH+g.G)/2:0, T=rrLift(svg,s,ok,0,D);
+    rrBar(T,{x:g.X0,y:g.Y1,w:g.BW,h:g.BH,n:g.b,fills:[[g.X0,g.xr,"var(--blue-fill)"]],a:g.xr,p,ok,flat:ok,fine,sl:red?[[g.X0,"l"]]:[]});
+    if(!ok){ [g.xr,g.X1].forEach(x=>rrE(svg,"line",{x1:x,y1:g.Y1+g.BH,x2:x,y2:g.Y2,stroke:"var(--muted)","stroke-width":2,"stroke-dasharray":"5 5","vector-effect":"non-scaling-stroke"}));
+      rrLab(svg,g.xr-fs*.6,g.Y2+g.BH/2+fs*.36,"Rest",String(g.d),"",fs,"end"); }
+    const G=rrLift(svg,s,ok,g.Y2-g.Y1,D), yb=ok?g.Y1:g.Y2;
+    rrBar(G,{x:g.xr,y:yb,w:g.RW,h:g.BH,n:g.d,fills:[[g.xr,g.xs,"var(--amber-fill)"]],a:g.xr,p,ok,flat:ok,fine,sl:red?[[g.xs,"m"]]:[]});
+    rrBrk(G,[{x0:g.xr,x1:g.xs,nm:"Second",num:(ok?g.c*m2:g.c)+u,col:"var(--amber)"},{x0:g.xs,x1:g.X1,nm:"Left",num:(ok?(g.d-g.c)*m2:g.d-g.c)+u}],yb+g.BH+3.6,false,fs);
+    rrBrk(T,[{x0:g.X0,x1:g.X1,nm:"Total",num:(ok?g.b*m1:g.b)+u}],g.yTb,true,fs);
+    rrBrk(T,[{x0:g.X0,x1:g.xr,nm:"First",num:(ok?g.a*m1:g.a)+u,col:"var(--blue)"},{x0:g.xr,x1:g.X1,nm:"Rest",num:(ok?n:g.r)+u}],g.yFb,true,fs);
+    rrBadge(svg,(g.xr+g.X1)/2,ok?(g.yLl-(g.Y2-g.Y1)+D+fs*.25+g.yK-g.R-4/g.q-fs*.8)/2:g.Y1+g.BH+g.G/2,rrCut(n,g.r),rrCut(n,g.d),ok,fs);
+    rrKnob(svg,g,n,ok,`${n} piece${n===1?"":"s"}`);
+    svg.setAttribute("aria-label",ok?`One bar: Total ${g.b*m1} units, First ${g.a*m1}, Second ${g.c*m2}, Left ${(g.d-g.c)*m2}.`:`Rest cut into ${n} pieces. The pieces do not fit both bars.`); },
+  drag(id,p,s){ if(s._usr) s._dr=1; const g=rrAg(s); s.pc=clamp(Math.round(1+(p.x-g.tx0)/(g.tx1-g.tx0)*(g.mx-1)),1,g.mx); },
+  key(){ return ""; }
+});
 PLAYS.restModel=restModel;
-const CWD=[30,23,16], CWX=18, CWG=[33,69,98];
-let cwKeep=0;
+const CWD=28, CWX=18, CWG=42, CWL=Math.PI*CWD, CWN=[8,16,32,64], CWR=26, CWT0=34, CWTS=24;
 const cwEz=t=>t<=0?0:t>=1?1:t*t*(3-2*t), cwCl=(x,a,b)=>Math.max(0,Math.min(1,(x-a)/(b-a))), cwF=v=>v[0].toFixed(3)+" "+v[1].toFixed(3);
-function cwFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,15/u); }
-function cwTx(svg,a,parts){ const t=svgEl("text",a); parts.forEach(q=>{ const it=Array.isArray(q); t.append(svgEl("tspan",it?{"font-style":"italic"}:{},it?q[0]:q)); }); svg.append(t); return t; }
+const cwRed=()=>!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+function cwFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,16/u); }
+function cwTx(svg,a,parts){ const t=svgEl("text",Object.assign({"font-weight":700,stroke:"var(--card)","stroke-width":1.4,"stroke-linejoin":"round","paint-order":"stroke"},a)); parts.forEach(q=>{ const it=Array.isArray(q); t.append(svgEl("tspan",it?{"font-style":"italic"}:{},it?q[0]:q)); }); svg.append(t); return t; }
 function cwStrip(N,R){ const a=2*Math.PI/N, h=a/2, c=2*R*Math.sin(h), H=R*Math.cos(h), n=N/2, P=[];
-  for(let k=0;k<n;k++) P.push({col:"b",u0:-h,u1:h,phc:Math.PI+(k+.5)*a,phs:1.5*Math.PI,pS:[(k+.5)*c,H],cS:[(k+.5)*c,H]});
+  for(let k=0;k<n;k++) P.push({col:"b",u0:-h,u1:h,phc:Math.PI+(k+.5)*a,phs:1.5*Math.PI,cS:[(k+.5)*c,H]});
   for(let j=0;j<n;j++){ const phc=(j+.5)*a, at=[(n-j)*c,0];
-    if(j) P.push({col:"a",u0:-h,u1:h,phc,phs:Math.PI/2,pS:at,cS:at});
-    else { P.push({col:"a",u0:0,u1:h,phc,phs:Math.PI/2,pS:at,cS:at,half:"stay"}); P.push({col:"a",u0:-h,u1:0,phc,phs:Math.PI/2,pS:at,cS:[0,0],half:"move"}); } }
+    if(j) P.push({col:"a",u0:-h,u1:h,phc,phs:Math.PI/2,cS:at});
+    else { P.push({col:"a",u0:0,u1:h,phc,phs:Math.PI/2,cS:at,half:"stay"}); P.push({col:"a",u0:-h,u1:0,phc,phs:Math.PI/2,cS:[0,0],half:"move"}); } }
   return {N,R,a,h,c,H,W:n*c,P}; }
-const cwLay=(nar,W)=>nar?{vb:"0 0 140 117",R:32,C:[60,36],x0:70-W/2,yT:81,nar:1}:{vb:"0 0 140 58",R:22,C:[26,26],x0:95-W/2,yT:15,nar:0};
-const cwNar=svg=>{ const w=svg.getBoundingClientRect().width; if(!(w>0)||w<520) return w>0; const mh=parseFloat(getComputedStyle(svg).maxHeight); return mh>0&&mh>=w*117/140*.8; };
-function cwPiece(svg,o,f,q,R,hl){ const A=g=>[o[0]+R*Math.cos(g),o[1]+R*Math.sin(g)], p0=A(f+q.u0), p1=A(f+q.u1), b=q.col==="b";
-  S_(svg,"path",{d:`M${cwF(o)}L${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}Z`,fill:b?"var(--blue-fill)":"var(--amber-fill)",stroke:hl?"var(--ink)":"var(--card)","stroke-width":hl?.6:.3,"stroke-linejoin":"round",class:"cwsl","data-c":q.col});
-  S_(svg,"path",{d:`M${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}`,fill:"none",stroke:b?"var(--blue)":"var(--amber)","stroke-width":1.1}); }
-function cwEnds(svg,L,S,x0,fs,lab){ [x0,x0+S.W].forEach((x,i)=>{ S_(svg,"line",{x1:x,y1:L.yT,x2:x,y2:L.yT+L.R,stroke:"var(--ink)","stroke-width":.8,class:"cwend","data-end":i?"R":"L"});
-  cwTx(svg,{x:i?x+2.2:x-2.2,y:L.yT+L.R/2+fs*.35,"text-anchor":i?"start":"end","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwendl"},lab==="r"?[["r"]]:[lab]); }); }
-function cwRow(svg,i,t,k,al,fs,sp){ const d=CWD[i], a=CWX, G=CWG[i], r=d/2, L=Math.PI*d, X=a+t*L, Y=G-r, th=2*Math.PI*t, g=svgEl("g",{opacity:al,class:"cwrow","data-row":i}); svg.append(g);
-  const E=(tag,o,tx)=>{ const e=svgEl(tag,o,tx); g.append(e); if(tag==="text"&&tx!=null&&/\{[^}]*\/[^}]*\}/.test(tx)) fracify(e); return e; };
-  E("line",{x1:2,y1:G,x2:138,y2:G,stroke:"var(--grid2)","stroke-width":.6});
-  if(k>0){ const y=G+1.7, tk=x=>E("line",{x1:x,y1:G-1.2,x2:x,y2:G+3,stroke:"var(--ink)","stroke-width":.5});
-    tk(a);
-    for(let j=0;j<3;j++){ const q=cwCl(k,j/4,(j+1)/4); if(q<=0) continue; const x0=a+j*d;
-      E("line",{x1:x0,y1:y,x2:x0+q*d,y2:y,stroke:"var(--amber)","stroke-width":1.4,class:"cwstamp"});
-      if(q>=1){ tk(x0+d); E("text",{x:x0+d,y:G+7.8,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwnum"},String(j+1)); } }
-    const q=cwCl(k,.75,1); if(q>0){ const x0=a+3*d;
-      E("line",{x1:x0,y1:y,x2:x0+q*d,y2:y,stroke:"var(--amber)","stroke-width":1,"stroke-dasharray":"1.4 1",class:"cwfourth"});
-      for(let m=1;m<=7;m++) if(q>=m/7-1e-9) E("line",{x1:x0+m*d/7,y1:G+.5,x2:x0+m*d/7,y2:G+3,stroke:"var(--ink)","stroke-width":m===7?.5:.35,class:m<7?"cw7":"cw7e"});
-      if(q>=1) E("text",{x:x0+d/7+.5,y:G+7.8,"text-anchor":"start","font-size":fs,"font-weight":700,fill:"var(--blue)",class:"cwfr"},"{1/7}"); } }
-  if(t>0) E("line",{x1:a,y1:G,x2:X,y2:G,stroke:"var(--blue)","stroke-width":1.6,class:"cwedge","data-row":i});
-  E("circle",{cx:X,cy:Y,r,fill:"var(--card)"});
+function cwPiece(svg,o,f,q,R){ const A=g=>[o[0]+R*Math.cos(g),o[1]+R*Math.sin(g)], p0=A(f+q.u0), p1=A(f+q.u1), b=q.col==="b";
+  S_(svg,"path",{d:`M${cwF(o)}L${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}Z`,fill:"var(--blue-fill)","fill-opacity":b?1:.42,stroke:"var(--card)","stroke-width":.3,"stroke-linejoin":"round",class:"cwsl","data-c":q.col});
+  S_(svg,"path",{d:`M${cwF(p0)}A${R} ${R} 0 0 1 ${cwF(p1)}`,fill:"none",stroke:"var(--blue)","stroke-opacity":b?1:.4,"stroke-width":1.2}); }
+function cwMk(svg,s){ const go=()=>{ const pl=svg.closest(".play"); if(!pl) return false; const e=s.step===0; pl.classList.toggle("rdp",e); pl.classList.toggle("rdpre",e); pl.classList.toggle("rdwait",e&&!!s.pre); return true; }; if(!go()) setTimeout(go,0); }
+const cwQ=s=>s.t==null?(s.pre?0:1):s.t, cwK=s=>cwCl(cwQ(s),.6,.97);
+function cwEdge(svg,s){ svg.setAttribute("viewBox","0 6 140 56"); const fs=cwFs(svg), q=cwQ(s), tr=cwEz(cwCl(q,0,.56)), k=cwK(s), d=CWD, r=d/2, G=CWG, X=CWX+tr*CWL, Y=G-r, th=2*Math.PI*tr, A={"font-size":fs,"text-anchor":"middle"};
+  S_(svg,"line",{x1:2,y1:G,x2:138,y2:G,stroke:"var(--grid2)","stroke-width":.6});
+  if(tr>0) S_(svg,"line",{x1:CWX,y1:G,x2:X,y2:G,stroke:"var(--blue)","stroke-width":1.8,"stroke-linecap":"round",class:"cwedge"});
+  const sy=G+2.9;
+  for(let j=0;j<3;j++){ const p=cwCl(k,j/4,(j+1)/4); if(p<=0) continue; const x0=CWX+j*d+.5;
+    S_(svg,"line",{x1:x0,y1:sy,x2:x0+p*(d-1),y2:sy,stroke:"var(--amber)","stroke-width":2,class:"cwstamp"});
+    if(p>=1) cwTx(svg,Object.assign({x:CWX+(j+.5)*d,y:G+10.6,fill:"var(--amber)",class:"cwnum"},A),[String(j+1)]); }
+  const ps=cwCl(k,.75,1), sl=(Math.PI-3)*d; if(ps>0){ const x0=CWX+3*d+.5;
+    S_(svg,"line",{x1:x0,y1:sy,x2:x0+ps*(sl-.5),y2:sy,stroke:"var(--amber)","stroke-width":2,class:"cwstamp"});
+    if(ps>=1) cwTx(svg,Object.assign({x:CWX+3*d+sl/2+1.2,y:G+10.6,fill:"var(--amber)",class:"cwnum"},A),["0.14"]); }
+  S_(svg,"circle",{cx:X,cy:Y,r,fill:"var(--card)"});
   const pt=g=>[X+r*Math.cos(g),Y+r*Math.sin(g)], b=Math.PI/2;
-  const arc=(a0,a1,o)=>{ const w=a1-a0; if(w<=1e-4) return; if(w>=2*Math.PI-1e-4){ E("circle",Object.assign({cx:X,cy:Y,r,fill:"none"},o)); return; } E("path",Object.assign({d:`M${cwF(pt(a0))}A${r} ${r} 0 ${w>Math.PI?1:0} 1 ${cwF(pt(a1))}`,fill:"none"},o)); };
+  const arc=(a0,a1,o)=>{ const w=a1-a0; if(w<=1e-4) return; if(w>=2*Math.PI-1e-4){ S_(svg,"circle",Object.assign({cx:X,cy:Y,r,fill:"none"},o)); return; } S_(svg,"path",Object.assign({d:`M${cwF(pt(a0))}A${r} ${r} 0 ${w>Math.PI?1:0} 1 ${cwF(pt(a1))}`,fill:"none"},o)); };
   arc(b,b+th,{stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.2 1"});
-  arc(b+th,b+2*Math.PI,{stroke:"var(--blue)","stroke-width":1.6,class:"cwrim"});
+  arc(b+th,b+2*Math.PI,{stroke:"var(--blue)","stroke-width":1.8,class:"cwrim"});
   const c1=pt(th), c2=pt(th+Math.PI);
-  if(sp>0){ E("line",{x1:X,y1:Y,x2:c2[0],y2:c2[1],stroke:"var(--amber)","stroke-width":1.4,"stroke-linecap":"round",class:"cwrad"}); E("line",{x1:X,y1:Y,x2:c1[0],y2:c1[1],stroke:"var(--green)","stroke-width":1.4,"stroke-linecap":"round",class:"cwrad"}); }
-  else E("line",{x1:c1[0],y1:c1[1],x2:c2[0],y2:c2[1],stroke:"var(--amber)","stroke-width":1.4,"stroke-linecap":"round",class:"cwdia"});
-  E("circle",{cx:X,cy:Y,r:sp>0?1.1:.8,fill:"var(--ink)"});
-  if(t===0||t===1){ if(sp>0) [[-1,"var(--amber)"],[1,"var(--green)"]].forEach(([sg,c])=>E("text",{x:X+sg*r/2,y:Y-1.8,"text-anchor":"middle","font-size":fs,"font-style":"italic","font-weight":700,fill:c,opacity:sp,class:"cwr"},"r"));
-    else E("text",{x:X,y:Y-1.8,"text-anchor":"middle","font-size":fs,"font-style":"italic","font-weight":700,fill:"var(--amber)",class:"cwd"},"d"); } }
-const CWT=[[0,.25,.4],[.43,.68,.83]], CWS=.86;
-function cwRoll(svg,s){ svg.setAttribute("viewBox","0 0 140 110"); const fs=cwFs(svg), ph=s.ph, p=s.p;
-  CWD.forEach((d,i)=>{ let t=0, k=0, al=1, sp=0;
-    if(i===0){ if(ph===1){ t=cwCl(p,0,.55); k=cwCl(p,.55,1); } else if(ph>=2){ t=1; k=1; sp=cwCl(p,CWS,1); } }
-    else { const T=CWT[i-1]; if(ph>=2){ t=cwCl(p,T[0],T[1]); k=cwCl(p,T[1],T[2]); } al=ph>=2&&p>=T[0]?1:.4; }
-    cwRow(svg,i,t,k,al,fs,sp); }); }
-function cwPizza(svg,s){ const N=8<<s.lv, nar=cwNar(svg), S=cwStrip(N,nar?32:22), L=cwLay(nar,S.W); svg.setAttribute("viewBox",L.vb);
-  const fs=cwFs(svg), x0=L.x0, R=L.R, p=s.ph>=1?cwCl(s.p,0,CWR):0, pull=2.2*cwEz(cwCl(p,0,.15)), e=cwEz(cwCl(p,.15,.7)), e2=cwEz(cwCl(p,.75,1));
-  if(p>.12) S_(svg,"circle",{cx:L.C[0],cy:L.C[1],r:R,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.5 1.2",class:"cwghost"});
-  const whole=p<.74; S.P.forEach(q0=>{ if(whole&&q0.half==="move") return; const q=whole&&q0.half==="stay"?Object.assign({},q0,{u0:-S.h}):q0, c0=[L.C[0]+pull*Math.cos(q.phc),L.C[1]+pull*Math.sin(q.phc)], s0=[x0+q.pS[0],L.yT+q.pS[1]];
-    let o=[c0[0]+(s0[0]-c0[0])*e,c0[1]+(s0[1]-c0[1])*e]; const f=q.phc+(q.phs-q.phc)*e;
-    if(q.half==="move"&&e2>0){ const s1=[x0+q.cS[0],L.yT+q.cS[1]]; o=[s0[0]+(s1[0]-s0[0])*e2,s0[1]+(s1[1]-s0[1])*e2-7*Math.sin(Math.PI*e2)]; }
-    cwPiece(svg,o,f,q,R,q.half==="move"&&p>.72&&p<1); });
-  if(p===0){ S_(svg,"line",{x1:L.C[0],y1:L.C[1],x2:L.C[0]+R,y2:L.C[1],stroke:"var(--ink)","stroke-width":.7});
-    cwTx(svg,{x:L.C[0]+R/2,y:L.C[1]-1.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)"},[["r"]]); }
-  if(p>=1) cwEnds(svg,L,S,x0,fs,"r"); }
-function cwMeasure(svg,s){ const nar=cwNar(svg), S=cwStrip(64,nar?32:22), L=cwLay(nar,S.W); svg.setAttribute("viewBox",L.vb);
-  const fs=cwFs(svg), x0=L.x0, R=L.R, C=L.C, ph=s.ph, e=ph===2?cwEz(s.p):1, top=e>0, ten=ph===2;
-  S_(svg,"circle",{cx:C[0],cy:C[1],r:R,fill:"var(--card)"});
-  S_(svg,"path",{d:`M${C[0]+R} ${C[1]}A${R} ${R} 0 0 1 ${C[0]-R} ${C[1]}`,fill:"none",stroke:"var(--amber)","stroke-width":1.6});
-  S_(svg,"path",{d:`M${C[0]-R} ${C[1]}A${R} ${R} 0 0 1 ${C[0]+R} ${C[1]}`,fill:"none",stroke:top?"var(--muted)":"var(--blue)","stroke-width":top?.6:1.6,"stroke-dasharray":top?"1.5 1.2":"none"});
-  S_(svg,"line",{x1:C[0],y1:C[1],x2:C[0]+R,y2:C[1],stroke:"var(--ink)","stroke-width":.7}); S_(svg,"circle",{cx:C[0],cy:C[1],r:.8,fill:"var(--ink)"});
-  cwTx(svg,{x:C[0]+R/2,y:C[1]-1.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwrl"},ten?[["r"]," = 10"]:[["r"]]);
-  if(ten) S_(svg,"text",L.nar?{x:C[0]+R+3,y:C[1]+fs*.35,"text-anchor":"start","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwedgel"}:{x:C[0],y:C[1]+R+6.2,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--ink)",class:"cwedgel"},"edge = 62.8");
-  S.P.forEach(q=>cwPiece(svg,[x0+q.cS[0],L.yT+q.cS[1]],q.phs,q,R,false));
-  cwEnds(svg,L,S,x0,fs,ten?"10":"r");
-  if(e>0){ const k=(1-e)/R, lift=ph===2?8*Math.sin(Math.PI*s.p):0, M=[C[0]+(x0+Math.PI*R/2-C[0])*e,C[1]-R+(L.yT-.35-(C[1]-R))*e-lift], pts=[];
-    for(let i=0;i<=64;i++){ const u=-Math.PI*R/2+Math.PI*R*i/64; pts.push(k>1e-6?[M[0]+Math.sin(k*u)/k,M[1]+(1-Math.cos(k*u))/k]:[M[0]+u,M[1]]); }
-    S_(svg,"path",{d:"M"+pts.map(cwF).join("L"),fill:"none",stroke:"var(--blue)","stroke-width":1.8,"stroke-linecap":"round",class:"cwlift"}); }
-  if(ph===3||(ph===2&&s.p>=1)) cwTx(svg,{x:x0+S.W/2,y:L.yT-3.6,"text-anchor":"middle","font-size":fs,"font-weight":700,fill:"var(--blue)",class:"cwhalf"},ph===2?["half the edge = 31.4"]:["half the edge = π × ",["r"]]); }
-const CWR=2600/5600, cwRed=()=>!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
-const cwGo=(ph,dur)=>(s,an)=>{ s.ph=ph; s.p=0; an(cwRed()?1:dur,p=>{ s.p=p; }); };
-const cwCut=(s,an)=>{ s.ph=1; s.p=0; s.lv=0; an(cwRed()?1:5600,p=>{ s.p=p; s.lv=p>=1?3:p<CWR?0:Math.min(3,1+Math.floor((p-CWR)*5.6)); s.hi=Math.max(s.hi,s.lv); }); };
-const cwAgain=()=>setTimeout(()=>{ const b=document.querySelector('.steptabs .stab[data-j="0"]'); if(b) b.click(); },0);
-const cwSet=s=>{ if(s._k){ s._k=0; s.ph=clamp(s.ph,0,[2,3][s.step]); if(s.step===1&&s.ph>=2) s.lv=3; s.hi=Math.max(s.hi,s.lv); s.p=1; return {}; } return {ph:0,p:1,lv:0,hi:0}; };
-const cwF7=`3${frac(1,7)}`;
-const cwT=[s=>s.ph===0||(s.ph===1&&s.p<1)?`How many ${V("d")} fit along the edge?`:s.ph===1||s.p<CWS?`${s.ph===2?"Still 3":"3"} and a bit.`:`Always 3.14. That is π.`,
-  s=>s.ph===0?`${8<<s.lv} slices.`:s.ph===1?(s.lv===0?`Same pizza, same area.`:`Closer and closer to a rectangle.`):s.ph===2?`Take ${V("r")} = 10.`:`Area = long side × short side.`];
-function cwKey(s){ const C=nw(`Circumference = π × ${V("d")}`), C2=nw(`Circumference = 2 × π × ${V("r")}`);
-  if(s.step===0){ if(s.ph===0||(s.ph===1&&s.p<1)) return "";
-    if(s.ph===1||s.p<1) return FORMS([FB("blue","The edge",`about ${cwF7} diameters`,`${cwF7} = ${frac(22,7)} ≈ 3.14`,"","wide")],true);
-    return FORMS([FB("blue","The edge",C,`π ≈ 3.14 or ${frac(22,7)}`,"","wide"),FB("amber",`${V("d")} = ${V("r")} + ${V("r")}`,C2,"","","wide")],true); }
-  if(s.ph===2&&s.p>=1) return EG(null,[`Edge = 2 × 3.14 × 10 = 62.8`,`${kc("blue","Half the edge")} = 31.4`,`31.4 = 3.14 × 10`]);
-  if(s.ph===3) return FORMS([FB("ink","Area of a circle",nw(`Area = π × ${V("r")} × ${V("r")}`),"","","wide")],true);
-  return ""; }
+  S_(svg,"line",{x1:c1[0],y1:c1[1],x2:c2[0],y2:c2[1],stroke:"var(--amber)","stroke-width":1.6,"stroke-linecap":"round",class:"cwdia"});
+  S_(svg,"circle",{cx:X,cy:Y,r:.9,fill:"var(--ink)"});
+  cwTx(svg,Object.assign({x:X,y:G-d-2.6,fill:"var(--amber)",class:"cwdl"},A),[["d"]," = 10 cm"]);
+  if(k>=1) cwTx(svg,Object.assign({x:CWX+(CWL-r-4)/2,y:G-3.4,fill:"var(--blue)",class:"cwel"},A),["edge = 31.4 cm"]); }
+function cwArea(svg,s){ const N=CWN[s.lv]||8, R=CWR, S=cwStrip(N,R), C=[70,R+5], yT=2*R+16, x0=70-S.W/2, TY=yT+R+10;
+  svg.setAttribute("viewBox",`0 0 140 ${TY+18}`); const fs=cwFs(svg), A={"font-size":fs,"text-anchor":"middle"};
+  S.P.forEach(q=>{ if(q.half==="move") return; cwPiece(svg,C,q.phc,q.half==="stay"?Object.assign({},q,{u0:-S.h}):q,R); });
+  S_(svg,"line",{x1:C[0],y1:C[1],x2:C[0]+R,y2:C[1],stroke:"var(--amber)","stroke-width":1.6,"stroke-linecap":"round",class:"cwrad"});
+  S_(svg,"circle",{cx:C[0],cy:C[1],r:.9,fill:"var(--ink)"});
+  cwTx(svg,Object.assign({x:C[0]+R/2,y:C[1]-2.2,fill:"var(--amber)",class:"cwrl"},A),[["r"]," = 10 cm"]);
+  S.P.forEach(q=>cwPiece(svg,[x0+q.cS[0],yT+q.cS[1]],q.phs,q,R));
+  [x0,x0+S.W].forEach((x,i)=>{ S_(svg,"line",{x1:x,y1:yT,x2:x,y2:yT+R,stroke:"var(--amber)","stroke-width":1.6,"stroke-linecap":"round",class:"cwend"});
+    cwTx(svg,{x:i?x+2.4:x-2.4,y:yT+R/2+fs*.35,"text-anchor":i?"start":"end","font-size":fs,fill:"var(--amber)",class:"cwendl"},[["r"]]); });
+  cwTx(svg,Object.assign({x:70,y:yT-3.4,fill:"var(--blue)",class:"cwhalf"},A),["half the edge = 31.4 cm"]);
+  cwTx(svg,Object.assign({x:70,y:yT+R/2+fs*.35,fill:"var(--ink)",class:"cwarea"},A),["314 cm²"]);
+  const T1=CWT0+3*CWTS, X=CWT0+s.lv*CWTS;
+  S_(svg,"line",{x1:CWT0,y1:TY,x2:T1,y2:TY,stroke:"var(--muted)","stroke-width":1,"stroke-linecap":"round"});
+  CWN.forEach((n,i)=>{ const x=CWT0+i*CWTS, on=i===s.lv; S_(svg,"circle",{cx:x,cy:TY,r:1.3,fill:"var(--muted)"});
+    S_(svg,"text",{x,y:TY+15,"text-anchor":"middle","font-size":fs,"font-weight":on?800:600,fill:on?"var(--ink)":"var(--muted)",class:"cwn"},String(n)); });
+  S_(svg,"line",{x1:CWT0-8,y1:TY,x2:T1+8,y2:TY,stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"n",style:"cursor:pointer"});
+  handle(svg,X,TY,"n","var(--ink)"); S_(svg,"circle",{cx:X,cy:TY,r:3.7,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); }
+const cwAns=(t,c,x)=>`<span class="ipans${x?" "+x:""}" style="color:var(--${c})">${t}</span>`;
+const cwM=cols=>`<span class="cwm">${cols.map(([l,n])=>`<span class="cwml">${l}</span><span class="cwmn">${n}</span>`).join("")}</span>`;
+function cwKey(s){ const W=(c,hd,eq,rd)=>`<div class="apwk ipk cwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB(c,hd,eq,rd,"","wide")],true)+`</div>`, T=kc("amber","10"), X=["×","×"];
+  if(s.step===0){ const k=cwK(s), n=Math.min(3,Math.floor(k*4+1e-9));
+    return W("blue","Edge",cwM([["π",k>=1?"3.14":n?String(n):`<span class="ipg">?</span>`],X,[V("d"),T],["",k>=1?`= ${cwAns("31.4 cm","blue")}`:""]]),""); }
+  return W("blue","Area",cwM([[`π × ${V("r")}`,kc("blue","31.4")],X,[V("r"),T],["",`= ${cwAns("314 cm²","ink")}`]]),nw(`${kc("blue","31.4")} = 3.14 × ${T}`)); }
+const CWPIC=[`<svg viewBox="0 0 80 64" class="cmini"><line x1="2" y1="56" x2="78" y2="56" stroke="var(--grid2)" stroke-width="1.4"/><line x1="24" y1="56" x2="76" y2="56" stroke="var(--blue)" stroke-width="4.5" stroke-linecap="round"/><circle cx="24" cy="33" r="21" fill="var(--card)" stroke="var(--blue)" stroke-width="3.6"/><line x1="3" y1="33" x2="45" y2="33" stroke="var(--amber)" stroke-width="3.6"/></svg>`,
+  `<svg viewBox="0 0 80 64" class="cmini"><path d="M2 21A16 16 0 0 1 34 21Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="2.4"/><path d="M2 21A16 16 0 0 0 34 21Z" fill="var(--blue-fill)" fill-opacity=".42" stroke="var(--blue)" stroke-opacity=".4" stroke-width="2.4"/><path d="M18 5V37M6.7 9.7L29.3 32.3M6.7 32.3L29.3 9.7" stroke="var(--card)" stroke-width="1.6"/><line x1="18" y1="21" x2="34" y2="21" stroke="var(--amber)" stroke-width="2.6"/>${[0,1,2,3].map(i=>`<path d="M${10+16*i} 42L${26+16*i} 42L${18+16*i} 62Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.6"/>`).join("")}${[0,1,2].map(i=>`<path d="M${18+16*i} 62L${34+16*i} 62L${26+16*i} 42Z" fill="var(--blue-fill)" fill-opacity=".42" stroke="var(--blue)" stroke-opacity=".4" stroke-width="1.6"/>`).join("")}<line x1="10" y1="42" x2="10" y2="62" stroke="var(--amber)" stroke-width="2.6"/><line x1="74" y1="42" x2="74" y2="62" stroke="var(--amber)" stroke-width="2.6"/></svg>`];
+const cwPing=()=>setTimeout(()=>{ const b=document.querySelector('.play.ip6ct .iptab[data-j="1"]'); if(!b) return; b.classList.remove("cwping"); void b.offsetWidth; b.classList.add("cwping"); clearTimeout(b._cp); b._cp=setTimeout(()=>b.classList.remove("cwping"),2200); },0);
 const circleWhyAid=aid({
-  init:{ph:0,p:1,lv:0,hi:0}, jump:true, nxWait:true, vb:"0 0 140 110", label:"A wheel rolls out its edge, then a circle is cut into slices and laid out", link:["ph"],
-  fix:s=>{ s._k=cwKeep; s.ph=Math.max(0,Math.round(s.ph)||0); s.lv=clamp(Math.round(s.lv)||0,0,3); s.hi=s.lv; s.p=1; },
-  nxOk:s=>s.p>=1&&(s.step===0?s.ph>=2:true),
-  sliders:[{k:"lv",label:"Slices",min:0,max:3,step:1,f:v=>String(8<<v),show:s=>s.step===1&&s.ph===1&&s.p>=1,on:s=>{ s.p=1; s.hi=Math.max(s.hi,s.lv); }}],
-  buttons:[{label:"▶ Roll it",show:s=>s.step===0&&s.ph===0,fn:cwGo(1,3800)},
-    {label:"▶ Smaller wheels",show:s=>s.step===0&&s.ph===1&&s.p>=1,fn:cwGo(2,6500)},
-    {label:"▶ Rearrange",show:s=>s.step===1&&s.ph===0,fn:cwCut},
-    {label:"▶ Measure it",show:s=>s.step===1&&s.ph===1&&s.p>=1,fn:(s,an)=>{ s.lv=3; s.hi=3; cwGo(2,1800)(s,an); }},
-    {label:"▶ In letters",show:s=>s.step===1&&s.ph===2&&s.p>=1,fn:s=>{ s.ph=3; s.p=1; }},
-    {label:"Start again",show:s=>s.step===1&&s.ph===3,fn:cwAgain}],
-  steps:[{name:"Edge",set:cwSet,t:cwT[0]},{name:"Area",set:cwSet,t:cwT[1]}],
-  draw(svg,s){ (s.step===0?cwRoll:s.ph<=1?cwPizza:cwMeasure)(svg,s); },
-  key:cwKey });
-function cwOld(q){ const n=k=>{ const v=parseInt(q.get(k),10); return isNaN(v)?null:v; };
-  if(q.has("at")){ q.set("step",q.get("at")); q.delete("at"); return; }
-  if(!q.has("step")) return; const o=Math.max(0,n("step")||0), ph=n("ph");
-  if(o===0){ if(ph!=null) q.set("ph",String(ph<=0?0:ph<=2?1:2)); }
-  else if(o===1){ q.set("step","1"); if(ph!=null) q.set("ph",ph>=1?"1":"0"); }
-  else { q.set("step","1"); q.set("ph",String(ph==null||ph<=0?1:ph<=2?2:3)); q.set("slices","64"); } }
-const circleWhy={steps:circleWhyAid.steps, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("cwplay","lean");
-  const q=new URLSearchParams(prm?prm.toString():""); q.delete("lv"); cwOld(q); cwKeep=q.has("ph")||q.has("slices")?1:0;
-  if(q.has("slices")){ const i=[8,16,32,64].indexOf(parseInt(q.get("slices"),10)); q.set("lv",String(Math.max(0,i))); q.delete("slices"); }
-  circleWhyAid.mount(stage,panel,key,q); cwKeep=0;
-  if(cur&&cur.state){ const f=cur.state; cur.state=()=>{ const o=f(), r={at:o.step||0}; if(o.ph) r.ph=o.ph; if(r.at===1&&o.ph===1) r.slices=8<<(o.lv||0); return r; }; } } };
+  init:{lv:0,pre:1,t:null}, jump:true, ip:"Drag for more slices.", demo:[1,0], vb:"0 6 140 56", label:"A wheel rolls out its edge. A circle cut into slices is laid side by side.", link:["lv"],
+  fix:s=>{ s.lv=clamp(Math.round(+s.lv)||0,0,3); },
+  buttons:[{label:"▶ Roll it",show:s=>s.step===0,fn:(s,an)=>{ s.pre=0; s.t=0; an(cwRed()?1:3800,p=>{ s.t=p>=1?null:p; if(p>=1) cwPing(); }); }}],
+  steps:[{name:"Edge",pic:CWPIC[0],set:{t:null},t:()=>"",w:cwKey},{name:"Area",pic:CWPIC[1],set:{t:null},t:()=>"",w:cwKey}],
+  draw(svg,s){ cwMk(svg,s); (s.step?cwArea:cwEdge)(svg,s); },
+  drag(id,p,s){ if(s.step!==1) return; s.lv=clamp(Math.round((p.x-CWT0)/CWTS),0,3); },
+  key(){ return ""; } });
+const circleWhy={steps:circleWhyAid.steps, ip:circleWhyAid.ip, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("cwplay","ip6ct");
+  const p=prm||new URLSearchParams(), q=new URLSearchParams(), at=parseInt(p.get("at")!=null?p.get("at"):p.get("step"),10), sl=CWN.indexOf(parseInt(p.get("slices"),10));
+  if(at>=1) q.set("step","1"); if(sl>=0) q.set("lv",String(sl));
+  circleWhyAid.mount(stage,panel,key,q);
+  if(cur&&cur.state){ const f=cur.state; cur.state=()=>{ const o=f(); return o.step?{step:1,slices:CWN[o.lv]||8}:{}; }; } } };
 PLAYS.circleWhy=circleWhy;
-const TAG=[-2,2,9], TAK=["blue","amber","green"];
-let taKeep=0, taV=null;
-const taVw=(w,svg)=>{ if(!w) return {g0:-1,g1:7,U:14,X0:14,YB:72,vb:"0 0 140 97",yt:5,r:[0,6]}; const n=svg?svg.getBoundingClientRect().width:0;
-  return n>0&&n<520?{g0:-3.6,g1:9.6,U:10,X0:4,YB:54,vb:"0 0 140 72",yt:5,r:[-3,9]}:{g0:-5,g1:11,U:8,X0:6,YB:43.6,vb:"0 0 140 61",yt:5,r:[-4,10]}; };
-const taEz=t=>t<=0?0:t>=1?1:t*t*(3-2*t), taH=frac(1,2);
+let taV=null;
+const taVw=()=>({g0:-3.6,g1:9.6,U:10,X0:4,YB:56,vb:"0 -6 140 74",r:[-3,9]});
 const taP=(v,x,y)=>[+(v.X0+(x-v.g0)*v.U).toFixed(3),+(v.YB-y*v.U).toFixed(3)];
-const taPts=(v,Q)=>Q.map(q=>taP(v,q[0],q[1]).join(",")).join(" ");
-const taRot=(Q,M,t)=>Q.map(([x,y])=>{ const c=Math.cos(t), sn=Math.sin(t), dx=x-M[0], dy=y-M[1]; return [M[0]+dx*c-dy*sn,M[1]+dx*sn+dy*c]; });
-const taQ=Q=>Q.map(q=>q.map(n=>+n.toFixed(4)).join(",")).join(" ");
-const taRun=(an,dur,f)=>an(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches?1:dur,f);
-function taFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,14/u); }
+function taFs(svg){ const r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal; if(!r.width||!vb||!vb.width) return 5.2; const u=Math.min(r.width/vb.width,(r.height||r.width)/vb.height); return u>=3.2?5.2:Math.max(5.2,16/u); }
 function taTx(svg,x,y,t,fs,a){ return S_(svg,"text",Object.assign({x,y,"text-anchor":"middle","font-size":+fs.toFixed(2),"font-weight":700,fill:"var(--ink)",stroke:"var(--card)","stroke-width":+(fs*.3).toFixed(2),"stroke-linejoin":"round","paint-order":"stroke"},a||{}),t); }
-function taGrid(svg,v){ let d=""; const yt=taP(v,0,v.yt)[1];
-  for(let i=Math.ceil(v.g0);i<=v.g1;i++){ const x=taP(v,i,0)[0]; d+=`M${x} ${v.YB}V${yt}`; }
-  for(let j=0;j<=v.yt;j++){ const y=taP(v,0,j)[1]; d+=`M${taP(v,v.g0,0)[0]} ${y}H${taP(v,v.g1,0)[0]}`; }
-  S_(svg,"path",{d,fill:"none",stroke:"var(--grid2)","stroke-width":.35,class:"tagrid"}); }
-function taPar(svg,v){ [0,4].forEach(y=>{ const a=taP(v,v.g0,y), b=taP(v,v.g1,y), m=taP(v,v.g0+.3,y), k=1.3;
-  S_(svg,"line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:"var(--muted)","stroke-width":y?.7:.6,"stroke-dasharray":y?"1.6 1.2":"none",class:y?"tatopl":"taline"});
-  S_(svg,"path",{d:`M${m[0]-k} ${m[1]-k}L${m[0]} ${m[1]}L${m[0]-k} ${m[1]+k}`,fill:"none",stroke:"var(--muted)","stroke-width":.7,class:"taarr"}); }); }
-function taBase(svg,v,b0,b1,col){ const a=taP(v,b0,0), b=taP(v,b1,0); S_(svg,"line",{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:col||"var(--ink)","stroke-width":1.3,"stroke-linecap":"round",class:"tabase"}); }
-function taTri(svg,v,Q,col,a){ return S_(svg,"polygon",Object.assign({points:taPts(v,Q),fill:`var(--${col}-fill)`,stroke:`var(--${col})`,"stroke-width":.9,"stroke-linejoin":"round",class:"tatri","data-c":col,"data-q":taQ(Q)},a||{})); }
-function taHt(svg,v,x,o){ o=o||{}; const T=taP(v,x,4), F=taP(v,x,0), c=o.col||"var(--ink)", b0=o.b0??0, b1=o.b1??6, g=svgEl("g",{class:"taht","data-x":x,opacity:o.op??1}); svg.append(g);
-  const E=(t,a)=>{ const e=svgEl(t,a); g.append(e); return e; };
-  if(x<b0-1e-9||x>b1+1e-9){ const e=taP(v,x<b0?b0:b1,0); E("line",{x1:e[0],y1:e[1],x2:F[0],y2:F[1],stroke:"var(--ink)","stroke-width":.7,"stroke-dasharray":"1.4 1",class:"taext"}); }
-  E("line",{x1:T[0],y1:T[1],x2:F[0],y2:F[1],stroke:c,"stroke-width":.85,"stroke-dasharray":".9 1.1","stroke-linecap":"round",class:"tadrop"});
-  const d=x<(b0+b1)/2?1:-1, q=Math.min(2.4,v.U*.3); E("path",{d:`M${F[0]+d*q} ${F[1]}V${F[1]-q}H${F[0]}`,fill:"none",stroke:c,"stroke-width":.5,class:"taright"}); }
-function taHtLab(svg,v,x,fs,xs){ xs=xs||[x]; const Wd=t=>t.length*.52*fs+1.6, y=taP(v,0,2)[1]+fs*.35, at=(px,t,sd)=>taTx(svg,px,y,t,fs,{"text-anchor":sd<0?"end":"start",class:"tahtl"});
-  if(x<=0||x>=6){ const X=taP(v,x,0)[0], sd=x<=0?-1:1, room=sd<0?X-1:140-X-1; return at(X+sd*1.4,Wd("height 4")>room?"4":"height 4",sd); }
-  const h=Math.max(0,2-.6*fs/v.U), lx=taP(v,Math.min(...xs)*h/4,0)[0]-1.6, rx=taP(v,6+(Math.max(...xs)-6)*h/4,0)[0]+1.6;
-  for(const t of ["height 4","4"]){ if(Wd(t)<=lx-1) return at(lx,t,-1); if(Wd(t)<=140-rx-1) return at(rx,t,1); }
-  return at(lx,"4",-1); }
-function taRow(svg,v,fs,r,x0,x1,t,col){ const a=taP(v,x0,0)[0], b=taP(v,x1,0)[0], y=v.YB+fs*(r?2.55:1.2);
-  if(r){ const ly=v.YB+fs*1.75; S_(svg,"path",{d:`M${a} ${ly-1.2}V${ly+1.2}M${a} ${ly}H${b}M${b} ${ly-1.2}V${ly+1.2}`,fill:"none",stroke:col||"var(--ink)","stroke-width":.6,class:"tadim"}); }
-  return taTx(svg,(a+b)/2,y,t,fs,{fill:col||"var(--ink)",class:"tawid","data-r":r}); }
 function taStrips(N,x){ const h=4/N, S=[]; for(let i=0;i<N;i++){ const ym=(i+.5)*h; S.push({y0:i*h,h,l:x*ym/4,L:6*(1-ym/4)}); } return S; }
-function taHalf(x){ if(x>6) return {big:[[0,0],[x,0],[x,4]],bb:[0,x],sm:[[6,0],[x,0],[x,4]],sb:[6,x],B:x,m:x-6,op:"−"};
-  if(x<0) return {big:[[6,0],[x,0],[x,4]],bb:[x,6],sm:[[0,0],[x,0],[x,4]],sb:[x,0],B:6-x,m:-x,op:"−"};
-  return {big:[[0,0],[x,0],[x,4]],bb:[0,x],sm:[[x,0],[6,0],[x,4]],sb:[x,6],B:x,m:6-x,op:"+"}; }
-function taGuess(svg,s){ const v=taV=taVw(1,svg); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg);
-  taGrid(svg,v); taPar(svg,v);
-  if(s.ph===0){ TAG.forEach((x,i)=>taTri(svg,v,[[0,0],[6,0],[x,4]],TAK[i],{"fill-opacity":.5,"data-drag":"g"+i,class:"tatri tapick"}));
-    TAG.forEach((x,i)=>taHt(svg,v,x,{col:`var(--${TAK[i]})`}));
-    TAG.forEach((x,i)=>{ const t=taP(v,x,4); S_(svg,"circle",{cx:t[0],cy:t[1],r:1.7,fill:`var(--${TAK[i]})`,"pointer-events":"none",class:"tatop"}); });
-    taBase(svg,v,0,6); taRow(svg,v,fs,0,0,6,"base 6"); taHtLab(svg,v,TAG[0],fs); return; }
-  const m=s.g<3?s.g:1, col=TAK[m]; s.x=clamp(s.x,v.r[0],v.r[1]); const x=s.x, out=s.ph===2&&(x<0||x>6);
-  TAG.forEach((t,i)=>{ if(i!==m&&!out) taTri(svg,v,[[0,0],[6,0],[t,4]],TAK[i],{fill:"none","stroke-dasharray":"1.5 1.2",opacity:.5,class:"tatri taghost"}); });
-  if(s.ph===1) taTri(svg,v,[[0,0],[6,0],[x,4]],col,{class:"tatri tamain"});
-  else { const H=taHalf(x);
-    if(out){ [[H.bb,"amber"],[H.sb,"green"]].forEach(([b,c])=>{ const p0=taP(v,b[0],4), p1=taP(v,b[1],0); S_(svg,"rect",{x:p0[0],y:p0[1],width:+(p1[0]-p0[0]).toFixed(3),height:+(p1[1]-p0[1]).toFixed(3),fill:"none",stroke:`var(--${c})`,"stroke-width":.6,"stroke-dasharray":"1.6 1.1",class:"tahbox","data-c":c}); });
-      taTri(svg,v,H.sm,"green",{"fill-opacity":.6,class:"tatri tasmall"}); }
-    taStrips(8<<s.lv,x).forEach((r,i)=>{ const p=taP(v,r.l,r.y0+r.h); S_(svg,"rect",{x:p[0],y:p[1],width:+(r.L*v.U).toFixed(4),height:+(r.h*v.U).toFixed(4),fill:i%2?`var(--${col}-fill)`:`var(--${col})`,"fill-opacity":i%2?1:.34,class:"tastrip","data-l":+r.L.toFixed(6),"data-i":i}); });
-    S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[x,4]]),fill:"none",stroke:`var(--${col})`,"stroke-width":.6,"stroke-linejoin":"round",class:"tatri tamain","data-q":taQ([[0,0],[6,0],[x,4]])});
-    if(out) S_(svg,"polygon",{points:taPts(v,H.big),fill:"none",stroke:"var(--amber)","stroke-width":1.2,"stroke-linejoin":"round",class:"tabig","data-q":taQ(H.big)}); }
-  taHt(svg,v,x); taBase(svg,v,0,6);
-  if(s.ph===2){ const c=taP(v,(6+x)/3,4/3); taTx(svg,c[0],c[1]+fs*.5,"12",fs*1.35,{fill:`var(--${col})`,class:"taarea"});
-    TAG.forEach((t,i)=>{ if(out||i===m||Math.abs(t-x)<2||!s.chk.includes(t)) return; const p=taP(v,t,4); taTx(svg,p[0],p[1]-2.4,"12",fs,{fill:`var(--${TAK[i]})`,class:"tagh12"}); }); }
-  if(out){ const H=taHalf(x); taRow(svg,v,fs,0,0,6,"6"); taRow(svg,v,fs,0,H.sb[0],H.sb[1],String(H.m),"var(--green)"); taRow(svg,v,fs,1,H.bb[0],H.bb[1],String(H.B),"var(--amber)"); }
-  else taRow(svg,v,fs,0,0,6,"base 6");
-  taHtLab(svg,v,x,fs);
-  if(s.ph===2){ const t=taP(v,x,4); handle(svg,t[0],t[1],"t",`var(--${col})`); } }
-function taBoxes(a){ const B=[]; if(a>1e-9) B.push({c:"blue",x0:0,x1:a,ins:[[0,0],[a,0],[a,4]],out:[[0,0],[a,4],[0,4]],M:[a/2,2]});
-  if(a<6-1e-9) B.push({c:"amber",x0:a,x1:6,ins:[[a,0],[6,0],[a,4]],out:[[a,4],[6,4],[6,0]],M:[(a+6)/2,2]});
-  if(B.length===1) B[0].c="blue"; return B; }
-function taCut(svg,s){ const v=taV=taVw(0); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg); taGrid(svg,v);
-  if(s.ph===2) return taRect(svg,s,v,fs);
-  const a=s.x, tn=s.ph===1, e=tn?taEz(s.p):0, B=taBoxes(a);
-  B.forEach((b,k)=>{ const p0=taP(v,b.x0,4), p1=taP(v,b.x1,0), col=`var(--${b.c})`, fl=`var(--${b.c}-fill)`;
-    S_(svg,"rect",{x:p0[0],y:p0[1],width:+(p1[0]-p0[0]).toFixed(3),height:+(p1[1]-p0[1]).toFixed(3),fill:"none",stroke:col,"stroke-width":.6,"stroke-dasharray":"1.6 1.1",class:"tabox","data-k":k});
-    S_(svg,"polygon",{points:taPts(v,b.ins),fill:fl,class:"tains","data-k":k,"data-q":taQ(b.ins)});
-    if(!tn) S_(svg,"polygon",{points:taPts(v,b.out),fill:fl,"fill-opacity":.45,stroke:col,"stroke-width":.5,"stroke-dasharray":"1.2 1",class:"taout","data-k":k,"data-q":taQ(b.out)});
-    else { const R=taRot(b.out,b.M,Math.PI*e); S_(svg,"polygon",{points:taPts(v,R),fill:fl,"fill-opacity":e>=1?.0:.85,stroke:col,"stroke-width":e>=1?1.3:.8,"stroke-linejoin":"round",class:"taturn","data-k":k,"data-q":taQ(R),"data-m":b.M.map(n=>+n.toFixed(4)).join(","),"data-o":taQ(b.out)});
-      if(e>=1) S_(svg,"polygon",{points:taPts(v,b.ins),fill:col,"fill-opacity":.22,class:"tadbl","data-k":k}); } });
-  S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[a,4]]),fill:"none",stroke:"var(--ink)","stroke-width":1,"stroke-linejoin":"round",class:"tatri tamain","data-q":taQ([[0,0],[6,0],[a,4]])});
-  taBase(svg,v,0,6); taHt(svg,v,a);
-  const r4=taP(v,6,2); taTx(svg,r4[0]+1.6,r4[1]+fs*.35,"4",fs,{"text-anchor":"start",class:"taside"});
-  B.forEach(b=>{ const w=Math.round(b.x1-b.x0); taRow(svg,v,fs,0,b.x0,b.x1,String(w),`var(--${b.c})`); });
-  if(!(tn&&s.p<1)){ const t=taP(v,a,4); handle(svg,t[0],t[1],"t"); } }
-function taRect(svg,s,v,fs){ const x=s.x, b=[1,5];
-  S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[6,4],[0,4]]),fill:"var(--amber-fill)","fill-opacity":.6,stroke:"var(--ink)","stroke-width":1,class:"tarect"});
-  taTri(svg,v,[[b[0],0],[b[1],0],[x,4]],"blue",{class:"tatri tamain"});
-  taBase(svg,v,b[0],b[1],"var(--blue)"); taHt(svg,v,x,{b0:b[0],b1:b[1]});
-  const r4=taP(v,6,2); taTx(svg,r4[0]+1.6,r4[1]+fs*.35,"4",fs,{"text-anchor":"start",class:"taside"});
-  taRow(svg,v,fs,0,1,5,"base 4","var(--blue)"); taRow(svg,v,fs,1,0,6,"6");
-  const t=taP(v,x,4); handle(svg,t[0],t[1],"t"); }
-function taX(P,Q){ const L=Math.min(P,Q), R=Math.max(P,Q), t=6/(6+R-L); return [R*t,4*t]; }
-function taWings(P,Q){ const X=taX(P,Q), w=T=>T===Math.min(P,Q)?[[0,0],[T,4],X]:[[6,0],[T,4],X]; return {X,sh:[[0,0],[6,0],X],bw:w(P),aw:w(Q)}; }
-function taTwo(svg,s){ const v=taV=taVw(1,svg); svg.setAttribute("viewBox",v.vb); const fs=taFs(svg);
-  s.x=clamp(s.x,v.r[0],v.r[1]); s.q=clamp(s.q,v.r[0],v.r[1]); if(s.q===s.x) s.q=s.x<v.r[1]?s.x+1:s.x-1;
-  const P=s.x, Q=s.q, W=taWings(P,Q), e=s.ph?taEz(s.p):0; taGrid(svg,v); taPar(svg,v);
-  if(!s.ph){ taTri(svg,v,[[0,0],[6,0],[P,4]],"blue",{"fill-opacity":.6}); taTri(svg,v,[[0,0],[6,0],[Q,4]],"amber",{"fill-opacity":.6}); }
-  else { taTri(svg,v,W.bw,"blue",{class:"tatri tawing"}); taTri(svg,v,W.aw,"amber",{class:"tatri tawing"});
-    S_(svg,"polygon",{points:taPts(v,W.sh),fill:"var(--muted)","fill-opacity":+(.3*(1-e)).toFixed(3),stroke:"var(--muted)","stroke-width":.6,"stroke-dasharray":"1.4 1",class:"tashared","data-q":taQ(W.sh)});
-    if(e>=1){ const c=taP(v,(6+W.X[0])/3,W.X[1]/3); taTx(svg,c[0],c[1]+fs*.35,"shared",fs*.9,{fill:"var(--muted)",class:"tashl"}); }
-    [[P,"blue"],[Q,"amber"]].forEach(([T,c])=>S_(svg,"polygon",{points:taPts(v,[[0,0],[6,0],[T,4]]),fill:"none",stroke:`var(--${c})`,"stroke-width":.9,"stroke-linejoin":"round"})); }
-  taHt(svg,v,P,{col:"var(--blue)"}); taHt(svg,v,Q,{col:"var(--amber)"}); taBase(svg,v,0,6);
-  taRow(svg,v,fs,0,0,6,"base 6"); taHtLab(svg,v,Math.abs(P-3)>=Math.abs(Q-3)?P:Q,fs,[P,Q]);
-  [[P,"t","blue"],[Q,"q","amber"]].forEach(([T,id,c])=>{ const t=taP(v,T,4); handle(svg,t[0],t[1],id,`var(--${c})`); }); }
-function taPick(s,i){ s.g=i; s.ph=1; s.x=TAG[i<3?i:1]; s.chk=[]; s.dr=0; }
-const taAgain=()=>setTimeout(()=>{ const b=document.querySelector('.steptabs .stab[data-j="0"]'); if(b) b.click(); },0);
-const taSet=s=>{ const i=s.step;
-  if(s._k){ s._k=0; s.p=1; s.la=""; s.dr=0; const r=i===1?[0,6]:[-4,10], R=n=>clamp(Math.round(+n)||0,r[0],r[1]);
-    s.x=R(s.x); s.q=R(s.q); s.lv=clamp(Math.round(s.lv)||0,0,3); s.ph=clamp(Math.round(s.ph)||0,0,[2,2,1][i]);
-    if(i===0){ s.g=Math.round(s.g); if(!(s.g>=0&&s.g<=3)){ s.g=-1; s.ph=0; } else { s.ph=Math.max(1,s.ph); if(s.ph===1) s.x=TAG[s.g<3?s.g:1]; } s.chk=s.ph===2?[s.x]:[]; }
-    if(i===2&&s.q===s.x) s.q=s.x<=7?s.x+3:s.x-3;
-    return {}; }
-  const o={ph:0,p:1,dr:0,la:"",chk:[]};
-  if(i===0) Object.assign(o,{g:-1,x:2,lv:0}); if(i===1) o.x=2; if(i===2) Object.assign(o,{x:-1,q:5});
-  return o; };
-const taT=[s=>{ if(s.ph===0) return "Which is biggest?"; if(s.ph===1) return "Let's check.";
-    if(!s.dr) return "Drag the top."; if(s.la==="s") return "Closer and closer.";
-    return s.x<0||s.x>6?"Same strips. Same area.":"Always 12! Go past the end."; },
-  s=>s.ph===2?"Not half now.":s.ph===1&&s.p>=1?"They match! Half of 24.":s.x%6===0?"Half a rectangle.":"Two rectangles.",
-  s=>s.ph?"The wings are equal.":"Same base. Same height."];
-function taKey(s){ const H=taH, E=(...l)=>EG(null,l);
-  if(s.step===0){ if(s.ph<2) return ""; const x=s.x, T=taHalf(x), c=TAK[s.g<3?s.g:1];
-    if(T.op==="+") return FORMS([FB(c,"Area",nw(`${H} × 6 × 4 = 12`),"","","wide")],true);
-    return E(`${kc("amber",nw(`${H} × ${T.B} × 4`))} ${T.op} ${kc("green",nw(`${H} × ${T.m} × 4`))}`,`= ${kc("amber",2*T.B)} ${T.op} ${kc("green",2*T.m)}`,"= 12"); }
-  if(s.step===1){ if(s.ph===2) return E("Rectangle: 6 × 4 = 24",kc("blue",`Triangle: ${nw(`${H} × 4 × 4`)} = 8`));
-    const a=Math.round(s.x), b=6-a, L=[]; if(a) L.push(kc("blue",`${a} × 4 = ${4*a}`)); if(b) L.push(kc(a?"amber":"blue",`${b} × 4 = ${4*b}`));
-    if(s.ph===1&&s.p>=1){ if(a&&b) L.push(`${4*a} + ${4*b} = 24`); L.push("Half of 24 = 12"); } return E(...L); }
-  const A=[kc("blue",`Blue: ${nw(`${H} × 6 × 4`)} = 12`),kc("amber",`Amber: ${nw(`${H} × 6 × 4`)} = 12`)];
-  if(s.ph&&s.p>=1) A.push(kc("blue","Blue wing = 12 − shared part"),kc("amber","Amber wing = 12 − shared part"));
-  return E(...A); }
+function taDraw(svg,s){ const v=taVw(svg); if(svg.isConnected) taV=v; svg.setAttribute("viewBox",v.vb); const fs=taFs(svg); s.x=clamp(s.x,v.r[0],v.r[1]); const x=s.x, P=(a,b)=>taP(v,a,b);
+  let g=""; const y5=P(0,5)[1];
+  for(let i=Math.ceil(v.g0);i<=v.g1;i++){ const X=P(i,0)[0]; g+=`M${X} ${v.YB}V${y5}`; }
+  for(let j=0;j<=5;j++){ const Y=P(0,j)[1]; g+=`M${P(v.g0,0)[0]} ${Y}H${P(v.g1,0)[0]}`; }
+  S_(svg,"path",{d:g,fill:"none",stroke:"var(--grid2)","stroke-width":.35,class:"tagrid"});
+  const L0=P(v.g0,0), L1=P(v.g1,0), T0=P(v.g0,4), T1=P(v.g1,4);
+  S_(svg,"line",{x1:L0[0],y1:L0[1],x2:L1[0],y2:L1[1],stroke:"var(--muted)","stroke-width":.6,class:"taline"});
+  S_(svg,"line",{x1:T0[0],y1:T0[1],x2:T1[0],y2:T1[1],stroke:"var(--muted)","stroke-width":.8,"stroke-dasharray":"1.6 1.2",class:"tatopl"});
+  S_(svg,"polygon",{points:[[0,0],[6,0],[2,4]].map(q=>P(q[0],q[1]).join(",")).join(" "),fill:"none",stroke:"var(--muted)","stroke-width":.7,"stroke-opacity":.45,"stroke-linejoin":"round",class:"taghost"});
+  taStrips(16,x).forEach((r,i)=>{ const p=P(r.l,r.y0+r.h); S_(svg,"rect",{x:p[0],y:p[1],width:+(r.L*v.U).toFixed(4),height:+(r.h*v.U).toFixed(4),fill:i%2?"var(--blue-fill)":"var(--blue)","fill-opacity":i%2?1:.34,class:"tastrip","data-l":+r.L.toFixed(6),"data-i":i}); });
+  S_(svg,"polygon",{points:[[0,0],[6,0],[x,4]].map(q=>P(q[0],q[1]).join(",")).join(" "),fill:"none",stroke:"var(--blue)","stroke-width":.6,"stroke-linejoin":"round",class:"tatri"});
+  const F=P(x,0), Tp=P(x,4), out=x<0||x>6;
+  if(out){ const e=P(x<0?0:6,0); S_(svg,"line",{x1:e[0],y1:e[1],x2:F[0],y2:F[1],stroke:"var(--green)","stroke-width":.8,"stroke-dasharray":"1.4 1",class:"taext"}); }
+  S_(svg,"line",{x1:Tp[0],y1:Tp[1],x2:F[0],y2:F[1],stroke:"var(--green)","stroke-width":1.1,"stroke-dasharray":"1 1.2","stroke-linecap":"round",class:"tadrop"});
+  const sd=x<3?1:-1, q=Math.min(2.6,v.U*.32); S_(svg,"path",{d:`M${F[0]+sd*q} ${F[1]}V${F[1]-q}H${F[0]}`,fill:"none",stroke:"var(--green)","stroke-width":.6,class:"taright"});
+  const B0=P(0,0), B1=P(6,0); S_(svg,"line",{x1:B0[0],y1:B0[1],x2:B1[0],y2:B1[1],stroke:"var(--amber)","stroke-width":1.8,"stroke-linecap":"round",class:"tabase"});
+  taTx(svg,P(3,0)[0],v.YB+fs+1.6,"6 cm",fs,{fill:"var(--amber)",class:"tabl"});
+  const hw=4*.56*fs; let ls=x<=0?-1:x>=6?1:x<3?1:-1, hy=2.6; if(out&&(ls<0?F[0]-1.8-hw<1:F[0]+1.8+hw>139)){ ls=-ls; hy=1.2; }
+  const H=P(x,hy); taTx(svg,H[0]+ls*1.8,H[1]+fs*.35,"4 cm",fs,{fill:"var(--green)","text-anchor":ls<0?"end":"start",class:"tahl"});
+  const c=P((6+x)/3,4/3); taTx(svg,c[0],c[1]+fs*.45,"12 cm²",fs*1.3,{fill:"var(--blue)",class:"taarea"+(s._pu?" tapu":"")});
+  S_(svg,"line",{x1:T0[0],y1:T0[1],x2:T1[0],y2:T1[1],stroke:"transparent","stroke-width":12,"pointer-events":"stroke","data-drag":"t",style:"cursor:pointer"});
+  handle(svg,Tp[0],Tp[1],"t","var(--ink)"); S_(svg,"circle",{cx:Tp[0],cy:Tp[1],r:3.7,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); }
+function taKey(s){ const H=frac(1,2), X=["×","×"];
+  return `<div class="apwk ipk cwk tak" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("blue","Area",cwM([["½",H],X,["base",kc("amber","6")],X,["height",kc("green","4")],["",`= ${cwAns("12 cm²","blue",s._pu?"tapu":"")}`]]),"","","wide")],true)+`</div>`; }
 const taAid=aid({
-  init:{ph:0,p:1,x:2,q:4,g:-1,chk:[],lv:0,dr:0,la:""}, jump:true, nxWait:true, vb:"0 0 140 61", label:"Triangles on one base, with their tops on a line parallel to it", link:["x","q","ph"],
-  fix:s=>{ s._k=taKeep; s.p=1; },
-  nxOk:s=>s.p>=1&&[s.ph>=2,s.ph>=2,true][s.step],
-  pills:[{k:"g",opts:[[0,"Blue"],[1,"Amber"],[2,"Green"],[3,"All the same"]],show:s=>s.step===0&&s.ph===0,on:s=>taPick(s,s.g)}],
-  sliders:[{k:"lv",label:"Strips",min:0,max:3,step:1,f:v=>String(8<<v),show:s=>s.step===0&&s.ph===2,on:s=>{ s.la="s"; s.dr=1; }}],
-  buttons:[{label:"▶ Check",show:s=>s.step===0&&s.ph===1,fn:s=>{ s.ph=2; s.lv=0; s.chk=[s.x]; s.dr=0; s.la=""; }},
-    {label:"▶ Turn",show:s=>s.step===1&&s.ph===0,fn:(s,an)=>{ s.ph=1; s.p=0; taRun(an,2000,p=>{ s.p=p; }); }},
-    {label:"▶ Shorter base",show:s=>s.step===1&&s.ph===1&&s.p>=1,fn:s=>{ s.ph=2; }},
-    {label:"▶ Take away",show:s=>s.step===2&&s.ph===0,fn:(s,an)=>{ s.ph=1; s.p=0; taRun(an,900,p=>{ s.p=p; }); }},
-    {label:"Start again",show:s=>s.step===2&&s.ph===1&&s.p>=1,fn:taAgain}],
-  steps:[{name:"Guess and slide",set:taSet,t:taT[0]},{name:"Half the rectangle",set:taSet,t:taT[1]},{name:"Wings",set:taSet,t:taT[2]}],
-  drag(id,pt,s,start){ const v=taV; if(!v) return;
-    if(/^g\d$/.test(id)){ if(start&&s.step===0&&s.ph===0) taPick(s,+id[1]); return; }
-    if(s.step===0&&s.ph<2) return; if(s.step===1&&s.ph===1&&s.p<1) return;
-    const r=v.r, n=clamp(Math.round((pt.x-v.X0)/v.U+v.g0),r[0],r[1]);
-    if(id==="q"){ if(n!==s.x) s.q=n; } else if(!(s.step===2&&n===s.q)) s.x=n;
-    if(s.step===0&&!s.chk.includes(s.x)) s.chk.push(s.x);
-    s.dr=1; s.la="d"; },
-  draw(svg,s){ [taGuess,taCut,taTwo][s.step](svg,s); svg.classList.toggle("nudge",!s.dr&&!!svg.querySelector("circle[data-drag]")); },
-  key:taKey });
-function taOld(q){ const n=k=>{ const v=parseInt(q.get(k),10); return isNaN(v)?null:v; };
-  if(q.has("at")){ q.set("step",q.get("at")); q.delete("at"); return; }
-  if(!q.has("step")) return; const o=Math.max(0,n("step")||0), ph=n("ph")||0;
-  if(o===0){ q.delete("ph"); }
-  else if(o===1){ q.set("ph",ph>=2?"1":"0"); if(ph===0) q.set("top","0"); }
-  else if(o===2){ q.set("step","0"); q.set("ph","2"); if(!q.has("guess")) q.set("guess","0"); }
-  else if(o===3){ q.set("step","1"); q.set("ph",ph>=1?"2":"0"); }
-  else q.set("step","2"); }
-const triangleSameArea={steps:taAid.steps, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("taplay","lean");
-  const q=new URLSearchParams(prm?prm.toString():""); ["x","q","g","lv"].forEach(k=>q.delete(k)); taOld(q);
-  taKeep=["top","top2","ph","guess","strips"].some(k=>q.has(k))?1:0;
-  if(q.has("strips")){ const i=[8,16,32,64].indexOf(parseInt(q.get("strips"),10)); q.set("lv",String(i<0?0:i)); q.delete("strips"); }
-  [["top","x"],["top2","q"],["guess","g"]].forEach(([a,b])=>{ if(q.has(a)){ q.set(b,q.get(a)); q.delete(a); } });
-  taAid.mount(stage,panel,key,q); taKeep=0;
-  if(cur&&cur.state){ const f=cur.state; cur.state=()=>{ const o=f(), i=o.step||0, r={at:i};
-    if(i===0){ if(o.g>=0){ r.guess=o.g; if(o.ph===2){ r.ph=2; r.top=o.x; r.strips=8<<(o.lv||0); } } }
-    else { if(o.ph) r.ph=o.ph; r.top=o.x; if(i===2) r.top2=o.q; }
-    return r; }; } } };
+  init:{x:2}, jump:true, ip:"Drag the top.", demo:[1,0], vb:"0 -6 140 74", label:"A triangle on a grid: drag its top along a line parallel to the base", link:["x"],
+  fix:s=>{ s.x=clamp(Math.round(+s.x)||0,-3,9); },
+  steps:[{name:"Same area",t:()=>"Drag the top.",w:taKey}],
+  draw:taDraw,
+  drop(id,s){ s._pu=1; },
+  drag(id,p,s){ const v=taV; if(!v) return; s._pu=0; s.x=clamp(Math.round((p.x-v.X0)/v.U+v.g0),v.r[0],v.r[1]); },
+  key(){ return ""; } });
+const triangleSameArea={steps:taAid.steps, ip:taAid.ip, mount(stage,panel,key,prm){ const pl=stage.closest(".play"); if(pl) pl.classList.add("taplay","ip6ct");
+  const q=new URLSearchParams(), t=prm?prm.get("top"):null; if(t!=null&&t!==""&&isFinite(+t)) q.set("x",String(Math.round(+t)));
+  taAid.mount(stage,panel,key,q);
+  if(cur&&cur.state){ const f=cur.state; cur.state=()=>({top:f().x}); } } };
 PLAYS.triangleSameArea=triangleSameArea;
 const RSX=[{v:[3,4,2,5],sw:0,f:"d",V:63},{v:[4,5,2,1],sw:0,f:"a",V:46},{v:[5,6,9,4],sw:1,f:"s",V:111}];
 const RSN=["Ali","Ben","Cal","Total"], RSK={Ali:"rmcb",Cal:"rmca"};
@@ -7173,351 +7015,140 @@ function rsFact(x,R){ const V=x.V; let hd,lhs,k;
   else if(x.f==="a"){ hd="All three"; k=R[0]+R[1]+R[2]; lhs=`${R[0]}u + ${R[1]}u + ${R[2]}u`; }
   else { hd="Ali + Cal"; k=R[0]+R[2]; lhs=`${R[0]}u + ${R[2]}u`; }
   return {line:`${hd} = ${V}`,L:[`${lhs} = ${k}u`,`${k}u = ${V}`,`1u = ${V} ÷ ${k} = ${V/k}`]}; }
-const ratioSame={ steps:[],
-  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","rmlean","rsplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
-    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches), HOLD=1500;
-    const st={v:["3","4","2","5"],sw:0,dv:[3,4,2,5],dsw:0,live:-1,chip:0,beat:3,M:null,p:1,anim:null,raf:0,hold:0,msg:"",cut:0,big:0,wN:0,res:"",miss:0,help:0,nIn:"",nmsg:"",ln:0,tap:-1,amt:"",tmsg:"",sol:null,tried:false};
-    const W=h("div",{class:"rm rml rs"}), pic=h("div",{class:"rmcard rmpic"}), q=h("div",{class:"rmq"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sv=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bars"}), side=h("div",{class:"rmside"}), rows=h("div",{class:"rmcard rmrows"}), slot=h("div",{class:"rmslot"});
-    sv.append(svg); pic.append(q,cap,sv); side.append(rows,slot); W.append(pic,side); stage.append(W);
-    const N=()=>st.v.map(Number), ok=()=>rsOk(N()), ed=()=>st.live>=0, n2=s=>s?["Cal","Ben"]:["Ben","Cal"];
-    const nextEmpty=i=>{ for(let k=1;k<=4;k++){ const j=(i+k+4)%4; if(!st.v[j]) return j; } return -1; };
-    const shake=el=>{ if(!el) return; el.classList.remove("rmshk"); void el.offsetWidth; el.classList.add("rmshk"); setTimeout(()=>el.classList.remove("rmshk"),450); };
-    const npad=()=>`<div class="sgpad rmpad rsnp">${Array.from({length:12},(_,i)=>`<button type="button" data-n="${i+1}">${i+1}</button>`).join("")}<button type="button" data-n="0" class="rmdel" aria-label="Delete">⌫</button><button type="button" data-n="ok" class="ok" aria-label="Done">✓</button></div>`;
-    const nm=(k,ov)=>`<span class="rmh${RSK[k]?" "+RSK[k]:""}">${ov?`<span class="rmov">${k}</span>`:k}</span>`;
-    const line=(cells,tail)=>cells.map((x,i)=>(i?`<span class="rmco">:</span>`:"")+x).join("")+`<span class="rmx">${tail||""}</span>`;
-    const TT=()=>[...st.M.R,st.M.T], joined=()=>st.beat>=4;
-    function capText(){ const M=st.M, X="× ";
-      if(st.anim&&st.anim.k==="in") return "";
-      if(st.beat===3&&st.cut) return st.big?`Works. Fewest: ${M.L}`:M.k1>1&&M.k2>1?`${X}${M.k1} and ${X}${M.k2} on EVERY number`:`${X}${M.k1>1?M.k1:M.k2} on EVERY number in the row`;
-      if(!M.draw) return "Too big to draw";
-      if(st.beat===3) return M.eq?"Ben is already the same.":st.res||"Same Ben. Boxes don't match.";
-      return "1 box = 1 unit."; }
-    function rowsHtml(){ const M=st.M, cut=st.cut||joined(), nn=n2(st.dsw);
-      const cell=(n,ben)=>`<span class="rmn${ben?" rsbn":""}">${n}</span>`;
-      const bx=(i,ben)=>`<button type="button" class="rmbx${ben?" rsob":""}${st.live===i?" live":""}" data-b="${i}" aria-label="${["Ali","Ben",...nn][i]} number">${st.v[i]}</button>`;
-      const blk=(cls,names,ix,g,simp,r2,k,sw)=>`<div class="rmblk ${cls}"><div class="rmg">${line(names.map(x=>nm(x,x==="Ben")),sw?`<button type="button" class="rssw" aria-label="Swap the names">⇄</button>`:"")}${line(ix.map((i,j)=>bx(i,names[j]==="Ben")))}${g>1?line(simp.map((n,j)=>cell(n,names[j]==="Ben")),`↓ ÷ ${g}`):""}${r2?line(r2.map((n,j)=>cell(n,names[j]==="Ben")),`↓ × ${k}`):""}</div></div>`;
-      const v2=st.dsw?[M.c,M.b2]:[M.b2,M.c], m2=st.dsw?[M.R[2],M.L]:[M.L,M.R[2]];
-      let s=`<div class="rmblks">${blk("rmb1",["Ali","Ben"],[0,1],M.g1,[M.a,M.b1],cut&&M.k1>1?[M.R[0],M.L]:null,M.k1,0)}${blk("rmb2",nn,[2,3],M.g2,v2,cut&&M.k2>1?m2:null,M.k2,1)}</div>`;
-      if(joined()){ const T=TT(), act=st.chip<0, co=`<span class="rmco">:</span>`, sep=`<span class="rssep"></span>`;
-        const hd=i=>act?`<button type="button" class="rsjh${RSK[RSN[i]]?" "+RSK[RSN[i]]:""}" data-i="${i}" tabindex="-1" aria-hidden="true">${i===1?`<span class="rmov">Ben</span>`:RSN[i]}</button>`:nm(RSN[i],i===1);
-        const cj=i=>act?`<button type="button" class="rmjn${st.tap===i||(st.sol&&st.sol.i===i)?" on":""}" data-i="${i}" aria-label="${RSN[i]}, ${rmU(T[i])}">${T[i]}u</button>`:`<span class="rmjn rsjs">${T[i]}u</span>`;
-        const am=i=>st.sol?`<span class="rmam">${T[i]*st.sol.u}</span>`:i===st.tap?`<span class="rmab">${st.amt||"?"}</span>`:"<span></span>";
-        s+=`<svg class="rsbr" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 2C3 8 8 8 14 8H90C96 8 100 9 100 15C100 9 104 8 110 8H186C192 8 197 8 197 2" vector-effect="non-scaling-stroke"/></svg>`;
-        s+=`<div class="rmj rsj${act&&!st.tried&&!ed()?" go":""}">${hd(0)}${co}${hd(1)}${co}${hd(2)}${sep}${hd(3)}${cj(0)}${co}${cj(1)}${co}${cj(2)}${sep}${cj(3)}${act&&(st.sol||st.tap>=0)?T.map((n,i)=>(i?"<span></span>":"")+am(i)).join(""):""}</div>`;
-        if(st.sol){ const k=T[st.sol.i]; s+=`<div class="rmsol">${k===1?"":`<div>${k}u = ${st.sol.n}</div>`}<div>1u = ${st.sol.u}</div></div>`; } }
-      if(st.chip>=0){ const F=rsFact(RSX[st.chip],M.R), sh=joined()&&st.ln>=3; s+=`<div class="rsfact${joined()?"":" grey"}"><div class="rsfl">${F.line}</div>${sh?`<div class="rsls">${F.L.map(x=>`<div class="rsln">${x}</div>`).join("")}</div>`:""}</div>`; }
-      return s; }
-    function slotHtml(){ const M=st.M, bt=st.beat;
-      if(ed()) return `<div class="rmtp"><div class="rmmsg" role="alert">${st.msg}</div>${npad()}</div>`;
-      if(bt===3&&!st.cut&&!M.eq){ const e=st.nIn, soft=!e&&st.help; return `<div class="rmtp rsask"><div class="rmtl">Cut Ben into <span class="rmab${soft?" soft":e?"":" q"}">${e||(soft?M.L:"?")}</span> boxes</div><div class="rmmsg" role="alert">${st.nmsg}</div>${rmPad(true)}</div>`; }
-      if(bt===3) return "";
-      if(st.tap>=0) return `<div class="rmtp"><div class="rmmsg" role="alert">${st.tmsg}</div>${rmPad(true)}</div>`;
-      if(st.chip>=0&&st.ln<3) return `<div class="rmact"><button type="button" class="rmbtn rmgo" data-a="ln">1u = ?</button></div>`;
-      return `<div class="rmact"><button type="button" class="rmbtn ghost" data-a="again">↺ Again</button></div>`; }
-    function tight(){ rows.classList.remove("rmtight"); if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight"); }
-    function render(){ const M=st.M;
-      q.innerHTML=`<div class="rmchips">${RSX.map((x,i)=>`<button type="button" class="rmchip rschip${st.chip===i&&!ed()?" on":""}" data-x="${i}">${x.v[0]} : ${x.v[1]}<span>·</span>${x.v[2]} : ${x.v[3]}</button>`).join("")}</div>`;
-      sv.hidden=!M.draw; cap.innerHTML=capText(); cap.classList.toggle("warn",(!M.draw&&!(st.beat===3&&st.cut))||(st.beat===3&&!st.cut&&!!st.res));
-      W.classList.toggle("rmedit",ed()); W.classList.toggle("rmb3",joined());
-      rows.innerHTML=rowsHtml(); tight(); slot.innerHTML=slotHtml(); draw(); }
-    function draw(){ svg.innerHTML=""; const M=st.M; if(!M||!M.draw) return;
-      const bt=st.beat, A=st.anim, ak=A?A.k:"", p=A?st.p:1, cl=(x,lo,hi)=>Math.max(0,Math.min(1,(x-lo)/(hi-lo))), ez=t=>t*t*(3-2*t);
-      const cw=Math.max(260,Math.round(sv.clientWidth||320)), wide=cw>=540, fs=wide?17:15, BH=wide?46:34, G1=wide?8:6, G2=wide?22:14;
-      const tw=s=>{ const t=svgEl("text",{"font-size":fs,"font-weight":700,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*fs*.6; };
-      const OP=7, bw=tw("Ben"), LW=Math.ceil(bw)+2*OP, X0=4+LW+10, X1=cw-8, BW=X1-X0;
-      const inP=ak==="in"?p:1, p1=cl(inP,0,.4), p2=cl(inP,.45,1);
-      const r=M.b1/M.b2, e2=bt===3?(M.eq?0:ez(cl(p2,0,.6))):M.eq?0:1, s2=1+(r-1)*e2;
-      const col=bt===3?cl(p2,0,.3):1, g0=bt===3?cl(p1,0,.5):1, al0=bt===3?cl(p1,0,.3):1;
-      const jp=ak==="join"?p:1, lift=bt===4?ez(cl(jp,.05,.7)):0, fadeB=bt===4?cl(jp,.55,.8):0;
-      const lens=[M.a,M.b1,M.b2*s2,M.c*s2], px=BW/Math.max(...lens), U=M.b1/M.L;
-      const Y0=4, Y1=Y0+BH+G1, Y2=Y1+BH+G2, Y3=Y2+BH+G1, YF=Y1+BH+G1, yB=Y2+(Y1-Y2)*lift, yC=Y3+(YF-Y3)*lift, H=yC+BH+6;
-      svg.setAttribute("viewBox",`0 0 ${cw} ${H.toFixed(1)}`); svg.setAttribute("width",cw); svg.setAttribute("height",H.toFixed(1));
-      const cut=bt===3&&st.cut, cg=ak==="cut"||ak==="wrong"?p:1, wN=bt===3&&!st.cut?st.wN:0;
-      const bar=(o)=>{ const g=svgEl("g",{opacity:o.al,class:"rsbar","data-bar":o.id}); svg.append(g); const E=(t,a,x)=>{ const e=svgEl(t,a,x); g.append(e); return e; };
-        const w=o.len*px, y=o.y, ln=(x,w2,hh,c2)=>E("line",{x1:x,y1:y,x2:x,y2:y+BH*hh,stroke:c2||"var(--ink)","stroke-width":w2});
-        E("rect",{x:X0,y,width:w,height:BH,fill:"var(--card)"});
-        if(col<1) E("rect",{x:X0,y,width:w,height:BH,fill:"var(--line)",opacity:1-col});
-        if(col>0) E("rect",{x:X0,y,width:w,height:BH,fill:o.fill,opacity:col});
-        if(bt===4){ const n=Math.round(o.len/U); for(let k=1;k<n;k++) ln(X0+k*U*px,1.3,1); }
-        else { const n=Math.round(o.len/o.step); for(let k=1;k<n;k++) ln(X0+k*o.step*px,2.2,g0);
-          if(cut&&o.k>1){ const n2c=Math.round(o.len/U), gc=cl(cg,o.t0,o.t0+.4); for(let k=1;k<n2c;k++){ if(k%o.k===0) continue; E("line",{x1:X0+k*U*px,y1:y,x2:X0+k*U*px,y2:y+BH*gc,stroke:"var(--ink)","stroke-width":1,class:"rscut"}); } }
-          if(wN){ const wu=M.b1/wN, gw=cl(cg,o.t0,o.t0+.4); if(wu*px>=4){ for(let k=1;k*wu<o.len-1e-9;k++) E("line",{x1:X0+k*wu*px,y1:y,x2:X0+k*wu*px,y2:y+BH*gw,stroke:"var(--ink)","stroke-width":1,class:"rswcut"}); }
-            if(o.brk){ const xs=X0+o.full*wu*px; E("rect",{x:xs,y:y+1,width:Math.max(2,X0+w-xs),height:BH-2,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":2,opacity:cl(cg,.55,.9),class:"rssl"}); } } }
-        E("rect",{x:X0,y,width:w,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2});
-        const ty=y+BH/2+fs*.36, tx=X0-10;
-        if(o.name==="Ben") E("rect",{x:tx-bw-2*OP,y:y+BH/2-fs*.5-5,width:bw+2*OP,height:fs+10,rx:(fs+10)/2,fill:"none",stroke:"var(--ink)","stroke-width":1.6});
-        E("text",{x:o.name==="Ben"?tx-OP:tx,y:ty,"text-anchor":"end","font-size":fs,"font-weight":700,fill:col>.5&&o.tc?o.tc:"var(--ink)",class:"rsnm"},o.name); };
-      const brk=(n,b)=>wN&&(n*wN)%b!==0, full=(n,b)=>Math.floor(n*wN/b);
-      bar({id:"a",name:"Ali",len:lens[0],y:Y0,step:1,k:M.k1,fill:"var(--blue-fill)",tc:"var(--blue)",al:al0,t0:.35,brk:brk(M.a,M.b1),full:wN?full(M.a,M.b1):0});
-      bar({id:"b1",name:"Ben",len:lens[1],y:Y1,step:1,k:M.k1,fill:"var(--blue-fill)",al:al0,t0:0});
-      bar({id:"b2",name:"Ben",len:lens[2],y:yB,step:s2,k:M.k2,fill:"var(--amber-fill)",al:al0*(1-fadeB),t0:0});
-      bar({id:"c",name:"Cal",len:lens[3],y:yC,step:s2,k:M.k2,fill:"var(--amber-fill)",tc:"var(--amber)",al:al0,t0:.35,brk:brk(M.c,M.b2),full:wN?full(M.c,M.b2):0});
-      const xb=X0+M.b1*px, dop=(bt===3?cl(p1,.5,.9):1)*(1-lift);
-      if(dop>0) svg.append(svgEl("line",{x1:xb,y1:Y1+BH,x2:xb,y2:Y2+BH+3,stroke:"var(--muted)","stroke-width":1.8,"stroke-dasharray":"3 4",opacity:dop,class:"rsdrop"}));
-      svg.setAttribute("aria-label",bt<4?`Four bars. Ali ${M.a}, Ben ${M.b1}; Ben ${M.b2}, Cal ${M.c}.`:`Three bars: Ali ${M.R[0]}, Ben ${M.R[1]}, Cal ${M.R[2]} units.`); }
-    const tick=now=>{ if(!st.anim) return; st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else { const k=st.anim.k; st.anim=null; done(k); } };
-    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; clearTimeout(st.hold); st.hold=0; }
-    function anim(k,dur){ if(!RED&&dur&&st.M&&st.M.draw){ st.p=0; st.anim={k,t0:performance.now(),dur}; st.raf=requestAnimationFrame(tick); } }
-    function later(){ clearTimeout(st.hold); st.hold=setTimeout(()=>{ st.hold=0; if(root.isConnected&&st.beat===3&&(st.cut||st.M.eq)) go(4); },HOLD); }
-    function done(k){ render(); if(k==="in"&&st.M.eq) later(); if(k==="cut") later(); }
-    function go(n,still){ stop(); st.M=rsMath(st.dv,st.dsw); st.beat=n; st.tap=-1; st.sol=null; st.tried=false; st.live=-1; st.msg=""; st.v=st.dv.map(String); st.sw=st.dsw;
-      if(n===3){ st.cut=0; st.big=0; st.wN=0; st.res=""; st.miss=0; st.help=0; st.nIn=""; st.nmsg=""; st.ln=0; }
-      if(n===4){ st.cut=0; st.ln=0; }
-      if(!still) anim(n===3?"in":"join",n===3?2200:1400);
-      render(); if(n===3&&st.M.eq&&!still&&!st.anim) later(); }
-    function finish(){ const k=st.anim?st.anim.k:""; const hl=!!st.hold; stop(); if(k) done(k); else if(hl) go(4); }
-    function apply(){ st.dv=N(); st.dsw=st.sw; if(st.chip>=0&&!(RSX[st.chip].v.join()===st.dv.join()&&RSX[st.chip].sw===st.dsw)) st.chip=-1; go(3); }
-    function numKey(n){ let i=st.live; if(i<0) return;
-      if(n==="ok"){ for(let j=0;j<4;j++) if(!st.v[j]) st.v[j]=String(st.dv[j]); st.live=-1; apply(); return; }
-      if(!n){ st.v[i]=""; st.msg=""; render(); return; }
-      st.v[i]=String(n); st.msg=""; st.live=nextEmpty(i); if(st.live<0) apply(); else render(); }
-    function boxTap(i){ if(st.anim) finish(); clearTimeout(st.hold); st.hold=0; st.tap=-1; st.live=i; st.msg=""; render(); }
-    function cancelEdit(){ st.live=-1; st.v=st.dv.map(String); st.sw=st.dsw; st.msg=""; }
-    function swap(){ if(ed()) cancelEdit(); st.dsw^=1; [st.dv[2],st.dv[3]]=[st.dv[3],st.dv[2]]; st.chip=-1; go(3); }
-    function nOk(){ const M=st.M; if(!st.nIn){ shake(slot.querySelector(".rmab")); return; }
-      const n=+st.nIn, r=rsTry(M,n); st.nIn=""; st.nmsg=""; st.wN=0; st.res="";
-      if(r==="ok"||r==="big"){ st.cut=1; st.big=r==="big"?1:0; st.help=0; anim("cut",1300); render(); if(!st.anim) later(); return; }
-      st.miss++; const bg=Math.max(M.b1,M.b2), sm=Math.min(M.b1,M.b2), said=r==="less"?`More than ${bg}.`:"Doesn't fit.";
-      const hint=st.miss===2?(sm>1?`Count in ${bg}s. Which one is in ${sm}s?`:`Count in ${bg}s.`):st.miss>=3?"Now you type it.":"";
-      if(st.miss>=3) st.help=1;
-      if(r==="frac") st.wN=n;
-      if(M.draw){ st.res=said; st.nmsg=hint; } else st.nmsg=hint||said;
-      if(r==="frac") anim("wrong",1000); render(); shake(slot.querySelector(".rmab")); }
-    function nKey(k){ if(st.beat!==3||st.cut||st.M.eq) return; if(st.anim) finish();
-      if(k==="⌫"){ st.nIn=st.nIn.slice(0,-1); slot.innerHTML=slotHtml(); return; }
-      if(k==="ok"){ nOk(); return; }
-      if(st.nIn.length>=3||(st.nIn===""&&k==="0")) return; st.nIn+=k; slot.innerHTML=slotHtml(); }
-    function jtap(i){ if(st.anim) finish(); if(st.beat<4||st.chip>=0) return; if(ed()) cancelEdit(); st.tried=true; st.tap=i; st.amt=""; st.tmsg=""; st.sol=null; render(); }
-    function amtKey(k){ const i=st.tap; if(i<0) return; const box=()=>rows.querySelector(".rmab");
-      if(k==="⌫"){ st.amt=st.amt.slice(0,-1); st.tmsg=""; render(); return; }
-      if(k==="ok"){ const n=+st.amt, k0=TT()[i]; if(!st.amt){ shake(box()); return; }
-        if(n>0&&n%k0===0){ st.sol={i,n,u:n/k0}; st.tap=-1; render(); return; }
-        st.tmsg=`Try ${k0}, ${2*k0}, ${3*k0}…`; st.amt=""; render(); shake(box()); return; }
-      if(st.amt.length>=7||(st.amt===""&&k==="0")) return; st.amt+=k; st.tmsg=""; render(); }
-    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if((st.anim||st.hold)&&e.target.closest(".rmpic")) finish(); return; }
-      if(t.dataset.b!=null){ boxTap(+t.dataset.b); return; }
-      if(t.dataset.n!=null){ numKey(t.dataset.n==="ok"?"ok":+t.dataset.n); return; }
-      if(t.dataset.k!=null){ if(st.beat===3) nKey(t.dataset.k); else amtKey(t.dataset.k); return; }
-      if(t.dataset.x!=null){ const x=RSX[+t.dataset.x]; st.dv=x.v.slice(); st.dsw=x.sw; st.chip=+t.dataset.x; go(3); return; }
-      if(t.dataset.i!=null){ jtap(+t.dataset.i); return; }
-      if(t.classList.contains("rssw")){ swap(); return; }
-      if(t.dataset.a==="ln"){ st.ln=3; render(); return; }
-      if(t.dataset.a==="again"){ go(3); return; } });
-    const onKey=e=>{ if(!root.isConnected){ document.removeEventListener("keydown",onKey); return; } if(e.ctrlKey||e.metaKey||e.altKey) return; const k=e.key;
-      if(/^[0-9]$/.test(k)||k==="Backspace"){ const kk=k==="Backspace"?"⌫":k;
-        if(ed()){ if(kk==="⌫") numKey(0); else if(kk!=="0") numKey(+kk); } else if(st.beat===3&&!st.cut) nKey(kk); else if(st.tap>=0) amtKey(kk); else return; e.preventDefault(); }
-      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ if(ed()) numKey("ok"); else if(st.beat===3&&!st.cut) nKey("ok"); else if(st.tap>=0) amtKey("ok"); else if(st.beat===4&&st.chip>=0&&st.ln<3){ st.ln=3; render(); } else return; e.preventDefault(); } };
-    document.addEventListener("keydown",onKey);
-    let rzT=0, lw=innerWidth, lh0=innerHeight; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw&&innerHeight===lh0) return; lw=innerWidth; lh0=innerHeight; clearTimeout(rzT); rzT=setTimeout(()=>{ tight(); draw(); },120); };
-    addEventListener("resize",onRz);
-    const xi=parseInt(prm.get("x"),10), PK=["a","b","c","d"], P=PK.map(k=>prm.get(k)), PN=P.map(Number);
-    if(xi>=0&&xi<RSX.length){ const x=RSX[xi]; st.dv=x.v.slice(); st.dsw=x.sw; st.chip=xi; }
-    else if(P.every(x=>x!=null&&x!=="")&&rsOk(PN)){ st.dv=PN; st.dsw=prm.get("sw")==="1"?1:0; st.chip=-1; }
-    const bt=parseInt(prm.get("beat"),10)||0;
-    if(bt>=4||(bt===3&&prm.get("cut")==="1")){ go(4,true);
-      if(st.chip>=0){ if((parseInt(prm.get("ln"),10)||0)>0) st.ln=3; }
-      else { const ti=parseInt(prm.get("tap"),10), tn=+prm.get("n"), T=TT(); st.tried=prm.get("tap")!=null; if(ti>=0&&ti<4&&tn>0&&Number.isInteger(tn)&&tn%T[ti]===0) st.sol={i:ti,n:tn,u:tn/T[ti]}; }
-      render(); }
-    else go(3);
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim) draw(); });
-    if(cur) cur.state=()=>{ const v=st.dv, o=st.chip>=0?{x:st.chip}:{a:v[0],b:v[1],c:v[2],d:v[3]}; if(st.chip<0&&st.dsw) o.sw=1; if(st.beat===4) o.beat=4; if(st.beat===4&&st.chip>=0&&st.ln) o.ln=st.ln; if(st.sol){ o.tap=st.sol.i; o.n=st.sol.n; } return o; };
-  } };
+const rrBk=s=>{ const X=RSX[s.x]||RSX[0], M=rsMath(X.v,X.sw), mx=Math.min(24,2*M.L-1); let o=Math.min(M.b1,M.b2); if(o%M.b1===0&&o%M.b2===0) o=1; return Object.assign(M,{sw:X.sw,mx,o}); };
+function rrBg(s){ const K=rrBk(s), fs=rrFs(), T0=rrT0(), LW=fs*3.3, X0=3+LW+fs*.6, X1=196, CW=fs*2.3, BH=fs*2.8, G1=fs*.8, G2=fs*2.3;
+  const la=K.a/K.b1, lc=K.c/K.b2, BL=(X1-CW-X0)/Math.max(la,1,lc), Ya=T0, Yb=Ya+BH+G1, Yb2=Yb+BH+G2, Yc=Yb2+BH+G1, Yc2=Yb+BH+G1, n=clamp(s.pc,1,K.mx), T=rrTrack({fs},Yc+BH);
+  return Object.assign(K,T,{fs,LW,X0,X1,BH,BL,la,lc,G2,Ya,Yb,Yb2,Yc,Yc2,n,hx:T.tx0+(n-1)/(K.mx-1)*(T.tx1-T.tx0)}); }
+function rrName(svg,g,y,nm,col,ov){ const fs=g.fs, x=g.X0-fs*.6, cy=y+g.BH/2;
+  if(ov){ const w=rrTW(svg,nm,fs)+fs*1.1; rrE(svg,"rect",{x:x-w,y:cy-fs*.82,width:w,height:fs*1.64,rx:fs*.82,fill:"none",stroke:"var(--ink)","stroke-width":2,"vector-effect":"non-scaling-stroke"}); rrE(svg,"text",{x:x-w/2,y:cy+fs*.36,"font-size":fs,"font-weight":700,"text-anchor":"middle",fill:"var(--ink)",class:"rrlb"},nm); }
+  else rrE(svg,"text",{x:x-fs*.55,y:cy+fs*.36,"font-size":fs,"font-weight":700,"text-anchor":"end",fill:col,class:"rrlb"},nm); }
+const rrCnt=(svg,g,x,y,t,col)=>rrE(svg,"text",{x:x+g.fs*.45,y:y+g.BH/2+g.fs*.36,"font-size":g.fs,"font-weight":700,fill:col||"var(--ink)",class:"rrlb"},t);
+const ratioSame=aid({
+  init:{x:0,pc:2,a:"",b:"",c:"",d:"",sw:""}, jump:true, ip:"Drag to cut Ben.", vb:"0 0 200 150", label:"Ali, Ben, Ben and Cal bars cut into boxes", demo:[1,0], link:["pc","a","b","c","d","sw"],
+  fix:s=>{ const P=[s.a,s.b,s.c,s.d]; if(P.every(v=>v!==""&&v!=null)){ const v=P.map(Number).join(), w=String(s.sw)==="1"?1:0, i=RSX.findIndex(x=>x.v.join()===v&&x.sw===w); if(i>=0){ s.x=i; s.pc=rrBk(s).o; } } s.a=s.b=s.c=s.d=s.sw=""; const K=rrBk(s); s.pc=clamp(Math.round(+s.pc)||K.o,1,K.mx); },
+  pills:[{k:"x",opts:RSX.map((x,i)=>[i,`${x.v[0]} : ${x.v[1]}<span class="rrdot">·</span>${x.v[2]} : ${x.v[3]}`]),on:s=>{ s.pc=rrBk(s).o; s._dr=0; }}],
+  steps:[{name:"Ben",t:()=>"Drag to cut Ben.",w:s=>{ const K=rrBk(s), n=clamp(s.pc,1,K.mx), ok=n%K.b1===0&&n%K.b2===0, k1=n/K.b1, k2=n/K.b2, A=K.a*k1, C=K.c*k2;
+    const b1=rrBlk([["Ali","rrbu"],["Ben","",1]],[K.a,K.b1],ok&&k1>1?[A,n]:null,k1);
+    const b2=K.sw?rrBlk([["Cal","rram"],["Ben","",1]],[K.c,K.b2],ok&&k2>1?[C,n]:null,k2):rrBlk([["Ben","",1],["Cal","rram"]],[K.b2,K.c],ok&&k2>1?[n,C]:null,k2);
+    return rrKey("rrB",b1,b2,[["Ali","rrbu"],["Ben","",1],["Cal","rram"]],[A,n,C],ok); }}],
+  draw(svg,s){ rrPpu(svg); const g=rrBg(s), n=g.n, ok=n%g.b1===0&&n%g.b2===0, fs=g.fs, p=g.BL/n, X0=g.X0, k1=n/g.b1, k2=n/g.b2, red=!!s._dr&&!ok, fine=n>12;
+    svg.setAttribute("viewBox",`0 0 200 ${g.H.toFixed(1)}`); const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("ip6rr");
+    const wa=g.la*g.BL, wc=g.lc*g.BL, B="var(--blue-fill)", A="var(--amber-fill)", NB="var(--line)";
+    const D=ok?(g.Yb2-g.Yb)/2:0, T=rrLift(svg,s,ok,0,D);
+    rrBar(T,{x:X0,y:g.Ya,w:wa,h:g.BH,n:g.a,fills:[[X0,X0+wa,B]],a:X0,p,ok,flat:ok,fine,sl:red?[[X0+wa,"r"]]:[]});
+    rrBar(T,{x:X0,y:g.Yb,w:g.BL,h:g.BH,n:g.b1,fills:[[X0,X0+g.BL,NB]],a:X0,p,ok,flat:ok,fine});
+    rrName(T,g,g.Ya,"Ali","var(--blue)"); rrName(T,g,g.Yb,"Ben","",1);
+    rrCnt(T,g,X0+wa,g.Ya,ok?g.a*k1+"u":String(g.a),"var(--blue)"); rrCnt(T,g,X0+g.BL,g.Yb,ok?n+"u":String(g.b1));
+    if(!ok){ rrE(svg,"line",{x1:X0+g.BL,y1:g.Yb+g.BH,x2:X0+g.BL,y2:g.Yb2,stroke:"var(--muted)","stroke-width":2,"stroke-dasharray":"5 5","vector-effect":"non-scaling-stroke"}); rrName(svg,g,g.Yb2,"Ben","",1); rrCnt(svg,g,X0+g.BL,g.Yb2,String(g.b2)); }
+    const Gb=rrLift(svg,s,ok,g.Yb2-g.Yb,D); rrBar(Gb,{x:X0,y:ok?g.Yb:g.Yb2,w:g.BL,h:g.BH,n:g.b2,fills:[[X0,X0+g.BL,NB]],a:X0,p,ok,flat:ok,fine});
+    const Gc=rrLift(svg,s,ok,g.Yc-g.Yc2,D), yc=ok?g.Yc2:g.Yc; rrBar(Gc,{x:X0,y:yc,w:wc,h:g.BH,n:g.c,fills:[[X0,X0+wc,A]],a:X0,p,ok,flat:ok,fine,sl:red?[[X0+wc,"r"]]:[]});
+    rrName(Gc,g,yc,"Cal","var(--amber)"); rrCnt(Gc,g,X0+wc,yc,ok?g.c*k2+"u":String(g.c),"var(--amber)");
+    rrBadge(svg,X0+g.BL/2,ok?(g.Yc2+D+g.BH+g.yK-g.R-4/g.q-fs*.8)/2:g.Yb+g.BH+g.G2/2,rrCut(n,g.b1),rrCut(n,g.b2),ok,fs);
+    rrKnob(svg,g,n,ok,`Ben: ${n} box${n===1?"":"es"}`);
+    svg.setAttribute("aria-label",ok?`Three bars: Ali ${g.a*k1}, Ben ${n}, Cal ${g.c*k2} units.`:`Ben cut into ${n} boxes. They do not fit both ratios.`); },
+  drag(id,p,s){ if(s._usr) s._dr=1; const g=rrBg(s); s.pc=clamp(Math.round(1+(p.x-g.tx0)/(g.tx1-g.tx0)*(g.mx-1)),1,g.mx); },
+  key(){ return ""; }
+});
 PLAYS.ratioSame=ratioSame;
-const SSX=[
-  {n:1,ev:"Lee got 14 more",sl:"Lee got 14 more.",end:"Now 1 : 2.",ask:"Kim at first?",keep:"k",A:[1,2],mB:1,mA:3,mv:[{w:"l",k:"in",d:1,v:14}],V:14,al:"Kim at first = 3u = 42"},
-  {n:2,ev:"Kim gave 6 to her brother",sl:"Kim gave 6 to her brother.",end:"Now 2 : 5.",ask:"Kim at first?",keep:"l",A:[2,5],mB:1,mA:1,mv:[{w:"k",k:"out",d:1,v:6}],V:6,al:"Kim at first = 3u = 18"},
-  {n:3,ev:"Kim gave 20 to Lee",sl:"Kim gave 20 to Lee.",end:"Now 1 : 7.",ask:"Lee in the end?",keep:"t",A:[1,7],mB:1,mA:1,mv:[{w:"k",k:"tx",d:2,v:20}],V:20,al:"Lee in the end = 7u = 70"},
-  {n:4,ev:"Lee gave 18 to Kim",sl:"Lee gave 18 to Kim.",end:"Now 3 : 1.",ask:"Lee at first?",keep:"t",A:[3,1],mB:1,mA:2,mv:[{w:"l",k:"tx",d:3,v:18}],V:18,al:"Lee at first = 5u = 30"},
-  {n:5,ev:"Each got 12 more",sl:"Each got 12 more.",end:"Now 2 : 3.",ask:"Kim at first?",keep:"d",A:[2,3],mB:1,mA:2,mv:[{w:"k",k:"in",d:1,v:12},{w:"l",k:"in",d:1,v:12}],V:12,al:"Kim at first = 3u = 36"},
-  {n:6,ev:"Each used 7",sl:"Each used 7.",end:"Now 4 : 7.",ask:"Kim at first?",keep:"d",A:[4,7],mB:3,mA:2,mv:[{w:"k",k:"use",d:1,v:7},{w:"l",k:"use",d:1,v:7}],V:7,al:"Kim at first = 9u = 63"},
-  {n:7,ev:"Kim got 11 more, Lee used 7",sl:"Kim got 11 more. Lee used 7.",end:"Then they had the same.",ask:"Kim at first?",keep:"n",A:null,mB:1,mA:1,mv:[{w:"k",k:"in",d:11/9,v:11},{w:"l",k:"use",d:7/9,v:7}],V:0,al:"Kim at first = 3u = 27"}];
-const SSN={k:"Kim",l:"Lee",t:"Total",d:"Difference",n:"Nothing"}, SSW={k:"Kim",l:"Lee",t:"Total",d:"Diff.",n:"—"}, SSK=["k","l","t","d"];
-const SSE=[`<span class="rmcb">Kim:</span> 3u + 11`,`<span class="rmca">Lee:</span> 5u − 7`,`<span class="sssd"><span class="ssup">+7</span>3u + 11</span> <span class="sseq pv">=</span> <span class="sssd"><span class="ssup">+7</span>5u − 7</span>`,`3u + 18 <span class="sseq pv">=</span> 5u`,`Spot: 2u = 18`,`1u = 9`,`Kim at first = 3u = 27`];
-function ssEnd(S){ const K0=3*S.mB, L0=5*S.mB; let Ka=K0, La=L0;
-  S.mv.forEach(m=>{ const s=m.k==="in"?1:-1; if(m.w==="k") Ka+=s*m.d; else La+=s*m.d; if(m.k==="tx"){ if(m.w==="k") La+=m.d; else Ka+=m.d; } });
+const SXS=[
+  {e:"Lee got 14 more.",keep:"k",mB:1,mv:[{w:"l",k:"in",d:1,v:14}]},
+  {e:"Kim gave 6 to her brother.",keep:"l",mB:1,mv:[{w:"k",k:"out",d:1,v:6}]},
+  {e:"Kim gave 20 to Lee.",keep:"t",mB:1,mv:[{w:"k",k:"tx",d:2,v:20}]},
+  {e:"Lee gave 18 to Kim.",keep:"t",mB:1,mv:[{w:"l",k:"tx",d:3,v:18}]},
+  {e:"each got 12 more.",keep:"d",mB:1,mv:[{w:"k",k:"in",d:1,v:12},{w:"l",k:"in",d:1,v:12}]},
+  {e:"each used 7.",keep:"d",mB:3,mv:[{w:"k",k:"use",d:1,v:7},{w:"l",k:"use",d:1,v:7}]}];
+const SXN={k:"Kim",l:"Lee",t:"Total",d:"Difference"}, SXT=["k","l","t","d"], SXA=2100, SXH=1200;
+function sxEnd(S){ const K0=3*S.mB, L0=5*S.mB; let Ka=K0, La=L0;
+  S.mv.forEach(m=>{ const g=m.k==="in"?1:-1; if(m.w==="k") Ka+=g*m.d; else La+=g*m.d; if(m.k==="tx"){ if(m.w==="k") La+=m.d; else Ka+=m.d; } });
   return {K0,L0,Ka,La}; }
-const ssVal=(x,K,L)=>x==="k"?K:x==="l"?L:x==="t"?K+L:Math.abs(L-K);
-function ssArr(S){ if(S.keep==="n") return []; const E=ssEnd(S), a=[]; [["k",E.Ka-E.K0],["l",E.La-E.L0]].forEach(([w,d])=>{ if(Math.abs(d)>1e-9) a.push({w,d:Math.round(d)}); }); return a; }
-function ssLines(S){ if(S.keep==="n") return SSE; const n=Math.abs(ssArr(S)[0].d), V=S.V; return (n===1?[`1u = ${V}`]:[`${n}u = ${V}`,`1u = ${V} ÷ ${n} = ${V/n}`]).concat([S.al]); }
-function ssRows(S){ const x=S.keep==="t"||S.keep==="d"?S.keep:"", f=(K,L)=>x?[K,L,ssVal(x,K,L)]:[K,L], m=S.mB, n=S.mA;
-  return {x,B:f(3,5),Bm:f(3*m,5*m),A:f(S.A[0],S.A[1]),Am:f(S.A[0]*n,S.A[1]*n)}; }
-function ssMsCap(S){ const R=ssRows(S), j=S.keep==="k"?0:S.keep==="l"?1:2; return `${SSN[S.keep]}: ${R.B[j]}, ${R.A[j]}. `+(S.mB===1&&S.mA===1?"Already the same.":`Make both ${R.Bm[j]}.`); }
-function ssVerb(S,x){ const E=ssEnd(S), a=ssVal(x,E.K0,E.L0), b=ssVal(x,E.Ka,E.La); return Math.abs(a-b)<1e-9?"stays the same":b>a?"grew":"shrank"; }
-const staysSame={ steps:[],
-  mount(stage,panel,key,prm){ const root=stage.closest(".play"); root.classList.add("rmplay","rmlean","ssplay"); key.remove(); panel.innerHTML=""; stage.innerHTML="";
-    const RED=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches), PLAY=2400, SAME=1100, HOLD=1500, LINE=1000, LAST=2500;
-    const st={ord:[0,1,2,3,4,5,6],i:0,rows:[],ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,ln:0,p:1,anim:null,raf:0,tm:0,nx:null};
-    const W=h("div",{class:"rm rml ss"}), pic=h("div",{class:"rmcard rmpic"}), cap=h("div",{class:"rmcap","aria-live":"polite"}), sv=h("div",{class:"rmsvg"}), svg=svgEl("svg",{role:"img","aria-label":"Bars"}), side=h("div",{class:"ssside"}), q=h("div",{class:"rmcard ssq"}), pk=h("div",{class:"rmcard sspk"}), rows=h("div",{class:"rmcard rmrows ssrw"}), slot=h("div",{class:"rmslot"}), tb=h("div",{class:"rmcard sstb"});
-    sv.append(svg); pic.append(cap,sv); side.append(q,pk,rows,slot); W.append(pic,tb,side); stage.append(W);
-    const cS=()=>SSX[st.ord[st.i]], cl=(x,lo,hi)=>Math.max(0,Math.min(1,(x-lo)/(hi-lo))), ez=t=>t*t*(3-2*t);
-    const modeB=()=>cS().keep!=="n"&&["same","arrow","fin"].includes(st.ph);
-    const shake=el=>{ if(!el) return; el.classList.remove("rmshk"); void el.offsetWidth; el.classList.add("rmshk"); setTimeout(()=>el.classList.remove("rmshk"),450); };
-    function capText(){ const S=cS(), ph=st.ph;
-      if(ph==="pick") return "At first";
-      if(ph==="play") return "";
-      if(ph==="miss"||ph==="lock"||S.keep==="n") return st.res;
-      if(ph==="arrow") return st.amiss?"Count the numbered boxes.":"Count the glowing boxes.";
-      return ssMsCap(S); }
-    function pkHtml(){ const ph=st.ph;
-      return `<div class="ssak">Stays the same?</div><div class="sspl">${["k","l","t","d","n"].map(x=>{ const tr=st.tried.includes(x); return `<button type="button" class="sspill ${x}${st.pick===x&&!tr?" act":""}${tr?" tried":""}" data-p="${x}"${tr||ph==="play"?" disabled":""}>${SSN[x]}</button>`; }).join("")}</div>`; }
-    function slotHtml(){ const ph=st.ph;
-      if(ph==="arrow") return `<div class="sgpad sspad" role="group" aria-label="How many u?">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-d="${n}">${n}</button>`).join("")}</div>`;
-      if(ph==="fin"&&st.rows.length<7) return `<div class="rmact"><button type="button" class="rmbtn rmgo" data-a="next">Next story →</button></div>`;
-      if(ph==="end") return `<div class="rmact"><button type="button" class="rmbtn ghost" data-a="again">↺ Again</button></div>`;
-      return ""; }
-    function rowsHtml(){ const S=cS(), ph=st.ph; let s="";
-      if(modeB()){ const R=ssRows(S), x3=!!R.x, nc=x3?6:4, kp=S.keep, ov=(k,t)=>kp===k?`<span class="rmov">${t}</span>`:t;
-        const hdr=`<span class="rmh rmcb">${ov("k","Kim")}</span><span class="rmco">:</span><span class="rmh rmca">${ov("l","Lee")}</span>${x3?`<span class="sssep"></span><span class="rmh">${ov(kp,SSN[kp])}</span>`:""}<span class="rmx"></span>`;
-        const row=(v,tag,tail)=>`<span class="rmn"${tag?` data-c="${tag}-k"`:""}>${v[0]}</span><span class="rmco">:</span><span class="rmn"${tag?` data-c="${tag}-l"`:""}>${v[1]}</span>${x3?`<span class="sssep"></span><span class="rmn">${v[2]}</span>`:""}<span class="rmx">${tail||""}</span>`;
-        const blk=(t,tag,raw,ms,m)=>`<div class="rmblk ssbk" data-b="${tag}"><div class="rmbt">${t}</div><div class="rmg" style="--nc:${nc}">${hdr}${row(raw,m>1?"":tag)}${m>1?row(ms,tag,`↓ × ${m}`):""}</div></div>`;
-        s+=`<div class="rmblks ssblks">${blk("Before","b",R.B,R.Bm,S.mB)}${blk("After","a",R.A,R.Am,S.mA)}</div>`; }
-      if(ph==="fin"||(ph==="lines"&&st.ln>0)) s+=`<div class="sslines${S.keep==="n"?" ss7":""}">${ssLines(S).slice(0,st.ln).map(x=>`<div class="ssl">${x}</div>`).join("")}</div>`;
-      return s; }
-    function fitRows(){ const bl=rows.querySelector(".ssblks"); rows.classList.remove("rmtight"); if(!bl) return; bl.classList.remove("ssv");
-      if(rows.scrollWidth>rows.clientWidth+1) rows.classList.add("rmtight");
-      if(rows.scrollWidth>rows.clientWidth+1) bl.classList.add("ssv"); }
-    function render(){ const S=cS(), ph=st.ph, end=ph==="end";
-      q.innerHTML=`<div class="ssdots" aria-label="Story ${st.i+1} of 7">${st.ord.map((x,j)=>{ const dn=end||j<st.i||(j===st.i&&ph==="fin"); return `<span class="ssdc"><span class="ssdot${dn?" done":j===st.i?" on":""}"></span><span class="ssdw">${dn?SSW[SSX[x].keep]:""}</span></span>`; }).join("")}</div>${end?"":`<div class="ssst"><div>Kim : Lee = 3 : 5. <u>${S.sl}</u></div><div>${S.end} <b>${S.ask}</b></div></div>`}`;
-      W.classList.toggle("ssend",end);
-      pic.hidden=end; cap.innerHTML=end?"":capText(); cap.classList.toggle("warn",ph==="miss"||(ph==="arrow"&&!!st.amiss));
-      pk.hidden=!["pick","play","miss"].includes(ph); if(!pk.hidden) pk.innerHTML=pkHtml();
-      rows.innerHTML=end?"":rowsHtml(); rows.hidden=end||!rows.querySelector(".ssblks,.ssl"); if(!rows.hidden) fitRows();
-      slot.innerHTML=slotHtml();
-      tb.hidden=!end; tb.innerHTML=end?`<div class="ssdone">All 7 done</div><table class="ssct"><thead><tr><th>What happened</th><th>Stays the same</th></tr></thead><tbody>${st.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`:"";
-      if(!end){ draw(); arcs(); } }
-    function draw(){ svg.innerHTML=""; const S=cS(), En=ssEnd(S), ph=st.ph, mb=modeB(), p=st.anim?st.p:1;
-      const cw=Math.max(260,Math.round(sv.clientWidth||320)), wide=cw>=560, fs=wide?17:15, sf=wide?15:13, BH=wide?44:34, BD=wide?34:28, G=wide?18:14;
-      const tw=(s,f)=>{ const t=svgEl("text",{"font-size":f,"font-weight":700,x:0,y:-50},s); svg.append(t); let w=0; try{ w=t.getComputedTextLength(); }catch(e){} t.remove(); return w>0?w:s.length*f*.6; };
-      const LW=Math.ceil(Math.max(tw("Total",fs),tw("Kim",fs),tw("Lee",fs))), X0=4+LW+10, X1=cw-16, mx=mb?Math.max(En.K0,En.L0,En.Ka,En.La):Math.max(En.K0+En.L0,En.Ka+En.La), px=(X1-X0)/mx, X=v=>X0+v*px;
-      const add=(t,a,x,par)=>{ const e=svgEl(t,a,x); (par||svg).append(e); return e; };
-      const FILL={k:"var(--blue-fill)",l:"var(--amber-fill)"}, INK={k:"var(--blue)",l:"var(--amber)"};
-      const lab=(s,y,c)=>add("text",{x:X0-10,y,"text-anchor":"end","font-size":fs,"font-weight":700,fill:c||"var(--ink)"},s);
-      const badge=(cx,cy,k,op)=>{ const g=add("g",{class:"ssok","data-k":k,opacity:op}); add("circle",{cx,cy,r:11,fill:"var(--green)"},null,g); add("text",{x:cx,y:cy+4.5,"text-anchor":"middle","font-size":13,"font-weight":700,fill:"var(--card)"},"✓",g); };
-      if(mb){ const bh=Math.round(BH*.62), c=ph==="same"&&st.anim?ez(p):1, Yk=sf+18, Yl=Yk+bh+4+BH+G, H=Yl+bh+4+BH+10;
-        svg.setAttribute("viewBox",`0 0 ${cw} ${H}`); svg.setAttribute("width",cw); svg.setAttribute("height",H);
-        add("rect",{x:X0,y:4,width:22,height:sf-1,fill:"none",stroke:"var(--ink)","stroke-width":1.6,"stroke-dasharray":"4 3"});
-        add("text",{x:X0+28,y:sf+2,"font-size":sf,fill:"var(--muted)"},"before"); const w1=tw("before",sf);
-        add("rect",{x:X0+40+w1,y:4,width:22,height:sf-1,fill:"none",stroke:"var(--ink)","stroke-width":2.2});
-        add("text",{x:X0+68+w1,y:sf+2,"font-size":sf,fill:"var(--muted)"},"after");
-        const bar=(id,y,hh,len,fill,base,gh)=>{ const g=add("g",{class:"ssbar","data-bar":id}); add("rect",{x:X0,y,width:len*px,height:hh,fill,"fill-opacity":gh?.5:1},null,g);
-          for(let j=1;j<len-1e-6;j++){ const full=j%base===0; if(!full&&c<=0) continue; add("line",{x1:X(j),y1:y,x2:X(j),y2:y+hh*(full?1:c),stroke:"var(--ink)","stroke-width":full?1.8:1.1,"stroke-dasharray":gh?"3 2":"none",class:"ssln"},null,g); }
-          add("rect",{x:X0,y,width:len*px,height:hh,fill:"none",stroke:"var(--ink)","stroke-width":gh?1.8:2,"stroke-dasharray":gh?"5 3":"none",class:"ssm"},null,g); };
-        [["k",Yk,En.K0,En.Ka],["l",Yl,En.L0,En.La]].forEach(([r,y,b0,a0])=>{ bar(r+"b",y,bh,b0,FILL[r],S.mB,1); bar(r+"a",y+bh+4,BH,a0,FILL[r],S.mA,0); lab(SSN[r],y+(bh+4+BH)/2+fs*.36,INK[r]);
-          if(S.keep===r){ add("rect",{x:X0-4,y:y+bh,width:a0*px+8,height:BH+8,rx:6,fill:"none",stroke:"var(--green)","stroke-width":2.8,class:"ssol","data-k":r}); badge(X(a0)+4,y+bh,r,1); } });
-        if(ph==="arrow"){ const a=ssArr(S)[0], y=a.w==="k"?Yk:Yl, b0=a.w==="k"?En.K0:En.L0, lo=Math.min(b0,b0+a.d), hi=Math.max(b0,b0+a.d), gy=a.d>0?y+bh+4:y, gh=a.d>0?BH:bh;
-          add("rect",{x:X(lo)-2,y:gy-3,width:(hi-lo)*px+4,height:gh+6,rx:4,fill:"var(--accent)","fill-opacity":.15,stroke:"var(--accent)","stroke-width":3,class:"ssglow"});
-          if(st.amiss>=1) for(let j=0;j<hi-lo;j++) add("text",{x:X(lo+j+.5),y:gy+gh/2+sf*.36,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--accent)",class:"sshn"},String(j+1)); }
-        svg.setAttribute("aria-label",`Before and after. Kim ${En.K0} to ${En.Ka} boxes, Lee ${En.L0} to ${En.La} boxes.`); return; }
-      const pl=ph==="play"&&!!st.anim, e=ph==="play"?(pl?ez(cl(p,.15,.65)):1):(st.after?1:0), rb=ph==="play"?(pl?cl(p,.65,.78):1):(st.after?1:0), vd=ph==="play"?(pl?cl(p,.78,1):1):(st.vd?1:0);
-      const Yk=16, Yb=Yk+BH, bm=Yb+BD/2, Yl=Yb+BD, Yt=Yl+BH+G, H=Yt+BH+10;
-      svg.setAttribute("viewBox",`0 0 ${cw} ${H}`); svg.setAttribute("width",cw); svg.setAttribute("height",H);
-      const Ke=En.K0+(En.Ka-En.K0)*e, Le=En.L0+(En.La-En.L0)*e, core={k:En.K0,l:En.L0}, before={k:En.K0,l:En.L0}, fly=[];
-      if(e>=1){ core.k=En.Ka; core.l=En.La; } else if(e>0) S.mv.forEach(m=>{ if(m.k!=="in") core[m.w]-=m.d; fly.push(m); });
-      const lx=(len,step,lim)=>{ const r=[]; for(let j=1;j*step<len-1e-6;j++){ if(j*step>lim+1e-6) break; r.push(j*step); } return r; };
-      const sets=(r,len)=>{ const o=[]; if(rb<1) o.push([lx(len,S.mB,Infinity),1-rb]); if(rb>0) o.push([lx(len,S.keep==="n"?1:S.mA,S.keep==="n"?before[r]:Infinity),rb]); return o; };
-      const ln=(g,x,y,hh,op,w)=>add("line",{x1:x,y1:y,x2:x,y2:y+hh,stroke:"var(--ink)","stroke-width":w||1.6,opacity:op,class:"ssln"},null,g);
-      const bar=(id,y,len)=>{ const g=add("g",{class:"ssbar","data-bar":id}); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:FILL[id]},null,g);
-        sets(id,len).forEach(([xs,op])=>xs.forEach(v=>ln(g,X(v),y,BH,op))); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2,class:"ssm"},null,g); };
-      bar("k",Yk,core.k); bar("l",Yl,core.l);
-      { const g=add("g",{class:"ssbar","data-bar":"t"}); add("rect",{x:X0,y:Yt,width:Ke*px,height:BH,fill:FILL.k},null,g); add("rect",{x:X(Ke),y:Yt,width:Le*px,height:BH,fill:FILL.l},null,g);
-        sets("k",Ke).forEach(([xs,op])=>xs.forEach(v=>ln(g,X(v),Yt,BH,op))); if(Ke>1e-6&&Le>1e-6) ln(g,X(Ke),Yt,BH,1,2.6);
-        sets("l",Le).forEach(([xs,op])=>xs.forEach(v=>ln(g,X(Ke+v),Yt,BH,op)));
-        add("rect",{x:X0,y:Yt,width:(Ke+Le)*px,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2,class:"ssm"},null,g); }
-      lab("Kim",Yk+BH/2+fs*.36,INK.k); lab("Lee",Yl+BH/2+fs*.36,INK.l); lab("Total",Yt+BH/2+fs*.36);
-      const a=Math.min(Ke,Le), b=Math.max(Ke,Le);
-      add("line",{x1:X(Ke),y1:Yk+BH,x2:X(Ke),y2:bm,stroke:"var(--muted)","stroke-width":1.4,"stroke-dasharray":"2 3"}); add("line",{x1:X(Le),y1:Yl,x2:X(Le),y2:bm,stroke:"var(--muted)","stroke-width":1.4,"stroke-dasharray":"2 3"});
-      add("line",{x1:X(a),y1:bm,x2:X(b),y2:bm,stroke:"var(--ink)","stroke-width":2,class:"ssdf"});
-      if(b-a>1e-6) [a,b].forEach(v=>add("line",{x1:X(v),y1:bm-6,x2:X(v),y2:bm+6,stroke:"var(--ink)","stroke-width":2,class:"ssdt"}));
-      { const dw=tw("Difference",sf), xr=X(a)-8; add("text",xr-dw>=2?{x:xr,y:bm+sf*.36,"text-anchor":"end","font-size":sf,"font-weight":700,fill:"var(--ink)",class:"ssdl"}:{x:X(b)+8,y:bm+sf*.36,"font-size":sf,"font-weight":700,fill:"var(--ink)",class:"ssdl"},"Difference"); }
-      fly.forEach(m=>{ const yw=m.w==="k"?Yk:Yl, base=before[m.w], w=m.d*px; let x, y=yw, op=1;
-        if(m.k==="in"){ x=X(base); y=yw-(1-e)*BH*.9; op=cl(e,0,.35); }
-        else if(m.k==="use"){ x=X(base-m.d)+e*BH*.6; op=1-e; }
-        else if(m.k==="out"){ x=X(base-m.d)+e*e*cw; op=1-cl(e,.5,1); }
-        else { const o=m.w==="k"?"l":"k", yo=o==="k"?Yk:Yl, tx=X(before[o]), fx=X(base-m.d); x=fx+(tx-fx)*e; y=yw+(yo-yw)*e-Math.sin(Math.PI*e)*BH*.4; }
-        const g=add("g",{class:"ssfly",opacity:op}); add("rect",{x,y,width:w,height:BH,fill:FILL[m.w],stroke:"var(--ink)","stroke-width":2},null,g);
-        for(let j=1;j*S.mB<m.d-1e-6;j++) ln(g,x+j*S.mB*px,y,BH,1);
-        const t=String(m.v), wt=tw(t,sf); add("text",{x:x+w/2,y:w>=wt+6?y+BH/2+sf*.36:y-5,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)"},t,g); });
-      st.outl.forEach(x=>{ const v0=ssVal(x,En.K0,En.L0), cv=ssVal(x,Ke,Le), eq=Math.abs(ssVal(x,En.Ka,En.La)-v0)<1e-9, lock=vd>0&&eq, al=pl&&!st.pre.includes(x)?cl(p,0,.15):1;
-        const yy=x==="k"?Yk:x==="l"?Yl:Yt, s0=x==="d"?X(a):X0, oy=x==="d"?bm-11:yy-4, oh=x==="d"?22:BH+8;
-        add("rect",{x:s0-4,y:oy,width:v0*px+8,height:oh,rx:6,fill:"none",stroke:lock?"var(--green)":"var(--muted)","stroke-width":lock?2.8:2,"stroke-dasharray":lock?"none":"5 4",opacity:al,class:"ssol","data-k":x});
-        if(vd>0&&!eq){ const ry=x==="d"?bm-8:yy, rh=x==="d"?16:BH;
-          if(cv>v0) add("rect",{x:s0+v0*px,y:ry,width:(cv-v0)*px,height:rh,fill:"var(--red-fill)","fill-opacity":.85,stroke:"var(--red)","stroke-width":2.4,opacity:vd,class:"ssov","data-k":x});
-          else add("rect",{x:s0+cv*px,y:ry,width:(v0-cv)*px,height:rh,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":2.4,"stroke-dasharray":"4 3",opacity:vd,class:"ssgp","data-k":x}); }
-        if(lock) badge(s0+v0*px+4,oy,x,vd); });
-      if(S.keep==="n"&&e>=1){ add("text",{x:X((En.K0+En.Ka)/2),y:Yk+BH/2+sf*.36,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)",class:"ssbl"},"11");
-        add("rect",{x:X(En.La),y:Yl,width:(En.L0-En.La)*px,height:BH,fill:"none",stroke:"var(--muted)","stroke-width":1.6,"stroke-dasharray":"4 3",class:"ssls"});
-        add("text",{x:X((En.La+En.L0)/2),y:Yl+BH/2+sf*.36,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)",class:"ssbl"},"7"); }
-      svg.setAttribute("aria-label",`Kim ${+(e?Ke:En.K0).toFixed(2)} boxes, Lee ${+(e?Le:En.L0).toFixed(2)} boxes, Total under them.`); }
-    function arcs(){ const old=rows.querySelector("svg.ssarr"); if(old) old.remove(); rows.classList.remove("ssarrs","ssvv");
-      const S=cS(); if(!modeB()||!["arrow","fin"].includes(st.ph)||rows.hidden) return; const A=ssArr(S), shown=st.ph==="arrow"?1:A.length;
-      const bl=rows.querySelector(".ssblks"), vert=bl.classList.contains("ssv"); rows.classList.add("ssarrs"); if(vert) rows.classList.add("ssvv");
-      const R=rows.getBoundingClientRect(), s=svgEl("svg",{class:"ssarr","aria-hidden":"true"}); rows.append(s);
-      const bb=[...rows.querySelectorAll(".ssbk")].map(b=>b.getBoundingClientRect()), yM=Math.max(bb[0].bottom,bb[1].bottom)-R.top;
-      for(let i=0;i<shown;i++){ const a=A[i], c0=rows.querySelector(`[data-c="b-${a.w}"]`).getBoundingClientRect(), c1=rows.querySelector(`[data-c="a-${a.w}"]`).getBoundingClientRect(), col=a.w==="k"?"var(--blue)":"var(--amber)";
-        let d, hd, lx, ly;
-        if(!vert){ const sx=c0.left+c0.width/2-R.left, sy=c0.bottom-R.top+2, ex=c1.left+c1.width/2-R.left, ey=c1.bottom-R.top+2, yb=yM+(A.length>1?(a.w==="k"?62:24):30);
-          d=`M${sx} ${sy}C${sx} ${yb} ${ex} ${yb} ${ex} ${ey+8}`; hd=`${ex},${ey} ${ex-5.5},${ey+10} ${ex+5.5},${ey+10}`; lx=(sx+ex)/2; ly=.125*sy+.75*yb+.125*ey; }
-        else if(a.w==="k"){ const sx=c0.left-R.left-4, sy=c0.top+c0.height/2-R.top, ex=c1.left-R.left-4, ey=c1.top+c1.height/2-R.top, xb=Math.min(sx,ex)-28;
-          d=`M${sx} ${sy}C${xb} ${sy} ${xb} ${ey} ${ex-8} ${ey}`; hd=`${ex},${ey} ${ex-10},${ey-5.5} ${ex-10},${ey+5.5}`; lx=xb-6; ly=(sy+ey)/2; }
-        else { const sx=c0.right-R.left+4, sy=c0.top+c0.height/2-R.top, ex=c1.right-R.left+4, ey=c1.top+c1.height/2-R.top, xb=Math.max(sx,ex)+28;
-          d=`M${sx} ${sy}C${xb} ${sy} ${xb} ${ey} ${ex+8} ${ey}`; hd=`${ex},${ey} ${ex+10},${ey-5.5} ${ex+10},${ey+5.5}`; lx=.75*xb+.125*(sx+ex); ly=(sy+ey)/2; }
-        s.append(svgEl("path",{d,fill:"none",stroke:col,"stroke-width":2.2,class:"ssap","data-w":a.w}),svgEl("polygon",{points:hd,fill:col}));
-        const fill=st.ph!=="arrow"||i>0, txt=(a.d>0?"+":"−")+(fill?Math.abs(a.d):"?")+"u", g=svgEl("g",{class:"ssal","data-i":i,"data-w":a.w}); s.append(g);
-        const t=svgEl("text",{x:lx,y:ly+5,"text-anchor":"middle","font-size":15,"font-weight":700,fill:col},txt); g.append(t); let w=40; try{ w=t.getComputedTextLength()+14; }catch(e){}
-        g.insertBefore(svgEl("rect",{x:lx-w/2,y:ly-12,width:w,height:24,rx:12,fill:fill?"var(--card)":"var(--blue-fill)",stroke:col,"stroke-width":fill?2:2.4,"stroke-dasharray":fill?"none":"4 3",class:fill?"":"ssq1"}),t); } }
-    const tick=now=>{ if(!st.anim) return; if(!root.isConnected){ st.anim=null; return; } st.p=Math.min(1,(now-st.anim.t0)/st.anim.dur); draw(); if(st.p<1) st.raf=requestAnimationFrame(tick); else { st.anim=null; done(); } };
-    function later(ms,fn){ clearTimeout(st.tm); st.nx=fn; st.tm=setTimeout(()=>{ st.tm=0; st.nx=null; if(root.isConnected) fn(); },ms); }
-    function stop(){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; clearTimeout(st.tm); st.tm=0; st.nx=null; }
-    function anim(dur){ if(RED||!dur) return false; st.p=0; st.anim={t0:performance.now(),dur}; st.raf=requestAnimationFrame(tick); return true; }
-    function done(){ if(st.ph==="play") played(true); else if(st.ph==="same"){ draw(); later(HOLD,toArrow); } else draw(); }
-    function skip(){ if(st.anim){ if(st.raf) cancelAnimationFrame(st.raf); st.raf=0; st.anim=null; st.p=1; done(); return true; } if(st.tm&&st.nx){ const f=st.nx; clearTimeout(st.tm); st.tm=0; st.nx=null; f(); return true; } return false; }
-    function played(live){ const S=cS(), p=st.pick, K=S.keep; st.after=1; st.vd=1;
-      if(p===K||st.rev){ st.res=K==="n"?"Nothing stays. The see-saw:":p===K?(S.n===5?"Difference stays, like with ages.":`${SSN[K]} stays the same.`):p==="n"?`${SSN[K]} stayed.`:`${SSN[p]} ${ssVerb(S,p)}. Watch ${SSN[K]}.`;
-        if(p!==K&&p!=="n"){ st.miss++; st.tried.push(p); }
-        if(K==="n"){ st.ph="lines"; st.ln=0; render(); if(live) shake(pic); later(HOLD,lineStep); return; }
-        st.ph="lock"; render(); if(live){ if(p!==K) shake(pic); later(HOLD,toSame); } return; }
-      st.miss++; st.tried.push(p); st.res=`${SSN[p]} ${ssVerb(S,p)}.`; st.ph="miss"; render(); if(live) shake(pic); }
-    function toSame(){ st.ph="same"; const a=anim(SAME); render(); if(!a) later(HOLD,toArrow); }
-    function toArrow(){ st.ph="arrow"; st.aIn=""; st.amiss=0; render(); }
-    function lineStep(){ const L=ssLines(cS()); st.ln=Math.min(L.length,st.ln+1); if(st.ln>=L.length){ finishStory(true); return; } render(); later(LINE,lineStep); }
-    function finishStory(live){ const S=cS(); st.ph="fin"; st.ln=ssLines(S).length; if(!st.rows.some(r=>r[2]===S.n)) st.rows.push([S.ev,SSN[S.keep],S.n]);
-      if(st.rows.length>=7&&!live){ st.ph="end"; render(); return; }
-      render(); if(st.rows.length>=7) later(LAST,()=>{ st.ph="end"; render(); window.scrollTo(0,0); }); }
-    function pill(x){ if(st.ph!=="pick"&&st.ph!=="miss") return; if(st.tried.includes(x)) return; stop(); const S=cS();
-      st.pick=x; const rev=x==="n"||(x!==S.keep&&st.miss>=1); st.pre=[]; st.outl=rev?SSK.slice():[x]; st.rev=rev?1:0; st.after=0; st.vd=0; st.res=""; st.ph="play";
-      const a=anim(PLAY); render(); if(!a) played(true); }
-    function reset(){ stop(); Object.assign(st,{ph:"pick",pick:"",tried:[],miss:0,rev:0,res:"",outl:[],pre:[],after:0,vd:0,aIn:"",amiss:0,afill:0,ln:0}); }
-    function again(){ const o=st.ord.slice(); let n; do{ n=o.slice(); for(let i=n.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [n[i],n[j]]=[n[j],n[i]]; } }while(n.join()===o.join());
-      st.ord=n; st.i=0; st.rows=[]; reset(); render(); window.scrollTo(0,0); }
-    function act(){ if(skip()) return; const ph=st.ph;
-      if(ph==="fin"&&st.rows.length<7){ st.i++; reset(); render(); window.scrollTo(0,0); return; }
-      if(ph==="end") again(); }
-    function dkey(k){ if(st.ph!=="arrow") return; const n=Math.abs(ssArr(cS())[0].d);
-      if(+k===n){ st.afill=1; finishStory(true); return; }
-      st.amiss++;
-      if(st.amiss>=2){ st.afill=2; finishStory(true); return; }
-      render(); shake(rows); }
-    W.addEventListener("click",e=>{ const t=e.target.closest("button"); if(!t||!W.contains(t)){ if(e.target.closest(".rmpic")) skip(); return; }
-      if(t.dataset.p){ pill(t.dataset.p); return; }
-      if(t.dataset.d){ dkey(t.dataset.d); return; }
-      if(t.classList.contains("rmbtn")) act(); });
-    const onKey=e=>{ if(!root.isConnected){ document.removeEventListener("keydown",onKey); return; } if(e.ctrlKey||e.metaKey||e.altKey) return; const k=e.key;
-      if(/^[1-9]$/.test(k)&&st.ph==="arrow"){ dkey(k); e.preventDefault(); }
-      else if(k==="Enter"&&!(e.target&&e.target.closest&&e.target.closest("button,a,input"))){ act(); e.preventDefault(); } };
-    document.addEventListener("keydown",onKey);
-    let rzT=0, lw=innerWidth; const onRz=()=>{ if(!root.isConnected){ removeEventListener("resize",onRz); return; } if(innerWidth===lw) return; lw=innerWidth; clearTimeout(rzT); rzT=setTimeout(()=>{ if(st.ph==="end") return; if(!rows.hidden) fitRows(); draw(); arcs(); },120); };
-    addEventListener("resize",onRz);
-    const sn=parseInt(prm.get("s")||prm.get("story"),10);
-    if(sn>=1&&sn<=7){ st.i=sn-1; st.rows=SSX.slice(0,sn-1).map(S=>[S.ev,SSN[S.keep],S.n]); const S=cS(), ph=Math.max(0,Math.min(4,parseInt(prm.get("ph"),10)||0)), tr=prm.get("try");
-      if(ph>=1){ st.pick=S.keep; st.outl=S.keep==="n"?SSK.slice():[S.keep]; st.rev=S.keep==="n"?1:0; played(false); stop();
-        if(S.keep==="n"||ph>=3){ st.afill=1; finishStory(false); }
-        else { st.ph="arrow"; st.aIn=""; st.amiss=0; } }
-      else if(tr&&/^[kltdn]$/.test(tr)){ st.pick=tr; st.rev=tr==="n"?1:0; st.outl=st.rev?SSK.slice():[tr]; played(false); stop();
-        if(st.ph==="lock") later(HOLD,toSame); else if(st.ph==="lines") later(HOLD,lineStep); } }
-    if(st.ph!=="end") render();
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(root.isConnected&&!st.anim&&st.ph!=="end"){ draw(); arcs(); } });
-    if(cur) cur.state=()=>{ const S=cS(), ph=st.ph, o={s:S.n}, n=ph==="fin"||ph==="end"?4:ph==="pick"||ph==="play"||ph==="miss"?0:S.keep==="n"?4:2; if(n) o.ph=n; return o; };
-  } };
+const sxVal=(x,K,L)=>x==="k"?K:x==="l"?L:x==="t"?K+L:Math.abs(L-K);
+const sxCl=(x,a,b)=>Math.max(0,Math.min(1,(x-a)/(b-a))), sxEz=u=>u*u*(3-2*u);
+const sxHold=(S,x)=>{ const E=sxEnd(S); return Math.abs(sxVal(x,E.K0,E.L0)-sxVal(x,E.Ka,E.La))<1e-9; };
+function sxFrame(s){ const S=SXS[s.s-1];
+  if(s.ph===1){ let u=s.t, x=s.tap; if(s.last&&u>=SXA+SXH){ u-=SXA+SXH; x=S.keep; } else u=Math.min(u,SXA); return {who:x,al:sxCl(u,0,300),e:sxEz(sxCl(u,300,1800)),vd:sxCl(u,1800,SXA)}; }
+  if(s.ph>=2) return {who:S.keep,al:1,e:1,vd:1};
+  return {who:"",al:0,e:0,vd:0}; }
+function sxFin(s){ if(s.ok) s.ph=2; else if(s.last) s.ph=3; else Object.assign(s,{ph:0,tap:"",tried:s.tap,t:0}); }
+function sxDraw(svg,s){ const S=SXS[s.s-1], E=sxEnd(S), F=sxFrame(s), e=F.e, pl=svg.closest(".play"), stg=svg.closest(".stage");
+  if(pl) pl.classList.add("sxplay"); svg._st=s;
+  if(stg){ if(s.ph===0&&s.tried) stg.classList.remove("ipdone"); else if(s.ph) stg.classList.add("ipdone"); }
+  if(!svg._rz){ svg._rz=1; const rz=()=>{ if(!svg.isConnected){ removeEventListener("resize",rz); return; } const w=Math.round(svg.clientWidth); if(w&&Math.abs(w-svg._cw)>2){ svg.innerHTML=""; sxDraw(svg,svg._st); } }; addEventListener("resize",rz); }
+  const cw=Math.max(280,Math.round(svg.clientWidth||320)); svg._cw=cw;
+  const wide=cw>=560, fs=wide?19:16, sf=wide?16:14, qf=wide?21:17, BH=wide?44:40, P=5, GP=10, OH=BH+2*P;
+  const add=(tg,at,tx,par)=>{ const n=svgEl(tg,at,tx); (par||svg).append(n); return n; };
+  const tw=(tx,f,wt)=>{ const n=add("text",{"font-size":f,"font-weight":wt||700,x:0,y:-99},tx); let w=0; try{ w=n.getComputedTextLength(); }catch(_){} n.remove(); return w>0?w:tx.length*f*.6; };
+  const LW=Math.ceil(Math.max(tw("Kim",fs),tw("Lee",fs),tw("Total",fs))), X0=8+LW+12, X1=cw-16;
+  const mx=Math.max(E.K0+E.L0,E.Ka+E.La), px=(X1-X0)/mx, X=v=>X0+v*px;
+  const y1=qf+7, y2=y1+qf+10, Yk=y2+16+P, DT=Yk+BH+P+GP, bm=DT+OH/2, Yl=DT+OH+GP+P, Yt=Yl+BH+P+GP+P, H=Yt+BH+P+4;
+  svg.setAttribute("viewBox",`0 0 ${cw} ${H}`);
+  const FILL={k:"var(--blue-fill)",l:"var(--amber-fill)"}, INK={k:"var(--blue)",l:"var(--amber)"};
+  { const af=tw("At first",sf)+12, q=add("text",{x:2,y:y1,"font-size":qf,"font-weight":700,fill:"var(--ink)"});
+    add("tspan",{"font-size":sf,"font-weight":600,fill:"var(--muted)"},"At first",q); add("tspan",{x:2+af,fill:INK.k},"Kim",q);
+    [[" : ",""],["Lee",INK.l],[" = 3 : 5.",""]].forEach(([w,c])=>add("tspan",c?{fill:c}:{},w,q));
+    const ev="Then "+S.e, ew=tw(ev,qf), q2=ew>cw-6?Math.floor(qf*(cw-6)/ew):qf; add("text",{x:2,y:y2,"font-size":q2,"font-weight":700,fill:"var(--ink)",class:"sxev"},ev);
+    for(let j=0;j<6;j++){ const cx=X1-(5-j)*13, cy=y1-qf*.33, on=j===s.s-1, dn=j<s.s-1;
+      add("circle",{cx,cy,r:on?4.5:3.5,fill:on?"var(--accent)":dn?"var(--muted)":"none",stroke:on?"var(--accent)":"var(--muted)","stroke-width":1.4}); } }
+  const before={k:E.K0,l:E.L0}, core={k:E.K0,l:E.L0}, fly=[];
+  if(e>=1){ core.k=E.Ka; core.l=E.La; } else if(e>0) S.mv.forEach(m=>{ if(m.k!=="in") core[m.w]-=m.d; fly.push(m); });
+  const Ke=E.K0+(E.Ka-E.K0)*e, Le=E.L0+(E.La-E.L0)*e;
+  const ln=(g,x,y,w)=>add("line",{x1:x,y1:y,x2:x,y2:y+BH,stroke:"var(--ink)","stroke-width":w||1.6},null,g);
+  const marks=len=>{ const r=[]; for(let j=S.mB;j<len-1e-6;j+=S.mB) r.push(j); return r; };
+  const bar=(id,y,len)=>{ const g=add("g",{}); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:FILL[id]},null,g);
+    marks(len).forEach(v=>ln(g,X(v),y)); add("rect",{x:X0,y,width:Math.max(0,len*px),height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2},null,g); };
+  bar("k",Yk,core.k); bar("l",Yl,core.l);
+  { const g=add("g",{}); add("rect",{x:X0,y:Yt,width:Ke*px,height:BH,fill:FILL.k},null,g); add("rect",{x:X(Ke),y:Yt,width:Le*px,height:BH,fill:FILL.l},null,g);
+    marks(Ke).forEach(v=>ln(g,X(v),Yt)); marks(Le).forEach(v=>ln(g,X(Ke+v),Yt)); if(Ke>1e-6&&Le>1e-6) ln(g,X(Ke),Yt,2.8);
+    add("rect",{x:X0,y:Yt,width:(Ke+Le)*px,height:BH,fill:"none",stroke:"var(--ink)","stroke-width":2},null,g); }
+  const lc=x=>x===s.tried&&s.ph===0?"var(--muted)":x==="k"?INK.k:x==="l"?INK.l:"var(--ink)";
+  const lab=(x,y)=>add("text",{x:X0-12,y,"text-anchor":"end","font-size":fs,"font-weight":700,fill:lc(x)},SXN[x]);
+  lab("k",Yk+BH/2+fs*.36); lab("l",Yl+BH/2+fs*.36); lab("t",Yt+BH/2+fs*.36);
+  const a=Math.min(Ke,Le), b=Math.max(Ke,Le);
+  add("line",{x1:X(Ke),y1:Yk+BH,x2:X(Ke),y2:bm,stroke:"var(--muted)","stroke-width":1.5,"stroke-dasharray":"2 3"});
+  add("line",{x1:X(Le),y1:Yl,x2:X(Le),y2:bm,stroke:"var(--muted)","stroke-width":1.5,"stroke-dasharray":"2 3"});
+  add("line",{x1:X(a),y1:bm,x2:X(b),y2:bm,stroke:"var(--ink)","stroke-width":2.2});
+  if(b-a>1e-6) [a,b].forEach(v=>add("line",{x1:X(v),y1:bm-7,x2:X(v),y2:bm+7,stroke:"var(--ink)","stroke-width":2.2}));
+  const dw=tw("Difference",sf), dr=X(a)-10, dl=dr-dw>=2?dr-dw:X(b)+10+dw<=cw-2?X(b)+10:2;
+  add("text",{x:dl,y:bm+sf*.36,"font-size":sf,"font-weight":700,fill:lc("d")},"Difference");
+  const AMB={fill:"none",stroke:"var(--amber)","stroke-width":3,"stroke-dasharray":"6 4",class:"sxtr"};
+  if(e>=1) S.mv.forEach(m=>{ const o=m.k==="tx"?(m.w==="k"?"l":"k"):m.w, v=m.k==="in"?before[o]:m.k==="tx"?before[o]:before[o]-m.d, y=o==="k"?Yk:Yl;
+    add("rect",Object.assign({x:X(v)+2,y:y+2,width:m.d*px-4,height:BH-4,rx:3},AMB)); });
+  fly.forEach(m=>{ const yw=m.w==="k"?Yk:Yl, base=before[m.w], w=m.d*px; let x, y=yw, op=1;
+    if(m.k==="in"){ x=X(base); y=yw-(1-e)*BH*.45; op=sxCl(e,0,.35); }
+    else if(m.k==="use"){ x=X(base-m.d)+e*BH*.6; op=1-e; }
+    else if(m.k==="out"){ x=X(base-m.d)+e*e*cw; op=1-sxCl(e,.5,1); }
+    else { const o=m.w==="k"?"l":"k", yo=o==="k"?Yk:Yl, tx=X(before[o]), fx=X(base-m.d); x=fx+(tx-fx)*e; y=yw+(yo-yw)*e-Math.sin(Math.PI*e)*BH*.4; }
+    const g=add("g",{opacity:op}); add("rect",{x,y,width:w,height:BH,fill:FILL[m.w],stroke:"var(--ink)","stroke-width":2},null,g);
+    for(let j=1;j*S.mB<m.d-1e-6;j++) ln(g,x+j*S.mB*px,y);
+    add("rect",Object.assign({x:x+2,y:y+2,width:w-4,height:BH-4,rx:3},AMB),null,g);
+    const vt=String(m.v), wt=tw(vt,sf); add("text",{x:x+w/2,y:w>=wt+8?y+BH/2+sf*.36:y-6,"text-anchor":"middle","font-size":sf,"font-weight":700,fill:"var(--ink)"},vt,g); });
+  const rowY={k:Yk-P,l:Yl-P,t:Yt-P,d:DT}, rest={k:X(E.K0),l:X(E.L0),t:X(E.K0+E.L0),d:Math.max(X(b),dl+dw)};
+  const DOT={rx:9,fill:"none","stroke-dasharray":"6 5"};
+  if(F.who){ const x=F.who, v0=sxVal(x,E.K0,E.L0), cv=sxVal(x,Ke,Le), eq=sxHold(S,x), vd=F.vd, yy=x==="k"?Yk:x==="l"?Yl:Yt;
+    const s0=x==="d"?X(a):X0, ox=x==="d"?s0-7:2, ow=x==="d"?v0*px+14:X(v0)+7-2, ok=vd>0&&eq, bad=vd>0&&!eq;
+    add("rect",Object.assign({},DOT,{x:ox,y:rowY[x],width:ow,height:OH,stroke:ok?"var(--green)":bad?"var(--red)":"var(--ink)","stroke-width":ok?3.2:2.6,"stroke-dasharray":ok?"none":"6 5",opacity:F.al,class:"sxol","data-k":x,"data-v":ok?"ok":bad?"bad":""}));
+    if(bad){ const ry=x==="d"?bm-9:yy, rh=x==="d"?18:BH;
+      if(cv>v0) add("rect",{x:s0+v0*px,y:ry,width:(cv-v0)*px,height:rh,fill:"var(--red-fill)","fill-opacity":.85,stroke:"var(--red)","stroke-width":2.6,opacity:vd});
+      else add("rect",{x:s0+cv*px,y:ry,width:(v0-cv)*px,height:rh,fill:"var(--red-fill)",stroke:"var(--red)","stroke-width":2.6,"stroke-dasharray":"4 3",opacity:vd}); }
+    if(ok){ const cx=Math.min(ox+ow,cw-14), cy=Math.max(rowY[x],14), g=add("g",{opacity:vd,class:"sxok"}); add("circle",{cx,cy,r:13,fill:"var(--green)"},null,g); add("text",{x:cx,y:cy+5.5,"text-anchor":"middle","font-size":16,"font-weight":700,fill:"var(--card)",class:"sxbt"},"✓",g); } }
+  if(s.ph===0){ const av=["k","d","l","t"].filter(x=>x!==s.tried), og=add("g",{class:"sxog"+(svg.classList.contains("nudge")?" nudgeme":s.tried?" sxre":""),stroke:"var(--ink)","stroke-width":1.8,"pointer-events":"none"});
+    if(s.tried) add("rect",Object.assign({},DOT,{x:2,y:rowY[s.tried],width:rest[s.tried]+7-2,height:OH,stroke:"var(--muted)","stroke-width":1.4,"stroke-opacity":.6,"pointer-events":"none"}));
+    av.forEach(x=>add("rect",Object.assign({},DOT,{x:2,y:rowY[x],width:rest[x]+7-2,height:OH}),null,og));
+    av.forEach(x=>add("rect",{x:0,y:rowY[x]-GP/2,width:cw,height:OH+GP,fill:"transparent","data-drag":x,"data-tap":"1",role:"button","aria-label":SXN[x],style:"cursor:pointer"})); }
+  if(s.ph===1&&!s.ok&&s.t>=SXA&&s.t<SXA+SXH) add("rect",{x:0,y:0,width:cw,height:H,fill:"transparent","data-drag":"z","data-tap":"1",style:"cursor:pointer"});
+  svg.setAttribute("aria-label",`Kim ${+Ke.toFixed(2)} boxes, Lee ${+Le.toFixed(2)} boxes, Total under them, the Difference between their ends.`); }
+const staysSame=aid({
+  init:{s:1,ph:0,tap:"",tried:"",t:0,last:0,ok:0,D:0}, jump:true, ip:"Tap what stays the same.", vb:"0 0 320 270", label:"Before and after bars", link:["s"],
+  fix:s=>{ const n=Math.round(+s.s); s.s=n>=1&&n<=6?n:1; Object.assign(s,{ph:0,tap:"",tried:"",t:0,last:0}); },
+  buttons:[{label:"Next story →",show:s=>s.ph>=2,fn:s=>{ Object.assign(s,{s:s.s%6+1,ph:0,tap:"",tried:"",t:0,last:0}); }}],
+  steps:[{name:"Before and after",t:()=>""}],
+  draw:sxDraw,
+  drag(){},
+  drop(id,s,animate){ const run=t0=>{ const D=s.D; if(t0>=D){ sxFin(s); return; } animate(D-t0,p=>{ s.t=t0+p*(D-t0); if(p>=1) sxFin(s); }); };
+    if(id==="z"){ if(s.ph===1&&!s.ok&&s.t>=SXA) run(SXA+SXH); return; }
+    if(s.ph!==0||!SXT.includes(id)||id===s.tried) return; const S=SXS[s.s-1], ok=id===S.keep, last=!ok&&!!s.tried;
+    Object.assign(s,{ph:1,tap:id,t:0,last:last?1:0,ok:ok?1:0,D:ok?SXA:last?2*SXA+SXH:SXA+SXH}); run(0); },
+  key(){ return ""; }
+});
 PLAYS.staysSame=staysSame;
 
 function miniQ(n){const vy=n===2?28:n===1?20:11, cy=2*vy-2;
@@ -11744,7 +11375,7 @@ function renderTopic(t,tab,prm){
   const src=srcFrom&&srcFrom.topic===t.id?srcFrom:null;
   cur={t,tab,state:null,stage:null,sheet:sheetForTopic(t),back:src&&!(tab==="sheet"&&src.own)?src.hash:(cdFrom||"").split("?")[0].replace(/^\//,"")==="p6"?"p6":"",done:src?"#"+src.hash:(t.sheet?"#"+t.id+"/sheet":"")};
   app.innerHTML="";
-  const IP=tab==="play"&&!!(PLAYS[t.play]&&PLAYS[t.play].ip)&&!kidOf(t.levels); document.documentElement.toggleAttribute("data-ip",IP);
+  const IP=tab==="play"&&!!(PLAYS[t.play]&&PLAYS[t.play].ip); document.documentElement.toggleAttribute("data-ip",IP);
   const tabs=h("div",{class:"tabs",role:"tablist"});
   [["play","Interactive",t.play],["sheet","Cheatsheet",t.sheet]].forEach(([k,name,has])=>{
     if(!has) return;
