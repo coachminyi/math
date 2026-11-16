@@ -7871,21 +7871,15 @@ diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup>
   </div>
 </div>`,
 
-complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + ${frac(V("b"),"2")})²`)} − ${nw(`(${frac(V("b"),"2")})²`)} + ${V("c")}`,"halve b · add and take away its square"),FB("amber","Turning point",nw(`(−${frac(V("b"),"2")}, ${V("c")} − (${frac(V("b"),"2")})²)`),"read it off the completed square"),FB("green","Min or max value",`${V("k")}, when ${X1} = ${V("h")}`,`from ${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)])}
+complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class="k-amber">3</b>)² − <b class="k-amber">3</b>²`),`halve the coefficient of ${X1}`,nw(`${X2} + ${V("b")}${X1} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`),"mk"),FB("amber","Number in front",`take it out, then multiply it <b class="k-amber">back in</b>`,`out of the ${X2} and ${X1} terms only`,"","mk mkw"),FB("green","Turning point",`${nw(`(${X1} + 4)² − 1`)} ${nw(`→ (<b class="k-amber">−4</b>, −1)`)}`,"flip the sign in the bracket",nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`),"mk")])}
 <div class="sheet">
-  <div class="panelc"><h4>3 steps: x² + bx + c</h4>
+  <div class="panelc"><h4>Odd b: use fractions</h4>
     <ul class="steps">
-      <li>① Halve ${V("b")}: ${frac(V("b"),"2")}</li>
-      <li>② Add <b>and</b> take away (${frac(V("b"),"2")})²</li>
-      <li>③ The first 3 terms make a perfect square</li>
+      <li>${nw(`${X2} − 5${X1} + 2`)}</li>
+      <li>${nw(`= (${X1} − ${frac("5","2")})² − (${frac("5","2")})² + 2`)} <span class="tagop">half of −5</span></li>
+      <li>${nw(`= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + ${frac("8","4")}`)}</li>
+      <li>= <b>${nw(`(${X1} − ${frac("5","2")})² − ${frac("17","4")}`)}</b></li>
     </ul>
-    <p class="big">${nw(`${X2} + ${V("b")}${X1} + ${V("c")}`)} = ${nw(`(${X1} + ${frac(V("b"),"2")})²`)} − ${nw(`(${frac(V("b"),"2")})²`)} + ${V("c")}</p>
-    <table>
-      <tr><th>Example</th><th>Working</th></tr>
-      <tr><td>${nw(`${X2} + 8${X1} + 5`)}</td><td>${nw(`= ${X2} + 8${X1} + 16 − 16 + 5`)}<br>= <b>${nw(`(${X1} + 4)² − 11`)}</b></td></tr>
-      <tr><td>${nw(`${X2} − 5${X1} + 2`)}</td><td>${nw(`= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + 2`)}<br>= <b>${nw(`(${X1} − ${frac("5","2")})² − ${frac("17","4")}`)}</b></td></tr>
-    </table>
-    <p class="anno">* the sign in the bracket follows ${V("b")}; the (${frac(V("b"),"2")})² is always taken away</p>
     ${PLAYLINK("#quad-formula-proof","For the curious: the quadratic formula, by completing the square")}
   </div>
 
@@ -7907,32 +7901,24 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
     ${PLAYLINK("#complete-square","Interactive: cut and move the strip")}
   </div>
 
-  <div class="panelc"><h4>Number in front of x²</h4>
-    ${EG("E-Math: −1 in front. Take −1 out of the x² and x terms",[nw(`−${X2} + 8${X1} + 1`),nw(`= −(${X2} − 8${X1}) + 1`),nw(`= −[(${X1} − 4)² − 16] + 1`),nw(`= −(${X1} − 4)² + 16 + 1`),nw(`= −(${X1} − 4)² + 17`)])}
-    <p class="anno">* A-Math: any number in front, same steps</p>
+  <div class="panelc"><h4>Negative x²</h4>
     <ul class="steps">
-      <li>2${X2} − 12${X1} + 7</li>
-      <li>${nw(`= 2(${X2} − 6${X1}) + 7`)} <span class="tagop">take 2 out of the ${X2} and ${X1} terms only</span></li>
-      <li>${nw(`= 2[(${X1} − 3)² − 9] + 7`)}</li>
-      <li>${nw(`= 2(${X1} − 3)² − 18 + 7`)} <span class="tagop">× 2 into the [ ]</span></li>
-      <li>= <b>2(${X1} − 3)² − 11</b></li>
+      <li>${nw(`−${X2} + 8${X1} + 1`)}</li>
+      <li>${nw(`= −(${X2} − 8${X1}) + 1`)} <span class="tagop">take out −1</span></li>
+      <li>${nw(`= −[(${X1} − 4)² − 16] + 1`)}</li>
+      <li>${nw(`= −(${X1} − 4)² <b class="k-amber">+ 16</b> + 1`)} <span class="tagop">× −1 back in</span></li>
+      <li>= <b>${nw(`−(${X1} − 4)² + 17`)}</b></li>
     </ul>
-    <div class="wrongright">
-      <div class="x">✗ 2(${X1} − 3)² − 9 + 7</div>
-      <div class="ok">✓ 2(${X1} − 3)² − 18 + 7</div>
-    </div>
-    <div class="note"><b>Note!</b> When you open the square bracket, the −9 gets multiplied by 2 too.</div>
+    <p class="anno">* A-Math: 2${X2} in front, same steps</p>
   </div>
 
-  <div class="panelc"><h4>What you can read off</h4>
-    <table>
-      <tr><th>${nw(`${V("y")} =`)} ${nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")}`)}</th><th>${V("a")} &gt; 0</th><th>${V("a")} &lt; 0</th></tr>
-      <tr><td>Turning point</td><td colspan="2">(${V("h")}, ${V("k")})</td></tr>
-      <tr><td>Type</td><td>${nw("minimum ∪")}</td><td>${nw("maximum ∩")}</td></tr>
-      <tr><td>Min / max value of ${V("y")}</td><td colspan="2">${V("k")}, when ${X1} = ${V("h")}</td></tr>
-    </table>
+  <div class="panelc"><h4>Min or max</h4>
     <div class="piccards two">${PIC(null,qMini("min"),`${V("a")} &gt; 0: minimum point`,`(${V("h")}, ${V("k")}) is the lowest point`)}${PIC(null,qMini("max"),`${V("a")} &lt; 0: maximum point`,`(${V("h")}, ${V("k")}) is the highest point`)}</div>
-    <p class="anno">* 2(${X1} − 3)² − 11 → minimum point (3, −11)</p>
+    <ul class="steps">
+      <li>${nw(`${V("y")} = −(${X1} + 1)² + 4`)}</li>
+      <li>${V("a")} &lt; 0: maximum point ${nw("(−1, 4)")}</li>
+      <li>maximum value of ${V("y")} = 4, when ${nw(`${X1} = −1`)}</li>
+    </ul>
   </div>
 
   <div class="panelc"><h4>Use it to prove "always positive" <span class="badge">A-Math</span></h4>
@@ -7942,6 +7928,17 @@ complSq:`${MUST([FB("blue",`${X2} + ${V("b")}${X1} + ${V("c")}`,`${nw(`(${X1} + 
       <li>so (${X1} − 2)² + 3 ≥ 3 &gt; 0 → <b>always positive</b></li>
     </ul>
     ${picAlwaysPos()}
+  </div>
+
+  <div class="panelc"><h4>Common mistakes</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`${X2} + 10${X1}`)}<br>${nw(`= (${X1} + 10)² − 100`)}</div>
+      <div class="ok">✓ ${nw(`= (${X1} + 5)² − 25`)}</div>
+      <div class="x">✗ ${nw(`−[(${X1} − 3)² − 9] + 1`)}<br>${nw(`= −(${X1} − 3)² − 9 + 1`)}</div>
+      <div class="ok">✓ ${nw(`= −(${X1} − 3)² + 9 + 1`)}</div>
+      <div class="x">✗ ${nw(`(${X1} + 5)² − 2`)}<br>turning point ${nw("(5, −2)")}</div>
+      <div class="ok">✓ turning point ${nw("(−5, −2)")}</div>
+    </div>
   </div>
 </div>`,
 
@@ -8651,54 +8648,40 @@ function cfP(){let d=""; const pts=[[0,0],[10,4],[20,14],[30,34],[40,62],[50,84]
   <g font-size="7" text-anchor="middle"><text x="${xq(25)}" y="79" fill="var(--green)">Q1</text><text x="${xq(50)}" y="79" fill="var(--amber)">median</text><text x="${xq(75)}" y="79" fill="var(--red)">Q3</text></g><text x="180" y="79" font-size="7" text-anchor="end" fill="var(--muted)">marks</text><text x="24" y="10" font-size="7" fill="var(--muted)">cumulative frequency</text></svg>`;}
 
 const SHEETS2={
-quadEqns:`${MUST([FB("green","First make it = 0",`${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`,"bring everything to one side, then read a, b, c"),FB("blue","Then MENU 5 2 2","see the answers first",`nice numbers: cross method · ugly decimals: formula`),FB("amber","Quadratic formula",nw(`${X1} = ${frac(`−${V("b")} ± ${SQRT(`${V("b")}² − 4${V("ac")}`)}`,`2${V("a")}`)}`),"memorise · for the ugly ones")])}
+quadEqns:`${MUST([FB("green","First make it = 0",`${nw(`${X2} = 3${X1} + 4`)} ${nw(`→ ${X2} − 3${X1} − 4 <b class="k-amber">= 0</b>`)}`,"everything on one side",nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`),"mk"),FB("blue","Which method?",`<b class="k-amber">MENU 5 2 2</b> first`,`nice numbers: cross method<br>ugly decimals: formula`,"","mk mkw"),FB("amber","Quadratic formula",nw(`${X1} = ${frac(`−${V("b")} ± ${SQRT(`${V("b")}² − 4${V("ac")}`)}`,`2${V("a")}`)}`),`${V("a")}, ${V("b")}, ${V("c")} in brackets, <b class="k-amber">with their signs</b>`,"","mk")])}
 <div class="sheet">
-  <div class="panelc"><h4>Which method? MENU 5 2 2 first</h4>
-    <ul class="steps">
-      <li>① Make it = 0, then MENU 5 2 2 and key in ${V("a")}, ${V("b")}, ${V("c")} <span class="tagop">see the answers first</span></li>
-      <li>② Nice numbers (like ${nw(`−2, 3 or ${frac("1","2")})?`)} <b>Cross method</b>, then write the working</li>
-      <li>③ A square root or ugly decimals (like 2.350 6…)? <b>Quadratic formula</b></li>
-    </ul>
-    ${EG(`Nice: ${nw(`${X2} + 5${X1} + 6 = 0`)}`,[`MENU 5 2 2: ${nw(`${X1} = −2, −3`)}, so use the cross`,picCrossG([[RX,"2",`2${RX}`],[RX,"3",`3${RX}`],[`${RX}²`,"6",`5${RX}`]]),nw(`(${X1} + 2)(${X1} + 3) = 0`),nw(`${X1} = −2 or ${X1} = −3`)])}
-    ${EG(`Ugly: ${nw(`2${X2} − 3${X1} − 4 = 0`)}`,["MENU 5 2 2 shows a square root (or long decimals), so use the formula",`working below in "Formula, step by step"`])}
-    <p class="anno">* the question says "complete the square"? Do that instead: <a href="#sheet/completing-the-square">Completing the square</a></p>
+  <div class="panelc"><h4>Nice numbers: cross method</h4>
+    ${EG(nw(`${X2} + 5${X1} + 6 = 0`),[`MENU 5 2 2: ${nw(`${X1} = −2, −3`)}`,picCrossG([[RX,"2",`2${RX}`],[RX,"3",`3${RX}`],[`${RX}²`,"6",`5${RX}`]]),nw(`(${X1} + 2)(${X1} + 3) = 0`),nw(`${X1} = −2 or ${X1} = −3`)])}
+    <p class="anno">* the question says “complete the square”? Do that: <a href="#sheet/completing-the-square">Completing the square</a></p>
   </div>
 
-  <div class="panelc"><h4>Formula, step by step</h4>
-    <p>Solve ${nw(`2${X2} − 3${X1} − 4 = 0`)}, giving your answers correct to 2 decimal places.</p>
+  <div class="panelc"><h4>Ugly decimals: formula</h4>
+    <p>Solve ${nw(`2${X2} − 3${X1} − 4 = 0`)}, correct to 2 decimal places.</p>
     <ul class="steps">
-      <li>① ${V("a")} = 2, ${V("b")} = −3, ${V("c")} = −4 <span class="tagop">signs included!</span></li>
-      <li>② ${nw(`${X1} = ${frac(`−(−3) ± ${SQRT(`(−3)² − 4(2)(−4)`)}`,`2(2)`)}`)}</li>
+      <li>MENU 5 2 2 shows ${SQRT("41")} <span class="tagop">ugly: formula</span></li>
+      <li>① ${V("a")} = 2, ${V("b")} = −3, ${V("c")} = −4</li>
+      <li>② ${nw(`${X1} = ${frac(`−<b class="k-amber">(−3)</b> ± ${SQRT(`<b class="k-amber">(−3)</b>² − 4(2)(−4)`)}`,`2(2)`)}`)}</li>
       <li>③ ${nw(`${X1} = ${frac(`3 ± ${SQRT("41")}`,`4`)}`)}</li>
-      <li>④ ${X1} = <b>2.35</b> or <b>−0.85</b> <span class="tagop">2 d.p., as the question asks</span></li>
+      <li>④ ${X1} = <b>2.35</b> or <b>−0.85</b> <span class="tagop">2 d.p.</span></li>
     </ul>
-    <p class="anno">* calculator: bracket the top line, then ${nw(`÷ 2${V("a")}`)}. ${nw("Do + and − separately.")}</p>
-    <p class="anno">* negative under the root? write "no real solutions"</p>
+    <p class="anno">* negative under the root, or an <i>i</i> on MENU 5 2 2? Write “no real solutions”</p>
     ${PLAYLINK("#quad-formula-proof","For the curious: where the formula comes from")}
   </div>
 
   <div class="panelc"><h4>Fraction in the equation? Multiply it away</h4>
     <ul class="steps">
-      <li>${frac("3",X1+" − 1")} + 2 = ${X1}</li>
-      <li>${nw(`3 + 2(${X1} − 1) = ${X1}(${X1} − 1)`)} <span class="tagop">× (${X1} − 1) every term</span></li>
-      <li>${nw(`3 + 2${X1} − 2 = ${X2} − ${X1}`)}</li>
-      <li>${nw(`${X2} − 3${X1} − 1 = 0`)} <span class="tagop">= 0, then formula</span></li>
-      <li>${X1} = <b>3.30</b> or <b>−0.303</b> (3 s.f.)</li>
+      <li>${nw(`${frac("10",`${X2} − 25`)} + ${frac("1",`${X1} + 5`)} = 1`)}</li>
+      <li>${nw(`LCM = (${X1} + 5)(${X1} − 5)`)} <span class="tagop">factorise first</span></li>
+      <li>${nw(`10 + (${X1} − 5) = ${X2} − 25`)} <span class="tagop">× every term</span></li>
+      <li>${nw(`${X2} − ${X1} − 30 = 0`)}</li>
+      <li>${nw(`(${X1} − 6)(${X1} + 5) = 0`)}</li>
+      <li>${nw(`${X1} = 6`)} or ${nw(`${X1} = −5`)}</li>
+      <li>${X1} = <b>6</b> <span class="tagop"><b class="k-amber">reject −5</b>: bottom = 0</span></li>
     </ul>
-    ${EG("Two fractions: use the LCM",[nw(`${frac("10",`${X2} − 25`)} + ${frac("1",`${X1} + 5`)} = 1`),`factorise each bottom: ${nw(`${X2} − 25 = (${X1} + 5)(${X1} − 5)`)}`,`LCM of ${nw(`${X2} − 25`)} and ${nw(`${X1} + 5`)} is ${nw(`${X2} − 25`)}`,`× every term by the LCM: ${nw(`10 + (${X1} − 5) = ${X2} − 25`)}`,nw(`${X1} + 5 = ${X2} − 25`),nw(`${X2} − ${X1} − 30 = 0`),nw(`(${X1} − 6)(${X1} + 5) = 0`),`${nw(`${X1} = 6`)} (reject −5: it makes a bottom 0)`])}
-    <p class="anno">* check each answer: if it makes a bottom 0, reject it (a negative answer can still be right)</p>
   </div>
 
-  <div class="panelc"><h4>Word problems: six steps, every time</h4>
-    <ul class="steps">
-      <li>① Let the unknown be ${X1}, with its unit</li>
-      <li>② Write the other amounts in terms of ${X1}</li>
-      <li>③ Form the equation</li>
-      <li>④ Make it = 0 and solve</li>
-      <li>⑤ <b>Reject</b> an answer that makes no sense (negative length, age…) and say why</li>
-      <li>⑥ Answer the actual question</li>
-    </ul>
-    ${EG("A rectangle is 2 cm longer than it is wide. Its area is 48 cm². Find the width.",[`width ${X1} cm, length ${nw(`(${X1} + 2) cm`)}`,nw(`${X1}(${X1} + 2) = 48`),nw(`${X2} + 2${X1} − 48 = 0`),nw(`(${X1} + 8)(${X1} − 6) = 0`),`width = <b>6 cm</b> (reject −8: a length can't be negative)`])}
+  <div class="panelc"><h4>Word problems</h4>
+    ${EG("A rectangle is 2 cm longer than it is wide. Its area is 48 cm². Find its length.",[`width ${X1} cm, length ${nw(`(${X1} + 2) cm`)}`,nw(`${X1}(${X1} + 2) = 48`),nw(`${X2} + 2${X1} − 48 = 0`),nw(`(${X1} + 8)(${X1} − 6) = 0`),`${nw(`${X1} = 6`)} (reject −8: a length can't be negative)`,`<b class="k-amber">length</b> = 6 + 2 = <b>8 cm</b> <span class="anno" style="margin-left:10px">what was asked</span>`])}
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
@@ -8707,8 +8690,13 @@ quadEqns:`${MUST([FB("green","First make it = 0",`${nw(`${V("a")}${X2} + ${V("b"
       <div class="ok">✓ ${nw(`${X2} − 5${X1} = 0`)}<br>→ ${nw(`${X1}(${X1} − 5) = 0`)} → ${X1} = 0 or 5</div>
       <div class="x">✗ ${nw(`(${X1} − 2)(${X1} + 5) = 3`)}<br>→ ${X1} − 2 = 3</div>
       <div class="ok">✓ expand, make it = 0 first</div>
+      <div class="x">✗ ${nw(`${V("b")} = −3`)}<br>so ${nw(`−${V("b")} = −3`)}</div>
+      <div class="ok">✓ ${nw(`−${V("b")} = −(−3) = 3`)}</div>
+      <div class="x">✗ ${nw(`${X1} = 3 ± ${frac(SQRT("41"),"4")}`)}</div>
+      <div class="ok">✓ ${nw(`${X1} = ${frac(`3 ± ${SQRT("41")}`,"4")}`)}<br>calculator: bracket the whole top</div>
+      <div class="x">✗ reject ${nw(`${X1} = −2`)}<br>because it is negative</div>
+      <div class="ok">✓ reject only a root that makes a bottom 0</div>
     </div>
-    <div class="note"><b>Note!</b> Dividing both sides by ${X1} loses the answer ${X1} = 0. Factorise instead.</div>
   </div>
 </div>`,
 
