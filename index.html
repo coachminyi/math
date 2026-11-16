@@ -11049,11 +11049,8 @@ function mzClick(e){ const b=e.target.closest("[data-a]");
     if(b.dataset.a==="showkn"){ cs.forEach(c=>{ if(c.classList.contains("known")) c.classList.toggle("kshow",on); }); mzRe(); }
     mzBar(); return; }
   const cb=e.target.closest(".mzc.cov .mzbody"); if(cb) mzCov(cb.closest(".mzc"),false); }
-function mzAct(s){ const cs=[...app.querySelectorAll(".mzc")]; if(!cs.length) return; if(!mzAct.on){ app.addEventListener("click",mzClick); mzAct.on=1; }
-  const rows=cdMemo(s.sheet), kn=mzKn(), lvl=s.levels[0];
-  cs.forEach(c=>{ const key=s.id+":"+c.dataset.k, n=rows.filter(x=>mzIn(x,c.dataset.deck)).length; c.dataset.key=key; c.classList.toggle("known",!!kn[key]);
-    c.querySelector(".mzact").innerHTML=`<button class="pill sm mzb" type="button" data-a="cov" aria-pressed="false">Cover</button><button class="pill sm mzb mzkn" type="button" data-a="kn" aria-pressed="${!!kn[key]}">${kn[key]?"✓ Known":"I know this"}</button>${n?`<a class="pill sm mzb mzfc" href="#cards/memo/${lvl}/${c.dataset.k}">${n} flashcard${n>1?"s":""} →</a>`:""}`; });
-  mzBar(); const m=/^cards\/memo\/[^/]+\/(.+)$/.exec(cdFrom||""); if(m){ const c=app.querySelector(`.mzc[data-k="${m[1]}"]`); if(c) setTimeout(()=>c.scrollIntoView({block:"start"}),80); } }
+function mzAct(s){ app.querySelectorAll(".mzact,.mzbar").forEach(e=>e.remove());
+  const m=/^cards\/memo\/[^/]+\/(.+)$/.exec(cdFrom||""); if(m){ const c=app.querySelector(`.mzc[data-k="${m[1]}"]`); if(c) setTimeout(()=>c.scrollIntoView({block:"start"}),80); } }
 function mzNav(){ const nav=app.querySelector(".mznav"); if(!nav) return; const cards=[]; let h="";
   app.querySelectorAll(".mzsec").forEach(sec=>{ const cs=[...sec.querySelectorAll(".mzc")]; h+=`<div class="mznh">${sec.querySelector(".mzsh").innerHTML}</div><div class="mznc">${cs.map(c=>{ cards.push(c); return `<button class="pill sm mzj" type="button" data-mz="${cards.length-1}">${c.querySelector(".mzt b").innerHTML}</button>`; }).join("")}</div>`; });
   nav.querySelector(".mzng").innerHTML=h; if(innerWidth>=900) nav.open=true;
