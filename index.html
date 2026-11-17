@@ -7286,59 +7286,42 @@ quadGraphs:`${MUST([FB("blue","Turning point form",`${nw(`${V("y")} = (${X1} −
   </div>
 </div>`,
 
-discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real and distinct roots","line CUTS the curve twice"),FB("amber",`${V("b")}² − 4${V("ac")} = 0`,"2 real, equal roots","line TOUCHES: a tangent"),FB("red",`${V("b")}² − 4${V("ac")} &lt; 0`,"no real roots","line MISSES the curve")])}
+discrim:`${MUST([FB("blue","Real roots",nw(`${V("b")}² − 4${V("ac")} <b class="k-amber">≥</b> 0`),`equal roots are real too: ≥, not &gt;`,`distinct: ${nw("&gt; 0")} · equal: ${nw("= 0")} · none: ${nw("&lt; 0")}`,"mk"),FB("amber","Line and curve",nw(`${X2} − 4${X1} + <b class="k-amber">(5 − ${V("k")})</b> = 0`),`sub in, everything on one side, THEN read ${V("a")}, ${V("b")}, ${V("c")}`,`tangent: ${nw(`${V("b")}² − 4${V("ac")} = 0`)}`,"mk"),FB("green","Always positive",`${nw(`${V("a")} &gt; 0`)} <b class="k-amber">and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`,"both conditions, every time",`${V("a")} is a letter? test ${nw(`${V("a")} = 0`)} on its own`,"mk")])}
 <div class="sheet">
-  <div class="panelc"><h4>b² − 4ac and the roots of ax² + bx + c = 0</h4>
+  <div class="panelc"><h4>Key words → ${nw(`${V("b")}² − 4${V("ac")}`)}</h4>
     <table>
-      <tr><th>${V("b")}² − 4${V("ac")}</th><th>Roots</th><th>Graph</th></tr>
-      <tr><td>&gt; 0</td><td>2 real and distinct roots</td><td>${miniQ(2)}</td></tr>
-      <tr><td>= 0</td><td>2 real, equal roots</td><td>${miniQ(1)}</td></tr>
-      <tr><td>&lt; 0</td><td>no real roots</td><td>${miniQ(0)}</td></tr>
+      <tr><th>The question says</th><th>${nw(`${V("b")}² − 4${V("ac")}`)}</th><th></th></tr>
+      <tr><td>two real and distinct roots · cuts at two points</td><td>${nw("&gt; 0")}</td><td>${miniLC(2)}</td></tr>
+      <tr><td>real and equal roots · meets at one point · tangent</td><td>${nw("= 0")}</td><td>${miniLC(1)}</td></tr>
+      <tr><td>no real roots · does not meet</td><td>${nw("&lt; 0")}</td><td>${miniLC(0)}</td></tr>
+      <tr><td>real roots · meets</td><td><b class="k-amber">${nw("≥ 0")}</b></td><td></td></tr>
     </table>
-    <p class="anno">* "real roots" (any, equal or not) → ${V("b")}² − 4${V("ac")} ≥ 0</p>
+    ${PLAYLINK("#discriminant","Interactive: move the line")}
   </div>
 
-  <div class="panelc"><h4>Line and curve</h4>
-    <ul class="steps">
-      <li>① Substitute the line into the curve</li>
-      <li>② Rearrange to (quadratic) = 0</li>
-      <li>③ Use ${V("b")}² − 4${V("ac")} of <b>that</b> quadratic</li>
-    </ul>
-    <div class="piccards">
-      ${PIC("#discriminant?m=1&c=3",miniLC(2),`cuts at 2 points`,`${V("b")}² − 4${V("ac")} &gt; 0`)}
-      ${PIC("#discriminant?m=0&c=1",miniLC(1),`touches: a tangent`,`${V("b")}² − 4${V("ac")} = 0`)}
-      ${PIC("#discriminant?m=0&c=-1",miniLC(0),`does not meet`,`${V("b")}² − 4${V("ac")} &lt; 0`)}
-    </div>
-    <p class="anno">* "meets / intersects" (any number of points) → ${V("b")}² − 4${V("ac")} ≥ 0</p>
-  </div>
-
-  <div class="panelc"><h4>Example: tangent</h4>
-    <p>${V("y")} = ${X1} + ${V("k")} is a tangent to ${V("y")} = ${X2} − 3${X1} + 5. Find ${V("k")}.</p>
-    <ul class="steps">
-      <li>${X2} − 3${X1} + 5 = ${X1} + ${V("k")}</li>
-      <li>${X2} − 4${X1} + (5 − ${V("k")}) = 0 <span class="tagop">a = 1, b = −4, c = 5 − k</span></li>
-      <li>(−4)² − 4(1)(5 − ${V("k")}) = 0 <span class="tagop">tangent → = 0</span></li>
-      <li>16 − 20 + 4${V("k")} = 0 → <b>${V("k")} = 1</b></li>
-    </ul>
+  <div class="panelc"><h4>Tangent: find ${V("k")}</h4>
+    ${EG(`${nw(`${V("y")} = ${X1} + ${V("k")}`)} is a tangent to ${nw(`${V("y")} = ${X2} − 3${X1} + 5`)}`,[nw(`${X2} − 3${X1} + 5 = ${X1} + ${V("k")}`),`${nw(`${X2} − 4${X1} + (5 − ${V("k")}) = 0`)}, so <b class="k-amber">${nw(`${V("c")} = 5 − ${V("k")}`)}</b>`,`<b class="k-amber">tangent, so = 0:</b> ${nw(`(−4)² − 4(1)(5 − ${V("k")}) = 0`)}`,nw(`16 − 20 + 4${V("k")} = 0`),`<b>${nw(`${V("k")} = 1`)}</b>`])}
   </div>
 
   <div class="panelc"><h4>Always positive / always negative</h4>
-    <div class="piccards two">${PIC(null,dMini("pos"),"Always positive",`above the ${X1}-axis, never touches it`)}${PIC(null,dMini("neg"),"Always negative",`below the ${X1}-axis, never touches it`)}</div>
-    <table>
-      <tr><th>${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} is…</th><th>Conditions</th></tr>
-      <tr><td>always positive (for all ${X1})</td><td>${nw(`${V("a")} &gt; 0`)} <b>and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}</td></tr>
-      <tr><td>always negative (for all ${X1})</td><td>${nw(`${V("a")} &lt; 0`)} <b>and</b> ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}</td></tr>
-    </table>
-    ${EG(`"Meets for all values of ${V("k")}"? Complete the square on ${nw(`${V("b")}² − 4${V("ac")}`)}`,[`e.g. ${nw(`${V("y")} = ${V("k")}${X1} + 1`)} and ${nw(`${V("y")} = ${X2} + ${X1}`)}`,nw(`${X2} + ${X1} = ${V("k")}${X1} + 1`),nw(`${X2} + (1 − ${V("k")})${X1} − 1 = 0`),nw(`${V("b")}² − 4${V("ac")} = (1 − ${V("k")})² − 4(1)(−1)`),nw(`= ${V("k")}² − 2${V("k")} + 5`),nw(`= (${V("k")} − 1)² + 4`),`${nw(`(${V("k")} − 1)² ≥ 0`)}, so ${nw(`(${V("k")} − 1)² + 4 &gt; 0`)} for all ${V("k")}`,`so ${nw(`${V("b")}² − 4${V("ac")} &gt; 0`)}: the line meets the curve for all ${V("k")}`])}
+    <div class="piccards two">${PIC(null,dMini("pos"),"Always positive",`${nw(`${V("a")} &gt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}${PIC(null,dMini("neg"),"Always negative",`${nw(`${V("a")} &lt; 0`)} and ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}`)}</div>
+  </div>
+
+  <div class="panelc"><h4>"For all values of ${V("k")}"? Complete the square</h4>
+    ${EG(`${nw(`${V("y")} = ${V("k")}${X1} + 1`)} meets ${nw(`${V("y")} = ${X2} + ${X1}`)} for all ${V("k")}`,[`sub in: ${nw(`${X2} + (1 − ${V("k")})${X1} − 1 = 0`)}`,nw(`${V("b")}² − 4${V("ac")} = (1 − ${V("k")})² + 4`),nw(`= ${V("k")}² − 2${V("k")} + 5`),`<b class="k-amber">complete the square:</b> ${nw(`(${V("k")} − 1)² + 4`)}`,`${nw(`(${V("k")} − 1)² ≥ 0`)}, so this is ${nw("&gt; 0")} for all ${V("k")}`])}
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
-      <div class="x">✗ using the line's ${V("c")} in ${nw(`${V("b")}² − 4${V("ac")}`)}</div>
-      <div class="ok">✓ rearrange to … = 0 first<br>then read ${V("a")}, ${V("b")}, ${V("c")}</div>
+      <div class="x">✗ real roots: ${nw(`${V("b")}² − 4${V("ac")} &gt; 0`)}</div>
+      <div class="ok">✓ ${nw(`${V("b")}² − 4${V("ac")} ≥ 0`)}<br>equal roots are real too</div>
+      <div class="x">✗ ${nw(`${X2} − 4${X1} + 5 + ${V("k")} = 0`)}</div>
+      <div class="ok">✓ ${nw(`${X2} − 4${X1} + (5 − ${V("k")}) = 0`)}<br>${V("k")} moves over: it becomes −${V("k")}</div>
+      <div class="x">✗ ${nw(`${V("k")}${X2} + ${V("k")}${X1} + 3 &gt; 0`)} for all ${X1}: ${nw(`0 &lt; ${V("k")} &lt; 12`)}</div>
+      <div class="ok">✓ test ${nw(`${V("k")} = 0`)}: it's just 3, always positive<br>${nw(`0 ≤ ${V("k")} &lt; 12`)}</div>
+      <div class="x">✗ two distinct points, ${V("k")} in front of ${X2}: only ${nw(`${V("b")}² − 4${V("ac")} &gt; 0`)}</div>
+      <div class="ok">✓ also ${nw(`${V("k")} ≠ 0`)}<br>at ${nw(`${V("k")} = 0`)} it isn't a quadratic</div>
     </div>
-    <div class="note"><b>Note!</b> In the example above, ${nw(`${V("c")} = 5 − ${V("k")}`)}, not ${V("k")} and not 5.</div>
-    <div class="note"><b>Note!</b> ${V("k")} in front of ${X2}? Check ${nw(`${V("k")} = 0`)} on its own: it isn't a quadratic then.<br>e.g. ${nw(`${V("k")}${X2} + ${V("k")}${X1} + 3`)} at ${nw(`${V("k")} = 0`)} is just 3: always positive, so ${nw(`${V("k")} = 0`)} counts.<br>"Two distinct points" needs ${nw(`${V("k")} ≠ 0`)}.</div>
   </div>
 </div>`,
 
@@ -7483,68 +7466,51 @@ trigGraphs:`${MUST([FB("blue","Amplitude",nw(`${V("y")} = <b class="k-blue">2</b
   </div>
 </div>`,
 
-rFormula:`${MUST([FB("blue",nw(`${CV("blue","R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`),"the hypotenuse","the wave goes up to R and down to −R"),FB("red",`tan ${AL} = ${frac(V("b"),V("a"))}`,`${AL} acute`,"b over a, not a over b"),FB("amber","Max and min",`${V("R")} and −${V("R")}`,"sin and cos are never beyond ±1")])}
+rFormula:`${MUST([FB("blue","R",nw(`${V("R")} = ${SQRT("3² + 4²")} = 5`),`greatest 5, least −5`,nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`),"mk"),FB("amber","The angle",nw(`tan α = ${frac(`<b class="k-amber">4</b>`,"3")}`),`${V("b")} over ${V("a")}, never ${V("a")} over ${V("b")}`,"α acute · keep 2 d.p.: 53.13°","mk"),FB("green","Which sign?",`${nw("3 cos θ + 4 sin θ")} ${nw(`= 5 cos(θ <b class="k-amber">−</b> 53.13°)`)}`,"cos flips the sign, sin keeps it","not on the formula sheet","mk")])}
 <div class="sheet">
-  <div class="panelc"><h4>The 4 forms <span class="badge">memorise: not on the formula sheet</span></h4>
+  <div class="panelc"><h4>The 4 forms <span class="badge">memorise</span></h4>
     <table>
       <tr><th>Expression</th><th>R-form</th></tr>
       <tr><td>${nw(`${V("a")} sin θ + ${V("b")} cos θ`)}</td><td>${nw(`${V("R")} sin(θ + α)`)}</td></tr>
       <tr><td>${nw(`${V("a")} sin θ − ${V("b")} cos θ`)}</td><td>${nw(`${V("R")} sin(θ − α)`)}</td></tr>
-      <tr><td>${nw(`${V("a")} cos θ + ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ − α)`)}</td></tr>
-      <tr><td>${nw(`${V("a")} cos θ − ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ + α)`)}</td></tr>
+      <tr><td>${nw(`${V("a")} cos θ + ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ <b class="k-amber">−</b> α)`)}</td></tr>
+      <tr><td>${nw(`${V("a")} cos θ − ${V("b")} sin θ`)}</td><td>${nw(`${V("R")} cos(θ <b class="k-amber">+</b> α)`)}</td></tr>
     </table>
-    <p class="big">${nw(`${V("R")} = ${SQRT(`${V("a")}² + ${V("b")}²`)}`)} &nbsp;·&nbsp; ${nw(`tan ${AL} = ${frac(V("b"),V("a"))}`)}</p>
-    <p class="anno">* ${V("a")}, ${V("b")} &gt; 0 and ${AL} acute. ${V("a")} = the number in front of the ratio named in the R-form.</p>
-  </div>
-
-  <div class="panelc"><h4>Where R and α come from</h4>
+    <p class="anno">* ${V("a")} = the number in front of the ratio named in the R-form</p>
     <a href="#r-formula?mode=cos&a=3&b=4" class="piclink"><svg viewBox="0 0 220 98" style="width:100%;max-width:300px;display:block;margin:0 auto">
       <path d="M20 78 L110 78 L110 18 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>
       <path d="M102 78 L102 70 L110 70" fill="none" stroke="var(--ink)"/>
-      <path d="M44 78 A24 24 0 0 0 40 65" fill="none" stroke="var(--red)" stroke-width="1.5"/>
-      <text x="50" y="72" font-size="13" fill="var(--red)" font-weight="700">α</text>
+      <path d="M44 78 A24 24 0 0 0 40 65" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="50" y="72" font-size="13" fill="var(--ink)" font-weight="700">α</text>
       <text x="65" y="92" font-size="13" text-anchor="middle" fill="var(--amber)" font-weight="700">a = R cos α</text>
       <text x="116" y="54" font-size="13" fill="var(--green)" font-weight="700">b = R sin α</text>
       <text x="56" y="40" font-size="13" fill="var(--blue)" font-weight="700">R</text>
-      <text x="122" y="22" font-size="12" fill="var(--ink)">R =</text>
-      <path d="M145 16.5 L147.5 15 L150.5 24 L154 7 H198" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round"/>
-      <text x="156" y="22" font-size="12" fill="var(--ink)" textLength="40" lengthAdjust="spacingAndGlyphs">a² + b²</text>
     </svg></a>
-    ${rWhy("cos",V("a"),V("b"))}
     ${PLAYLINK("#r-formula?step=6","Interactive: why tan α = b ÷ a")}
   </div>
 
-  <div class="panelc"><h4>Max and min</h4>
-    <ul class="steps">
-      <li>${nw(`${V("R")} = ${SQRT("3² + 4²")} = 5`)} <span class="tagop">${V("a")} = 3, ${V("b")} = 4</span></li>
-      <li>${nw(`tan ${AL} = ${frac("4","3")}`)} → ${nw(`${AL} = 53.13°`)}</li>
-      <li>${nw("3 cos θ + 4 sin θ")} = ${nw("5 cos(θ − 53.13°)")}</li>
-      <li>Max = <b>5</b> when θ − 53.13° = 0° → θ = 53.1° (1 d.p.)</li>
-      <li>Min = <b>−5</b> when θ − 53.13° = 180° → θ = 233.1° (1 d.p.)</li>
-    </ul>
+  <div class="panelc"><h4>Greatest and least</h4>
     ${rWave()}
-    <p class="anno">* max = ${V("R")}, min = −${V("R")}, because sin and cos are always between −1 and 1</p>
-    ${EG("Squared, or at the bottom of a fraction? Find the least and greatest of the bracket first",[`${nw(`(5 cos(θ − 53.13°))²`)}: least <b>0</b>, greatest <b>25</b>`,`${nw(`${frac("1",`30 + 25 sin(θ + α)`)}`)}: smallest bottom ${nw("30 − 25 = 5")}`,`so greatest value ${nw(`= ${frac("1","5")}`)}`])}
-    <p class="anno">* ${nw(`${V("R")} cos(θ − α) = ${V("c")}`)} with ${V("c")} bigger than ${V("R")} (or less than −${V("R")}): no solution</p>
+    ${EG(nw("5 cos(θ − 53.13°)"),[`greatest <b>5</b>: ${nw("θ − 53.13° = 0°")} → ${nw("θ = 53.1°")}`,`least <b>−5</b>: ${nw("θ − 53.13° = 180°")} → ${nw("θ = 233.1°")}`])}
+    ${EG(`In a denominator? <b class="k-amber">Smallest denominator</b> gives the greatest value`,[nw(`${frac("1",`30 + 25 sin(θ + α)`)}`),`smallest denominator: ${nw("30 − 25 = 5")}`,`greatest value ${nw(`= ${frac("1","5")}`)}`])}
+    <p class="anno">* ${nw(`5 cos(θ − 53.13°) = 6`)}? 6 is more than ${V("R")}: no solution</p>
   </div>
 
-  <div class="panelc"><h4>Solve, step by step</h4>
-    <p>3 cos θ + 4 sin θ = 2.5, for 0° ≤ θ ≤ 360°</p>
-    <ul class="steps">
-      <li>① 5 cos(θ − 53.13°) = 2.5</li>
-      <li>② cos(θ − 53.13°) = 0.5 <span class="tagop">÷ 5</span></li>
-      <li>③ Range: ${nw("−53.13° ≤ θ − 53.13°")} ${nw("≤ 306.87°")} <span class="tagop">subtract 53.13° from all 3 parts</span></li>
-      <li>④ basic angle 60°, cos positive → Q1, Q4: ${nw("θ − 53.13° = 60° or 300°")} <span class="anno">(−60° is outside the range, so reject it)</span></li>
-      <li>⑤ θ = <b>113.1°</b> or <b>353.1°</b> (1 d.p.)</li>
-    </ul>
+  <div class="panelc"><h4>Solve</h4>
+    ${EG(`${nw("3 cos θ + 4 sin θ = 2.5")}, ${nw("0° ≤ θ ≤ 360°")}`,[nw("5 cos(θ − 53.13°) = 2.5"),nw("cos(θ − 53.13°) = 0.5"),`<b class="k-amber">shift the range first:</b> ${nw("−53.13° ≤ θ − 53.13°")} ${nw("≤ 306.87°")}`,`basic angle 60°, cos positive → Q1, Q4`,`${nw("θ − 53.13° = 60°")} or ${nw("300°")}`,`<b>${nw("θ = 113.1°")}</b> or <b>${nw("353.1°")}</b>`])}
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ tan α = ${frac(V("a"),V("b"))}</div>
       <div class="ok">✓ tan α = ${frac(V("b"),V("a"))}</div>
+      <div class="x">✗ least value of ${nw("(5 cos(θ − 53.13°))²")} ${nw("= (−5)² = 25")}</div>
+      <div class="ok">✓ a square is never negative<br>least <b>0</b>, greatest <b>25</b></div>
+      <div class="x">✗ ${nw("θ − 53.13°")} from 0° to 360°</div>
+      <div class="ok">✓ take 53.13° off all 3 parts:<br>${nw("−53.13°")} to ${nw("306.87°")}</div>
+      <div class="x">✗ ${nw("3 cos θ + 4 sin θ = 5 cos(θ + 53.13°)")}</div>
+      <div class="ok">✓ cos flips the sign:<br>${nw("5 cos(θ − 53.13°)")}</div>
     </div>
-    <div class="note"><b>Note!</b> Keep α to 2 d.p. while working; give final angles to 1 d.p. Always shift the range in step ③ before solving.</div>
   </div>
 </div>`,
 
@@ -7731,18 +7697,11 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
   </div>
 </div>`,
 
-kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a")}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,`integrate to go back: ${nw(`${V("a")} → ${V("v")} → ${V("s")}`)}`),FB("amber","At rest / turns round",`${V("v")} = 0`,"max displacement is where v = 0"),FB("red","Distance ≠ displacement","split the journey where v = 0","add the parts as positive numbers")])}
+kinematics:`${MUST([FB("blue","Distance",nw(`9 + <b class="k-amber">4</b> = 13 m`),`split where ${nw(`${V("v")} = 0`)}, add the sizes`,`displacement: ${nw("9 − 4 = 5 m")}`,"mk"),FB("amber","Read the start",`from rest: <b class="k-amber">${V("v")}</b> = 0`,`passes O: ${nw(`${V("s")} = 0`)}`,`both at ${nw(`${V("t")} = 0`)} · every ${nw(`+ ${V("c")}`)} comes from these`,"mk mkw"),FB("green","Least velocity",`<b class="k-amber">${V("a")}</b> = 0`,`at rest is ${nw(`${V("v")} = 0`)}`,`${nw(`${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}`)} · ${nw(`${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}`)}`,"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>s, v, a</h4>
     ${picSVA()}
-    <table>
-      <tr><th>Quantity</th><th>Symbol</th><th>How to get it</th></tr>
-      <tr><td>displacement (position from O)</td><td>${V("s")}</td><td>${V("s")} = ∫ ${V("v")} d${V("t")}</td></tr>
-      <tr><td>velocity</td><td>${V("v")}</td><td><span class="nw">${V("v")} = ${frac("d"+V("s"),"d"+V("t"))}</span> <span class="nw">= ∫ ${V("a")} d${V("t")}</span></td></tr>
-      <tr><td>acceleration</td><td>${V("a")}</td><td>${V("a")} = ${frac("d"+V("v"),"d"+V("t"))}</td></tr>
-    </table>
-    <p class="anno">* differentiate down, integrate up</p>
-    <p class="anno">* integrating gives + ${V("c")}: find ${V("c")} from "starts at O" (${V("s")} = 0 at ${V("t")} = 0) or "initial velocity"</p>
+    <p class="anno">* differentiate down, integrate up ${nw(`(+ ${V("c")})`)}</p>
     ${PLAYLINK("#area-under","Interactive: watch the particle move")}
   </div>
 
@@ -7750,12 +7709,10 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
     <table>
       <tr><th>The question says</th><th>Do</th></tr>
       <tr><td>at rest / momentarily at rest</td><td>put ${V("v")} = 0</td></tr>
-      <tr><td>changes direction</td><td>${V("v")} = 0 AND ${V("v")} changes sign either side</td></tr>
-      <tr><td>from rest</td><td>${V("v")} = 0 at ${V("t")} = 0</td></tr>
-      <tr><td>in the ${V("n")}th second</td><td>from ${nw(`${V("t")} = ${V("n")} − 1`)} to ${nw(`${V("t")} = ${V("n")}`)}</td></tr>
-      <tr><td>maximum or minimum displacement</td><td>${V("v")} = 0, then find ${V("s")}</td></tr>
-      <tr><td>maximum or minimum velocity</td><td>${V("a")} = 0, then find ${V("v")}</td></tr>
-      <tr><td>returns to O / passes through O</td><td>put ${V("s")} = 0</td></tr>
+      <tr><td>changes direction</td><td>${V("v")} = 0 AND ${V("v")} changes sign</td></tr>
+      <tr><td>in the ${V("n")}th second</td><td>from <b class="k-amber">${nw(`${V("t")} = ${V("n")} − 1`)}</b> to ${nw(`${V("t")} = ${V("n")}`)}</td></tr>
+      <tr><td>greatest or least displacement</td><td>${V("v")} = 0, then find ${V("s")}</td></tr>
+      <tr><td>returns to O</td><td>put ${V("s")} = 0</td></tr>
       <tr><td>initial velocity</td><td>put ${V("t")} = 0 in ${V("v")}</td></tr>
       <tr><td>constant velocity</td><td>${V("a")} = 0</td></tr>
     </table>
@@ -7764,17 +7721,12 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
   <div class="panelc"><h4>Distance travelled vs displacement</h4>
     <a href="#area-under?cv=lin&T=5" class="piclink"><svg viewBox="0 0 220 70" style="width:100%;max-width:300px;display:block;margin:0 auto">
       <path d="M20 10 L110 45 L20 45 Z" fill="var(--blue-fill)"/>
-      <path d="M110 45 L170 68 L170 45 Z" fill="var(--red-fill)"/>
+      <path d="M110 45 L170 68 L170 45 Z" fill="var(--amber-fill)"/>
       <line x1="10" y1="45" x2="210" y2="45" stroke="var(--ink)"/><line x1="20" y1="10" x2="170" y2="68" stroke="var(--blue)" stroke-width="2.5"/>
-      <text x="55" y="38" font-size="12" fill="var(--blue)" font-weight="700">+9</text><text x="150" y="62" font-size="12" fill="var(--red)" font-weight="700">−4</text>
+      <text x="55" y="38" font-size="12" fill="var(--blue)" font-weight="700">+9</text><text x="150" y="62" font-size="12" fill="var(--amber)" font-weight="700">−4</text>
       <text x="105" y="58" font-size="10" fill="var(--muted)">t = 3</text><text x="200" y="40" font-size="10" fill="var(--muted)">t</text>
     </svg></a>
-    <ul class="steps">
-      <li>${V("v")} = 6 − 2${V("t")}: at rest when ${V("t")} = 3</li>
-      <li>0 to 3 s: moves <b>+9 m</b> · 3 to 5 s: moves <b>−4 m</b> (backwards)</li>
-      <li>Displacement at ${V("t")} = 5: 9 − 4 = <b>5 m</b> · Distance travelled: 9 + 4 = <b>13 m</b></li>
-    </ul>
-    <div class="note"><b>Note!</b> Never integrate straight from 0 to 5 for distance: the backwards part cancels. Split at ${V("v")} = 0.</div>
+    <p class="anno" style="text-align:center">${nw(`${V("v")} = 6 − 2${V("t")}`)}: at rest at ${nw(`${V("t")} = 3`)}, then goes back 4 m</p>
   </div>
 
   <div class="panelc"><h4>Speeding up or slowing down?</h4>
@@ -7784,82 +7736,75 @@ kinematics:`${MUST([FB("blue",`Differentiate ${V("s")} → ${V("v")} → ${V("a"
       <tr><td>opposite signs</td><td>slowing down</td></tr>
       <tr><td>${V("a")} = 0</td><td>constant velocity (not "stopped")</td></tr>
     </table>
-    <p class="anno">* ${V("a")} &lt; 0 does NOT always mean slowing down: if ${V("v")} is also negative, it is speeding up (backwards)</p>
+    <p class="anno">* ${V("a")} &lt; 0 with ${V("v")} &lt; 0: speeding up (backwards)</p>
   </div>
 
-  <div class="panelc"><h4>Worked example</h4>
-    <p>${V("v")} = ${V("t")}² − 4${V("t")} + 3, starts at O. Find the distance travelled in the first 3 s.</p>
-    <ul class="steps">
-      <li>① ${V("v")} = 0 → (${V("t")} − 1)(${V("t")} − 3) = 0 → ${V("t")} = 1 or 3</li>
-      <li>② ${V("s")} = ∫ ${V("v")} d${V("t")} = ${frac(V("t")+"³","3")} − 2${V("t")}² + 3${V("t")} <span class="tagop">c = 0, starts at O</span></li>
-      <li>③ ${nw(`${V("s")}(1) = ${frac("1","3")} − 2 + 3 = ${frac("4","3")}`)} · ${nw(`${V("s")}(3) = 9 − 18 + 9 = 0`)}</li>
-      <li>④ Distance = ${frac("4","3")} + |0 − ${frac("4","3")}| = <b>${frac("8","3")} m</b> <span class="anno">(displacement is 0)</span></li>
-    </ul>
+  <div class="panelc"><h4>Distance in the first 3 s</h4>
+    ${EG(`${nw(`${V("v")} = ${V("t")}² − 4${V("t")} + 3`)}, starts at O`,[`${nw(`${V("v")} = 0`)}: ${nw(`(${V("t")} − 1)(${V("t")} − 3) = 0`)}, so ${nw(`${V("t")} = 1`)} or 3`,`starts at O, so ${nw(`${V("c")} = 0`)}:`,nw(`${V("s")} = ${frac(V("t")+"³","3")} − 2${V("t")}² + 3${V("t")}`),`${nw(`${V("s")}(1) = ${frac("4","3")}`)} · ${nw(`${V("s")}(3) = 0`)}`,`distance ${nw(`= ${frac("4","3")} + ${frac("4","3")}`)} ${nw(`= <b>${frac("8","3")} m</b>`)}`])}
     ${picKinArea()}
-  </div>
-</div>`,
-
-integration:`${MUST([FB("blue","Power rule",`∫ ${X1}<sup>${V("n")}</sup> d${X1} = ${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")} + ${V("c")}`,"add 1 to the power, divide by the new power"),FB("amber","Definite integral",`${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}`,"upper − lower, no + c"),FB("green","+ c","every indefinite integral","a point on the curve finds c")])}
-<div class="sheet">
-  <div class="panelc"><h4>Why area under a graph = integral</h4>
-    <ul class="steps">
-      <li>Area under a velocity–time graph = displacement</li>
-      <li>Differentiate displacement → velocity: ${frac("d"+V("s"),"d"+V("t"))} = ${V("v")}</li>
-      <li>Integrate velocity → displacement: ${V("s")} = ∫ ${V("v")} d${V("t")}</li>
-    </ul>
-    ${picVTarea()}
-    <p class="anno">* below the axis (moving backwards) the area counts as negative · for distance, add the sizes. <a href="#area-under">Open the Kinematics aid</a></p>
-    ${PLAYLINK("#area-rectangles","For the curious: why integrating gives the area")}
-  </div>
-  <div class="panelc"><h4>Rules <span class="badge">memorise: not on the formula sheet</span></h4>
-    <table>
-      <tr><th>∫ … d${X1}</th><th>Answer (+ ${V("c")})</th></tr>
-      <tr><td>${X1}<sup>${V("n")}</sup> (${V("n")} ≠ −1)</td><td>${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")}</td></tr>
-      <tr><td>(${V("a")}${X1} + ${V("b")})<sup>${V("n")}</sup> (${V("n")} ≠ −1)</td><td>${frac("("+V("a")+X1+" + "+V("b")+")<sup>"+V("n")+" + 1</sup>",V("a")+"("+V("n")+" + 1)")}</td></tr>
-      <tr><td>sin ${X1}</td><td>−cos ${X1}</td></tr>
-      <tr><td>cos ${X1}</td><td>sin ${X1}</td></tr>
-      <tr><td>sec² ${X1}</td><td>tan ${X1}</td></tr>
-      <tr><td>sin(${V("a")}${X1} + ${V("b")})</td><td>−${frac("1",V("a"))} cos(${V("a")}${X1} + ${V("b")})</td></tr>
-      <tr><td>cos(${V("a")}${X1} + ${V("b")})</td><td>${frac("1",V("a"))} sin(${V("a")}${X1} + ${V("b")})</td></tr>
-      <tr><td>e<sup>${X1}</sup></td><td>e<sup>${X1}</sup></td></tr>
-      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td>${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
-      <tr><td>${frac("1",X1)}</td><td>ln ${X1}</td></tr>
-      <tr><td>${frac("1",`${V("a")}${X1} + ${V("b")}`)}</td><td>${frac("1",V("a"))} ln(${V("a")}${X1} + ${V("b")})</td></tr>
-      <tr><td>sec²(${V("a")}${X1} + ${V("b")})</td><td>${frac("1",V("a"))} tan(${V("a")}${X1} + ${V("b")})</td></tr>
-    </table>
-    <p class="anno">* add 1 to the power, divide by the new power (and by ${V("a")}, the number in front of ${X1})</p>
-  </div>
-
-  <div class="panelc"><h4>Definite integral</h4>
-    <p class="big">${nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`)} = ${nw(`F(${V("b")}) − F(${V("a")})`)}</p>
-    <ul class="steps">
-      <li>∫<span class="lim"><sup>3</sup><sub>1</sub></span> (${frac("1","2")}${X2} + 1) d${X1} = [${frac(V("x")+"³","6")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span> <span class="tagop">${nw(`${frac("1","2")} × ${frac(V("x")+"³","3")} = ${frac(V("x")+"³","6")}`)}</span></li>
-      <li>= (${frac("27","6")} + 3) − (${frac("1","6")} + 1) <span class="tagop">upper − lower</span></li>
-      <li>= ${frac("45","6")} − ${frac("7","6")}</li>
-      <li>= ${frac("38","6")} = <b>${frac("19","3")}</b></li>
-    </ul>
-    <p class="anno">* no + ${V("c")} for a definite integral</p>
-    <p class="anno">* areas (below the axis, curve and line, tangent triangles): <a href="#sheet/applications-of-integration">Applications of integration</a></p>
-  </div>
-
-  <div class="panelc"><h4>Reverse of differentiation</h4>
-    <ul class="steps">
-      <li>If ${frac("d","d"+X1)}[F(${X1})] = f(${X1}), then ${nw(`∫ f(${X1}) d${X1}`)} = ${nw(`F(${X1}) + ${V("c")}`)}</li>
-    </ul>
-    <p class="anno">* "Hence find ∫…": use the derivative from the part before, and adjust for any number in front</p>
-    ${EG(`Given ${nw(`${frac("d","d"+X1)}(${X2} + 1)³ = 6${X1}(${X2} + 1)²`)}, find ${nw(`∫ ${X1}(${X2} + 1)² d${X1}`)}`,[`${nw(`∫ 6${X1}(${X2} + 1)² d${X1}`)} ${nw(`= (${X2} + 1)³ + ${V("c")}`)}`,`÷ 6: ${nw(`∫ ${X1}(${X2} + 1)² d${X1}`)} ${nw(`= ${frac("1","6")}(${X2} + 1)³ + ${V("c")}`)}`])}
-    ${EG(`Curve from ${nw(`${frac("d"+V("y"),"d"+X1)} = 6${X1}`)}, through (1, 5)`,[nw(`${V("y")} = 3${X2} + ${V("c")}`),nw(`5 = 3 + ${V("c")}, so ${V("c")} = 2`),nw(`${V("y")} = 3${X2} + 2`)])}
-    <p class="anno">* a point on the curve pins ${V("c")}</p>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
-      <div class="x">✗ ${nw(`∫ (2${X1} + 1)³ d${X1}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","4")} + ${V("c")}`)}</div>
-      <div class="ok">✓ ${nw(`${frac("(2"+X1+" + 1)⁴","4 × 2")} + ${V("c")}`)}<br>= ${nw(`${frac("(2"+X1+" + 1)⁴","8")} + ${V("c")}`)}</div>
+      <div class="x">✗ starts from rest → ${nw(`${V("s")}(0) = 0`)}</div>
+      <div class="ok">✓ rest is about velocity:<br>${nw(`${V("v")}(0) = 0`)}</div>
+      <div class="x">✗ ${nw(`${V("v")} = ∫ (6 − 2${V("t")}) d${V("t")} = 6${V("t")} − ${V("t")}²`)}</div>
+      <div class="ok">✓ ${nw(`6${V("t")} − ${V("t")}² + ${V("c")}`)}, then find ${V("c")}</div>
+      <div class="x">✗ the 4th second: ${nw(`${V("t")} = 0`)} to 4</div>
+      <div class="ok">✓ ${nw(`${V("t")} = 3`)} to ${nw(`${V("t")} = 4`)}</div>
+      <div class="x">✗ least velocity: solve ${nw(`${V("v")} = 0`)}</div>
+      <div class="ok">✓ solve ${nw(`${V("a")} = 0`)}</div>
+      <div class="x">✗ distance ${nw(`= ${V("s")}(5) − ${V("s")}(0)`)}</div>
+      <div class="ok">✓ split at every rest time, add the sizes</div>
+      <div class="x">✗ calculator in degrees for ${nw(`${V("v")} = 4 cos 2${V("t")} + 2`)}</div>
+      <div class="ok">✓ radians, always</div>
+    </div>
+  </div>
+</div>`,
+
+integration:`${MUST([FB("blue","Linear inside",nw(`∫ (<b class="k-amber">3</b>${X1} + 2)⁴ d${X1} = ${frac(`(3${X1} + 2)⁵`,`5 × <b class="k-amber">3</b>`)} + ${V("c")}`),`÷ the new power AND the number in front of ${X1}`,nw(`${frac(`(${V("a")}${X1} + ${V("b")})<sup>${V("n")} + 1</sup>`,`${V("a")}(${V("n")} + 1)`)} + ${V("c")}`),"mk"),FB("amber","Only power −1 gives ln",nw(`∫ ${frac("1",`2${X1} + 1`)} d${X1} = ${frac("1","2")} <b class="k-amber">ln</b>(2${X1} + 1) + ${V("c")}`),`any other power: the power rule`,nw(`${frac("1",V("a"))} ln(${V("a")}${X1} + ${V("b")}) + ${V("c")}`),"mk"),FB("green","Definite",nw(`<b class="k-amber">(</b>4 − 6<b class="k-amber">)</b> − <b class="k-amber">(</b>1 − 3<b class="k-amber">)</b> = 0`),`bracket the lower one before you subtract`,`${nw(`[${X2} − 3${X1}]<span class="lim"><sup>2</sup><sub>1</sub></span>`)} · upper − lower · no + ${V("c")}`,"mk")])}
+<div class="sheet">
+  <div class="panelc"><h4>Rules <span class="badge">memorise</span></h4>
+    <table>
+      <tr><th>∫ … d${X1}</th><th>Answer (+ ${V("c")})</th></tr>
+      <tr><td>${X1}<sup>${V("n")}</sup> (${V("n")} ≠ −1)</td><td>${frac(X1+"<sup>"+V("n")+" + 1</sup>",V("n")+" + 1")}</td></tr>
+      <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td>${frac("1",V("a"))}e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
+      <tr><td>sin(${V("a")}${X1} + ${V("b")})</td><td><b class="k-amber">−</b>${frac("1",V("a"))} cos(${V("a")}${X1} + ${V("b")})</td></tr>
+      <tr><td>cos(${V("a")}${X1} + ${V("b")})</td><td>${frac("1",V("a"))} sin(${V("a")}${X1} + ${V("b")})</td></tr>
+      <tr><td>sec²(${V("a")}${X1} + ${V("b")})</td><td>${frac("1",V("a"))} tan(${V("a")}${X1} + ${V("b")})</td></tr>
+    </table>
+    <p class="anno">* just ${X1} inside? ${nw(`${V("a")} = 1`)}: ${nw(`∫ sin ${X1} d${X1} = −cos ${X1} + ${V("c")}`)}</p>
+    <p class="anno">* trig: ${X1} in radians</p>
+  </div>
+
+  <div class="panelc"><h4>Definite integral</h4>
+    ${EG(nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> (${frac("1","2")}${X2} + 1) d${X1}`),[nw(`= [${frac(V("x")+"³","6")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span>`),nw(`= (${frac("27","6")} + 3) − (${frac("1","6")} + 1)`),nw(`= ${frac("45","6")} − ${frac("7","6")}`),`= <b>${frac("19","3")}</b>`])}
+    <p class="anno">* areas: <a href="#sheet/applications-of-integration">Applications of integration</a></p>
+    ${PLAYLINK("#area-rectangles","For the curious: why integrating gives the area")}
+  </div>
+
+  <div class="panelc"><h4>The curve from ${frac("d"+V("y"),"d"+X1)}</h4>
+    ${EG(`${nw(`${frac("d"+V("y"),"d"+X1)} = 6${X1}`)}, through (1, 5)`,[nw(`${V("y")} = 3${X2} + ${V("c")}`),`<b class="k-amber">find ${V("c")} first:</b> ${nw(`5 = 3 + ${V("c")}`)}, so ${nw(`${V("c")} = 2`)}`,`<b>${nw(`${V("y")} = 3${X2} + 2`)}</b>`])}
+  </div>
+
+  <div class="panelc"><h4>"Hence": use the part before</h4>
+    ${EG(`Given ${nw(`${frac("d","d"+X1)}(${X2} + 1)³ = 6${X1}(${X2} + 1)²`)}, find ${nw(`∫ ${X1}(${X2} + 1)² d${X1}`)}`,[`${nw(`∫ 6${X1}(${X2} + 1)² d${X1}`)} ${nw(`= (${X2} + 1)³ + ${V("c")}`)}`,`<b class="k-amber">÷ 6:</b> ${nw(`∫ ${X1}(${X2} + 1)² d${X1}`)} ${nw(`= ${frac("1","6")}(${X2} + 1)³ + ${V("c")}`)}`])}
+    <p class="anno">* there's no product rule for integration: always use the part before</p>
+  </div>
+
+  <div class="panelc"><h4>Common mistakes</h4>
+    <div class="wrongright">
+      <div class="x">✗ ${nw(`∫ (3${X1} + 2)⁴ d${X1} = ${frac(`(3${X1} + 2)⁵`,"5")} + ${V("c")}`)}</div>
+      <div class="ok">✓ ÷ the 3 as well:<br>${nw(`${frac(`(3${X1} + 2)⁵`,"15")} + ${V("c")}`)}</div>
       <div class="x">✗ ∫ sin ${X1} d${X1} = cos ${X1} + ${V("c")}</div>
       <div class="ok">✓ −cos ${X1} + ${V("c")}</div>
+      <div class="x">✗ ${nw(`∫ sin ${frac(X1,"2")} d${X1} = −${frac("1","2")} cos ${frac(X1,"2")} + ${V("c")}`)}</div>
+      <div class="ok">✓ ÷ ${frac("1","2")} is × 2:<br>${nw(`−2 cos ${frac(X1,"2")} + ${V("c")}`)}</div>
+      <div class="x">✗ ${nw(`∫ ${frac("1",`(2${X1} + 1)²`)} d${X1} = ${frac("1","2")} ln(2${X1} + 1)² + ${V("c")}`)}</div>
+      <div class="ok">✓ power −2, so the power rule:<br>${nw(`−${frac("1",`2(2${X1} + 1)`)} + ${V("c")}`)}</div>
+      <div class="x">✗ ${nw(`[${X2} + 3${X1} + ${V("c")}]<span class="lim"><sup>2</sup><sub>0</sub></span>`)}</div>
+      <div class="ok">✓ no + ${V("c")} for a definite integral</div>
     </div>
-    <div class="note"><b>Note!</b> Indefinite integral → always + ${V("c")}. Trig integrals need ${X1} in radians.</div>
   </div>
 </div>`
 
@@ -10119,64 +10064,49 @@ ${PAN("Real-life graphs",`<table><tr><th>Graph</th><th>What it tells you</th></t
 ${MIST([[`${nw(`${V("y")} = ${frac(V("k"),X1)}`)} drawn as one curve through O`,`2 separate branches: it never touches the ${V("y")}-axis`],[nw(`${V("k")}(−3)² = −9${V("k")}`),`keep the bracket: ${nw("(−3)² = 9")}, so ${nw(`9${V("k")}`)}`],[`${nw(`${V("y")} = 5(2)<sup>${X1}</sup>`)} crosses the ${V("y")}-axis at ${nw("(0, 2)")}`,`any number to the power 0 is 1: ${nw("(0, 5)")}`],["straight segments between the plotted points","one smooth curve"],["gradient from 2 points on the curve","draw the tangent, use 2 points on it"],["flat on a distance–time graph = constant speed","flat = not moving"]])}
 </div>`,
 
-amIntApp:`${MUST([FB("blue","Area under a curve",nw(`${V("A")} = ∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> ${V("y")} d${X1}`),`${V("a")}, ${V("b")}: the ${X1}-values at the 2 ends`),FB("red",`Below the ${X1}-axis`,"the integral is negative","area = its size · split at every root"),FB("green","Curve and line",nw(`∫ (upper − lower) d${X1}`),"limits: where they meet")])}
+amIntApp:`${MUST([FB("blue","Split at the root",nw(`${frac("4","3")} + <b class="k-amber">|−${frac("4","3")}|</b> = ${frac("8","3")}`),`below the axis the integral is negative: add its size`,nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> ${V("y")} d${X1} = 0 is not the area`),"mk"),FB("amber","Curve and line",`∫ (<b class="k-amber">upper − lower</b>) d${X1}`,`limits: the ${X1}-values where they meet`,"","mk mkw"),FB("green",`Along the ${V("y")}-axis`,`∫ <b class="k-amber">${X1}</b> d${V("y")}`,`make ${X1} the subject first`,`limits are ${V("y")}-values`,"mk mkw")])}
 <div class="sheet">
 ${PAN("Area under a curve",picAreaUnder()+EG(`Area under ${nw(`${V("y")} = ${X2} + 1`)} from ${nw(`${X1} = 1`)} to ${nw(`${X1} = 3`)}`,[nw(`${V("A")} = ∫<span class="lim"><sup>3</sup><sub>1</sub></span> (${X2} + 1) d${X1}`),nw(`= [${frac(V("x")+"³","3")} + ${X1}]<span class="lim"><sup>3</sup><sub>1</sub></span>`),nw(`= (9 + 3) − (${frac("1","3")} + 1)`),nw(`= ${frac("32","3")} units²`)])+PLAYLINK("#area-rectangles","For the curious: why integrating gives the area"))}
-  <div class="panelc"><h4>Area: 4 cases</h4>
-    <table>
-      <tr><th>Region</th><th>Integral comes out</th><th>Area</th></tr>
-      <tr><td>above the ${X1}-axis</td><td>positive</td><td>= the integral</td></tr>
-      <tr><td>below the ${X1}-axis</td><td>negative</td><td>= its positive value</td></tr>
-      <tr><td>crosses the ${X1}-axis</td><td>parts cancel</td><td>split at the crossing, add positive values</td></tr>
-      <tr><td>between the curve and the ${V("y")}-axis</td><td>use ${nw(`∫ ${X1} d${V("y")}`)}, not ${nw(`∫ ${V("y")} d${X1}`)}</td><td>make ${X1} the subject first</td></tr>
-    </table>
+  <div class="panelc"><h4>Crosses the axis: split</h4>
     <svg viewBox="0 0 220 60" style="width:100%;max-width:300px;display:block;margin:6px auto 0">
-      <path d="M20.0,40.0 20.0,13.0 21.5,14.2 23.0,15.4 24.5,16.5 26.0,17.6 27.5,18.8 29.0,19.8 30.5,20.9 32.0,22.0 33.5,23.0 35.0,24.0 36.5,25.0 38.0,26.0 39.5,26.9 41.0,27.8 42.5,28.8 44.0,29.6 45.5,30.5 47.0,31.4 48.5,32.2 50.0,33.0 51.5,33.8 53.0,34.6 54.5,35.3 56.0,36.0 57.5,36.8 59.0,37.4 60.5,38.1 62.0,38.8 63.5,39.4 65.0,40.0 65.0,40.0Z" fill="var(--blue-fill)"/><path d="M65.0,40.0 65.0,40.0 68.0,41.2 71.0,42.2 74.0,43.2 77.0,44.2 80.0,45.0 83.0,45.8 86.0,46.4 89.0,47.0 92.0,47.6 95.0,48.0 98.0,48.4 101.0,48.6 104.0,48.8 107.0,49.0 110.0,49.0 113.0,49.0 116.0,48.8 119.0,48.6 122.0,48.4 125.0,48.0 128.0,47.6 131.0,47.0 134.0,46.4 137.0,45.8 140.0,45.0 143.0,44.2 146.0,43.2 149.0,42.2 152.0,41.2 155.0,40.0 155.0,40.0Z" fill="var(--red-fill)"/>
+      <path d="M20.0,40.0 20.0,13.0 21.5,14.2 23.0,15.4 24.5,16.5 26.0,17.6 27.5,18.8 29.0,19.8 30.5,20.9 32.0,22.0 33.5,23.0 35.0,24.0 36.5,25.0 38.0,26.0 39.5,26.9 41.0,27.8 42.5,28.8 44.0,29.6 45.5,30.5 47.0,31.4 48.5,32.2 50.0,33.0 51.5,33.8 53.0,34.6 54.5,35.3 56.0,36.0 57.5,36.8 59.0,37.4 60.5,38.1 62.0,38.8 63.5,39.4 65.0,40.0 65.0,40.0Z" fill="var(--blue-fill)"/><path d="M65.0,40.0 65.0,40.0 68.0,41.2 71.0,42.2 74.0,43.2 77.0,44.2 80.0,45.0 83.0,45.8 86.0,46.4 89.0,47.0 92.0,47.6 95.0,48.0 98.0,48.4 101.0,48.6 104.0,48.8 107.0,49.0 110.0,49.0 113.0,49.0 116.0,48.8 119.0,48.6 122.0,48.4 125.0,48.0 128.0,47.6 131.0,47.0 134.0,46.4 137.0,45.8 140.0,45.0 143.0,44.2 146.0,43.2 149.0,42.2 152.0,41.2 155.0,40.0 155.0,40.0Z" fill="var(--amber-fill)"/>
       <line x1="10" y1="40" x2="200" y2="40" stroke="var(--ink)"/>
       <path d="M20.0,13.0 24.1,16.2 28.1,19.2 32.1,22.1 36.2,24.8 40.2,27.4 44.3,29.8 48.4,32.1 52.4,34.3 56.4,36.3 60.5,38.1 64.5,39.8 68.6,41.4 72.7,42.8 76.7,44.1 80.8,45.2 84.8,46.2 88.8,47.0 92.9,47.7 97.0,48.2 101.0,48.6 105.1,48.9 109.1,49.0 113.1,49.0 117.2,48.8 121.2,48.4 125.3,48.0 129.4,47.3 133.4,46.6 137.5,45.7 141.5,44.6 145.6,43.4 149.6,42.0 153.6,40.5 157.7,38.9 161.8,37.1 165.8,35.2 169.9,33.1 173.9,30.9 178.0,28.5 182.0,26.0" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--red)" font-weight="700">−</text>
+      <text x="28" y="36" font-size="12" fill="var(--blue)" font-weight="700">+</text><text x="106" y="47" font-size="12" fill="var(--amber)" font-weight="700">−</text>
       <g font-size="10" fill="var(--muted)" text-anchor="middle"><text x="65" y="54">1</text><text x="155" y="54">3</text><text x="20" y="54">0</text></g>
     </svg>
-    ${EG(`e.g. the picture: ${nw(`${V("y")} = ${X2} − 4${X1} + 3`)}`,[`${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${V("y")} d${X1} = ${frac("4","3")}`)} <span class="k-blue">above</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> ${V("y")} d${X1} = −${frac("4","3")}`)} <span class="k-red">below</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> ${V("y")} d${X1} = 0`)} ✗ not the area`,`area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = <b>${frac("8","3")}</b>`)}`])}
+    ${EG(`${nw(`${V("y")} = ${X2} − 4${X1} + 3`)}, from 0 to 3`,[`${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${V("y")} d${X1} = ${frac("4","3")}`)} <span class="k-blue">above</span>`,`${nw(`∫<span class="lim"><sup>3</sup><sub>1</sub></span> ${V("y")} d${X1} = −${frac("4","3")}`)} <span class="k-amber">below</span>`,`area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = <b>${frac("8","3")}</b>`)}`])}
   </div>
 
   <div class="panelc"><h4>Curve and a straight line</h4>
-    <ul class="steps">
-      <li>Area between them = ∫ (upper − lower) d${X1}</li>
-      <li>or: area of a triangle / trapezium ± area under the curve</li>
-    </ul>
-    <p class="anno">* find where they meet first; those ${X1}-values are the limits</p>
     <svg viewBox="0 0 150 80" class="lsp wide" aria-hidden="true"><path d="M18.0 70.0 L90.0 34.0 L87.6 31.7 L85.2 29.7 L82.8 27.9 L80.4 26.3 L78.0 25.0 L75.6 23.9 L73.2 23.1 L70.8 22.5 L68.4 22.1 L66.0 22.0 L63.6 22.1 L61.2 22.5 L58.8 23.1 L56.4 23.9 L54.0 25.0 L51.6 26.3 L49.2 27.9 L46.8 29.7 L44.4 31.7 L42.0 34.0 L39.6 36.5 L37.2 39.3 L34.8 42.3 L32.4 45.5 L30.0 49.0 L27.6 52.7 L25.2 56.7 L22.8 60.9 L20.4 65.3 Z" fill="var(--blue-fill)"/>
       <path d="M8 70 H142 M18 70 V3" fill="none" stroke="var(--ink)"/><line x1="90" y1="34" x2="90" y2="70" stroke="var(--muted)" stroke-dasharray="3 2"/>
       <path d="M18.0 70.0 L20.4 65.4 L22.7 61.0 L25.1 56.8 L27.5 52.9 L29.9 49.2 L32.2 45.8 L34.6 42.5 L37.0 39.6 L39.3 36.8 L41.7 34.3 L44.1 32.0 L46.4 30.0 L48.8 28.1 L51.2 26.6 L53.6 25.2 L55.9 24.1 L58.3 23.2 L60.7 22.6 L63.0 22.2 L65.4 22.0 L67.8 22.1 L70.2 22.4 L72.5 22.9 L74.9 23.6 L77.3 24.6 L79.6 25.9 L82.0 27.3 L84.4 29.0 L86.8 31.0 L89.1 33.1 L91.5 35.5 L93.9 38.2 L96.2 41.0 L98.6 44.1 L101.0 47.5 L103.3 51.1 L105.7 54.9 L108.1 58.9 L110.5 63.2 L112.8 67.7 L115.2 72.4" fill="none" stroke="var(--blue)" stroke-width="2"/>
-      <line x1="18" y1="70" x2="123.6" y2="17.2" stroke="var(--amber)" stroke-width="2"/><circle cx="18" cy="70" r="2.2" fill="var(--red)"/><circle cx="90" cy="34" r="2.2" fill="var(--red)"/>
+      <line x1="18" y1="70" x2="123.6" y2="17.2" stroke="var(--amber)" stroke-width="2"/><circle cx="18" cy="70" r="2.2" fill="var(--ink)"/><circle cx="90" cy="34" r="2.2" fill="var(--ink)"/>
       <text x="66" y="7" font-size="6.5" fill="var(--blue)" text-anchor="middle">upper</text><text x="66" y="15" font-size="7" font-weight="700" fill="var(--blue)" text-anchor="middle"><tspan font-style="italic">y</tspan> = 4${RX} − ${RX}²</text>
       <text x="126" y="20" font-size="7" font-weight="700" fill="var(--amber)"><tspan font-style="italic">y</tspan> = ${RX}</text><text x="126" y="28" font-size="6.5" fill="var(--amber)">lower</text>
-      <text x="54" y="40" font-size="6.5" fill="var(--ink)" text-anchor="middle">area</text><text x="18" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">0</text><text x="90" y="78" font-size="7" font-weight="700" fill="var(--red)" text-anchor="middle">3</text></svg>
-    ${EG(`e.g. the picture: ${nw(`${V("y")} = 4${X1} − ${X2}`)} and ${nw(`${V("y")} = ${X1}`)}`,[`meet: ${nw(`4${X1} − ${X2} = ${X1}`)}`,`${nw(`${X1}(3 − ${X1}) = 0`)}, so ${nw(`${X1} = 0`)} or 3`,`upper − lower: ${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (4${X1} − ${X2} − ${X1}) d${X1}`)}`,nw(`= ∫<span class="lim"><sup>3</sup><sub>0</sub></span> (3${X1} − ${X2}) d${X1}`),nw(`= [${frac("3"+X2,"2")} − ${frac(V("x")+"³","3")}]<span class="lim"><sup>3</sup><sub>0</sub></span>`),nw(`= ${frac("27","2")} − 9 = <b>${frac("9","2")} units²</b>`)])}
+      <text x="54" y="40" font-size="6.5" fill="var(--ink)" text-anchor="middle">area</text><text x="18" y="78" font-size="7" font-weight="700" fill="var(--ink)" text-anchor="middle">0</text><text x="90" y="78" font-size="7" font-weight="700" fill="var(--ink)" text-anchor="middle">3</text></svg>
+    ${EG(`${nw(`${V("y")} = 4${X1} − ${X2}`)} and ${nw(`${V("y")} = ${X1}`)}`,[`<b class="k-amber">meet first:</b> ${nw(`4${X1} − ${X2} = ${X1}`)}`,`${nw(`${X1}(3 − ${X1}) = 0`)}, so ${nw(`${X1} = 0`)} or 3`,nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (4${X1} − ${X2} − ${X1}) d${X1}`),nw(`= [${frac("3"+X2,"2")} − ${frac(V("x")+"³","3")}]<span class="lim"><sup>3</sup><sub>0</sub></span>`),nw(`= ${frac("27","2")} − 9 = <b>${frac("9","2")} units²</b>`)])}
   </div>
-${PAN(`Along the ${V("y")}-axis`,picYaxisArea()+EG(`Area between ${nw(`${V("y")} = ${X2}`)} (${nw(`${X1} ≥ 0`)}), the ${V("y")}-axis, ${nw(`${V("y")} = 1`)} and ${nw(`${V("y")} = 4`)}`,[`make ${X1} the subject: ${nw(`${X1} = ${V("y")}<sup>${frac("1","2")}</sup>`)}`,nw(`${V("A")} = ∫<span class="lim"><sup>4</sup><sub>1</sub></span> ${V("y")}<sup>${frac("1","2")}</sup> d${V("y")}`),nw(`= [${frac("2","3")}${V("y")}<sup>${frac("3","2")}</sup>]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw(`= ${frac("2","3")}(8 − 1)`),nw(`= ${frac("14","3")} units²`)]))}
-${PAN("A tangent cuts off a triangle",picTanTri()+`<p class="anno">* curve part: integrate · straight part: ${nw(`${frac("1","2")} × base × height`)} · then add or take away, from the sketch</p>`
-  +EG(`${nw(`${V("y")} = ${X2}`)}. The tangent at P(1, 1) meets the ${X1}-axis at R. Find the shaded area.`,[`tangent: gradient ${nw(`2${X1} = 2`)}, so ${nw(`${V("y")} − 1 = 2(${X1} − 1)`)}`,`R: put ${nw(`${V("y")} = 0`)}, so ${nw(`${X1} = ${frac("1","2")}`)}`,`under the curve: ${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${X2} d${X1} = ${frac("1","3")}`)}`,`triangle: ${nw(`${frac("1","2")} × ${frac("1","2")} × 1 = ${frac("1","4")}`)}`,`shaded: ${nw(`${frac("1","3")} − ${frac("1","4")} = ${frac("1","12")} units²`)}`]))}
-${PAN("Rules for definite integrals",STEPS([[nw(`∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1} + ∫<span class="lim"><sup>${V("c")}</sup><sub>${V("b")}</sub></span> f(${X1}) d${X1} = ∫<span class="lim"><sup>${V("c")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`),"join the limits"],[nw(`∫<span class="lim"><sup>${V("a")}</sup><sub>${V("b")}</sub></span> f(${X1}) d${X1} = −∫<span class="lim"><sup>${V("b")}</sup><sub>${V("a")}</sub></span> f(${X1}) d${X1}`),"swap the limits: change the sign"],[nw(`∫ ${V("k")}f(${X1}) d${X1} = ${V("k")}∫ f(${X1}) d${X1}`),"a number in front comes out"]])
-  +EG(`Given ${nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> f(${X1}) d${X1} = 7`)}`,[nw(`∫<span class="lim"><sup>1</sup><sub>4</sub></span> f(${X1}) d${X1} = −7`),nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> 3f(${X1}) d${X1} = 3 × 7 = 21`),nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> [f(${X1}) + 2] d${X1} = 7 + [2${X1}]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw("= 7 + 6 = 13")]))}
-${PAN("Find an unknown limit",EG(`${nw(`∫<span class="lim"><sup>${V("k")}</sup><sub>0</sub></span> (2${X1} + 1) d${X1} = 6`)}, where ${nw(`${V("k")} &gt; 0`)}. Find ${V("k")}.`,[nw(`[${X2} + ${X1}]<span class="lim"><sup>${V("k")}</sup><sub>0</sub></span> = 6`),nw(`${V("k")}² + ${V("k")} = 6`),nw(`${V("k")}² + ${V("k")} − 6 = 0`),nw(`(${V("k")} + 3)(${V("k")} − 2) = 0`),`${nw(`${V("k")} = 2`)} (reject −3: ${nw(`${V("k")} &gt; 0`)})`]))}
-${PAN(`"Hence": use the part before`,EG(`Show that ${nw(`${frac("d","d"+X1)}(${X1} ln ${X1}) = ln ${X1} + 1`)}. Hence find ${nw(`∫ ln ${X1} d${X1}`)}.`,[`product rule: ${nw(`${X1} × ${frac("1",X1)} + ln ${X1} = ln ${X1} + 1`)}`,`so ${nw(`∫ (ln ${X1} + 1) d${X1} = ${X1} ln ${X1} + ${V("c")}`)}`,nw(`∫ ln ${X1} d${X1} + ${X1} = ${X1} ln ${X1} + ${V("c")}`),nw(`∫ ln ${X1} d${X1} = ${X1} ln ${X1} − ${X1} + ${V("c")}`)])+`<p class="anno">* there's no product rule for integration: always use the "show that" part</p>`)}
+${PAN(`Along the ${V("y")}-axis`,picYaxisArea()+EG(`${nw(`${V("y")} = ${X2}`)} (${nw(`${X1} ≥ 0`)}), the ${V("y")}-axis, ${nw(`${V("y")} = 1`)} and ${nw(`${V("y")} = 4`)}`,[`${X1} the subject: ${nw(`${X1} = ${V("y")}<sup>${frac("1","2")}</sup>`)}`,nw(`${V("A")} = ∫<span class="lim"><sup>4</sup><sub>1</sub></span> ${V("y")}<sup>${frac("1","2")}</sup> d${V("y")}`),nw(`= [${frac("2","3")}${V("y")}<sup>${frac("3","2")}</sup>]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw(`= ${frac("2","3")}(8 − 1)`),nw(`= ${frac("14","3")} units²`)]))}
+${PAN("A tangent cuts off a triangle",picTanTri()+`<p class="anno">* curve part: integrate · straight part: ${nw(`${frac("1","2")} × base × height`)}</p>`
+  +EG(`${nw(`${V("y")} = ${X2}`)}. The tangent at P(1, 1) meets the ${X1}-axis at R.`,[`tangent: ${nw(`${V("y")} − 1 = 2(${X1} − 1)`)}`,`<b class="k-amber">R is on the axis:</b> ${nw(`${V("y")} = 0`)}, so ${nw(`${X1} = ${frac("1","2")}`)}`,`under the curve: ${nw(`∫<span class="lim"><sup>1</sup><sub>0</sub></span> ${X2} d${X1} = ${frac("1","3")}`)}`,`triangle: ${nw(`${frac("1","2")} × ${frac("1","2")} × 1 = ${frac("1","4")}`)}`,`shaded: ${nw(`${frac("1","3")} − ${frac("1","4")} = ${frac("1","12")} units²`)}`]))}
+${PAN("Rules for definite integrals",EG(`Given ${nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> f(${X1}) d${X1} = 7`)} and ${nw(`∫<span class="lim"><sup>6</sup><sub>4</sub></span> f(${X1}) d${X1} = 3`)}`,[`<b class="k-amber">swap the limits, change the sign:</b> ${nw(`∫<span class="lim"><sup>1</sup><sub>4</sub></span> f(${X1}) d${X1} = −7`)}`,`<b class="k-amber">a number in front comes out:</b> ${nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> 3f(${X1}) d${X1} = 3 × 7 = 21`)}`,`<b class="k-amber">join the limits:</b> ${nw(`∫<span class="lim"><sup>6</sup><sub>1</sub></span> f(${X1}) d${X1} = 7 + 3 = 10`)}`,`<b class="k-amber">integrate the 2 too:</b> ${nw(`∫<span class="lim"><sup>4</sup><sub>1</sub></span> [f(${X1}) + 2] d${X1}`)}`,nw(`= 7 + [2${X1}]<span class="lim"><sup>4</sup><sub>1</sub></span>`),nw("= 7 + 6 = 13")]))}
+${PAN("Find an unknown limit",EG(`${nw(`∫<span class="lim"><sup>${V("k")}</sup><sub>0</sub></span> (2${X1} + 1) d${X1} = 6`)}, ${nw(`${V("k")} &gt; 0`)}`,[nw(`${V("k")}² + ${V("k")} − 6 = 0`),nw(`(${V("k")} + 3)(${V("k")} − 2) = 0`),`<b class="k-amber">reject −3, since ${nw(`${V("k")} &gt; 0`)}:</b> <b>${nw(`${V("k")} = 2`)}</b>`]))}
+${PAN(`"Hence": use the part before`,EG(`${nw(`${frac("d","d"+X1)}(${X1} ln ${X1}) = ln ${X1} + 1`)}. Hence find ${nw(`∫ ln ${X1} d${X1}`)}.`,[nw(`∫ (ln ${X1} + 1) d${X1} = ${X1} ln ${X1} + ${V("c")}`),nw(`∫ ln ${X1} d${X1} + ${X1} = ${X1} ln ${X1} + ${V("c")}`),`<b>${nw(`∫ ln ${X1} d${X1} = ${X1} ln ${X1} − ${X1} + ${V("c")}`)}</b>`]))}
 ${MIST([[`${nw(`∫<span class="lim"><sup>2</sup><sub>−1</sub></span> (${X2} − ${X1} − 2) d${X1} = −${frac("9","2")}`)}, so the area is ${nw(`−${frac("9","2")}`)}`,`below the axis: area = ${frac("9","2")}`],[`${nw(`∫<span class="lim"><sup>3</sup><sub>0</sub></span> (${X2} − 2${X1}) d${X1} = 0`)}, so the area is 0`,`root at ${nw(`${X1} = 2`)}: area ${nw(`= ${frac("4","3")} + ${frac("4","3")} = ${frac("8","3")}`)}`],[nw(`∫ (lower − upper) d${X1}`),nw(`∫ (upper − lower) d${X1}`)],[`along the ${V("y")}-axis: ${nw(`∫ ${V("y")} d${V("y")}`)}`,`${nw(`∫ ${X1} d${V("y")}`)}: make ${X1} the subject first`],["assume the triangle's corner is on the curve",`read it off the sketch: on the axis, put ${nw(`${V("y")} = 0`)} in the line`],[nw(`∫ ${X1}e<sup>${X1}</sup> d${X1} = ${frac(X2,"2")}e<sup>${X1}</sup> + ${V("c")}`),"no product rule for integration: use the part before"]])}
 </div>`,
 
-amProofs:`${MUST([FB("blue","Every line needs a reason","statement (reason)","no reason, no mark"),FB("amber","Similar triangles","AA is enough","match the letters in order"),FB("green","A product",nw("AB² = AC × AD"),"comes from 2 similar triangles: find them first")])}
+amProofs:`${MUST([FB("blue","Every line needs a reason",`statement <b class="k-amber">(reason)</b>`,"no reason, no mark","the last line = exactly what was asked","mk mkw"),FB("amber","Similar triangles",`<b class="k-amber">AA</b> is enough`,`match the letters in order: ${nw("A ↔ A, B ↔ C, D ↔ B")}`,"congruent: SSS, SAS, ASA, AAS, RHS","mk mkw"),FB("green","A product",nw(`AB² = AC × AD`),"find the 2 similar triangles first",nw(`from ${frac("AB","AC")} = ${frac("AD","AB")}`),"mk")])}
 <div class="sheet">
-${PAN("Write it like this",picTanSec()+EG(`AB is a tangent to the circle at B, and ADC is a straight line. Prove that ${nw("AB² = AC × AD")}.`,[`${nw("∠ABD = ∠ACB")}<br>(∠s in alt. seg.)`,`${nw("∠BAD = ∠CAB")}<br>(common ∠)`,`${nw("△ABD is similar to △ACB")} (AA)`,`so ${nw(`${frac("AB","AC")} = ${frac("AD","AB")}`)}<br>(similar △s)`,`${nw("AB² = AC × AD")} (shown)`])+`<p class="anno">* the last line is exactly what the question asked for</p>`+PLAYLINK("#centre-angle-proof","For the curious: centre angle proof"))}
-${PAN("Reasons to quote",`<table><tr><th>Fact</th><th>Write</th></tr>
-  <tr><td>angles on a straight line</td><td>(adj. ∠s on a str. line)</td></tr><tr><td>vertically opposite</td><td>(vert. opp. ∠s)</td></tr><tr><td>parallel lines</td><td>(alt. ∠s, AB &#47;&#47; CD) · (corr. ∠s, AB &#47;&#47; CD)</td></tr>
-  <tr><td>isosceles triangle</td><td>(base ∠s of isos. △)</td></tr><tr><td>angle at the centre</td><td>(∠ at centre = 2∠ at circ.)</td></tr><tr><td>angle in a semicircle</td><td>(∠ in semicircle)</td></tr>
-  <tr><td>same segment</td><td>(∠s in same seg.)</td></tr><tr><td>cyclic quadrilateral</td><td>(opp. ∠s of cyclic quad.)</td></tr><tr><td>tangent and radius</td><td>(tan ⊥ rad)</td></tr>
-  <tr><td>2 tangents from a point</td><td>(tangents from ext. pt.)</td></tr><tr><td>tangent and chord</td><td>(∠s in alt. seg.)</td></tr></table>`)}
-${PAN("Prove 4 points lie on a circle",STEPS(["show ONE of these:",["opposite angles add to 180°","(converse of opp. ∠s of cyclic quad.)"],["an exterior angle = the interior opposite angle","(converse of ext. ∠ of cyclic quad.)"],["2 equal angles on the same chord, same side","(converse of ∠s in same seg.)"]]))}
-${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN ∥ BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(midpoint theorem)`])+`<p class="anno">* both points must be midpoints of 2 sides of the <b>same</b> triangle</p>`)}
-${PAN("Prove a tangent, or parallel lines",STEPS([["show the angle between the line and the radius is 90°","then it's a tangent (converse of tan ⊥ rad)"],["show a pair of alternate angles are equal","then the lines are parallel (converse of alt. ∠s)"]]))}
-${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in same seg.) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of cyclic quad.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
+${PAN("Write it like this",picTanSec()+EG(`AB is a tangent at B, ADC is a straight line. Prove ${nw("AB² = AC × AD")}.`,[`${nw("∠ABD = ∠ACB")}<br>(alt. segment thm)`,`${nw("∠BAD = ∠CAB")}<br>(common ∠)`,`${nw("△ABD is similar to △ACB")} (AA)`,`${nw(`${frac("AB","AC")} = ${frac("AD","AB")}`)}<br>(corr. sides of similar △s)`,`${nw("AB² = AC × AD")} (shown)`])+`<p class="anno">* every reason, exact wording: <a href="#sheet/angle-reasons">Angle reasons</a></p>`+PLAYLINK("#centre-angle-proof","For the curious: centre angle proof"))}
+${PAN("Prove it: show the converse",`<table><tr><th>To prove</th><th>Show</th></tr>
+  <tr><td>4 points on a circle</td><td>opposite angles add to 180°<br>or exterior angle = interior opposite angle<br>or equal angles on the same chord, same side</td></tr>
+  <tr><td>a line is a tangent</td><td>it meets the radius at 90°</td></tr>
+  <tr><td>lines are parallel</td><td>alternate angles are equal</td></tr></table>
+  <p class="anno">* write it as <b class="k-amber">(converse, …)</b>, e.g. (converse, tan ⊥ rad)</p>`)}
+${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN ∥ BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(Midpoint Theorem)`]))}
+${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in the same segment) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of a cyclic quad. are supp.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
 </div>`,
 glossary:`${MUST([FB("blue","Expression",nw(`2${X1} + 1`),"no = sign: you simplify it","","mk"),FB("amber","Equation",nw(`2${X1} + 1 = 7`),`true only when ${nw(`${X1} = 3`)}: you solve it`,"","mk"),FB("green","Identity",nw(`2(${X1} + 1) ≡ 2${X1} + 2`),`true for every ${X1}`,"","mk")])}
 <div class="sheet">
