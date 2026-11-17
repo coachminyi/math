@@ -7616,7 +7616,7 @@ diffApps:`${MUST([FB("blue","Gradient of the tangent",nw(`${V("m")} = ${frac("d"
     ${EG("20 m of fence makes a rectangle. Find the greatest area.",[`<svg viewBox="0 0 150 62" style="width:100%;max-width:210px;display:block"><rect x="14" y="8" width="96" height="36" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.4"/><text x="62" y="58" font-size="12" text-anchor="middle" fill="var(--ink)">10 − <tspan font-style="italic">x</tspan></text><text x="116" y="30" font-size="12" font-style="italic" fill="var(--ink)">x</text></svg>`,`half the fence is 10 m: sides ${X1} and ${nw(`10 − ${X1}`)}`,nw(`${V("A")} = ${X1}(10 − ${X1}) = 10${X1} − ${X2}`),nw(`${frac("d"+V("A"),"d"+X1)} = 10 − 2${X1} = 0`),nw(`${X1} = 5`),`${nw(`${frac("d²"+V("A"),"d"+X1+"²")} = −2 &lt; 0`)}: max`,`greatest area ${nw("= 5 × 5 = <b>25 m²</b>")}`])}  </div>
 </div>`,
 
-speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration","m/s² · flat = steady speed · downhill = slowing down"),FB("blue","Area under speed–time graph","= distance travelled","triangle · rectangle · trapezium"),FB("amber","km/h ↔ m/s",nw(`72 km/h = ${frac("72 km","1 h")}`),"change the top and the bottom separately")])}
+speedTime:`${MUST([FB("blue","Speed–time graph",`area = <b class="k-amber">distance</b>`,"gradient = acceleration","split the area at every corner, add the pieces","mk mkw"),FB("amber","Average speed",frac("total distance","total time"),`time stopped <b class="k-amber">counts</b>`,"never the mean of the speeds","mk mkw"),FB("green","km/h → m/s",`${nw(`72 km/h = ${frac('72 × <b class="k-amber">1000</b> m','1 × <b class="k-amber">60 × 60</b> s')}`)} ${nw("= 20 m/s")}`,"change the numerator and the denominator","acceleration needs m/s and s: convert first","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Speed–time graph</h4>
     <a href="#speed-time" class="piclink"><svg viewBox="0 0 220 100" style="width:100%;max-width:320px;display:block;margin:0 auto">
@@ -7625,28 +7625,29 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
       <line x1="15" y1="85" x2="212" y2="85" stroke="var(--ink)"/><line x1="20" y1="90" x2="20" y2="10" stroke="var(--ink)"/>
       <text x="22" y="70" font-size="10" fill="var(--green)" font-weight="700" transform="rotate(-50 22 70)">speeding up</text>
       <text x="105" y="20" font-size="11" fill="var(--ink)" text-anchor="middle">steady</text>
-      <text x="150" y="22" font-size="10" fill="var(--red)" font-weight="700" transform="rotate(45 150 22)">slowing down</text>
+      <text x="150" y="22" font-size="10" fill="var(--amber)" font-weight="700" transform="rotate(45 150 22)">slowing down</text>
       <text x="105" y="62" font-size="12" fill="var(--blue)" text-anchor="middle" font-weight="700">area = distance</text>
       <text x="216" y="97" font-size="10" fill="var(--muted)" text-anchor="end">t (s)</text><text x="4" y="14" font-size="10" fill="var(--muted)">v</text>
     </svg></a>
-    <table>
-      <tr><th>Part of the graph</th><th>Means</th></tr>
-      <tr><td>sloping up</td><td>speeding up: acceleration = gradient = ${frac("change in speed","time")}</td></tr>
-      <tr><td>flat</td><td>steady speed, acceleration 0</td></tr>
-      <tr><td>sloping down</td><td>slowing down: retardation = the size of the gradient, given as a positive number</td></tr>
-      <tr><td>on the ${V("t")}-axis</td><td>stopped (speed 0)</td></tr>
-    </table>
+    <p class="anno">* slowing down: <b class="k-amber">retardation</b> = the size of the gradient, a positive number</p>
+    <p class="anno">* on the ${V("t")}-axis: stopped</p>
     ${PLAYLINK("#speed-time","Interactive: drag the corners")}
   </div>
 
-  <div class="panelc"><h4>Distance = area under the graph</h4>
+  <div class="panelc"><h4>Example</h4>
+    <p>A car speeds up from rest to 12 m/s in 4 s, keeps 12 m/s for 6 s, then slows to a stop in 4 s.</p>
+    <svg viewBox="0 0 154 76" class="lsp wide" aria-hidden="true"><path d="M14 62 L48.4 14 L48.4 62 Z" fill="var(--green-fill)"/><rect x="48.4" y="14" width="51.6" height="48" fill="var(--blue-fill)"/><path d="M100 14 L134.4 62 L100 62 Z" fill="var(--amber-fill)"/>
+      <path d="M48.4 14 V62 M100 14 V62 M14 14 H48.4" fill="none" stroke="var(--muted)" stroke-dasharray="3 2"/><path d="M14 62 L48.4 14 L100 14 L134.4 62" fill="none" stroke="var(--blue)" stroke-width="2.2"/>
+      <path d="M14 62 H146 M14 66 V5 M48.4 62 V65.5 M100 62 V65.5 M134.4 62 V65.5" fill="none" stroke="var(--ink)"/>
+      <g font-size="9" font-weight="700" text-anchor="middle"><text x="37" y="50" fill="var(--green)">24</text><text x="74.2" y="42" fill="var(--blue)">72</text><text x="111.5" y="50" fill="var(--amber)">24</text></g>
+      <g font-size="7" text-anchor="middle" fill="var(--ink)"><text x="31.2" y="72">4 s</text><text x="74.2" y="72">6 s</text><text x="117.2" y="72">4 s</text></g>
+      <text x="11" y="16.5" font-size="7" fill="var(--ink)" text-anchor="end">12</text><text x="17" y="8" font-size="6" fill="var(--muted)">v (m/s)</text><text x="152" y="59" font-size="6" fill="var(--muted)" text-anchor="end">t (s)</text></svg>
     <ul class="steps">
-      <li>Triangle: ${frac("1","2")} × base × height</li>
-      <li>Rectangle: base × height</li>
-      <li>Trapezium:<br>${nw(`${frac("1","2")} × (sum of parallel sides) × width`)}</li>
+      <li>Acceleration in the first 4 s = ${frac("12 − 0","4")} = <b>${nw("3 m/s²")}</b></li>
+      <li>Retardation in the last 4 s = ${frac("12","4")} = <b>3 m/s²</b></li>
+      <li>Distance = ${nw(`${frac("1","2")} × 4 × 12 + 6 × 12 + ${frac("1","2")} × 4 × 12`)}<br>= ${nw("24 + 72 + 24")} = <b>120 m</b></li>
+      <li>Average speed = ${frac("120","4 + 6 + 4")} = <b>8.57 m/s</b> (3 s.f.)</li>
     </ul>
-    <p class="anno">* split the area at every corner, find each piece, add them up</p>
-    <p class="anno">* average speed = ${frac("total distance","total time")}, including any time spent stopped (NOT the average of the speeds)</p>
   </div>
 
   <div class="panelc"><h4>Distance–time graph (the other one)</h4>
@@ -7655,36 +7656,14 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
       <tr><th>Part of the graph</th><th>Means</th></tr>
       <tr><td>gradient</td><td><b>speed</b> = ${frac("distance","time")}</td></tr>
       <tr><td>flat</td><td>not moving</td></tr>
-      <tr><td>steeper</td><td>faster</td></tr>
-      <tr><td>curve getting steeper</td><td>speeding up</td></tr>
       <tr><td>sloping down</td><td>coming back (returning)</td></tr>
     </table>
-    <p class="anno">* two objects meet: their distances are equal, e.g. A goes at 15 m/s, B leaves 10 s later at 20 m/s: ${nw(`15${V("T")} = 20(${V("T")} − 10)`)}</p>
-    <div class="note"><b>Note!</b> Area under a distance–time graph means nothing. Area is only for the speed–time graph.</div>
+    <p class="anno">* area under a distance–time graph means nothing</p>
+    ${EG("A goes at 15 m/s. B leaves 10 s later at 20 m/s. When does B catch up?",[`<b class="k-amber">same distance:</b> ${nw(`15${V("T")} = 20(${V("T")} − 10)`)}`,nw(`5${V("T")} = 200`),`${nw(`${V("T")} = 40`)}: 40 s after A leaves`])}
   </div>
 
-  <div class="panelc"><h4>Units: km/h ↔ m/s</h4>
-    ${EG("72 km/h in m/s",[nw(`72 km/h = ${frac("72 km","1 h")}`),nw(`= ${frac("72 × 1000 m","1 × 60 × 60 s")}`),nw("= 20 m/s")])}
+  <div class="panelc"><h4>m/s → km/h</h4>
     ${EG("15 m/s in km/h",[nw(`15 m/s = ${frac("15 m","1 s")}`),nw(`= ${frac("15 ÷ 1000 km","1 ÷ 3600 h")}`),nw("= 54 km/h")])}
-    <p class="anno">* write it as a fraction, change the numerator and the denominator separately, then press the calculator</p>
-    <p class="anno">* acceleration in m/s² needs speed in m/s and time in s. Convert first.</p>
-  </div>
-
-  <div class="panelc"><h4>Example</h4>
-    <p>A car speeds up from rest to 12 m/s in 4 s, keeps 12 m/s for 6 s, then slows to a stop in 4 s.</p>
-    <svg viewBox="0 0 154 76" class="lsp wide" aria-hidden="true"><path d="M14 62 L48.4 14 L48.4 62 Z" fill="var(--green-fill)"/><rect x="48.4" y="14" width="51.6" height="48" fill="var(--blue-fill)"/><path d="M100 14 L134.4 62 L100 62 Z" fill="var(--red-fill)"/>
-      <path d="M48.4 14 V62 M100 14 V62 M14 14 H48.4" fill="none" stroke="var(--muted)" stroke-dasharray="3 2"/><path d="M14 62 L48.4 14 L100 14 L134.4 62" fill="none" stroke="var(--blue)" stroke-width="2.2"/>
-      <path d="M14 62 H146 M14 66 V5 M48.4 62 V65.5 M100 62 V65.5 M134.4 62 V65.5" fill="none" stroke="var(--ink)"/>
-      <g font-size="9" font-weight="700" text-anchor="middle"><text x="37" y="50" fill="var(--green)">24</text><text x="74.2" y="42" fill="var(--blue)">72</text><text x="111.5" y="50" fill="var(--red)">24</text></g>
-      <g font-size="7" text-anchor="middle" fill="var(--ink)"><text x="31.2" y="72">4 s</text><text x="74.2" y="72">6 s</text><text x="117.2" y="72">4 s</text></g>
-      <text x="11" y="16.5" font-size="7" fill="var(--ink)" text-anchor="end">12</text><text x="17" y="8" font-size="6" fill="var(--muted)">v (m/s)</text><text x="152" y="59" font-size="6" fill="var(--muted)" text-anchor="end">t (s)</text></svg>
-    <ul class="steps">
-      <li>Acceleration in the first 4 s = ${frac("12 − 0","4")} = <b>${nw("3 m/s²")}</b></li>
-      <li>Retardation in the last 4 s = ${frac("12","4")} = <b>3 m/s²</b></li>
-      <li>Distance = ${nw(`${frac("1","2")} × 4 × 12 + 6 × 12 + ${frac("1","2")} × 4 × 12`)}<br>= ${nw("24 + 72 + 24")} = <b>120 m</b></li>
-      <li>Total time = ${nw("4 + 6 + 4 = 14 s")}</li>
-      <li>Average speed = ${frac("120","14")} = <b>8.57 m/s</b> (3 s.f.)</li>
-    </ul>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
@@ -7693,6 +7672,10 @@ speedTime:`${MUST([FB("green","Gradient of speed–time graph","= acceleration",
       <div class="ok">✓ "retardation 3 m/s²"<br>a positive number</div>
       <div class="x">✗ average speed = ${nw(frac("0 + 12 + 0","3"))}</div>
       <div class="ok">✓ average speed = ${frac("total distance","total time")}</div>
+      <div class="x">✗ distance = the gradient</div>
+      <div class="ok">✓ distance = the area under the speed–time graph</div>
+      <div class="x">✗ 0 to 12 m/s in 2 min: ${nw(`${frac("12","2")} = 6 m/s²`)}</div>
+      <div class="ok">✓ 2 min = 120 s: ${nw(`${frac("12","120")} = 0.1 m/s²`)}</div>
     </div>
   </div>
 </div>`,
@@ -7979,7 +7962,7 @@ linIneq:`${MUST([FB("amber","× or ÷ by a negative",nw(`−2${X1} ≤ 8 → ${X
   </div>
 </div>`,
 
-indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)}<br>${nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)}<br>${nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)}`,"memorise"),FB("amber","Zero and negative",`${nw(`${V("a")}<sup>0</sup> = 1`)} · ${nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)}`,"negative power = flip it (not a negative number)"),FB("green","Fraction power = root",`${nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`)} · ${nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`)}`,"denominator = root, numerator = power")])}
+indices:`${MUST([FB("blue","Negative power",nw(`2<sup>−3</sup> = <b class="k-amber">${frac("1","2³")}</b> = ${frac("1","8")}`),"1 over it, never a negative number",nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`),"mk"),FB("amber","Fraction power",`${nw(`16<sup>${frac("3","4")}</sup> = (<b class="k-amber">${SQRT("16","4")}</b>)³`)} ${nw("= 2³ = 8")}`,"root first, then the power",nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`),"mk"),FB("green","Same base first",`${nw(`4<sup>2${X1}</sup> = 8<sup>${X1} + 1</sup>`)} ${nw(`→ <b class="k-amber">2</b><sup>4${X1}</sup> = <b class="k-amber">2</b><sup>3${X1} + 3</sup>`)}`,`then equate the indices: ${nw(`4${X1} = 3${X1} + 3`)}`,"","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>The laws, with numbers</h4>
     <table>
@@ -7997,25 +7980,14 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
   <div class="panelc"><h4>Negative and fraction powers</h4>
     <table>
       <tr><th>Power</th><th>Means</th><th>Value</th></tr>
-      <tr><td>2<sup>−3</sup></td><td>${frac("1","2³")}</td><td>${frac("1","8")}</td></tr>
       <tr><td>(${frac("2","3")})<sup>−2</sup></td><td>flip, then square: (${frac("3","2")})²</td><td>${frac("9","4")}</td></tr>
-      <tr><td>8<sup>${frac("2","3")}</sup></td><td>${nw(`(${SQRT("8","3")})²`)}</td><td>2² = 4</td></tr>
       <tr><td>27<sup>−${frac("1","3")}</sup></td><td>${frac("1",SQRT("27","3"))}</td><td>${frac("1","3")}</td></tr>
-      <tr><td>16<sup>${frac("3","4")}</sup></td><td>${nw(`(${SQRT("16","4")})³`)}</td><td>2³ = 8</td></tr>
     </table>
-    <p class="anno">* root first (small numbers), then the power</p>
     ${PLAYLINK("#zero-power","For the curious: why power 0 gives 1")}
   </div>
 
   <div class="panelc"><h4>Equations: make the bases the same</h4>
-    <ul class="steps">
-      <li>${nw(`2<sup>${X1} + 1</sup> = 32`)}</li>
-      <li>${nw(`2<sup>${X1} + 1</sup> = 2⁵`)} <span class="tagop">32 = 2⁵</span></li>
-      <li>${nw(`${X1} + 1 = 5`)} → ${X1} = 4 <span class="tagop">same base → equate the indices</span></li>
-    </ul>
-    <ul class="steps">
-      <li>${nw(`3<sup>2${X1}</sup> = ${frac("1","27")}`)} = 3<sup>−3</sup> → 2${X1} = −3 → ${X1} = −${frac("3","2")}</li>
-    </ul>
+    ${EG("",[nw(`3<sup>2${X1}</sup> = ${frac("1","27")}`),nw(`3<sup>2${X1}</sup> = 3<sup>−3</sup>`),nw(`2${X1} = −3`),nw(`${X1} = −${frac("3","2")}`)])}
     ${FACTS("Know these: they make the bases the same",[["Base 2",["4 = 2²","8 = 2³","16 = 2⁴","32 = 2⁵"]],["Base 3",["9 = 3²","27 = 3³","81 = 3⁴"]],["Base 5",["25 = 5²","125 = 5³"]],["Any",["1 = anything⁰"]]])}
   </div>
 
@@ -8040,8 +8012,6 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
       <li>${nw(`= 3<sup>${V("n")}</sup>(3² + 1)`)} <span class="tagop">factorise: take out ${nw(`3<sup>${V("n")}</sup>`)}</span></li>
       <li>${nw(`= 10 × 3<sup>${V("n")}</sup>`)}</li>
     </ul>
-    ${EG(`Subtracting: ${nw(`2<sup>${V("n")} + 3</sup> − 2<sup>${V("n")}</sup>`)}`,[nw(`= 2<sup>${V("n")}</sup> × 2³ − 2<sup>${V("n")}</sup>`),nw(`= 2<sup>${V("n")}</sup>(2³ − 1)`),nw(`= 7 × 2<sup>${V("n")}</sup>`)])}
-    <p class="anno">* ${nw("2⁵ + 2⁵ = 2 × 2⁵ = 2⁶")}, not 2¹⁰ or 4⁵</p>
     ${PLAYLINK("#indices-collect?step=1","Interactive: see the blocks")}
   </div>
 
@@ -8049,12 +8019,19 @@ indices:`${MUST([FB("blue","Same base: work on the indices",`${nw(`${V("a")}<sup
     <div class="wrongright">
       <div class="x">✗ 2³ × 2⁴ = 4⁷</div>
       <div class="ok">✓ 2⁷ (base stays)</div>
+      <div class="x">✗ ${nw(`(${X1}³)⁴ = ${X1}⁷`)}</div>
+      <div class="ok">✓ ${nw(`${X1}<sup>3 × 4</sup> = ${X1}¹²`)}</div>
       <div class="x">✗ (2${V("a")})³ = 2${V("a")}³</div>
       <div class="ok">✓ 8${V("a")}³</div>
       <div class="x">✗ ${V("a")}<sup>−2</sup> = −${V("a")}²</div>
       <div class="ok">✓ ${frac("1",V("a")+"²")}</div>
+      <div class="x">✗ ${nw("2⁵ + 2⁵ = 2¹⁰")}</div>
+      <div class="ok">✓ ${nw("2 × 2⁵ = 2⁶")}</div>
+      <div class="x">✗ ${nw(`3${X1}<sup>0</sup> = 1`)}</div>
+      <div class="ok">✓ ${nw("3 × 1 = 3")}<br>only the ${X1} has the power: ${nw(`(3${X1})<sup>0</sup> = 1`)}</div>
+      <div class="x">✗ answer ${nw(`2${X1}<sup>−2</sup>${V("y")}`)}</div>
+      <div class="ok">✓ ${nw(frac(`2${V("y")}`,`${X1}²`))}: no negative index in the answer</div>
     </div>
-    <div class="note"><b>Note!</b> A negative power never makes a positive number negative. It means 1 over: ${nw(`${V("a")}<sup>−2</sup> = ${frac("1",V("a")+"²")}`)}.</div>
   </div>
 </div>`,
 
@@ -8569,7 +8546,7 @@ s1MemoFC:`${MUST([FB("red","Memorise these",`know them by heart`,"write them fro
       ${FL(`Ratio in its simplest form = same units, whole numbers`)}
       ${FL(`Speed = ${nw(frac("distance","time"))}`)}
       ${FL(`Average speed = ${nw(frac("total distance","total time"))}`+FNOTE("not the average of the two speeds"))}
-      ${FL(`${nw("72 km/h")} = ${nw(frac("72 km","1 h"))}`+FNOTE("change the top and the bottom separately"))}
+      ${FL(`${nw("72 km/h")} = ${nw(frac("72 km","1 h"))}`+FNOTE("change the numerator and the denominator separately"))}
       ${GRP("Percentage","percentage")}
       ${FL(nw(`80% of 500 = ${frac("80","100")} × 500`))}
       ${FL(`Percentage change = ${nw(`${frac("change","original")} × 100%`)}`+FNOTE(`change = ${nw("new − original")}`))}
@@ -9098,8 +9075,8 @@ function picQuartList(){ const V=[3,5,6,8,9,11,14], XS=[14,30,46,70,94,110,126];
 function picSineQ(){ const B='font-weight="700"';
   return SV("0 0 104 66",PG("14,56 86,56 65.9,12.5")+ARC(14,56,9,0,40,"var(--amber)")+ARC(86,56,8,114.8,180,"var(--amber)")
     +TX(28,52,"40°",`font-size="6" fill="var(--amber)" font-weight="700" text-anchor="start"`)+TX(76,51,"65°",`font-size="6" fill="var(--amber)" font-weight="700" text-anchor="end"`)
-    +TX(10,62,"A",B)+TX(90,62,"B",B)+TX(66,8,"C",B)+TX(80,32,"8 cm",`font-size="6.5" text-anchor="start"`)+TX(36,31,`${IT("b")} = ?`,`font-size="7" fill="var(--red)" font-weight="700" text-anchor="end"`)); }
-function picCosQ(){ return SV("0 0 104 62",PG("40,52 96,52 25.1,14.9")+ARC(40,52,8,0,111.8,"var(--red)")+TX(47,43,"θ",`fill="var(--red)" font-weight="700" font-style="italic"`)
+    +TX(10,62,"A",B)+TX(90,62,"B",B)+TX(66,8,"C",B)+TX(80,32,"8 cm",`font-size="6.5" text-anchor="start"`)+TX(36,31,`${IT("b")} = ?`,`font-size="7" fill="var(--amber)" font-weight="700" text-anchor="end"`)); }
+function picCosQ(){ return SV("0 0 104 62",PG("40,52 96,52 25.1,14.9")+ARC(40,52,8,0,111.8,"var(--amber)")+TX(47,43,"θ",`fill="var(--amber)" font-weight="700" font-style="italic"`)
     +TX(68,59,"7")+TX(29,35,"5",`text-anchor="end"`)+TX(64,30,"10",`text-anchor="start" font-weight="700"`)); }
 function picAB(){ const X=x=>10+11*x, Y=y=>40-11*y, B='font-weight="700"';
   return SV("0 0 106 68",GRID(i=>X(i),j=>Y(j-2),8,5)+LN(X(0),Y(-2),X(0),Y(3),`stroke="var(--muted)"`)+LN(X(0),Y(0),X(8),Y(0),`stroke="var(--muted)"`)
@@ -9817,47 +9794,45 @@ function picOAB(){ return SV("0 0 116 68",ARW(12,60,96,52,"var(--blue)",1.6)+ARW
   +DOT(83.5,41.5,"var(--red)")+TX(88,46,"P",`fill="var(--red)" font-weight="700" text-anchor="start"`)
   +TX(68,41,"M",AM)+TX(8,65,"O",`font-weight="700"`)+TX(101,56,"A",`font-weight="700"`)+TX(46,6.5,"B",`font-weight="700"`)); }
 const SHEETS6={
-emCoord:`${MUST([FB("blue","Length",nw(`AB = ${SQRT("run² + rise²")}`),"Pythagoras on the run and the rise"),FB("amber","Gradient",nw(`${V("m")} = ${frac("rise","run")}`),"left to right: + goes up, − goes down"),FB("green","Parallel · perpendicular",`${nw(`${V("m")}₁ = ${V("m")}₂`)} · ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`,"perpendicular: flip it, then change the sign")])}
+emCoord:`${MUST([FB("blue","Gradient",nw(`${V("m")} = ${frac(`<b class="k-amber">4</b> − 1`,`<b class="k-amber">5</b> − 1`)} = ${frac("3","4")}`),"rise over run, both from the same point",nw(`${V("m")} = ${frac("rise","run")}`),"mk"),FB("amber","Get y alone",`${nw(`4${VY} = 8${X1} − 3`)} ${nw(`→ ${VY} = <b class="k-amber">2</b>${X1} − ${frac("3","4")}`)}`,`then read the gradient: ${nw(`${V("m")} = 2`)}`,nw(`${VY} = ${V("m")}${X1} + ${V("c")}`),"mk"),FB("green","Perpendicular",nw(`−${frac("7","4")} → ${CS("amber",frac("4","7"))}`),`flip it <b>and</b> change the sign`,`parallel: ${nw(`${V("m")}₁ = ${V("m")}₂`)} · perpendicular: ${nw(`${V("m")}₁${V("m")}₂ = −1`)}`,"mk")])}
 <div class="sheet">
-${PAN("One triangle does it all",picRunRise()+STEPS([[nw("run = 5 − 1 = 4"),`the ${X1}'s`],[nw("rise = 4 − 1 = 3"),`the ${VY}'s`],[nw(`AB = ${SQRT("4² + 3²")} = 5`),"Pythagoras"],[nw(`${V("m")} = ${frac("3","4")}`),"rise over run"]])+`<p class="anno">* start both subtractions at the same point</p>`
-  +FACTS("Gradient facts",[["",["horizontal: 0","vertical: undefined",nw(`tan θ = ${V("m")}`)]]])+`<p class="anno">* θ is the angle the line makes with the positive ${X1}-axis · in a real-world graph, the gradient is a rate</p>`)}
+${PAN("One triangle does it all",picRunRise()+STEPS([[nw("run = 5 − 1 = 4"),`the ${X1}'s`],[nw("rise = 4 − 1 = 3"),`the ${VY}'s`],[nw(`AB = ${SQRT("4² + 3²")} = 5`),"Pythagoras"]])
+  +EG(`A(1, 1), B(${V("k")}, 4), AB = 5. Find ${V("k")}.`,[nw(`(${V("k")} − 1)² + 3² = 5²`),nw(`(${V("k")} − 1)² = 16`),`${nw(`${V("k")} − 1 = 4`)} <b class="k-amber">or −4</b>`,nw(`${V("k")} = 5 or −3`)])+`<p class="anno">* flat: ${nw(`${V("m")} = 0`)} · vertical: undefined</p>`)}
 ${PAN("Midpoint and part-way",EG("Midpoint of A(1, 1) and B(5, 4): add, then halve",[nw(`M = ${PAR(`${frac("1 + 5","2")}, ${frac("1 + 4","2")}`)}`),nw("= (3, 2.5)")])
+  +`<p class="anno">* parallelogram: use the midpoint of a <b class="k-amber">diagonal</b>, never a side</p>`
   +picPart()+EG("A(2, 1), B(10, 5), AP : PB = 1 : 3. Find P.",[`${nw("AP : AB = 1 : 4")} (1 + 3 parts)`,nw("run = 8, rise = 4"),`${nw(`× ${frac("1","4")}`)}: 2 across, 1 up`,nw("P = (2 + 2, 1 + 1) = (4, 2)")])+`<p class="anno">* the small triangle is a scaled copy of the big one</p>`)}
 ${PAN("Equation of a line",EG("Through (2, 3) and (6, 11)",[nw(`${V("m")} = ${frac("11 − 3","6 − 2")} = 2`),nw(`${VY} = 2${X1} + ${V("c")}`),`put in (2, 3): ${nw(`3 = 2(2) + ${V("c")}`)}`,nw(`${V("c")} = −1`),nw(`${VY} = 2${X1} − 1`)])
-  +STEPS([[nw(`${VY} = 3`),"flat line"],[nw(`${X1} = 4`),"vertical line"],[`${nw(`2${VY} = 6${X1} − 8`)} → ${nw(`${VY} = 3${X1} − 4`)}`,`get ${VY} alone, then read ${V("m")}`]]))}
-${PAN("Parallel and perpendicular",FACTS("Perpendicular: flip it, then change the sign",[["",[`${frac("2","3")} → −${frac("3","2")}`,`−4 → ${frac("1","4")}`,`−${frac("7","4")} → ${frac("4","7")}`]]])
-  +EG(`Perpendicular to ${nw(`${VY} = 2${X1} + 3`)}, through (1, 5)`,[`gradient: ${nw(`−${frac("1","2")}`)}`,nw(`5 = −${frac("1","2")}(1) + ${V("c")}`),nw(`${V("c")} = ${frac("11","2")}`),nw(`${VY} = −${frac("1","2")}${X1} + ${frac("11","2")}`),`× 2: ${nw(`2${VY} = −${X1} + 11`)}`])+`<p class="anno">* parallel lines have the same gradient, so they never meet</p>`)}
+  +STEPS([[nw(`${VY} = 3`),"flat line"],[nw(`${X1} = 4`),"vertical line"]]))}
+${PAN("Perpendicular line",EG(`Perpendicular to ${nw(`${VY} = 2${X1} + 3`)}, through (1, 5)`,[`gradient: ${nw(`−${frac("1","2")}`)}`,nw(`5 = −${frac("1","2")}(1) + ${V("c")}`),nw(`${V("c")} = ${frac("11","2")}`),nw(`${VY} = −${frac("1","2")}${X1} + ${frac("11","2")}`),`× 2: ${nw(`2${VY} = −${X1} + 11`)}`])
+  +`<p class="anno">* show two lines are parallel? <b class="k-amber">End with a sentence:</b> same gradient, different ${VY}-intercepts, so they never meet</p>`)}
 ${PAN("Where two lines meet",picTwoLines()+STEPS([`${nw(`${VY} = ${X1} + 1`)} and ${nw(`${VY} = −${X1} + 5`)}`,[nw(`${X1} + 1 = −${X1} + 5`),`same ${VY}`],nw(`${X1} = 2, ${VY} = 3`),"they meet at (2, 3)"])+`<p class="anno">* the ${X1}-axis is ${nw(`${VY} = 0`)}, the ${VY}-axis is ${nw(`${X1} = 0`)}</p>`)}
 ${PAN("Area and shortest distance",picBoxTri()+EG("No flat side? Box it in, take away the corners",[nw("box = 6 × 4 = 24"),nw("corners = 1.5 + 3 + 10 = 14.5"),nw("area = 24 − 14.5 = 9.5 units²")])
-  +EG("Shortest distance from A to BC",[nw(`BC = ${SQRT("6² + 1²")} = ${SQRT("37")}`),nw(`area = ${frac("1","2")} × BC × ${V("h")}`),nw(`9.5 = ${frac("1","2")} × ${SQRT("37")} × ${V("h")}`),nw(`${V("h")} = ${frac("2 × 9.5",SQRT("37"))}`),nw("= 3.12 units (3 s.f.)")])+`<p class="anno">* the height is always perpendicular to the base</p>`)}
-${MIST([[`${nw(`2${VY} = 6${X1} − 8`)}, so ${nw(`${V("m")} = 6`)}`,`${nw(`${VY} = 3${X1} − 4`)} first, so ${nw(`${V("m")} = 3`)}`],[`perpendicular to ${nw(`−${frac("7","4")}`)} is ${nw(`−${frac("4","7")}`)}`,`flip, then change the sign: ${nw(frac("4","7"))}`],[`${nw("AP : PB = 3 : 4")}, so scale by ${nw(frac("3","4"))}`,`${nw("AP : AB = 3 : 7")}, so scale by ${nw(frac("3","7"))}`],["height = the slant side","the height is perpendicular to the base"]])}
+  +EG("Shortest distance from A to BC",[nw(`BC = ${SQRT("6² + 1²")} = ${SQRT("37")}`),nw(`area = ${frac("1","2")} × BC × ${V("h")}`),nw(`9.5 = ${frac("1","2")} × ${SQRT("37")} × ${V("h")}`),nw(`${V("h")} = ${frac("2 × 9.5",SQRT("37"))}`),nw("= 3.12 units (3 s.f.)")]))}
+${MIST([[`${nw(`(${V("k")} − 1)² = 16`)}, so ${nw(`${V("k")} = 5`)}`,`${nw(`${V("k")} − 1 = 4`)} or −4, so ${nw(`${V("k")} = 5`)} or −3`],[`${nw(`2${VY} = 6${X1} − 8`)}, so ${nw(`${V("m")} = 6`)}`,`${nw(`${VY} = 3${X1} − 4`)} first, so ${nw(`${V("m")} = 3`)}`],[`perpendicular to ${nw(`−${frac("7","4")}`)} is ${nw(`−${frac("4","7")}`)}`,`flip, then change the sign: ${nw(frac("4","7"))}`],["parallelogram ABCD: the midpoint of AB","the diagonals AC and BD share a midpoint"],[`${nw("AP : PB = 3 : 4")}, so scale by ${nw(frac("3","4"))}`,`${nw("AP : AB = 3 : 7")}, so scale by ${nw(frac("3","7"))}`],["height = the slant side","the height is perpendicular to the base"]])}
 </div>`,
 
-emTrig2:`${MUST([FB("blue","Sine rule",SINE_RULE,"a side and its opposite angle"),FB("amber","Cosine rule",nw(`${V("a")}² = ${V("b")}² + ${V("c")}² − 2${V("bc")} cos ${V("A")}`),"2 sides and the angle between, or 3 sides"),FB("green","Area",nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),`${V("C")} is the angle between ${V("a")} and ${V("b")}`)])}
+emTrig2:`${MUST([FB("blue","Sine rule",nw(`${frac(`<b class="k-amber">${V("b")}</b>`,`sin <b class="k-amber">65°</b>`)} = ${frac("8","sin 40°")}`),"each side with the angle opposite it",SINE_RULE,"mk"),FB("amber","Cosine rule",`${nw(`${V("a")}² = 7² + 8² − <b class="k-amber">2(7)(8) cos 60°</b>`)} ${nw("= 113 − 56")}`,`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first, then subtract`,nw(`${V("a")}² = ${V("b")}² + ${V("c")}² − 2${V("bc")} cos ${V("A")}`),"mk"),FB("green","Sin gives 2 angles",`${nw("sin θ = 0.6: 36.9°")} ${nw(`or <b class="k-amber">143.1°</b>`)}`,`${nw("180° − 36.9°")}, then check which fits`,"cos gives one angle: negative cos = obtuse","mk")])}
 <div class="sheet">
 ${PAN("Which rule?",PICS(PIC(null,picRule("sine"),"Sine rule","a side and its opposite angle"),PIC(null,picRule("sas"),"Cosine rule","2 sides and the angle between"),PIC(null,picRule("sss"),"Cosine rule","all 3 sides"))+`<p class="anno">* a right angle? TOA CAH SOH is quicker</p>`)}
-${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw("cos(180° − θ) = −cos θ"),"other side: minus"]])
-  +EG(`${nw("sin θ = 0.6")}, ${nw("0° ≤ θ ≤ 180°")}`,[nw("θ = sin⁻¹ 0.6 = 36.9° (1 d.p.)"),nw("or θ = 180° − 36.9° = 143.1° (1 d.p.)")])+`<p class="anno">* cos gives one angle: negative cos means obtuse</p>`)}
-${PAN("Sine rule",picSineQ()+EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${frac(V("b"),"sin 65°")} = ${frac("8","sin 40°")}`),nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm (3 s.f.)")])
-  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6° (1 d.p.)`),`not ${nw("143.4°")}: ${nw("143.4° + 50° > 180°")}`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
+${PAN("Obtuse angles",picObtuse()+STEPS([[nw("sin(180° − θ) = sin θ"),"same height"],[nw(`cos(180° − θ) = <b class="k-amber">−</b>cos θ`),"other side: minus"]]))}
+${PAN("Sine rule",picSineQ()+EG(`${nw(`${V("A")} = 40°`)}, ${nw(`${V("B")} = 65°`)}, ${nw(`${V("a")} = 8 cm`)}. Find ${V("b")}.`,[nw(`${V("b")} = ${frac("8 sin 65°","sin 40°")}`),nw("= 11.3 cm (3 s.f.)")])
+  +EG(`${nw(`${V("a")} = 9`)}, ${nw(`${V("b")} = 7`)}, ${nw(`${V("A")} = 50°`)}. Find ${V("B")}.`,[nw(`${frac("sin "+V("B"),"7")} = ${frac("sin 50°","9")}`),nw(`sin ${V("B")} = 0.59581`),nw(`${V("B")} = 36.6° (1 d.p.)`),`<b class="k-amber">check 143.4°:</b> ${nw("143.4° + 50° > 180°")}, so no`])+`<p class="anno">* finding an angle? put the sines in the numerators</p>`)}
 ${PAN("Cosine rule",STEPS([[nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`),"to find an angle"]])
-  +EG(`${nw(`${V("b")} = 7`)}, ${nw(`${V("c")} = 8`)}, ${nw(`${V("A")} = 60°`)}. Find ${V("a")}.`,[nw(`${V("a")}² = 7² + 8² − 2(7)(8) cos 60°`),nw("= 113 − 56 = 57"),nw(`${V("a")} = ${SQRT("57")}`),nw("= 7.55 (3 s.f.)")])
-  +picCosQ()+EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),nw("θ = 111.8° (1 d.p.)")])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
-${PAN("Area",EG("Sides 6 cm and 9 cm, with 50° between them",[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm² (3 s.f.)")])
-  +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),nw("sin θ = 0.8"),nw("θ = 53.1° or 126.9° (1 d.p.)")])+`<p class="anno">* sin gives 2 angles: keep both unless one can't fit</p>`)}
-${MIST([[nw("cos 130° = cos 50°"),nw("cos 130° = −cos 50°")],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("180° − 36.9° = 143.1°")}`],[nw(`${V("a")}² = (49 + 64 − 112) cos 60°`),`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first: ${nw("113 − 56")}`],["rounding in the middle","keep 5 s.f. in working, give 3 s.f. at the end (angles 1 d.p.)"]])}
+  +picCosQ()+EG("Sides 5, 7 and 10. Find the largest angle.",["it is opposite the longest side, 10",nw(`cos θ = ${frac("5² + 7² − 10²","2(5)(7)")}`),nw("= −0.37143"),`${nw("θ = 111.8° (1 d.p.)")}: negative cos, so obtuse`])+`<p class="anno">* the <a href="#sheet/emath-formula-sheet">formula sheet</a> gives all 3 rules, but not this ${nw(`cos ${V("A")}`)} version</p>`)}
+${PAN("Area",EG(`Sides 6 cm and 9 cm, with 50° <b class="k-amber">between</b> them`,[nw(`area = ${frac("1","2")}(6)(9) sin 50°`),nw("= 20.7 cm² (3 s.f.)")])
+  +EG("Area 20 cm², sides 5 cm and 10 cm. Find θ.",[nw(`${frac("1","2")}(5)(10) sin θ = 20`),`${nw("sin θ = 0.8")}: ${nw("θ = 53.1°")} or ${nw("126.9°")} (1 d.p.)`]))}
+${MIST([[nw("cos 130° = cos 50°"),nw("cos 130° = −cos 50°")],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("180° − 36.9° = 143.1°")}`],[nw(`${V("a")}² = (49 + 64 − 112) cos 60°`),`work out ${nw(`2${V("bc")} cos ${V("A")}`)} first: ${nw("113 − 56")}`],[`height from A to BC ${nw(`= BC sin ${V("B")}`)}`,`${nw(`AB sin ${V("B")}`)}: the side that starts at A`],[nw("sin 30 = −0.988"),`calculator in degrees: ${nw("sin 30° = 0.5")}`],["rounding in the middle","keep 5 s.f. in working, give 3 s.f. at the end (angles 1 d.p.)"]])}
 </div>`,
 
-emTrigApp:`${MUST([FB("blue","Looking up or down","from the horizontal","up: elevation · down: depression"),FB("amber","Bearing","from North, clockwise",nw("3 figures: 065°")),FB("green","Which rule?","right angle? TOA CAH SOH","no right angle? sine or cosine rule")])}
+emTrigApp:`${MUST([FB("blue","Depression",`from the <b class="k-amber">horizontal</b>`,"= the elevation at the other end (alt. ∠s)","up: elevation · down: depression","mk mkw"),FB("amber","Bearing",nw(`<b class="k-amber">0</b>65°`),"from North, clockwise, 3 figures","start at the point after “from”","mk"),FB("green","Which rule?","right angle? TOA CAH SOH","no right angle? sine or cosine rule","","mk mkw")])}
 <div class="sheet">
-${PAN("Elevation and depression",picElev()+STEPS([[nw("depression = elevation"),"alt. ∠s, horizontals &#47;&#47;"]])
-  +EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw(`tan 28° = ${frac(V("h"),"30")}`),nw(`${V("h")} = 30 tan 28° = 15.951 m`),nw("height = 1.6 + 15.951"),nw("= 17.6 m (3 s.f.)")])+`<p class="anno">* add the eye level at the end</p>`)}
+${PAN("Elevation and depression",picElev()+EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw(`tan 28° = ${frac(V("h"),"30")}`),nw(`${V("h")} = 30 tan 28° = 15.951 m`),`<b class="k-amber">add the eye level:</b> ${nw("1.6 + 15.951")}`,nw("= 17.6 m (3 s.f.)")]))}
 ${PAN("Two points, one tower",picTower()+EG("A tower is 50 m tall. From A the angle of elevation of the top is 30°, from B it is 45°. A and B are on the same side, in a line with the tower.",["B to the foot of the tower:",nw("50 ÷ tan 45° = 50 m"),"A to the foot of the tower:",nw("50 ÷ tan 30° = 86.603 m"),nw("AB = 86.603 − 50"),nw("= 36.6 m (3 s.f.)")])+`<p class="anno">* two right-angled triangles, one tan each</p>`)}
-${PAN("Bearings",picBearing()+STEPS(["start at the point after “from”","face North, turn clockwise"])+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">(alt. ∠s, N₁ &#47;&#47; N₂)</p>`+PLAYLINK("#bearings","Interactive: both bearings"))}
+${PAN("Bearings",picBearing()+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">(alt. ∠s, N₁ &#47;&#47; N₂)</p>`+PLAYLINK("#bearings","Interactive: both bearings"))}
 ${PAN("Journeys",picJourney()+EG("A ship sails 12 km on a bearing of 040°, then 8 km on 120°. How far is it from the start?",[`bearing of A from B: ${nw("040° + 180° = 220°")}`,`angle at B: ${nw("220° − 120° = 100°")}`,nw("AC² = 12² + 8² − 2(12)(8) cos 100°"),nw("= 241.34"),nw("AC = 15.5 km (3 s.f.)")]))}
-${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6° (1 d.p.)")])+`<p class="anno">* pyramid, slant EDGE and the base: use half the base diagonal · slant FACE and the base: use half the base side</p>`)}
+${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6° (1 d.p.)")])+`<p class="anno">* pyramid, slant <b class="k-amber">edge</b> and the base: half the base <b class="k-amber">diagonal</b> · slant face and the base: half the base side</p>`)}
 ${PAN("Shortest distance",picShortest()+EG("C is 150 m from A. A straight path from A makes 35° with AC. A 40 m pole stands at C. Find the greatest angle of elevation of its top from the path.",[`${nw("shortest distance = 150 sin 35°")} ${nw("= 86.036 m")}`,nw(`tan θ = ${frac("40","86.036")}`),nw("θ = 24.9° (1 d.p.)")])+`<p class="anno">* the shortest distance is perpendicular to the path, and gives the greatest angle</p>`)}
-${MIST([["angle of depression from the vertical","from the horizontal"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`A from B: ${nw("065° + 180° = 245°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`]])}
+${MIST([["angle of depression from the vertical","from the horizontal"],["angle of depression at the top, inside the triangle","outside: it equals the elevation at the bottom"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`A from B: ${nw("065° + 180° = 245°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`],["pyramid slant edge with half the base side","half the base diagonal"]])}
 </div>`,
 
 emArcs:`${MUST([FB("blue","Radians",nw("π rad = 180°"),`calculator in <b class="k-amber">RAD</b>`,"","mk"),FB("amber","Angle in radians",`${nw(`arc = ${V("r")}<b class="k-amber">θ</b>`)}<br>${nw(`sector = ${frac("1","2")}${V("r")}²<b class="k-amber">θ</b>`)}`,`θ in <b class="k-amber">radians</b>, not degrees`,"","mk"),FB("green","Perimeter",nw(`<b class="k-amber">${V("r")} + ${V("r")}</b> + arc`),"not just the arc","","mk")])}
@@ -10049,18 +10024,18 @@ function picMidpt(){ const B='font-weight="700"', ch=(x,y)=>`<path d="M${x-2.5} 
 const GW=(w,m,e,lv)=>`<li><span class="gw">${w}</span>: ${m}${lv?`<span class="glv">${lv}</span>`:""}${e?`<span class="ge">${e}</span>`:""}</li>`;
 const GLS=a=>`<ul class="gloss">${a.join("")}</ul>`;
 const SHEETS8={
-emFuncGraphs:`${MUST([FB("blue",nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`),`6 shapes: ${nw(`${V("n")} = 3, 2, 1, 0, −1, −2`)}`,`${nw(`${V("k")} &lt; 0`)} flips it in the ${X1}-axis`),FB("amber",nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`crosses the ${V("y")}-axis at ${V("k")}`,`${nw(`${V("a")} &gt; 1`)}: growth · ${nw(`0 &lt; ${V("a")} &lt; 1`)}: decay`),FB("green","Solve off the graph",nw(`f(${X1}) = ${V("k")}`),`draw ${nw(`${V("y")} = ${V("k")}`)}, read the ${X1} values`)])}
+emFuncGraphs:`${MUST([FB("blue","Negative x",nw(`3<b class="k-amber">(−2)</b>² = 3 × 4 = 12`),`keep the bracket round a negative ${X1}`,`${nw("(−2)² = 4")}, but ${nw("−2² = −4")}`,"mk"),FB("amber","y-intercept",`${nw(`${V("y")} = <b class="k-amber">7</b>(2)<sup>${X1}</sup>`)} ${nw(`→ (0, <b class="k-amber">7</b>)`)}`,"any number to the power 0 is 1",`${nw(`${V("a")} &gt; 1`)}: growth · ${nw(`0 &lt; ${V("a")} &lt; 1`)}: decay`,"mk"),FB("green","Solve off the graph",`${nw(`f(${X1}) = 5`)} ${nw(`→ draw ${V("y")} = 5`)}`,`read the ${X1} values where they meet`,"misses the curve? no solution","mk mkw")])}
 <div class="sheet">
 ${PAN(`The 6 shapes of ${nw(`${V("y")} = ${V("k")}${X1}<sup>${V("n")}</sup>`)}`,PICS(PIC(null,picSix(3),nw(`${V("n")} = 3`),"through O, flat there, no turning point"),PIC(null,picSix(2),nw(`${V("n")} = 2`),"∪ with its lowest point at O"),PIC(null,picSix(1),nw(`${V("n")} = 1`),"a straight line through O"),PIC(null,picSix(0),nw(`${V("n")} = 0`),"a flat line"),PIC(null,picSix(-1),nw(`${V("n")} = −1`),"2 branches in opposite corners"),PIC(null,picSix(-2),nw(`${V("n")} = −2`),`2 branches, both above the ${X1}-axis`))+`<p class="anno">* drawn for ${nw(`${V("k")} &gt; 0`)} · ${nw(`${V("k")} &lt; 0`)} flips the shape upside down</p>`)}
-${PAN(`Find ${V("k")} or ${V("n")} from a point`,EG(`${nw(`${V("y")} = ${V("k")}${X2}`)} passes through (2, 12). Find ${V("k")}.`,[nw(`12 = ${V("k")}(2)²`),nw(`12 = 4${V("k")}`),nw(`${V("k")} = 3`)])+EG(`${nw(`${V("y")} = 2${X1}<sup>${V("n")}</sup>`)} passes through (3, 54). Find ${V("n")}.`,[nw(`54 = 2(3)<sup>${V("n")}</sup>`),nw(`3<sup>${V("n")}</sup> = 27 = 3³`),nw(`${V("n")} = 3`)])+`<p class="anno">* a negative ${X1}? keep the bracket: ${nw("(−3)² = 9")}, but ${nw("−3² = −9")}</p>`)}
-${PAN("Exponential graphs",picExpGD()+STEPS([[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`),`at ${nw(`${X1} = 0`)}, ${nw(`${V("y")} = ${V("k")}`)}`],[`never touches the ${X1}-axis`,"it only gets closer"],[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup> + ${V("b")}`),`crosses the ${V("y")}-axis at ${nw(`${V("k")} + ${V("b")}`)}`]])
+${PAN(`Find ${V("k")} or ${V("n")}: put the point in`,EG(`${nw(`${V("y")} = 2${X1}<sup>${V("n")}</sup>`)} passes through (3, 54). Find ${V("n")}.`,[nw(`54 = 2(3)<sup>${V("n")}</sup>`),nw(`3<sup>${V("n")}</sup> = 27 = 3³`),nw(`${V("n")} = 3`)]))}
+${PAN("Exponential graphs",picExpGD()+STEPS([[`never touches the ${X1}-axis`,"it only gets closer"],[nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup> + ${V("b")}`),`crosses the ${V("y")}-axis at ${nw(`${V("k")} + ${V("b")}`)}`]])
   +EG(`${nw(`${V("y")} = ${V("k")}${V("a")}<sup>${X1}</sup>`)} passes through (0, 5) and (2, 45). Find ${V("k")} and ${V("a")}.`,[`${nw(`${X1} = 0`)}: ${nw(`5 = ${V("k")}${V("a")}⁰`)}, so ${nw(`${V("k")} = 5`)}`,`${nw(`${X1} = 2`)}: ${nw(`45 = 5${V("a")}²`)}`,nw(`${V("a")}² = 9`),`${nw(`${V("a")} = 3`)} (${V("a")} is positive)`]))}
-${PAN("Growth and decay",EG("A car worth $40 000 loses 15% of its value every year. Find its value after 3 years.",[`every year it keeps 85%: ${nw("× 0.85")}`,nw(`${V("V")} = 40 000(0.85)<sup>${V("t")}</sup>`),nw("= 40 000(0.85)³"),nw("= $24 565")])+`<p class="anno">* up 5% a year: × 1.05 · down 15% a year: × 0.85</p>`)}
-${PAN("Plot a curve",STEPS([`① complete the table: put each ${X1} in, with brackets round negatives`,"② plot each point with a small ×","③ join them with ONE smooth curve: no ruler, no corners"]))}
-${PAN("Answers from the graph",picLineMeet()+STEPS([[`solve ${nw(`f(${X1}) = ${V("k")}`)}`,`draw ${nw(`${V("y")} = ${V("k")}`)}`],["the line misses the curve","no solution"],[nw(`${V("y")} &gt; ${V("k")}`),"where the curve is above the line"]])
+${PAN("Growth and decay",EG("A car worth $40 000 loses 15% of its value every year. Find its value after 3 years.",[`every year it keeps 85%: ${nw("× 0.85")}`,nw(`${V("V")} = 40 000(0.85)<sup>${V("t")}</sup>`),nw("= 40 000(0.85)³"),nw("= $24 565")])+`<p class="anno">* up 5% a year: × 1.05</p>`)}
+${PAN("Plot a curve",STEPS(["plot each point with a small ×",`join them with <b class="k-amber">ONE smooth curve</b>: no ruler, no corners`]))}
+${PAN("Answers from the graph",picLineMeet()+`<p class="anno">* ${nw(`${V("y")} &gt; ${V("k")}`)}: where the curve is above the line</p>`
   +EG(`The curve ${nw(`${V("y")} = ${X2} − 2${X1} − 3`)} is drawn. Which line do you draw to solve ${nw(`${X2} − 3${X1} − 1 = 0`)}?`,[nw(`${X2} − 3${X1} − 1 = 0`),`split it so the curve appears: ${nw(`${X2} − 2${X1} − 3 − ${X1} + 2 = 0`)}`,nw(`${X2} − 2${X1} − 3 = ${X1} − 2`),`draw ${nw(`${V("y")} = ${X1} − 2`)}`,`they meet at ${nw(`${X1} ≈ −0.3`)} and ${nw(`${X1} ≈ 3.3`)}`])+PLAYLINK("#solve-by-graph","Interactive: draw the line yourself"))}
-${PAN("Gradient of a curve",STEPS(["① draw the tangent: a ruler line that just touches the curve at the point","② pick 2 points far apart ON THE TANGENT",`③ gradient = ${frac("rise","run")}`])+`<p class="anno">* then say what it means: on a distance–time graph, the gradient is the speed</p>`)}
-${PAN("Real-life graphs",`<table><tr><th>Graph</th><th>What it tells you</th></tr><tr><td>distance–time</td><td>gradient = speed · flat = not moving</td></tr><tr><td>speed–time</td><td>gradient = acceleration · area = distance</td></tr><tr><td>filling a container</td><td>narrow part: depth rises fast (steep) · wide part: rises slowly</td></tr></table>`+PLAYLINK("#sheet/speed-time-graphs","Speed–time graphs sheet"))}
+${PAN("Gradient of a curve",STEPS(["① draw the tangent: a ruler line that just touches the curve at the point",`② pick 2 points far apart <b class="k-amber">on the tangent</b>`,`③ gradient = ${frac("rise","run")}`]))}
+${PAN("Filling a container",`<p class="anno">* narrow part: the depth rises fast (steep) · wide part: it rises slowly</p>`+PLAYLINK("#sheet/speed-time-graphs","Speed–time and distance–time graphs sheet"))}
 ${MIST([[`${nw(`${V("y")} = ${frac(V("k"),X1)}`)} drawn as one curve through O`,`2 separate branches: it never touches the ${V("y")}-axis`],[nw(`${V("k")}(−3)² = −9${V("k")}`),`keep the bracket: ${nw("(−3)² = 9")}, so ${nw(`9${V("k")}`)}`],[`${nw(`${V("y")} = 5(2)<sup>${X1}</sup>`)} crosses the ${V("y")}-axis at ${nw("(0, 2)")}`,`any number to the power 0 is 1: ${nw("(0, 5)")}`],["straight segments between the plotted points","one smooth curve"],["gradient from 2 points on the curve","draw the tangent, use 2 points on it"],["flat on a distance–time graph = constant speed","flat = not moving"]])}
 </div>`,
 
