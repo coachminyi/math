@@ -1803,13 +1803,13 @@ const TOPICS = [
   {id:"quad-forms", strand:"graph", levels:["emath","amath"], chapter:"Quadratic Functions",
    title:"Quadratic graphs: 3 forms", blurb:"Drag the turning point. Watch the sign flip: (x − 2)² puts it at x = 2.", play:"quadForms", sheet:"quadGraphs", sheetTitle:"Quadratic graphs"},
   {id:"discriminant", strand:"graph", levels:["amath"], chapter:"Equations & Inequalities",
-   title:"Line meets curve: b² − 4ac", blurb:"Slide a line: cuts, touches or misses?", play:"discrim", sheet:"discrim", sheetTitle:"b² − 4ac (discriminant)"},
+   title:"Line meets curve: b² − 4ac", blurb:"Drag the line: cuts, touches or misses?", play:"discrim", sheet:"discrim", sheetTitle:"b² − 4ac (discriminant)"},
   {id:"quad-inequality", strand:"graph", levels:["amath"], chapter:"Equations & Inequalities",
    title:"Quadratic inequalities: sketch it", blurb:"Above the x-axis is > 0, below is < 0. Read the solution off the sketch.", play:"quadIneq", sheet:"amEqIneq", sheetTitle:"Simultaneous equations & quadratic inequalities"},
   {id:"unit-circle", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"Unit circle & ASTC", blurb:"Tap the 16 special angles. Same height in every quadrant, only the sign changes.", play:"unitCircle", sheet:"trigAngles", sheetTitle:"Trig ratios of any angle"},
   {id:"trig-graphs", strand:"trig", levels:["amath"], chapter:"Trigonometry",
-   title:"Trig graphs: what a, b, c do", blurb:"Stretch, squeeze and shift sin, cos and tan.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
+   title:"Trig graphs: amplitude and period", blurb:"Drag the top of the wave: amplitude, period, max and min.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
   {id:"r-formula", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"R-formula: two waves make one", blurb:"Where R and α come from, and why max = R.", play:"rFormula", sheet:"rFormula", sheetTitle:"R-formula"},
   {id:"bearings", strand:"trig", levels:["emath"], chapter:"Applications of Trigonometry",
@@ -1845,7 +1845,7 @@ const TOPICS = [
   {id:"tangent-gradient", strand:"calc", levels:["amath"], chapter:"Differentiation",
    title:"Tangents, gradient & stationary points", blurb:"Drag P. Green going up, red going down, amber flat. Gradient graph underneath.", play:"tangentAid", sheet:"diffApps", sheetTitle:"Uses of differentiation"},
   {id:"speed-time", strand:"graph", levels:["emath"], chapter:"Speed–time graphs",
-   title:"Speed–time & distance–time graphs", blurb:"Drag the corners of a journey. Area = distance, gradient = acceleration.", play:"speedTime", sheet:"speedTime", sheetTitle:"Speed–time graphs"},
+   title:"Speed–time graphs: distance = area", blurb:"Drag the time line: the area under the graph is the distance gone.", play:"speedTime", sheet:"speedTime", sheetTitle:"Speed–time graphs"},
   {id:"area-under", strand:"calc", levels:["amath"], chapter:"Kinematics",
    title:"Kinematics: s, v, a", blurb:"A particle on a line, with its s, v and a graphs. At rest, turning round, area = displacement.", play:"kinAid", sheet:"kinematics", sheetTitle:"Kinematics"},
   {id:"data-dots", strand:"stats", levels:["sec2","emath"], chapter:"Statistics",
@@ -2219,35 +2219,48 @@ const quadForms=aid({
 
 const DBOX={l:12,t:4,w:124,h:112,x0:-2,x1:6,y0:-4,y1:12,xs:1,xl:2,ys:1,yl:2};
 const dInfo=s=>{const B=-(4+s.m), C=5-s.c, D=B*B-4*C; const n=Math.abs(D)<1e-9?1:D>0?2:0; return {B,C,D,n}};
+const dcPh=()=>innerWidth<600;
+const dcB=()=>({l:6,t:dcPh()?6:10,w:dcPh()?124:128,h:dcPh()?126:103,x0:-1.5,x1:6.5,y0:-8.5,y1:13,xs:1,xl:1,ys:2,yl:2,nonum:true});
+const dcLo=-7, dcHi=1, dcP="var(--purple)";
+const dcD=c=>16+4*c;
+const dcX=c=>{ const d=4+c; if(d<0) return []; if(d===0) return [3]; const q=Math.sqrt(d); return [3-q,3+q]; };
+const dcCss=()=>{ if(!document.getElementById("dccss")){ const e=document.createElement("style"); e.id="dccss"; e.textContent=DCCSS; document.head.append(e); } };
+const DCCSS=`.dck .formbox{padding:8px 12px}.dck.ipk .formbox .eq{height:auto;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;white-space:normal}.dck .dcr{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 7px;text-align:center;line-height:1.25}.dck .dcr1,.dck .dcr2{height:38px}.dck .dcr3{height:40px}.dck .dcsp{font-size:13px;color:var(--muted);font-weight:400;text-align:center;height:18px;line-height:18px}.dck .dcq{color:var(--purple);font-weight:800;background:var(--purple-fill);border-radius:2px;padding:0 3px}.dck .dcu{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;line-height:1.15}.dck .dcul{font-size:18px;font-weight:800;color:var(--purple);margin-top:3px}.dck .dcr2{height:60px}.dck .k-mis{color:#3f5d8a;font-weight:800}:root[data-theme="dark"] .dck .k-mis{color:#9fb7e0}.dck .dcp{color:var(--purple);font-weight:800}.dck .dcg{color:var(--muted);font-weight:400}.dck .dcres{font-size:1.2em;font-weight:800}.dck .dcv{height:40px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;border-top:1px solid var(--grid2);margin-top:4px}.dck .dcv.k-ink{color:var(--ink)}@media (max-width:599px){.dck.ipk .formbox .eq{font-size:19px}.dck .dcr1{height:34px}.dck .dcr2{height:58px}.dck .dcul{font-size:18px}.dck .dcr3{height:56px}.dck .dcv{height:36px;font-size:21px}}`;
+const dcLK=s=>{ const c=s.c, k=5-c, D=dcD(c), n=D>0?2:D===0?1:0, col=["mis","amber","green"][n], P=t=>`<span class="dcp">${t}</span>`, Q=t=>`<span class="dcq">${t}</span>`;
+  const ln=`2${X1}${c===0?"":` ${c>0?"+":"−"} ${Math.abs(c)}`}`;
+  const r1=nw(`${kc("blue",`${X2} − 4${X1} + 5`)} = ${P(ln)}`);
+  const r2=`${nw(`${X2} ${Q(`− 6${X1}`)}`)} ${nw(`+ <span class="dcu"><span>(${kc("blue","5")} ${Q(`− ${PB(c)}`)})</span><span class="dcul">= ${N(k)}</span></span> = 0`)}`;
+  const res=n===1?`= 0`:`= ${N(D)} ${n===2?"&gt;":"&lt;"} 0`;
+  const r3=`${nw(`<span class="dcg">${V("b")}² − 4${V("ac")} =</span>`)} ${nw(`${P("(−6)")}² − 4(1)(${P(N(k))})`)} ${nw(`<span class="dcres k-${col}">${res}</span>`)}`;
+  const vd=n===2?"cuts: 2 points":n===1?"tangent: 1 point":"misses: 0 points";
+  return `<div class="apwk ipk dck" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="eq"><div class="dcr dcr1">${r1}</div><div class="dcsp">everything on one side ↓</div><div class="dcr dcr2">${r2}</div><div class="dcr dcr3">${r3}</div><div class="dcv k-${col}">${vd}</div></div></div></div></div>`; };
 const discrim=aid({
-  init:{m:1,c:3}, label:"Curve and a movable straight line",
-  sliders:[{k:"m",label:"m",min:-4,max:4,step:.25},{k:"c",label:"c",min:-12,max:12,step:.25}],
-  buttons:[{label:"Cuts (2 points)",fn:s=>{s.m=1;s.c=3}},{label:"Make it a tangent",fn:s=>{s.c=5-(4+s.m)**2/4;}},{label:"Misses (0 points)",fn:s=>{s.m=0;s.c=-1}}],
-  explain:[`Drag the <b>grey ring</b> to move the line.`,`${V("b")}² − 4${V("ac")}: <span class="k-green"><b>&gt; 0 cuts</b></span> · <span class="k-amber"><b>= 0 tangent</b></span> · <span class="k-red"><b>&lt; 0 misses</b></span>`],
-  steps:[
-    {set:{m:1,c:3}, t:()=>`A curve ${V("y")} = ${X2} − 4${X1} + 5 and a straight line ${V("y")} = ${V("m")}${X1} + ${V("c")}.<br>Drag the grey ring to move the line.`},
-    {t:()=>`Where do they meet? Make the two ${V("y")}'s equal:<br>${X2} − 4${X1} + 5 = ${V("m")}${X1} + ${V("c")}`},
-    {t:()=>`Bring everything to one side → a quadratic = 0.<br>Its <b>${V("b")}² − 4${V("ac")}</b> tells us how many meeting points.`},
-    {set:{m:1,c:3}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-green">&gt; 0</span> → <b>2 meeting points</b>. The line cuts the curve.`},
-    {set:{m:0,c:1}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-amber">= 0</span> → <b>1 meeting point</b>. The line is a <b>tangent</b>: it just touches.<br>Try "Make it a tangent" for any ${V("m")}.`},
-    {set:{m:0,c:-1}, t:()=>`${V("b")}² − 4${V("ac")} <span class="k-red">&lt; 0</span> → <b>no meeting points</b>. The line misses the curve.`},
-    {t:()=>`Exam words:<br>"is a tangent" → <b>= 0</b> · "cuts at 2 points" → <b>&gt; 0</b><br>"meets / intersects" → <b>≥ 0</b> · "does not meet" → <b>&lt; 0</b>`}
-  ],
-  draw(svg,s){
-    const g=graph(svg,DBOX), I=dInfo(s), col=I.n===2?"var(--green)":I.n===1?"var(--amber)":"var(--red)";
-    g.plot(x=>x*x-4*x+5);
-    g.text(2.2,-3.2,"y = x² − 4x + 5",{fill:"var(--blue)","font-size":3.9,"font-style":"italic"});
-    g.line(-2,s.c-2*s.m,6,s.c+6*s.m,{stroke:col,"stroke-width":1.1});
-    let xs=[]; if(I.n>0){const sq=Math.sqrt(Math.max(I.D,0)); xs=[(-I.B-sq)/2,(-I.B+sq)/2].slice(0,I.n); xs.forEach(x=>g.dot(x,s.m*x+s.c,col,1.8));}
-    if(s.c>=-4&&s.c<=12) ringHandle(svg,g.X(0),g.Y(s.c),"c",!xs.some(x=>Math.hypot(x,s.m*x)<1));
-  },
-  drag(id,p,s){const [,y]=ginv(DBOX,p); s.c=clamp(snap(y,.25),-4,12);},
-  key(s){const I=dInfo(s), c=I.n===2?"green":I.n===1?"amber":"red";
-    const word=I.n===2?"CUTS: 2 points":I.n===1?"TOUCHES: tangent, 1 point":"MISSES: no points";
-    return KPAIR(`${V("y")} = ${V("m")}${X1} + ${V("c")}`,`${V("y")} = ${poly([[s.m,X1],[s.c,""]])}`,"This line")
-      +FORMS([FB("blue","Line = curve gives",nw(`${poly([[1,X2],[I.B,X1],[I.C,""]])} = 0`),`${V("a")} = 1, ${V("b")} = ${N(I.B)}, ${V("c")} = ${N(I.C)}`,`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`),
-      FB(c,`${V("b")}² − 4${V("ac")}`,`${N(I.D,3)} ${I.n===2?"&gt; 0":I.n===1?"= 0":"&lt; 0"}`,word)]);},
-  readout(s){const I=dInfo(s); return `<div class="row hint">Working: (${N(I.B)})² − 4(1)(${N(I.C)}) = ${N(I.D,3)}</div>`;}
+  init:{c:-3}, jump:true, ip:"Drag the line.", vb:"0 0 140 118", label:"The curve y = x² − 4x + 5 and the line y = 2x + c you can drag up and down; b² − 4ac counts the meeting points", link:["c"],
+  fix:s=>{ s.c=clamp(Math.round(+s.c||0),dcLo,dcHi); },
+  steps:[{name:"Line meets curve",t:()=>"",w:s=>dcLK(s)}],
+  draw(svg,s){ dcCss(); const n0=graph.n; graph.n=9810; const ph=dcPh(); svg.setAttribute("viewBox",ph?"0 0 136 138":"0 0 140 118");
+    const B=dcB(), g=graph(svg,B), c=s.c, D=dcD(c), xs=dcX(c), fs=ph?6:4.6, F={"font-size":fs,"font-weight":700}, X0=g.X(0), Yc=g.Y(c);
+    const dc=D>0?"var(--green)":"var(--amber)";
+    const lt=`y = 2x${c===0?"":` ${c>0?"+":"−"} ${Math.abs(c)}`}`;
+    const Y0=g.Y(0); let ly=Yc+fs+2.4; if(ly-fs*.75<Y0+.8&&ly+fs*.25>Y0-.8) ly=Y0+fs*.75+1.4;
+    const NF={"font-size":fs*.82,fill:"var(--muted)","paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.35,"stroke-linejoin":"round"}, lx0=X0+(ph?8:7), LB=[lx0-1,ly-fs*.85,lx0+lt.length*fs*.52+1,ly+fs*.3];
+    for(let k=1;k<=6;k++){ const tx=g.X(k), ty=Y0+fs*.82+1.2, w=fs*.3; if(Math.abs(k+c/2)<.6) continue; if(tx-w<LB[2]&&tx+w>LB[0]&&ty-fs*.8<LB[3]&&ty+.5>LB[1]) continue; lab(svg,[tx,ty],N(k),NF); }
+    [-6,-4,-2,2,4,8,10].forEach(v=>{ if(Math.abs(v-c)<2.1) return; lab(svg,[X0-1.6,g.Y(v)+fs*.3],N(v),Object.assign({"text-anchor":"end"},NF)); });
+    g.plot(x=>x*x-4*x+5,{stroke:"var(--blue)","stroke-width":1.5});
+    lab(svg,[g.X(ph?2.4:2.9),g.Y(11.4)],"y = x² − 4x + 5",Object.assign({fill:"var(--blue)","font-style":"italic"},F));
+    g.line(B.x0,2*B.x0+c,B.x1,2*B.x1+c,{stroke:dcP,"stroke-width":1.7});
+    lab(svg,[X0+(ph?8:7),ly],lt,Object.assign({fill:dcP,"font-style":"italic","text-anchor":"start","paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"},F));
+    xs.forEach(x=>g.dot(x,2*x+c,dc,D===0?2.8:2.3));
+    const tx=[[B.x0,2*B.x0+c],[B.x1,2*B.x1+c]].map(([x,y])=>{ const yy=clamp(y,B.y0,B.y1); return [g.X((yy-c)/2),g.Y(yy)]; });
+    S_(svg,"path",{d:`M${tx[0][0].toFixed(2)} ${tx[0][1].toFixed(2)}L${tx[1][0].toFixed(2)} ${tx[1][1].toFixed(2)}M${X0.toFixed(2)} ${g.Y(dcHi+.6).toFixed(2)}L${X0.toFixed(2)} ${g.Y(dcLo-.6).toFixed(2)}`,fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"c",style:"cursor:pointer"});
+    handle(svg,X0,Yc,"c","var(--ink)"); S_(svg,"circle",{cx:X0,cy:Yc,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [x,y]=ginv(dcB(),p), u=y-2*x, t=performance.now(); let nc=Math.abs(u+4)<.8?-4:clamp(Math.round(u),dcLo,dcHi);
+    if(s.c!==-4&&nc!==-4&&(s.c+4)*(nc+4)<0){ nc=-4; s._tk=t; }
+    else if(s.c===-4&&nc!==-4&&t-(s._tk||0)<300) nc=-4;
+    if(nc===-4&&s.c!==-4) s._tk=t; s.c=nc; },
+  kbd:{label:(id,s)=>["The line: arrow keys move it up or down",`y = 2x ${s.c<0?"−":"+"} ${Math.abs(s.c)}`],
+    move:(id,key,sh,s)=>{ s.c=clamp(s.c+(/Up|Right/.test(key)?1:-1),dcLo,dcHi); }},
+  key(){ return ""; }
 });
 
 const TBOX={l:12,t:4,w:124,h:112,x0:0,x1:360,y0:-6,y1:6,xs:30,xl:90,ys:1,yl:1,xf:v=>v+"°"};
@@ -2255,36 +2268,45 @@ const angTxt=(s,dg)=>s.u==="rad"?piFrac(dg):N(dg)+"°";
 const TF={sin:Math.sin,cos:Math.cos,tan:Math.tan};
 const trigEq=s=>`${V("y")} = ${s.a===1?"":s.a===-1?CS("blue","−"):CS("blue",N(s.a))+" "}${s.fn} ${s.b===1?"":CS("amber",s.b)}${X1}${s.fn==="tan"?"":CS("green",kStr(s.c))}`;
 const trigGen=s=>`${V("y")} = ${CV("blue","a")} ${s.fn} ${CV("amber","b")}${X1}${s.fn==="tan"?"":` + ${CV("green","c")}`}`;
+const tgwPh=()=>innerWidth<600;
+const tgwB=()=>tgwPh()?{l:14,t:7,w:120,h:100,x0:0,x1:360,y0:-3,y1:5,xs:30,xl:90,ys:1,yl:1,nonum:true,xn:" ",yn:" "}:{l:14,t:11,w:122,h:80,x0:0,x1:360,y0:-3,y1:5,xs:30,xl:90,ys:1,yl:1,nonum:true,xn:" ",yn:" "};
+const TGWCSS=`.tgwk .formbox{padding:8px 12px 10px}.tgwk .tgwg{font-size:13px;color:var(--muted);text-align:center;height:20px;line-height:20px}.tgwk .tgwh{font-size:21px;font-weight:600;text-align:center;height:34px;line-height:34px;white-space:nowrap}.tgwk .tgwr{font-size:17px;text-align:center;line-height:1.5;white-space:nowrap}.tgwk.ipk .formbox .eq.tgwp{font-size:20px;font-weight:600;height:40px;line-height:40px;white-space:nowrap;flex-wrap:nowrap}.tgwk .tgwc{background:var(--amber-fill);color:var(--amber);border-radius:7px;padding:1px 7px;font-weight:800;font-size:1.2em}.tgwk .tgwm{display:flex;flex-wrap:wrap;justify-content:center;gap:0 20px;height:34px;align-content:center;font-size:19px;font-weight:600}.tgwk .tgwgc{background:var(--green-fill);color:var(--green);border-radius:6px;padding:0 6px;font-weight:800}.tgwk .tgwm>span{white-space:nowrap}.tgwk .tgwa{font-weight:800}.tgwk .tgwl{color:var(--muted)}@media (max-width:599px){.tgwk .tgwh{font-size:20px}.tgwk.ipk .formbox .eq.tgwp{font-size:19px}.tgwk .tgwm{height:58px;font-size:18px}}`;
+const tgwCss=()=>{ if(!document.getElementById("tgwcss")){ const e=document.createElement("style"); e.id="tgwcss"; e.textContent=TGWCSS; document.head.append(e); } };
+const tgwK=s=>{ const a=s.a, b=s.b, B=t=>kc("blue",t), A=t=>kc("amber",t), G=t=>kc("green",t), L=t=>`<span class="tgwl">${t}</span>`;
+  const hd=nw(`${V("y")} = ${a===1?"":B(a)+" "}sin ${b===1?"":A(b)}${X1} + ${G(1)}`);
+  return `<div class="apwk ipk tgwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="tgwg">${nw(`${V("y")} = ${CV("blue","a")} sin ${CV("amber","b")}${X1} + ${CV("green","c")}`)}</div><div class="tgwh">${hd}</div><div class="tgwr">${nw(`${L("amplitude =")} ${B(a)}`)}</div><div class="eq tgwr tgwp">${nw(`${L("period =")} 360° ÷ ${A(b)} = <span class="tgwc">${N(360/b)}°</span>`)}</div><div class="tgwr tgwm"><span>${L("max =")} <span class="tgwgc">1</span> + ${B(a)} = <b class="tgwa">${N(1+a)}</b></span><span>${L("min =")} <span class="tgwgc">1</span> − ${B(a)} = <b class="tgwa">${N(1-a)}</b></span></div></div></div></div>`; };
+const tgwArr=(svg,x,y1,y2,col,w)=>{ const d=y2<y1?-1:1, hl=Math.min(2.6,Math.abs(y2-y1)*.45); seg(svg,[x,y1],[x,y2-d*hl*.8],{stroke:col,"stroke-width":w,"pointer-events":"none"}); S_(svg,"path",{d:`M${(x-1.7).toFixed(2)} ${(y2-d*hl).toFixed(2)}L${x.toFixed(2)} ${y2.toFixed(2)}L${(x+1.7).toFixed(2)} ${(y2-d*hl).toFixed(2)}Z`,fill:col,"pointer-events":"none"}); };
 const trigGraphs=aid({
-  init:{fn:"sin",a:1,b:1,c:0,u:"deg"}, label:"Trig graph with a, b, c sliders",
-  pills:[{k:"fn",label:"Graph",opts:[["sin","sin"],["cos","cos"],["tan","tan"]],on:s=>{if(s.fn==="tan")s.c=0}},{k:"u",label:"Angles in",opts:[["deg","degrees"],["rad","radians"]]}],
-  sliders:[{k:"a",label:CS("blue","a"),min:-3,max:3,step:.5,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},{k:"b",label:CS("amber","b"),min:1,max:4,step:1},{k:"c",label:CS("green","c"),min:-3,max:3,step:1,show:s=>s.fn!=="tan"}],
-  steps:[
-    {set:{fn:"sin",a:1,b:1,c:0}, t:()=>`${V("y")} = sin ${X1}: <b>1 full wave</b> from 0° to 360°.<br>Max 1, min −1.`},
-    {set:{fn:"sin",a:2,b:1,c:0}, t:()=>`${V("a")} stretches it up and down.<br><b>Amplitude = ${V("a")}</b> (ignore the sign). Here ${V("a")} = 2.`},
-    {set:{fn:"sin",a:-2,b:1,c:0}, t:()=>`A <b>negative</b> ${V("a")} flips the graph upside down.`},
-    {set:{fn:"sin",a:2,b:2,c:0}, t:()=>`${V("b")} squeezes it sideways: <b>${V("b")} full waves</b> in 360°.<br>Period = 360° ÷ ${V("b")}.`},
-    {set:{fn:"sin",a:2,b:2,c:1}, t:()=>`${V("c")} moves the whole graph up or down. Middle line ${V("y")} = ${V("c")}.<br>Max = ${V("c")} + amplitude, min = ${V("c")} − amplitude.`},
-    {set:{fn:"cos",a:2,b:2,c:1}, t:()=>`cos works the same way. It just starts at its max instead of the middle (when ${V("a")} &gt; 0; a negative ${V("a")} makes it start at its min).`},
-    {set:{fn:"tan",a:1,b:1,c:0}, t:()=>`tan: no max or min, so no amplitude.<br>Period = 180° ÷ ${V("b")}. Dashed lines = asymptotes: the graph never touches them.`}
-  ],
-  draw(svg,s){
-    const g=graph(svg,Object.assign({},TBOX,{xf:v=>angTxt(s,v)})), F=TF[s.fn], amp=Math.abs(s.a);
-    g.plot(x=>F(rad(x)),{stroke:"var(--muted)","stroke-dasharray":"1.5 1.5","stroke-width":.6});
-    if(s.fn==="tan"){
-      for(let k=0;;k++){const x=(90+180*k)/s.b; if(x>360) break; g.line(x,-6,x,6,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.6});}
-    } else {
-      g.line(0,s.c,360,s.c,{stroke:"var(--green)","stroke-dasharray":"2 1.5","stroke-width":.6});
-      [s.c+amp,s.c-amp].forEach(y=>g.line(0,y,360,y,{stroke:"var(--green)","stroke-dasharray":"1 1.5","stroke-width":.5}));
-    }
-    g.plot(x=>s.a*F(rad(s.b*x))+(s.fn==="tan"?0:s.c),{stroke:"var(--blue)","stroke-width":1.3},0,360,720);
-    lab(svg,[20,10],trigEq(s).replace(/<[^>]+>/g,""),{"text-anchor":"start","font-size":4.6,"font-style":"italic",fill:"var(--blue)","font-weight":700});
-  },
-  explain:[`${CV("blue","a")} = height · ${CV("amber","b")} = waves in 360° · ${CV("green","c")} = up or down.`,`Grey dotted curve = the basic graph. Negative ${CV("blue","a")} flips it.`],
-  key(s){const amp=Math.abs(s.a), head=KPAIR(trigGen(s),trigEq(s),"This graph"), P=fx(angTxt(s,s.fn==="tan"?180:360)), B=CV("amber","b");
-    if(s.fn==="tan"){const as=[];for(let k=0;;k++){const x=(90+180*k)/s.b;if(x>360)break;as.push(fx(angTxt(s,x)));}
-      return head+FORMS([FB("blue","Amplitude","none","no max or min"),FB("amber",`Period = ${P} ÷ ${B}`,fx(angTxt(s,180/s.b)),`${P} ÷ ${s.b}`),FB("red","Asymptotes",as.join(", "),"dashed lines",null,"wide")],true);}
-    return head+FORMS([FB("blue",`Amplitude = |${CV("blue","a")}|`,N(amp),"height of wave"),FB("amber",`Period = ${P} ÷ ${B}`,fx(angTxt(s,360/s.b)),`${P} ÷ ${s.b}`),FB("green",`Max / Min = ${CV("green","c")} ± |${CV("blue","a")}|`,`${N(s.c+amp)} and ${N(s.c-amp)}`,`middle ${V("y")} = ${N(s.c)}`)],true);}
+  init:{a:2,b:2}, jump:true, demo:[.7,-.7], ip:"Drag the wave's top.", vb:"0 0 140 110", label:"The graph of y = a sin bx + 1 from 0 to 360 degrees; drag the top of the first wave to change a and b", link:["a","b"],
+  fix:s=>{ s.a=clamp(Math.round(+s.a||1),1,3); s.b=clamp(Math.round(+s.b||1),1,3); },
+  steps:[{name:"Amplitude and period",t:()=>"",w:s=>tgwK(s)}],
+  draw(svg,s){ tgwCss(); const n0=graph.n; graph.n=9800; const ph=tgwPh(), B=tgwB(); svg.setAttribute("viewBox",ph?"0 0 140 128":"0 0 140 110");
+    const g=graph(svg,B), a=s.a, b=s.b, c=1, P=360/b, px=90/b, tx=270/b, fs=ph?5.6:4.6, F={"font-size":fs,"font-weight":700}, H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.5,"stroke-linejoin":"round"}, NF={"font-size":fs*.82,fill:"var(--muted)"};
+    const X0=g.X(0), Y0=g.Y(0), yb=B.t+B.h;
+   g.line(0,c,360,c,{stroke:GR,"stroke-dasharray":"2.4 1.6","stroke-width":.9});
+    g.line(0,c+a,px,c+a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
+    g.line(0,c-a,tx,c-a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
+    g.plot(x=>a*Math.sin(rad(b*x))+c,{stroke:"var(--ink)","stroke-width":1.4},0,360,720);
+    [90,180,270,360].forEach(v=>{ lab(svg,[g.X(v)+(v===360?-.3:0),g.Y(-3)-1.3],v+"°",Object.assign({"text-anchor":v===360?"end":"middle"},NF,H)); });
+    lab(svg,[X0-1.6,B.t+fs*.8],"y",{"text-anchor":"end","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
+    lab(svg,[B.l+B.w+1.2,Y0+fs*.34],"x",{"text-anchor":"start","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
+    lab(svg,[X0-1.6,g.Y(c)+fs*.34],"1",Object.assign({"text-anchor":"end",fill:GR},F));
+    lab(svg,[X0-1.6,g.Y(c+a)+fs*.34],N(c+a),Object.assign({"text-anchor":"end"},F));
+    lab(svg,[X0-1.6,g.Y(c-a)+fs*.34],N(c-a),Object.assign({"text-anchor":"end"},F));
+    const hy=g.Y(c+a), hx=g.X(px), ty=g.Y(c-a), txs=g.X(tx);
+    tgwArr(svg,hx,g.Y(c),hy+4.2,BL,1.1);
+    tgwArr(svg,txs,g.Y(c),ty,BL,1.1);
+    if(a>1) lab(svg,[hx+2.2,g.Y(c)-1.6],N(a),Object.assign({"text-anchor":"start",fill:BL},F,H));
+    lab(svg,[txs+2.2,g.Y(c)+1.6+fs*.72],N(a),Object.assign({"text-anchor":"start",fill:BL},F,H));
+    for(let k=0;k<b;k++){ const x1=g.X(k*P)+.7, x2=g.X((k+1)*P)-.7, o=k?.45:1, y=yb+2.2;
+      S_(svg,"path",{d:`M${x1.toFixed(2)} ${(y-1.8).toFixed(2)}V${y.toFixed(2)}H${x2.toFixed(2)}V${(y-1.8).toFixed(2)}`,fill:"none",stroke:AMB,"stroke-width":k?.8:1.2,"stroke-opacity":o,"pointer-events":"none"});
+      lab(svg,[(x1+x2)/2,y+fs+.9],N(P)+"°",Object.assign({fill:AMB,"fill-opacity":o},F)); }
+    S_(svg,"rect",{x:B.l,y:B.t,width:B.w,height:B.h,fill:"transparent","data-drag":"p",style:"cursor:pointer"});
+    handle(svg,hx,hy,"p","var(--ink)"); S_(svg,"circle",{cx:hx,cy:hy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [gx,gy]=ginv(tgwB(),p); s.a=clamp(Math.round(gy-1),1,3); s.b=gx>67.5?1:gx>37.5?2:3; },
+  kbd:{label:(id,s)=>["The top of the wave: up and down change a, left and right change b",`a = ${s.a}, b = ${s.b}`],
+    move:(id,k,sh,s)=>{ if(/Up/.test(k)) s.a=Math.min(3,s.a+1); else if(/Down/.test(k)) s.a=Math.max(1,s.a-1); else if(/Right/.test(k)) s.b=Math.max(1,s.b-1); else if(/Left/.test(k)) s.b=Math.min(3,s.b+1); }},
+  key(){ return ""; }
 });
 
 const UO=[70,60], UR=42;
@@ -2691,38 +2713,57 @@ function stFix(s){ const v=s.c?s.c.split("_").map(Number):[], P=[]; s.c="";
   for(let i=0;i+1<v.length;i+=2) P.push([v[i],v[i+1]]);
   const ok=v.length%2===0&&P.length===JOUR[s.j].pts.length&&P[0][0]===0&&P.every((p,i)=>p[0]%.5===0&&p[0]<=14&&(!i||p[0]>=P[i-1][0]+.5)&&Number.isInteger(p[1])&&p[1]>=0&&p[1]<=16);
   if(ok) s.pts=P; }
+const stCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.stk .formbox{padding:8px 12px}.stk .stsum{display:grid;grid-template-columns:repeat(4,auto);grid-template-rows:repeat(3,48px) 62px;justify-content:center;align-items:center;column-gap:0;font-size:20px;font-weight:700;white-space:nowrap}.stk .stsum>span,.stk .eq>span{display:flex;align-items:center;padding:0 4px}.stk .sx,.stk .sv{justify-self:end}.stk .sv{font-weight:800}.stk .sn{justify-self:start;font-size:13px;font-weight:400;color:var(--muted)}.stk .sth{display:inline-flex;align-items:center;font-size:1.2em;font-weight:800;border:2.5px solid currentColor;border-radius:9px;padding:0 5px;margin-right:6px;background:var(--card);line-height:1}.stk.ipk .formbox .eq{display:contents}.stk .eq>span{align-self:stretch;display:flex;align-items:center;border-top:1.5px solid var(--grid2);margin-top:6px;font-size:30px;font-weight:800;color:var(--ink)}.stk .eq>.sx,.stk .eq>.sv{justify-self:stretch;justify-content:flex-end}@media (max-width:599px){.stk .stsum{font-size:18px;grid-template-rows:repeat(3,44px) 54px}.stk .sn{font-size:12px}.stk .eq>span{font-size:26px}}'; document.head.append(e); }catch(_){} return 1; })();
+const STB={l:14,t:34,w:110,h:70,x0:0,x1:14,y0:0,y1:14,xs:1,xl:2,ys:2,yl:4,nonum:true,xn:" ",yn:" "};
+const stV=t=>t<=4?3*t:t<=10?12:Math.max(0,12-3*(t-10));
+const stP=T=>{ const o=[]; if(T>0){ const a=Math.min(T,4); o.push({k:"tri",c:"green",t0:0,t1:a,v0:0,v1:3*a,A:1.5*a*a}); }
+  if(T>4){ const b=Math.min(T,10); o.push({k:"rect",c:"blue",t0:4,t1:b,v0:12,v1:12,A:12*(b-4)}); }
+  if(T>10){ const c=Math.min(T,14), vc=stV(c); o.push({k:c>=14?"tri":"trap",c:"amber",t0:10,t1:c,v0:12,v1:vc,A:(12+vc)/2*(c-10)}); }
+  return o; };
+const stK=s=>{ const T=s.T, P=stP(T), tot=P.reduce((a,p)=>a+p.A,0), H=`<span class="sth">${frac("1","2")}</span>`;
+  const row=p=>{ const w=p.t1-p.t0, x=p.k==="rect"?`${N(w)} × 12`:p.k==="trap"?`${H} × (12 + ${N(p.v1)}) × ${N(w)}`:`${H} × ${N(w)} × ${N(Math.max(p.v0,p.v1))}`;
+    const c=`style="color:var(--${p.c})"`;
+    return `<span class="sx" ${c}>${x}</span><span class="se" ${c}>=</span><span class="sv" ${c}>${N(p.A)}</span><span class="sn">${p.k==="rect"?"rectangle":p.k==="trap"?"trapezium":"triangle"}</span>`; };
+  const rows=P.map(row).join("")+"<span></span>".repeat(4*(3-P.length));
+  return `<div class="apwk ipk stk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="gen">distance = area under the graph</div><div class="stsum">${rows}<div class="eq"><span class="sx"></span><span class="se">=</span><span class="sv ipans">${N(tot)}</span><span class="sm">m</span></div></div></div></div></div>`; };
+const stDist=T=>stP(T).reduce((a,p)=>a+p.A,0);
 const speedTime=aid({
-  init:{j:"abs",T:5,pts:[[0,0],[4,12],[10,12],[14,0]],c:""}, vb:"0 0 140 124", label:"Speed-time graph with draggable corners and a car on a road",
-  link:["c"], save:s=>{s.c=JSON.stringify(s.pts)===JSON.stringify(JOUR[s.j].pts)?"":s.pts.map(p=>p.join("_")).join("_");}, fix:stFix,
-  explain:[`<b>Area = distance. Gradient = acceleration.</b>`,`Drag the corners. Flat = steady speed.`],
-  pills:[{k:"j",label:"Sample journeys",opts:Object.entries(JOUR).map(([k,v])=>[k,v.name]),on:s=>{s.pts=JSON.parse(JSON.stringify(JOUR[s.j].pts)); s.T=0;}}],
-  sliders:[{k:"T",label:"t",min:0,max:14,step:.1,f:v=>N(v,1)+" s"}],
-  buttons:[{label:"▶ Drive",fn:(s,anim)=>{anim(7000,p=>{s.T=+(14*p).toFixed(1);});}}],
-  steps:[{t:()=>""}],
-  draw(svg,s){
-    const g=graph(svg,SBOX), P=s.pts, I=jInfo(s), fills={rectangle:"var(--blue-fill)",triangle:"var(--green-fill)",trapezium:"var(--amber-fill)"};
-    for(let k=0;k<P.length-1;k++){const p=P[k],q=P[k+1],A=segArea(p,q),sh=segShape(p,q);
-      g.poly([[p[0],0],[p[0],p[1]],[q[0],q[1]],[q[0],0]],{fill:fills[sh],stroke:"var(--card)","stroke-width":.4});
-      const dt=q[0]-p[0], hm=(p[1]+q[1])/2; if(dt>=1.5&&hm>=2.5){ g.text((p[0]+q[0])/2,hm/2,N(A)+" m",{"text-anchor":"middle","font-size":4,"font-weight":700,fill:"var(--ink)"}); if(dt>=3&&hm>=5) g.text((p[0]+q[0])/2,hm/2-2.2,sh,{"text-anchor":"middle","font-size":3.2,fill:"var(--muted)"}); } }
-    g.line(I.p[0],I.p[1],I.q[0],I.q[1],{stroke:"var(--amber)","stroke-width":2.6,opacity:.35});
-    for(let k=0;k<P.length-1;k++) g.line(P[k][0],P[k][1],P[k+1][0],P[k+1][1],{stroke:"var(--blue)","stroke-width":1.3});
-    g.line(I.T,0,I.T,16,{stroke:"var(--red)","stroke-dasharray":"1.5 1.2","stroke-width":.6}); g.dot(I.T,I.vT,"var(--red)",1.8);
-    P.forEach((pt,k)=>{handle(svg,g.X(pt[0]),g.Y(pt[1]),"k"+k,k===0?"var(--muted)":"var(--accent)");});
-    const rx0=g.X(0), rx1=g.X(14), ry=20; seg(svg,[rx0,ry],[rx1,ry],{stroke:"var(--muted)","stroke-width":1.4}); seg(svg,[rx0,ry],[rx1,ry],{stroke:"var(--card)","stroke-width":.5,"stroke-dasharray":"3 3"});
-    lab(svg,[rx0,ry+5],"start",{"font-size":3.4,fill:"var(--muted)","text-anchor":"start"}); lab(svg,[rx1,ry+5],`${N(I.tot)} m`,{"font-size":3.4,fill:"var(--muted)","text-anchor":"end"});
-    const cx=rx0+(I.tot>0?I.sofar/I.tot:0)*(rx1-rx0);
-    S_(svg,"rect",{x:cx-7,y:ry-7.5,width:14,height:5.5,rx:1.5,fill:I.vT<1e-9?"var(--red)":"var(--blue)"}); S_(svg,"rect",{x:cx-4,y:ry-10,width:7,height:3,rx:1,fill:I.vT<1e-9?"var(--red)":"var(--blue)"});
-    [cx-4,cx+4].forEach(x=>S_(svg,"circle",{cx:x,cy:ry-1.6,r:1.6,fill:"var(--ink)"}));
-    lab(svg,[cx,ry-12],I.vT<1e-9?"STOPPED":`${N(I.vT,1)} m/s`,{"font-size":3.8,"font-weight":700,fill:I.vT<1e-9?"var(--red)":"var(--ink)"});
-  },
-  drag(id,p,s){const [t,v]=ginv(SBOX,p), i=+id.slice(1), P=s.pts, last=P.length-1; let nt=snap(t,.5), nv=clamp(snap(v,1),0,16);
-    if(i===0) nt=0; else nt=clamp(nt,P[i-1][0]+.5,i<last?P[i+1][0]-.5:14); P[i]=[nt,nv];},
-  key(s){const I=jInfo(s), ac=Math.abs(I.a)<1e-9?"amber":I.a>0?"green":"red", aw=Math.abs(I.a)<1e-9?"steady speed":I.a>0?"speeding up":"slowing down";
-    return KHEAD(`${TT} = ${N(I.T,1)} s · speed ${N(I.vT,1)} m/s · gone ${N(I.sofar,1)} m so far`)+FORMS([FB("blue","Total distance = total area",`${N(I.tot)} m`,s.pts.slice(0,-1).map((p,k)=>segShape(p,s.pts[k+1])).join(" + ")),
-      I.a<-1e-9?FB(ac,"Retardation now = size of the gradient",`${N(-I.a,2)} m/s²`,`${aw} · ${frac(`${N(I.p[1])} − ${N(I.q[1])}`,`${N(I.q[0])} − ${N(I.p[0])}`)}`)
-        :FB(ac,"Acceleration now = gradient",`${N(I.a,2)} m/s²`,`${aw} · ${frac(`${N(I.q[1])} − ${N(I.p[1])}`,`${N(I.q[0])} − ${N(I.p[0])}`)}`),
-      FB("amber","Average speed = total distance ÷ total time",`${N(I.tot/I.tEnd,2)} m/s`,`${N(I.tot)} ÷ ${N(I.tEnd)}`)]);},
-  readout(s){const P=s.pts; return P.slice(0,-1).map((p,k)=>{const sh=segShape(p,P[k+1]); return `<div class="row">${N(p[0])}–${N(P[k+1][0])} s: ${sh==="stopped"?`stopped (speed 0) → <b>0 m</b>`:`${sh} ${segWork(p,P[k+1])} = <b>${N(segArea(p,P[k+1]))} m</b>`}</div>`;}).join("");},
+  init:{T:7}, jump:true, ip:"Drag the time line.", vb:"0 2 140 121", label:"Speed-time graph of a car: drag the time line, the shaded area so far is the distance the car has gone", link:["T"],
+  fix:s=>{ s.T=clamp(Math.round(+s.T||0),0,14); },
+  steps:[{name:"Area = distance",t:()=>"",w:s=>stK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9880; const T=clamp(Math.round(+s.T||0),0,14), g=graph(svg,STB), ph=innerWidth<600, fs=ph?5.4:4.6, F={"font-size":fs,"font-weight":700}, P=stP(T), vT=stV(T), INK="var(--ink)", rc=svg.getBoundingClientRect(), pu=rc.width?Math.min(rc.width/140,(rc.height||rc.width)/121):0, rr=Math.max(7,pu?22/pu:0);
+    const H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"}, Y0=g.Y(0);
+    P.forEach(p=>g.poly([[p.t0,0],[p.t0,p.v0],[p.t1,p.v1],[p.t1,0]],{fill:`var(--${p.c}-fill)`,stroke:"none"}));
+    P.forEach(p=>{ if(p.k!=="tri") return; const c=`var(--${p.c})`, d={stroke:c,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"}, hv=Math.max(p.v0,p.v1);
+      if(p.t0===0) g.line(0,hv,p.t1,hv,d); else { g.line(p.t0,hv,p.t1,hv,d); g.line(p.t1,0,p.t1,hv,d); } });
+    g.plot(stV,{stroke:INK,"stroke-width":1.5},0,14);
+    g.line(T,0,T,STB.y1,{stroke:INK,"stroke-width":.8});
+    [0,4,10,14].forEach(v=>{ if(v===T||Math.abs(v-T)<1.5) return; lab(svg,[g.X(v),Y0+fs+1.2],N(v),{"font-size":fs*.85,fill:"var(--muted)"}); });
+    lab(svg,[g.X(T),Y0+rr+fs*.95],N(T),Object.assign({fill:INK},F,{"font-size":fs*1.1}));
+    lab(svg,[g.X(14)+3.4,Y0-rr-1],"t (s)",{"font-size":fs*.85,fill:"var(--muted)","text-anchor":"start","font-style":"italic"});
+    if(T>1) lab(svg,[g.X(0)-1.6,g.Y(12)+fs*.32],"12",{"font-size":fs*.85,fill:"var(--muted)","text-anchor":"end"});
+    lab(svg,[6.4,g.Y(6)],"v (m/s)",{"font-size":fs*.85,fill:"var(--muted)","font-style":"italic",transform:`rotate(-90 6.4 ${g.Y(6).toFixed(2)})`});
+    P.forEach(p=>{ const w=p.t1-p.t0, c=`var(--${p.c})`, m=(p.t0+p.t1)/2;
+      const nr=Math.abs(g.X(m)-g.X(T))<rr+6; if(!(nr&&p.t0===0)) lab(svg,[g.X(m),Y0-(nr?rr+1.5:1.5)],`${N(w)} s`,Object.assign({fill:c,"font-size":fs*.82,"font-weight":700},H));
+      let at=null; if(p.k==="tri"&&p.t0===0){ if(w>=2) at=[p.t1*2/3,p.v1/3]; } else if(p.k==="rect") at=[m,6.5]; else if(p.k==="tri") at=[p.t0+w/3,p.v0/3]; else at=[m,(p.v0+p.v1)/4+.6];
+      if(at){ const af=w<2&&N(p.A).length>2?fs*.95:fs*1.15; lab(svg,[g.X(at[0]),g.Y(at[1])+af*.35],N(p.A),Object.assign({fill:c,"font-size":af,"font-weight":800},H)); } });
+    if(vT>0&&vT<12){ const dn=T>10; lab(svg,[g.X(T)+(dn?2.2:-2.2),g.Y(vT)-2],N(vT),Object.assign({fill:INK,"text-anchor":dn?"start":"end"},F,H)); }
+    g.dot(T,vT,INK,1.9);
+    const tot=P.reduce((a,p)=>a+p.A,0), R0=g.X(0), R1=g.X(14), rx=d=>R0+d/120*(R1-R0), ry=21;
+    S_(svg,"rect",{x:R0,y:ry-2,width:R1-R0,height:4,rx:1,fill:"var(--line)"});
+    let d0=0; P.forEach(p=>{ if(p.A>0) S_(svg,"rect",{x:rx(d0),y:ry-2,width:rx(d0+p.A)-rx(d0),height:4,fill:`var(--${p.c}-fill)`,stroke:`var(--${p.c})`,"stroke-width":.5}); d0+=p.A; });
+    const cx=rx(tot);
+    S_(svg,"rect",{x:cx-6,y:ry-8.2,width:12,height:4.6,rx:1.4,fill:INK}); S_(svg,"rect",{x:cx-3.6,y:ry-10.8,width:6.4,height:3.2,rx:1,fill:INK});
+    [cx-3.5,cx+3.5].forEach(x=>S_(svg,"circle",{cx:x,cy:ry-3.2,r:1.5,fill:"var(--muted)",stroke:"var(--card)","stroke-width":.5}));
+    const rt=cx<100; lab(svg,[cx+(rt?8:-8),ry-4.6],`${N(tot)} m`,Object.assign({fill:INK,"text-anchor":rt?"start":"end"},F,{"font-size":fs*1.1}));
+    S_(svg,"rect",{x:R0-8,y:ry-14,width:R1-R0+16,height:20,fill:"transparent","data-drag":"r",style:"cursor:pointer"});
+    S_(svg,"rect",{x:STB.l-6,y:STB.t-6,width:STB.w+12,height:128-STB.t+6,fill:"transparent","data-drag":"t",style:"cursor:pointer"});
+    const hx=g.X(T), hy=Y0; handle(svg,hx,hy,"t",INK); S_(svg,"circle",{cx:hx,cy:hy,r:3.2,fill:INK,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ if(id==="r"){ const R0=STB.l, d=clamp((p.x-R0)/STB.w*120,0,120); let b=0; for(let k=1;k<=14;k++) if(Math.abs(stDist(k)-d)<Math.abs(stDist(b)-d)) b=k; s.T=b; return; }
+    const [t]=ginv(STB,p); s.T=clamp(Math.round(t),0,14); },
+  kbd:{label:(id,s)=>["The time line: arrow keys move it",`t = ${s.T} s`],
+    move:(id,k,sh,s)=>{ s.T=clamp(s.T+(/Up|Right/.test(k)?1:-1),0,14); }},
+  key(){ return ""; }
 });
 
 const KV={
@@ -3224,44 +3265,70 @@ function ceLet(svg,s){ const g=graph(svg,Object.assign({},BXC,{nonum:1})), {a,b,
   g.dot(a,b,"var(--ink)",1.6); g.dot(x,y,"var(--accent)",1.6);
   T(a,b,["C(","a",", ","b",")"],{dx:-2,dy:5,"text-anchor":"end"});
   T(x,y,["P(","x",", ","y",")"],{dx:3.4,dy:-3,"text-anchor":"start",fill:"var(--accent)"}); }
+const ceCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.cek .formbox{padding:8px 12px}.cek.ipk .formbox .gen{height:26px}.cek.ipk .formbox .eq{height:auto;display:block;overflow:visible;padding:0;white-space:normal}.cek .cer1{height:64px;display:flex;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;gap:0 8px;font-size:23px;font-weight:700;color:var(--ink);line-height:1.3;text-align:center}.cek .cer2{display:flex;align-items:center;justify-content:center;height:46px;margin-top:4px;border-top:1px solid var(--grid2);font-size:23px;font-weight:700;color:var(--ink);white-space:nowrap}.cek .cech{background:var(--green-fill);border-radius:6px;padding:0 .1em;font-weight:800}.cek .ce25{color:var(--purple);background:var(--purple-fill);border-radius:6px;padding:0 .2em;margin-left:.15em;font-weight:800;font-size:1.12em}.cek .cer1 .k-purple{font-weight:800}.cek .cep{display:inline-block;color:var(--purple);font-weight:800}.cek .cep.on{animation:cepl .7s ease-out both}@keyframes cepl{0%{transform:scale(1)}30%{transform:scale(1.45)}100%{transform:scale(1)}}@media (prefers-reduced-motion:reduce){.cek .cep.on{animation:none}}@media (max-width:899px){#app .play.ceip .stage svg{max-height:50svh}}@media (max-width:599px){.cek .cer1{font-size:19px;height:54px;gap:0 6px}.cek .cer2{font-size:20px;height:42px}}'; document.head.append(e); }catch(_){} return 1; })();
+const CEP=[[5,0],[4,3],[3,4],[0,5],[-3,4],[-4,3],[-5,0],[-4,-3],[-3,-4],[0,-5],[3,-4],[4,-3]];
+const ceB={l:16,t:8,w:104,h:104,x0:-5,x1:8,y0:-7.5,y1:5.5,xs:1,ys:1,xl:1,yl:1,nonum:true,xn:" ",yn:" "};
+const ceHit=(R,Q)=>R[0]<Q[2]&&Q[0]<R[2]&&R[1]<Q[3]&&Q[1]<R[3];
+const ceSeg=(R,A,B)=>{ for(let i=0;i<=24;i++){ const x=A[0]+(B[0]-A[0])*i/24, y=A[1]+(B[1]-A[1])*i/24; if(x>R[0]-.9&&x<R[2]+.9&&y>R[1]-.9&&y<R[3]+.9) return true; } return false; };
+const ceTx=(svg,x,y,parts,fs,anc,O,big)=>{ const len=parts.reduce((a,q)=>a+q[0].length,0), w=len*fs*.58, x0=anc==="start"?x:anc==="end"?x-w:x-w/2;
+  const e=S_(svg,"text",{x:x.toFixed(2),y:y.toFixed(2),"text-anchor":anc,"font-size":fs,"font-weight":big?800:700,fill:"var(--ink)","paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.6,"stroke-linejoin":"round"});
+  parts.forEach(([s,c])=>e.append(svgEl("tspan",c?{fill:c}:{},s))); O.push([x0,y-fs*.8,x0+w,y+fs*.22]); };
+let ceLP=null, ceT=-1e4;
+const ceK=s=>{ const [dx,dy]=CEP[s.p], px=2+dx, py=-1+dy, A=t=>kc("amber",t), G=t=>kc("green",t), P=t=>kc("purple",t);
+  const gen=nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${P(`${V("r")}²`)}`);
+  if(s.p!==ceLP){ if(ceLP!==null) ceT=performance.now(); ceLP=s.p; } const age=performance.now()-ceT, pz=age<700?` on" style="animation-delay:-${Math.round(age)}ms`:"";
+  const r1=`${nw(`(${A(`${N(px)} − 2`)})² + (${G(`${N(py)} <span class="cech">− (−1)</span>`)})²`)} ${nw(`= ${A(`${PB(dx)}²`)} + ${G(`${PB(dy)}²`)}`)} ${nw(`= <span class="cep${pz}">25</span> = ${P("5²")}`)}`;
+  const r2=nw(`(${A(`${X1} − 2`)})² + (${G(`${V("y")} <span class="cech">+ 1</span>`)})² = <span class="ce25">25</span>`);
+  return `<div class="apwk ipk cek" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-blue wide"><div class="gen">${gen}</div><div class="eq"><div class="cer1">${r1}</div><div class="cer2">${r2}</div></div></div></div></div>`; };
 const circleEq=aid({
-  init:{a:2,b:1,r:5,th:53.13010235415598,qx:6,qy:5,ln:1}, jump:true, nxWait:true, label:"Circle: every point is r away from the centre", link:["th","qx","qy","ln"],
-  fix:s=>{ s.ln=clamp(Math.round(+s.ln||1),1,4); },
-  sliders:[{k:"a",label:V("a"),min:-3,max:5,step:1,show:s=>s.step===3},{k:"b",label:V("b"),min:-3,max:4,step:1,show:s=>s.step===3},{k:"r",label:V("r"),min:1,max:6,step:1,show:s=>s.step===3}],
-  buttons:[{label:"▶ Next line",show:s=>s.step===1&&s.ln<4,fn:s=>{s.ln++;}},{label:"Start again",show:s=>s.step===1&&s.ln>1,fn:s=>{s.ln=1;}}],
-  steps:[{name:"On the circle",t:s=>`Drag P round the circle. It's always ${N(s.r)} away from the centre C.<br>So across² + up² = ${N(s.r)}² = ${N(s.r*s.r)}, wherever P is.`},
-    {name:"In letters",set:{ln:1},t:s=>s.ln<4?`Same triangle in letters: centre ${nw(`C(${V("a")}, ${V("b")})`)}, any point ${nw(`P(${X1}, ${V("y")})`)} on the circle.<br>Press <b>▶ Next line</b>.`:`This works for every point P on the circle.<br>P left of or below C? ${nw(`${X1} − ${V("a")}`)} or ${nw(`${V("y")} − ${V("b")}`)} is negative, but its square is the same.`},
-    {name:"Test a point",t:s=>`Drag the dot. Put it into the left side and compare with ${N(s.r*s.r)}.<br>Less: inside. Equal: on the circle. More: outside.`},
-    {name:"Centre & radius",t:s=>`Change the centre and the radius.<br>Watch the signs: ${cSign(s)}`}],
-  draw(svg,s){ if(s.step===1){ ceLet(svg,s); return; } const g=graph(svg,BXC);
-    g.add("circle",{cx:g.X(s.a),cy:g.Y(s.b),r:g.X(s.a+s.r)-g.X(s.a),fill:"none",stroke:BL,"stroke-width":1.2});
-    g.dot(s.a,s.b,"var(--ink)",1.6); g.text(s.a,s.b,`C(${N(s.a)}, ${N(s.b)})`,{dx:-2,dy:s.step===0&&cP(s)[1]<s.b?-2.4:5,"text-anchor":"end","font-size":3.9,"font-weight":700});
-    if(s.step===0){ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b;
-      g.line(s.a,s.b,px,s.b,{stroke:AMB,"stroke-width":1.3}); g.line(px,s.b,px,py,{stroke:GR,"stroke-width":1.3}); g.line(s.a,s.b,px,py,{stroke:RD,"stroke-width":1.3});
-      if(Math.abs(dx)>.8&&Math.abs(dy)>.8) rightMark(svg,[g.X(px),g.Y(s.b)],[g.X(s.a),g.Y(s.b)],[g.X(px),g.Y(py)],3);
-      if(Math.abs(dx)>.8) g.text((s.a+px)/2,s.b,N(Math.abs(r2(dx))),{dy:dy>0?4.6:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.9,"font-weight":700});
-      if(Math.abs(dy)>.8) g.text(px,(s.b+py)/2,N(Math.abs(r2(dy))),{dx:dx>=0?1.6:-1.6,dy:1.3,"text-anchor":dx>=0?"start":"end",fill:GR,"font-size":3.9,"font-weight":700});
-      g.text((s.a+px)/2,(s.b+py)/2,N(s.r),{dx:dx>=0?-1.8:1.8,dy:dy>=0?-1.6:4,"text-anchor":dx>=0?"end":"start",fill:RD,"font-size":3.9,"font-weight":700});
-      g.text(px,py,`P(${N(r2(px))}, ${N(r2(py))})`,{dx:dx>=0?3.4:-3.4,dy:dy>=0?-3:5.5,"text-anchor":dx>=0?"start":"end",fill:"var(--accent)","font-size":3.9,"font-weight":700});
-      handle(svg,g.X(px),g.Y(py),"p"); return; }
-    if(s.step===2){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1, col=st===0?GR:st<0?BL:RD;
-      g.line(s.a,s.b,s.qx,s.qy,{stroke:col,"stroke-dasharray":"1.6 1.2","stroke-width":.9});
-      g.text(s.qx,s.qy,`(${N(s.qx)}, ${N(s.qy)})`,{dx:s.qx>=s.a?3.4:-3.4,dy:-3,"text-anchor":s.qx>=s.a?"start":"end",fill:col,"font-size":3.9,"font-weight":700});
-      handle(svg,g.X(s.qx),g.Y(s.qy),"q",col); return; }
-    g.line(s.a,s.b,s.a+s.r,s.b,{stroke:RD,"stroke-width":1.2}); g.text(s.a+s.r/2,s.b,`r = ${N(s.r)}`,{dy:-1.8,"text-anchor":"middle",fill:RD,"font-size":3.9,"font-weight":700}); },
-  drag(id,p,s){ const [x,y]=ginv(BXC,p);
-    if(id==="p"){ const th=Math.atan2(y-s.b,x-s.a)*180/Math.PI; let best=null,bd=7; circLat(s).forEach(([dx,dy])=>{const t=Math.atan2(dy,dx)*180/Math.PI, d=Math.abs(((th-t+540)%360)-180); if(d<bd){bd=d;best=t;}}); s.th=best!=null?best:Math.round(th); }
-    if(id==="q"){ let qx=clamp(snap(x,.5),BXC.x0,BXC.x1), qy=clamp(snap(y,.5),BXC.y0,BXC.y1), bd=.6; circLat(s).forEach(([dx,dy])=>{const u=s.a+dx, v=s.b+dy, d=Math.hypot(u-x,v-y); if(d<bd){bd=d;qx=u;qy=v;}}); s.qx=qx; s.qy=qy; } },
-  key(s){ const live=nw(`${br(s.a)}² + ${br(s.b,V("y"))}² = ${N(s.r*s.r)}`), eq=KHEAD(live);
-    if(s.step===0){ const [px,py]=cP(s), dx=px-s.a, dy=py-s.b, lat=Math.abs(dx-Math.round(dx))<1e-6&&Math.abs(dy-Math.round(dy))<1e-6;
-      return eq+FORMS([FB("amber",`Across: ${X1} − ${PB(s.a)}`,nw(`${N(r2(px))} − ${PB(s.a)} = ${N(r2(dx))}`),""),FB("green",`Up: ${V("y")} − ${PB(s.b)}`,nw(`${N(r2(py))} − ${PB(s.b)} = ${N(r2(dy))}`),""),
-        FB("blue","Pythagoras",nw(`${sqP(dx)} + ${sqP(dy)} ${lat?"=":"≈"} ${N(s.r*s.r)}`),`wherever P is, it comes to ${N(s.r*s.r)} = ${V("r")}²`,null,"wide")],true); }
-    if(s.step===1) return EG(null,ceLines(s).slice(0,s.ln));
-    if(s.step===2){ const d2=(s.qx-s.a)**2+(s.qy-s.b)**2, R2=s.r*s.r, st=Math.abs(d2-R2)<1e-9?0:d2<R2?-1:1;
-      return eq+FORMS([FB("amber","Put the point in",nw(`${brN(s.qx,s.a)}² + ${brN(s.qy,s.b)}² = ${N(d2,2)}`),"",null,"wide"),
-        FB(st===0?"green":st<0?"blue":"red",st===0?"✓ On the circle":st<0?"Inside":"Outside",nw(`${N(d2,2)} ${st===0?"=":st<0?"&lt;":"&gt;"} ${N(R2)}`),`compared with ${V("r")}² = ${N(R2)}`,null,"wide")],true); }
-    return KPAIR(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`,live,"Here","Standard form")+FORMS([FB("blue","Centre",nw(`(${N(s.a)}, ${N(s.b)})`),`${nw(`(${V("a")}, ${V("b")})`)}: flip the signs in the brackets`),FB("red","Radius",nw(`${SQRT(N(s.r*s.r))} = ${N(s.r)}`),"square root of the right side"),
-      FB("amber","Multiplied out",nw(`${poly([[1,X2],[1,V("y")+"²"],[-2*s.a,X1],[-2*s.b,V("y")],[s.a*s.a+s.b*s.b-s.r*s.r,""]])} = 0`),`centre from here: half each ${X1} and ${V("y")} coefficient, then flip the sign`,null,"wide")],true); }
+  init:{p:2}, jump:true, ip:"Drag P round the circle.", vb:"-2 -4 146 122", label:"A circle with centre C(2, −1) and radius 5, a point P you drag round it, and its right-angled triangle", link:["p"],
+  fix:s=>{ s.p=((Math.round(+s.p)||0)%12+12)%12; },
+  steps:[{name:"Equation of a circle",t:()=>"",w:s=>ceK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9830; const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("ceip"); else setTimeout(()=>{ const q=svg.closest&&svg.closest(".play"); if(q) q.classList.add("ceip"); },0);
+    const ph=innerWidth<600, VB=ph?[-6,0,153,120]:[-2,-4,146,122]; svg.setAttribute("viewBox",VB.join(" "));
+    const rc=svg.getBoundingClientRect(), pu=rc.width?Math.min(rc.width/VB[2],(rc.height||rc.width)/VB[3]):ph?(innerWidth-40)/VB[2]:3.2, mn=pu?12/pu:0, fs=Math.max(ph?5.6:4.6,mn), fn=Math.max(ph?4.4:3.7,mn), hr=svg.classList.contains("nudge")?Math.max(7,pu?22/pu:0)+1.2:4.4;
+    const B=ceB, g=graph(svg,B), [dx,dy]=CEP[s.p], a=2, b=-1, px=a+dx, py=b+dy, PU="var(--purple)", O=[];
+    const C=[g.X(a),g.Y(b)], K=[g.X(px),g.Y(b)], P=[g.X(px),g.Y(py)], R=g.X(a+5)-g.X(a), X0=g.X(0), Y0=g.Y(0), f=v=>v.toFixed(2);
+    S_(svg,"path",{d:`M${f(C[0]+R)} ${f(C[1])}A${f(R)} ${f(R)} 0 1 0 ${f(C[0]-R)} ${f(C[1])}A${f(R)} ${f(R)} 0 1 0 ${f(C[0]+R)} ${f(C[1])}`,fill:"none",stroke:BL,"stroke-width":1.5});
+    if(dx&&dy) S_(svg,"polygon",{points:[C,K,P].map(q=>q.map(f).join(",")).join(" "),fill:"var(--ink)","fill-opacity":.06});
+    const ln=(A,Bq,c,w)=>seg(svg,A,Bq,{stroke:c,"stroke-width":w,"stroke-linecap":"round"}), off=2.4;
+    if(dx&&dy){ ln(C,K,AMB,1.9); ln(K,P,GR,1.9); ln(C,P,PU,1.7); rightMark(svg,K,C,P,3.2,"var(--ink)"); }
+    else if(!dy){ ln(C,P,AMB,1.9); ln([C[0],C[1]+off],[P[0],P[1]+off],PU,1.7); }
+    else { ln(C,P,GR,1.9); ln([C[0]-off,C[1]],[P[0]-off,P[1]],PU,1.7); }
+    S_(svg,"circle",{cx:f(C[0]),cy:f(C[1]),r:1.7,fill:"var(--ink)"});
+    const lf=fs*1.15, AXB=[[B.l,Y0-.8,B.l+B.w,Y0+.8],[X0-.8,B.t,X0+.8,B.t+B.h]], SG=dx&&dy?[[C,K],[K,P],[C,P]]:!dy?[[C,P],[[C[0],C[1]+off],[P[0],P[1]+off]]]:[[C,P],[[C[0]-off,C[1]],[P[0]-off,P[1]]]];
+    O.push([P[0]-hr,P[1]-hr,P[0]+hr,P[1]+hr]);
+    const box=(pa,z,x,y,an)=>{ const w=pa.reduce((u,q)=>u+q[0].length,0)*z*.58, x0=an==="start"?x:an==="end"?x-w:x-w/2; return [x0,y-z*.8,x0+w,y+z*.22]; };
+    const ok=(R,ax)=>R[0]>VB[0]+.5&&R[2]<VB[0]+VB[2]-.5&&R[1]>VB[1]&&R[3]<VB[1]+VB[3]&&!O.some(Q=>ceHit(Q,[R[0]-1,R[1]-.6,R[2]+1,R[3]+.6]))&&!SG.some(([U,W])=>ceSeg(R,U,W))&&!(ax&&AXB.some(Q=>ceHit(Q,R)));
+    const put=(pa,z,cs,big)=>{ const c=cs.find(([x,y,an])=>ok(box(pa,z,x,y,an),1))||cs.find(([x,y,an])=>ok(box(pa,z,x,y,an),0))||cs[0]; ceTx(svg,c[0],c[1],pa,z,c[2],O,big); };
+    const TS=[.5,.36,.64,.24,.76];
+    const cx=dx/5, cy=dy/5, pl2=[["P(",0],[N(px),AMB],[", ",0],[N(py),GR],[")",0]];
+    const pd=hr+(Math.abs(cx)>.9?2:Math.abs(cy)>.9?1.2:3), pw=pl2.reduce((u,q)=>u+q[0].length,0)*fs*.58, pa=cx>.35?"start":cx<-.35?"end":"middle";
+    let lx=P[0]+cx*pd, ly=P[1]-cy*pd+fs*.36-cy*fs*.5, la=pa; const lx0=lx; if(pa==="start") lx=Math.min(lx,VB[0]+VB[2]-pw-.5); if(pa==="end") lx=Math.max(lx,VB[0]+pw+.5);
+    if(Math.abs(lx-lx0)>1){ la=cx>0?"end":"start"; lx=P[0]+(cx>0?hr*.4:-hr*.4); ly=P[1]-hr-3.5; }
+    ly=clamp(ly,VB[1]+fs*.85,VB[1]+VB[3]-fs*.3);
+    ceTx(svg,lx,ly,pl2,fs,la,O);
+    const it={"font-size":fs,"font-style":"italic",fill:"var(--ink)"};
+    lab(svg,[B.l+B.w+1.6,Y0+fs*.36],"x",Object.assign({"text-anchor":"start"},it)); O.push([B.l+B.w+1.2,Y0-fs*.7,B.l+B.w+2+fs*.6,Y0+fs*.3]);
+    lab(svg,[X0+1.6,B.t+fs*.8],"y",Object.assign({"text-anchor":"start"},it)); O.push([X0+1.2,B.t,X0+2+fs*.6,B.t+fs]);
+    const cl=[["C(",0],["2",AMB],[", ",0],["−1",GR],[")",0]];
+    put(cl,fs,[[C[0]+2.6,C[1]+fs+1.6,"start"],[C[0]+2.6,C[1]-2.4,"start"],[C[0],C[1]+fs+2.6,"middle"],[C[0],C[1]-3.2,"middle"],[C[0]+3.2,C[1]+fs*.36,"start"],[C[0]-2.6,C[1]+fs+1.6,"end"],[C[0]-2.6,C[1]-2.4,"end"]]);
+    if(dy){ const t=[String(Math.abs(dy)),GR], sd=dx>0?-1:1, cs=[], Y=k=>K[1]+(P[1]-K[1])*k+lf*.36; [[.5,.36,.64],[.24,.76]].forEach(ks=>{ if(dx){ ks.forEach(k=>cs.push([K[0]+sd*2.6,Y(k),sd<0?"end":"start"])); ks.forEach(k=>cs.push([K[0]-sd*2.6,Y(k),sd<0?"start":"end"])); } else ks.forEach(k=>cs.push([K[0]+2.6,Y(k),"start"])); }); put([t],lf,cs,1); }
+    if(dx){ const t=[String(Math.abs(dx)),AMB], cs=[]; (dy?TS:[.18,.25,.32,.12]).forEach(k=>{ const x=C[0]+(K[0]-C[0])*k; if(dy) cs.push([x,K[1]+lf+1.2,"middle"]); else cs.push([x,K[1]+off+lf+1.6,"middle"]); }); TS.forEach(k=>cs.push([C[0]+(K[0]-C[0])*k,K[1]-2.9,"middle"])); put([t],lf,cs,1); }
+    const rl=[["r = 5",PU]], rc2=[];
+    if(dx&&dy){ TS.forEach(k=>{ const M=[C[0]+(P[0]-C[0])*k,C[1]+(P[1]-C[1])*k], ux0=M[0]-K[0], uy0=M[1]-K[1], L=Math.hypot(ux0,uy0)||1, ux=ux0/L, uy=uy0/L; rc2.push([M[0]+ux*3.6,M[1]+uy*3.6+fs*.36+uy*fs*.4,ux>.3?"start":ux<-.3?"end":"middle"]); }); }
+    else if(!dy) [.64,.56,.5,.45,.72].forEach(k=>rc2.push([C[0]+(P[0]-C[0])*k,C[1]+off+fs+1.6,"middle"]));
+    else TS.forEach(k=>rc2.push([C[0]-off-2,C[1]+(P[1]-C[1])*k+fs*.36,"end"]));
+    put(rl,fs,rc2);
+    const T={"font-size":fn,fill:"var(--muted)"}, tk=R=>!O.some(Q=>ceHit(Q,R))&&!SG.some(([U,W])=>ceSeg(R,U,W));
+    [-4,-2,2,4,6].forEach(v=>{ const x=g.X(v), y=Y0+fn+1, w=String(v).length*fn*.58; if(tk([x-w/2-2.2,y-fn*.8-.6,x+w/2+2.2,y+.6])) lab(svg,[x,y],N(v),T); });
+    [-6,-4,-2,2,4].forEach(v=>{ const x=X0-1.4, y=g.Y(v)+fn*.36, w=String(v).length*fn*.58; if(tk([x-w-2.2,y-fn*.8-.6,x+1.2,y+.6])) lab(svg,[x,y],N(v),Object.assign({"text-anchor":"end"},T)); });
+    S_(svg,"path",{d:`M${f(C[0]+R)} ${f(C[1])}A${f(R)} ${f(R)} 0 1 0 ${f(C[0]-R)} ${f(C[1])}A${f(R)} ${f(R)} 0 1 0 ${f(C[0]+R)} ${f(C[1])}`,fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"p",style:"cursor:pointer"});
+    handle(svg,P[0],P[1],"p","var(--ink)"); S_(svg,"circle",{cx:f(P[0]),cy:f(P[1]),r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [x,y]=ginv(ceB,p), t=Math.atan2(y+1,x-2); let best=s.p, bd=9; CEP.forEach(([u,v],i)=>{ const d=Math.abs(((t-Math.atan2(v,u))%(2*Math.PI)+3*Math.PI)%(2*Math.PI)-Math.PI); if(d<bd){ bd=d; best=i; } }); s.p=best; },
+  kbd:{label:(id,s)=>["P: arrow keys move it round the circle",`P(${2+CEP[s.p][0]}, ${-1+CEP[s.p][1]})`],
+    move:(id,k,sh,s)=>{ s.p=(s.p+(/Up|Right/.test(k)?1:11))%12; }},
+  key(){ return ""; }
 });
 const LLX=[1,2,3,4,5];
 const niceTop=v=>[5,10,20,25,50,100,150,200,250,300,400,500,600,800,1000,1200].find(x=>x>=v)||Math.ceil(v/100)*100;
@@ -4221,50 +4288,47 @@ const qiExp=(s,L)=>s.step===2?`${X2} − 2${X1} + 3`:poly([[L,X2],[-L*(s.p+s.q),
 const qiExpT=(s,L)=>strip(qiExp(s,L));
 const qiSignBox=(g,ex)=>{ const up=qiUp(g), on=!qiStrict(g);
   return FB(up?"green":"red",`${QSG[g]} 0`,`${up?"ABOVE":"BELOW"}${on?" or ON":""} ${nw(`the ${X1}-axis`)}`,ex||(on?"so the roots count: ●":"the roots don't count: ○")); };
+const qiPh=()=>innerWidth<600, qiG=()=>({l:6,t:qiPh()?6:13,w:128,h:qiPh()?96:72,x0:-1.5,x1:7,y0:-4.2,y1:11,xs:1,xl:1,ys:1e3,yl:1e3,nonum:true});
+const qiF=x=>(x-1)*(x-4), qiI=x=>Math.round((x+1)*2);
+const QIA="var(--green)", QIB="var(--purple)", QICSS=`.qik .formbox{padding:8px 12px}.qik .qih{font-size:18px;font-weight:700;color:var(--ink);text-align:center;display:flex;align-items:baseline;justify-content:center;gap:8px;line-height:1.3}.qik .qil{font-weight:400;color:var(--muted)}.qik .qia{color:var(--green)}.qik .qib{color:var(--purple)}.qik .qio{color:var(--ink)}.qik .qisg{font-weight:800}.qik.ipk .formbox .eq{height:62px;font-size:20px;flex-direction:column;flex-wrap:nowrap;gap:0;justify-content:center}.qik .qir{display:block;line-height:1.3;white-space:nowrap}.qik .qir b{font-weight:800}.qik .qiw{font-size:17px;font-weight:500}.qik .qiw b{font-weight:700}.qik .qit{font-size:21px;font-weight:800}.qik .qiar{color:var(--muted);font-weight:400;margin:0 .3em}.qik .qino{color:var(--ink)}.play.qiip .dock .pillrow[data-pk]{max-width:320px;width:100%;margin:0 auto}.play.qiip .dock .pillrow[data-pk] .pill{background:var(--card);border-color:var(--grid2);font-weight:700}.play.qiip .dock .pillrow[data-pk] .pill[data-v=gt]{color:var(--green)}.play.qiip .dock .pillrow[data-pk] .pill[data-v=lt]{color:var(--purple)}.play.qiip .dock .pillrow[data-pk] .pill[data-v=gt][aria-pressed=true]{background:var(--green-fill);border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);font-weight:800}.play.qiip .dock .pillrow[data-pk] .pill[data-v=lt][aria-pressed=true]{background:var(--purple-fill);border-color:var(--purple);border-left:1px solid var(--purple);box-shadow:inset 0 0 0 1px var(--purple);font-weight:800}.qik .qis{height:80px;display:flex;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;gap:2px 10px;font-size:26px;font-weight:800;border-top:1px solid var(--grid2);padding-top:4px;text-align:center}.qik .qior{background:var(--amber-fill);color:var(--ink);border-radius:8px;padding:0 10px;font-size:1.12em;font-weight:900;line-height:1.25}.qik .qior.qib{color:var(--purple)}.qik .qist{flex-basis:100%;font-size:14px;font-weight:400;color:var(--muted)}@media (min-width:900px){.qik.ipk .formbox .eq{height:66px;font-size:21px}}@media (max-width:599px){.qik.ipk .formbox .eq{font-size:17px;height:56px}.qik .qiw{font-size:15.5px}.qik .qit{font-size:19px}.qik .qih{font-size:17px}.qik .qis{font-size:22px;height:70px}.qik .qist{font-size:13px}}@media (max-width:379px){.qik .qiw{font-size:14.5px}}@media (max-width:899px) and (orientation:portrait){.play.qiip .stage svg,.play.qiip .stage.tall svg{max-height:44vh;max-height:44svh}}`;
+const qiCs=()=>{ if(!document.getElementById("qicss")){ const e=document.createElement("style"); e.id="qicss"; e.textContent=QICSS; document.head.append(e); } };
+const qiK=s=>{ const x=s.x, y=qiF(x), gt=s.sg!=="lt", cl=y>0?"qia":y<0?"qib":"qio", inS=gt?y>0:y<0;
+  const tag=y>0?"above":y<0?"below":`on the ${X1}-axis`, mk=inS?`<span class="${gt?"qia":"qib"}">in ✓</span>`:`<span class="qino">not in</span>`;
+  const sg=`<b class="qisg ${gt?"qia":"qib"}">${gt?"&gt;":"&lt;"} 0</b>`;
+  const sol=gt?`<span class="qia">${nw(`${X1} &lt; 1`)}</span><span class="qior">or</span><span class="qia">${nw(`${X1} &gt; 4`)}</span>`:`<span class="qior qib">${nw(`1 &lt; ${X1} &lt; 4`)}</span>`;
+  const st=gt?"outside the roots":"between the roots";
+  return `<div class="apwk ipk qik" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="qih"><span class="qil">Solve</span>${nw(`(${X1} − 1)(${X1} − 4) ${sg}`)}</div><div class="eq"><span class="qir qiw">${nw(`${X1} = <b>${N(x)}</b>:`)} ${nw(`(${N(x)} − 1)(${N(x)} − 4) = <b class="${cl}">${N(y)}</b>`)}</span><span class="qir qit"><span class="${cl}">${tag}</span><span class="qiar">→</span>${mk}</span></div><div class="qis">${sol}<span class="qist">${st}</span></div></div></div></div>`; };
 const quadIneq=aid({
-  init:{p:1,q:4,sg:"gt",w:"neg"}, jump:true, vb:"0 0 140 124", label:"Solve a quadratic inequality by sketching the curve",
-  pills:[{k:"sg",label:"Solve",opts:[["gt","&gt; 0"],["ge","≥ 0"],["lt","&lt; 0"],["le","≤ 0"]]},{k:"w",label:"Sketch",opts:[["neg","<span>× (−1) first: ∪</span>"],["as","<span>as it is: ∩</span>"]],show:s=>s.step===1}],
-  sliders:[{k:"p",label:"root "+CV("amber","p"),min:-3,max:4,step:1,on:s=>{if(s.p>=s.q)s.q=s.p+1;},show:s=>s.step!==2},{k:"q",label:"root "+CV("amber","q"),min:-2,max:5,step:1,on:s=>{if(s.q<=s.p)s.p=s.q-1;},show:s=>s.step!==2}],
-  fix:s=>{ s.p=clamp(Math.round(s.p),-3,4); s.q=clamp(Math.round(s.q),-2,5); if(s.q<=s.p){ if(s.p<4) s.q=s.p+1; else s.p=s.q-1; } },
-  steps:[
-    {name:"Sketch it",t:()=>`Sketch the ∪ and mark where it cuts ${nw(`the ${X1}-axis`)}.<br>${kc("green","<b>Above</b>")} ${nw(`the ${X1}-axis`)} is &gt; 0. ${kc("red","<b>Below</b>")} is &lt; 0.`},
-    {name:`<span>Negative ${X2}</span>`,t:s=>s.w==="as"?`Or sketch the ∩ as it is. Its middle part is above ${nw(`the ${X1}-axis`)}.<br>Same roots, same solution.`:`Minus in front of ${X2}? × (−1) first and <b>flip the sign</b>.<br>× (−1) turns the ∩ into a ∪, so above swaps with below.`},
-    {name:"No roots",t:()=>`${V("b")}² − 4${V("ac")} &lt; 0, so the ∪ never touches ${nw(`the ${X1}-axis`)}.<br>It's always above: always positive.`}
-  ],
-  draw(svg,s){
-    const B=qiBox(s), g=graph(svg,B), I=qiInfo(s), R=B.y1-B.y0, cy=y=>clamp(y,B.y0-R,B.y1+R), col=I.want>0?GR:RD;
-    I.sol.forEach(([a,b])=>{ const x0=Math.max(a,B.x0), x1=Math.min(b,B.x1), pts=[[x0,0]]; for(let i=0;i<=120;i++){ const x=x0+(x1-x0)*i/120; pts.push([x,cy(I.F(x))]); } pts.push([x1,0]);
-      g.poly(pts,{fill:I.want>0?"var(--green-fill)":"var(--red-fill)",opacity:.9}); });
-    g.line(0,B.y0,0,B.y1,{stroke:"var(--ink)","stroke-width":.55}); g.add("text",{x:B.l+B.w-1,y:g.Y(0)-3,"text-anchor":"end","font-size":4.4,"font-style":"italic",fill:"var(--ink)"},"x");
-    const cuts=[B.x0,...I.R,B.x1]; for(let i=0;i<cuts.length-1;i++){ const m=(cuts[i]+cuts[i+1])/2; g.line(cuts[i],0,cuts[i+1],0,{stroke:I.F(m)>0?GR:RD,"stroke-width":1.6}); }
-    if(I.G) g.plot(I.G,{stroke:"var(--muted)","stroke-dasharray":"1.6 1.4","stroke-width":.8});
-    g.plot(I.F,{"stroke-width":1.3});
-    g.add("text",{x:g.X(0)+1.6,y:B.t+4,"font-size":4.4,"font-style":"italic",fill:"var(--ink)","paint-order":"stroke",stroke:"var(--card)","stroke-width":1.2},"y");
-    if(I.T===2&&I.want<0) g.text(1,B.y0/2,"never below",{"text-anchor":"middle",fill:RD,"font-size":3.9,"font-weight":700});
-    lab(svg,I.T===2?[134,94]:[10,10],`y = ${qiExpT(s,I.L)}`,{"text-anchor":I.T===2?"end":"start","font-size":4,"font-style":"italic","font-weight":700,fill:BL});
-    if(I.G) lab(svg,[10,15.5],`y = ${qiExpT(s,-I.L)}`,{"text-anchor":"start","font-size":3.7,"font-style":"italic",fill:"var(--muted)"});
-    const ny=111, Xn=g.X, xa=Xn(B.x0)+1, xb=Xn(B.x1)-1, dash={stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5};
-    I.R.forEach((r,i)=>{ S_(svg,"line",Object.assign({x1:Xn(r),x2:Xn(r),y1:g.Y(0),y2:ny-3},dash)); g.dot(r,0,AMB,1.8);
-      g.text(r,0,N(r),{dx:i?1.4:-1.4,dy:I.L>0?5.2:-2.2,"text-anchor":i?"start":"end",fill:AMB,"font-size":4,"font-weight":700}); });
-    S_(svg,"line",{x1:xa,x2:xb,y1:ny,y2:ny,stroke:"var(--ink)","stroke-width":.6});
-    S_(svg,"path",{d:`M${xb-2.4} ${ny-2} L${xb+.6} ${ny} L${xb-2.4} ${ny+2} M${xa+2.4} ${ny-2} L${xa-.6} ${ny} L${xa+2.4} ${ny+2}`,fill:"none",stroke:"var(--ink)","stroke-width":.6});
-    for(let x=B.x0+1;x<B.x1;x++) S_(svg,"line",{x1:Xn(x),x2:Xn(x),y1:ny-1,y2:ny+1,stroke:"var(--ink)","stroke-width":.4});
-    I.sol.forEach(([a,b])=>{ const u=Math.max(a,B.x0), v=Math.min(b,B.x1), ua=a<B.x0, vb=b>B.x1, x1=ua?xa:Xn(u), x2=vb?xb:Xn(v);
-      S_(svg,"line",{x1,x2,y1:ny,y2:ny,stroke:BL,"stroke-width":1.8});
-      if(ua) S_(svg,"path",{d:`M${xa+3.4} ${ny-2.8} L${xa-.4} ${ny} L${xa+3.4} ${ny+2.8}`,fill:"none",stroke:BL,"stroke-width":1.2});
-      if(vb) S_(svg,"path",{d:`M${xb-3.4} ${ny-2.8} L${xb+.4} ${ny} L${xb-3.4} ${ny+2.8}`,fill:"none",stroke:BL,"stroke-width":1.2}); });
-    I.R.forEach(r=>{ S_(svg,"circle",{cx:Xn(r),cy:ny,r:1.9,fill:I.strict?"var(--card)":BL,stroke:BL,"stroke-width":.9});
-      S_(svg,"text",{x:Xn(r),y:ny+7.4,"text-anchor":"middle","font-size":4,"font-weight":700,fill:AMB},N(r)); });
-  },
-  key(s){ const I=qiInfo(s), S=QSG[s.sg], fac=qiFac(s.p,s.q), rts=`roots ${kc("amber",N(s.p))} and ${kc("amber",N(s.q))}`;
-    const sol=rd=>FB("blue","Solution",I.txt,rd,null,"wide");
-    if(I.T===2) return KHEAD(`Solve ${nw(`${qiExp(s,1)} ${S} 0`)}`)+FORMS([qiSignBox(s.sg,qiUp(s.sg)?"the whole ∪ is above":"the ∪ is never below"),
-      FB("red",`${V("b")}² − 4${V("ac")}`,`${nw("(−2)² − 4(1)(3)")}<span class="brk"> </span>${nw("= −8")}`,"&lt; 0: no real roots"),sol("it's always positive")]);
-    if(I.T===0) return KHEAD(`Solve ${nw(`${qiExp(s,1)} ${S} 0`)}`)+FORMS([FB("amber","Factorise",nw(`${fac} ${S} 0`),rts),qiSignBox(s.sg),sol(I.out?"two pieces, so write “or”":"one piece: between the roots")]);
-    const H=KHEAD(`Solve ${nw(`${qiExp(s,-1)} ${S} 0`)}`);
-    if(I.neg) return H+FORMS([FB("red","× (−1): flip the sign",nw(`${qiExp(s,1)} ${QSG[I.g]} 0`),`now it's a ∪`),FB("amber","Factorise",nw(`${fac} ${QSG[I.g]} 0`),rts),
-      sol(`${QSG[I.g]} 0: ${qiUp(I.g)?kc("green","above"):kc("red","below")} ${nw(`the ${X1}-axis`)}`)]);
-    return H+FORMS([FB("amber","Factorise",nw(`−${fac} ${S} 0`),rts),qiSignBox(s.sg,`∩: ${I.out?"the outside parts":"only the middle"}`),sol("same as × (−1) first")]); }
+  init:{x:5,sg:"gt",d:32767}, jump:true, ip:"Drag along the x-axis.", vb:"0 0 140 102", label:"The curve y = (x − 1)(x − 4) with a point you drag along the x-axis; above the x-axis is > 0, below is < 0", link:["x","d"],
+  pills:[{k:"sg",opts:[["gt","&gt; 0"],["lt","&lt; 0"]]}],
+  fix:s=>{ s.sg=s.sg==="lt"||s.sg==="le"?"lt":"gt"; s.x=clamp(Math.round((+s.x||0)*2)/2,-1,6); s.d=(Math.round(+s.d||0)&32767)|(1<<qiI(s.x)); },
+  steps:[{name:"Sketch it",t:()=>"",w:s=>qiK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9820; qiCs(); const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("qiip"); else setTimeout(()=>{ const q=svg.closest&&svg.closest(".play"); if(q) q.classList.add("qiip"); },0);
+    const ph=qiPh(), B=qiG(), fs=ph?5.8:4.6, F={"font-size":fs,"font-weight":700}, H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"};
+    const ny=B.t+B.h+(ph?11:10), vh=ny+fs+(ph?5:4.4); svg.setAttribute("viewBox",`0 0 140 ${vh.toFixed(1)}`);
+    const g=graph(svg,B), x=s.x, y=qiF(x), d=s.d|(1<<qiI(x)), gt=s.sg!=="lt", y0=g.Y(0), c=y>0?QIA:y<0?QIB:"var(--ink)";
+    [1,4].forEach(r=>seg(svg,[g.X(r),y0],[g.X(r),ny-2.2],{stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5}));
+    for(let i=0;i<15;i++) if(d>>i&1){ const v=i/2-1, w=qiF(v); if(!w) continue; const k=w>0?QIA:QIB;
+      const lo=[1,4].includes(v-.5)?v-.5:v-.25, hi=[1,4].includes(v+.5)?v+.5:v+.25; g.line(lo,0,hi,0,{stroke:k,"stroke-width":2.6}); if(v!==x){ g.line(v,0,v,w,{stroke:k,"stroke-width":.8,"stroke-opacity":.45}); g.dot(v,w,k,1.2); } }
+    g.plot(qiF,{stroke:BL,"stroke-width":1.4});
+    lab(svg,[g.X(2.5),B.t+fs+.6],"y = (x − 1)(x − 4)",Object.assign({fill:BL,"font-style":"italic"},F,H));
+    if(y){ g.line(x,0,x,y,{stroke:c,"stroke-width":1.7}); g.dot(x,y,c,2.3);
+      if(y>0){ const R=x>5.2; lab(svg,[g.X(x)+(R?-3.4:3.4),g.Y(y)+fs*.36],N(y),Object.assign({fill:c,"text-anchor":R?"end":"start"},F,H)); }
+      else lab(svg,[g.X(x),g.Y(y)+fs+1.6],N(y),Object.assign({fill:c},F,H)); }
+    if(y) lab(svg,[g.X(x),y>0?y0+(ph?11.4:9.4)+fs*.5:y0-(ph?7.6:6.4)],N(x),Object.assign({fill:"var(--ink)"},F,H));
+    const xa=g.X(B.x0)+1, xb=g.X(B.x1)-1, A=(u,dir,col,w)=>S_(svg,"path",{d:`M${u-dir*2.6} ${ny-2.2} L${u+dir*.6} ${ny} L${u-dir*2.6} ${ny+2.2}`,fill:"none",stroke:col,"stroke-width":w});
+    seg(svg,[xa,ny],[xb,ny],{stroke:"var(--ink)","stroke-width":.6}); A(xb,1,"var(--ink)",.6); A(xa,-1,"var(--ink)",.6);
+    for(let v=-1;v<=6;v++) seg(svg,[g.X(v),ny-1],[g.X(v),ny+1],{stroke:"var(--ink)","stroke-width":.4});
+    const W=gt?QIA:QIB;
+    { const P=gt?[[xa,g.X(1)],[g.X(4),xb]]:[[g.X(1),g.X(4)]]; P.forEach(([u,v])=>seg(svg,[u,ny],[v,ny],{stroke:W,"stroke-width":2}));
+      if(gt){ A(xb,1,W,1.3); A(xa,-1,W,1.3); } }
+    [1,4].forEach(r=>{ S_(svg,"circle",{cx:g.X(r),cy:ny,r:1.3,fill:"var(--card)",stroke:W,"stroke-width":.6}); lab(svg,[g.X(r),ny+fs+1.8],N(r),F); });
+    S_(svg,"rect",{x:B.l,y:B.t,width:B.w,height:ny+3-B.t,fill:"transparent","data-drag":"x",style:"cursor:pointer"});
+    handle(svg,g.X(x),y0,"x","var(--ink)"); S_(svg,"circle",{cx:g.X(x),cy:y0,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [gx]=ginv(qiG(),p); s.x=clamp(Math.round(gx*2)/2,-1,6); s.d=s.d|(1<<qiI(s.x)); },
+  kbd:{label:(id,s)=>["The dot on the x-axis: arrow keys move it",`x = ${s.x}`],
+    move:(id,k,sh,s)=>{ s.x=clamp(s.x+(/Right|Up/.test(k)?.5:-.5),-1,6); s.d=s.d|(1<<qiI(s.x)); }},
+  key(){ return ""; }
 });
 const VNR={o:1,a:2,ab:4,b:8}, VNK=["a","ab","b","o"];
 const VNM=v=>VNK.filter(k=>v&VNR[k]);
@@ -7558,18 +7622,18 @@ trigGraphs:`${MUST([FB("blue","Amplitude",nw(`${V("y")} = <b class="k-blue">2</b
 <div class="sheet">
   <div class="panelc"><h4>What a, b, c do</h4>
     <div class="piccards">
-      ${PIC("#trig-graphs?fn=sin&a=2&b=1&c=0",miniWave(2,1,0),`${CV("blue","a")} = 2: twice as tall`,"amplitude 2 · negative a flips it")}
-      ${PIC("#trig-graphs?fn=sin&a=1&b=2&c=0",miniWave(1,2,0,"var(--amber)"),`${CV("amber","b")} = 2: two waves in 360°`,"period 360° ÷ 2 = 180°")}
-      ${PIC("#trig-graphs?fn=sin&a=1&b=1&c=1",miniWave(1,1,1,"var(--green)"),`${CV("green","c")} = 1: moved up 1`,"midline y = 1 · greatest 2, least 0")}
+      ${PIC("#trig-graphs?a=2&b=1",miniWave(2,1,0),`${CV("blue","a")} = 2: twice as tall`,"amplitude 2 · negative a flips it")}
+      ${PIC("#trig-graphs?a=1&b=2",miniWave(1,2,0,"var(--amber)"),`${CV("amber","b")} = 2: two waves in 360°`,"period 360° ÷ 2 = 180°")}
+      ${PIC("#trig-graphs?a=1&b=1",miniWave(1,1,1,"var(--green)"),`${CV("green","c")} = 1: moved up 1`,"midline y = 1 · greatest 2, least 0")}
     </div>
     <p class="anno">* grey dotted = ${V("y")} = sin ${X1} before the change · tap a picture to play with it</p>
   </div>
 
   <div class="panelc"><h4>Where each one starts (a &gt; 0)</h4>
     <div class="piccards">
-      ${PIC("#trig-graphs?fn=sin&a=1&b=1&c=0",miniWave(1,1,0),"sin: middle, going up","")}
-      ${PIC("#trig-graphs?fn=cos&a=1&b=1&c=0",miniWave(1,1,0,"var(--blue)",Math.cos),"cos: starts at its max","")}
-      ${PIC("#trig-graphs?fn=tan&a=1&b=1&c=0",`<svg viewBox="0 0 100 48" class="miniw"><line x1="2" y1="24" x2="98" y2="24" stroke="var(--muted)"/><line x1="4" y1="2" x2="4" y2="46" stroke="var(--muted)"/><line x1="27" y1="2" x2="27" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="73" y1="2" x2="73" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><path d="M4 24 Q20 22 25 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M29 44 Q40 28 50 24 Q60 20 71 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M75 44 Q80 26 96 24" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg>`,"tan: through O, asymptotes","")}
+      ${PIC("#trig-graphs?a=1&b=1",miniWave(1,1,0),"sin: middle, going up","")}
+      ${PIC("",miniWave(1,1,0,"var(--blue)",Math.cos),"cos: starts at its max","")}
+      ${PIC("",`<svg viewBox="0 0 100 48" class="miniw"><line x1="2" y1="24" x2="98" y2="24" stroke="var(--muted)"/><line x1="4" y1="2" x2="4" y2="46" stroke="var(--muted)"/><line x1="27" y1="2" x2="27" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="73" y1="2" x2="73" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><path d="M4 24 Q20 22 25 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M29 44 Q40 28 50 24 Q60 20 71 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M75 44 Q80 26 96 24" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg>`,"tan: through O, asymptotes","")}
     </div>
     <p class="anno">* a negative ${V("a")} flips the graph: sin goes down first, cos starts at its min</p>
   </div>
@@ -7607,7 +7671,7 @@ trigGraphs:`${MUST([FB("blue","Amplitude",nw(`${V("y")} = <b class="k-blue">2</b
       <li>quarter points every ${nw("120° ÷ 4 = 30°")}: 0°, 30°, 60°, 90°, 120°…</li>
     </ul>
     ${sin3x()}
-    ${PLAYLINK("#trig-graphs?fn=sin&a=2&b=3&c=1","Interactive: see this graph")}
+    ${PLAYLINK("#trig-graphs?a=2&b=3","Interactive: see this graph")}
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
@@ -7787,7 +7851,7 @@ speedTime:`${MUST([FB("blue","Speed–time graph",`area = <b class="k-amber">dis
     </svg></a>
     <p class="anno">* slowing down: <b class="k-amber">retardation</b> = the size of the gradient, a positive number</p>
     <p class="anno">* on the ${V("t")}-axis: stopped</p>
-    ${PLAYLINK("#speed-time","Interactive: drag the corners")}
+    ${PLAYLINK("#speed-time","Interactive: drag the time line")}
   </div>
 
   <div class="panelc"><h4>Example</h4>
@@ -11035,7 +11099,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
    complSq:`<rect x="2" y="2" width="38" height="38" fill="var(--blue-fill)" stroke="var(--ink)"/><rect x="40" y="2" width="14" height="38" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="2" y="40" width="38" height="14" fill="var(--amber-fill)" stroke="var(--ink)"/><rect x="40" y="40" width="14" height="14" fill="var(--red-fill)" stroke="var(--red)" stroke-dasharray="3 2"/>`,
    dataDots:`<line x1="4" y1="46" x2="116" y2="46" stroke="var(--ink)" stroke-width="1.5"/><circle cx="24" cy="40" r="4" fill="var(--accent)"/><circle cx="34" cy="40" r="4" fill="var(--accent)"/><circle cx="34" cy="31" r="4" fill="var(--accent)"/><circle cx="44" cy="40" r="4" fill="var(--accent)"/><circle cx="44" cy="31" r="4" fill="var(--accent)"/><circle cx="44" cy="22" r="4" fill="var(--accent)"/><circle cx="54" cy="40" r="4" fill="var(--accent)"/><circle cx="54" cy="31" r="4" fill="var(--accent)"/><circle cx="64" cy="40" r="4" fill="var(--accent)"/><circle cx="106" cy="40" r="4" fill="var(--red)"/><path d="M54 47 L47 60 L61 60 Z" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.5"/>`,
    quadForms:`<path d="M10 4 Q40 110 70 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="40" cy="57" r="4" fill="var(--accent)"/><line x1="0" y1="40" x2="110" y2="40" stroke="var(--muted)"/>`,
-   discrim:`<path d="M10 4 Q45 100 80 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="0" y1="52" x2="110" y2="52" stroke="var(--amber)" stroke-width="2"/><line x1="0" y1="60" x2="110" y2="20" stroke="var(--green)" stroke-width="2"/>`,
+   discrim:`<path d="M10 4 Q45 100 80 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="0" y1="60" x2="100" y2="0" stroke="var(--purple)" stroke-width="2.5"/><circle cx="29.3" cy="42.4" r="3.8" fill="var(--green)"/><circle cx="75.9" cy="14.4" r="3.8" fill="var(--green)"/>`,
    unitCircle:`<circle cx="32" cy="32" r="28" fill="none" stroke="var(--ink)" stroke-width="1.5"/><line x1="32" y1="32" x2="56" y2="18" stroke="var(--ink)" stroke-width="1.5"/><line x1="56" y1="18" x2="56" y2="32" stroke="var(--blue)" stroke-width="3"/><line x1="32" y1="32" x2="56" y2="32" stroke="var(--amber)" stroke-width="3"/><text x="72" y="26" font-size="16" font-weight="700" fill="var(--accent)">S A</text><text x="72" y="50" font-size="16" font-weight="700" fill="var(--accent)">T C</text>`,
    sixRatios:`<g transform="translate(22 0)"><path d="M50 58 A40 40 0 0 0 10 18" fill="none" stroke="var(--ink)" stroke-width="1.2"/><line x1="10" y1="58" x2="38.3" y2="58" stroke="var(--amber)" stroke-width="2.5"/><line x1="38.3" y1="58" x2="38.3" y2="29.7" stroke="var(--blue)" stroke-width="2.5"/><line x1="38.3" y1="29.7" x2="66.6" y2="58" stroke="var(--green)" stroke-width="2.5"/><line x1="38.3" y1="29.7" x2="10" y2="1.4" stroke="var(--teal)" stroke-width="2.5"/><line x1="10" y1="62" x2="66.6" y2="62" stroke="var(--red)" stroke-width="2"/><line x1="6" y1="58" x2="6" y2="1.4" stroke="var(--purple)" stroke-width="2"/><line x1="10" y1="58" x2="38.3" y2="29.7" stroke="var(--ink)" stroke-width="1.2"/></g>`,
    pascalPaths:`<g stroke="var(--green)" stroke-width="2.5"><line x1="54" y1="18" x2="42" y2="30"/><line x1="66" y1="18" x2="78" y2="30"/><line x1="42" y1="42" x2="54" y2="52"/><line x1="78" y1="42" x2="66" y2="52"/></g><g font-size="17" font-weight="700" text-anchor="middle"><text x="60" y="15" fill="var(--muted)">1</text><text x="36" y="42" fill="var(--red)">1</text><text x="84" y="42" fill="var(--red)">1</text><text x="60" y="64" fill="var(--green)">2</text></g>`,
@@ -11058,7 +11122,7 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
    eqExpLog:`<line x1="6" y1="60" x2="62" y2="4" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M4 50 Q40 48 52 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M16 62 Q18 26 62 14" fill="none" stroke="var(--green)" stroke-width="2.5"/><text x="70" y="40" font-size="13" font-style="italic" fill="var(--ink)">y = x</text>`,
    radAid:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--red-fill)" stroke="none"/><line x1="14" y1="58" x2="44.3" y2="10.9" stroke="var(--ink)" stroke-width="1.5"/><line x1="14" y1="58" x2="70" y2="58" stroke="var(--amber)" stroke-width="3.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
    arcRad:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><path d="M26 58 A12 12 0 0 0 20.5 47.9" fill="none" stroke="var(--red)" stroke-width="2"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
-   circleEq:`<circle cx="60" cy="32" r="26" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="60" y1="32" x2="75.6" y2="32" stroke="var(--amber)" stroke-width="2.2"/><line x1="75.6" y1="32" x2="75.6" y2="11.2" stroke="var(--green)" stroke-width="2.2"/><line x1="60" y1="32" x2="75.6" y2="11.2" stroke="var(--red)" stroke-width="2.2"/><circle cx="60" cy="32" r="2.8" fill="var(--ink)"/>`,
+   circleEq:`<circle cx="60" cy="32" r="26" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="60" y1="32" x2="75.6" y2="32" stroke="var(--amber)" stroke-width="2.2"/><line x1="75.6" y1="32" x2="75.6" y2="11.2" stroke="var(--green)" stroke-width="2.2"/><line x1="60" y1="32" x2="75.6" y2="11.2" stroke="var(--purple)" stroke-width="2.2"/><circle cx="60" cy="32" r="2.8" fill="var(--ink)"/>`,
    angPar:`<line x1="2" y1="18" x2="92" y2="18" stroke="var(--ink)" stroke-width="1.5"/><line x1="2" y1="46" x2="92" y2="46" stroke="var(--ink)" stroke-width="1.5"/><path d="M14 18 H58 L36 46 H80" fill="none" stroke="var(--green)" stroke-width="6" stroke-opacity=".4" stroke-linejoin="round" stroke-linecap="round"/><line x1="70" y1="2" x2="24" y2="62" stroke="var(--ink)" stroke-width="1.5"/><path d="M36 46 L44 46 A8 8 0 0 0 40.9 39.7 Z" fill="var(--amber)"/><path d="M58 18 L50 18 A8 8 0 0 0 53.1 24.3 Z" fill="var(--amber)"/><text x="107" y="43" font-size="32" font-weight="800" text-anchor="middle" fill="var(--green)">Z</text>`,
    crossAid:`<line x1="6" y1="42" x2="114" y2="42" stroke="var(--ink)" stroke-width="2"/><line x1="66" y1="4" x2="66" y2="62" stroke="var(--ink)" stroke-width="2"/><path d="M22 12 L40 32 M22 32 L40 12" stroke="var(--muted)" stroke-width="1.6"/><g font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)"><text x="14" y="18">x</text><text x="14" y="36">x</text><text x="14" y="58">x²</text><text x="48" y="18">5</text><text x="48" y="36" fill="var(--red)">−1</text><text x="48" y="58">−5</text><text x="92" y="18">5x</text><text x="92" y="36" fill="var(--red)">−x</text><text x="92" y="58" fill="var(--green)">4x</text></g>`,
    probAid:`<rect x="4" y="5" width="54" height="54" fill="var(--card)" stroke="var(--line)"/><rect x="40" y="5" width="18" height="18" fill="var(--amber-fill)"/><rect x="22" y="23" width="18" height="18" fill="var(--amber-fill)"/><rect x="4" y="41" width="18" height="18" fill="var(--amber-fill)"/><path d="M22 5 V59 M40 5 V59 M4 23 H58 M4 41 H58" stroke="var(--line)"/><rect x="4" y="5" width="54" height="54" fill="none" stroke="var(--ink)"/><path d="M68 32 L88 15 L112 7 M88 15 L112 24 M68 32 L88 49 L112 40 M88 49 L112 58" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle cx="88" cy="15" r="4.5" fill="var(--red)"/><circle cx="88" cy="49" r="4.5" fill="var(--blue)"/><circle cx="112" cy="7" r="3.5" fill="var(--red)"/><circle cx="112" cy="24" r="3.5" fill="var(--blue)"/><circle cx="112" cy="40" r="3.5" fill="var(--red)"/><circle cx="112" cy="58" r="3.5" fill="var(--blue)"/>`,
