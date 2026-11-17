@@ -9554,7 +9554,7 @@ function picPlot(){ const X=x=>20+16*x, Y=y=>50-8*y, S='font-size="5.5" text-anc
   return SV("0 0 92 72",GRID(i=>X(i-1),j=>Y(j-2),5,7)+LN(X(-1),Y(0),X(4),Y(0))+LN(X(0),Y(-2),X(0),Y(5))+TX(88,Y(0)+2,IT("x"))+TX(X(0),7,IT("y"))
     +LN(X(-0.5),Y(-2),X(3),Y(5),`stroke="var(--blue)" stroke-width="1.8"`)+DOT(X(0),Y(-1))+DOT(X(1),Y(1))+DOT(X(2),Y(3))
     +TX(X(0)+3,Y(-1)+5,"(0, −1)",S)+TX(X(1)+3,Y(1)+5,"(1, 1)",S)+TX(X(2)+3,Y(3)+5,"(2, 3)",S)); }
-function picUnitSq(){ const S='font-size="6.5"', R=`font-size="6.5" fill="var(--red)" font-weight="700"`;
+function picUnitSq(){ const S='font-size="6.5"', R=`font-size="6.5" fill="var(--amber)" font-weight="700"`;
   return SV("0 0 124 66",`<rect x="34" y="11" width="46" height="46" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`
     +TX(57,8,"1 m",S)+TX(31,36,"1 m",`${S} text-anchor="end"`)+TX(57,64,"100 cm",R)+TX(83,36,"100 cm",`${R} text-anchor="start"`)
     +TX(57,29,"1 m²",`font-size="8" font-weight="700"`)+TX(57,41,"100 × 100",`font-size="6"`)+TX(57,50,"= 10 000 cm²",`font-size="6"`)); }
@@ -9564,7 +9564,7 @@ function picCircleParts(){ return SV("0 0 124 64",`<circle cx="40" cy="32" r="25
     +TX(70,14,"circumference",`fill="var(--blue)" font-weight="700" font-size="6.5" text-anchor="start"`)+TX(70,22,"(the edge)",`fill="var(--muted)" font-size="6" text-anchor="start"`)
     +TX(72,42,`${IT("d")} = 2${IT("r")}`,`font-size="7" text-anchor="start"`)); }
 function picPrismBase(){ return SV("0 0 126 68",`<polygon points="8,62 48,62 28,30" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M28 30 L68 14 L88 46 L48 62" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M8 62 L48 46 L88 46 M48 46 L68 14" fill="none" stroke="var(--muted)" stroke-width=".9" ${DASH}/>`
-    +LN(48,62,88,46,`stroke="var(--red)" stroke-width="2"`)+TX(28,55,"base",`fill="var(--amber)" font-weight="700" font-size="6.5"`)+TX(71,63,"length = height",`fill="var(--red)" font-weight="700" font-size="6" text-anchor="start"`)); }
+    +LN(48,62,88,46,`stroke="var(--green)" stroke-width="2"`)+TX(28,55,"base",`fill="var(--amber)" font-weight="700" font-size="6.5"`)+TX(71,63,"length = height",`fill="var(--green)" font-weight="700" font-size="6" text-anchor="start"`)); }
 function picPrismQ(){ const S='font-size="6.5"';
   return SV("0 0 120 74",`<polygon points="8,64 56,64 32,32" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M32 32 L72 16 L96 48 L56 64" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M8 64 L48 48 L96 48 M48 48 L72 16" fill="none" stroke="var(--muted)" stroke-width=".9" ${DASH}/>`
     +LN(32,32,32,64,`stroke="var(--red)" stroke-width="1.3" ${DASH}`)+`<path d="M32 60.5 H35.5 V64" fill="none" stroke="var(--ink)" stroke-width=".7"/>`
@@ -9705,71 +9705,56 @@ ${PAN("Money",`<table><tr><th>Question</th><th>Working</th></tr>
 ${MIST([["+20% then −20% gets back to the start",nw("100 → 120 → 96")],[`reverse %: ${nw("$96 + 20% of $96")}`,"$96 is 80% of the original"],["% change ÷ the new value","÷ the original value"],["25% off $80: the answer is $20",`$20 is the discount: pay ${nw("$80 − $20 = $60")}`]])}
 </div>`,
 
-s1Patterns:`${MUST([FB("blue","Linear sequence","same difference each time","5, 8, 11, 14: + 3 each"),FB("amber",`${VN}th term`,`difference first: ${nw(`3${VN}, 4${VN}, …`)}`,"then plus or minus to reach the 1st term"),FB("green","Is it a term?",nw(`${Tn} = the number`),`${VN} must be a positive integer`)])}
+s1Patterns:`${MUST([FB("blue",`${VN}th term`,`${nw("7, 11, 15, …")} ${nw(`→ ${Tn} = <b class="k-amber">4</b>${VN} + 3`)}`,`the difference goes in front of ${VN}`,nw(`${VN} = 1: 4${VN} = 4, so + 3 to reach 7`),"mk"),FB("amber","Going down",`${nw("20, 17, 14, …")} ${nw(`→ ${Tn} = <b class="k-amber">−3</b>${VN} + 23`)}`,"keep the minus on the difference","","mk"),FB("green","Is it a term?",`${VN} must be a <b class="k-amber">positive integer</b>`,`solve ${nw(`${Tn} = the number`)} for ${VN}`,"","mk mkw")])}
 <div class="sheet">
-${PAN(`Find the ${VN}th term`,picPattern()+STEPS(["7, 11, 15, 19, …",[nw(`difference 4, so 4${VN}`),"difference first"],[nw(`${VN} = 1: 4${VN} = 4`),"but the 1st term is 7"],[nw("4 + 3 = 7"),"how do we get to 7? + 3"],nw(`${Tn} = 4${VN} + 3`)])+EG("20, 17, 14, … (going down)",[nw(`difference −3, so −3${VN}`),nw(`${VN} = 1: −3${VN} = −3`),`how do we get to 20? ${nw("−3 + 23 = 20")}`,nw(`${Tn} = −3${VN} + 23`)]))}
+${PAN(`Find the ${VN}th term`,picPattern())}
 ${PAN(`Use the ${VN}th term`,STEPS([[nw(`T<sub>20</sub> = 4(20) + 3 = 83`),"20th term"],[nw(`4${VN} + 3 = 99, ${VN} = 24`),"99 is the 24th term ✓"]]))}
 ${PAN("Is it a term? Write it like this",EG(`${nw(`${Tn} = 4${VN} + 3`)}. Is 150 a term of the sequence?`,[nw(`4${VN} + 3 = 150`),nw(`4${VN} = 147`),nw(`${VN} = 36.75`),`As <b>${nw(`${VN} = 36.75`)}</b> is <b>not a positive integer</b>, <b>150</b> is <b>not a term</b> of the sequence.`]))}
 ${PAN("Picture patterns",picSticks()+STEPS([nw("sticks: 4, 7, 10, …"),nw(`${Tn} = 3${VN} + 1`)]))}
 ${PAN("Other sequences",FACTS("",[["Square",["1, 4, 9, 16, 25",nw(`${Tn} = ${VN}²`)]],["Cube",["1, 8, 27, 64",nw(`${Tn} = ${VN}³`)]],["Triangle",["1, 3, 6, 10, 15",nw(`${Tn} = ${frac(`${VN}(${VN} + 1)`,"2")}`)]]]))}
-${MIST([[`7, 11, 15: ${nw(`${Tn} = ${VN} + 4`)}`,`the difference goes in front of ${VN}: ${nw(`4${VN} + 3`)}`],[`${nw(`${VN} = 36.75`)}, so 150 is the 37th term`,`${VN} must be a positive integer: 150 is not a term`]])}
+${MIST([[`7, 11, 15: ${nw(`${Tn} = ${VN} + 4`)}`,`the difference goes in front of ${VN}: ${nw(`4${VN} + 3`)}`],[`${nw(`${VN} = 36.75`)}, so 150 is the 37th term`,`${VN} must be a positive integer: 150 is not a term`],[`20, 17, 14: ${nw(`${Tn} = 3${VN} + 17`)}`,`difference −3: ${nw(`${Tn} = −3${VN} + 23`)}`]])}
 </div>`,
 
-s1Graphs:`${MUST([FB("blue","Gradient","rise ÷ run","uphill: positive · downhill: negative"),FB("amber",nw(`${VY} = ${V("m")}${X1} + ${V("c")}`),`${V("m")} = gradient`,`${V("c")} = the ${VY}-intercept (where it cuts the ${VY}-axis)`),FB("green","Flat or upright",`${nw(`${VY} = ${V("k")}`)}: flat (horizontal)`,`${nw(`${X1} = ${V("k")}`)}: upright (vertical)`)])}
+s1Graphs:`${MUST([FB("blue","Gradient",nw(`gradient = ${frac("rise","run")}`),"downhill: the gradient is negative","","mk"),FB("amber","Get y alone",`${nw(`2${VY} = 4${X1} + 6`)} ${nw(`→ ${VY} = <b class="k-amber">2</b>${X1} + 3`)}`,`gradient 2, cuts the ${VY}-axis at 3`,nw(`${VY} = ${V("m")}${X1} + ${V("c")}`),"mk"),FB("green","Flat or upright",`${nw(`${VY} = 5`)} is <b class="k-amber">flat</b>`,`${nw(`${X1} = 5`)} is upright (vertical)`,"","mk")])}
 <div class="sheet">
 ${PAN("Gradient from 2 points",picGrad()+STEPS([nw(`gradient = ${frac("rise","run")} = ${frac("6","3")} = 2`),nw(`or ${frac(`${VY}₂ − ${VY}₁`,`${X1}₂ − ${X1}₁`)} = ${frac("7 − 1","4 − 1")} = 2`)]))}
 ${PAN("Read the equation",`<table><tr><th>Equation</th><th>Gradient</th><th>Cuts ${VY}-axis</th></tr>
   <tr><td>${nw(`${VY} = 3${X1} − 2`)}</td><td>3</td><td>−2</td></tr>
   <tr><td>${nw(`${VY} = −${frac("1","2")}${X1} + 4`)}</td><td>−${frac("1","2")}</td><td>4</td></tr>
-  <tr><td>${nw(`2${VY} = 4${X1} + 6`)}</td><td>2</td><td>3</td></tr>
-  <tr><td>${nw(`${VY} = 5`)}</td><td>0</td><td>5</td></tr></table>
-  <p class="anno">* make ${VY} the subject first: ${nw(`2${VY} = 4${X1} + 6`)} → ${nw(`${VY} = 2${X1} + 3`)}</p>`)}
+  <tr><td>${nw(`2${VY} = 4${X1} + 6`)}</td><td>2</td><td>3</td></tr></table>`)}
 ${PAN("4 kinds of line",PICS(PIC(null,picLineKind("up"),"Uphill","gradient is positive"),PIC(null,picLineKind("down"),"Downhill","gradient is negative"),PIC(null,picLineKind("flat"),`Flat: ${nw(`${VY} = ${V("k")}`)}`,"gradient is 0"),PIC(null,picLineKind("upright"),`Upright: ${nw(`${X1} = ${V("k")}`)}`,"a vertical line")))}
-${PAN("Draw it",`<table><tr><th>${X1}</th><td>0</td><td>1</td><td>2</td></tr><tr><th>${nw(`${VY} = 2${X1} − 1`)}</th><td>−1</td><td>1</td><td>3</td></tr></table>`+picPlot()+`<p class="anno">* plot the 3 points, then one ruler line through all of them</p>`)}
+${PAN("Draw it",`<table><tr><th>${X1}</th><td>0</td><td>1</td><td>2</td></tr><tr><th>${nw(`${VY} = 2${X1} − 1`)}</th><td>−1</td><td>1</td><td>3</td></tr></table>`+picPlot()+`<p class="anno">* 3 points, then one ruler line</p>`)}
 ${PAN("Find the equation",EG("Through (2, 5) and (4, 9)",[nw(`${V("m")} = ${frac("9 − 5","4 − 2")} = 2`),`put ${nw("(2, 5)")} into ${nw(`${VY} = 2${X1} + ${V("c")}`)}`,nw(`5 = 2(2) + ${V("c")}, so ${V("c")} = 1`),nw(`${VY} = 2${X1} + 1`)])+`<p class="anno">* parallel lines have the same gradient</p>`)}
-${MIST([["gradient = run ÷ rise","rise ÷ run"],[`${nw(`2${VY} = 4${X1} + 6`)} has gradient 4`,`${nw(`${VY} = 2${X1} + 3`)}: gradient 2`],[`${nw(`${VY} = 5`)} is vertical`,`${nw(`${VY} = 5`)} is flat · ${nw(`${X1} = 5`)} is vertical`]])}
+${MIST([["gradient = run ÷ rise","rise ÷ run"],[`${nw(`2${VY} = 4${X1} + 6`)} has gradient 4`,`${nw(`${VY} = 2${X1} + 3`)}: gradient 2`],[`${nw(`${VY} = 5`)} is vertical`,`${nw(`${VY} = 5`)} is flat · ${nw(`${X1} = 5`)} is vertical`],[`${nw(`${VY} = 3${X1} − 2`)} cuts the ${VY}-axis at 2`,"at −2: keep the minus"]])}
 </div>`,
 
-s1Area:`${MUST([FB("blue","Parallelogram","base × height","the height meets the base at 90°, not the slanted side"),FB("amber","Trapezium",nw(`${frac("1","2")}(${V("a")} + ${V("b")}) × ${V("h")}`),`${V("a")}, ${V("b")} = the parallel sides`),FB("green","Circle",`area ${nw(`π${V("r")}²`)}`,`circumference ${nw(`2π${V("r")}`)}`)])}
+s1Area:`${MUST([FB("blue","The height",`meets the base at <b class="k-amber">90°</b>`,"never the slanted side","","mk mkw"),FB("amber","Half a circle",nw(`arc = ${frac("1","2")} × 2π${V("r")}`),"then add only the outside straight edges","","mk"),FB("green","Area units",nw(`1 m² = <b class="k-amber">10 000</b> cm²`),"100 × 100, not 100","","mk")])}
 <div class="sheet">
-${PAN("The area formulas",PICS(PIC(null,picShape("tri"),`Triangle = ${nw(`${frac("1","2")} × base × ${V("h")}`)}`),PIC(null,picShape("para"),`Parallelogram = ${nw(`base × ${V("h")}`)}`),PIC(null,picShape("trap"),`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`)))}
-${PAN("Why they work",PICS(PIC("#area-cut-move",picParaCut(),"Cut the triangle off one side, move it to the other: a rectangle",nw(`base × ${V("h")}`)),PIC("#area-cut-move?step=1",picTrapPair(),`2 trapeziums make a rectangle ${nw(`(${V("a")} + ${V("b")}) × ${V("h")}`)}`,`1 trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`)))}
+${PAN("The area formulas",PICS(PIC(null,picShape("tri"),`Triangle = ${nw(`${frac("1","2")} × base × ${V("h")}`)}`),PIC(null,picShape("para"),`Parallelogram = ${nw(`base × ${V("h")}`)}`),PIC(null,picShape("trap"),`Trapezium = ${nw(`${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`)}`))+PLAYLINK("#area-cut-move","Interactive: why they work"))}
 ${PAN("Circles",picCircleParts()+FACTS("",[["",[nw(`${V("d")} = 2${V("r")}`),nw(`circumference = 2π${V("r")}`),nw(`area = π${V("r")}²`)]]]))}
-${PAN("A composite shape",picComposite()+EG("A 10 cm by 6 cm rectangle with a semicircle on one 6 cm side",[nw(`${V("r")} = 6 ÷ 2 = 3`),nw(`area = 10 × 6 + ${frac("1","2")}π(3)²`),nw("= 60 + 14.137…"),nw("= 74.1 cm² (3 s.f.)"),nw(`arc = ${frac("1","2")} × 2π(3) = 3π`),nw("perimeter = 10 + 6 + 10 + 3π"),nw("= 26 + 9.424…"),nw("= 35.4 cm (3 s.f.)")])+`<p class="anno">* the side under the semicircle is not part of the perimeter</p>`)}
-${PAN("Units",picUnitSq()+FACTS("",[["Length",["1 m = 100 cm","1 km = 1000 m"]],["Area",["1 m² = 10 000 cm²"]],["Volume",["1 m³ = 1 000 000 cm³","1 litre = 1000 cm³"]]]))}
-${MIST([[`parallelogram: ${nw("base × slanted side")}`,"base × perpendicular height"],["1 m² = 100 cm²",nw("100 × 100 = 10 000 cm²")],[`perimeter of a semicircle = ${nw(`π${V("r")}`)}`,`${nw(`π${V("r")} + 2${V("r")}`)}: the curved edge + the straight edge (leave out a straight edge inside the shape)`]])}
+${PAN("A composite shape",picComposite()+EG("A 10 cm by 6 cm rectangle with a semicircle on one 6 cm side",[nw(`${V("r")} = 6 ÷ 2 = 3`),nw(`area = 10 × 6 + ${frac("1","2")}π(3)²`),nw("= 60 + 14.137…"),nw("= 74.1 cm² (3 s.f.)"),nw(`arc = ${frac("1","2")} × 2π(3) = 3π`),nw("perimeter = 10 + 6 + 10 + 3π"),nw("= 26 + 9.424…"),nw("= 35.4 cm (3 s.f.)")]))}
+${PAN("Units",picUnitSq()+FACTS("",[["Length",["1 m = 100 cm","1 km = 1000 m"]],["Volume",["1 m³ = 1 000 000 cm³","1 litre = 1000 cm³"]]]))}
+${MIST([[`parallelogram: ${nw("base × slanted side")}`,"base × perpendicular height"],["1 m² = 100 cm²",nw("100 × 100 = 10 000 cm²")],[`perimeter of a semicircle = ${nw(`π${V("r")}`)}`,`${nw(`π${V("r")} + 2${V("r")}`)}: the curved edge + the straight edge`],[`diameter 6 cm: ${nw("area = π(6)²")}`,`halve it first: ${nw(`${V("r")} = 3`)}, ${nw("area = π(3)²")}`]])}
 </div>`,
 
-s1Volume:`${MUST([FB("blue","Volume","base area × height","then just find the base area"),FB("amber","Surface area","2 × base area + toilet paper",`toilet paper = ${nw("perimeter of base × height")}`),FB("green","Cylinder",nw(`${V("V")} = π${V("r")}²${V("h")}`),`surface ${nw(`2π${V("r")}² + 2π${V("r")} × ${V("h")}`)}`)])}
+s1Volume:`${MUST([FB("blue","Volume","base area × height","work out the base area first, any shape","","mk mkw"),FB("amber","Surface area","2 × base area + toilet paper",`toilet paper = ${nw("perimeter of base × height")}`,"","mk mkw"),FB("green","Litres",nw(`1 litre = <b class="k-amber">1000</b> cm³`),"volume in cm³, area in cm²","","mk")])}
 <div class="sheet">
-${PAN("One rule, any base",`<p class="big">${nw("volume = base area × height")}</p><table><tr><th>Base</th><th>Base area</th></tr>
-  <tr><td>rectangle</td><td>${nw(`${V("l")} × ${V("b")}`)}</td></tr>
-  <tr><td>circle</td><td>${nw(`π${V("r")}²`)}</td></tr>
-  <tr><td>triangle</td><td>${nw(`${frac("1","2")} × base × height`)} of the triangle</td></tr></table>
-  ${picPrismBase()}<p class="anno">* a prism lying down: its "height" is the length</p>`)}
+${PAN("A prism lying down",picPrismBase())}
 ${PAN("The solids",PICS(PIC(null,picSolid("cuboid"),nw(`${V("V")} = ${V("lbh")}`),`surface ${nw(`2${V("lb")} + 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`),PIC(null,picSolid("cyl"),nw(`${V("V")} = π${V("r")}²${V("h")}`),`surface ${nw(`2π${V("r")}² + 2π${V("r")} × ${V("h")}`)}`),PIC(null,picSolid("prism"),`${V("V")} = ${nw("triangle area × length")}`,"2 triangles + toilet paper")))}
 ${PAN("Cylinder",picCylNet()+EG(`${nw(`${V("r")} = 4 cm`)}, ${nw(`${V("h")} = 10 cm`)}`,[nw("V = base area × height"),nw("= π(4)² × 10 = 160π"),nw("= 503 cm³ (3 s.f.)"),"surface = 2 circles + toilet paper",nw("= 2π(4)² + 2π(4) × 10"),nw("= 32π + 80π = 112π"),nw("= 352 cm² (3 s.f.)")])+PLAYLINK("#toilet-paper"))}
 ${PAN("Triangular prism",picPrismQ()+EG("Triangle: base 6 cm, height 4 cm. Length 10 cm.",[nw(`base area = ${frac("1","2")} × 6 × 4 = 12 cm²`),nw("V = 12 × 10 = 120 cm³")]))}
-${PAN("Capacity",FACTS("",[["",["1 litre = 1000 cm³","18 000 cm³ = 18 litres"]]]))}
-${MIST([["closed cylinder surface = 2πrh only",`add the 2 circles: ${nw("2πr² + 2πr × h")}`],["r = the diameter","halve the diameter first"],["volume in cm²","volume is in cm³"]])}
+${MIST([["closed cylinder surface = 2πrh only",`add the 2 circles: ${nw("2πr² + 2πr × h")}`],[`open cylinder (no lid): ${nw("2πr² + 2πr × h")}`,`1 circle only: ${nw("πr² + 2πr × h")}`],["r = the diameter","halve the diameter first"],["volume in cm²","volume is in cm³"]])}
 </div>`,
 
-s1Data:`${MUST([FB("blue","Bar chart","compare groups","gaps between the bars"),FB("amber","Pie chart",nw(`angle = ${frac("part","total")} × 360°`),"the angles add to 360°"),FB("green","Line graph","change over time","time goes along the bottom")])}
+s1Data:`${MUST([FB("blue","Which chart?","line graph: change over time","bar chart: separate categories","","mk mkw"),FB("amber","Pie chart",nw(`${frac("18","40")} × <b class="k-amber">360°</b> = 162°`),"the angles add to 360°","","mk"),FB("green","Pictogram",`read the <b class="k-amber">key</b> first`,nw("2.5 circles × 4 = 10 students"),"","mk mkw")])}
 <div class="sheet">
-${PAN("Which chart?",PICS(PIC(null,picChart("bar"),"Bar chart"),PIC(null,picChart("pie"),"Pie chart"),PIC(null,picChart("line"),"Line graph"),PIC(null,picChart("picto"),"Pictogram","always read the key")))}
-${PAN("Pie chart angles",`<table><tr><th>40 students</th><th>Number</th><th>Angle</th></tr>
-  <tr><td>Bus</td><td>18</td><td>${nw(`${frac("18","40")} × 360° = 162°`)}</td></tr>
-  <tr><td>MRT</td><td>12</td><td>${nw(`${frac("12","40")} × 360° = 108°`)}</td></tr>
-  <tr><td>Walk</td><td>10</td><td>${nw(`${frac("10","40")} × 360° = 90°`)}</td></tr>
-  <tr><td>Total</td><td>40</td><td>360° ✓</td></tr></table>`)}
-${PAN("Pictogram",EG("Key: one circle = 4 students",["Tue: 2 and a half circles",nw("2.5 × 4 = 10 students")]))}
-${PAN("Misleading charts",picMislead()+STEPS(["an axis that doesn't start at 0 makes small changes look big","from 40: the 52 bar looks 3 times as tall as the 44 bar","from 0: you can see 52 is only 8 more","bars of different widths, or 3D pictures, mislead"]))}
 ${PAN("Write it like this",EG("Bar graph or line graph? (favourite snacks)",["<b>Bar graph</b>: the data are <b>separate categories</b> (types of snack).","A line graph shows how data <b>change over a period of time</b>."])
   +EG("Why is a pie chart not suitable? (20 activities)",["There would be <b>too many small sectors</b>.","So it is <b>hard to read and compare</b>."])
   +EG("Why is the pictogram misleading?",["The <b>size of the pictures</b> is different.","Readers may think a <b>bigger picture</b> means <b>more</b>."])
-  +EG("Why is the bar graph misleading?",["The vertical axis <b>does not start from zero</b> (it starts from <b>40</b>).",`So readers may think <b>52</b> is <b>3 times</b> <b>44</b>, but it is only <b>8 more</b>.`])
+  +picMislead()+EG("Why is the bar graph misleading?",["The vertical axis <b>does not start from zero</b> (it starts from <b>40</b>).",`So readers may think <b>52</b> is <b>3 times</b> <b>44</b>, but it is only <b>8 more</b>.`])
   +`<p class="anno">* say what's wrong, then what it makes the reader think</p>`)}
-${MIST([[`pie angle = the percentage: ${nw("45% → 45°")}`,`fraction × 360°: ${nw(`${frac("45","100")} × 360° = 162°`)}`],["count the pictogram symbols and stop","× by the key"],["\"a line graph is clearer\"","say why: it shows change over a period of time"]])}
+${PAN("Which chart?",PICS(PIC(null,picChart("bar"),"Bar chart"),PIC(null,picChart("pie"),"Pie chart"),PIC(null,picChart("line"),"Line graph"),PIC(null,picChart("picto"),"Pictogram")))}
+${MIST([[`pie angle = the percentage: ${nw("45% → 45°")}`,`fraction × 360°: ${nw(`${frac("45","100")} × 360° = 162°`)}`],["count the pictogram symbols and stop","× by the key"],["half a symbol = 1 student",`half the key: ${nw(`${frac("1","2")} × 4 = 2 students`)}`],["\"a line graph is clearer\"","say why: it shows change over a period of time"]])}
 </div>`
 };
 Object.assign(SHEETS,SHEETS4);
