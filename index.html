@@ -1600,6 +1600,32 @@ html[data-ip] .dock .pillrow:not([data-pk]) .pill.act{min-height:48px;width:100%
 html[data-ip] svg.ipwig circle[data-drag]{stroke:var(--ink);animation:ipwig .6s ease-out 2}
 @keyframes ipwigb{0%,100%{transform:none}35%{transform:scale(1.07)}70%{transform:scale(.98)}}
 html[data-ip] .dock .pill.act.ipwigb{animation:ipwigb .5s ease-out 2 !important}
+.cxk .formbox .eq{height:68px;flex-direction:column;flex-wrap:nowrap;gap:2px}
+.cxl{color:var(--ink);font-size:1em;font-weight:700}
+.ipk.cxk .formbox.cxe{opacity:.4}
+.stage.ipdone:has(svg .cxwait) .iphint{opacity:1}
+.ipk.cxk .formbox .hd,.ipk.sqk .formbox .hd,.ipk.wek .formbox .hd{font-size:13px}
+.ipk.wek .formbox .gen{font-size:16px}
+.ipk.wek .ipsf{font-size:13px}
+.ipk.sqk .formbox{background:var(--card)}
+.ipk.sqk .formbox .eq{height:auto;min-height:62px;flex-wrap:nowrap;align-items:flex-end;gap:0 5px;font-size:18px;padding:2px 0 4px}
+.sqc{display:inline-flex;flex-direction:column;align-items:center;gap:3px}
+.sqt{font-size:16px;font-weight:700;line-height:1.2;white-space:nowrap}
+.sqn{font-size:19px;line-height:1.25;white-space:nowrap}
+.sqn.sqq{font-size:17px;font-weight:600}
+.sqn.sqo{color:var(--ink)}
+.sqchip{display:inline-block;background:var(--amber);color:var(--card);border-radius:7px;padding:1px 8px;font-size:23px;font-weight:800}
+@media (max-width:599px){.ipk.cxk .formbox .eq,.ipk.wek .formbox .eq{font-size:17px}.sqt{font-size:14px}.sqchip{font-size:21px;padding:1px 6px}.ipk.sqk .formbox .eq{gap:0 3px}}
+@keyframes cxp{0%,100%{stroke-width:.9}50%{stroke-width:1.9}}
+html[data-ip] svg.nudge .cxch.nudgeme rect{animation:cxp 1.4s ease-in-out infinite}
+html[data-ip] svg.ipwig .cxch rect{animation:ipwig .6s ease-out 2}
+@media (prefers-reduced-motion:reduce){html[data-ip] svg.nudge .cxch.nudgeme rect{animation:none}}
+.sqk .sq2{font-size:1.15em}
+html[data-ip] svg .cxch.cxagain rect:not(.cxon){animation:cxp 1.4s ease-in-out 3}
+@keyframes sqfl{0%,100%{stroke-opacity:0}50%{stroke-opacity:1}}
+.sqfl{stroke-opacity:0;animation:sqfl .5s ease-in-out 2}
+@media (prefers-reduced-motion:reduce){.sqfl,html[data-ip] svg .cxch.cxagain rect{animation:none}}
+@media (min-width:900px){html[data-ip] .panel:has(.cxk){align-self:start;margin-top:40px}}
 .ip6ba .barows{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
 .bak .formbox.rrbox{padding:6px 8px}
 svg.baev .bapc{animation:bapc .8s ease-out both}
@@ -1734,7 +1760,7 @@ const LEVELS = [
 
 const TOPICS = [
   {id:"a-plus-b-squared", strand:"alg", levels:["sec2"], chapter:"Expansion & Factorisation",
-   title:"Why (a + b)² = a² + 2ab + b²", blurb:"Cut a square into 4 pieces and see where the 2ab comes from.", play:"squareAB", sheet:"expansion"},
+   title:"Why (a + b)² = a² + 2ab + b²", blurb:"Drag the cut: a², b² and two ab strips. That's where the 2ab comes from.", play:"squareAB", sheet:"expansion"},
   {id:"balance-equations", strand:"alg", levels:["sec1"], chapter:"Linear equations",
    title:"Solving linear equations: throw and flip", blurb:"Throw a term over the = and flip it. The balance scale shows why.", play:"balanceEq", sheet:"s1LinEq", sheetTitle:"Linear equations"},
   {id:"complete-square", strand:"alg", levels:["emath","amath"], chapter:"Quadratic Functions",
@@ -1818,7 +1844,7 @@ const TOPICS = [
   {id:"linear-law-graphs", strand:"graph", levels:["amath"], chapter:"Linear Law",
    title:"Linear law: curve to straight line", blurb:"Take lg of both sides and the curve turns into a straight line.", play:"linLawAid", sheet:"amLinLaw", sheetTitle:"Linear law"},
   {id:"cross-method", strand:"alg", levels:["sec2"], chapter:"Expansion & Factorisation",
-   title:"Factorising with the cross method", blurb:"Find the numbers first, then the signs. Tiles show why it works.", play:"crossAid", sheet:"s2Factor", sheetTitle:"Factorising quadratics"},
+   title:"Factorising with the cross method", blurb:"Tap a factor pair: numbers first, then the signs go on.", play:"crossAid", sheet:"s2Factor", sheetTitle:"Factorising quadratics"},
   {id:"polygon-angles", strand:"geo", levels:["sec1"], chapter:"Polygons",
    title:"Angles of polygons", blurb:"Walk round any polygon: the turns add up to 360°. Cut it into triangles: (n − 2) × 180°.", play:"polyAng", sheet:"s1Polygons", sheetTitle:"Triangles, quadrilaterals & polygons"},
   {id:"area-cut-move", strand:"geo", levels:["sec1"], chapter:"Measurement",
@@ -1872,74 +1898,6 @@ const BIN=(n,r)=>`<span class="binom"><span class="p">(</span><span class="st"><
 const fx=s=>String(s).replace(/\{([^/}]*)\/([^}]*)\}/g,(m,n,d)=>frac(n,d));
 const V=s=>`<i class="v">${s}</i>`;
 
-const squareAB = {
-  steps:[
-    {t:()=>`Here is a square. Each side is ${V("a")} + ${V("b")}.<br>So its area is (${V("a")} + ${V("b")})².`, show:{split:false}},
-    {t:()=>`Cut each side into ${V("a")} and ${V("b")}. The square breaks into <b>4 pieces</b>.`, show:{split:true}},
-    {t:()=>`Top-left piece: ${V("a")} × ${V("a")} = <span class="k-blue">${V("a")}²</span>`, show:{split:true,hi:"aa"}},
-    {t:()=>`Two rectangles: ${V("a")} × ${V("b")} each.<br>Together = <span class="k-amber">2${V("ab")}</span>`, show:{split:true,hi:"ab"}},
-    {t:()=>`Bottom-right piece: ${V("b")} × ${V("b")} = <span class="k-red">${V("b")}²</span>`, show:{split:true,hi:"bb"}},
-    {t:()=>`Add all 4 pieces:<br><b>(${V("a")} + ${V("b")})² = <span class="k-blue">${V("a")}²</span> + <span class="k-amber">2${V("ab")}</span> + <span class="k-red">${V("b")}²</span></b>`, show:{split:true,hi:"all"}},
-    {t:()=>`<span class="k-red">Common mistake:</span> (${V("a")} + ${V("b")})² = ${V("a")}² + ${V("b")}² ✗<br>That forgets the <span class="k-amber">2 rectangles</span>!`, show:{split:true,hi:"mistake"}}
-  ],
-  mount(stage,panel,key,prm){
-    const st={a:Math.round(prmNum(prm,"a",1,8,5)),b:Math.round(prmNum(prm,"b",1,6,3)),step:5}; if(cur) cur.state=()=>({a:st.a,b:st.b});
-    const svg=svgEl("svg",{viewBox:"0 0 130 126","aria-label":"Square of side a plus b split into four pieces"});
-    stage.append(svg); const kb=h("div",{class:"keybox"}); key.append(kb); key.classList.remove("empty");
-    panel.innerHTML=`${explainBox([`Big square = 4 pieces:<br><b>${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}</b>`,`Don't forget the <span class="k-amber"><b>2 rectangles</b></span>!`])}
-      <span class="dockslot" hidden></span>
-      <div class="box dock">
-        <div class="ctrl"><label for="sa">a</label><input id="sa" type="range" min="1" max="8" step="1" value="5"><output></output></div>
-        <div class="ctrl"><label for="sb">b</label><input id="sb" type="range" min="1" max="6" step="1" value="3"><output></output></div>
-      </div>
-      <div class="box robox"><div class="readout" id="ro"></div></div>
-      <p class="hint">Drag the sliders or type a number. The rule works for any a and b.</p>`;
-    const sa=$("#sa",panel), sb=$("#sb",panel), ro=$("#ro",panel);
-    const draw=()=>{
-      const {a,b,step}=st, S=this.steps[step].show;
-      sa.value=a; sb.value=b; $("output",sa.closest(".ctrl")).textContent=a; $("output",sb.closest(".ctrl")).textContent=b;
-      svg.innerHTML="";
-      const sc=92/(a+b), x0=26, y0=12, A=a*sc, B=b*sc, T=A+B;
-      const fade=k=>{ if(!S.split) return 1; if(!S.hi||S.hi==="all") return 1;
-        if(S.hi==="mistake") return k==="ab"?1:.45; return S.hi===k?1:.25; };
-      if(!S.split){
-        svg.append(svgEl("rect",{x:x0,y:y0,width:T,height:T,fill:"var(--blue-fill)",stroke:"var(--ink)","stroke-width":.8}));
-        svg.append(svgEl("text",{x:x0+T/2,y:y0+T/2+2.5,"text-anchor":"middle","font-size":7,fill:"var(--ink)","font-style":"italic"},"(a + b)²"));
-        svg.append(svgEl("text",{x:x0+T/2,y:y0-3.5,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic"},`a + b = ${a+b}`));
-        svg.append(svgEl("text",{x:x0-4,y:y0+T/2,"text-anchor":"middle","font-size":6,fill:"var(--ink)","font-style":"italic",transform:`rotate(-90 ${x0-4} ${y0+T/2})`},`a + b = ${a+b}`));
-      } else {
-        const piece=(x,y,w,hh,fill,lab,col,k,val)=>{
-          const g=svgEl("g",{opacity:fade(k)});
-          g.append(svgEl("rect",{x,y,width:w,height:hh,fill,stroke:"var(--ink)","stroke-width":.8}));
-          const fs=Math.max(3.4,Math.min(7,Math.min(w,hh)*.42));
-          g.append(svgEl("text",{x:x+w/2,y:y+hh/2+(val!=null?-fs*.1:fs*.35),"text-anchor":"middle","font-size":fs,fill:col,"font-weight":700,"font-style":"italic"},lab));
-          if(val!=null){const f2=Math.max(3.2,fs*.72); g.append(svgEl("text",{x:x+w/2,y:y+hh/2+fs*.1+f2,"text-anchor":"middle","font-size":f2,fill:col,"font-weight":700},"= "+val));}
-          if(S.hi==="mistake"&&k==="ab"){
-            g.append(svgEl("rect",{x:x+1,y:y+1,width:w-2,height:hh-2,fill:"none",stroke:"var(--red)","stroke-width":1.2,"stroke-dasharray":"2.5 1.5"}));
-          }
-          svg.append(g);
-        };
-        piece(x0,y0,A,A,"var(--blue-fill)","a²","var(--blue)","aa",a*a);
-        piece(x0+A,y0,B,A,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
-        piece(x0,y0+A,A,B,"var(--amber-fill)","ab","var(--amber)","ab",a*b);
-        piece(x0+A,y0+A,B,B,"var(--red-fill)","b²","var(--red)","bb",b*b);
-        const lab=(x,y,t,anchor="middle")=>svg.append(svgEl("text",{x,y,"text-anchor":anchor,"font-size":6,fill:"var(--ink)","font-style":"italic"},t));
-        lab(x0+A/2,y0-3.5,`a = ${a}`); lab(x0+A+B/2,y0-3.5,`b = ${b}`);
-        lab(x0-3.5,y0+A/2+2,`a = ${a}`,"end"); lab(x0-3.5,y0+A+B/2+2,`b = ${b}`,"end");
-        [[x0,y0-1.5,x0,y0-6],[x0+A,y0-1.5,x0+A,y0-6],[x0+T,y0-1.5,x0+T,y0-6],
-         [x0-1.5,y0,x0-6,y0],[x0-1.5,y0+A,x0-6,y0+A],[x0-1.5,y0+T,x0-6,y0+T]]
-         .forEach(([x1,y1,x2,y2])=>svg.append(svgEl("line",{x1,y1,x2,y2,stroke:"var(--muted)","stroke-width":.5})));
-      }
-      const tot=(a+b)**2;
-      svg.append(svgEl("text",{x:72,y:118,"text-anchor":"middle","font-size":6.2,fill:"var(--ink)"},
-        S.split?`${a*a} + ${2*a*b} + ${b*b} = ${tot}  =  (${a} + ${b})²`:`(${a} + ${b})² = ${tot}`));
-      kb.innerHTML=FORMS([FB("blue",`(${V("a")} + ${V("b")})²`,`(${a} + ${b})² = ${tot}`,"the big square"),FB("amber",`${V("a")}² + 2${V("ab")} + ${V("b")}²`,`${a*a} + ${2*a*b} + ${b*b} = ${tot}`,"the 4 pieces ✓"),FB("red","✗ Common mistake",`${a}² + ${b}² = ${a*a+b*b}`,`forgets the 2 rectangles`)]); settleKey(kb);
-      ro.innerHTML=""; ro.closest(".box").style.display="none";
-    };
-    sa.oninput=()=>{st.a=+sa.value;draw()}; sb.oninput=()=>{st.b=+sb.value;draw()};
-    draw();
-  }
-};
 
 const N=(v,d=2)=>{let s=fmt(v,d); if(s==="-0")s="0"; return s.replace("-","−")};
 const PI=Math.PI, rad=d=>d*PI/180, deg=r=>r*180/PI, norm=a=>((a%360)+360)%360;
@@ -3464,72 +3422,87 @@ const bearAid=aid({
   drag(id,p,s){ s.th=bgSnap(brgTo(bgM,[p.x,p.y])); },
   key(){ return ""; }
 });
+const ipArr=(svg,E,lf,rt,d=11)=>[[lf,-1],[rt,1]].forEach(([on,k])=>{ if(!on) return; const x=E[0]+k*d, y=E[1], f=v=>v.toFixed(2);
+  S_(svg,"path",{d:`M${f(x-k*1.6)} ${f(y-2.8)}L${f(x+k*1.4)} ${f(y)}L${f(x-k*1.6)} ${f(y+2.8)}`,fill:"none",stroke:"var(--ink)","stroke-width":1.1,"stroke-linecap":"round","stroke-linejoin":"round",opacity:.7,"pointer-events":"none"}); });
+const SQG={x0:24,y0:16,sc:10,T:8};
+const sqK=s=>{ const a=s.a, b=SQG.T-a, G=t=>`<span class="ipans" style="color:var(--green)">${t}</span>`, W=SQG.T*SQG.T;
+  const C=(t,n,c)=>`<span class="sqc"><span class="sqt">${t}</span><span class="sqn${c?" "+c:""}">${n}</span></span>`, O=t=>C("&nbsp;",t,"sqo");
+  return `<div class="apwk ipk sqk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
+    FB("green","Big square",C(`(${V("a")} + ${V("b")})²`,`(${a} + ${b})²`)+O("=")+C("&nbsp;",G(W)),null,null,"wide"),
+    FB("amber","4 pieces",C(kc("blue",`${V("a")}²`),kc("blue",a*a),"sqq")+O("+")+C(kc("amber",`2${V("ab")}`),`<span class="sqchip">2 × ${a*b}</span>`)+O("+")+C(kc("purple",`${V("b")}²`),kc("purple",b*b),"sqq")+O("=")+C("&nbsp;",G(W)),null,null,"wide")],true)+`</div>`; };
+const squareAB=aid({
+  init:{a:5}, jump:true, ip:"Drag the dot.", vb:"-14 4 140 110", label:"A square with side a plus b, cut into a squared, b squared and two ab strips", link:["a"],
+  fix:s=>{ s.a=clamp(Math.round(+s.a||5),2,6); },
+  steps:[{name:"Square",t:()=>"",w:s=>sqK(s)}],
+  draw(svg,s){ const {x0,y0,sc,T}=SQG, a=s.a, b=T-a, A=a*sc, B=b*sc, W=T*sc, fs=innerWidth<600?6:5.2, F={"font-size":fs,"font-weight":700,"font-style":"italic"};
+    const pc=(x,y,w,h,fill,col,lt,v,big)=>{ S_(svg,"rect",{x,y,width:w,height:h,fill,stroke:big?col:"var(--ink)","stroke-width":big?1.2:.8}); const m=Math.min(w,h), f=big?Math.max(6.5,Math.min(10,m*.45)):Math.max(5,Math.min(7.5,m*.36));
+      lab(svg,[x+w/2,y+h/2+f*(m>=18?.85:.36)],String(v),{"font-size":f,fill:col,"font-weight":700});
+      if(m>=18) lab(svg,[x+w/2,y+h/2-f*.3],lt,{"font-size":Math.max(4.6,f*.66),fill:col,"font-weight":700,"font-style":"italic"}); };
+    pc(x0,y0,A,A,"var(--blue-fill)","var(--blue)","a²",a*a);
+    pc(x0+A,y0+A,B,B,"var(--purple-fill)","var(--purple)","b²",b*b);
+    pc(x0+A,y0,B,A,"var(--amber-fill)","var(--amber)","ab",a*b,1);
+    pc(x0,y0+A,A,B,"var(--amber-fill)","var(--amber)","ab",a*b,1);
+    if(s._fl) [[x0+A,y0,B,A],[x0,y0+A,A,B]].forEach(([x,y,w,h])=>S_(svg,"rect",{x,y,width:w,height:h,fill:"none",stroke:"var(--amber)","stroke-width":2.4,class:"sqfl","pointer-events":"none"}));
+    S_(svg,"rect",{x:x0,y:y0,width:W,height:W,fill:"none",stroke:"var(--green)","stroke-width":1.4,"pointer-events":"none"});
+    S_(svg,"rect",{x:x0+A-7.5,y:y0+A-4,width:15,height:8,rx:2.2,fill:"var(--amber)",stroke:"var(--card)","stroke-width":.7,"pointer-events":"none"});
+    lab(svg,[x0+A,y0+A+2.1],"× 2",{"font-size":5.6,fill:"var(--card)","font-weight":700,"pointer-events":"none",style:"stroke:none"});
+    lab(svg,[x0+A/2,y0-3],`a = ${a}`,F); lab(svg,[x0+A+B/2,y0-3],`b = ${b}`,F);
+    lab(svg,[x0-3,y0+A/2+fs*.35],`a = ${a}`,Object.assign({"text-anchor":"end"},F)); lab(svg,[x0-3,y0+A+B/2+fs*.35],`b = ${b}`,Object.assign({"text-anchor":"end"},F));
+    const E=[x0+A,y0+W+7];
+    S_(svg,"rect",{x:x0,y:y0,width:W,height:W,fill:"transparent","data-drag":"a",style:"cursor:pointer"});
+    S_(svg,"path",{d:`M${x0+1.6*sc} ${E[1]}H${x0+6.4*sc}`,fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"a",style:"cursor:pointer"});
+    ipArr(svg,E,a>2,a<6);
+    seg(svg,[x0+A,y0+W],E,{stroke:"var(--ink)","stroke-width":.9}); handle(svg,E[0],E[1],"a","var(--ink)"); S_(svg,"circle",{cx:E[0],cy:E[1],r:3.7,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); },
+  drag(id,p,s){ s._fl=0; s.a=clamp(Math.round((p.x-SQG.x0)/SQG.sc),2,6); },
+  drop(id,s){ s._fl=1; },
+  key(){ return ""; }
+});
 const CXI=`<tspan font-style="italic">x</tspan>`;
-const CXQ=[{id:"a",A:[1,1],b:4,c:-5,pairs:[[5,1]]},{id:"b",A:[1,1],b:-7,c:12,pairs:[[12,1],[6,2],[4,3]]},{id:"c",A:[2,1],b:7,c:3,pairs:[[1,3],[3,1]]},{id:"d",A:[3,1],b:-10,c:8,pairs:[[1,8],[8,1],[2,4],[4,2]]}];
-const cxQ=s=>CXQ.find(q=>q.id===s.q)||CXQ[0];
-const cxSol=q=>{ for(let i=0;i<q.pairs.length;i++) for(let g=0;g<4;g++){ const n1=q.pairs[i][0]*(g&1?-1:1), n2=q.pairs[i][1]*(g&2?-1:1); if(n1*n2===q.c&&n1*q.A[1]+n2*q.A[0]===q.b) return {i,g,n1,n2}; } return {i:0,g:0,n1:q.pairs[0][0],n2:q.pairs[0][1]}; };
-const cxT=(k,x=X1)=>k===0?"0":`${k<0?"−":""}${Math.abs(k)===1?"":Math.abs(k)}${x}`;
-const cxL=(a,x=X1)=>`${a===1?"":a}${x}`;
-const cxQH=(q,x=X1,x2=X2)=>`${cxL(q.A[0]*q.A[1],x2)} ${q.b<0?"−":"+"} ${cxL(Math.abs(q.b),x)} ${q.c<0?"−":"+"} ${Math.abs(q.c)}`;
-const cxBr=(a,n,x=X1)=>`(${cxL(a,x)} ${n<0?"−":"+"} ${Math.abs(n)})`;
-const cxAns=(q,n1,n2)=>nw(cxBr(q.A[0],n1)+cxBr(q.A[1],n2));
-const cxPair=s=>{ const q=cxQ(s); return q.pairs[s["p"+q.id]]||q.pairs[0]; };
-const cxSigned=s=>{ const q=cxQ(s), o=cxSol(q), n1=Math.abs(o.n1)*(s.sg&1?-1:1), n2=Math.abs(o.n2)*(s.sg&2?-1:1); return {q,n1,n2,t1:n1*q.A[1],t2:n2*q.A[0]}; };
-function cxGrid(c){ const P=[[21,30],[55,30],[103,30],[21,48],[55,48],[103,48],[21,68],[55,68],[103,68]];
-  return LN(9,54,131,54)+LN(75,20,75,72)+c.flat().map((t,i)=>TX(P[i][0],P[i][1],t[0],`${t[1]?`fill="${t[1]}" `:""}font-weight="700" font-size="8"`)).join("")
-    +`<g transform="translate(5 16)"><path d="M22 11 L41 27 M22 27 L41 11 M36.6 25.9 L41 27 L39.2 22.9 M39.2 15.1 L41 11 L36.6 12.1" fill="none" stroke="var(--muted)" stroke-width="1"/></g>`; }
-function cxTiles(s){ const e=s.tl<1?s.tl*s.tl*(3-2*s.tl):1, m=(a,b)=>a+(b-a)*e, X=40, U=8, R=(x,y,w,h,c)=>`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${w}" height="${h}" fill="var(--${c}-fill)" stroke="var(--${c})" stroke-width=".8"/>`;
-  let o=R(m(4,12),20,X,X,"blue")+TX(m(24,32),44,`${CXI}²`,`fill="var(--blue)" font-weight="700" font-size="8"`);
-  for(let i=0;i<3;i++) o+=R(m(50+10*i,52+U*i),20,U,X,"amber");
-  for(let j=0;j<2;j++) o+=R(m(4,12),m(66+10*j,60+U*j),X,U,"amber");
-  for(let i=0;i<3;i++) for(let j=0;j<2;j++) o+=R(m(50+10*i,52+U*i),m(66+10*j,60+U*j),U,U,"green");
-  if(e>=1){ const T=`font-weight="700" font-size="6"`;
-    o+=LN(12,15.5,52,15.5,`stroke="var(--muted)" stroke-width=".6"`)+LN(52,15.5,76,15.5,`stroke="var(--green)" stroke-width=".6"`)+LN(7.5,20,7.5,60,`stroke="var(--muted)" stroke-width=".6"`)+LN(7.5,60,7.5,76,`stroke="var(--green)" stroke-width=".6"`)
-      +TX(32,13,CXI,T)+TX(64,13,"3",`fill="var(--green)" ${T}`)+TX(5.5,42,CXI,`text-anchor="end" ${T}`)+TX(5.5,70,"2",`fill="var(--green)" text-anchor="end" ${T}`)
-      +TX(44,88,`(${CXI} + 2)(${CXI} + 3)`,`fill="var(--green)" font-weight="700" font-size="7"`); }
-  const B=`font-weight="700" font-size="6.5"`, g=[[CXI,""],["2","var(--green)"],[`2${CXI}`,"var(--amber)"],[CXI,""],["3","var(--green)"],[`3${CXI}`,"var(--amber)"],[`${CXI}²`,"var(--blue)"],["6","var(--green)"],[`5${CXI}`,"var(--amber)"]];
-  const G=[[91,26],[109,26],[130,26],[91,42],[109,42],[130,42],[91,64],[109,64],[130,64]];
-  o+=LN(88,50,138,50,`stroke-width=".9"`)+LN(120,14,120,70,`stroke-width=".9"`)+`<path d="M95 22 L105 38 M95 38 L105 22" fill="none" stroke="var(--muted)" stroke-width=".7"/>`;
-  g.forEach((t,i)=>{ o+=TX(G[i][0],G[i][1],t[0],`${t[1]?`fill="${t[1]}" `:""}${B}`); });
-  return o; }
+const CXQ=[{b:-3,c:-18,ps:[[18,1],[9,2],[6,3]]},{b:7,c:12,ps:[[12,1],[6,2],[4,3]]},{b:-11,c:18,ps:[[18,1],[9,2],[6,3]]},{b:1,c:-12,ps:[[12,1],[6,2],[4,3]]}];
+const CXC=[26,70,114];
+const cxS=(k,x)=>`${Math.abs(k)===1?"":Math.abs(k)}${x}`;
+const cxP=s=>s.p>=0?CXQ[s.q].ps[s.p]:null;
+const cxOk=s=>{ const P=cxP(s), B=Math.abs(CXQ[s.q].b); return !!P&&(P[0]+P[1]===B||Math.abs(P[0]-P[1])===B); };
+const cxSg=s=>{ const q=CXQ[s.q], [u,v]=cxP(s), sb=q.b<0?-1:1; if(u+v===Math.abs(q.b)) return [sb*u,sb*v]; return u>v?[sb*u,-sb*v]:[-sb*u,sb*v]; };
+const cxBr=(S,x,sg)=>S.map(n=>`(${x} ${sg(n<0?"−":"+")} ${Math.abs(n)})`).join("");
+const cxK=s=>{ const q=CXQ[s.q], P=cxP(s), B=Math.abs(q.b);
+  const ln=(t,r,ok)=>`<div class="cxl">${t} ${kc(ok?"green":"red",`${r} ${ok?"✓":"✗"}`)}</div>`;
+  let e1="";
+  if(P&&cxOk(s)){ const hi=Math.max(...P), lo=Math.min(...P), sm=hi+lo===B; e1=ln(nw(`${cxS(hi,X1)} ${sm?"+":"−"} ${cxS(lo,X1)} =`),cxS(B,X1),true); }
+  const won=cxOk(s)&&s.sg>=.85, e2=won?`<span class="ipans" style="color:var(--green)">${nw(cxBr(cxSg(s),X1,t=>kc("amber",t)))}</span>`:"";
+  return `<div class="apwk ipk cxk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
+    FB("blue",`Add or subtract to get ${kc("blue",cxS(B,X1))}?`,e1,null,null,"wide"+(e1?"":" cxe")),
+    FB("amber","Signs last",e2,null,null,"wide"+(won?"":" cxe"))],true)+`</div>`; };
 const crossAid=aid({
-  init:{q:"a",pa:0,pb:0,pc:0,pd:0,sg:0,tl:0}, jump:true, vb:"0 0 140 92", label:"Cross method grid for factorising a quadratic", link:["sg","tl"],
-  pills:[{k:"q",label:"Sample quadratics",opts:CXQ.map(q=>[q.id,`<span>${cxQH(q)}</span>`]),show:s=>s.step<2,on:s=>{s.sg=0;}},
-    ...CXQ.map(q=>({k:"p"+q.id,label:`Factor pair of ${Math.abs(q.c)}`,opts:q.pairs.map((p,i)=>[i,`${p[0]} × ${p[1]}`]),show:s=>s.step===0&&s.q===q.id}))],
-  buttons:[{label:"Flip top sign",show:s=>s.step===1,fn:s=>{s.sg^=1;}},{label:"Flip bottom sign",show:s=>s.step===1,fn:s=>{s.sg^=2;}},
-    {label:"▶ Try the signs",show:s=>s.step===1,fn:(s,anim)=>{ const seq=[0,2,1,3], n=seq.indexOf(cxSol(cxQ(s)).g)+1; s.sg=0; anim(n*700,p=>{ s.sg=seq[clamp(Math.floor(p*n),0,n-1)]; }); }},
-    {label:"▶ Make the rectangle",show:s=>s.step===2&&s.tl<1,fn:(s,anim)=>{ s.tl=0; anim(1500,p=>{ s.tl=p; }); }},
-    {label:"Take it apart",show:s=>s.step===2&&s.tl>=1,fn:s=>{ s.tl=0; }}],
-  fix:s=>{ s.sg=clamp(Math.round(s.sg)||0,0,3); s.tl=s.tl>=1?1:0; },
-  steps:[{name:"Try a pair",t:()=>`Pick a factor pair. Multiply along the arrows, then add or subtract.<br><b class="k-green">Green</b> = the middle term. No signs yet.`},
-    {name:"Signs last",t:()=>`Numbers first, signs last. Flip the signs.<br>They must give the last number <b>and</b> the middle term.`},
-    {name:"Why it works",t:()=>`${nw(`${X2} + 5${X1} + 6`)} as tiles. Press ▶ to make a rectangle.<br>Its sides are the factors: ${nw(`(${X1} + 2)(${X1} + 3)`)}.`}],
-  draw(svg,s){
-    if(s.step===2){ svg.innerHTML=cxTiles(s); return; }
-    const q=cxQ(s), RDc="var(--red)", bot=[[cxL(q.A[0]*q.A[1],`${CXI}²`),""],[N(q.c),""],[cxT(q.b,CXI),""]];
-    let o, chk;
-    if(s.step===0){ const p=cxPair(s), t1=p[0]*q.A[1], t2=p[1]*q.A[0], add=q.c>0, sum=add?t1+t2:Math.abs(t1-t2), ok=sum===Math.abs(q.b);
-      o=cxGrid([[[cxL(q.A[0],CXI),""],[p[0],""],[cxT(t1,CXI),""]],[[cxL(q.A[1],CXI),""],[p[1],""],[cxT(t2,CXI),""]],bot]);
-      chk=TX(103,86,`${add?`${cxT(t1,CXI)} + ${cxT(t2,CXI)}`:`${cxT(Math.max(t1,t2),CXI)} − ${cxT(Math.min(t1,t2),CXI)}`} = ${cxT(sum,CXI)} ${ok?"✓":"✗"}`,`fill="var(--${ok?"green":"red"})" font-weight="700" font-size="6.5"`);
-      svg.innerHTML=TX(70,10,cxQH(q,CXI,`${CXI}²`),`font-weight="700" font-size="7.5"`)+o+chk; return; }
-    const {n1,n2,t1,t2}=cxSigned(s), cOK=n1*n2===q.c, mOK=t1+t2===q.b, cl=v=>v<0?RDc:"";
-    o=cxGrid([[[cxL(q.A[0],CXI),""],[N(n1),cl(n1)],[cxT(t1,CXI),cl(t1)]],[[cxL(q.A[1],CXI),""],[N(n2),cl(n2)],[cxT(t2,CXI),cl(t2)]],bot]);
-    chk=TX(40,86,`${N(n1)} × ${PB(n2)} = ${N(n1*n2)} ${cOK?"✓":"✗"}`,`fill="var(--${cOK?"green":"red"})" font-weight="700" font-size="6.5"`)
-      +TX(103,86,`${cxT(t1,CXI)} ${t2<0?"−":"+"} ${cxT(Math.abs(t2),CXI)} = ${cxT(t1+t2,CXI)} ${mOK?"✓":"✗"}`,`fill="var(--${mOK?"green":"red"})" font-weight="700" font-size="6.5"`);
-    svg.innerHTML=TX(70,10,`${cxQH(q,CXI,`${CXI}²`)}${cOK&&mOK?` = <tspan fill="var(--green)">${cxBr(q.A[0],n1,CXI)}${cxBr(q.A[1],n2,CXI)}</tspan>`:""}`,`font-weight="700" font-size="7.5"`)+o+chk; },
-  key(s){
-    if(s.step===2){ const done=s.tl>=1;
-      return KHEAD(nw(`${X2} + 5${X1} + 6`)+(done?` = ${nw(`(${X1} + 2)(${X1} + 3)`)}`:""))+FORMS([FB("blue","Big square",nw(`${X1} × ${X1} = ${X2}`)),
-        FB("amber","Strips",nw(`2${X1} + 3${X1} = 5${X1}`),"the cross products"),FB("green","Small squares",nw("2 × 3 = 6")),
-        FB(done?"green":"ink","Sides of the rectangle",done?`${nw(`(${X1} + 2)(${X1} + 3)`)}`:"press ▶",done?"read across each row of the cross":"",null,"wide")],true); }
-    const q=cxQ(s), H="";
-    if(s.step===0){ const p=cxPair(s), t1=p[0]*q.A[1], t2=p[1]*q.A[0], add=q.c>0, sum=add?t1+t2:Math.abs(t1-t2), ok=sum===Math.abs(q.b);
-      return H+FORMS([FB("blue","Along the arrows",nw(`${cxT(t1)} and ${cxT(t2)}`),`${nw(`${p[0]} × ${cxL(q.A[1])}`)}, ${nw(`${p[1]} × ${cxL(q.A[0])}`)}`),
-        FB(ok?"green":"red",`${q.c>0?"+":"−"}${Math.abs(q.c)}, so ${add?"add":"subtract"}`,`${nw(add?`${cxT(t1)} + ${cxT(t2)}`:`${cxT(Math.max(t1,t2))} − ${cxT(Math.min(t1,t2))}`)} = ${nw(cxT(sum))}`,ok?`✓ matches ${nw(cxT(q.b))}: signs next`:`✗ need ${nw(cxT(Math.abs(q.b)))}: try another pair`)],true); }
-    const {n1,n2,t1,t2}=cxSigned(s), cOK=n1*n2===q.c, mOK=t1+t2===q.b;
-    return H+FORMS([FB(cOK?"green":"red","Last number",`${nw(`${N(n1)} × ${PB(n2)}`)} = ${nw(N(n1*n2))}`,cOK?"✓":`✗ need ${N(q.c)}`),
-      FB(mOK?"green":"red","Middle term",`${nw(`${cxT(t1)} ${t2<0?"−":"+"} ${cxT(Math.abs(t2))}`)} = ${nw(cxT(t1+t2))}`,mOK?"✓":`✗ need ${nw(cxT(q.b))}`),
-      FB(cOK&&mOK?"green":"ink","Read across each row",cxAns(q,n1,n2),cOK&&mOK?`✓ ${nw(`${cxQH(q)} = ${cxAns(q,n1,n2)}`)}`:"✗ not yet: flip a sign",null,"wide")],true); }
+  init:{q:0,p:-1,sg:0}, jump:true, ip:"Tap a factor pair.", vb:"0 3 140 110", label:"Cross method: tap a factor pair, then the signs go on", link:["q"],
+  fix:s=>{ s.q=clamp(Math.round(+s.q||0),0,CXQ.length-1); s.p=-1; s.sg=0; },
+  buttons:[{label:"New question ↻",show:s=>s.sg>=1,fn:s=>{ s.q=(s.q+1)%CXQ.length; s.p=-1; s.sg=0; }}],
+  steps:[{name:"Cross method",t:()=>"",w:s=>cxK(s)}],
+  draw(svg,s){ const q=CXQ[s.q], P=cxP(s), ok=cxOk(s), sg=ok?s.sg||0:0, S=ok?cxSg(s):null, ink="var(--ink)", am=t=>`<tspan fill="var(--amber)">${t}</tspan>`;
+    const T=(x,y,t,a={})=>{ const e=S_(svg,"text",Object.assign({x,y,"text-anchor":"middle","font-size":7,"font-weight":700,fill:ink,"pointer-events":"none"},a)); e.innerHTML=t; return e; };
+    const sgT=n=>`<tspan fill="var(--amber)" font-size="10">${n<0?"−":"+"}</tspan>`, R1=32, R2=46, RB=65, HL=54, BY=93;
+    if(sg>=.85) [R1,R2].forEach(y=>S_(svg,"rect",{x:12,y:y-6,width:118,height:11,rx:3,fill:"var(--green-fill)","pointer-events":"none"}));
+    const qt=`${CXI}² <tspan fill="var(--blue)">${q.b<0?"−":"+"} ${cxS(q.b,CXI)}</tspan> ${q.c<0?"−":"+"} ${Math.abs(q.c)}`;
+    T(70,15,sg>=.85?`${qt} = <tspan fill="var(--green)">${cxBr(S,CXI,am)}</tspan>`:qt,{"font-size":7.5});
+    seg(svg,[12,HL],[130,HL],{stroke:ink,"stroke-width":.5}); seg(svg,[82,23],[82,72],{stroke:ink,"stroke-width":.5});
+    const ar=(A,B)=>{ const dx=B[0]-A[0], dy=B[1]-A[1], L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L, h=3, w=1.6, f=v=>v.toFixed(2);
+      S_(svg,"path",{d:`M${f(A[0])} ${f(A[1])}L${f(B[0])} ${f(B[1])}M${f(B[0]-ux*h-uy*w)} ${f(B[1]-uy*h+ux*w)}L${f(B[0])} ${f(B[1])}L${f(B[0]-ux*h+uy*w)} ${f(B[1]-uy*h-ux*w)}`,fill:"none",stroke:"var(--muted)","stroke-width":.8,"pointer-events":"none"}); };
+    ar([32,R1-1],[49,R2-4]); ar([32,R2-3],[49,R1-2]);
+    T(26,R1+2.5,CXI); T(26,R2+2.5,CXI); T(26,RB+2.5,`${CXI}²`);
+    T(58,RB+2.5,`${q.c<0?"−":""}${Math.abs(q.c)}`); T(108,RB+2.5,`${q.b<0?"−":""}${cxS(q.b,CXI)}`,{fill:"var(--blue)"});
+    if(P){ [P[0],P[1]].forEach((u,i)=>{ const y=(i?R2:R1)+2.5, n=S?S[i]:u;
+        T(58,y,`${sg>=.5?sgT(n):""}${u}`); T(108,y,`${sg>=.15?sgT(n):""}${cxS(u,CXI)}`); });
+      const hi=Math.max(...P), lo=Math.min(...P), B0=Math.abs(q.b), L=[[hi+lo,"+"],[hi-lo,"−"]].filter(([v])=>!ok||v===B0);
+      L.forEach(([v,o],k)=>{ const g=v===B0, c=g?"var(--green)":"var(--red)";
+        T(134,RB+14+k*9,`${cxS(hi,CXI)} ${o} ${cxS(lo,CXI)} = <tspan fill="${c}">${cxS(v,CXI)} ${g?"✓":"✗"}</tspan>`,{"text-anchor":"end","font-size":7}); }); }
+    else { T(58,R1+2.5,"?",{fill:"var(--muted)"}); T(58,R2+2.5,"?",{fill:"var(--muted)"}); }
+    const g=S_(svg,"g",{class:"cxch"+(ok?"":" cxwait")+(svg.classList.contains("nudge")?" nudgeme":P&&!ok?" cxagain":"")});
+    q.ps.forEach(([u,v],i)=>{ const on=i===s.p, c=on?(ok?"green":"red"):null, dim=sg>=.85&&!on;
+      S_(g,"rect",{x:CXC[i]-20,y:BY,width:40,height:19,rx:5,fill:c?`var(--${c}-fill)`:"var(--card)",stroke:c?`var(--${c})`:ink,"stroke-width":on?1.5:.9,opacity:dim?.4:1,class:on?"cxon":"","data-drag":"p","data-tap":"1",style:"cursor:pointer"});
+      T(CXC[i],BY+12,`${u} × ${v}`,{fill:c?`var(--${c})`:ink,opacity:dim?.4:1}); }); },
+  drag(id,p,s,start){ if(!start) return; const i=CXC.findIndex(c=>Math.abs(p.x-c)<=21); if(i<0) return; s.p=i; s.sg=0; },
+  drop(id,s,anim){ if(cxOk(s)&&s.sg<1) anim(2600,p=>{ s.sg=p; }); },
+  key(){ return ""; }
 });
 const DD0=[12,13,13,14,14,14,15,15,16,17], DDB={l:9,w:122,ay:52,x0:10,x1:25};
 const ddX=v=>DDB.l+(v-DDB.x0)/(DDB.x1-DDB.x0)*DDB.w;
@@ -5225,44 +5198,36 @@ const areaRect=aid({
     const rows=[1,.1,.01,.001].map(v=>{ const st=c.F(x+v)-c.F(x); return `<tr${Math.abs(Math.log10(s.h)-Math.log10(v))<.15?' class="live"':""}><td>${v}</td><td>${fmt(st,6)}</td><td>${fmt(st/v,6)}</td></tr>`; }).join("");
     return `<table class="mini"><tr><th>h</th><th>new strip</th><th>strip ÷ h</th></tr>${rows}</table>`; }
 });
-const WE=[[1,"yearly","year","1 year"],[2,"half-yearly","half-year","2 half-years"],[4,"quarterly","quarter","4 quarters"],[12,"monthly","month","12 months"],[52,"weekly","week","52 weeks"],[365,"daily","day","365 days"],[8760,"hourly","hour","8760 hours"],[525600,"every minute","minute","525 600 minutes"]];
-const weV=n=>Math.exp(n*Math.log1p(1/n)), weN=n=>n>=1e4?String(n).replace(/\B(?=(\d{3})+$)/g," "):String(n);
-const weR=s=>WE.find(w=>w[0]===s.n)||WE[0], weM=v=>"$"+v.toFixed(2);
-const weD=n=>n===1?"= 2":n===2?"= 2.25":`≈ ${weV(n).toFixed(5)}`;
-const weP=n=>`(1 + ${n===1?"1":frac("1",weN(n))})<sup>${weN(n)}</sup>`;
-const weG=n=>(Math.E-weV(n)).toPrecision(2);
+const WEN=[1,2,4,12,52,365,8760], WEW=["Yearly","Half-yearly","Quarterly","Monthly","Weekly","Daily","Hourly"], WEB={l:16,t:16,w:97,h:66};
+const weV=n=>Math.exp(n*Math.log1p(1/n));
+const weI=s=>Math.max(0,WEN.indexOf(+s.n)), weX=i=>WEB.l+WEB.w*(i+.5)/WEN.length, weY=v=>WEB.t+WEB.h*(1-v/3);
+const weD=n=>n===1?"2":n===2?"2.25":weV(n).toFixed(5);
+const weK=s=>{ const i=weI(s), n=WEN[i], A=t=>`<span class="ipans" style="color:var(--amber)">${t}</span>`;
+  return `<div class="apwk ipk wek" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
+    FB("amber",`${WEW[i]} · ${V("n")} = ${n}`,`${nw(PAR(`1 + ${n===1?"1":frac("1",String(n))}`,String(n)))} ${nw(`= ${A(weD(n))}${n>2?`<span class="ipsf">(5 d.p.)</span>`:""}`)}`,null,`$1 × ${nw(PAR(`1 + ${frac("1",V("n"))}`,V("n")))}`,"wide")],true)+`</div>`; };
 const whereE=aid({
-  init:{n:2}, jump:true, vb:"0 0 140 143", label:"Bars: what $1 at 100% grows to when compounded more and more often",
-  link:["n"], fix:s=>{ if(!WE.some(w=>w[0]===s.n)) s.n=2; },
-  pills:[{k:"n",label:"Compounded",opts:WE.map(([n,w])=>[n,w])}],
-  steps:[{name:"More often",t:()=>`$1 at 100% a year. Yearly: $2. Half-yearly (50% twice): $2.25.<br>Compound more often. Does the money keep growing?`},
-    {name:"It levels off",t:()=>`More often always gives a bit more, but the bars level off at 2.71828…<br>That number is ${MS("e")}. The bars get closer and closer, but never go past it.`},
-    {name:"So…",t:()=>`Compound non-stop (every instant) and $1 grows to exactly $${MS("e")}.<br>That's where ${MS("e")} comes from: the ${MS("e")} in ${nw(`${V("y")} = ${MS("e")}<sup>${X1}</sup>`)}. ${nw(`<a href="#exp-log-graphs?cv=ee">Try it →</a>`)}`}],
-  draw(svg,s){
-    const L=6, U=34, T=12, R=13.5, VX=110, ex=L+U*Math.E, bot=T+9*R, sel=WE.findIndex(w=>w[0]===s.n);
-    for(let d=0;d<=3;d++){ S_(svg,"line",{x1:L+U*d,x2:L+U*d,y1:T,y2:bot,stroke:"var(--grid2)","stroke-width":d?.3:.6});
-      lab(svg,[L+U*d,bot+5.8],"$"+d,{"font-size":4,fill:"var(--muted)"}); }
-    S_(svg,"line",{x1:L,x2:L+U*3,y1:bot,y2:bot,stroke:"var(--ink)","stroke-width":.5});
-    if(s.step>0){ S_(svg,"line",{x1:ex,x2:ex,y1:T-3,y2:bot,stroke:GR,"stroke-width":.9,"stroke-dasharray":"2 1.4"});
-      lab(svg,[ex,T-4.6],"e = 2.71828…",{fill:GR,"font-size":4.2,"font-weight":700}); }
-    WE.forEach(([n,w],i)=>{ const y=T+i*R, on=s.step>0||i<=sel, me=i===sel, col=me?AMB:BL, v=weV(n);
-      lab(svg,[L,y+5],`${w} · n = ${weN(n)}`,{"text-anchor":"start","font-size":4.2,fill:on?(me?AMB:"var(--ink)"):"var(--muted)","font-weight":me?700:400});
-      if(!on) return;
-      S_(svg,"rect",{x:L,y:y+6.6,width:U*v,height:5.4,rx:.8,fill:col,opacity:me?1:.75});
-      lab(svg,[VX,y+11.2],weM(v),{"text-anchor":"start","font-size":4.2,fill:col,"font-weight":700}); });
-    const y=T+8*R, done=s.step===2;
-    lab(svg,[L,y+5],"non-stop",{"text-anchor":"start","font-size":4.2,fill:done?GR:"var(--muted)","font-weight":done?700:400});
-    if(done){ S_(svg,"rect",{x:L,y:y+6.6,width:U*Math.E,height:5.4,rx:.8,fill:GR}); lab(svg,[VX,y+11.2],"$e",{"text-anchor":"start","font-size":4.2,fill:GR,"font-weight":700}); }
-    else lab(svg,[L+3,y+11.2],"?",{"text-anchor":"start","font-size":4.6,fill:"var(--muted)","font-weight":700});
-  },
-  key(s){ const [n,w,p,ps]=weR(s), v=weV(n);
-    if(s.step===0) return KHEAD(`${nw(`${V("A")} = ${V("P")}(1 + ${frac(V("r"),"100")})<sup>${V("n")}</sup>`)} → ${nw(`${V("A")} = 1${weP(n)}`)}`)
-      +FORMS([FB("blue",`Each ${p}`,nw(n===1?`${V("r")} = 100`:`${V("r")} = 100 ÷ ${weN(n)}`),`so ${nw(`${frac(V("r"),"100")} = ${n===1?"1":frac("1",weN(n))}`)}`,null,"wide"),
-        FB("amber",ps,nw(`${weP(n)} ${weD(n)}`),`${n>2?"(5 d.p.) ":""}→ ${weM(v)}`,null,"wide")],true);
-    if(s.step===1) return FORMS([FB("amber",w,nw(`${weP(n)} ${weD(n)}`),`still ${weG(n)} below ${MS("e")}`,null,"wide"),
-        FB("green","The bars level off at",nw(`${MS("e")} = 2.71828…`),`calculator: ${nw("SHIFT ln 1 =")}`,null,"wide")],true);
-    return FORMS([FB("blue","Non-stop, for 1 year",nw(`$1 → $${MS("e")} ≈ $2.72`),"100% a year, compounded every instant",null,"wide"),
-      FB("green","So…",`${nw(`(1 + ${frac("1",V("n"))})<sup>${V("n")}</sup> → ${MS("e")}`)} as ${V("n")} gets bigger`,`${nw(`${MS("e")} = 2.71828…`)} ${nw("≈ 2.72 (3 s.f.)")} · ${nw(`ln = log base ${MS("e")}`)}`,null,"wide")],true); }
+  init:{n:4}, jump:true, ip:"Drag the dot.", vb:"0 4 140 122", label:"Bars: what $1 at 100% grows to when compounded more and more often, levelling off at e", link:["n"],
+  fix:s=>{ if(!WEN.includes(+s.n)) s.n=4; else s.n=+s.n; },
+  steps:[{name:"Where e comes from",t:()=>"",w:s=>weK(s)}],
+  draw(svg,s){ const B=WEB, i0=weI(s), fs=innerWidth<600?5.2:4.4, ey=weY(Math.E), bot=B.t+B.h, R=svg.getBoundingClientRect(), pp=R.width?Math.min(R.width/140,R.height/122):4, mf=12.5/pp;
+    for(let d=0;d<=3;d++){ const y=weY(d); S_(svg,"line",{x1:B.l,x2:B.l+B.w,y1:y,y2:y,stroke:d?"var(--grid2)":"var(--ink)","stroke-width":d?.3:.6}); lab(svg,[B.l-3,y+fs*.35],"$"+d,{"font-size":fs,fill:"var(--muted)","text-anchor":"end"}); }
+    const ny=bot+fs*1.3, hy=ny+fs*2.4, wy=hy+fs*2.8;
+    WEN.forEach((n,i)=>{ const x=weX(i), me=i===i0; lab(svg,[x,ny],String(n),{"font-size":fs,fill:me?AMB:"var(--muted)","font-weight":me?700:400});
+      if(i>i0) return; const y=weY(weV(n)); S_(svg,"rect",{x:x-5.5,y,width:11,height:bot-y,fill:me?AMB:BL,opacity:me?1:.55}); });
+    lab(svg,[clamp(weX(i0),B.l+8,B.l+B.w-6),wy],WEW[i0].toLowerCase(),{"font-size":fs*.95,fill:AMB,"font-weight":700});
+    lab(svg,[B.l+B.w/2+4,wy+fs*1.5],"$1 at 100%, compounded n times a year",{"font-size":fs,fill:"var(--muted)"});
+    S_(svg,"line",{x1:B.l,x2:B.l+B.w,y1:ey,y2:ey,stroke:GR,"stroke-width":.9,"stroke-dasharray":"2.2 1.4"});
+    lab(svg,[B.l+B.w+2,ey+1.6],"e",{"text-anchor":"start","font-size":fs*1.5,fill:GR,"font-weight":700,"font-style":"italic"}); lab(svg,[B.l+B.w+2,ey+3+fs],"2.71828…",{"text-anchor":"start","font-size":fs*.9,fill:GR,"font-weight":700});
+    const n0=WEN[i0], vt=n0===1?"$2":"$"+weV(n0).toFixed(2), cf=Math.max(fs*1.05,mf), by=weY(weV(n0)), ch=cf*1.35;
+    const ct=lab(svg,[0,by-1-ch*.27],vt,{"font-size":cf,fill:"var(--card)","font-weight":700,"pointer-events":"none",style:"stroke:none"}); let tw=vt.length*cf*.58; try{ const L=ct.getComputedTextLength(); if(L>0) tw=L; }catch(_){}
+    const cw=tw+3, cx=clamp(weX(i0),B.l+cw/2,B.l+B.w-1-cw/2); ct.setAttribute("x",cx.toFixed(2));
+    svg.insertBefore(svgEl("rect",{x:(cx-cw/2).toFixed(2),y:(by-1-ch).toFixed(2),width:cw.toFixed(2),height:ch.toFixed(2),rx:1.6,fill:AMB,"pointer-events":"none"}),ct);
+    const x0=weX(i0), E=[x0,hy];
+    S_(svg,"rect",{x:B.l,y:B.t-4,width:B.w,height:hy+8-(B.t-4),fill:"transparent","data-drag":"n",style:"cursor:pointer"});
+    ipArr(svg,E,i0>0,i0<WEN.length-1,10.5);
+    handle(svg,x0,hy,"n","var(--ink)"); S_(svg,"circle",{cx:x0,cy:hy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); },
+  drag(id,p,s){ const i=clamp(Math.round((p.x-WEB.l)/WEB.w*WEN.length-.5),0,WEN.length-1); s.n=WEN[i]; },
+  key(){ return ""; }
 });
 const qxD=13400;
 const quadProof=(()=>{
@@ -9942,11 +9907,11 @@ emTrigApp:`${MUST([FB("blue","Looking up or down","from the horizontal","up: ele
 ${PAN("Elevation and depression",picElev()+STEPS([[nw("depression = elevation"),"alt. ∠s, horizontals &#47;&#47;"]])
   +EG("From 30 m away, the angle of elevation of the top of a tree is 28°. Your eyes are 1.6 m above the ground.",[nw(`tan 28° = ${frac(V("h"),"30")}`),nw(`${V("h")} = 30 tan 28° = 15.951 m`),nw("height = 1.6 + 15.951"),nw("= 17.6 m (3 s.f.)")])+`<p class="anno">* add the eye level at the end</p>`)}
 ${PAN("Two points, one tower",picTower()+EG("A tower is 50 m tall. From A the angle of elevation of the top is 30°, from B it is 45°. A and B are on the same side, in a line with the tower.",["B to the foot of the tower:",nw("50 ÷ tan 45° = 50 m"),"A to the foot of the tower:",nw("50 ÷ tan 30° = 86.603 m"),nw("AB = 86.603 − 50"),nw("= 36.6 m (3 s.f.)")])+`<p class="anno">* two right-angled triangles, one tan each</p>`)}
-${PAN("Bearings",picBearing()+STEPS(["start at the point after “from”","face North, turn clockwise"])+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">* going back: add or subtract 180°</p>`+PLAYLINK("#bearings","Interactive: both bearings"))}
+${PAN("Bearings",picBearing()+STEPS(["start at the point after “from”","face North, turn clockwise"])+FACTS("",[["B from A",["065°"]],["A from B",[nw("065° + 180° = 245°")]]])+`<p class="anno">(alt. ∠s, N₁ &#47;&#47; N₂)</p>`+PLAYLINK("#bearings","Interactive: both bearings"))}
 ${PAN("Journeys",picJourney()+EG("A ship sails 12 km on a bearing of 040°, then 8 km on 120°. How far is it from the start?",[`bearing of A from B: ${nw("040° + 180° = 220°")}`,`angle at B: ${nw("220° − 120° = 100°")}`,nw("AC² = 12² + 8² − 2(12)(8) cos 100°"),nw("= 241.34"),nw("AC = 15.5 km (3 s.f.)")]))}
 ${PAN("3D: find the right-angled triangle",picCuboid()+EG("Cuboid with an 8 by 6 base, 5 high. Angle between the long diagonal and the base?",[nw(`base diagonal = ${SQRT("8² + 6²")} = 10`),nw(`tan θ = ${frac("5","10")}`),nw("θ = 26.6° (1 d.p.)")])+`<p class="anno">* pyramid, slant EDGE and the base: use half the base diagonal · slant FACE and the base: use half the base side</p>`)}
 ${PAN("Shortest distance",picShortest()+EG("C is 150 m from A. A straight path from A makes 35° with AC. A 40 m pole stands at C. Find the greatest angle of elevation of its top from the path.",[`${nw("shortest distance = 150 sin 35°")} ${nw("= 86.036 m")}`,nw(`tan θ = ${frac("40","86.036")}`),nw("θ = 24.9° (1 d.p.)")])+`<p class="anno">* the shortest distance is perpendicular to the path, and gives the greatest angle</p>`)}
-${MIST([["angle of depression from the vertical","from the horizontal"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`add or subtract ${nw("180°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`]])}
+${MIST([["angle of depression from the vertical","from the horizontal"],[nw("bearing = 65°"),nw("bearing = 065°")],["bearing of A from B = bearing of B from A",`A from B: ${nw("065° + 180° = 245°")}`],[`tree = ${nw("30 tan 28°")} only`,`add the eye level: ${nw("1.6 + 30 tan 28°")}`]])}
 </div>`,
 
 emArcs:`${MUST([FB("blue","Radians",nw("π rad = 180°"),`calculator in <b class="k-amber">RAD</b>`,"","mk"),FB("amber","Angle in radians",`${nw(`arc = ${V("r")}<b class="k-amber">θ</b>`)}<br>${nw(`sector = ${frac("1","2")}${V("r")}²<b class="k-amber">θ</b>`)}`,`θ in <b class="k-amber">radians</b>, not degrees`,"","mk"),FB("green","Perimeter",nw(`<b class="k-amber">${V("r")} + ${V("r")}</b> + arc`),"not just the arc","","mk")])}
@@ -10819,7 +10784,7 @@ Object.assign(SHEETS,SHEETS10);
 SHEETS.emMemoFC+=`<ul class="steps fml">${GRP("Standard form","standard-form")}${FL(`Standard form = ${nw(`${V("A")} × 10<sup>${V("n")}</sup>`)}`+FNOTE(nw(`1 ≤ ${V("A")} &lt; 10`)))}
 ${GRP("Indices","indices")}${FL(nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`))}${FL(nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`))}${FL(nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`))}
 ${GRP("Speed–time graphs","speed-time-graphs")}${FL("Gradient of a distance–time graph = speed")}${FL("Gradient of a speed–time graph = acceleration")}${FL("Area under a speed–time graph = distance travelled")}
-${GRP("Bearings","bearings-elevation-3d")}${FL(`Bearing${nw(" → ")}from North, clockwise, 3 figures`)}${FL(`Bearing of A from B = ${nw("bearing of B from A ± 180°")}`)}
+${GRP("Bearings","bearings-elevation-3d")}${FL(`Bearing${nw(" → ")}from North, clockwise, 3 figures`)}${FL(`B from A = 065°${nw(" → ")}A from B = ${nw("065° + 180° = 245°")}`)}
 ${GRP("Polygons","polygons")}${FL(`Each exterior angle of a regular polygon = ${nw(frac("360°",V("n")))}`)}
 ${GRP("Circle properties","circle-properties")}${FL(`Angle at centre = ${nw("2 × angle at circumference")}`+FNOTE("(∠ at centre = 2∠ at circ.)"))}${FL("Angle in a semicircle = 90°"+FNOTE("(rt. ∠ in semicircle)"))}${FL(`Angles in the same segment${nw(" → ")}equal`+FNOTE("(∠s in same seg.)"))}${FL(`Cyclic quadrilateral, opposite angles${nw(" → ")}add to 180°`+FNOTE("(∠s in opp. segments are supp.)"))}${FL(`Tangent and radius${nw(" → ")}meet at 90°`+FNOTE("(tan ⊥ rad)"))}${FL(`2 tangents from an outside point${nw(" → ")}equal`+FNOTE("(tangents from ext. pt.)"))}${FL(`Line from the centre ⊥ chord${nw(" → ")}cuts the chord in half`+FNOTE("(⊥ from centre bisects chord)"))}${FL(`Equal chords${nw(" → ")}the same distance from the centre`+FNOTE("(equal chords, equidistant from centre)"))}
 ${GRP("Congruence and similarity tests","congruence-similarity-sec3")}${FL("Congruence tests = SSS, SAS, ASA, AAS, RHS"+FNOTE("ASS and AAA are not tests"))}${FL("Similarity tests = AA, SSS, SAS"+FNOTE("sides in the same ratio"))}
