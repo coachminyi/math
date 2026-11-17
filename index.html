@@ -7377,7 +7377,7 @@ discrim:`${MUST([FB("green",`${V("b")}² − 4${V("ac")} &gt; 0`,"2 real and dis
   </div>
 </div>`,
 
-trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or tan⁻¹ of the POSITIVE value`,"always acute: cos⁻¹ 0.5 = 60°, even for cos θ = −0.5"),FB("blue","ASTC = which ratios are +",`A S T C`,"All, Sin, Tan, Cos: anticlockwise from Q1"),FB("green",`θ from ${AL}`,`Q1: ${AL}<br>Q2: ${nw(`180° − ${AL}`)}<br>Q3: ${nw(`180° + ${AL}`)}<br>Q4: ${nw(`360° − ${AL}`)}`,"same triangle in every quadrant")])}
+trigAngles:`${MUST([FB("blue","Basic angle",nw(`250° − 180° = <b class="k-amber">70°</b>`),`acute angle to the <b>${X1}-axis</b>, never the ${V("y")}-axis`,`Q2: ${nw("180° − θ")} · Q3: ${nw("θ − 180°")} · Q4: ${nw("360° − θ")}`,"mk"),FB("amber","ASTC",nw(`sin 150° = <b class="k-amber">+</b>sin 30° = ${frac("1","2")}`),"size from the basic angle, sign from ASTC","All, Sin, Tan, Cos: anticlockwise from Q1","mk"),FB("green","Reciprocals",nw(`sec θ = ${frac("1",`<b class="k-amber">cos</b> θ`)}`),`<b class="k-amber">sec</b> goes with <b class="k-amber">cos</b>, cosec with sin`,`${nw(`cosec θ = ${frac("1","sin θ")}`)} · ${nw(`cot θ = ${frac("1","tan θ")}`)}`,"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>ASTC: which ratios are positive</h4>
     <a href="#unit-circle?th=150&all=1" class="piclink"><svg viewBox="0 0 220 150" style="width:100%;max-width:300px;display:block;margin:0 auto">
@@ -7389,7 +7389,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
         <text x="186" y="39">all +</text><text x="34" y="39">sin +</text><text x="34" y="137">tan +</text><text x="186" y="137">cos +</text></g>
       <g font-size="11" fill="var(--ink)"><text x="196" y="70">0°</text><text x="114" y="14">90°</text><text x="12" y="70">180°</text><text x="114" y="144">270°</text></g>
     </svg></a>
-    <p class="anno" style="text-align:center">* anticlockwise from Quadrant 1: All, Sin, Tan, Cos</p>
+    <p class="anno" style="text-align:center">* cosec, sec, cot: same sign as sin, cos, tan</p>
   </div>
 
   <div class="panelc"><h4>Basic angle α: same triangle in every quadrant</h4>
@@ -7406,7 +7406,7 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
       <tr><td>tan</td><td>0</td><td>${frac("1",SQRT("3"))}</td><td>1</td><td>${SQRT("3")}</td><td>undefined</td></tr>
     </table>
     ${FACTS("Same value, written 2 ways",[["",[`${frac("1",SQRT("2"))} = ${frac(SQRT("2"),"2")}`,`${frac("1",SQRT("3"))} = ${frac(SQRT("3"),"3")}`]]])}
-    ${EG(`One ratio and the quadrant: ${nw(`sin θ = ${frac("5","13")}`)}, θ obtuse`,[`draw a right-angled triangle for α: ${nw("sides 5, 12, 13")}`,"the triangle gives the size, ASTC gives the sign",nw(`cos θ = −${frac("12","13")}`)])}
+    ${EG(`One ratio and the quadrant: ${nw(`sin θ = ${frac("5","13")}`)}, θ obtuse`,[`draw a right-angled triangle for α: ${nw("sides 5, 12, 13")}`,`Q2, cos negative: ${nw(`cos θ = −${frac("12","13")}`)}`])}
     <svg viewBox="0 0 120 72" class="lsp" aria-hidden="true"><line x1="6" y1="56" x2="116" y2="56" stroke="var(--ink)"/><line x1="84" y1="6" x2="84" y2="68" stroke="var(--ink)"/>
       <path d="M84 56 L24 56 L24 31 Z" fill="var(--blue-fill)" fill-opacity=".6"/><line x1="84" y1="56" x2="24" y2="56" stroke="var(--amber)" stroke-width="2.5"/><line x1="24" y1="56" x2="24" y2="31" stroke="var(--blue)" stroke-width="2.5"/><line x1="84" y1="56" x2="24" y2="31" stroke="var(--ink)" stroke-width="1.4"/><path d="M24 51 H29 V56" fill="none" stroke="var(--ink)" stroke-width=".8"/>
       <path d="M66 56 A18 18 0 0 1 67.38 49.08" fill="none" stroke="var(--red)" stroke-width="1.6"/><path d="M91 56 A7 7 0 0 0 77.54 53.31" fill="none" stroke="var(--blue)" stroke-width="1.1"/>
@@ -7415,16 +7415,13 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
       <text x="40" y="13" font-size="7" font-weight="700" fill="var(--accent)" text-anchor="middle">Q2 · S</text><text x="40" y="21" font-size="6" fill="var(--muted)" text-anchor="middle">sin +, cos −</text></svg>
   </div>
 
-  <div class="panelc"><h4>6 ratios &amp; principal values</h4>
-    <table>
-      <tr><td>cosec θ = ${frac("1","sin θ")}</td><td>sec θ = ${frac("1","cos θ")}</td><td>cot θ = ${frac("1","tan θ")}</td></tr>
-    </table>
-    <p class="anno">* each has the same sign as its partner: use ASTC on sin, cos, tan</p>
+  <div class="panelc"><h4>Principal values</h4>
     <table>
       <tr><th>Calculator gives (principal value)</th><th>Range</th></tr>
       <tr><td>sin⁻¹ and tan⁻¹</td><td>−90° to 90°</td></tr>
       <tr><td>cos⁻¹</td><td>0° to 180°</td></tr>
     </table>
+    <p class="anno">* <b class="k-amber">cos⁻¹ of a negative</b> is obtuse: ${nw("cos⁻¹(−0.5) = 120°")}</p>
     ${PLAYLINK("#six-ratios?step=3","For the curious: 6 ratios as lengths")}
   </div>
 
@@ -7436,29 +7433,24 @@ trigAngles:`${MUST([FB("red",`Basic angle ${AL}`,`${AL} = sin⁻¹, cos⁻¹ or 
       <li>② Sign: cos is <b>negative</b> → Quadrants 2, 3</li>
       <li>③ ${nw(`θ = 180° − 60° = <b>120°</b>`)} or ${nw(`θ = 180° + 60° = <b>240°</b>`)}</li>
     </ul>
-    ${EG(`Multiple angles: ${nw(`sin 2${X1} = ${V("k")}`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`① double the range: ${nw(`0° ≤ 2${X1} ≤ 720°`)}`,`② solve for 2${X1}: basic angle, quadrants, then ${nw("+ 360°")} to each`,`③ halve every answer`])}
     ${PLAYLINK("#unit-circle?th=120&sv=cos","Interactive: see both answers light up")}
-  </div>
-
-  <div class="panelc"><h4>E-Math: obtuse angles</h4>
-    <ul class="steps">
-      <li>sin(180° − θ) = sin θ → sin 150° = sin 30° = ${frac("1","2")}</li>
-      <li>cos(180° − θ) = −cos θ → cos 120° = −cos 60° = −${frac("1","2")}</li>
-    </ul>
-    <p class="anno">* use it when: a triangle has an obtuse angle (sine rule, cosine rule, ${frac("1","2")}ab sin C)</p>
-    <p class="anno">* sine rule finding an angle: sin⁻¹ gives only the acute answer. If the angle could be obtuse, the other answer is 180° − that angle.</p>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ α = sin⁻¹(−0.5) = −30°</div>
       <div class="ok">✓ α = sin⁻¹ 0.5 = 30°<br>then ASTC for the sign</div>
+      <div class="x">✗ sin 150° = −sin 30°</div>
+      <div class="ok">✓ Q2: sin is positive<br>sin 150° = sin 30°</div>
+      <div class="x">✗ basic angle of 250° = 250° − 90° = 160°</div>
+      <div class="ok">✓ to the ${X1}-axis: 250° − 180° = 70°</div>
+      <div class="x">✗ ${nw(`sec θ = ${frac("1","sin θ")}`)}</div>
+      <div class="ok">✓ ${nw(`sec θ = ${frac("1","cos θ")}`)}</div>
     </div>
-    <div class="note"><b>Note!</b> The calculator gives only one angle. Always check the range for the other answer(s).</div>
   </div>
 </div>`,
 
-trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above the midline","tan has none"),FB("amber",`Period = 360° ÷ ${CV("amber","b")}`,`${CV("amber","b")} waves in 360°`,"tan: 180° ÷ b"),FB("green",`Greatest / least = ${CV("green","c")} ± |${CV("blue","a")}|`,`midline ${V("y")} = ${CV("green","c")}`,"c moves the whole graph up or down")])}
+trigGraphs:`${MUST([FB("blue","Amplitude",nw(`${V("y")} = <b class="k-blue">2</b> sin 3${X1} + 1`),"amplitude 2: the height above the midline",`amplitude = |${V("a")}| · tan has none`,"mk"),FB("amber","Period",nw(`sin <b class="k-amber">3</b>${X1}: 360° ÷ <b class="k-amber">3</b> = 120°`),`<b>÷</b> by ${V("b")}, never ×`,`tan: 180° ÷ ${V("b")} · radians: 2π ÷ ${V("b")}`,"mk"),FB("green","Greatest, least",`${nw(`<b class="k-green">1</b> + 2 = 3`)}, ${nw(`<b class="k-green">1</b> − 2 = −1`)}`,`midline ${nw(`${V("y")} = <b class="k-green">1</b>`)}, then ± the amplitude`,`${V("c")} ± |${V("a")}|`,"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>What a, b, c do</h4>
     <div class="piccards">
@@ -7467,18 +7459,6 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
       ${PIC("#trig-graphs?fn=sin&a=1&b=1&c=1",miniWave(1,1,1,"var(--green)"),`${CV("green","c")} = 1: moved up 1`,"midline y = 1 · greatest 2, least 0")}
     </div>
     <p class="anno">* grey dotted = ${V("y")} = sin ${X1} before the change · tap a picture to play with it</p>
-  </div>
-
-  <div class="panelc"><h4>Read the graph off the equation</h4>
-    <table>
-      <tr><th>Graph</th><th>${nw(`${V("y")} = ${V("a")} sin ${V("b")}${X1} + ${V("c")}`)}<br>${nw(`${V("y")} = ${V("a")} cos ${V("b")}${X1} + ${V("c")}`)}</th><th>${nw(`${V("y")} =`)} ${nw(`${V("a")} tan ${V("b")}${X1}`)}</th></tr>
-      <tr><td>Amplitude</td><td>|${V("a")}|</td><td>none</td></tr>
-      <tr><td>Period</td><td>${frac("360°",V("b"))}</td><td>${frac("180°",V("b"))}</td></tr>
-      <tr><td>Max</td><td>${nw(`${V("c")} + |${V("a")}|`)}</td><td>none</td></tr>
-      <tr><td>Min</td><td>${nw(`${V("c")} − |${V("a")}|`)}</td><td>none</td></tr>
-    </table>
-    <p class="anno">* radians: period ${frac("2π",V("b"))} for sin, cos; ${frac("π",V("b"))} for tan</p>
-    <p class="anno">* ${V("y")} = ${V("a")} sin ${frac(X1,V("b"))} + ${V("c")}: period = 360° × ${V("b")} (the graph is stretched)</p>
   </div>
 
   <div class="panelc"><h4>Where each one starts (a &gt; 0)</h4>
@@ -7492,12 +7472,13 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
 
   <div class="panelc"><h4>Sketch in 3 steps</h4>
     <ul class="steps">
-      <li>① Find the period and sketch ${nw(`${V("y")} = sin ${V("b")}${X1}`)}<br><span class="anno">tip: split each period into 4 equal parts · sin: midline, greatest, midline, least · cos: greatest, midline, least, midline</span></li>
+      <li>① Find the period and sketch ${nw(`${V("y")} = sin ${V("b")}${X1}`)}<br><span class="anno">split each period into 4 equal parts · sin: midline, greatest, midline, least · cos: greatest, midline, least, midline</span></li>
       <li>② Stretch it to the amplitude with ${V("a")} <span class="tagop">negative ${V("a")}: flip it</span></li>
       <li>③ Shift it up or down by ${V("c")}</li>
     </ul>
     ${sinQuarters()}
-    <p class="anno">* label the greatest and least points and the end points</p>
+    <p class="anno">* <b class="k-amber">label</b> the greatest and least points and the end points</p>
+    <p class="anno">* tan: asymptotes at ${X1} = ${frac("90°",V("b"))}, ${frac("270°",V("b"))}, …, drawn <b class="k-amber">dashed</b>; the curve never touches them</p>
   </div>
 
   <div class="panelc"><h4>${V("a")}, ${V("b")}, ${V("c")} from a graph</h4>
@@ -7519,8 +7500,6 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
   <div class="panelc"><h4>Example</h4>
     <p>${V("y")} = 2 sin 3${X1} + 1, for 0° ≤ ${X1} ≤ 180°</p>
     <ul class="steps">
-      <li>amplitude 2 · period 360° ÷ 3 = <b>120°</b></li>
-      <li>max = 1 + 2 = <b>3</b> · min = 1 − 2 = <b>−1</b></li>
       <li>quarter points every ${nw("120° ÷ 4 = 30°")}: 0°, 30°, 60°, 90°, 120°…</li>
     </ul>
     ${sin3x()}
@@ -7533,8 +7512,9 @@ trigGraphs:`${MUST([FB("blue",`Amplitude = |${CV("blue","a")}|`,"height above th
       <div class="ok">✓ 360° ÷ 3 = 120°</div>
       <div class="x">✗ tan has amplitude 1</div>
       <div class="ok">✓ tan has no amplitude</div>
+      <div class="x">✗ the tan curve meets ${X1} = 90°</div>
+      <div class="ok">✓ ${X1} = 90° is an asymptote: dashed, never touched</div>
     </div>
-    <div class="note"><b>Note!</b> tan has asymptotes (dashed lines it never touches) at ${X1} = ${frac("90°",V("b"))}, ${frac("270°",V("b"))}, …</div>
   </div>
 </div>`,
 
@@ -10091,42 +10071,37 @@ ${PAN("The graphs",picExpLog()+STEPS([[nw(`${V("y")} = ${V("a")}<sup>${X1}</sup>
 ${MIST([[nw(`3<sup>${V("n")}</sup> × 9<sup>${V("n")}</sup> = 27<sup>2${V("n")}</sup>`),nw(`3<sup>${V("n")}</sup> × 3<sup>2${V("n")}</sup> = 3<sup>3${V("n")}</sup>`)],[`${nw(`${LOGA(V("a"))}(${X1} − ${V("y")})`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`,`only ${nw(`${LOGA(V("a"))} ${frac(X1,V("y"))}`)} ${nw(`= ${LOGA(V("a"))} ${X1} − ${LOGA(V("a"))} ${V("y")}`)}`],[nw(`lg ${X1}³ = (lg ${X1})³`),nw(`lg ${X1}³ = 3 lg ${X1}`)],[nw(`${LOGA("2")} ${X1} + ${LOGA("4")} ${X1} = ${LOGA("2")} ${X2}`),`same base first: ${nw(`${LOGA("4")} ${X1} = ${frac("1","2")}${LOGA("2")} ${X1}`)}`],[`${nw(`2<sup>${X1}</sup> = 10`)}, so ${nw(`${X1} = ${frac("10","2")}`)}`,nw(`${X1} = ${frac("lg 10","lg 2")} = 3.32`)],[`${nw(`${V("y")} = 2<sup>${X1}</sup> − 4`)}: asymptote ${nw(`${V("y")} = 0`)}`,`asymptote <b class="k-amber">${nw(`${V("y")} = −4`)}</b>: it moves with the curve`],[`${nw(`${V("n")} lg 0.5 &lt; lg 0.2`)}, so ${nw(`${V("n")} &lt; 2.32`)}`,`${nw("lg 0.5")} is negative: ${nw(`${V("n")} &gt; 2.32`)}`],[`${nw(`${LOGA(X1)} 9 = 2`)}, so ${nw(`${X1} = ±3`)}`,`${nw(`${X1} = 3`)} (<b class="k-amber">reject</b> −3: a base is never negative)`]])}
 </div>`,
 
-amCoord:`${MUST([FB("blue","Line",nw(`${V("y")} − ${V("y")}₁ = ${V("m")}(${X1} − ${X1}₁)`),"a gradient and one point"),FB("amber","Circle",`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})²`)}<br>${nw(`= ${V("r")}²`)}`,`centre ${nw(`(${V("a")}, ${V("b")})`)}, radius ${V("r")}`),FB("green","General form",nw(`${X2} + ${V("y")}² + 2${V("g")}${X1} + 2${V("f")}${V("y")} + ${V("c")} = 0`),`centre ${nw(`(−${V("g")}, −${V("f")})`)} · radius ${nw(SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`))}`)])}
+amCoord:`${MUST([FB("blue","Perpendicular",nw(`${frac("2","3")} → <b class="k-amber">−</b>${frac("3","2")}`),`flip it <b>and</b> change the sign`,nw(`${V("m")}₁${V("m")}₂ = −1`),"mk"),FB("amber","Circle",nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),`centre <b class="k-amber">(−3, 2)</b>, radius <b class="k-amber">${SQRT("16")} = 4</b>`,`${nw(`(${X1} − ${V("a")})² + (${V("y")} − ${V("b")})² = ${V("r")}²`)}: centre ${nw(`(${V("a")}, ${V("b")})`)}`,"mk"),FB("green","Area",`<b class="k-amber">anticlockwise</b>, back to the start`,`${CS("blue","↘")} add, ${CS("amber","↗")} subtract, then halve`,"clockwise gives a negative area","mk mkw")])}
 <div class="sheet">
-${PAN("Perpendicular bisector",picPerpBis()+EG("A(1, 2), B(5, 6)",[nw("midpoint M = (3, 4)"),nw(`${V("m")}<sub>AB</sub> = ${frac("6 − 2","5 − 1")} = 1`),`perpendicular: ${nw(`${V("m")} = −1`)}`,nw(`${V("y")} − 4 = −1(${X1} − 3)`),nw(`${V("y")} = −${X1} + 7`)])+`<p class="anno">* through the midpoint, with the perpendicular gradient · basics: <a href="#sheet/coordinate-geometry">E-Math coordinate geometry</a></p>`+PLAYLINK("#parallel-perp?step=1","Interactive: flip it, change the sign"))}
-${PAN("Area from the corners",EG("A(−4, 3), B(3, 5), C(2, −5)",["sketch the 3 points, then go round anticlockwise: A, C, B, back to A",picShoe(),`${CS("blue","↘")}${nw(": (−4)(−5) + (2)(5) + (3)(3) = 39")}`,`${CS("amber","↗")}${nw(": (3)(2) + (−5)(3) + (5)(−4) = −29")}`,nw(`area = ${frac("1","2")}(39 − (−29)) = 34 units²`)])+`<p class="anno">* clockwise gives a negative answer, so go anticlockwise</p>`)}
-${PAN("Circles",picCircAxes()+EG(nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`),[nw("centre = (−3, 2)"),nw(`radius = ${SQRT("16")} = 4`)])+`<p class="anno">* centre: flip the signs in the brackets</p>`
-  +`<p class="anno">* general form? First make ${X2} and ${V("y")}² have 1 in front, and the right side 0</p>`+EG(nw(`${X2} + ${V("y")}² − 4${X1} + 10${V("y")} + 4 = 0`),[nw(`2${V("g")} = −4, 2${V("f")} = 10, ${V("c")} = 4`),nw(`${V("g")} = −2, ${V("f")} = 5`),nw("centre = (2, −5)"),nw(`radius = ${SQRT("(−2)² + 5² − 4")} = 5`)])+`<p class="anno">* centre: half each ${X1} and ${V("y")} coefficient, then flip the sign</p>`)}
+${PAN("Perpendicular bisector",picPerpBis()+EG("A(1, 2), B(5, 6)",[`<b class="k-amber">through the midpoint:</b> ${nw("M = (3, 4)")}`,nw(`${V("m")}<sub>AB</sub> = ${frac("6 − 2","5 − 1")} = 1`),`perpendicular: ${nw(`${V("m")} = −1`)}`,nw(`${V("y")} − 4 = −1(${X1} − 3)`),nw(`${V("y")} = −${X1} + 7`)])+PLAYLINK("#parallel-perp?step=1","Interactive: flip it, change the sign"))}
+${PAN("Area from the corners",EG("A(−4, 3), B(3, 5), C(2, −5)",["sketch, then anticlockwise: A, C, B, back to A",picShoe(),`${CS("blue","↘")}${nw(": (−4)(−5) + (2)(5) + (3)(3) = 39")}`,`${CS("amber","↗")}${nw(": (3)(2) + (−5)(3) + (5)(−4) = −29")}`,nw(`area = ${frac("1","2")}(39 − (−29)) = 34 units²`)]))}
+${PAN("Same circle, general form",picCircAxes()+EG(nw(`${X2} + ${V("y")}² + 6${X1} − 4${V("y")} − 3 = 0`),[`<b class="k-amber">first:</b> 1 in front of ${X2} and ${V("y")}², right side 0`,nw(`2${V("g")} = 6, 2${V("f")} = −4, ${V("c")} = −3`),`centre: halve, then flip the signs: ${nw("(−3, 2)")}`,nw(`radius = ${SQRT("3² + (−2)² − (−3)")} = 4`)])+`<p class="anno">* ${nw(`centre (−${V("g")}, −${V("f")})`)} · ${nw(`radius ${SQRT(`${V("g")}² + ${V("f")}² − ${V("c")}`)}`)}</p>`)}
 ${PAN("Tangent to a circle",picTangent()+EG(`Tangent at P(6, 2) to ${nw(`${X2} + ${V("y")}² − 6${X1} + 4${V("y")} − 12 = 0`)}`,[nw("centre C = (3, −2)"),nw(`${V("m")}<sub>CP</sub> = ${frac("2 − (−2)","6 − 3")} = ${frac("4","3")}`),`tangent: ${nw(`${V("m")} = −${frac("3","4")}`)}`,nw(`${V("y")} − 2 = −${frac("3","4")}(${X1} − 6)`),nw(`4${V("y")} = −3${X1} + 26`)])
   +STEPS(["line meets circle: substitute the line into the circle",`touches once (a tangent): ${nw(`${V("b")}² − 4${V("ac")} = 0`)}`]))}
-${MIST([["perpendicular bisector through A","through the midpoint of AB"],["shoelace corners in any order","anticlockwise, and end where you started"],[`${nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)}: centre (3, −2), radius 16`,"centre (−3, 2), radius 4"],["tangent gradient = radius gradient",`perpendicular: ${nw(`−${frac("1",`${V("m")}<sub>radius</sub>`)}`)}`]])}
+${MIST([["perpendicular bisector through A","through the midpoint of AB"],["shoelace corners in any order","anticlockwise, and end where you started"],[`area 6, one corner unknown: ${nw(`${frac("1","2")}(10 − 2${V("k")}) = 6`)} only`,`${nw("= 6")} or ${nw("= −6")}:<br>${nw(`${V("k")} = −1`)} or ${nw(`${V("k")} = 11`)}`],[`${nw(`(${X1} + 3)² + (${V("y")} − 2)² = 16`)}: centre (3, −2), radius 16`,"centre (−3, 2), radius 4"],[`${nw(`2${X2} + 2${V("y")}² − 8${X1} + 4${V("y")} − 1 = 0`)}: ${nw(`${V("g")} = −4`)}`,`÷ 2 first:<br>${nw(`${X2} + ${V("y")}² − 4${X1} + 2${V("y")} − ${frac("1","2")} = 0`)}, so ${nw(`${V("g")} = −2`)}`],[`centre (5, −2), touches the ${X1}-axis: ${nw(`${V("r")} = −2`)}`,`${nw(`${V("r")} = 2`)}: a radius is never negative`],["tangent gradient = radius gradient",`perpendicular: ${nw(`−${frac("1",`${V("m")}<sub>radius</sub>`)}`)}`]])}
 </div>`,
 
-amLinLaw:`${MUST([FB("blue","Straight-line form",nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("C")}`),`${V("Y")} up the side, ${V("X")} along the bottom`),FB("amber","The rule",`${V("Y")} and ${V("X")}: variables only`,`${V("m")} and ${V("C")}: numbers only`),FB("green",nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`),nw(`lg ${V("y")} = ${V("n")} lg ${X1} + lg ${V("a")}`),`plot lg ${V("y")} against lg ${X1}`)])}
+amLinLaw:`${MUST([FB("blue","Straight-line form",`${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1}`)} → ${nw(`${frac(V("y"),X1)} = ${V("a")}${X1} + ${V("b")}`)}`,`keep ${X1} and ${V("y")} out of <b class="k-amber">${V("m")}</b> and <b class="k-amber">${V("C")}</b>`,nw(`${V("Y")} = ${V("m")}${V("X")} + ${V("C")}`),"mk"),FB("amber","Change back",nw(`ln ${V("a")} = 1.2 → ${V("a")} = <b class="k-amber">e<sup>1.2</sup></b> = 3.32`),`the question wants ${V("a")}, not ln ${V("a")}`,nw(`lg ${V("a")} = ${V("C")} → ${V("a")} = 10<sup>${V("C")}</sup>`),"mk"),FB("green","Your line",`2 points <b class="k-amber">on your line</b>, far apart`,`read ${V("C")} only where ${nw(`${V("X")} = 0`)}`,"never 2 points from the table","mk mkw")])}
 <div class="sheet">
 ${PAN("Make it straight",`<table><tr><th>Equation</th><th>Plot</th><th>${V("m")}</th><th>${V("C")}</th></tr>
   <tr><td>${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}</td><td>lg ${V("y")} against lg ${X1}</td><td>${V("n")}</td><td>${nw(`lg ${V("a")}`)}</td></tr>
   <tr><td>${nw(`${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup>`)}</td><td>lg ${V("y")} against ${X1}</td><td>${nw(`lg ${V("b")}`)}</td><td>${nw(`lg ${V("a")}`)}</td></tr>
-  <tr><td>${nw(`${V("y")} = ${V("a")}e<sup>${V("b")}${X1}</sup>`)}</td><td>ln ${V("y")} against ${X1}</td><td>${V("b")}</td><td>${nw(`ln ${V("a")}`)}</td></tr>
-  <tr><td>${nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1}`)}</td><td>${frac(V("y"),X1)} against ${X1}</td><td>${V("a")}</td><td>${V("b")}</td></tr></table>`
-  +EG(nw(`${V("y")} = ${V("a")}${V("b")}<sup>${X1}</sup>`),[`take lg: ${nw(`lg ${V("y")} = lg ${V("a")} + ${X1} lg ${V("b")}`)}`,nw(`lg ${V("y")} = (lg ${V("b")})${X1} + lg ${V("a")}`),`${nw(`${V("Y")} = lg ${V("y")}, ${V("X")} = ${X1}`)}, ${nw(`${V("m")} = lg ${V("b")}, ${V("C")} = lg ${V("a")}`)}`])
+  <tr><td>${nw(`${V("y")} = ${V("a")}e<sup>${V("b")}${X1}</sup>`)}</td><td>ln ${V("y")} against ${X1}</td><td>${V("b")}</td><td>${nw(`ln ${V("a")}`)}</td></tr></table>`
   +EG(nw(`${V("y")} = 3${X1}${V("y")} − 5${X1}`),[`÷ ${X1}: ${nw(`${frac(V("y"),X1)} = 3${V("y")} − 5`)}`,nw(`${V("Y")} = ${frac(V("y"),X1)}, ${V("X")} = ${V("y")}, ${V("m")} = 3, ${V("C")} = −5`)]))}
-${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup>`),nw("= 3.02 (3 s.f.)")])+picLgLine()+`<p class="anno">* the axis may not start at 0, so put a point in instead of reading ${V("C")} off</p>`)}
-${PAN("From a table of data",picLinLaw()+STEPS([`① make a table of ${V("X")} and ${V("Y")} first`,"② plot them and draw the line of best fit","③ gradient: 2 points on your line, far apart",`④ change back: ${nw(`lg ${V("a")} = ${V("C")}`)}, so ${nw(`${V("a")} = 10<sup>${V("C")}</sup>`)}`])+`<p class="anno">* a point well off the line is the wrong reading: read the right value off the line</p>`)}
+${PAN("Constants from the line",EG(`For ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}, the line of lg ${V("y")} against lg ${X1} passes through (0.2, 0.78) and (0.6, 1.38)`,[`<b class="k-amber">these are (${V("X")}, ${V("Y")}):</b> ${nw(`lg ${X1} = 0.2`)}, ${nw(`lg ${V("y")} = 0.78`)}`,nw(`${V("n")} = ${frac("1.38 − 0.78","0.6 − 0.2")} = 1.5`),nw(`0.78 = 1.5(0.2) + lg ${V("a")}`),nw(`lg ${V("a")} = 0.48`),nw(`${V("a")} = 10<sup>0.48</sup>`),nw("= 3.02 (3 s.f.)")])+picLgLine())}
+${PAN("From a table of data",picLinLaw()+STEPS([`① add rows for ${V("X")} and ${V("Y")} first`,"② plot them and draw the line of best fit",`③ read off ${nw(`lg ${V("y")} = 1.61`)}? Then ${nw(`${V("y")} = 10<sup>1.61</sup> = 40.7`)}`])+`<p class="anno">* a point well off the line is the wrong reading: read the right value off the line</p>`)}
 ${MIST([[`plot ${V("y")} against ${X1} when it says lg ${V("y")} against ${X1}`,`make the ${V("X")}, ${V("Y")} table first`],["gradient from 2 points in the table","2 points on your line, far apart"],[`stop at ${nw(`lg ${V("a")} = 0.48`)}`,`${nw(`${V("a")} = 10<sup>0.48</sup>`)} ${nw("= 3.02 (3 s.f.)")}`],[nw(`lg(${V("a")}${X1}<sup>${V("n")}</sup>) = lg ${V("a")} × ${V("n")} lg ${X1}`),`the logs add: ${nw(`lg ${V("a")} + ${V("n")} lg ${X1}`)}`]])}
 </div>`,
 
-amTrigId:`${MUST([FB("blue","3 basic identities",`${nw(`sin²${V("A")} + cos²${V("A")} = 1`)} · ${nw(`1 + tan²${V("A")} = sec²${V("A")}`)} · ${nw(`1 + cot²${V("A")} = cosec²${V("A")}`)}`,"all on the formula sheet"),FB("green","Find the range first",nw(`0° ≤ ${X1} ≤ 360°`),`so ${nw(`0° ≤ 2${X1} ≤ 720°`)}`),FB("amber","Double angle",nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`),`${nw(`cos 2${V("A")} = 1 − 2 sin²${V("A")}`)} ${nw(`= 2 cos²${V("A")} − 1`)} · other terms in sin? use ${nw(`1 − 2 sin²${V("A")}`)} · in cos? use ${nw(`2 cos²${V("A")} − 1`)}`)])}
+amTrigId:`${MUST([FB("blue","Range first",nw(`0° ≤ ${X1} ≤ 360° → 0° ≤ <b class="k-amber">2${X1}</b> ≤ 720°`),`solve for 2${X1} in that range, then halve`,"sin, cos repeat every 360° · tan every 180°","mk"),FB("amber","Factorise",nw(`sin ${X1} cos ${X1} = sin ${X1}`),`${nw(`sin ${X1}(cos ${X1} − 1) = 0`)}: <b class="k-amber">${nw(`sin ${X1} = 0`)}</b> gives answers too`,`never divide by sin ${X1}`,"mk"),FB("green","Double angle",nw(`sin 2${V("A")} = 2 sin ${V("A")} <b class="k-amber">cos ${V("A")}</b>`),`${nw(`cos 2${V("A")}`)}, other terms in sin? ${nw(`1 − 2 sin²${V("A")}`)}`,`all on the <a href="#sheet/amath-formula-sheet">formula sheet</a>`,"mk")])}
 <div class="sheet">
-${PAN("Solve a basic equation",quadPic()+STEPS(["① basic angle α from the positive value","② ASTC: which quadrants, from the sign",`③ use ${nw("α")}, ${nw("180° − α")}, ${nw("180° + α")}, ${nw("360° − α")}`])
-  +EG(`${nw(`cos ${X1} = −0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw("α = cos⁻¹ 0.5 = 60°"),"cos is negative: Quadrants 2 and 3",nw(`${X1} = 180° − 60° = 120°`),nw(`${X1} = 180° + 60° = 240°`)]))}
-${PAN(`${nw(`sin(${V("a")}${X1} + ${V("b")}) = ${V("k")}`)}: bracket first`,`<p class="anno">* let θ = the whole bracket, and find the range of θ first</p>`+EG(`${nw(`sin 2${X1} = 0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw(`θ = 2${X1}: 0° ≤ θ ≤ 720°`),`basic angle ${nw("α = 30°")}`,`sin positive → Q1, Q2: ${nw(`2${X1} = 30°, 150°`)}`,`go round again ${nw("(+ 360°)")}: ${nw(`2${X1} = 390°, 510°`)}`,nw(`${X1} = 15°, 75°, 195°, 255°`)])+sin720()+`<p class="anno">* ${nw("sin θ = 0.5")} happens 4 times between 0° and 720°, so there are 4 answers · sin and cos repeat every 360°, tan every 180°</p>`)}
-${PAN("Use an identity first",EG(`${nw(`2 cos²${X1} + 3 sin ${X1} = 3`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`swap cos²: ${nw(`2(1 − sin²${X1}) + 3 sin ${X1} = 3`)}`,nw(`2 − 2 sin²${X1} + 3 sin ${X1} − 3 = 0`),`${nw("× (−1)")}: ${nw(`2 sin²${X1} − 3 sin ${X1} + 1 = 0`)}`,nw(`(2 sin ${X1} − 1)(sin ${X1} − 1) = 0`),`${nw(`sin ${X1} = ${frac("1","2")}`)} or ${nw(`sin ${X1} = 1`)}`,nw(`${X1} = 30°, 90°, 150°`)])
-  +EG(`${nw(`sin ${X1} cos ${X1} = sin ${X1}`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}: factorise, ${nw("never ÷")}`,[nw(`sin ${X1}(cos ${X1} − 1) = 0`),`${nw(`sin ${X1} = 0`)} or ${nw(`cos ${X1} = 1`)}`,nw(`${X1} = 0°, 180°, 360°`)])+PLAYLINK("#six-ratios?step=6","For the curious: the identities, drawn"))}
-${PAN("Addition formulae: exact values",EG("sin 75° without a calculator",[nw("sin 75° = sin(45° + 30°)"),`${nw("= sin 45° cos 30°")} ${nw("+ cos 45° sin 30°")}`,`${nw(`= ${frac(SQRT("2"),"2")} × ${frac(SQRT("3"),"2")}`)} ${nw(`+ ${frac(SQRT("2"),"2")} × ${frac("1","2")}`)}`,nw(`= ${frac(`${SQRT("6")} + ${SQRT("2")}`,"4")}`)])+`<p class="anno">* the addition and double angle formulae are on the <a href="#sheet/amath-formula-sheet">formula sheet</a></p>`+PLAYLINK("#addition-proof","For the curious: why the addition formulae work"))}
-${PAN("Proving identities",STEPS(["① start with the side that looks harder","② simplify it with the identities","③ end with “= RHS”: go from one side to the other"])+`<p class="anno">* stuck? write everything in sin and cos, then make one fraction</p>`
+${PAN("Solve a basic equation",quadPic()+EG(`${nw(`cos ${X1} = −0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`<b class="k-amber">basic angle first:</b> ${nw("α = cos⁻¹ 0.5 = 60°")}`,`<b class="k-amber">then the sign:</b> cos negative → Quadrants 2, 3`,nw(`${X1} = 180° − 60° = 120°`),nw(`${X1} = 180° + 60° = 240°`)]))}
+${PAN(`${nw(`sin(${V("a")}${X1} + ${V("b")}) = ${V("k")}`)}: range first`,EG(`${nw(`sin 2${X1} = 0.5`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[nw(`0° ≤ 2${X1} ≤ 720°`),`basic angle ${nw("α = 30°")}`,`sin positive → Q1, Q2: ${nw(`2${X1} = 30°, 150°`)}`,`go round again ${nw("(+ 360°)")}: ${nw(`2${X1} = 390°, 510°`)}`,nw(`${X1} = 15°, 75°, 195°, 255°`)])+sin720()+`<p class="anno">* 4 crossings up to 720°, so 4 answers</p>`)}
+${PAN("Use an identity first",EG(`${nw(`2 cos²${X1} + 3 sin ${X1} = 3`)}, ${nw(`0° ≤ ${X1} ≤ 360°`)}`,[`swap cos²: ${nw(`2(1 − sin²${X1}) + 3 sin ${X1} = 3`)}`,nw(`2 − 2 sin²${X1} + 3 sin ${X1} − 3 = 0`),`${nw("× (−1)")}: ${nw(`2 sin²${X1} − 3 sin ${X1} + 1 = 0`)}`,nw(`(2 sin ${X1} − 1)(sin ${X1} − 1) = 0`),`${nw(`sin ${X1} = ${frac("1","2")}`)} or ${nw(`sin ${X1} = 1`)}`,nw(`${X1} = 30°, 90°, 150°`)])+PLAYLINK("#six-ratios?step=6","For the curious: the identities, drawn"))}
+${PAN("Addition formulae: exact values",EG("sin 75° without a calculator",[nw("sin 75° = sin(45° + 30°)"),`${nw("= sin 45° cos 30°")} ${nw("+ cos 45° sin 30°")}`,`${nw(`= ${frac(SQRT("2"),"2")} × ${frac(SQRT("3"),"2")}`)} ${nw(`+ ${frac(SQRT("2"),"2")} × ${frac("1","2")}`)}`,nw(`= ${frac(`${SQRT("6")} + ${SQRT("2")}`,"4")}`)])+PLAYLINK("#addition-proof","For the curious: why the addition formulae work"))}
+${PAN("Proving identities",STEPS(["① start with the side that looks harder","② simplify it with the identities","③ end with “= RHS”: one side to the other"])+`<p class="anno">* stuck? write everything in sin and cos, then make one fraction</p>`
   +EG(`Prove ${nw(`${frac(`1 − cos 2${V("A")}`,`sin 2${V("A")}`)} = tan ${V("A")}`)}`,[nw(`LHS = ${frac(`1 − (1 − 2 sin²${V("A")})`,`2 sin ${V("A")} cos ${V("A")}`)}`),nw(`= ${frac(`2 sin²${V("A")}`,`2 sin ${V("A")} cos ${V("A")}`)}`),nw(`= ${frac(`sin ${V("A")}`,`cos ${V("A")}`)}`),nw(`= tan ${V("A")} = RHS`)])+`<p class="anno">* ${nw(`${V("a")} sin θ + ${V("b")} cos θ`)}? Use the <a href="#sheet/r-formula">R-formula</a></p>`)}
-${MIST([[nw("cos⁻¹(−0.5) = −60°"),`${nw("120°")}: cos⁻¹ gives 0° to 180°`],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`],[nw(`sin 2${V("A")} = 2 sin ${V("A")}`),nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)],[`${nw(`cos(${V("A")} + ${V("B")})`)} ${nw(`= cos ${V("A")} + cos ${V("B")}`)}`,`${nw(`cos ${V("A")} cos ${V("B")}`)} ${nw(`− sin ${V("A")} sin ${V("B")}`)}`]])}
+${MIST([[nw("cos⁻¹(−0.5) = −60°"),`${nw("120°")}: cos⁻¹ gives 0° to 180°`],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`],[nw("sec²θ = 1 − tan²θ"),`${nw("1 + tan²θ = sec²θ")}<br>test 45°: ${nw("1 + 1 = 2")}`],[nw(`sin 2${V("A")} = 2 sin ${V("A")}`),nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`)],[`${nw(`cos(${V("A")} + ${V("B")})`)} ${nw(`= cos ${V("A")} + cos ${V("B")}`)}`,`${nw(`cos ${V("A")} cos ${V("B")}`)} ${nw(`− sin ${V("A")} sin ${V("B")}`)}`]])}
 </div>`
 };
 Object.assign(SHEETS,SHEETS7);
