@@ -9042,6 +9042,7 @@ SHEETLIST.push(
   {id:"sec2-memorise",levels:["sec2"],chapter:"Formulas and key facts",title:"Sec 2 formulas to memorise",sheet:"s2Memo",aid:null,exam:true,group:"memorise",kw:"formula memorise remember pythagoras toa cah soh volume proportion"},
   {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
+  {id:"angle-reasons",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Sec 1 to A-Math, the exam wording",title:"Angle reasons",sheet:"angleReasons",aid:null,exam:true,group:"memorise",kw:"angle reasons geometry proof parallel lines alternate interior corresponding triangle polygon circle properties tangent chord cyclic quadrilateral alternate segment converse midpoint theorem"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
   {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"},
   {id:"calculator-guide",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Casio fx-97SG X keys",title:"Calculator guide",sheet:"calcGuide",aid:null,exam:true,group:"tips",kw:"calculator casio fx-97SG X keys menu equation quadratic simultaneous statistics standard deviation mean fraction degree radian"}
@@ -10781,6 +10782,57 @@ ZC("blue","Kinematics","kinematics",
 ])}`
 };
 Object.assign(SHEETS,SHEETS10);
+const ARMUST=`<div class="mzmust">${MUST([FB("green","Parallel lines",`(alt. ∠s, AB &#47;&#47; CD)`,"always name the 2 parallel lines","","mk"),FB("amber","Every angle",`a reason in brackets`,"use these exact words","","mk")])}</div>`;
+Object.assign(SHEETS,{angleReasons:`${ARMUST}
+${ZS("Sec 1: lines and shapes",[
+ZC("blue","Lines","angles-parallel-lines",
+  ZR(picStrLine(),[ZF("On a straight line",nw(`${V("a")} + ${V("b")} = 180°`)),ZRS("(adj. ∠s on a str. line)")])
+  +ZR(picAtPt(),[ZF("At a point",nw(`${V("a")} + ${V("b")} + ${V("c")} = 360°`)),ZRS("(∠s at a pt.)")])
+  +ZR(picVertOpp(),[ZF("Vertically opposite","→ equal"),ZRS("(vert. opp. ∠s)")])),
+ZC("green","Parallel lines","angles-parallel-lines",
+  ZR(picPar("alt"),[ZF("Z","→ equal"),ZRS("(alt. ∠s, AB &#47;&#47; CD)")])
+  +ZR(picPar("int"),[ZF("C",nw(`${V("a")} + ${V("b")} = 180°`)),ZRS("(int. ∠s, AB &#47;&#47; CD)")])
+  +ZR(picPar("corr"),[ZF("F","→ equal"),ZRS("(corr. ∠s, AB &#47;&#47; CD)")])),
+ZC("red","Triangles","polygons",
+  ZF("Angle sum","= 180°")+ZRS("(∠ sum of △)")
+  +ZR(picTriExt(),[ZF("Exterior angle",nw(`= ${V("a")} + ${V("c")}`)),ZRS("(ext. ∠ of △)")],"st")
+  +ZR(picIsos(),[ZF("Isosceles","→ base angles equal"),ZRS("(base ∠s of isos. △)")])),
+ZC("purple","Quadrilaterals and polygons","polygons",
+  ZF("Quadrilateral","= 360°")+ZRS("(∠ sum of quad.)")
+  +ZR(picQuad("para"),[ZF("Parallelogram","→ opposite angles equal"),ZRS("(opp. ∠s of parallelogram)")])
+  +ZR(picHexExt(),[ZF("Exterior angles","= 360°"),ZRS("(sum of ext. ∠s of polygon)")],"st")
+  +ZF("Interior angles",nw(`= (${V("n")} − 2) × 180°`))+ZRS("(sum of int. ∠s of polygon)"))
+])}
+${ZS("E-Math: circles",[
+ZC("teal","Angles in a circle","circle-properties",
+  ZT([[cmini({p:{A:210,B:330,P:90},l:["AP","BP","OA","OB"],o:1,arcs:[["O","A","B","var(--amber)"],["P","A","B","var(--blue)"]]}),"centre = "+nw("2 × circumference"),ZRS("(∠ at centre = 2∠ at circ.)")],
+    [cmini({p:{A:210,B:330,P:70,Q:125},l:["AP","BP","AQ","BQ"],arcs:[["P","A","B","var(--red)"],["Q","A","B","var(--red)"]]}),"same segment → equal",ZRS("(∠s in the same segment)")],
+    [cmini({p:{A:180,B:0,P:60},l:["AB","AP","BP"],o:1,rt:"P"}),"semicircle → 90°",ZRS("(rt. ∠ in a semicircle)")],
+    [cmini({p:{A:140,B:210,C:300,D:40},l:["AB","BC","CD","DA"],arcs:[["A","D","B","var(--red)"],["C","B","D","var(--blue)",1]]}),"cyclic quad: opposite → 180°",ZRS("(∠s in opp. segments are supp.)")+ZX("or (opp. ∠s of a cyclic quad. are supp.)")]],"two")),
+ZC("blue","Tangents, chords, radii","circle-properties",
+  ZT([[cmini({p:{P:60},l:["OP"],o:1,tan:"P",rt:"P"}),"tangent meets radius at 90°",ZRS("(tan ⊥ rad)")],
+    [cmini({p:{},o:1,ext:1}),"2 tangents from a point → equal",ZRS("(tangents from an external pt.)")],
+    [cmini({p:{A:200,B:340},l:["AB","OM"],o:1,mid:1}),"⊥ from centre → cuts chord in half",ZRS("(⊥ bisector of chord)")],
+    [cmini({p:{A:150,B:30,C:210,D:330},l:["AB","CD"],o:1,perp:["AB","CD"]}),"equal chords → same distance from O",ZRS("(equal chords)")],
+    [cmini({p:{A:200,B:340},l:["OA","OB","AB"],o:1,arcs:[["A","O","B","var(--red)"],["B","O","A","var(--red)"]]}),"OA = OB → isosceles",ZRS("(radii of circle)")]],"two"))
+])}
+${ZS("A-Math: proofs",[
+ZC("purple","More circle reasons","proofs-plane-geometry",
+  ZR(cmini({p:{A:270,B:40,C:150},l:["AB","AC","BC"],tan:"A",arcs:[["A","T","C","var(--red)"],["B","A","C","var(--red)"]]}),[ZF("Tangent and chord",nw("∠TAC = ∠ABC")),ZRS("(alt. segment thm)")])
+  +ZF("Cyclic quad","exterior ∠ = interior opposite ∠")+ZRS("(ext. ∠ of cyclic quad.)")),
+ZC("amber","Prove it: use the converse","proofs-plane-geometry",
+  ZTB(["To prove","Write"],[["4 points on a circle","(converse, opp. ∠s of cyclic quad.)<br>(converse, ext. ∠ of cyclic quad.)<br>(converse, ∠s in the same segment)"],["a line is a tangent","(converse, tan ⊥ rad)<br>(converse, alt. segment thm)"],["a chord is a diameter","(converse, rt. ∠ in a semicircle)"],["lines are parallel","(converse, alt. ∠s)"]])),
+ZC("red","Triangles in proofs","proofs-plane-geometry",
+  ZR(picMidpt(),[ZF("Midpoints of 2 sides",nw("MN ∥ BC")),ZF("",nw(`MN = ${frac("1","2")}BC`)),ZRS("(Midpoint Theorem)")],"st")
+  +ZF("Shared angle","")+ZRS("(common ∠)")
+  +ZF("Equal angles","→ equal sides")+ZRS("(sides opp. equal ∠s)")
+  +ZCH(["SSS","SAS","ASA","AAS","RHS"],"Congruent")
+  +ZCH(["AA"],"Similar"))
+])}
+${ZS("Lose no marks",[
+ZC("red","Never write","",
+  ZTB(["✗","✓"],[["(alt. ∠s)","(alt. ∠s, AB &#47;&#47; CD)"],["co-interior","(int. ∠s, AB &#47;&#47; CD)"],["(Z angles)","Z, C, F only help you spot them"]]))
+])}`});
 SHEETS.emMemoFC+=`<ul class="steps fml">${GRP("Standard form","standard-form")}${FL(`Standard form = ${nw(`${V("A")} × 10<sup>${V("n")}</sup>`)}`+FNOTE(nw(`1 ≤ ${V("A")} &lt; 10`)))}
 ${GRP("Indices","indices")}${FL(nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`))}${FL(nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`))}${FL(nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`))}
 ${GRP("Speed–time graphs","speed-time-graphs")}${FL("Gradient of a distance–time graph = speed")}${FL("Gradient of a speed–time graph = acceleration")}${FL("Area under a speed–time graph = distance travelled")}
@@ -10855,7 +10907,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
@@ -11214,7 +11266,7 @@ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ app.que
 function renderSheetOnly(s){
   const lvl=LEVELS.find(l=>l.id===(s.levels.includes(homeFilter)?homeFilter:s.levels[0]));
   document.title=s.title+" · Maths Hub";
-  titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:s.group==="memorise"?`${SHORT[s.levels[0]]} · Memorise`:`Exam kit · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
+  titleEl.textContent=s.title; crumbEl.textContent=s.exam?(s.group==="formula"?`${SHORT[s.levels[0]]} · Formula sheet`:s.group==="memorise"&&!s.tag?`${SHORT[s.levels[0]]} · Memorise`:`Exam kit · ${s.tag||lvl.name}`):`${lvl.name} · ${s.chapter}`;
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
@@ -12553,7 +12605,7 @@ function renderCards(kind,id,sub){ if(kind==="mist"&&!cdMistOn) return false;
   setKid(kidOf(s.levels)); cdS={kind,key,cards,id:s.id,back:bk}; if(kind==="quick") qqDeal(null,/^\d{1,9}$/.test(sub||"")?+sub:qqSeed()); else cdStart(cards.map((x,i)=>i)); window.scrollTo(0,0); return true; }
 function cdLinks(key){ const s=SHEETLIST.find(x=>x.sheet===key); if(!s) return;
   if(qqMk(s.id).length){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/quick/${s.id}">Try 5 questions →</a></p>`, e=app.querySelector(".sheetend"); if(e) e.insertAdjacentHTML("beforebegin",b); }
-  if(s.group==="memorise"){ const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, e=app.querySelector(".sheetend");
+  if(s.group==="memorise"){ if(!cdMemo(s.sheet).length) return; const b=`<p class="pl cdgo-p"><a class="pill act cdgo" href="#cards/memo/${s.levels[0]}">Test yourself: ${cdMemo(s.sheet).length} flashcards →</a></p>`, e=app.querySelector(".sheetend");
     if(e) e.insertAdjacentHTML("beforebegin",b); return; }
   if(!cdMistOn) return;
   const w=app.querySelectorAll(".wrongright"); if(!w.length||!cdSpot(s.id).length) return;
