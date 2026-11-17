@@ -1829,7 +1829,7 @@ const TOPICS = [
   {id:"pythagoras-squares", strand:"geo", levels:["sec2"], chapter:"Pythagoras' theorem",
    title:"Pythagoras: squares on the sides", blurb:"The 2 smaller squares add up to the biggest one.", play:"pythSq", sheet:"s2Pyth", sheetTitle:"Pythagoras' theorem"},
   {id:"pointy-third", strand:"geo", levels:["sec2"], chapter:"Volume & surface area",
-   title:"Why a pyramid is one-third of a cuboid", blurb:"A cube cuts into 3 pyramids, so pointy solids get ⅓. Every solid is base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
+   title:"Why a pyramid is one-third of a cuboid", blurb:"A cube cuts into 3 identical pyramids, so 1 pyramid = ⅓ × base area × height.", play:"pointyThird", sheet:"s2Volume", sheetTitle:"Volume & surface area: pyramids, cones & spheres"},
   {id:"venn-regions", strand:"alg", levels:["emath"], chapter:"Set Language & Notation",
    title:"Shading Venn diagrams", blurb:"Tap the parts to shade A ∩ B′, (A ∪ B)′ and more. Check, and get a second try.", play:"vennAid", sheet:"sets", sheetTitle:"Sets & Venn diagrams"},
   {id:"arcs-radians", strand:"geo", levels:["emath"], chapter:"Arc Length & Radians",
@@ -1849,7 +1849,7 @@ const TOPICS = [
   {id:"area-under", strand:"calc", levels:["amath"], chapter:"Kinematics",
    title:"Kinematics: s, v, a", blurb:"A particle on a line, with its s, v and a graphs. At rest, turning round, area = displacement.", play:"kinAid", sheet:"kinematics", sheetTitle:"Kinematics"},
   {id:"data-dots", strand:"stats", levels:["sec2","emath"], chapter:"Statistics",
-   title:"Dot diagrams: mean, median, mode", blurb:"Drag the dots. The mean is the balance point, and an outlier pulls it away.", play:"dataDots", sheet:"s2Data", sheetTitle:"Dot diagrams, histograms & stem-and-leaf"},
+   title:"Dot diagrams: mean vs median", blurb:"Drag a dot out. The mean follows it, the median stays.", play:"dataDots", sheet:"s2Data", sheetTitle:"Dot diagrams, histograms & stem-and-leaf"},
   {id:"area-rectangles", strand:"calc", levels:["amath"], chapter:"Applications of Integration", tier:"curious",
    title:"Why integration gives the area", blurb:"Thinner and thinner rectangles, then why the area grows at the height of the curve.", play:"areaRect", sheet:"amIntApp", sheetTitle:"Applications of integration: area"},
   {id:"straight-line-graphs", strand:"graph", levels:["sec1","sec2"], chapter:"Linear graphs",
@@ -1887,7 +1887,7 @@ const TOPICS = [
   {id:"toilet-paper", strand:"geo", levels:["sec1","emath"], chapter:"Volume & surface area",
    title:"Surface area: the toilet paper method", blurb:"Unroll the sides into one rectangle. Surface area = 2 × base area + toilet paper.", play:"toiletPaper", sheet:"s1Volume", sheetTitle:"Volume & surface area: prisms & cylinders"},
   {id:"cone-sector", strand:"geo", levels:["sec2","emath"], chapter:"Measurement",
-   title:"Roll a sector up into a cone", blurb:"The arc becomes the base circle. Where r, h and πrl come from.", play:"coneSector", sheet:"s2Volume", sheetTitle:"Volume & surface area"},
+   title:"Roll a sector up into a cone", blurb:"The arc becomes the base circle, so arc = 2πr.", play:"coneSector", sheet:"s2Volume", sheetTitle:"Volume & surface area"},
   {id:"p5-fractions", strand:"num", levels:["p5"], chapter:"Fractions", unlisted:true,
    title:"Fractions: see the pieces", blurb:"Five pictures: same-size pieces, mixed numbers, of a number, fraction × fraction, of the rest.", play:"fracBars"},
   {id:"of-the-rest", strand:"num", levels:["p6"], chapter:"Fractions", unlisted:true,
@@ -3756,78 +3756,45 @@ function ddSpread(svg,items,y){
   for(let i=L.length-1;i>=0;i--){const lim=i===L.length-1?135-L[i].w/2:L[i+1].x-(L[i].w+L[i+1].w)/2; if(L[i].x>lim) L[i].x=lim;}
   L.forEach(it=>lab(svg,[it.x,y],it.t,{"font-size":3.9,"font-weight":700,fill:it.c}));
 }
+const ipDdCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.ipddk .ipddu{font-size:.78em;font-weight:600;margin-left:5px}.ipddk .formbox{transition:opacity .25s}.ipddk .formbox.ipddim{opacity:.6}.ipddk .fb-amber .rd{height:34px;margin:6px 0 0;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--amber-fill);font-size:18px;font-weight:700;color:var(--ink);white-space:nowrap}.ipddk .fb-amber .rd b{margin-left:.28em}.ipddk .fb-amber.ipddn .rd{visibility:hidden}@media (max-width:599px){.ipddk .fb-amber .rd{height:32px;font-size:17px}}'; document.head.append(e); }catch(_){} return 1; })();
+const ipDdB={l:7,w:126,ay:34,x0:12,x1:30}, ipDdF=[12,13,13,14,14,14,15,15,16];
+const ipDdX=v=>ipDdB.l+(v-ipDdB.x0)/(ipDdB.x1-ipDdB.x0)*ipDdB.w;
+const ipDdV=s=>clamp(Math.round(+s.v||17),17,30);
+const ipDdK=s=>{ const v=ipDdV(s), tot=126+v, o=v>=21, A=t=>kc("amber",t),
+    ans=(x,c)=>`= <span class="ipans" style="color:var(--${c})">${x}<span class="ipddu">years</span></span>`;
+  return `<div class="apwk ipk ipddk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
+    FB("blue","Mean",`${nw(frac(String(tot),"10"))} ${nw(ans(N(tot/10,1),"blue"))}`,null,frac("total","how many"),o?"wide ipddim":"wide"),
+    FB("amber","Median",`${nw(frac(`${A("14")} + ${A("14")}`,"2"))} ${nw(ans("14","amber"))}`,`Outlier? Use the<b class="k-amber">median</b>.`,"the middle two dots",o?"wide":"wide ipddn")],true)+`</div>`; };
 const dataDots=aid({
-  init:{d:[...DD0],o:0,ov:24}, jump:true, vb:"0 0 140 90", label:"Dot diagram of ages with draggable dots", link:["o","ov"],
-  fix:s=>{s.o=s.o?1:0; s.ov=clamp(Math.round(s.ov),10,25);},
-  buttons:[{label:"Add an outlier",pressed:s=>!!s.o,fn:s=>{s.o=s.o?0:1;}},{label:"↺ Reset dots",fn:s=>{s.d=[...DD0]; s.ov=24;}}],
-  steps:[
-    {name:"Mean = balance point",t:()=>`Mean = ${frac("total","how many")}. It is the <b>balance point</b> of the dots.<br>Drag any dot: the balance point moves.`},
-    {name:"Median & mode",t:()=>`<span class="k-amber">Median</span> = the middle dot, in order. <span class="k-green">Mode</span> = the tallest stack.<br>Add an outlier: the mean moves a lot, the median hardly moves.`},
-    {name:"Describe it",t:()=>`Describe it with 3 things, every time: <b>range</b>, <b>cluster</b>, <b>outlier</b>.<br>Drag the dots and the sentences change.`},
-    {name:"Box plot (E-Math)",t:()=>`${nw("Q1 = middle")} of the lower half. ${nw("Q3 = middle")} of the upper half.<br>The box is the middle half of the data: IQR = Q3 − Q1.`},
-    {name:"Spread (E-Math)",t:()=>`Standard deviation = the <b>typical distance</b> of a dot from the mean.<br>Bigger SD = more spread out. Add the outlier and watch it jump.`}
-  ],
-  draw(svg,s){
-    const I=ddInfo(s), m=s.step, ay=DDB.ay, sp=Math.min(7.2,I.mx>1?28/(I.mx-1):7.2), cy=i=>ay-4.4-I.pos[i]*sp, colTop=x=>ay-4.4-(I.cnt[x]-1)*sp;
-    const xm=ddX(I.mean), cl=x=>clamp(x,20,120), isOut=i=>I.v[i]<I.lo||I.v[i]>I.hi;
-    lab(svg,[3,6],`Ages of ${I.n} people`,{"text-anchor":"start","font-size":3.9,fill:"var(--muted)"});
-    if(m===1) I.modes.forEach(x=>{S_(svg,"rect",{x:ddX(x)-4.6,y:colTop(x)-4.6,width:9.2,height:ay-colTop(x)+4.6,rx:2,fill:"var(--green-fill)",stroke:GR,"stroke-width":.6}); if(!I.modes.includes(x-1)){let e=x; while(I.modes.includes(e+1)) e++; lab(svg,[(ddX(x)+ddX(e))/2,colTop(x)-6.6],"mode",{"font-size":3.9,"font-weight":700,fill:GR});}});
-    if(m===2){const top=Math.min(...I.srt.filter(x=>x>=I.lo&&x<=I.hi).map(colTop)); S_(svg,"rect",{x:ddX(I.lo)-4.8,y:top-4.8,width:ddX(I.hi)-ddX(I.lo)+9.6,height:ay-top+4.8,rx:3,fill:"var(--green-fill)",stroke:GR,"stroke-width":.6}); lab(svg,[(ddX(I.lo)+ddX(I.hi))/2,top-6.6],"cluster",{"font-size":3.9,"font-weight":700,fill:GR});}
-    if(m===4){const a=ddX(Math.max(10,I.mean-I.sd)), b=ddX(Math.min(25,I.mean+I.sd)); S_(svg,"rect",{x:a,y:10,width:b-a,height:ay-10,fill:"var(--green-fill)",opacity:.8});}
-    if(m===3) seg(svg,[ddX(I.med),ay],[ddX(I.med),Math.min(...I.srt.map(colTop))-5],{stroke:AMB,"stroke-dasharray":"1.4 1.2","stroke-width":.6});
-    if(m===0||m===1||m===4){S_(svg,"path",{d:`M${xm} ${ay+.5} L${xm-4.5} ${ay+9} L${xm+4.5} ${ay+9} Z`,fill:"var(--blue-fill)",stroke:BL,"stroke-width":.8});}
-    seg(svg,[DDB.l-4,ay],[DDB.l+DDB.w+4,ay],{"stroke-width":.8});
-    for(let x=DDB.x0;x<=DDB.x1;x++){seg(svg,[ddX(x),ay],[ddX(x),ay+1.6],{"stroke-width":.5}); lab(svg,[ddX(x),ay+5.8],String(x),{"font-size":3.7,fill:"var(--muted)",stroke:"var(--card)","stroke-width":1.2,"paint-order":"stroke"});}
-    const col=i=>{const r=I.rk.indexOf(i);
-      if(m===3){ if(I.mid.length===1&&I.mid[0]===r) return AMB; if(I.q1r.includes(r)) return GR; if(I.q3r.includes(r)) return RD; return "var(--accent)"; }
-      if(isOut(i)) return RD;
-      if(m===1&&I.mid.includes(r)) return AMB;
-      return "var(--accent)";};
-    const order=I.v.map((x,i)=>i).sort((a,b)=>I.pos[a]-I.pos[b]);
-    order.forEach(i=>S_(svg,"circle",{cx:ddX(I.v[i]),cy:cy(i),r:3.3,fill:col(i),stroke:"var(--card)","stroke-width":.5}));
-    if(m!==3) I.out.filter((x,k,a)=>a.indexOf(x)===k&&!a.includes(x-1)).forEach(x=>lab(svg,[ddX(x),Math.min(...I.out.filter(y=>y>=x&&y<=x+1).map(colTop))-5.6],"outlier",{"font-size":3.9,"font-weight":700,fill:RD,"text-anchor":x>22?"end":"middle",dx:x>22?3:0}));
-    order.forEach(i=>S_(svg,"circle",{cx:ddX(I.v[i]),cy:cy(i),r:3.6,fill:"transparent","data-drag":i===10?"o":String(i),style:"cursor:grab"}));
-    if(m===0){lab(svg,[cl(xm),ay+15],`mean ${/≈/.test(ddV(I.mean))?"":"= "}${ddV(I.mean)}`,{"font-size":4.2,"font-weight":700,fill:BL});
-      lab(svg,[70,ay+23],`total distance left ${ddV(I.left)} = total distance right ${ddV(I.left)}`,{"font-size":3.9,fill:"var(--muted)"});}
-    if(m===1){lab(svg,[cl(xm),ay+15],`mean ${/≈/.test(ddV(I.mean))?"":"= "}${ddV(I.mean)}`,{"font-size":4.2,"font-weight":700,fill:BL});
-      lab(svg,[cl(ddX(I.med)),ay+23],`median = ${N(I.med)}`,{"font-size":4.2,"font-weight":700,fill:AMB});}
-    if(m===2){const a=ddX(I.srt[0]), b=ddX(I.srt[I.n-1]), y=ay+12;
-      if(b>a){seg(svg,[a,y],[b,y],{stroke:BL,"stroke-width":.8}); S_(svg,"path",{d:`M${a+2.2} ${y-1.4} L${a} ${y} L${a+2.2} ${y+1.4} M${b-2.2} ${y-1.4} L${b} ${y} L${b-2.2} ${y+1.4}`,fill:"none",stroke:BL,"stroke-width":.8});}
-      lab(svg,[cl((a+b)/2),y+7],`range: ${I.srt[0]} to ${I.srt[I.n-1]}`,{"font-size":4.2,"font-weight":700,fill:BL});}
-    if(m===3){const y=ay+18, X=ddX, mn=I.srt[0], mx=I.srt[I.n-1];
-      seg(svg,[X(mn),y],[X(I.Q1),y],{"stroke-width":.7}); seg(svg,[X(I.Q3),y],[X(mx),y],{"stroke-width":.7});
-      seg(svg,[X(mn),y-3],[X(mn),y+3],{"stroke-width":.7}); seg(svg,[X(mx),y-3],[X(mx),y+3],{"stroke-width":.7});
-      S_(svg,"rect",{x:X(I.Q1),y:y-5,width:Math.max(.01,X(I.Q3)-X(I.Q1)),height:10,fill:"var(--blue-fill)",stroke:BL,"stroke-width":.8});
-      seg(svg,[X(I.Q1),y-5],[X(I.Q1),y+5],{stroke:GR,"stroke-width":1}); seg(svg,[X(I.Q3),y-5],[X(I.Q3),y+5],{stroke:RD,"stroke-width":1}); seg(svg,[X(I.med),y-5],[X(I.med),y+5],{stroke:AMB,"stroke-width":1.4});
-      ddSpread(svg,[{x:X(I.Q1),t:"Q1 "+N(I.Q1),c:GR},{x:X(I.med),t:"median "+N(I.med),c:AMB},{x:X(I.Q3),t:"Q3 "+N(I.Q3),c:RD}],y+10.5);
-      ddSpread(svg,[{x:X(mn),t:"min "+N(mn),c:"var(--muted)"},{x:X(mx),t:"max "+N(mx),c:"var(--muted)"}],y+17);}
-    if(m===4){lab(svg,[cl(xm),ay+15],`mean ${/≈/.test(ddV(I.mean))?"":"= "}${ddV(I.mean)}`,{"font-size":4.2,"font-weight":700,fill:BL});
-      const b=ddX(Math.min(25,I.mean+I.sd)), y=ay+20.5; seg(svg,[xm,y],[b,y],{stroke:GR,"stroke-width":.9}); seg(svg,[b,y-1.6],[b,y+1.6],{stroke:GR,"stroke-width":.9});
-      lab(svg,[cl(Math.max(xm+10,(xm+b)/2)),y+6.5],`SD ${/≈/.test(ddV(I.sd))?"":"= "}${ddV(I.sd)}`,{"font-size":4.2,"font-weight":700,fill:GR});}
-  },
-  drag(id,p,s){const x=clamp(Math.round(DDB.x0+(p.x-DDB.l)/DDB.w*(DDB.x1-DDB.x0)),DDB.x0,DDB.x1); if(id==="o") s.ov=x; else s.d[+id]=x;},
-  key(s){const I=ddInfo(s), m=s.step, mEq=`${nw(frac(I.tot,I.n))} ${nw(ddEq(I.mean))}`;
-    if(m===0) return FORMS([FB("ink","Total of the ages",String(I.tot),""),FB("ink","How many",String(I.n),""),FB("blue","Mean",mEq,"the balance point")],true);
-    if(m===1){const J=s.o?ddInfo(Object.assign({},s,{o:0})):null, mEven=I.n%2===0;
-      return FORMS([FB("blue","Mean",ddV(I.mean),[ddX2(I.mean)?"":"(3 s.f.)",J?`was ${ddV(J.mean)} before`:""].filter(Boolean).join("<br>")),
-        FB("amber","Median",mEven?`${nw(frac(`${I.srt[I.mid[0]]} + ${I.srt[I.mid[1]]}`,"2"))} ${nw(`= ${N(I.med)}`)}`:N(I.med),J?`was ${N(J.med)} before`:""),
-        FB("green","Mode",I.modes.length?I.modes.join(" and "):"none",I.modes.length?`${I.top} times`:"each age appears once")],true);}
-    if(m===2){const o=I.out.filter((x,k,a)=>a.indexOf(x)===k);
-      return FORMS([FB("blue","① Range",nw(`${I.srt[0]} to ${I.srt[I.n-1]}`),nw(`${I.srt[I.n-1]} − ${I.srt[0]} = ${I.srt[I.n-1]-I.srt[0]}`)),FB("green","② Cluster",I.lo===I.hi?String(I.lo):nw(`${I.lo} to ${I.hi}`),"most of the dots"),FB("red","③ Outlier",o.length?o.join(" and "):"none",o.length?"far from the rest":"")],true);}
-    if(m===3) return FORMS([FB("green","Q1",N(I.Q1),"lower half"),FB("amber","Median",N(I.med),"middle"),FB("red","Q3",N(I.Q3),"upper half"),FB("blue","Interquartile range",nw(`Q3 − Q1 = ${N(I.Q3)} − ${N(I.Q1)} = ${N(I.Q3-I.Q1)}`),"the width of the box",null,"wide")],true);
-    return FORMS([FB("blue",`Mean ${V("x̄")}`,ddV(I.mean),/≈/.test(ddV(I.mean))?"(3 s.f.)":""),FB("green",`SD ${V("σx")}`,ddV(I.sd),/≈/.test(ddV(I.sd))?"(3 s.f.)":""),FB("ink","Casio fx-97SG X","MENU 3 1","key in the ages · AC · OPTN → 1-Variable Calc")],true);},
-  readout(s){const I=ddInfo(s), m=s.step;
-    if(m===0){const G=[];for(let k=0;k<I.srt.length;k+=5)G.push(nw((k?"+ ":"")+I.srt.slice(k,k+5).join(" + ")));
-      return `<div class="row hint">Total = ${G.join(" ")} ${nw(`= ${I.tot}`)}</div>`;}
-    if(m===1) return `<div class="row">In order: ${I.srt.map((x,r)=>I.mid.includes(r)?`<b class="k-amber">${x}</b>`:x).join(", ")}</div><div class="row hint">${I.n} ages: the middle is the ${I.mid.map(r=>ddOrd(r+1)).join(" and ")}</div>`;
-    if(m===2){const o=I.out.filter((x,k,a)=>a.indexOf(x)===k), sp=I.srt[I.n-1]-I.srt[0];
-      return `<div class="row">① The ages <b class="k-blue">range from ${I.srt[0]} to ${I.srt[I.n-1]}</b> (range = ${I.srt[I.n-1]} − ${I.srt[0]} = ${sp}).</div>`
-        +`<div class="row">② ${I.lo===I.hi?`<b class="k-green">Most</b> of the ages are <b class="k-green">${I.lo}</b>.`:`<b class="k-green">Most</b> of the ages are <b class="k-green">clustered between ${I.lo} and ${I.hi}</b>.`}</div>`
-        +`<div class="row">③ ${o.length?`<b class="k-red">${o.join(" and ")}</b> ${o.length>1?"are <b class=\"k-red\">outliers</b>":"is an <b class=\"k-red\">outlier</b>"}.`:"There is <b>no outlier</b>."}</div>`;}
-    if(m===3){const h=Math.floor(I.n/2), f=(r,x)=>I.q1r.includes(r)?`<b class="k-green">${x}</b>`:I.q3r.includes(r)?`<b class="k-red">${x}</b>`:x;
-      const lo=I.srt.slice(0,h).map((x,r)=>f(r,x)).join(", "), hi=I.srt.slice(I.n-h).map((x,r)=>f(r+I.n-h,x)).join(", ");
-      return `<div class="row">${lo} │ ${I.n%2?`<b class="k-amber">${I.srt[h]}</b> │ `:""}${hi}</div><div class="row hint">${I.n} ages: lower half │ ${I.n%2?"median │ ":""}upper half</div>`;}
-    return "";}
+  init:{v:17}, jump:true, ip:"Drag the dot out.", vb:"0 -9 140 74", label:"Dot diagram of 10 ages: drag the biggest dot out, the mean triangle follows it, the median line stays at 14", link:["v"], demo:[1,0],
+  fix:s=>{ s.v=ipDdV(s); },
+  steps:[{name:"Mean vs median",t:()=>"",w:s=>ipDdK(s)}],
+  draw(svg,s){ svg.setAttribute("viewBox",innerWidth<600?"0 -2 140 67":"0 -9 140 74"); const v=ipDdV(s), B=ipDdB, ay=B.ay, X=ipDdX, ph=innerWidth<600, rc=svg.getBoundingClientRect(), pu=rc.width?rc.width/140:4, fs=ph?5.2:4.6, F={"font-weight":700}, H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"};
+    const r=3.3, sp=7, cyL=k=>ay-r-.4-k*sp, m=(126+v)/10, o=v>=21, mv=m-14.3>=.5, xm=X(m), xg=X(14.3), x14=X(14), INK="var(--ink)", BLU="var(--blue)", all=pu*(B.w/(B.x1-B.x0))>=20;
+    const hx=X(v), hy=cyL(0), rr=Math.max(7,22/pu)+1.6, nb=ay+6.8, tA=nb+2.6, tB=tA+7.4, tw=4.4, aY=tB+3.2, lY=aY+3+fs*1.05;
+    S_(svg,"rect",{x:X(17)-6,y:ay-22,width:X(30)-X(17)+13,height:32,fill:"transparent","data-drag":"v",style:"cursor:pointer"});
+    const tTop=cyL(2)-r;
+    seg(svg,[x14,ay],[x14,tTop-5.2],{stroke:"var(--amber)","stroke-width":1.3});
+    lab(svg,[x14,tTop-6.6],"median 14",Object.assign({fill:"var(--amber)","font-size":fs*1.15},F,H));
+    seg(svg,[B.l-5,ay],[B.l+B.w+5,ay],{"stroke-width":.9});
+    const vy=Math.max(nb,hy+rr+fs*.78);
+    for(let x=B.x0;x<=B.x1;x++){ seg(svg,[X(x),ay],[X(x),ay+1.6],{"stroke-width":.5});
+      if(x===v||(vy>nb+.5&&Math.abs(x-v)<1.5)||(!all&&(x%2||Math.abs(x-v)<2))) continue; lab(svg,[X(x),nb],String(x),Object.assign({"font-size":fs*.9,fill:"var(--muted)"},H)); }
+    lab(svg,[hx,vy],String(v),Object.assign({fill:INK,"font-size":fs*1.08},F,H));
+    const tri=(x,a)=>S_(svg,"path",Object.assign({d:`M${x} ${tA} L${x-tw} ${tB} L${x+tw} ${tB} Z`},a));
+    if(mv) tri(xg,{fill:"none",stroke:BLU,"stroke-width":.7,"stroke-dasharray":"1.4 1.1",opacity:.7});
+    tri(xm,{fill:"var(--blue-fill)",stroke:BLU,"stroke-width":1});
+    if(mv){ const e=xm-1.2; seg(svg,[xg,aY],[e-2.6,aY],{stroke:BLU,"stroke-width":1.3}); S_(svg,"path",{d:`M${e} ${aY} L${e-3} ${aY-1.9} L${e-3} ${aY+1.9} Z`,fill:BLU}); }
+    lab(svg,[Math.max(2,xg-tw),lY],mv?`mean 14.3 → ${N(m,1)}`:`mean ${N(m,1)}`,Object.assign({fill:BLU,"font-size":fs*1.15,"text-anchor":"start"},F,H));
+    lab(svg,[138,lY],"age (years)",{"font-size":fs*.8,fill:"var(--muted)","text-anchor":"end","font-style":"italic"});
+    const seen={}; ipDdF.forEach(x=>{ const k=seen[x]||0; seen[x]=k+1; const am=x===14&&(k===1||k===2);
+      S_(svg,"circle",{cx:X(x),cy:cyL(k),r,fill:am?"var(--amber)":"var(--muted)",stroke:"var(--card)","stroke-width":.6,opacity:1}); });
+    if(o) lab(svg,[v>27?hx+r+1.5:hx,hy-rr],"outlier",Object.assign({fill:INK,"font-size":fs*1.08,"text-anchor":v>27?"end":"middle"},F,H));
+    handle(svg,hx,hy,"v",INK); S_(svg,"circle",{cx:hx,cy:hy,r:r+.4,fill:INK,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); },
+  drag(id,p,s){ s.v=clamp(Math.round(ipDdB.x0+(p.x-ipDdB.l)/ipDdB.w*(ipDdB.x1-ipDdB.x0)),17,30); },
+  kbd:{label:(id,s)=>["The dot: arrow keys move it",`${ipDdV(s)} years`],
+    move:(id,k,sh,s)=>{ s.v=clamp(ipDdV(s)+(/Up|Right/.test(k)?1:-1),17,30); }},
+  key(){ return ""; }
 });
 const PDE=[["s7","sum = 7",(i,j)=>i+j===7,"s"],["s10","sum ≥ 10",(i,j)=>i+j>=10,"s"],["six","at least one 6",(i,j)=>i===6||j===6,"p"],["dbl","a double",(i,j)=>i===j,"p"],["pev","product is even",(i,j)=>i*j%2===0,"x"]];
 const pdS=(n,d)=>{ if(!n) return "0"; const g=gcd(n,d); return d/g===1?String(n/g):frac(n/g,d/g); };
@@ -4201,78 +4168,57 @@ function ptCubeF(svg,s){ const VW=[PT3[0],PT3[1],-1], AP=[1,1,0], allHome=ptAll(
     if(!home||ptAll(s,(s2,j)=>j===i||!ptHome(s2,j))){ const c=up?pj(A):pj(C); lab(svg,[c[0],c[1]+(up?-3:2.4)],String(i+1),Object.assign({"font-size":7,"font-weight":700,fill:`var(--${P.c})`},NP)); } });
   if(ptAll(s,ptAtRow)) lab(svg,[75,85.5],"3 identical pyramids",Object.assign({"font-size":4.4,"font-weight":700,fill:"var(--ink)"},NP));
 }
+const ipPtCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.ippt-k .ipans{font-weight:800}.ippt-k .ippt-t{display:inline-flex;align-items:center;font-size:1.3em;font-weight:800;color:var(--amber);border:2.5px solid var(--amber);border-radius:9px;padding:1px 5px;margin-right:2px;background:var(--amber-fill);line-height:1}.ippt-k .ippt-h{color:var(--purple)}.ippt-k .formbox .gen .ippt-g{color:var(--amber);font-weight:700}.ippt-k .ippt-l{display:inline-flex;align-items:center;gap:.3em;white-space:nowrap}.ippt-k .formbox{transition:opacity .25s}.ippt-k .formbox.ippt-dim{opacity:.4}'; document.head.append(e); }catch(_){} return 1; })();
+const ipPtA=.4, ipPtX0=30, ipPtX1=120, ipPtY=95;
+const ipPtPP=u=>PT3P.map((P,i)=>{ const U=[P.U[0]+(i===2?7:0),P.U[1]]; if(u<=ipPtA){ const e=ptSm(u/ipPtA); return {x:U[0]*e,y:U[1]*e,t:0}; } const e=ptSm((u-ipPtA)/(1-ipPtA)); return {x:U[0]+(P.R[0]-U[0])*e,y:U[1]+(P.R[1]-U[1])*e,t:e}; });
+function ipPtCube(svg,s,fs){ const VW=[PT3[0],PT3[1],-1], AP=[1,1,0], allHome=ptAll(s,ptHome), NP={"pointer-events":"none"}, PU="var(--purple)";
+  const sub=(a,b)=>a.map((v,i)=>v-b[i]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], LT=[-.35,.8,-.5];
+  const Ps=PT3P.map((P,i)=>{ const g=s.pp[i], pj=p=>{ const q=ptPj0(p); return [q[0]+g.x,q[1]+g.y]; };
+    const mv=p=>{ if(g.t<=0||P.flat) return p; const r=rot3(sub(p,P.cen),P.aa.a,P.aa.th*g.t); return r.map((v,j)=>v+P.cen[j]); };
+    const Q=P.q.map(mv), A=mv(AP), C=P.cen;
+    const F=[Q].concat(Q.map((p,j)=>[A,p,Q[(j+1)%4]])).map(f=>{ let n=cr(sub(f[1],f[0]),sub(f[2],f[0])); const m=[0,1,2].map(j=>f.reduce((s,p)=>s+p[j],0)/f.length); if(dot(n,sub(m,C))<0) n=n.map(v=>-v); const L=Math.hypot(...n)||1; n=n.map(v=>v/L); return {f,n,vis:dot(n,VW)>1e-6}; });
+    return {i,P,A,C,Q,F,pj,home:ptHome(s,i),dd:dot(C,VW)}; });
+  const ord=Ps.filter(o=>o.home).sort((a,b)=>a.dd-b.dd).concat(s.zo.map(i=>Ps[i]).filter(o=>!o.home)), full=!s.cube&&ptAll(s,ptAtRow);
+  ord.forEach(({i,P,F,A,Q,pj,home})=>{ const col=`var(--${P.c})`, poly=(f,a)=>S_(svg,"polygon",Object.assign({points:f.map(p=>pj(p).map(v=>v.toFixed(2)).join(",")).join(" "),"stroke-linejoin":"round"},NP,a));
+    const vk=new Set(); F.filter(x=>x.vis).forEach(x=>x.f.forEach((p,j)=>{ const q=x.f[(j+1)%x.f.length]; vk.add(p.join()+"|"+q.join()); vk.add(q.join()+"|"+p.join()); }));
+    F.filter(x=>x.vis).forEach(x=>{ poly(x.f,{fill:`var(--${P.c}-fill)`,stroke:col,"stroke-width":.9});
+      const dk=.22*(1-Math.max(0,dot(x.n,LT))); if(dk>.01) poly(x.f,{fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"}); });
+    if(full) poly(Q,{fill:col,"fill-opacity":.28,stroke:"none"});
+    if(!s.cube) F.filter(x=>!x.vis).forEach(x=>x.f.forEach((p,j)=>{ const q=x.f[(j+1)%x.f.length]; if(!vk.has(p.join()+"|"+q.join())) seg(svg,pj(p),pj(q),Object.assign({stroke:col,"stroke-width":.6,"stroke-dasharray":"1.6 1.2"},NP)); })); });
+  const H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.4,"stroke-linejoin":"round"};
+  const T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":fs,"font-weight":700},NP,H,a));
+  if(allHome){ const pj=ptPj0, L0=pj([0,0,0]), L1=pj([0,1,0]);
+    seg(svg,L0,L1,Object.assign({stroke:PU,"stroke-width":1.2,"stroke-linecap":"round"},NP));
+    T(pj([.5,0,0]),"6 cm",{dy:fs+1.4}); T(pj([0,.5,0]),"6 cm",{dx:-2.4,dy:fs*.35,"text-anchor":"end",fill:PU}); T(pj([1,0,.5]),"6 cm",{dx:2.6,dy:fs*.75,"text-anchor":"start"}); return; }
+  ord.forEach(({i,P,C,A,Q,pj})=>{ const up=full;
+    if(up){ const u=Q.reduce((b,p,j)=>Math.hypot(p[0]-A[0],p[2]-A[2])<Math.hypot(Q[b][0]-A[0],Q[b][2]-A[2])?j:b,0), nb=[(u+1)%4,(u+3)%4].sort((a,b)=>Q[a][2]-Q[b][2])[0];
+      const m1=pj([0,1,2].map(j=>(Q[u][j]+Q[nb][j])/2)), m2=pj([0,1,2].map(j=>(Q[u][j]+A[j])/2)), cx=pj(C)[0], rt=m2[0]>cx;
+      seg(svg,pj(Q[u]),pj(A),Object.assign({stroke:PU,"stroke-width":1.15,"stroke-linecap":"round"},NP));
+      T(m1,"6 × 6",{dy:fs+1}); T(m2,"6",{dx:rt?2.2:-2.2,dy:fs*.35,"text-anchor":rt?"start":"end",fill:PU}); }
+    const c=up?pj(A):pj(C); lab(svg,[c[0],c[1]+(up?-3:2.4)],String(i+1),Object.assign({"font-size":fs*(up?1.9:1.6),"font-weight":800,fill:`var(--${P.c})`},NP,H)); });
+}
+const ipPtK=s=>{ const T3=`<span class="ippt-t">${frac("1","3")}</span>`, h=`<span class="ippt-h">6</span>`, on=(+s.u||0)>=40;
+  return `<div class="apwk ipk ippt-k" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
+    FB("ink","Cube",`<span class="ippt-l"><span>6 × 6 ×</span>${h}<span>=</span><span class="ipans">216 cm³</span></span>`,null,"base area × height","wide"),
+    FB("amber","1 pyramid",`<span class="ippt-l">${T3}<span>× 6 × 6 ×</span>${h}<span>=</span><span class="ipans">72 cm³</span></span>`,null,`<span class="ippt-g">⅓</span> × base area × height`,on?"wide":"wide ippt-dim")],true)+`</div>`; };
 const pointyThird=aid({
-  init:{sh:"pyr",r:3,a:6,h:4,n:0,f:0,pp:[{x:0,y:0,t:0},{x:0,y:0,t:0},{x:0,y:0,t:0}],zo:[0,1,2]}, jump:true, vb:"0 0 150 100", label:"A cube cut into 3 pyramids you can drag apart; pyramid and cuboid, cone and cylinder", link:["n"],
-  pills:[{k:"sh",label:"Pick a pair",show:s=>s.step>0,opts:[["pyr","<span>Pyramid &amp; cuboid</span>"],["cone","<span>Cone &amp; cylinder</span>"]],on:s=>{s.n=0;s.f=0;}}],
-  sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="cone"},
-    {k:"a",label:"side",min:1,max:10,step:1,f:v=>N(v)+" cm",show:s=>s.step>1&&s.sh==="pyr"},
-    {k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:s=>s.step>1}],
-  buttons:[{label:"▶ Pull apart",show:s=>s.step===0&&!ptAll(s,ptAtRow),fn:(s,anim)=>{ const a0=s.pp.map(g=>Object.assign({},g)), two=ptAll(s,ptHome); s.zo=PT3ZO.slice();
-      anim(two?3600:1600,p=>{ s.pp.forEach((g,i)=>{ const P=PT3P[i], a=a0[i];
-        if(two){ const p1=ptSm(clamp(p/.4,0,1)), p2=ptSm(clamp((p-.45)/.55,0,1)), x1=a.x+(P.U[0]-a.x)*p1, y1=a.y+(P.U[1]-a.y)*p1; g.x=x1+(P.R[0]-x1)*p2; g.y=y1+(P.R[1]-y1)*p2; g.t=p2; }
-        else { const e=ptSm(p); g.x=a.x+(P.R[0]-a.x)*e; g.y=a.y+(P.R[1]-a.y)*e; g.t=a.t+(1-a.t)*e; } }); }); }},
-    {label:"↺ Put back",show:s=>s.step===0&&!ptAll(s,ptHome),fn:(s,anim)=>{ const a0=s.pp.map(g=>Object.assign({},g)), two=ptAll(s,ptAtRow);
-      anim(two?2200:1200,p=>{ s.pp.forEach((g,i)=>{ const P=PT3P[i], a=a0[i];
-        if(two){ const p1=ptSm(clamp(p/.55,0,1)), p2=ptSm(clamp((p-.6)/.4,0,1)), x1=a.x+(P.U[0]-a.x)*p1, y1=a.y+(P.U[1]-a.y)*p1; g.x=x1*(1-p2); g.y=y1*(1-p2); g.t=a.t*(1-p1); }
-        else { const e=ptSm(p); g.x=a.x*(1-e); g.y=a.y*(1-e); g.t=a.t*(1-e); } }); }); }},
-    {label:"▶ Pour one",show:s=>s.step===1&&s.n<3,fn:(s,anim)=>{const n0=s.n; anim(1900,p=>{ if(p>=1){s.n=n0+1;s.f=0;return;} s.n=n0; s.f=p; });}},
-    {label:"↺ Empty",show:s=>s.step===1&&s.n>0,fn:s=>{s.n=0;s.f=0;}}],
-  fix:s=>{s.n=clamp(Math.round(s.n),0,3); s.f=0;},
-  drag(id,p,s,start){ if(s.step!==0||!/^y[012]$/.test(id)) return; const i=+id[1], g=s.pp[i];
-    if(start||!s._g||s._g.i!==i){ s._g={i,px:p.x,py:p.y,ox:g.x,oy:g.y,mv:false}; s.zo=s.zo.filter(j=>j!==i).concat([i]); return; }
-    const G=s._g, dx=p.x-G.px, dy=p.y-G.py; if(Math.hypot(dx,dy)>1.5) G.mv=true;
-    if(G.mv){ const c=ptPj0(PT3P[i].cen); g.x=clamp(G.ox+dx,18-c[0],132-c[0]); g.y=clamp(G.oy+dy,31-c[1],88-c[1]); } },
-  drop(id,s,anim){ const G=s._g; s._g=null; if(s.step!==0||!G) return; const i=G.i, g=s.pp[i], P=PT3P[i], x0=g.x, y0=g.y, t0=g.t; s._acted=true;
-    if(!G.mv){ if(ptHome(s,i)){ anim(500,q=>{ const e=ptSm(q); g.x=P.U[0]*e; g.y=P.U[1]*e; }); return; }
-      if(!P.flat){ const t1=t0>.5?0:1; anim(650,q=>{ g.t=t0+(t1-t0)*ptSm(q); }); } return; }
-    if(Math.hypot(g.x,g.y)<10) anim(350,q=>{ const e=ptSm(q); g.x=x0*(1-e); g.y=y0*(1-e); g.t=t0*(1-e); }); },
-  steps:[
-    {name:"3 pyramids make a cube",t:s=>ptAll(s,ptStand)?`<b>3 identical pyramids</b> make the cube. Each has the cube's base and height.<br>So 1 pyramid = ${frac("1","3")} × base area × height.`:ptAll(s,(s,i)=>!ptHome(s,i))?`Tap each pyramid to stand it on its square base.<br>Do they look the same?`:`Drag a pyramid out of the cube, or press <b>▶ Pull apart</b>.<br>Tap a pyramid to stand it on its square base.`},
-    {name:"Check: pour it",set:{f:0},t:s=>{const [p,c,ps]=ptName(s); return ptPour(s).cnt===3?`<b>3 ${ps} fill the ${c}</b>, just like the cube.<br>So 1 ${p} = ${frac("1","3")} of the ${c}.`:`${s.sh==="cone"?"A cone is a round pyramid":`Same base, same height as the ${c}`}, so it should be ${frac("1","3")} of the ${c} too.<br>Check: press <b>▶ Pour one</b> until the ${c} is full.`;}},
-    {name:"Base area × height",set:{f:0},t:s=>`Every solid: <b>${nw(`${V("V")} = base area × height`)}</b>.<br>Pointy top (cone, pyramid)? Put ${frac("1","3")} in front.`}
-  ],
-  draw(svg,s){ const cone=s.sh==="cone", [pn,cn]=ptName(s), T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":4.4},a));
-    if(s.step===0){ ptCubeF(svg,s); return; }
-    if(s.step===1){ const P=ptPour(s), Hs=48, by=86, ty=by-Hs, hx=30+(66-30)*P.e, hy=ty-(ty-10)*P.e, cx2=110, CR=20, PA=32, ph=PA/2;
-      [ty,by].forEach(y=>seg(svg,[10,y],[cx2-(cone?CR:ph),y],{stroke:RD,"stroke-width":.6,"stroke-dasharray":"1.6 1.4",opacity:1-P.e}));
-      if(cone) ptCyl(svg,cx2,by,CR,Hs,{water:P.lvl}); else ptBox(svg,ptPj([cx2+ph*PT3[0],by-ph*PT3[1]],1),PA,Hs,{water:P.lvl});
-      [1,2].forEach(i=>{ if(P.cnt<i) return; const y=by-Hs*i/3; if(cone) S_(svg,"path",{d:`M${cx2-CR} ${y} A${CR} ${.3*CR} 0 0 0 ${cx2+CR} ${y}`,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); else seg(svg,[cx2-ph,y],[cx2+ph,y],{stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.2 1.2"}); });
-      [1,2,3].forEach(i=>{ if(P.cnt>=i) T([cx2+(cone?CR:ph)*.5,by-Hs*(i-.5)/3+2.2],String(i),{"font-size":7,"font-weight":700,fill:AMB}); });
-      if(P.q>0&&P.q<1){ const rx=hx+(cone?CR:ph*(1+PT3[0])), ry=hy-(cone?0:ph*PT3[1]), ly=by-Hs*P.lvl; S_(svg,"path",{d:`M${rx} ${ry} Q${cx2-5} ${hy-6} ${cx2-6} ${hy+12} L${cx2-6} ${ly}`
-,fill:"none",stroke:BL,"stroke-width":1.8,"stroke-opacity":.6,"stroke-linecap":"round"}); }
-      if(cone) ptInvCone(svg,hx,hy,CR,Hs,P.cone); else ptInvPyr(svg,ptPj([hx,hy+Hs],1),PA,Hs,P.cone);
-      T([30,96],pn,{fill:AMB,"font-weight":700,opacity:1-P.e}); T([cx2,98],cn,{"font-weight":700});
-      return; }
-    if(s.step===2){ const by=cone?78:80, G=20, k=cone?Math.min(10,(150-G-8)/(4*s.r),(by-10)/(s.h+.3*s.r),30/s.r):Math.min(10,(150-G-8)/(2*s.a*(1+PT3[0])),(by-8)/(s.h+PT3[1]*s.a/2),(84-by)/(PT3[1]*s.a/2));
-      if(cone){ const R=s.r*k, H=s.h*k, cL=75-G/2-R, cR=75+G/2+R;
-        const c1=ptCone(svg,cL,by,R,H,{base:"var(--blue-fill)",fill:"var(--amber-fill)",op:.75,col:AMB}); const c2=ptCyl(svg,cR,by,R,H,{base:"var(--blue-fill)",fill:"var(--muted)",op:.12});
-        [cL,cR].forEach(x=>{ seg(svg,[x,by],[x,by-H],{stroke:RD,"stroke-width":.8,"stroke-dasharray":"1.6 1.2"}); seg(svg,[x,by],[x+R,by],{stroke:"var(--ink)","stroke-width":.9}); S_(svg,"circle",{cx:x,cy:by,r:.8,fill:"var(--ink)"}); T([x+R/2,by+c1.ry+5.2],`r = ${N(s.r)}`,{"font-weight":700}); });
-        T([cL,by+c1.ry+11],pn,{fill:AMB,"font-weight":700,"font-size":4}); T([cR,by+c1.ry+11],cn,{"font-weight":700,"font-size":4});
-        T([75,by-H/2+1.6],`h = ${N(s.h)}`,{fill:RD,"font-weight":700}); }
-      else { const A=s.a*k, H=s.h*k, oL=75-G/2-A*(1+PT3[0])/2, oR=75+G/2+A*(1+PT3[0])/2;
-        const pL=ptPj([oL,by],1), pR=ptPj([oR,by],1);
-        ptPyr(svg,pL,A,H,{base:"var(--blue-fill)",fill:"var(--amber-fill)",op:.75,col:AMB}); ptBox(svg,pR,A,H,{base:"var(--blue-fill)",fill:"var(--muted)",op:.12});
-        [pL,pR].forEach(pj=>{ seg(svg,pj(0,0,0),pj(0,H,0),{stroke:RD,"stroke-width":.8,"stroke-dasharray":"1.6 1.2"}); const F=pj(0,0,-A/2); T([F[0],F[1]+5.2],`${N(s.a)} cm`,{"font-weight":700}); });
-        T([pL(0,0,-A/2)[0],by+A/2*PT3[1]+11],pn,{fill:AMB,"font-weight":700,"font-size":4}); T([pR(0,0,-A/2)[0],by+A/2*PT3[1]+11],cn,{"font-weight":700,"font-size":4});
-        T([75,by-H/2+1.6],`h = ${N(s.h)}`,{fill:RD,"font-weight":700}); }
-      return; }
-  },
-  key(s){ const cone=s.sh==="cone", [pn,cn,ps]=ptName(s), R=s.r, A=s.a, h=s.h, t3=frac("1","3");
-    if(s.step===0){ const VA=V("a");
-      return FORMS([FB("ink","Cube",nw(`${VA} × ${VA} × ${VA}`),"= 3 identical pyramids"),
-        FB("blue","Each pyramid",nw(`base = ${VA} × ${VA}`),nw(`height = ${VA}`)),
-        FB("green","So 1 pyramid",nw(`= ${t3} × ${VA} × ${VA} × ${VA}`),nw(`= ${t3} × base area × height`))]); }
-    if(s.step===1){ const c=ptPour(s).cnt;
-      return FORMS([FB("amber",`${ps} poured`,String(c),c===3?`${cn} full ✓`:c===0?`${cn} empty`:nw(`${cn} ${frac(String(c),"3")} full`)),
-        FB("ink",`1 ${pn}`,c===3?nw(`${t3} of the ${cn}`):"?",c===3?"same base, same height":"pour to find out")]); }
-    if(s.step===2){ const ba=cone?R*R:A*A, bT=cone?nw(`π(${N(R)})² = ${ptPi(ba)}`):nw(`${N(A)} × ${N(A)} = ${N(ba)}`), bS=cone?ptPi(ba):N(ba);
-      const vC=ba*h, vP=ba*h/3, dC=cone?PI*vC:vC, dP=cone?PI*vP:vP;
-      const res=(c,d)=>cone?nw(`= ${ptPi(c)}`)+" "+nw(`= ${ptS3(d)} cm³`)+" "+nw("(3 s.f.)"):nw(`= ${ptNum(d)} cm³`)+ptRs(d);
-      return KHEAD(`<span class="k-blue">base area = ${bT} cm²</span>`)+FORMS([
-        FB("ink",cn,nw(`${bS} × ${N(h)}`),res(vC,dC),nw(`base area × ${V("h")}`)),
-        FB("amber",pn,nw(`${t3} × ${bS} × ${N(h)}`),res(vP,dP),nw(`${t3} × base area × ${V("h")}`))]); }
-    return ""; }
-
+  init:{u:0}, jump:true, ip:"Drag to pull it apart.", vb:"0 10 150 99", label:"A 6 cm cube that pulls apart into 3 identical pyramids, each with the cube's base and height", link:["u"],
+  fix:s=>{ s.u=clamp(Math.round(+s.u||0),0,40); },
+  steps:[{name:"Why one-third",t:()=>"",w:s=>ipPtK(s)}],
+  draw(svg,s){ const u=clamp(Math.round(+s.u||0),0,40), ph=innerWidth<600, fs=ph?5.4:4.4, o={pp:ipPtPP(u/40),zo:PT3ZO.slice(),cube:u===0}, X=ipPtX0+(ipPtX1-ipPtX0)*u/40, Y=ipPtY, INK="var(--ink)";
+    S_(svg,"rect",{x:0,y:10,width:150,height:Y-16,fill:"transparent","data-drag":"p",style:"cursor:grab"});
+    ipPtCube(svg,o,fs);
+    seg(svg,[ipPtX0,Y],[ipPtX1,Y],{stroke:"var(--muted)","stroke-opacity":.4,"stroke-width":1.6,"stroke-linecap":"round","pointer-events":"none"});
+    if(u>0) seg(svg,[ipPtX0,Y],[X,Y],{stroke:"var(--muted)","stroke-width":1.6,"stroke-linecap":"round","pointer-events":"none"});
+    S_(svg,"path",{d:`M${ipPtX0-6} ${Y}H${ipPtX1+6}`,fill:"none",stroke:"transparent","stroke-width":12,"pointer-events":"stroke","data-drag":"u",style:"cursor:pointer"});
+    handle(svg,X,Y,"u",INK); S_(svg,"circle",{cx:X,cy:Y,r:3.7,fill:INK,stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); },
+  drag(id,p,s,start){ if(id==="p"){ if(start||!s._pg){ s._pg={x:p.x,u:+s.u||0}; return; } s.u=clamp(Math.round(s._pg.u+(p.x-s._pg.x)/(ipPtX1-ipPtX0)*40),0,40); return; }
+    let u=clamp(Math.round((p.x-ipPtX0)/(ipPtX1-ipPtX0)*40),0,40); if(u<=2) u=0; if(u>=38) u=40; s.u=u; },
+  drop(id,s){ s._pg=null; if(s.u<=2) s.u=0; if(s.u>=38) s.u=40; },
+  kbd:{label:(id,s)=>["Pull the cube apart: arrow keys move it",s.u<=0?"cube":s.u>=40?"3 pyramids standing":"pulling apart"],
+    move:(id,k,sh,s)=>{ s.u=clamp(s.u+(/Up|Right/.test(k)?4:-4),0,40); }},
+  key(){ return ""; }
 });
 const QSG={gt:"&gt;",ge:"≥",lt:"&lt;",le:"≤"}, QFL={gt:"lt",ge:"le",lt:"gt",le:"ge"}, QSV={gt:">",ge:"≥",lt:"<",le:"≤"};
 const qiFac=(p,q)=>p===0?X1+br(q):q===0?X1+br(p):br(p)+br(q);
@@ -4610,26 +4556,66 @@ function acTrap(svg,s){
     const L=acP(d,0)[0],Rx=acP(d+a+b,0)[0],y=top-8.5; seg(svg,[L,y],[Rx,y],{stroke:"var(--green)","stroke-width":.8}); seg(svg,[L,y-1.6],[L,y+1.6],{stroke:"var(--green)","stroke-width":.8}); seg(svg,[Rx,y-1.6],[Rx,y+1.6],{stroke:"var(--green)","stroke-width":.8});
     acT(svg,[(L+Rx)/2,y-1.8],`a + b = ${a+b}`,"var(--green)"); }
 }
+const ipAcCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.ipk.ipack .formbox{height:164px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding:6px 12px}.ipk.ipack .formbox .hd{display:none}.ipk.ipack .formbox .gen{height:26px}.ipk.ipack .formbox .eq{height:auto;display:block;font-size:22px}.ipack .ipac-sum{display:grid;grid-template-columns:repeat(5,auto);justify-content:center;align-items:center;row-gap:6px;font-weight:700;white-space:nowrap}.ipack .ipac-sum>span{display:flex;align-items:center;padding:0 4px;min-height:42px;transition:opacity .25s}.ipack .ipac-x,.ipack .ipac-v{justify-self:end}.ipack .ipac-sum>.ipac-u{justify-self:start;padding-left:0}.ipack .ipac-n{justify-self:end;font-size:15px;font-weight:700;color:var(--ink);padding-right:12px}.ipack .ipac-sum>.ipac-dim{opacity:.4}.ipack .ipac-one{display:flex;justify-content:center;align-items:center;gap:0 8px;font-size:28px;font-weight:700;white-space:nowrap}.ipack .ipac-h{color:var(--purple);font-weight:800;font-size:1.3em}.ipack .ipac-half{display:inline-flex;align-items:center;font-weight:800;font-size:1.05em;border:3px solid currentColor;border-radius:10px;padding:1px 6px;margin-right:6px;line-height:1;background:var(--card);vertical-align:middle}.ipack .ipans{font-size:1.2em;font-weight:800}.ipack .ipac-u{font-size:.8em;font-weight:700;margin-left:4px}@media (max-width:599px){.ipk.ipack .formbox{height:150px;padding:6px 8px}.ipk.ipack .formbox .eq{font-size:19px}.ipack .ipac-one{font-size:25px}.ipack .ipac-sum>span{min-height:40px;padding:0 3px}.ipack .ipac-n{font-size:13.5px;padding-right:6px}.play.ipacp .iptabs{grid-template-columns:repeat(2,minmax(0,1fr))}.play.ipacp .iptab{flex-direction:row;justify-content:center;gap:8px;min-height:52px;font-size:15px}.play.ipacp .iptab .cmini{width:48px;height:36px}}'; document.head.append(e); }catch(_){} return 1; })();
+const IPAC={U:8,X0:4,Y0:5,vb:"0 -6 128 83"};
+const ipAcP=(x,y)=>[+(IPAC.X0+(x+1)*IPAC.U).toFixed(2),+(IPAC.Y0+(6-y)*IPAC.U).toFixed(2)];
+const ipAcPts=a=>a.map(q=>ipAcP(q[0],q[1]).join(",")).join(" ");
+const ipAcE=p=>p<=0?0:p>=1?1:p*p*(3-2*p);
+const IPAC_T=[[0,0],[5,0],[3,4],[0,4]];
+const ipAcCopy=k=>{ const th=Math.PI*ipAcE(k/3), c=Math.cos(th), sn=Math.sin(th), cx=10.5-k; return {cx,f:([x,y])=>{ const u=x-2.5, v=y-2; return [cx+u*c-v*sn,2+u*sn+v*c]; }}; };
+const ipAcHalo=fs=>({"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.4,"stroke-linejoin":"round"});
+function ipAcGrid(svg,fs,ph){ for(let i=-1;i<=14;i++) seg(svg,ipAcP(i,-2),ipAcP(i,6),{stroke:"var(--grid2)","stroke-width":.45}); for(let j=-2;j<=6;j++) seg(svg,ipAcP(-1,j),ipAcP(14,j),{stroke:"var(--grid2)","stroke-width":.45});
+  const q=ipAcP(-1,-2); lab(svg,[q[0],q[1]+fs*.95],"1 square = 1 cm²",{"font-size":fs*(ph?.8:.68),fill:"var(--muted)","text-anchor":"start"}); }
+function ipAcHandle(svg,id,A,B,P){ S_(svg,"path",{d:`M${A[0]} ${A[1]}L${B[0]} ${B[1]}`,fill:"none",stroke:"transparent","stroke-width":16,"stroke-linecap":"round","data-drag":id,style:"cursor:pointer"});
+  handle(svg,P[0],P[1],id,"var(--ink)"); S_(svg,"circle",{cx:P[0],cy:P[1],r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); }
+function ipAcSlant(svg,fs,P,end,H){ const t=lab(svg,[P[0],P[1]+fs*.35],end?"slant ":"slant ",Object.assign({"font-size":fs*.9,fill:"var(--muted)","text-anchor":end?"end":"start","font-weight":700},H)); t.append(svgEl("tspan",{fill:"var(--red)"},"✗")); }
+function ipAcPara(svg,s,fs){ const m=clamp(+s.m||0,0,6), done=m>=6, AM="var(--amber)", PU="var(--purple)", BL="var(--blue)", INK="var(--ink)", MU="var(--muted)", H=ipAcHalo(fs);
+  S_(svg,"polygon",{points:ipAcPts([[5,0],[9,0],[11,4],[5,4]]),fill:"var(--blue-fill)",stroke:"none"});
+  if(m>0) S_(svg,"polygon",{points:ipAcPts([[3,0],[5,0],[5,4]]),fill:"none",stroke:AM,"stroke-width":.8,"stroke-dasharray":"2 1.5"});
+  if(done) seg(svg,ipAcP(3,0),ipAcP(5,4),{stroke:MU,"stroke-width":1.8,"stroke-linecap":"round"});
+  S_(svg,"polygon",{points:ipAcPts([[3+m,0],[5+m,0],[5+m,4]]),fill:"var(--amber-fill)",stroke:AM,"stroke-width":1.1,"stroke-linejoin":"round"});
+  if(m<=0) S_(svg,"polygon",{points:ipAcPts([[3,0],[9,0],[11,4],[5,4]]),fill:"none",stroke:INK,"stroke-width":1,"stroke-linejoin":"round"});
+  else if(done) S_(svg,"polyline",{points:ipAcPts([[5,0],[11,0],[11,4],[5,4]]),fill:"none",stroke:INK,"stroke-width":1.5});
+  else { seg(svg,ipAcP(5,4),ipAcP(11,4),{stroke:INK,"stroke-width":1}); seg(svg,ipAcP(5,0),ipAcP(9,0),{stroke:INK,"stroke-width":1}); }
+  if(!done){ seg(svg,ipAcP(9,0),ipAcP(11,4),{stroke:MU,"stroke-width":1.8,"stroke-linecap":"round"}); const L=ipAcP(10.75,2.1); ipAcSlant(svg,fs,[L[0]+2.2,L[1]],false,H); }
+  else { const L=ipAcP(3.75,2.1); ipAcSlant(svg,fs,[L[0]-2.4,L[1]],true,H); }
+  seg(svg,ipAcP(5,0),ipAcP(5,4),{stroke:"var(--card)","stroke-width":1.8}); seg(svg,ipAcP(5,0),ipAcP(5,4),{stroke:PU,"stroke-width":1.6,"stroke-dasharray":"2.6 1.6"}); rightMark(svg,ipAcP(5,0),ipAcP(5,1),ipAcP(6,0),3.2,PU);
+  const hp=ipAcP(5,2.75); lab(svg,[hp[0]+2.2,hp[1]+fs*.45],"4",Object.assign({"font-size":fs*1.4,"font-weight":800,fill:PU,"text-anchor":"start"},H));
+  const bl={stroke:BL,"stroke-width":2.2,"stroke-linecap":"round"}; seg(svg,ipAcP(5,0),ipAcP(9,0),bl); seg(svg,ipAcP(3+m,0),ipAcP(5+m,0),bl);
+  if(m<=0||done){ const bp=ipAcP(done?7:6,-.5); lab(svg,[bp[0],bp[1]+fs*.42],"6",Object.assign({"font-size":fs*1.2,"font-weight":800,fill:BL},H)); }
+  ipAcHandle(svg,"m",ipAcP(3,0),ipAcP(9,0),ipAcP(3+m,0)); }
+function ipAcTrap(svg,s,fs){ const k=clamp(+s.k||0,0,5), done=k>=5, AM="var(--amber)", PU="var(--purple)", BL="var(--blue)", INK="var(--ink)", H=ipAcHalo(fs), C=ipAcCopy(k);
+  S_(svg,"polygon",{points:ipAcPts(IPAC_T),fill:"var(--blue-fill)",stroke:INK,"stroke-width":1,"stroke-linejoin":"round"});
+  seg(svg,ipAcP(0,0),ipAcP(0,4),{stroke:PU,"stroke-width":2,"stroke-linecap":"round"}); rightMark(svg,ipAcP(0,0),ipAcP(0,1),ipAcP(1,0),3,PU); rightMark(svg,ipAcP(0,4),ipAcP(0,3),ipAcP(1,4),3,PU);
+  const hl=ipAcP(-.5,2); lab(svg,[hl[0],hl[1]+fs*.45],"4",Object.assign({"font-size":fs*1.4,"font-weight":800,fill:PU},H));
+  const t3=ipAcP(1.5,4.55), t5=ipAcP(2.5,-.55); lab(svg,[t3[0],t3[1]+fs*.42],"3",Object.assign({"font-size":fs*1.2,"font-weight":800,fill:BL},H)); lab(svg,[t5[0],t5[1]+fs*.42],"5",Object.assign({"font-size":fs*1.2,"font-weight":800,fill:BL},H));
+  S_(svg,"polygon",{points:ipAcPts(IPAC_T.map(C.f)),fill:"var(--amber-fill)","fill-opacity":.94,stroke:AM,"stroke-width":1.1,"stroke-linejoin":"round"});
+  [[1.5,4.6,"3"],[2.5,-.6,"5"]].forEach(([x,y,n])=>{ const P=C.f([x,y]), q=ipAcP(P[0],P[1]); lab(svg,[q[0],q[1]+fs*.42],n,Object.assign({"font-size":fs*1.2,"font-weight":800,fill:AM},H)); });
+  if(done){ S_(svg,"polyline",{points:ipAcPts([[0,0],[8,0],[8,4],[0,4]]),fill:"none",stroke:INK,"stroke-width":1.5}); const q=ipAcP(1.75,1.9); lab(svg,[q[0],q[1]+fs*.5],"{1/2}",{"font-size":fs*1.45,"font-weight":800,fill:INK}); }
+  ipAcHandle(svg,"k",ipAcP(10.5,2),ipAcP(5.5,2),ipAcP(C.cx,2)); }
+const ipAcMini=i=>{ const P=(pts,f,st)=>`<polygon points="${pts}" fill="${f}" stroke="${st}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  if(!i) return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true">${P("6,36 40,36 54,10 20,10","var(--blue-fill)","var(--ink)")}${P("6,36 20,36 20,10","var(--amber-fill)","var(--amber)")}<line x1="20" y1="10" x2="20" y2="36" stroke="var(--purple)" stroke-width="2" stroke-dasharray="3 2"/></svg>`;
+  return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true">${P("10,36 36,36 24,10 10,10","var(--blue-fill)","var(--ink)")}${P("36,36 50,36 50,10 24,10","var(--amber-fill)","var(--amber)")}</svg>`; };
+const ipAcK=s=>{ const B=x=>kc("blue",x), A=x=>kc("amber",x), P=x=>`<span class="ipac-h">${x}</span>`, U=d=>`<span class="ipac-u${d}">cm²</span>`;
+  const row=(n,x,v,u,dim)=>{ const d=dim?" ipac-dim":""; return `<span class="ipac-n${d}">${n}</span><span class="ipac-x${d}"><span>${x}</span></span><span class="ipac-e${d}">=</span><span class="ipac-v${d}">${v}</span>${u?U(d):`<span class="${d.trim()}"></span>`}`; };
+  const eq=s.step===1?`<div class="ipac-sum">${row("rectangle",`(${B("3")} + ${A("5")}) × ${P("4")}`,"32",0,0)}${row("1 trapezium",`<span class="ipac-half">${frac("1","2")}</span> × 32`,`<span class="ipans">16</span>`,1,!((+s.k||0)>=5))}</div>`
+    :`<div class="ipac-one">${B("6")}<span>×</span>${P("4")}<span>=</span><span class="ipans">24</span>${U("")}</div>`;
+  const gen=s.step===1?nw(`½(${V("a")} + ${V("b")})${V("h")}`):"base × height";
+  return `<div class="apwk ipk ipack" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("ink","",eq,"",gen,"wide")],true)+`</div>`; };
 const areaCut=aid({
-  init:{pb:6,ph:4,pl:2,mv:0,a:3,b:5,h:4,tl:1,tm:0}, jump:true, vb:"0 0 122 82", label:"Shapes on a square grid, cut, moved and turned into rectangles",
-  sliders:[{k:"pb",label:"base",min:3,max:7,step:1,show:s=>s.step===0},{k:"ph",label:`height ${V("h")}`,min:2,max:6,step:1,show:s=>s.step===0},{k:"pl",label:"slant",min:1,max:3,step:1,maxf:s=>Math.min(3,s.pb-1),show:s=>s.step===0},
-    {k:"a",label:`top ${V("a")}`,min:2,max:6,step:1,show:s=>s.step>0},{k:"b",label:`bottom ${V("b")}`,min:2,max:6,step:1,show:s=>s.step>0},{k:"h",label:`height ${V("h")}`,min:2,max:6,step:1,show:s=>s.step>0},
-    {k:"tl",label:"slant",min:1,max:3,step:1,maxf:s=>Math.min(3,s.b-1,14-s.a-s.b),show:s=>s.step===2}],
-  buttons:[{label:"▶ Cut & move",show:s=>s.step===0&&s.mv<1,fn:(s,an)=>{s.mv=0; an(1600,p=>{s.mv=p;});}},
-    {label:"↺ Put it back",show:s=>s.step===0&&s.mv>=1,fn:(s,an)=>{an(900,p=>{s.mv=1-p;});}},
-    {label:"▶ Copy & turn it",show:s=>s.step>0&&s.tm<1,fn:(s,an)=>{s.tm=0; an(2600,p=>{s.tm=p;});}},
-    {label:"↺ Start again",show:s=>s.step>0&&s.tm>=1,fn:s=>{s.tm=0;}}],
-  steps:[
-    {name:"Parallelogram",set:{mv:0},t:s=>s.mv>=1?`Same squares, now a ${CS("green","<b>rectangle</b>")}.<br>Area = base × ${CS("red","<b>height</b>")}, the height at 90°.`:`Cut the ${CS("amber","<b>triangle</b>")} off along the ${CS("red","<b>height</b>")}.<br>Slide it to the other side.`},
-    {name:"Trapezium",set:{tm:0},t:s=>s.tm>=1?`2 trapeziums make a ${CS("green","<b>rectangle</b>")}, ${nw(`(${V("a")} + ${V("b")}) by ${V("h")}`)}.<br>1 trapezium is half of it.`:`A right trapezium: parallel sides ${V("a")} and ${V("b")}.<br>Copy it, turn it 180°, slide it beside.`},
-    {name:"Any trapezium",set:{tm:0},t:s=>s.tm>=1?`Now a ${CS("green","<b>parallelogram</b>")}: base ${nw(`(${V("a")} + ${V("b")})`)}, height ${V("h")}.<br>Base × height, same formula.`:`No right angle? Same trick.<br>Copy it, turn it 180°, slide it beside.`}],
-  draw(svg,s){ svg.setAttribute("viewBox",s.step===0?"0 13 122 69":"0 0 122 82"); acGrid(svg); if(s.step===0) acPara(svg,s); else acTrap(svg,s); },
-  key(s){ if(s.step===0){ const A=s.pb*s.ph;
-      return FORMS([FB("blue","Base",nw(`${s.pb} cm`)),FB("red",`Height ${V("h")}`,nw(`${s.ph} cm`),"at 90°"),FB("green","Area",nw(`${CS("blue",s.pb)} × ${CS("red",s.ph)}`),nw(`= ${A} cm²`),"base × height")],true); }
-    const R=(s.a+s.b)*s.h, P=s.step===2;
-    return FORMS([FB("green",P?"Parallelogram":"Rectangle",nw(`(${s.a} + ${s.b}) × ${s.h}`),nw(`= ${R} cm²`),nw(`(${V("a")} + ${V("b")}) × ${V("h")}`)),
-      FB("blue","1 trapezium",nw(`${frac("1","2")} × ${R}`),nw(`= ${N(R/2)} cm²`),nw(`${frac("1","2")}(${V("a")} + ${V("b")}) × ${V("h")}`))],true); },
-  readout(){return "";}
+  init:{m:0,k:0}, jump:true, ip:"Drag the piece across.", vb:IPAC.vb, label:"Shapes on a square grid: drag the amber piece across and the shape becomes a rectangle with the same squares", link:["m","k"],
+  fix:s=>{ s.m=(+s.m||0)>=3?6:0; s.k=(+s.k||0)>=2.5?5:0; },
+  steps:[{name:"Parallelogram",pic:ipAcMini(0),t:()=>"",w:s=>ipAcK(s)},{name:"Trapezium",pic:ipAcMini(1),t:()=>"",w:s=>ipAcK(s)}],
+  draw(svg,s){ const ph=innerWidth<600, fs=ph?5.8:4.8, pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("ipacp"); svg.setAttribute("viewBox",IPAC.vb);
+    const ih=svg.parentNode&&svg.parentNode.querySelector&&svg.parentNode.querySelector(".iphint"), hw=s.step===1?"Drag the copy in.":"Drag the piece across."; if(ih&&ih.textContent!==hw) ih.textContent=hw;
+    ipAcGrid(svg,fs,ph); if(s.step===1) ipAcTrap(svg,s,fs); else ipAcPara(svg,s,fs); },
+  drag(id,p,s,start){ const gx=(p.x-IPAC.X0)/IPAC.U-1;
+    if(id==="k"){ if(start) s._a0=Math.round(+s.k||0); let v=clamp(10.5-gx,0,5); if(v<.4) v=0; if(v>4.6) v=5; s.k=+v.toFixed(3); return; }
+    if(start) s._a0=Math.round(+s.m||0); let v=clamp(gx-3,0,6); if(v<.4) v=0; if(v>5.6) v=6; s.m=+v.toFixed(3); },
+  drop(id,s){ const k=id==="k", E=k?5:6, v=k?s.k:s.m, a=s._a0!=null?s._a0:(v>=E/2?E:0), r=Math.abs(v-a)>=1.2?(a>=E/2?0:E):(a>=E/2?E:0); if(k) s.k=r; else s.m=r; delete s._a0; },
+  kbd:{label:(id,s)=>id==="k"?["The amber copy: arrow keys move it in or out",s.k>=5?"in place":"beside"]:["The amber triangle: arrow keys move it across",s.m>=6?"moved across":"cut off"],
+    move:(id,key,sh,s)=>{ if(id==="k") s.k=/Left|Up/.test(key)?5:0; else s.m=/Right|Up/.test(key)?6:0; }},
+  key(){ return ""; }
 });
 const SPCK=[
   {id:"kmh",u:"km/h",v:"m/s",a:"km",A:"m",ta:"× 1000",b:"h",B:"s",tb:"× 60 × 60",tm:1000,td:3600,n:72,mx:150,ft:"1 km = 1000 m",fb:"1 h = 60 × 60 s",ts:"s",tl:"h",pcs:3600},
@@ -5837,36 +5823,91 @@ const tpLines=s=>{ if(s.q==="cyl"){ const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h;
     return [`surface = ${kc("blue","2 circles")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue",`2π(${r})²`)} + ${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${kc("blue",tpPi(c))} + ${kc("green",tpPi(t))} = ${tpPi(c+t)}`),nw(`= ${tpS3(PI*(c+t))} cm² (3 s.f.)`)]; }
   const t=22*s.L;
   return [`${kc("blue","base area")} = ${nw("6 × 2 + 2 × 3")} ${nw(`= ${kc("blue","18")} cm²`)}`,`perimeter = ${nw(TPS.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + "))} ${nw("= 22 cm")}`,`surface = ${kc("blue","2 × base area")} + ${kc("green","toilet paper")}`,nw(`= ${kc("blue","2 × 18")} + ${kc("green",`22 × ${kc("red",N(s.L))}`)}`),nw(`= ${kc("blue","36")} + ${kc("green",N(t))} = ${N(36+t)} cm²`)]; };
+const ipTpCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.iptpk .formbox{padding:8px 12px}.iptpk.ipk .formbox .eq{height:auto;display:block;padding:0;white-space:nowrap;overflow:visible}.iptpk .iptps{display:grid;grid-template-columns:auto auto auto auto;grid-template-rows:46px 46px;justify-content:center;align-items:center;font-size:20px;font-weight:700}.iptpk .iptpn{justify-self:end;font-size:13px;font-weight:700;padding-right:12px}.iptpk .iptpx{justify-self:end;display:flex;align-items:center}.iptpk .iptpe{padding:0 6px}.iptpk .iptpv{justify-self:start;font-weight:800}.iptpk .iptpc{display:inline-flex;align-items:center;font-size:1.15em;font-weight:800;color:var(--amber);border:2.5px solid var(--amber);border-radius:9px;padding:1px 6px;margin-right:6px;background:var(--card);line-height:1.1}.iptpk .iptpt{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:0 8px;height:56px;border-top:1.5px solid var(--grid2);margin-top:4px;font-size:28px;font-weight:800;color:var(--ink)}.iptpk .iptpt .iptpa{font-size:inherit;font-weight:800}.iptpk .iptpd{opacity:.4;transition:opacity .25s}.iptpk .ipsf{margin-left:0}@media (max-width:599px){.iptpk .iptps{font-size:17px;grid-template-rows:42px 42px}.iptpk .iptpn{font-size:12px;padding-right:8px}.iptpk .iptpe{padding:0 4px}.iptpk .iptpc{padding:1px 4px;margin-right:4px}.iptpk .iptpt{font-size:23px;height:50px;gap:0 6px}.iptpk .ipsf{font-size:11px}.play.iptpp .iptabs{grid-template-columns:repeat(2,minmax(0,1fr))}.play.iptpp .iptab{flex-direction:row;justify-content:center;gap:8px;min-height:52px;font-size:15px}.play.iptpp .iptab .cmini{width:48px;height:36px}}'; document.head.append(e); }catch(_){} return 1; })();
+const ipTpU=v=>{ v=clamp(+v,0,1); if(!(v>=0)) v=.4; return v<.05?0:v>.95?1:+snap(v,.01).toFixed(2); };
+const ipTpS=(()=>{ const o={pts:[[0,0],[3,0],[3,4]],sides:[3,4,5],cum:[0,3,7],per:12,lb:[[[1.5,0],0,0,"middle"],[[3,2],1.8,1.6,"start"],[[1.5,2],-1.8,-1.4,"end"]]}, V=o.pts, n=V.length, E=V.map((p,i)=>[V[(i+1)%n][0]-p[0],V[(i+1)%n][1]-p[1]]);
+  o.tau=E.map((e,i)=>{ if(!i) return 0; const f=E[i-1]; return Math.atan2(f[0]*e[1]-f[1]*e[0],f[0]*e[0]+f[1]*e[1]); }); return o; })();
+const ipTpG=()=>{ const k=3.8, R=4*k, H=10*k, ry=.3*R, ty=32.4; return {k,R,H,ry,D:2*ry+2.5,cx:46,ty,by:ty+H,per:2*PI*R}; }, ipTpPG=()=>({S:ipTpS,k:5.6,x0:52,sy:82.4,L:10,per:12});
+const ipTpMini=k=>{ const I="var(--ink)", A="var(--amber)", G="var(--green-fill)", B="var(--blue-fill)";
+  if(k==="cyl") return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true"><path d="M8 11V33A10 3.4 0 0 0 28 33V11" fill="${G}" stroke="${I}" stroke-width="1.4"/><ellipse cx="18" cy="11" rx="10" ry="3.4" fill="${B}" stroke="${A}" stroke-width="2"/><rect x="34" y="11" width="22" height="22" fill="${G}"/><path d="M34 11H56" stroke="${A}" stroke-width="2.2"/></svg>`;
+  return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true"><path d="M8 14H24V36H8Z" fill="${G}" stroke="${I}" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 14L13 7L24 14Z" fill="${B}" stroke="${A}" stroke-width="2" stroke-linejoin="round"/><rect x="31" y="14" width="25" height="22" fill="${G}"/><path d="M31 14H56" stroke="${A}" stroke-width="2.2"/></svg>`; };
+function ipTpCyl(svg,u,fs){ const {R,H,ry,D,cx,ty,by,per}=ipTpG(), PU="var(--purple)", T=(P,t,a={})=>lab(svg,P,t,Object.assign({"font-size":fs,"font-weight":700},a)), pt=q=>q.map(v=>v.toFixed(2)).join(",");
+  const e0=clamp(u/.15,0,1), e=D*e0*e0*(3-2*e0), ph=2*PI*u, B=Math.max(0,2*PI-ph), c0=cx+R*ph, fy=ty+ry, fb=by+ry, W=R*ph;
+  const P=(b,top)=>[c0+R*Math.sin(b),(top?ty:by)+ry*Math.cos(b)];
+  const tc0=clamp((u-.8)/.2,0,1), tc=tc0*tc0*(3-2*tc0), lx=cx+R*tc, rt=ry+(R-ry)*tc, cyT=(ty-e)*(1-tc)+(fy-R)*tc, cyB=(by+e)*(1-tc)+(fb+R)*tc;
+  if(u<1) S_(svg,"rect",{x:cx,y:fy,width:per,height:H,fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
+  S_(svg,"ellipse",{cx:lx,cy:cyB,rx:R,ry:rt,fill:"var(--blue-fill)",stroke:AMB,"stroke-width":1});
+  const n=B>1e-6?Math.max(2,Math.ceil(48*B/(2*PI))):0;
+  const gr=svgEl("linearGradient",{id:"ipTpSh",gradientUnits:"userSpaceOnUse",x1:c0-R,y1:0,x2:c0+R,y2:0}), dfs=svgEl("defs",{});
+  for(let i=0;i<=12;i++){ const t=i/12, c=Math.sqrt(Math.max(0,1-(2*t-1)**2)); gr.append(svgEl("stop",{offset:t.toFixed(3),"stop-color":"var(--ink)","stop-opacity":(.2*(1-c)).toFixed(3)})); }
+  dfs.append(gr); svg.append(dfs);
+  const band=(a,b)=>{ const m=Math.max(1,Math.ceil(n*(b-a)/B)), top=[], bot=[]; for(let i=0;i<=m;i++){ const t=a+(b-a)*i/m; top.push(P(t,1)); bot.push(P(t,0)); } return top.concat(bot.reverse()).map(pt).join(" "); };
+  const rimB=(a,b)=>{ const m=Math.max(1,Math.ceil(n*(b-a)/B)); let d=""; for(let i=0;i<=m;i++) d+=(i?"L":"M")+pt(P(a+(b-a)*i/m,0)).replace(","," "); S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":1.2}); };
+  const edge=b=>seg(svg,P(b,0),P(b,1),Object.assign({stroke:PU,"stroke-width":1.3},u<.001?{"stroke-dasharray":"1.6 1.2"}:{}));
+  if(n&&B>PI/2){ const pts=band(PI/2,Math.min(B,1.5*PI)); S_(svg,"polygon",{points:pts,fill:"var(--green-fill)",stroke:"none"}); S_(svg,"polygon",{points:pts,fill:"var(--ink)","fill-opacity":.3,stroke:"none"}); }
+  if(Math.cos(B)<=0) edge(B);
+  const FR=n?[[0,Math.min(B,PI/2)]].concat(B>1.5*PI?[[1.5*PI,B]]:[]):[];
+  FR.forEach(([a,b])=>{ const pts=band(a,b); S_(svg,"polygon",{points:pts,fill:"var(--green-fill)",stroke:"var(--green-fill)","stroke-width":.3,"stroke-linejoin":"round"}); S_(svg,"polygon",{points:pts,fill:"url(#ipTpSh)",stroke:"none"}); rimB(a,b); });
+  [PI/2,1.5*PI].forEach(b=>{ if(b<B) seg(svg,P(b,0),P(b,1),{"stroke-width":.6}); });
+  if(Math.cos(B)>0) edge(B);
+  if(W>.05){ S_(svg,"rect",{x:cx,y:fy,width:W,height:H,fill:"var(--green-fill)",stroke:"none"});
+    seg(svg,[cx,fb],[c0,fb],{stroke:AMB,"stroke-width":1.2}); seg(svg,[cx,fy],[cx,fb],{stroke:PU,"stroke-width":1.3}); }
+  let d=`M${cx.toFixed(2)} ${fy.toFixed(2)}`; for(let i=0;i<=n;i++) d+="L"+pt(P(n?B*i/n:0,1)).replace(","," ");
+  S_(svg,"path",{d,fill:"none",stroke:AMB,"stroke-width":u>0?2.4:1.4,"stroke-linecap":"round","stroke-linejoin":"round"});
+  S_(svg,"ellipse",{cx:lx,cy:cyT,rx:R,ry:rt,fill:"var(--blue-fill)",stroke:AMB,"stroke-width":1.4});
+  seg(svg,[lx,cyT],[lx+R,cyT],{"stroke-width":.9}); S_(svg,"circle",{cx:lx,cy:cyT,r:.9,fill:"var(--ink)"});
+  T([lx+R/2,rt>fs+3?cyT-2.4:cyT-rt-2],"r = 4");
+  if(u===0) T([cx-R-1,ty-ry-2],"2 ends",{fill:BL,"text-anchor":"end"});
+  else if(u>=.2) T([lx-R-2,cyB+fs*.35],"2 ends",{fill:BL,"text-anchor":"end"});
+  const hx=u<.2?cx-R-4:cx-2.4, my=(fy+fb)/2;
+  if(u<.2){ seg(svg,[hx,ty],[hx,by],{stroke:PU,"stroke-width":.9}); [ty,by].forEach(y=>seg(svg,[hx-1.5,y],[hx+1.5,y],{stroke:PU,"stroke-width":.9})); }
+  T([hx-2,my+fs*.35],"h = 10",{fill:PU,"text-anchor":"end"});
+  const mn=B>=1.5*PI?-1:B>PI?Math.sin(B):0, rimL=B>1e-6?c0+R*mn:c0+99, m=cx+W/2, af=fs*1.25, hw=af*1.55;
+  const ax=Math.min(m,rimL-1-hw); if(ax-hw>=cx-1) T([ax,fy-2.6],"2π(4)",{fill:AMB,"font-size":af,"font-weight":800});
+  const tw=fs*3.4; if(W>2*tw+4&&m+tw<c0-1) T([m,my+fs*.35],"toilet paper",{fill:GR});
+  S_(svg,"path",{d:`M${cx.toFixed(2)} ${fb.toFixed(2)}H${(cx+per).toFixed(2)}`,fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"u",style:"cursor:pointer"});
+  handle(svg,c0,fb,"u","var(--ink)"); S_(svg,"circle",{cx:c0,cy:fb,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); }
+function ipTpPri(svg,u,fs){ const {S,k,x0,sy,L,per}=ipTpPG(), V=S.pts, n=V.length, PU="var(--purple)", pj=(x,y,d)=>[x0+k*(x+.5*d),sy-k*(y+.9*d)], T=(Q,t,a={})=>lab(svg,Q,t,Object.assign({"font-size":fs,"font-weight":700},a));
+  const sm=t=>t*t*(3-2*t), pt=q=>q.map(v=>v.toFixed(2)).join(","), poly=(Q,a)=>S_(svg,"polygon",Object.assign({points:Q.map(pt).join(" "),"stroke-linejoin":"round"},a));
+  const l=u*per, ps=PI/2*sm(clamp(l/S.sides[0],0,1)), f=S.sides.map((w,j)=>j?sm(clamp((l-S.cum[j])/w,0,1)):1);
+  const W=[[0,0]], A=[]; let a=0; for(let j=0;j<n;j++){ if(j) a+=S.tau[j]*(1-f[j]); A.push(a); const p=W[j]; W.push([p[0]+S.sides[j]*Math.cos(a),p[1]+S.sides[j]*Math.sin(a)]); }
+  const flat=j=>Math.abs(A[j])<1e-4&&Math.abs(W[j][1])<1e-4&&Math.abs(W[j+1][1])<1e-4;
+  if(u<1) poly([pj(0,0,0),pj(per,0,0),pj(per,L,0),pj(0,L,0)],{fill:"none",stroke:"var(--muted)","stroke-width":.5,"stroke-dasharray":"1.6 1.2"});
+  const lid=top=>{ const Q=V.map(([px,py])=>top?pj(px,L+py*Math.sin(ps),py*Math.cos(ps)):pj(px,-py*Math.sin(ps),py*Math.cos(ps)));
+    poly(Q,{fill:"var(--blue-fill)",stroke:"none"}); Q.forEach((p,i)=>seg(svg,p,Q[(i+1)%n],{stroke:AMB,"stroke-width":top?1.6:1,"stroke-linecap":"round"})); return Q; };
+  lid(false);
+  const F=S.sides.map((w,j)=>{ const p=W[j], q=W[j+1], nx=Math.sin(A[j]), nd=-Math.cos(A[j]), fv=nd-.5*nx;
+    return {j,p,q,vis:fv<0,lit:-fv/1.118,key:(p[1]+q[1])/2-.5*(p[0]+q[0])/2}; }).sort((x,y)=>y.key-x.key);
+  F.forEach(o=>{ const Q=[pj(o.p[0],0,o.p[1]),pj(o.q[0],0,o.q[1]),pj(o.q[0],L,o.q[1]),pj(o.p[0],L,o.p[1])];
+    poly(Q,{fill:"var(--green-fill)",stroke:"var(--green-fill)","stroke-width":.3}); const dk=o.vis?.22*(1-clamp(o.lit,0,1)):.32; if(dk>.01) poly(Q,{fill:"var(--ink)","fill-opacity":dk.toFixed(3),stroke:"none"});
+    seg(svg,Q[0],Q[1],{stroke:AMB,"stroke-width":1.1}); seg(svg,Q[3],Q[2],{stroke:AMB,"stroke-width":1.6,"stroke-linecap":"round"});
+    const ed=(P1,P2,pu)=>seg(svg,P1,P2,pu?Object.assign({stroke:PU,"stroke-width":1.3},u<.001?{"stroke-dasharray":"1.6 1.2"}:{}):{stroke:"var(--ink)","stroke-width":.5,"stroke-opacity":.6});
+    ed(Q[0],Q[3],o.j===0); ed(Q[1],Q[2],o.j===n-1); });
+  lid(true);
+  if(ps>PI/2-.02){ const r0=pj(3,L,0), z=.55*k; S_(svg,"path",{d:`M${(r0[0]-z).toFixed(2)} ${r0[1].toFixed(2)}V${(r0[1]-z).toFixed(2)}H${r0[0].toFixed(2)}`,fill:"none",stroke:"var(--ink)","stroke-width":.6});
+    S.lb.forEach(([m,ddx,ddy,an],i)=>{ if(!i) return; const Q=pj(m[0],L+m[1],0); T([Q[0]+ddx,Q[1]+ddy],String(S.sides[i]),{fill:AMB,"text-anchor":an}); }); }
+  const hx=x0+k*l; let fl=0; for(let j=0;j<n&&flat(j);j++){ fl=W[j+1][0]; const lx=Math.min(pj((W[j][0]+W[j+1][0])/2,0,0)[0],hx-fs*1.15-8); if(lx>=pj(W[j][0],0,0)[0]+fs*.5) T([lx,sy-2.4],String(S.sides[j]),{fill:AMB,"font-size":fs*1.15,"font-weight":800}); }
+  const H=L*k, ly=sy-H/2; T([x0-2.4,ly-1.8],"length",{fill:PU,"text-anchor":"end"}); T([x0-2.4,ly+fs+.6],"= 10",{fill:PU,"text-anchor":"end"});
+  const tw=fs*3.4; if(fl*k>2*tw+4) T([x0+fl*k/2,ly+fs*.35],"toilet paper",{fill:GR});
+  T([x0-2.4,sy+fs+8],"2 ends",{fill:BL,"text-anchor":"end"}); T([x0-2.4,sy+2*fs+9.5],"area 6",{fill:BL,"text-anchor":"end"});
+  S_(svg,"path",{d:`M${x0.toFixed(2)} ${sy.toFixed(2)}H${(x0+per*k).toFixed(2)}`,fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"u",style:"cursor:pointer"});
+  handle(svg,hx,sy,"u","var(--ink)"); S_(svg,"circle",{cx:hx,cy:sy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); }
+const ipTpK=s=>{ const cy=s.step!==1, C=(c,x)=>`<span style="color:var(--${c})">${x}</span>`, chip=x=>`<span class="iptpc">${x}</span>`;
+  const row=(c,nm,x,v,dm)=>{ return `<span class="iptpn${dm?" iptpd":""}" style="color:var(--${c})">${nm}</span><span class="iptpx${dm?" iptpd":""}" style="color:var(--${c})">${x}</span><span class="iptpe${dm?" iptpd":""}" style="color:var(--${c})">=</span><span class="iptpv${dm?" iptpd":""}" style="color:var(--${c})">${v}</span>`; };
+  const r1=cy?row("blue","2 ends",nw("2 × π(4)²"),"32π"):row("blue","2 ends",nw("2 × 6"),"12");
+  const r2=row("green","toilet paper",`${chip(cy?"2π(4)":nw("(3 + 4 + 5)"))}${nw(`× ${C("purple","10")}`)}`,cy?"80π":"120",ipTpU(s.u)<1);
+  const tot=cy?`<span>= 112π</span><span class="iptpa">≈ 352 cm²</span><span class="ipsf">(3 s.f.)</span>`:`<span>= 132 cm²</span>`;
+  const gen=cy?`2 ends + ${nw(`2π${V("r")} × ${V("h")}`)}`:"2 ends + perimeter × length";
+  return `<div class="apwk ipk iptpk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="gen">${gen}</div><div class="eq"><div class="iptps">${r1}${r2}</div><div class="iptpt">${tot}</div></div></div></div></div>`; };
 const toiletPaper=aid({
-  init:{r:4,h:10,L:6,u:-1,q:"cyl",ln:-1,ps:"L"}, jump:true, vb:"0 0 150 112", label:"A cylinder and prisms unrolled into toilet paper", link:["u","ln"],
-  pills:[{k:"ps",label:"Prism",show:s=>s.step===1,opts:[["L","<span>L-shape</span>"],["tri","<span>Triangle</span>"],["trap","<span>Trapezium</span>"]],on:s=>{s.u=0;}},
-    {k:"q",label:"Question",show:s=>s.step===2,opts:[["cyl","<span>Cylinder</span>"],["prism","<span>L-shaped prism</span>"]],on:s=>{s.ln=1;}}],
-  sliders:[{k:"r",label:V("r"),min:1,max:6,step:1,f:v=>N(v)+" cm",show:tpCylOn},{k:"h",label:V("h"),min:1,max:12,step:1,f:v=>N(v)+" cm",show:tpCylOn},
-    {k:"L",label:"length",min:2,max:8,step:1,f:v=>N(v)+" cm",show:s=>!tpCylOn(s)}],
-  buttons:[{label:"▶ Unroll",show:s=>s.step<2,fn:(s,anim)=>{s.u=0; anim(s.step===1?4400:3200,p=>{s.u=p;});}},
-    {label:"▶ Next line",show:s=>s.step===2&&s.ln<tpLines(s).length,fn:s=>{s.ln++;}},
-    {label:"Start again",show:s=>s.step===2&&s.ln>1,fn:s=>{s.ln=1;}}],
-  fix:s=>{ if(s.u>=0) s.u=clamp(s.u,0,1); if(s.ln>=0) s.ln=clamp(Math.round(s.ln),1,tpLines(s).length); },
-  steps:[
-    {name:"Cylinder",set:tpSet({u:0}),t:()=>`Surface area = 2 circles + toilet paper.<br>Press <b>▶ Unroll</b> or drag the green dot: the ${kc("amber","edge of the circle")} becomes the long side, ${nw(`2π${V("r")}`)}.`},
-    {name:"Any prism",set:tpSet({u:0}),t:()=>`Drag the green dot to unroll the sides into one strip: ${nw("perimeter × length")}.<br>Length = the distance between the 2 ends, even when the prism lies down.`},
-    {name:"Exam style",set:tpSet({ln:1}),t:s=>s.q==="cyl"?`A closed cylinder has radius ${N(s.r)} cm and height ${N(s.h)} cm.<br>Find its total surface area.`:`This prism has the L-shaped end shown and length ${N(s.L)} cm.<br>Find its total surface area.`}
-  ],
-  draw(svg,s){ if(s.step===2){ if(s.q==="cyl") tpCyl(svg,s,1,false); else tpPrism(svg,s,1,false); requestAnimationFrame(()=>alignEq(document.querySelector(".keybox"))); return; }
-    if(s.step===1) tpPrism(svg,s,s.u,true); else tpCyl(svg,s,s.u,true); },
-  drag(id,p,s){ if(id!=="u"||s.step===2) return;
-    if(s.step===1){ const g=tpPrG(s); s.u=clamp(snap((p.x-g.x0)/(g.per*g.k),.01),0,1); }
-    else { const g=tpCylG(s); s.u=clamp(snap((p.x-g.cx)/g.per,.01),0,1); } },
-  key(s){ if(s.step===2) return EG(null,tpLines(s).slice(0,s.ln));
-    if(s.step===1){ const S=tpShape(s), t=S.per*s.L, b2=2*S.ar;
-      return FORMS([FB("ink",`Perimeter of the ${S.nm}`,nw(`${S.sides.map((w,i)=>kc(i%2?"amber":"green",w)).join(" + ")} = ${S.per} cm`),"","","wide"),
-        FB("blue","2 × base area",S.ar2(),nw(`= ${b2} cm²`)),
-        FB("green","Toilet paper",nw(`${S.per} × ${kc("red",N(s.L))}`),nw(`= ${N(t)} cm²`)),
-        FB("ink","Surface area",nw(`${b2} + ${N(t)}`),nw(`= ${N(b2+t)} cm²`))],true); }
-    const r=N(s.r), c=2*s.r*s.r, t=2*s.r*s.h, tot=c+t;
-    return FORMS([FB("blue","2 circles",nw(`2 × π(${r})²`),nw(`= ${tpPi(c)}`)),
-      FB("green","Toilet paper",nw(`${kc("amber",`2π(${r})`)} × ${kc("red",N(s.h))}`),nw(`= ${tpPi(t)}`),nw(`2π${V("r")} × ${V("h")}`)),
-      FB("ink","Surface area",nw(`${tpPi(c)} + ${tpPi(t)}`),nw(`= ${tpPi(tot)}`)+" "+nw(`= ${tpS3(PI*tot)} cm²`)+" "+nw("(3 s.f.)"))],true); }
+  init:{u:.4}, jump:true, ip:"Drag to unroll.", vb:"-3 0 158 112", label:"A cylinder or a triangular prism whose sides unroll into one rectangle, the toilet paper", link:["u"],
+  fix:s=>{ s.u=ipTpU(s.u); },
+  steps:[{name:"Cylinder",pic:ipTpMini("cyl"),t:()=>"",w:s=>ipTpK(s)},{name:"Prism",pic:ipTpMini("pri"),t:()=>"",w:s=>ipTpK(s)}],
+  draw(svg,s){ const fs=innerWidth<600?5.4:4.6, u=ipTpU(s.u), pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("iptpp"); if(s.step===1) ipTpPri(svg,u,fs); else ipTpCyl(svg,u,fs); },
+  drag(id,p,s){ if(s.step===1){ const g=ipTpPG(); s.u=ipTpU((p.x-g.x0)/(g.per*g.k)); } else { const g=ipTpG(); s.u=ipTpU((p.x-g.cx)/g.per); } },
+  kbd:{label:(id,s)=>["The unroll: arrow keys move it",`${Math.round(ipTpU(s.u)*100)}% unrolled`],
+    move:(id,k,sh,s)=>{ s.u=ipTpU(ipTpU(s.u)+(/Up|Right/.test(k)?.1:-.1)); }},
+  key(){ return ""; }
 });
 const CNQ={v:{l:12,th:120,t:`A sector of radius 12 cm and angle 120° is folded into a cone.<br>Find ${V("r")}, then ${V("h")}, then the volume.`},
   ang:{l:8,th:135,t:`A cone has ${nw(`${V("r")} = 3 cm`)} and ${nw(`${V("l")} = 8 cm`)}.<br>Find the angle of the sector.`},
@@ -5935,55 +5976,40 @@ function cnPair(svg,s,o={}){
   lab(svg,[ax+(gap-3)/2,ay-3.5],"roll",{"font-size":3.6,fill:"var(--muted)"});
   return {G0,G1,D0,D1,k};
 }
+const ipCsCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.ipcs .formbox{transition:opacity .3s}.ipcs .formbox.ipcs-dim{opacity:.4}.ipcs .ipcs-so{font-size:.8em;font-weight:400;color:var(--muted)}.ipcs .ipcs-r{font-size:1.45em}.ipcs .ipcs-x{font-size:15px;font-weight:700;color:var(--muted);margin-left:8px;white-space:nowrap}.ipcs .ipcs-x b{color:var(--red);font-size:1.15em}:root{--ipcs-fill:var(--blue-fill)}:root[data-theme="dark"]{--ipcs-fill:#3b5ca3}'; document.head.append(e); }catch(_){} return 1; })();
+const ipCsL=12, ipCsTh=120, ipCsC=[70,57], ipCsS=4.3;
+const ipCsAt=t=>{ const G=cnGeo(ipCsL,ipCsTh,t), ox=ipCsC[0]-ipCsS*(G.bx[0]+G.bx[1])/2, oy=ipCsC[1]-ipCsS*(G.by[0]+G.by[1])/2, E=G.P(1,G.u1); return [ox+ipCsS*E[0],oy+ipCsS*E[1]]; };
+const ipCsK=s=>{ const on=s.p>=1, g="360°";
+  const b1=FB("green","Arc",`${nw(`${frac("120°",g)} × 2π(${kc("blue","12")})`)} ${nw(`= <span class="ipans" style="color:var(--green)">8π cm</span>`)}`,null,nw(`${frac("θ","360°")} × 2π${V("l")}`),"wide");
+  const b2=FB("amber","Base radius",`${nw(`2π${V("r")} = ${kc("green","8π")}`)} ${nw(`<span class="ipcs-so">so</span> <span class="ipans ipcs-r" style="color:var(--amber)">${V("r")} = 4 cm</span><span class="ipcs-x">not 12 <b>✗</b></span>`)}`,null,nw(`arc = 2π${V("r")}`),"wide"+(on?"":" ipcs-dim"));
+  return `<div class="apwk ipk ipcs" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([b1,b2],true)+`</div>`; };
 const coneSector=aid({
-  init:{l:12,th:120,p:0,q:"v"}, jump:true, label:"A sector rolled up into a cone", link:["p"],
-  fix:s=>{s.p=clamp(+(+s.p).toFixed(3),0,1); if(!CNQ[s.q]) s.q="v";},
-  pills:[{k:"q",label:"Questions",opts:[["v","Volume"],["ang","Angle"],["lh",`<span>Angle from ${V("h")}</span>`]],show:s=>s.step===3}],
-  sliders:[{k:"l",label:`${V("l")} (cm)`,min:5,max:15,step:1,show:s=>s.step<3},{k:"th",label:"θ",min:30,max:330,step:15,f:v=>N(v)+"°",show:s=>s.step<3}],
-  buttons:[{label:"▶ Roll up",show:s=>s.step===0,fn:(s,anim)=>{const p0=s.p>=1?0:s.p; s.p=p0; anim(2600*(1-p0)+200,t=>{s.p=+(p0+(1-p0)*(t<.5?2*t*t:1-2*(1-t)*(1-t))).toFixed(3);});}},
-    {label:"↺ Flat",show:s=>s.step===0,fn:s=>{s.p=0;}}],
-  steps:[
-    {name:"Roll it up",t:()=>`Press <b>▶ Roll up</b> or drag the dot. The two <span class="k-blue">blue edges</span> meet: each is the slant height ${V("l")}.<br>The <span class="k-green">green arc</span> goes round the bottom: it becomes the base circle.`},
-    {name:"Arc = circumference",set:{p:1},t:()=>`The arc wraps once round the base: arc = 2π${V("r")}.<br>Pythagoras then gives ${V("h")}, the <span class="k-red">red</span> height inside.`},
-    {name:"Why πrl",set:{p:1},t:()=>`Same paper, so curved surface area = sector area.<br>The sector is ${frac("θ","360°")} of the dashed circle.`},
-    {name:"Exam style",set:{p:1},t:s=>CNQ[s.q].t}],
-  draw(svg,s){
-    if(s.step===0){ svg.setAttribute("viewBox","0 0 140 120"); const G=cnGeo(s.l,s.th,s.p), k=(26+1.75*s.l)/s.l, D=cnDraw(svg,G,k,70,57), arc=2*PI*s.l*s.th/360;
-      if(s.p<.02) cnFlatLabels(svg,G,D,{arc:`arc ${cnS(arc)}`});
-      if(s.p>.995) cnConeLabels(svg,G,D,{base:`2πr = ${cnS(arc)}`});
-      lab(svg,[70,117.5],s.p<.02?"flat sector":s.p>.995?"cone":`slant stays ${N(s.l)} · base radius ${cnS(G.rho)} → ${cnS(G.r)}`,{"font-size":3.8,fill:"var(--muted)"});
-      const H=D.E1; handle(svg,H[0],H[1],"roll",GR); return; }
-    const {l,th}=cnLT(s), r=l*th/360, arc=2*PI*r;
-    if(s.step===1){ const P=cnPair(svg,s,{base:true}); cnFlatLabels(svg,P.G0,P.D0,{arc:`arc ${cnS(arc)}`,out:true}); cnConeLabels(svg,P.G1,P.D1,{base:`2πr = ${cnS(arc)}`}); return; }
-    if(s.step===2){ const P=cnPair(svg,s,{circle:true,fill:"var(--green-fill)"}); cnFlatLabels(svg,P.G0,P.D0,{});
-      lab(svg,[P.D0.A[0]+P.k*l*.72,P.D0.A[1]-P.k*l*.72-1.5],"area πl²",{"font-size":4,fill:"var(--muted)","text-anchor":"start"});
-      cnConeLabels(svg,P.G1,P.D1,{}); return; }
-    const P=cnPair(svg,s,{}), Q=s.q;
-    cnFlatLabels(svg,P.G0,P.D0,{});
-    cnConeLabels(svg,P.G1,P.D1,{h:Q==="lh"?"h = 12":Q==="ang"?"h":`h = ${cnS(P.G1.hh)}`});
-  },
-  drag(id,p,s){ if(id!=="roll") return; const k=(26+1.75*s.l)/s.l; let best=s.p,bd=1e9;
-    for(let i=0;i<=60;i++){ const t=i/60, G=cnGeo(s.l,s.th,t), ox=70-k*(G.bx[0]+G.bx[1])/2, oy=57-k*(G.by[0]+G.by[1])/2, E=G.P(1,G.u1), d=Math.hypot(ox+k*E[0]-p.x,oy+k*E[1]-p.y); if(d<bd){bd=d;best=t;} }
-    s.p=best>.97?1:best<.03?0:+best.toFixed(3); },
-  key(s){ const {l,th}=cnLT(s), r=l*th/360, h=Math.sqrt(l*l-r*r), arc=2*PI*r, fr=frac("θ","360°"), ft=frac(cnD(th),"360°");
-    const VL=V("l"), VR=V("r"), VH=V("h");
-    if(s.step===0) return FORMS([FB("blue","Slant height",nw(`${VL} = ${N(l)} cm`),"= the sector's radius"),FB("green","Base circumference",nw(`2π${VR} = arc`),`= ${cnV(arc,"cm")}`)]);
-    if(s.step===1) return FORMS([FB("green","Arc = base circumference",nw(`2π${VR} = ${fr} × 2π${VL}`),`so ${nw(`${VR} = ${fr} × ${VL}`)}`,`arc = ${nw(`${fr} × 2π${VL}`)}`,"wide")],true)+FORMS([
-      FB("amber",`Base radius ${VR}`,nw(`${VR} = ${ft} × ${N(l)}`),`= ${cnV(r,"cm")}`),
-      FB("red",`Height ${VH}`,nw(`${VH} = ${SQRT(`${N(l)}² − ${cnK(r)}²`)}`),`= ${cnV(h,"cm")}`,nw(`${VH}² + ${VR}² = ${VL}²`))]);
-    if(s.step===2){ const csa=PI*r*l, fa=kc("amber",fr), fb=kc("amber",frac(VR,VL));
-      return FORMS([FB("amber","Same fraction",nw(`${fa} = ${fb}`),`because ${nw(`2π${VR} = ${fr} × 2π${VL}`)}`,null,"wide"),
-        FB("green","Curved surface area = sector area",nw(`${fb} × π${VL}² = π${V("rl")}`),`= π(${cnK(r)})(${N(l)}) = ${cnV(csa,"cm²")}`,nw(`${fa} × π${VL}²`),"wide")],true); }
-    if(s.q==="v"){ const V3=PI*r*r*h/3;
-      return FORMS([FB("amber",`1. ${VR}`,nw(`${VR} = ${frac("120°","360°")} × 12`),"= 4 cm",nw(`2π${VR} = arc`)),
-        FB("red",`2. ${VH}`,nw(`${VH} = ${SQRT("12² − 4²")}`),`= ${cnV(h,"cm")}`,nw(`${VH}² + ${VR}² = ${VL}²`)),
-        FB("blue","3. Volume",nw(`= ${frac("1","3")} × π(4)² × ${cnK(h)}`),`= ${cnV(V3,"cm³")}`,nw(`${V("V")} = ${frac("1","3")} × base area × ${VH}`))]); }
-    if(s.q==="ang") return FORMS([FB("green",`1. Arc = 2${MS("π")}${VR}`,nw(`${fr} × 2π(8) = 2π(3)`),"arc of the sector = base circumference",null,"wide")],true)+FORMS([
-        FB("amber",`2. ÷ 2${MS("π")}`,nw(`${fr} × 8 = 3`),""),
-        FB("blue","3. Angle",nw(`θ = ${frac("3","8")} × 360°`),"= 135°")]);
-    return FORMS([FB("blue",`1. Slant height ${VL}`,nw(`${VL} = ${SQRT("5² + 12²")}`),"= 13 cm",`${VL}, not ${VH}, is the sector's radius`,"wide"),
-        FB("green",`2. Arc = 2${MS("π")}${VR}`,nw(`${fr} × 2π(13) = 2π(5)`),`so ${nw(`${fr} × 13 = 5`)}`,null,"wide"),
-        FB("amber","3. Angle",nw(`θ = ${frac("5","13")} × 360°`),`= ${n1(th)}° (1 d.p.)`,null,"wide")],true); }
+  init:{p:0}, jump:true, ip:"Drag to roll it up.", vb:"6 2 128 110", label:"A sector of radius 12 cm and angle 120 degrees: drag the dot to roll it into a cone. The arc becomes the base circle, radius 4 cm; the 12 cm edges become the slant height", link:["p"],
+  fix:s=>{ const v=clamp(+(+s.p||0).toFixed(2),0,1); s.p=v>.94?1:v<.06?0:v; },
+  steps:[{name:"Roll it up",t:()=>"",w:s=>ipCsK(s)}],
+  draw(svg,s){ svg.setAttribute("viewBox",innerWidth<900?"12 2 104 110":"6 2 128 110"); const p=clamp(+s.p||0,0,1), ph=innerWidth<600, fs=ph?5.6:4.6, G=cnGeo(ipCsL,ipCsTh,p), flat=p<.02, shut=p>=1;
+    let d=""; for(let i=0;i<=40;i++){ const q=ipCsAt(i/40); d+=(i?"L":"M")+q[0].toFixed(2)+" "+q[1].toFixed(2); }
+    if(flat){ const Q=[]; for(let i=0;i<=14;i++) Q.push(ipCsAt(.03+i*.016)); const Z=Q[14], Y=Q[12], ax=Z[0]-Y[0], ay=Z[1]-Y[1], al=Math.hypot(ax,ay)||1, bx=ax/al*2.6, by=ay/al*2.6;
+      S_(svg,"path",{d:Q.map((q,i)=>(i?"L":"M")+q[0].toFixed(2)+" "+q[1].toFixed(2)).join(""),fill:"none",stroke:"var(--muted)","stroke-width":.8,"stroke-dasharray":"1.8 1.6","stroke-linecap":"round"});
+      S_(svg,"path",{d:`M${(Z[0]-bx-by).toFixed(2)} ${(Z[1]-by+bx).toFixed(2)}L${(Z[0]+bx*.4).toFixed(2)} ${(Z[1]+by*.4).toFixed(2)}L${(Z[0]-bx+by).toFixed(2)} ${(Z[1]-by-bx).toFixed(2)}`,fill:"none",stroke:"var(--muted)","stroke-width":.8,"stroke-linecap":"round","stroke-linejoin":"round"}); }
+    const D=cnDraw(svg,G,ipCsS,ipCsC[0],ipCsC[1],{fill:"var(--ipcs-fill)"}), A=D.A;
+    const H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"}, F=Object.assign({"font-size":fs,"font-weight":700},H), cen=[(D.left+D.right)/2,(D.top+D.bot)/2];
+    const edge=E=>{ const m=[(A[0]+E[0])/2,(A[1]+E[1])/2], dx=E[0]-A[0], dy=E[1]-A[1], ln=Math.hypot(dx,dy)||1; let nx=-dy/ln, ny=dx/ln; if(nx*(m[0]-cen[0])+ny*(m[1]-cen[1])<0){ nx=-nx; ny=-ny; }
+      cnT(svg,[m[0]+nx*(fs*.9+1),m[1]+ny*(fs*.9+1)+fs*.35],"l = 12",BL,Object.assign({},F,{"text-anchor":nx>.35?"start":nx<-.35?"end":"middle"})); };
+    edge(D.E1); if(flat) edge(D.E0);
+    if(flat){ arcMark(svg,A,7,G.u0-90,ipCsTh,"var(--ink)",null); lab(svg,[A[0]-9-fs*1.2,A[1]+fs*.35],"120°",Object.assign({fill:"var(--ink)"},F)); }
+    if(shut){ const C=D.C, L=D.M; seg(svg,C,L,{stroke:AMB,"stroke-width":1.4,"stroke-dasharray":"2.2 1.4"}); S_(svg,"circle",{cx:C[0],cy:C[1],r:1.1,fill:AMB});
+      cnT(svg,[(C[0]+L[0])/2,C[1]-2.2],"r = 4",AMB,Object.assign({},F,{"font-size":fs*1.35,"font-weight":800})); }
+    const M=D.M, c0=shut?D.C:[A[0],M[1]-3], dx=M[0]-c0[0], dy=M[1]-c0[1], dl=Math.hypot(dx,dy)||1, ux=dx/dl, uy=dy/dl;
+    lab(svg,[M[0]+ux*(fs*.7+1.5),M[1]+uy*(fs*.7+1.5)+fs*.35],"arc = 8π",Object.assign({fill:GR,"text-anchor":ux>.35?"start":ux<-.35?"end":"middle"},F));
+    S_(svg,"path",{d,fill:"none",stroke:"transparent","stroke-width":16,"stroke-linecap":"round","pointer-events":"stroke","data-drag":"roll",style:"cursor:pointer"});
+    const E=shut?[D.E1[0]+10,D.E1[1]+1.5]:D.E1; handle(svg,E[0],E[1],"roll","var(--ink)"); S_(svg,"circle",{cx:E[0],cy:E[1],r:3.7,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); },
+  drag(id,p,s){ if(id!=="roll") return; let b=s.p, bd=1e9;
+    for(let i=0;i<=100;i++){ const t=i/100, q=ipCsAt(t), d=Math.hypot(q[0]-p.x,q[1]-p.y); if(d<bd){ bd=d; b=t; } }
+    s.p=b>.94?1:b<.06?0:+b.toFixed(2); },
+  kbd:{label:(id,s)=>["The roll: arrow keys roll it up or flat",s.p>=1?"cone":s.p<=0?"flat sector":`${Math.round(s.p*100)}% rolled`],
+    move:(id,k,sh,s)=>{ const v=+(s.p+(/Up|Right/.test(k)?.125:-.125)).toFixed(3); s.p=v>.94?1:v<.06?0:clamp(v,0,1); }},
+  key(){ return ""; }
 });
 const FBX0=20, FBW=106;
 const FBN1={2:"half",3:"third",4:"quarter",5:"fifth",6:"sixth",7:"seventh",8:"eighth",9:"ninth",10:"tenth",11:"eleventh",12:"twelfth"};
@@ -8433,7 +8459,6 @@ spread:`${MUST([FB("blue","Quartiles off the curve",`${nw(`Q1 at ${frac("1","4")
     ${boxPlotP()}
     <p class="anno">* 5 numbers: min, Q1, median, Q3, max</p>
     <p class="anno">* IQR = Q3 − Q1, the <b class="k-amber">whole box</b>, never the median to Q3</p>
-    ${PLAYLINK("#data-dots?step=3","Interactive: box plot from a dot diagram")}
   </div>
 
   <div class="panelc"><h4>Quartiles from a list</h4>
@@ -9861,7 +9886,7 @@ s2Data:`${MUST([FB("blue","Describe it","range, cluster, outlier","3 things, eve
 <div class="sheet">
 ${PAN("Write it like this",picDotDesc()+EG("Describe the distribution: ages 12, 13, 13, 14, 14, 14, 15, 22",[`① The ages <b>range from 12 to 22</b> (range = 22 − 12 = 10).`,`② <b>Most</b> of the ages are <b>clustered between 12 and 15</b>.`,`③ <b>22</b> is an <b>outlier</b>.`])
   +EG("Compare the two classes",[`Class A's median (<b>34.5</b>) is <b>higher</b> than Class B's (<b>31</b>).`,"So <b>generally</b>, Class A did <b>better</b>."])
-  +`<p class="anno">* quote both numbers, then say what they mean</p>`+PLAYLINK("#data-dots?step=2&o=1","Interactive: describe a dot diagram"))}
+  +`<p class="anno">* quote both numbers, then say what they mean</p>`)}
 ${PAN("The diagrams",PICS(PIC(null,picChart("dot"),"Dot diagram","the tallest stack is the mode"),PIC(null,picChart("hist"),"Histogram","equal class widths along the bottom")))}
 ${PAN("Read a stem-and-leaf",picStemLeaf()
   +EG("10 values",["mode = 35 (3 times)",`median: the 5th and 6th <span class="anno" style="margin-left:10px">the middle two</span>`,nw(`median = ${frac("34 + 35","2")} = 34.5`),nw("range = 48 − 21 = 27")]))}
@@ -9871,7 +9896,7 @@ ${MIST([["gaps between histogram bars","the bars touch"],["\"Class A did better\
 s2Averages:`${MUST([FB("blue","Which average?","extreme value? use the median","say why, with the numbers","","mk mkw"),FB("amber","Mean from a table",nw(`mean = ${frac(`total of <b class="k-amber">${V("fx")}</b>`,`total of <b class="k-amber">${V("f")}</b>`)}`),"÷ how many values, never ÷ the columns","","mk"),FB("green","Median",nw(`position ${frac(`${VN} + 1`,"2")}`),"order the values first","","mk")])}
 <div class="sheet">
 ${PAN("Which average? Write it like this",EG("9, 12, 21, 22, 86. Which average is better?",[nw("mean = 150 ÷ 5 = 30"),nw("median = 21"),"<b>Median</b> (<b>21</b>).","The <b>extreme value</b> (<b>86</b>) <b>affects the mean</b> (<b>30</b>) but <b>not the median</b>."])
-  +PLAYLINK("#data-dots?step=1","Interactive: add an outlier"))}
+  +PLAYLINK("#data-dots","Interactive: drag a dot out"))}
 ${PAN("From a list",EG("4, 7, 7, 9, 12, 15",[nw("mean = 54 ÷ 6 = 9"),`${nw(`median = ${frac("7 + 9","2")} = 8`)} <span class="anno" style="margin-left:10px">6 values: the middle two</span>`,"mode = 7 (there can be more than one)"]))}
 ${PAN("From a table",`<table><tr><th>Goals (${X1})</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>Matches (${V("f")})</th><td>3</td><td>5</td><td>8</td><td>4</td></tr><tr><th>${V("fx")}</th><td>0</td><td>5</td><td>16</td><td>12</td></tr></table>`
   +EG("20 matches",[nw(`mean = ${frac("0 + 5 + 16 + 12","20")} = ${frac("33","20")} = 1.65`),`median position: ${nw(`${frac("20 + 1","2")} = 10.5`)}, so the 10th and 11th`,`${nw("median = 2")} <span class="anno" style="margin-left:10px">9th to 16th are all 2</span>`,"mode = 2 (the highest f, 8)"]))}
@@ -10011,7 +10036,7 @@ ${MIST([["angle of depression from the vertical","from the horizontal"],["angle 
 emArcs:`${MUST([FB("blue","Radians",nw("π rad = 180°"),`calculator in <b class="k-amber">RAD</b>`,"","mk"),FB("amber","Angle in radians",`${nw(`arc = ${V("r")}<b class="k-amber">θ</b>`)}<br>${nw(`sector = ${frac("1","2")}${V("r")}²<b class="k-amber">θ</b>`)}`,`θ in <b class="k-amber">radians</b>, not degrees`,"","mk"),FB("green","Perimeter",nw(`<b class="k-amber">${V("r")} + ${V("r")}</b> + arc`),"not just the arc","","mk")])}
 <div class="sheet">
 ${PAN("In degrees",picSector()+STEPS([nw(`arc = ${frac("θ","360°")} × 2π${V("r")}`),nw(`sector = ${frac("θ","360°")} × π${V("r")}²`)])
-  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm (3 s.f.)")} <span class="anno" style="margin-left:10px">keep 7.854</span>`,nw(`sector = ${frac("75°","360°")} × π(6)²`),nw("= 23.6 cm² (3 s.f.)"),nw(`perimeter = <b class="k-amber">6 + 6</b> + 7.854`),nw("= 19.9 cm (3 s.f.)")])+PLAYLINK("#cone-sector?step=1","Try it"))}
+  +EG(`${nw(`${V("r")} = 6 cm`)}, ${nw("θ = 75°")}`,[nw(`arc = ${frac("75°","360°")} × 2π(6)`),`${nw("= 7.85 cm (3 s.f.)")} <span class="anno" style="margin-left:10px">keep 7.854</span>`,nw(`sector = ${frac("75°","360°")} × π(6)²`),nw("= 23.6 cm² (3 s.f.)"),nw(`perimeter = <b class="k-amber">6 + 6</b> + 7.854`),nw("= 19.9 cm (3 s.f.)")])+PLAYLINK("#cone-sector","Try it"))}
 ${PAN("Degrees and radians",pic1rad()+STEPS([[nw(`× ${frac("π","180°")}`),"degrees to radians"],[nw(`× ${frac("180°","π")}`),"radians to degrees"]])
   +FACTS("Worth knowing",[["",[nw(`90° = ${frac("π","2")}`),nw(`60° = ${frac("π","3")}`),nw(`45° = ${frac("π","4")}`),nw(`30° = ${frac("π","6")}`)]]])
   +EG("Convert",[nw(`50° = 50 × ${frac("π","180°")} = ${frac("5π","18")}`),nw("= 0.873 rad (3 s.f.)")])+PLAYLINK("#arcs-radians?u=rad","Interactive: arc and area in radians")+PLAYLINK("#what-is-a-radian","For the curious: what a radian is"))}
