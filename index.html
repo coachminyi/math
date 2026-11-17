@@ -8286,7 +8286,7 @@ interest:`${MUST([FB("amber","Compound interest",nw(`5000 × 1.03⁴ <b class="k
   </div>
 </div>`,
 
-sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),FB("amber","∪ = OR (everything in either)",`A ∪ B`,"in A, in B, or in both"),FB("red","′ = NOT (outside)",`A′`,"everything in ξ that is not in A")])}
+sets:`${MUST([FB("blue","Dash on a bracket",nw(`(A ∪ B)′ = A′ <b class="k-amber">∩</b> B′`),"the dash flips ∪ and ∩",nw("(A ∩ B)′ = A′ ∪ B′"),"mk"),FB("amber","Element or set?",`${nw(`6 <b class="k-amber">∈</b> C`)}&emsp;${nw(`{6} <b class="k-amber">⊂</b> C`)}`,"an element takes ∈, a set takes ⊂","","mk"),FB("green","Overlap first",nw(`18 − <b class="k-amber">7</b> = 11`),"football only: fill the overlap, then work outwards","all the regions add up to n(ξ)","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Shade it</h4>
     <div class="piccards">
@@ -8298,36 +8298,33 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
       ${PIC(null,venn("sub"),"B ⊂ A","B is inside A")}
     </div>
     ${PLAYLINK("#venn-regions","Interactive: tap to shade")}
-    ${EG("A harder one? Work from the inside out",["① shade each bracket lightly, one at a time","② ∩: keep what's shaded twice · ∪: keep everything shaded","③ a dash on the bracket: take the opposite"])}
-    <p class="anno">* ${nw("(A ∪ B)′ = A′ ∩ B′")}: a dash on a bracket flips ∪ and ∩</p>
+    <p class="anno">* a harder one: shade each part lightly · ∩ keeps only what is shaded <b class="k-amber">twice</b></p>
   </div>
 
   <div class="panelc"><h4>Symbols</h4>
     <table>
       <tr><th>Symbol</th><th>Say</th><th>Example</th></tr>
-      <tr><td>∈</td><td>is an element of</td><td>3 ∈ {1, 2, 3}</td></tr>
-      <tr><td>∉</td><td>is not an element of</td><td>5 ∉ {1, 2, 3}</td></tr>
       <tr><td>⊆</td><td>is a subset of</td><td>{1, 2} ⊆ {1, 2, 3}</td></tr>
       <tr><td>⊂</td><td>is a proper subset of (not equal)</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
       <tr><td>ξ</td><td>universal set</td><td>everything in the question</td></tr>
       <tr><td>∅ or { }</td><td>empty set</td><td>A ∩ B = ∅ → nothing in common</td></tr>
-      <tr><td>n(A)</td><td>number of elements in A</td><td>n({2, 4, 6}) = 3</td></tr>
+      <tr><td>n(A)</td><td>number of elements in A</td><td>n({1, 3, 5}) = 3</td></tr>
     </table>
-    <p class="anno">* a set with ${V("n")} elements has ${nw(`2<sup>${V("n")}</sup> subsets`)}: {2, 4, 6} has 2³ = 8</p>
+    <p class="anno">* {1, 3, 5} has 3 elements but ${nw(`2³ = <b class="k-amber">8</b> subsets`)}</p>
+    <p class="anno">* whole numbers start at <b class="k-amber">0</b>, positive integers at 1</p>
     ${EG(`${nw(`{${X1} : ${X1} is a prime, ${X1} &lt; 10}`)}`,[`reads "the set of ${X1} such that…"`,`${nw("= {2, 3, 5, 7}")}`])}
   </div>
 
   <div class="panelc"><h4>Counting with a Venn diagram</h4>
     <p>30 students: 18 play football (F), 15 play basketball (B), 7 play both.</p>
-    <ul class="steps">
-      <li>① Put the overlap in first: n(F ∩ B) = <span class="k-amber">7</span></li>
-      <li>② Football only: 18 − 7 = <span class="k-blue">11</span> · basketball only: 15 − 7 = <span class="k-blue">8</span></li>
-      <li>③ Neither: 30 − (11 + 7 + 8) = <span class="k-green">4</span></li>
-    </ul>
     <svg viewBox="0 0 120 86" class="lsp" style="max-width:230px" aria-hidden="true"><text x="2" y="9" font-size="8" fill="var(--ink)">ξ = 30</text><rect x="2" y="12" width="116" height="72" rx="4" fill="var(--card)" stroke="var(--ink)"/><circle cx="46" cy="50" r="24" fill="none" stroke="var(--ink)" stroke-width="1.2"/><circle cx="74" cy="50" r="24" fill="none" stroke="var(--ink)" stroke-width="1.2"/>
       <g font-weight="700" text-anchor="middle"><text x="24" y="33" font-size="9" fill="var(--ink)">F</text><text x="96" y="33" font-size="9" fill="var(--ink)">B</text>
       <text x="33" y="53" font-size="9" fill="var(--blue)">11</text><text x="60" y="53" font-size="9" fill="var(--amber)">7</text><text x="87" y="53" font-size="9" fill="var(--blue)">8</text><text x="106" y="78" font-size="9" fill="var(--green)">4</text></g></svg>
-    ${EG("Shortcut",[`${nw("n(A ∪ B)")} = ${nw("n(A) + n(B) − n(A ∩ B)")}`,`here: ${nw("18 + 15 − 7 = 26")}`])}
+    <ul class="steps">
+      <li>basketball only: ${nw("15 − 7 = 8")}</li>
+      <li>neither: ${nw("30 − (11 + 7 + 8) = 4")} <span class="tagop">inside ξ, outside both circles</span></li>
+    </ul>
+    ${EG("Shortcut: take the overlap away once",[`${nw("n(A ∪ B)")} = ${nw(`n(A) + n(B) <b class="k-amber">− n(A ∩ B)</b>`)}`,`here: ${nw("18 + 15 − 7 = 26")}`])}
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
@@ -8336,46 +8333,44 @@ sets:`${MUST([FB("blue","∩ = AND (the overlap)",`A ∩ B`,"in both A and B"),F
       <div class="ok">✓ only what they share</div>
       <div class="x">✗ 2 ⊂ {1, 2, 3}</div>
       <div class="ok">✓ 2 ∈ {1, 2, 3} · {2} ⊂ {1, 2, 3}</div>
+      <div class="x">✗ ${nw("(A ∪ B)′ = A′ ∪ B′")}</div>
+      <div class="ok">✓ ${nw("(A ∪ B)′ = A′ ∩ B′")}</div>
+      <div class="x">✗ ${nw("n(F ∪ B) = 18 + 15 = 33")}</div>
+      <div class="ok">✓ ${nw("18 + 15 − 7 = 26")}</div>
+      <div class="x">✗ {1, 3, 5} has 8 elements</div>
+      <div class="ok">✓ 3 elements, 8 subsets</div>
+      <div class="x">✗ whole numbers less than 3: 1, 2</div>
+      <div class="ok">✓ 0, 1, 2</div>
     </div>
-    <div class="note"><b>Note!</b> Always fill the overlap first, then subtract outwards.</div>
   </div>
 </div>`,
 
-spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${frac("1","2")}N · Q3 at ${frac("3","4")}N`,"on the cumulative frequency axis · 80th percentile at 0.8N"),FB("amber","Interquartile range",`IQR = Q3 − Q1`,"the middle 50%: smaller IQR = more consistent"),FB("green","Standard deviation",nw(`SD = ${SQRT(`${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − mean²`)}`),"on the formula sheet · bigger SD = more spread out")])}
+spread:`${MUST([FB("blue","Quartiles off the curve",`${nw(`Q1 at ${frac("1","4")}N`)}&emsp;${nw(`Q3 at ${frac("3","4")}N`)}`,"across from the cumulative frequency axis, then down",`median at ${frac("1","2")}N`,"mk mkw"),FB("amber","Standard deviation",nw(`SD = ${SQRT(`50 − <b class="k-amber">6²</b>`)} = 3.74`),"mean 6: take away 6<b>²</b>, not 6",nw(`SD = ${SQRT(`${frac("Σ"+V("fx")+"²","Σ"+V("f"))} − mean²`)}`),"mk"),FB("green","Compare",`quote <b class="k-amber">both</b> numbers, then say what they mean`,"smaller IQR or SD = more consistent","mean with SD · median with IQR","mk mkw")])}
 <div class="sheet">
-  <div class="panelc"><h4>Cumulative frequency curve</h4>
-    ${cfP()}
-    <ul class="steps">
-      <li>① Plot each cumulative frequency at the <b>upper</b> end of its class, and start with 0 at the lower end of the first class</li>
-      <li>② Go across from ${frac("1","4")}N, ${frac("1","2")}N, ${frac("3","4")}N on the vertical axis</li>
-      <li>③ Drop down and read Q1, median, Q3</li>
-    </ul>
-    <p class="anno">* "how many scored more than 60": · ${nw("N − (cumulative")} frequency at 60)</p>
-  </div>
-
-  <div class="panelc"><h4>Box-and-whisker plot</h4>
-    ${boxPlotP()}
-    <p class="anno">* 5 numbers: min, Q1, median, Q3, max · the box = the middle half of the data</p>
-    ${PLAYLINK("#data-dots?step=3","Interactive: box plot from a dot diagram")}
-  </div>
-
   <div class="panelc"><h4>Compare two sets: write it like this</h4>
     ${picBox2()}
     ${EG("Average",[`Class B's median (<b>55</b>) is <b>higher</b> than Class A's (<b>48</b>).`,"So <b>generally</b>, Class B did <b>better</b>."])}
     ${EG("Spread",[`Class A's interquartile range (<b>12</b>) is <b>smaller</b> than Class B's (<b>18</b>).`,"So Class A's marks are <b>more consistent</b> (<b>smaller spread</b>)."])}
-    <p class="anno">* quote both numbers, then say what they mean · with the mean, compare the standard deviations the same way</p>
-    <table>
-      <tr><th>Average</th><th>goes with this spread</th></tr>
-      <tr><td>mean</td><td>standard deviation</td></tr>
-      <tr><td>median</td><td>interquartile range</td></tr>
-    </table>
-    <p class="anno">* never mix the pairs · an extreme value? use the median with the IQR</p>
+    <p class="anno">* an extreme value? use the median with the IQR</p>
+  </div>
+
+  <div class="panelc"><h4>Cumulative frequency curve</h4>
+    ${cfP()}
+    <p class="anno">* plot at the <b class="k-amber">upper</b> end of each class · start with 0 at the lower end of the first class</p>
+    <p class="anno">* top 10%: go across from <b class="k-amber">0.9N</b>, not 0.1N</p>
+    <p class="anno">* more than 60: ${nw("N − (cumulative")} frequency at 60)</p>
+  </div>
+
+  <div class="panelc"><h4>Box-and-whisker plot</h4>
+    ${boxPlotP()}
+    <p class="anno">* 5 numbers: min, Q1, median, Q3, max</p>
+    <p class="anno">* IQR = Q3 − Q1, the <b class="k-amber">whole box</b>, never the median to Q3</p>
+    ${PLAYLINK("#data-dots?step=3","Interactive: box plot from a dot diagram")}
   </div>
 
   <div class="panelc"><h4>Quartiles from a list</h4>
     ${picQuartList()}
-    ${EG("3, 5, 6, 8, 9, 11, 14 (7 values)",["median = 8, the 4th value",`lower half 3, 5, 6: ${nw("Q1 = 5")}`,`upper half 9, 11, 14: ${nw("Q3 = 11")}`,nw("IQR = 11 − 5 = 6")])}
-    <p class="anno">* order the data first · ${V("n")} odd: the median goes in neither half · ${V("n")} even: median = mean of the middle two</p>
+    <p class="anno">* <b class="k-amber">order the data</b> first · ${V("n")} odd: the median goes in <b class="k-amber">neither</b> half · ${V("n")} even: median = mean of the middle two</p>
   </div>
 
   <div class="panelc"><h4>SD on the Casio fx-97SG X</h4>
@@ -8385,29 +8380,34 @@ spread:`${MUST([FB("blue","Quartiles",`Q1 at ${frac("1","4")}N · median at ${fr
       <li>③ the frequencies in the FREQ column</li>
       <li>④ AC → OPTN → 1-Variable Calc → read ${V("x̄")} (mean) and σ${V("x")} (SD)</li>
     </ul>
-    <p class="anno">* use σ${V("x")}, not s${V("x")} · no FREQ column? SETUP (SHIFT MENU) → Statistics → Frequency On</p>
-    <p class="anno">* add ${V("b")} to every value: the mean goes up by ${V("b")}, the SD stays the same</p>
+    <p class="anno">* no FREQ column? SETUP (SHIFT MENU) → Statistics → Frequency On</p>
+    <p class="anno">* add 5 to every value: mean 20 becomes <b class="k-amber">25</b>, SD 4 stays <b class="k-amber">4</b></p>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ Q1 read at ${frac("1","4")} of the biggest mark</div>
       <div class="ok">✓ Q1 read at ${frac("1","4")} of N (the frequency axis)</div>
+      <div class="x">✗ ${nw(`SD = ${SQRT("50 − 6")}`)}</div>
+      <div class="ok">✓ ${nw(`SD = ${SQRT("50 − 6²")}`)}</div>
+      <div class="x">✗ IQR = 30 − 22 = 8 (median to Q3)</div>
+      <div class="ok">✓ IQR = 30 − 14 = 16, the whole box</div>
+      <div class="x">✗ 1, 2, 4, 6, 9: Q1 = 2</div>
+      <div class="ok">✓ lower half 1, 2: Q1 = 1.5</div>
+      <div class="x">✗ add 5 to every value: SD 4 becomes 9</div>
+      <div class="ok">✓ the SD stays 4</div>
       <div class="x">✗ "bigger SD = better"</div>
       <div class="ok">✓ bigger SD = more spread out, less consistent</div>
       <div class="x">✗ "Class B did better."</div>
       <div class="ok">✓ no numbers, no mark: give both medians</div>
     </div>
-    <div class="note"><b>Note!</b> Plot the cumulative frequency at the upper class boundary, never the mid-value.</div>
   </div>
 </div>`,
 
-probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can happen","total number of outcomes")}`,"outcomes equally likely · always between 0 and 1"),FB("amber","Tree diagram","× along a path · + between paths","each pair of branches adds to 1"),FB("green","At least one",`P(at least one) = 1 − P(none)`,"faster than adding every case")])}
+probability:`${MUST([FB("blue","Two dice",nw(`P(total 7) = ${frac(`<b class="k-amber">6</b>`,"36")}`),"count the cells, never the 11 totals","","mk"),FB("amber","Without replacement",nw(`${frac("3","5")} × ${frac(`<b class="k-amber">2</b>`,`<b class="k-amber">4</b>`)}`),"the colour you took drops too","with replacement: nothing changes","mk"),FB("green","At least one",nw("1 − P(none)"),`at least one red: ${nw(`1 − ${frac("2","5")} × ${frac("1","4")} = ${frac("9","10")}`)}`,"","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Possibility diagram: two dice</h4>
     ${diceGrid()}
-    <p class="anno" style="text-align:center">P(total = 7) = ${frac("6","36")} = ${frac("1","6")}</p>
-    <p class="anno">* 6 × 6 = 36 equally likely outcomes; count the ones you want</p>
     ${PLAYLINK("#prob-dice-tree?ev=s7","Interactive: light up the cells")}
   </div>
 
@@ -8418,10 +8418,8 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
       <li>P(both red) = ${frac("3","5")} × ${frac("2","4")} = <b>${frac("3","10")}</b> <span class="tagop">along the branch: ×</span></li>
       <li>${nw("P(one of each)")} = ${nw(`${frac("3","5")} × ${frac("2","4")} + ${frac("2","5")} × ${frac("3","4")}`)}<br>= <b>${frac("3","5")}</b> <span class="tagop">two branches: +</span></li>
     </ul>
-    <p class="anno">* without replacement: the bottom drops by 1, and so does the top for the colour you took (${frac("3","5")} then ${frac("2","4")}) · with replacement: nothing changes</p>
     ${PLAYLINK("#prob-dice-tree?step=2&r=3&b=2&out=rr","Interactive: tap a branch")}
-    ${EG(`An unknown: ${V("n")} red, 4 blue, ${nw(`P(red) = ${frac("2","3")}`)}`,[nw(`${frac(V("n"),`${V("n")} + 4`)} = ${frac("2","3")}`),nw(`3${V("n")} = 2(${V("n")} + 4)`),nw(`3${V("n")} = 2${V("n")} + 8`),nw(`${V("n")} = 8`)])}
-    <p class="anno">* write the probability with the unknown, set it equal to the value given, solve</p>
+    ${EG(`An unknown: ${V("n")} red, 4 blue, ${nw(`P(red) = ${frac("2","3")}`)}`,[nw(`${frac(V("n"),`<b class="k-amber">${V("n")} + 4</b>`)} = ${frac("2","3")}`),nw(`3${V("n")} = 2(${V("n")} + 4)`),nw(`3${V("n")} = 2${V("n")} + 8`),nw(`${V("n")} = 8`)])}
   </div>
 
   <div class="panelc"><h4>Words → maths</h4>
@@ -8429,7 +8427,6 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
       <tr><th>The question says</th><th>Do</th></tr>
       <tr><td>both / and / then</td><td>multiply along the branches</td></tr>
       <tr><td>either / or / one of each</td><td>add the branches that work</td></tr>
-      <tr><td>at least one</td><td>1 − P(none)</td></tr>
       <tr><td>not</td><td>1 − P(it)</td></tr>
     </table>
     <p class="anno">* the formal words: mutually exclusive = can't both happen (add) · independent = one doesn't change the other (multiply)</p>
@@ -8439,6 +8436,14 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
     <div class="wrongright">
       <div class="x">✗ P(both red) = ${nw(`${frac("3","5")} × ${frac("3","5")}`)} (no replacement)</div>
       <div class="ok">✓ ${frac("3","5")} × ${frac("2","4")}</div>
+      <div class="x">✗ P(total 9) = ${frac("1","11")} (11 totals)</div>
+      <div class="ok">✓ ${frac("4","36")}: count the cells</div>
+      <div class="x">✗ P(at least one girl) = P(all girls)</div>
+      <div class="ok">✓ 1 − P(all boys)</div>
+      <div class="x">✗ P(M) in MATHEMATICS = ${frac("1","8")}</div>
+      <div class="ok">✓ ${frac("2","11")}: count every letter, repeats too</div>
+      <div class="x">✗ one of each of 3 flavours = P(ABC)</div>
+      <div class="ok">✓ 6 orders: ${nw("6 × P(ABC)")}</div>
       <div class="x">✗ P(A or B) = ${nw("P(A) + P(B)")} always</div>
       <div class="ok">✓ only if A and B can't both happen</div>
     </div>
@@ -8446,12 +8451,12 @@ probability:`${MUST([FB("blue","Probability",`P = ${frac("number of ways it can 
   </div>
 </div>`,
 
-matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0","3","4"]])} is 2 × 3`,"rows first, across; then columns, down"),FB("amber","Add / subtract",`same order only · element by element`,"2 × 3 plus 2 × 3 → 2 × 3"),FB("green","Multiply: row × column",`(${V("m")} × ${V("n")})(${V("n")} × ${V("p")}) → ${V("m")} × ${V("p")}`,"inner numbers must match")])}
+matrices:`${MUST([FB("blue","Order",`${MX([["1","2","3"]])} is ${nw(`<b class="k-amber">1</b> × 3`)}`,"rows first, then columns","rows × columns","mk"),FB("amber","Check the inner numbers",nw(`(2 × <b class="k-amber">3</b>)(<b class="k-amber">3</b> × 1) → 2 × 1`),"they match, so you can multiply","","mk"),FB("green","What does it mean?",`name the row, the column <b>and</b> the units`,"never just “it is 85”","","mk mkw")])}
 <div class="sheet">
   <div class="panelc"><h4>Add, subtract, scalar multiple</h4>
     <ul class="steps">
-      <li>${MX([["1","4"],["2","0"]])} + ${MX([["3","−1"],["5","2"]])} = ${MX([["4","3"],["7","2"]])}</li>
-      <li>3${MX([["1","4"],["2","0"]])} = ${MX([["3","12"],["6","0"]])} <span class="tagop">multiply every element</span></li>
+      <li>${MX([["1","4"],["2","0"]])} + ${MX([["3","−1"],["5","2"]])} = ${MX([["4","3"],["7","2"]])} <span class="tagop">same order only</span></li>
+      <li>3${MX([["1","4"],["2","0"]])} = ${MX([["3","12"],["6","0"]])} <span class="tagop">multiply <b>every</b> element</span></li>
     </ul>
   </div>
 
@@ -8464,13 +8469,11 @@ matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0",
     <ul class="steps">
       <li>${MX([["2","3"],["1","4"]])}${MX([["5"],["6"]])} = ${MX([["2×5 + 3×6"],["1×5 + 4×6"]])} = ${MX([["28"],["29"]])}</li>
     </ul>
-    <p class="anno">* row 1 across × column down, add up · then row 2 the same way</p>
     <table>
       <tr><th>Can you multiply?</th><th>Answer</th></tr>
-      <tr><td>(2 × 2)(2 × 1)</td><td>yes → 2 × 1 (the one above)</td></tr>
-      <tr><td>(2 × 3)(3 × 1)</td><td>yes → 2 × 1</td></tr>
+      <tr><td>(2 × 2)(2 × 1)</td><td>yes: 2 × 1 (the one above)</td></tr>
       <tr><td>(2 × 3)(2 × 3)</td><td>no: 3 ≠ 2</td></tr>
-      <tr><td>(1 × 3)(3 × 2)</td><td>yes → 1 × 2</td></tr>
+      <tr><td>(1 × 3)(3 × 2)</td><td>yes: 1 × 2</td></tr>
     </table>
   </div>
 
@@ -8481,18 +8484,23 @@ matrices:`${MUST([FB("blue","Order = rows × columns",`${MX([["2","5","1"],["0",
       <li>= ${MX([["85"],["110"]])}</li>
       <li>Meaning: <b>$85</b> is the total amount the shop collected from selling pens and files on Monday.</li>
     </ul>
-    <p class="anno">* rows = days, columns = items (pens, files). List the prices in the same order: pens, then files.</p>
-    <p class="anno">* "state what the elements mean": name the row, the column, and the units in a full sentence</p>
+    <p class="anno">* the sales columns (pens, files) match the price rows (pens, files)</p>
+    <p class="anno">* nothing sold? put a <b class="k-amber">0</b>, never a blank</p>
   </div>
 
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ multiply element by element</div>
       <div class="ok">✓ row × column, then add</div>
+      <div class="x">✗ ${nw(`${MX([["1","2"],["3","0"]])}² = ${MX([["1","4"],["9","0"]])}`)}</div>
+      <div class="ok">✓ ${nw(`${MX([["1","2"],["3","0"]])}${MX([["1","2"],["3","0"]])} = ${MX([["7","2"],["3","6"]])}`)}</div>
       <div class="x">✗ AB = BA</div>
       <div class="ok">✓ usually different (order matters)</div>
+      <div class="x">✗ ${nw(`${X2} = 9`)}, so ${nw(`${X1} = 3`)}</div>
+      <div class="ok">✓ 3 or −3: test each in another element</div>
+      <div class="x">✗ a 12% increase: × 0.12</div>
+      <div class="ok">✓ × 1.12</div>
     </div>
-    <div class="note"><b>Note!</b> Say what each row and column stands for, or the "meaning" mark is lost.</div>
   </div>
 </div>`
 };
@@ -10001,21 +10009,21 @@ ${PAN("Segment",picSegment()+STEPS([nw("segment = sector − triangle"),nw(`= ${
 ${MIST([[`${nw(`arc = ${V("r")}θ`)} with θ in degrees`,"change θ to radians first"],[`${nw("sin 1.2")} in degree mode`,"calculator in RAD"],["perimeter of a sector = the arc",`add the 2 radii: ${nw(`${V("r")} + ${V("r")} + arc`)}`],["major arc worked out with θ",`use ${nw("360° − θ")} (or ${nw("2π − θ")})`],["half the chord gives the whole angle",`it gives ${frac("θ","2")}: double it`]])}
 </div>`,
 
-emVectors:`${MUST([FB("blue","Size",nw(`|${CVEC(X1,VY)}| = ${SQRT(`${X2} + ${VY}²`)}`),"+ is right or up · − is left or down"),FB("amber","End minus start",nw(`${VEC("AB")} = ${VEC("OB")} − ${VEC("OA")}`),nw(`= ${BV("b")} − ${BV("a")}`)),FB("green","Parallel",nw(`${VEC("PQ")} = ${V("k")}${VEC("AB")}`),"plus a shared point: collinear")])}
+emVectors:`${MUST([FB("blue","End minus start",nw(`${VEC("AB")} = <b class="k-amber">${VEC("OB")}</b> − ${VEC("OA")}`),"the point you arrive at comes first",nw(`= ${BV("b")} − ${BV("a")}`),"mk"),FB("amber","Ratio",`${nw("AP : PB = 1 : 3")} ${nw(`→ ${VEC("AP")} = <b class="k-amber">${frac("1","4")}</b>${VEC("AB")}`)}`,"÷ the total number of parts","","mk"),FB("green","Collinear",`parallel <b>and</b> a common point`,`${nw(`${VEC("AC")} = 3${VEC("AB")}`)}, and A is on both`,`${nw(`${VEC("PQ")} = ${V("k")}${VEC("AB")}`)}: parallel`,"mk mkw")])}
 <div class="sheet">
-${PAN("Column vectors",picVecCol()+STEPS([[CVEC("3","2"),"3 right, 2 up"],[nw(`|${CVEC("−5","12")}| = ${SQRT("(−5)² + 12²")} = 13`),"size"],[`${BV("a")} in print, ${TL("a")} by hand`,"writing a vector"]])
-  +EG(`${nw(`|${CVEC(X1,"6")}| = 10`)}. Find ${X1}.`,[nw(`${X2} + 36 = 100`),nw(`${X2} = 64`),nw(`${X1} = ±8`)])+`<p class="anno">* equal vectors: same size, same direction · negative vector: flip both signs</p>`)}
+${PAN("Column vectors",picVecCol()+STEPS([[nw(`|${CVEC("−5","12")}| = ${SQRT(`${CS("amber","(−5)²")} + 12²`)} = 13`),"size"],[`${BV("a")} in print, ${TL("a")} by hand`,"writing a vector"]])
+  +EG(`${nw(`|${CVEC(X1,"6")}| = 10`)}. Find ${X1}.`,[nw(`${X2} + 36 = 100`),nw(`${X2} = 64`),nw(`${X1} = <b class="k-amber">±</b>8`)])+`<p class="anno">* equal vectors: same size, same direction · negative vector: flip <b class="k-amber">both</b> signs</p>`)}
 ${PAN("Add, subtract, scale",STEPS([nw(`${CVEC("2","3")} + ${CVEC("4","−1")} = ${CVEC("6","2")}`)])+picTipTail()+`<p class="anno">* tip to tail: the second starts where the first ends</p>`+STEPS([nw(`3${CVEC("2","−1")} = ${CVEC("6","−3")}`)])
-  +EG(`${CVEC("2","3")} is parallel to ${CVEC("6",V("k"))}. Find ${V("k")}.`,[nw(`${CVEC("6",V("k"))} = 3${CVEC("2","3")}`),nw(`${V("k")} = 9`)])+`<p class="anno">* parallel: one is a multiple of the other</p>`)}
+  +EG(`${CVEC("2","3")} is parallel to ${CVEC("6",V("k"))}. Find ${V("k")}.`,[nw(`${CVEC("6",V("k"))} = 3${CVEC("2","3")}`),nw(`${V("k")} = 9`)]))}
 ${PAN("Position vectors",STEPS([[`A(3, −1): ${nw(`${VEC("OA")} = ${CVEC("3","−1")}`)}`,"from the origin"]])
   +picAB()+EG("A(3, −1), B(7, 2). Find AB and its length.",[nw(`${VEC("AB")} = ${CVEC("7","2")} − ${CVEC("3","−1")} = ${CVEC("4","3")}`),nw(`|${VEC("AB")}| = ${SQRT("4² + 3²")} = 5`)]))}
-${PAN(`Routes in ${BV("a")} and ${BV("b")}`,picOAB()+STEPS([[nw(`${VEC("OM")} = ${VEC("OA")} + ${VEC("AM")}`),"go through points you know"],"against the arrow: change the sign"])
+${PAN(`Routes in ${BV("a")} and ${BV("b")}`,picOAB()+STEPS([[nw(`${VEC("OM")} = ${VEC("OA")} + ${VEC("AM")}`),"go through points you know"],`against the arrow: <b class="k-amber">change the sign</b>, ${nw(`${VEC("AO")} = −${BV("a")}`)}`])
   +EG(`${nw(`${VEC("OA")} = ${BV("a")}`)}, ${nw(`${VEC("OB")} = ${BV("b")}`)}, M is the midpoint of AB`,[nw(`${VEC("AB")} = ${BV("b")} − ${BV("a")}`),nw(`${VEC("AM")} = ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`${VEC("OM")} = ${BV("a")} + ${frac("1","2")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("1","2")}(${BV("a")} + ${BV("b")})`)])
-  +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,[`÷ the total parts: ${nw(`${VEC("AP")} = ${frac("1","4")}${VEC("AB")}`)}`,nw(`${VEC("OP")} = ${BV("a")} + ${frac("1","4")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("3","4")}${BV("a")} + ${frac("1","4")}${BV("b")}`)]))}
-${PAN("Parallel and collinear",EG(`${nw(`${VEC("AB")} = 2${BV("a")} + ${BV("b")}`)}, ${nw(`${VEC("AC")} = 6${BV("a")} + 3${BV("b")}`)}`,[nw(`${VEC("AC")} = 3(2${BV("a")} + ${BV("b")}) = 3${VEC("AB")}`),"so AC is parallel to AB","A is on both, so A, B and C are collinear",nw("AB : AC = 1 : 3")])+`<p class="anno">* always say the shared point</p>`)}
-${PAN("Area ratios",STEPS([[nw("area ratio = base ratio"),"same height"],[nw("area ratio = (length ratio)²"),"similar triangles"]])+picOABh()
+  +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,[nw(`${VEC("OP")} = ${BV("a")} + ${frac("1","4")}(${BV("b")} − ${BV("a")})`),nw(`= ${frac("3","4")}${BV("a")} + ${frac("1","4")}${BV("b")}`)]))}
+${PAN("Parallel and collinear",EG(`${nw(`${VEC("AB")} = 2${BV("a")} + ${BV("b")}`)}, ${nw(`${VEC("AC")} = 6${BV("a")} + 3${BV("b")}`)}`,[nw(`${VEC("AC")} = 3(2${BV("a")} + ${BV("b")}) = 3${VEC("AB")}`),"so AC is parallel to AB","A is on both, so A, B and C are collinear",nw("AB : AC = 1 : 3")]))}
+${PAN("Area ratios",STEPS([[nw("area ratio = base ratio"),"same height"],[nw(`area ratio = (length ratio)<b class="k-amber">²</b>`),"similar triangles"]])+picOABh()
   +EG(`P is on AB with ${nw("AP : PB = 1 : 3")}`,["triangles OAP and OPB have the same height from O",nw("area OAP : area OPB = 1 : 3")])+PLAYLINK("#vector-areas","Interactive: drag P and watch the areas"))}
-${MIST([[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),`end minus start: ${nw(`${VEC("OB")} − ${VEC("OA")}`)}`],[nw("(−5)² = −25"),nw("(−5)² = 25")],[`${nw(`${X2} = 64`)}, so ${nw(`${X1} = 8`)}`,nw(`${X1} = ±8`)],[`${nw("AP : PB = 1 : 3")}, so ${nw(`${VEC("AP")} = ${frac("1","3")}${VEC("AB")}`)}`,`÷ the total parts: ${nw(`${frac("1","4")}${VEC("AB")}`)}`],["“parallel, so collinear”","say the shared point too"]])}
+${MIST([[nw(`${VEC("AB")} = ${VEC("OA")} − ${VEC("OB")}`),`end minus start: ${nw(`${VEC("OB")} − ${VEC("OA")}`)}`],[nw("(−5)² = −25"),nw("(−5)² = 25")],[`${nw(`${X2} = 64`)}, so ${nw(`${X1} = 8`)}`,nw(`${X1} = ±8`)],[nw(`−${CVEC("3","−7")} = ${CVEC("−3","−7")}`),`flip both: ${nw(CVEC("−3","7"))}`],[nw(`${VEC("AO")} = ${BV("a")}`),`against the arrow: ${nw(`${VEC("AO")} = −${BV("a")}`)}`],[`${nw("AP : PB = 1 : 3")}, so ${nw(`${VEC("AP")} = ${frac("1","3")}${VEC("AB")}`)}`,`÷ the total parts: ${nw(`${frac("1","4")}${VEC("AB")}`)}`],["“parallel, so collinear”","say the shared point too"],["similar, lengths 2 : 5, so areas 2 : 5",`square it: ${nw("4 : 25")}`]])}
 </div>`,
 
 emCongSim:`${MUST([FB("blue","Congruence tests",nw("SSS, SAS, ASA, AAS, RHS"),`SAS: the angle is <b class="k-amber">between</b> the 2 sides`,"ASS and AAA are not tests","mk"),FB("amber","Matching order",nw(`△<b class="k-amber">A</b>BC ≡ △<b class="k-amber">M</b>LK`),"A with M, B with L, C with K","","mk"),FB("green","Similar figures",nw("2 : 3 → 4 : 9 → 8 : 27"),`<b class="k-amber">square</b> for area, <b class="k-amber">cube</b> for volume`,"","mk")])}
