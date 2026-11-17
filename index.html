@@ -1470,6 +1470,10 @@ html[data-ip] .play{padding-bottom:4px}
 .ipk .ipans{font-size:1.18em}
 .ipk .ipsf{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
 .ipk .ipg{color:var(--muted)}
+.elk.ipk .formbox .eq{gap:0 10px}
+.elk .elar{color:var(--muted);font-weight:400;margin:0 .1em}
+@media (min-width:900px){.play:has(svg.elsvg) .stage svg{max-height:calc(100vh - 240px) !important;max-height:calc(100svh - 240px) !important}}
+@media (max-width:599px){.elk.ipk .formbox .eq{height:96px;font-size:21px;flex-direction:column;flex-wrap:nowrap;gap:0}.elk.ipk .formbox .eq>.elar{transform:rotate(90deg);line-height:1.1}.play:has(svg.elsvg) .stage svg{max-height:48vh;max-height:48svh}}
 .ipk.vak .formbox .eq{height:204px;display:flex;flex-direction:column;white-space:normal;overflow:visible;padding:0}
 .vak .var{flex:1 1 0;min-height:0;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .vak .var+.var{border-top:1px solid var(--line)}
@@ -1493,6 +1497,29 @@ html[data-ip] .dohint{display:none !important}
 .qfsm{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline;font-size:14px;margin:10px 4px 0;color:var(--muted)}
 .qfsm .qfl{font-size:12px;text-align:right}
 .qfh{font-size:1.3em;font-weight:800}
+.sbk .formbox{padding:8px 12px}
+.sbk .sbq{font-size:18px;font-weight:700;color:var(--ink);text-align:center;display:flex;align-items:baseline;justify-content:center;gap:8px}
+.sbk .sbl{font-weight:400}
+.sbk .sbsp{font-size:13px;color:var(--muted);text-align:center;margin-top:4px}
+.sbk.ipk .formbox .eq{height:44px;font-size:25px}
+.sbk .sba{min-height:62px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 10px;font-size:22px;font-weight:700;color:var(--green);text-align:center;border-top:1px solid var(--grid2);padding-top:4px}
+.sbk .sbor{color:var(--muted);font-weight:400;font-size:.75em}
+.sbk .sbno{color:var(--ink)}
+.sbk .sbt{flex-basis:100%;font-size:14px;font-weight:400;color:var(--ink)}
+.sbk .sba .ipsf{font-size:13px}
+@media (max-width:899px) and (orientation:portrait){.play.sbip .stage svg,.play.sbip .stage.tall svg{max-height:48vh;max-height:48svh}}
+@media (max-width:599px){.sbk.ipk .formbox .eq{font-size:22px;height:40px}.sbk .sba{font-size:20px}}
+
+.qgk.ipk .formbox .eq{height:84px;flex-direction:column;flex-wrap:nowrap;gap:2px;white-space:nowrap}
+.qgk .formbox .hd{color:var(--ink);font-weight:600;font-size:16px;text-transform:none;letter-spacing:0}
+.qgk .qgr{display:block;line-height:1.3}
+.qgk .qga{color:var(--amber);font-weight:700}
+.qgk .qgc{background:var(--amber-fill);border-radius:6px;padding:0 4px;font-weight:800}
+.qgk .qgy{color:var(--blue);font-weight:800}
+.qgk .qgx{color:var(--amber);font-weight:800}
+@media (max-width:599px){ .qgk.ipk .formbox .eq{font-size:19px;height:92px} }
+@media (min-width:600px) and (max-width:899px){ .qgk.ipk .formbox .eq{height:100px} }
+@media (min-width:900px){ .qgk.ipk .formbox .eq{height:104px;font-size:23px} }
 .qxw{font-size:17px;line-height:1.25}
 .qxh,.qxr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:14px}
 .qxh{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:0 10px 4px}
@@ -1822,15 +1849,15 @@ const TOPICS = [
   {id:"area-rectangles", strand:"calc", levels:["amath"], chapter:"Applications of Integration", tier:"curious",
    title:"Why integration gives the area", blurb:"Thinner and thinner rectangles, then why the area grows at the height of the curve.", play:"areaRect", sheet:"amIntApp", sheetTitle:"Applications of integration: area"},
   {id:"straight-line-graphs", strand:"graph", levels:["sec1","sec2"], chapter:"Linear graphs",
-   title:"Straight-line graphs", blurb:"Put in x, get y, plot the dot. What m and c do, and where two lines meet.", play:"eqLines", sheet:"s1Graphs", sheetTitle:"Coordinates & linear graphs"},
+   title:"Straight-line graphs", blurb:"Drag the line: gradient = rise ÷ run, c = where it cuts the y-axis.", play:"eqLines", sheet:"s1Graphs", sheetTitle:"Coordinates & linear graphs"},
   {id:"quadratic-graphs", strand:"graph", levels:["sec2"], chapter:"Quadratic graphs",
-   title:"Quadratic graphs: why a U?", blurb:"Plot from a table, test points, and see why it's symmetrical.", play:"eqQuad", sheet:"s2Quad", sheetTitle:"Quadratic equations & graphs"},
+   title:"Quadratic graphs: why a U?", blurb:"Each x gives one dot. Join the dots with one smooth curve.", play:"eqQuad", sheet:"s2Quad", sheetTitle:"Quadratic equations & graphs"},
   {id:"power-graphs", strand:"graph", levels:["emath"], chapter:"Functions & Graphs",
-   title:"Power & exponential graphs", blurb:"Why some graphs never touch the axes. The 6 shapes, and the gradient from a tangent.", play:"eqPower", sheet:"emFuncGraphs", sheetTitle:"Functions & graphs"},
+   title:"Why y = 1/x has asymptotes", blurb:"Drag the dot along 1/x: 1 ÷ 0 has no value, and 1 ÷ x is never 0. So it never touches the axes.", play:"eqPower", sheet:"emFuncGraphs", sheetTitle:"Functions & graphs"},
   {id:"solve-by-graph", strand:"graph", levels:["emath"], chapter:"Functions & Graphs",
-   title:"Solve by drawing a line", blurb:"Split the equation so the curve appears. The other side is the line you draw.", play:"solveLine", sheet:"emFuncGraphs", sheetTitle:"Functions & graphs"},
+   title:"Solve by drawing a line", blurb:"Drag the line y = k: the solutions are where it crosses the curve.", play:"solveLine", sheet:"emFuncGraphs", sheetTitle:"Functions & graphs"},
   {id:"exp-log-graphs", strand:"graph", levels:["amath"], chapter:"Exponentials & Logarithms",
-   title:"Exponential & log graphs", blurb:"Why ln x needs x > 0, and why the two graphs are mirror images.", play:"eqExpLog", sheet:"amLogs", sheetTitle:"Exponentials & logarithms"},
+   title:"Exponential & log graphs", blurb:"eˣ and ln x are mirror images in y = x: the coordinates swap.", play:"eqExpLog", sheet:"amLogs", sheetTitle:"Exponentials & logarithms"},
   {id:"why-logs", strand:"alg", levels:["amath"], chapter:"Exponentials & Logarithms", tier:"curious",
    title:"Why the laws of logs work", blurb:"Logs are powers. Multiply two numbers and their logs add. Then a slide rule.", play:"whyLogs", sheet:"amLogs", sheetTitle:"Exponentials & logarithms"},
   {id:"where-e", strand:"alg", levels:["emath","amath"], chapter:"Simple & Compound Interest", tier:"curious",
@@ -2883,31 +2910,54 @@ const LINES=[
   {id:"l4",pill:`${V("y")} = 3`,eq:`${V("y")} = 3`,eqW:`${V("y")} = ${kc("red","3")}`,f:()=>3,sub:()=>"3",plain:true,note:`no ${X1} in it, so ${V("y")} is always 3`,xr:[-4,4,1],why:lineWhy(0,3,1,"0",`There's no ${X1} in it, so ${V("y")} = 3 for every ${X1}: a flat line.<br>Gradient ${kc("amber",V("m"))} = 0, and it cuts the ${V("y")}-axis at ${kc("red","3")}.`)}
 ];
 const L1f=x=>x+1, L2f=x=>-x+5;
-const eqLines=eqAid({label:"Straight-line graph: plot points, test points, gradient and intercept",box:BXL,curves:LINES,xr:[-4,5,1],whyName:"Why straight?",hidePill:[3,4],
-  joinT:"Then join the dots with <b>a ruler</b>. That's the graph.",
-  init:{m:2,c:1,qx:-2,qy:4}, link:["qx","qy"],
-  sliders:[{k:"m",label:V("m"),min:-3,max:3,step:.5,show:s=>s.step===3},{k:"c",label:V("c"),min:-4,max:4,step:1,show:s=>s.step===3}],
-  drag(id,p,s,B){ if(id!=="q") return; const [x,y]=ginv(B,p); s.qx=clamp(snap(x,.5),-5,5); let yy=snap(y,.5); if(Math.abs(y-L1f(s.qx))<.4) yy=L1f(s.qx); else if(Math.abs(y-L2f(s.qx))<.4) yy=L2f(s.qx); s.qy=clamp(yy,-5,5); },
-  extra:[
-    {name:"Make a line",t:()=>`Change ${V("m")} and ${V("c")}.<br>${V("m")} tilts the line, ${V("c")} slides it up and down.`,
-     draw:(g,s)=>{ g.line(-5,s.c-5*s.m,5,s.c+5*s.m,{stroke:BL,"stroke-width":1.2});
-       if(s.m!==0){ g.line(0,s.c,1,s.c,{stroke:AMB,"stroke-width":1.1}); g.line(1,s.c,1,s.c+s.m,{stroke:GR,"stroke-width":1.1});
-         g.text(.5,s.c,"1",{dy:s.m>0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.9,"font-weight":700}); g.text(1,s.c+s.m/2,N(s.m),{dx:1.6,dy:1.3,fill:GR,"font-size":3.9,"font-weight":700}); }
-       gpt(g,0,s.c,`(0, ${N(s.c)})`,RD,{dx:-2.6,"text-anchor":"end",dy:s.m>0?-2.4:4.6}); },
-     key:s=>KHEAD(nw(`${V("y")} = ${poly([[s.m,X1],[s.c,""]])||"0"}`))+FORMS([FB("amber",V("m"),N(s.m),s.m>0?`along 1, up ${N(s.m)}`:s.m<0?`along 1, down ${N(-s.m)}`:"flat: no up or down"),FB("red",V("c"),N(s.c),`cuts the ${V("y")}-axis at ${nw(`(0, ${N(s.c)})`)}`)],true)},
-    {name:"Two lines (Sec 2)",t:()=>`Drag the dot onto both lines.<br>The point on both solves ${nw(`${V("y")} = ${X1} + 1`)} and ${nw(`${V("y")} = −${X1} + 5`)} together.`,
-     draw:(g,s,svg)=>{ g.line(-5,L1f(-5),5,L1f(5),{stroke:BL,"stroke-width":1.2}); g.line(-5,L2f(-5),5,L2f(5),{stroke:AMB,"stroke-width":1.2});
-       g.text(-4.7,L1f(-4.7),"y = x + 1",{dy:-2,"font-size":3.9,fill:BL,"font-style":"italic","font-weight":700});
-       g.text(2.6,L2f(2.6),"y = −x + 5",{dx:2.2,dy:-1,"font-size":3.9,fill:AMB,"font-style":"italic","font-weight":700});
-       const o1=Math.abs(s.qy-L1f(s.qx))<1e-9, o2=Math.abs(s.qy-L2f(s.qx))<1e-9, col=o1&&o2?GR:o1?BL:o2?AMB:RD, dash={stroke:"var(--muted)","stroke-dasharray":"1.2 1.2","stroke-width":.5};
-       g.line(s.qx,0,s.qx,s.qy,dash); g.line(0,s.qy,s.qx,s.qy,dash);
-       g.text(s.qx,s.qy,`(${N(s.qx)}, ${N(s.qy)})`,{dx:s.qx>=0?3.4:-3.4,dy:-3,"text-anchor":s.qx>=0?"start":"end",fill:col,"font-size":3.9,"font-weight":700});
-       handle(svg,g.X(s.qx),g.Y(s.qy),"q",col); },
-     key:s=>{ const o1=Math.abs(s.qy-L1f(s.qx))<1e-9, o2=Math.abs(s.qy-L2f(s.qx))<1e-9;
-       return FORMS([FB(o1?"green":"red",nw(`${V("y")} = ${X1} + 1`),nw(`${N(s.qy)} ${o1?"=":"≠"} ${N(s.qx)} + 1`),o1?"✓ on this line":"✗ not on it"),
-         FB(o2?"green":"red",nw(`${V("y")} = −${X1} + 5`),nw(`${N(s.qy)} ${o2?"=":"≠"} −${PM(s.qx)} + 5`),o2?"✓ on this line":"✗ not on it"),
-         FB(o1&&o2?"green":"amber",o1&&o2?"✓ Works for both":"Works for both?",o1&&o2?nw(`${X1} = ${N(s.qx)}, ${V("y")} = ${N(s.qy)}`):"not yet",o1&&o2?"so this is the solution of the simultaneous equations":"find where the lines cross",null,"wide")],true); }}
-  ]});
+const lnCss=(()=>{ try{ const e=document.createElement("style"); e.textContent='.lnk .formbox .rd{font-size:17px;color:var(--ink);text-align:center;margin-top:4px}.lnk.ipk .formbox .eq{font-size:25px}.lnk.ipk .formbox .gen{font-size:15px}.lnk .lnm{font-weight:800;font-size:1.12em}.lnk .formbox .rd .lnm{font-size:1.08em}.lnsg{display:inline-block;color:var(--blue);background:var(--blue-fill);border-radius:6px;padding:0 .14em;margin-right:.06em;font-size:1.12em;font-weight:800;line-height:1.1}.lntri{fill:var(--ink);fill-opacity:.07}html[data-theme="dark"] .lntri{fill-opacity:.2}@media (max-width:899px){#app .play.lnip .stage svg{max-height:50svh}}@media (max-width:599px){.lnk.ipk .formbox .eq{font-size:23px}.lnk .formbox .rd{font-size:16px}}'; document.head.append(e); }catch(_){} return 1; })();
+const LNB={l:14,t:14,w:100,h:100,x0:-2,x1:8,y0:-4,y1:6,xs:1,xl:1,ys:1,yl:1,nonum:true};
+const lnRU=s=>{ const r=clamp(Math.round(+s.r||3),1,6); let u=clamp(Math.round(+s.u||0),-4,4); if(!u) u=1; return [r,u]; };
+const lnM=(u,r)=>{ const g=gcd(Math.abs(u),r)||1; return {neg:u<0,a:Math.abs(u)/g,b:r/g}; };
+const lnHit=(R,Q)=>R[0]<Q[2]&&Q[0]<R[2]&&R[1]<Q[3]&&Q[1]<R[3];
+const lnArw=(svg,P,Q,col)=>{ const dx=Q[0]-P[0], dy=Q[1]-P[1], L=Math.hypot(dx,dy); if(L<6) return; const ux=dx/L, uy=dy/L, M=[P[0]+dx*.56,P[1]+dy*.56], f=v=>v.toFixed(2);
+  S_(svg,"path",{d:`M${f(M[0]+ux*1.8)} ${f(M[1]+uy*1.8)}L${f(M[0]-ux*1.6-uy*1.9)} ${f(M[1]-uy*1.6+ux*1.9)}L${f(M[0]-ux*1.6+uy*1.9)} ${f(M[1]-uy*1.6-ux*1.9)}Z`,fill:col}); };
+const lnTx=(svg,x,y,w0,v,col,fs,anc,O)=>{ const w=(w0.length+v.length*1.2)*fs*.56, x0=anc==="start"?x:x-w/2;
+  const e=S_(svg,"text",{x:x.toFixed(2),y:y.toFixed(2),"text-anchor":anc,"font-size":fs,"font-weight":700,fill:col});
+  e.append(svgEl("tspan",{},w0)); e.append(svgEl("tspan",{"font-size":(fs*1.2).toFixed(2)},v)); O.push([x0,y-fs*.85,x0+w,y+fs*.25]); };
+const lnK=s=>{ const [r,u]=lnRU(s), M=lnM(u,r), B=x=>kc("blue",x), G=x=>kc("green",x), sg=`<span class="lnsg">−</span>`, mv=(M.neg?sg:"")+(M.b===1?String(M.a):frac(B(M.a),G(M.b))), mx=(M.neg?sg:"")+(M.a===1&&M.b===1?"":M.b===1?String(M.a):frac(M.a,M.b));
+  const eq=nw(`${V("y")} = <span class="lnm">${mx}</span>${X1} ${kc("amber","+ 1")}`);
+  const rd=`${nw(`${V("m")} = ${B("rise")} ÷ ${G("run")}`)} ${nw(`= ${B((u<0?sg:"")+Math.abs(u))} ÷ ${G(String(r))} = <span class="lnm">${mv}</span>`)}`;
+  return `<div class="apwk ipk lnk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("ink","Equation of the line",eq,rd,nw(`${V("y")} = ${V("m")}${X1} + ${kc("amber",V("c"))}`),"wide")],true)+`</div>`; };
+const eqLines=aid({
+  init:{r:4,u:3}, jump:true, ip:"Drag the big dot.", vb:"2 6 128 111", label:"A straight line through (0, 1) with its rise and run triangle", link:["r","u"],
+  fix:s=>{ const q=lnRU(s); s.r=q[0]; s.u=q[1]; },
+  steps:[{name:"Straight line",t:()=>"",w:s=>lnK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9761; const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("lnip");
+    const rc=svg.getBoundingClientRect(), pu=rc.width?Math.min(rc.width/128,(rc.height||rc.width)/111):0, mn=pu?12/pu:0;
+    const [r,u]=lnRU(s), m=u/r, g=graph(svg,LNB), ph=innerWidth<600, fs=Math.max(ph?5.6:4.8,mn), fn=Math.max(3.6,mn), BL="var(--blue)", GN="var(--green)", AM="var(--amber)", INK="var(--ink)", O=[];
+    const xn=[...svg.querySelectorAll("text")].find(e=>e.textContent==="x");
+    const A=[g.X(0),g.Y(1)], C=[g.X(r),g.Y(1)], P=[g.X(r),g.Y(1+u)];
+    S_(svg,"polygon",{points:[A,C,P].map(q=>q.map(v=>v.toFixed(2)).join(",")).join(" "),class:"lntri"});
+    g.line(LNB.x0,1+m*LNB.x0,LNB.x1,1+m*LNB.x1,{stroke:INK,"stroke-width":1.35,"stroke-linecap":"round"});
+    seg(svg,A,C,{stroke:GN,"stroke-width":1.8,"stroke-linecap":"round"}); lnArw(svg,A,C,GN);
+    seg(svg,C,P,{stroke:BL,"stroke-width":1.8,"stroke-linecap":"round"}); lnArw(svg,C,P,BL);
+    S_(svg,"circle",{cx:A[0],cy:A[1],r:1.5,fill:AM});
+    const hr=Math.max(7,pu?22/pu:0)+.6, Y0=g.Y(0); O.push([P[0]-hr,P[1]-hr,P[0]+hr,P[1]+hr],[A[0]-1.8,A[1]-1.8,A[0]+1.8,A[1]+1.8]);
+    const lh=R=>{ const xa=ginv(LNB,{x:R[0],y:0})[0], xb=ginv(LNB,{x:R[2],y:0})[0], ya=g.Y(1+m*xa), yb=g.Y(1+m*xb); return Math.min(ya,yb)<R[3]&&Math.max(ya,yb)>R[1]; };
+    if(xn){ const xf=Math.max(4.4,mn), x8=g.X(LNB.x1); xn.setAttribute("x",(x8+1.6).toFixed(2)); xn.setAttribute("y",(Y0+xf*.35).toFixed(2)); xn.setAttribute("text-anchor","start"); O.push([x8+1.2,Y0-xf*.6,x8+1.8+xf*.7,Y0+xf*.45]); }
+    const rw=("run ".length+String(r).length*1.2)*fs*.56, rx=Math.max((A[0]+C[0])/2,A[0]+rw/2+2.5);
+    lnTx(svg,rx,u>0?A[1]+fs+1.4:A[1]-2,"run ",String(r),GN,fs,"middle",O);
+    const rv=(u<0?"−":"")+Math.abs(u), rw2=("rise ".length+rv.length*1.2)*fs*.56, ax=[LNB.l,Y0-2.4,140,Y0+fn+2], lg=[A[0],A[1]-1.2,C[0]+1.6,A[1]+1.2], free=R=>R[0]>LNB.l&&R[2]<129.5&&!lnHit(R,ax)&&!lnHit(R,lg)&&!O.some(Q=>lnHit(Q,R))&&!lh(R);
+    let rp=null; for(const k of [.3,.22,.38,.15,.46]){ const yc=C[1]+(P[1]-C[1])*k, xe=C[0]-2.4, R=[xe-rw2,yc-fs*.62,xe,yc+fs*.62]; if(free(R)){ rp=[R[0],yc]; break; } }
+    const rx2=Math.min(C[0]+hr+.8,128.5-rw2); if(!rp) for(const k of [.5,.35,.65,.2,.8,0,1]){ const yc=C[1]+(P[1]-C[1])*k, R=[rx2,yc-fs*.62,rx2+rw2,yc+fs*.62]; if(free(R)){ rp=[rx2,yc]; break; } }
+    if(!rp) rp=[rx2,(C[1]+P[1])/2];
+    lnTx(svg,rp[0],rp[1]+fs*.35,"rise ",rv,BL,fs,"start",O);
+    for(let x=LNB.x0;x<=LNB.x1;x++){ if(!x) continue; lab(svg,[g.X(x),Y0+fn+.8],N(x),{"font-size":fn,fill:"var(--muted)","text-anchor":"middle"}); }
+    for(let y=LNB.y0;y<LNB.y1;y++){ if(!y) continue; const one=y===1, f=one?Math.max(4.8,mn*1.2):fn, X=g.X(0)-(one?2.6+f*.3:1.6), Y=g.Y(y)+f*.36;
+      lab(svg,[X,Y],N(y),one?{"font-size":f,fill:AM,"font-weight":800,"text-anchor":"end"}:{"font-size":f,fill:"var(--muted)","text-anchor":"end"}); }
+    S_(svg,"rect",{x:2,y:6,width:128,height:111,fill:"transparent","data-drag":"p",style:"cursor:pointer"});
+    handle(svg,P[0],P[1],"p",INK); S_(svg,"circle",{cx:P[0],cy:P[1],r:3.2,fill:INK,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [x,y]=ginv(LNB,p); s.r=clamp(Math.round(x),1,6); const v=y-1; let u=clamp(Math.round(v),-4,4); if(!u) u=v<0?-1:1; s.u=u; },
+  kbd:{label:(id,s)=>["The big dot: arrow keys move it",`rise ${s.u}, run ${s.r}`],
+    move:(id,k,sh,s)=>{ if(/Up/.test(k)) s.u=s.u===-1?1:Math.min(4,s.u+1); else if(/Down/.test(k)) s.u=s.u===1?-1:Math.max(-4,s.u-1); else if(/Right/.test(k)) s.r=Math.min(6,s.r+1); else s.r=Math.max(1,s.r-1); }},
+  key(){ return ""; }
+});
 const BXQ={l:12,t:4,w:124,h:112,x0:-4,x1:5,y0:-6,y1:12,xs:1,xl:1,ys:1,yl:2};
 const wMirror=(h,ds,ex)=>({b:"Why symmetrical?",t:`Points the same distance either side of ${nw(`${X1} = ${N(h)}`)} get the same ${V("y")}.<br>So the two sides are mirror images.`,
   draw:(g,s,F,B)=>{ g.line(h,B.y0,h,B.y1,{stroke:GR,"stroke-dasharray":"2 1.5","stroke-width":.9}); pairs(g,F,h,ds); },
@@ -2929,7 +2979,33 @@ const QUADS2=[
   {id:"q3",pill:`${V("y")} = ${X2} − 2${X1} − 3`,eq:`${V("y")} = ${X2} − 2${X1} − 3`,f:x=>x*x-2*x-3,sub:x=>`${PB(x)}² − 2${PM(x)} − 3`,xr:[-2,4,1],why:[wRoots(-1,3,[`${X2} − 2${X1} − 3 = 0`,`(${X1} + 1)(${X1} − 3) = 0`]),wYint(-3,`${V("y")} = 0² − 2(0) − 3 = −3`),wMirror(1,[1,2,3],`halfway between −1 and 3`),wTurn(1,-4,true,nw(`${V("y")} = 1² − 2(1) − 3 = −4`))]},
   {id:"q4",pill:`${V("y")} = −${X2} + 4`,eq:`${V("y")} = −${X2} + 4`,f:x=>-x*x+4,sub:x=>`−${PB(x)}² + 4`,xr:[-3,3,1],why:[{b:"Why upside down?",t:`${nw(`${V("y")} = 4 − ${X2}`)}: the further ${X1} is from 0, the more you take away from 4.<br>So ${V("y")} is biggest (4) at ${X1} = 0, and the curve is an ∩.`,draw:g=>gpt(g,-3,-5,"(−3, −5)",RD,{dx:0,"text-anchor":"middle",dy:5.2}),key:()=>[FB("red","Square first, then the minus",nw("−(−3)² + 4 = −9 + 4 = −5"),"the further from 0, the lower it goes")]},wRoots(-2,2,[`−${X2} + 4 = 0`,`${X2} = 4`],"both square to 4"),wTurn(0,4,false,nw(`${V("y")} = −0² + 4 = 4`))]}
 ];
-const eqQuad=eqAid({label:"Quadratic graph from a table of values",box:BXQ,curves:QUADS2,xr:[-3,4,1],init:{px:2,py:2}});
+const QGB={l:8,t:19,w:126,h:100,x0:-3,x1:5,y0:-6,y1:7,xs:1,xl:1,ys:1,yl:1,nonum:true};
+const QGP=[[3.6,"c","start"],[4.4,"a","start"],[-3.6,"c","end"],[0,"b","middle"],[3.6,"c","start"],[-4.4,"a","end"],[-3.6,"c","end"]];
+const qgF=x=>x*x-2*x-3,qgN=d=>{ let n=0; for(let i=0;i<7;i++) if(d>>i&1) n++; return n; };
+const qgK=s=>{ const x=s.x, y=qgF(x), ng=x<0, A=t=>`<span class="qga${ng?" qgc":""}">${t}</span>`, t2=-2*x;
+  const r1=nw(`${V("y")} = ${A(`${PB(x)}²`)} ${A(`− 2${PM(x)}`)} − 3`);
+  const r2=nw(`= ${A(N(x*x))} ${A(`${t2>0?"+":"−"} ${N(Math.abs(t2))}`)} − 3 = <span class="ipans qgy">${N(y)}</span>`);
+  return `<div class="apwk ipk qgk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("blue",nw(`${V("y")} = ${X2} − 2${X1} − 3`),`<div class="qgr qgx">${nw(`${X1} = ${N(x)}`)}</div><div class="qgr">${r1}</div><div class="qgr">${r2}</div>`,null,null,"wide")],true)+`</div>`; };
+const eqQuad=aid({
+  init:{x:-2,d:1}, jump:true, ip:"Drag along the x-axis.", vb:"2 8 136 116", label:"Plot y = x² − 2x − 3 one x at a time", link:["x","d"],
+  fix:s=>{ s.x=clamp(Math.round(+s.x||0),-2,4); s.d=((Math.round(+s.d||0)&127)|(1<<(s.x+2))); },
+  steps:[{name:"Plot it",t:()=>`Drag along the x-axis.`,w:s=>qgK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9610; const g=graph(svg,QGB), x=s.x, y=qgF(x), d=s.d|(1<<(x+2)), c=qgN(d), fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700};
+    for(let v=-2;v<=4;v++) if(v!==x){ const o=v===0||v===-1?-1.4:v===3?1.4:0; lab(svg,[g.X(v)+o,g.Y(0)+fs+1.4],N(v),{"font-size":fs-.6,fill:"var(--muted)","text-anchor":o<0?"end":o>0?"start":"middle"}); }
+    [-4,2,4,6].forEach(v=>lab(svg,[g.X(0)-1.4,g.Y(v)+fs*.32],N(v),{"font-size":fs-.6,fill:"var(--muted)","text-anchor":"end"}));
+    if(c>=3) g.plot(qgF,c>=7?{stroke:BL,"stroke-width":1.5}:{stroke:BL,"stroke-width":1.2,"stroke-opacity":.3});
+    if(c>=7) lab(svg,[g.X(1.6),g.Y(2.4)],"one smooth curve",Object.assign({fill:BL},F));
+    if(y!==0) g.line(x,0,x,y,{stroke:AMB,"stroke-dasharray":"1.4 1.2","stroke-width":.8});
+    for(let v=-2;v<=4;v++) if(v!==x&&(d>>(v+2)&1)) g.dot(v,qgF(v),BL,1.6);
+    g.dot(x,y,BL,2.2);
+    lab(svg,[g.X(x),g.Y(0)+(innerWidth<600?10.6:8.2)+fs*.75],N(x),Object.assign({fill:AMB,stroke:"var(--card)","stroke-width":1.4,"paint-order":"stroke"},F));
+    const P=QGP[x+2], vt=S_(svg,"text",Object.assign({x:g.X(x)+P[0]*(P[1]==="a"&&innerWidth<600?1.6:1),y:g.Y(y)+(P[1]==="c"?fs*.36:P[1]==="a"?(innerWidth<600?-7.4:-4.6):fs+3.2),"text-anchor":P[2],fill:"var(--ink)"},F));
+    [["("],[N(x),"amber"],[", "],[N(y),"blue"],[")"]].forEach(([t,k])=>vt.append(svgEl("tspan",k?{fill:`var(--${k})`}:{},t)));
+    S_(svg,"rect",{x:QGB.l,y:QGB.t,width:QGB.w,height:QGB.h,fill:"transparent","data-drag":"x",style:"cursor:pointer"});
+    handle(svg,g.X(x),g.Y(0),"x","var(--ink)"); S_(svg,"circle",{cx:g.X(x),cy:g.Y(0),r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [gx]=ginv(QGB,p); s.x=clamp(Math.round(gx),-2,4); s.d=s.d|(1<<(s.x+2)); },
+  key(){ return ""; }
+});
 const BXP={l:12,t:4,w:124,h:112,x0:-4,x1:4,y0:-6,y1:8,xs:.5,xl:1,ys:1,yl:2};
 const w0x=b=>({b:`Can ${X1} be 0?`,t:`Put ${X1} = 0 in: ${V("y")} = ${b}, and you can't divide by 0.<br>So the ${V("y")}-axis (${X1} = 0) is an <b>asymptote</b>: the curve never meets it.`,
   draw:(g,s,F,B)=>asy(g,B,"x",0,"asymptote"),key:()=>[FB("red",nw(`${X1} = 0`),nw(`${V("y")} = ${b}`),"can't divide by 0, so no point")]});
@@ -2959,23 +3035,54 @@ const powEq=(a,n)=>{const A=a===1?"":a===-1?"−":N(a); if(n===0) return `${V("y
 const riseT=v=>{const r=Math.round(v*10)/10, ap=Math.abs(v-r)>1e-6?"≈ ":""; return v<0?`down ${ap}${N(-r,1)}`:`rise ${ap}${N(r,1)}`;};
 const gRun=m=>Math.abs(m)>4?.5:Math.abs(m)>2?1:2;
 const pcv=s=>POWS.find(c=>c.id===s.cv)||POWS[0];
-const eqPower=eqAid({label:"Power and exponential graphs",box:BXP,curves:POWS,xr:[-4,4,.5],hidePill:[3],init:{n:-1,a:1,gx:1},
-  sliders:[{k:"n",label:V("n"),min:-2,max:3,step:1,show:s=>s.step===3},{k:"a",label:V("a"),min:-3,max:3,step:.5,show:s=>s.step===3,on:(s,p)=>{if(s.a===0)s.a=p>0?-.5:.5}},
-    {k:"gx",label:X1,min:-4,max:4,step:.5,show:s=>s.step===4,minf:s=>pcv(s).xr[0],maxf:s=>pcv(s).xr[1]}],
-  extra:[
-    {name:"6 shapes",t:()=>`Change ${V("n")} to see the 6 shapes of ${nw(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`)}.<br>A negative ${V("a")} flips the graph upside down.`,
-     draw:(g,s,svg,F,c,B)=>{ const f=x=>s.n<0&&Math.abs(x)<1e-9?NaN:s.a*Math.pow(x,s.n); if(s.n<0){ g.line(0,B.y0,0,B.y1,{stroke:RD,"stroke-dasharray":"2.2 1.6","stroke-width":.8}); g.line(B.x0,0,B.x1,0,{stroke:RD,"stroke-dasharray":"2.2 1.6","stroke-width":.8}); } g.plot(f,{"stroke-width":1.4}); },
-     key:s=>KPAIR(`${V("y")} = ${V("a")}${X1}<sup>${V("n")}</sup>`,nw(powEq(s.a,s.n)),"Here")+FORMS([FB("blue","Shape",nw(`${V("n")} = ${N(s.n)}`),(s.n<0?`${nw(`${X1}<sup>${N(s.n)}</sup> = ${frac("1",s.n===-1?X1:X2)}`)}: `:"")+sh6(s.n,s.a)),FB(s.a>0?"green":"red",nw(`${V("a")} ${s.a>0?"&gt;":"&lt;"} 0`),s.a>0?"this way up":"flipped upside down")],true)},
-    {name:"Gradient",t:()=>`The green line is the <b>tangent</b>: it just touches the curve here.<br>Gradient = rise ÷ run, read off a big triangle on the tangent.`,
-     draw:(g,s,svg,F,c,B)=>{ g.plot(F,{"stroke-width":1.2}); const x=s.gx, y=F(x); if(!isFinite(y)){ asy(g,B,"x",x,"no point here"); return; }
-       const m=gslope(F,x), run=gRun(m), h=run/2; g.line(x-4,y-4*m,x+4,y+4*m,{stroke:GR,"stroke-width":1.1});
-       g.line(x-h,y-m*h,x+h,y-m*h,{stroke:AMB,"stroke-width":1}); g.line(x+h,y-m*h,x+h,y+m*h,{stroke:GR,"stroke-width":1,"stroke-dasharray":"1.4 1"});
-       g.text(x,y-m*h,`run ${N(run)}`,{dy:m>=0?4.4:-1.8,"text-anchor":"middle",fill:AMB,"font-size":3.8,"font-weight":700});
-       g.text(x+h,y,riseT(m*run),{dx:1.6,dy:1.3,fill:GR,"font-size":3.8,"font-weight":700}); g.dot(x,y,"var(--accent)",2); },
-     key:(s,c)=>{ const F=x=>(c.bad&&c.bad(x))?NaN:c.f(x), x=s.gx, y=F(x); if(!isFinite(y)) return KHEAD(c.eq)+FORMS([FB("red","At",nw(`${X1} = ${N(x)}`),"no point here, so no tangent",null,"wide")],true);
-       const m=gslope(F,x), run=gRun(m), rise=m*run, R=Math.round(rise*10)/10, ex=Math.abs(rise-R)<1e-6;
-       return KHEAD(c.eq)+FORMS([FB("amber","At",nw(`(${N(x)}, ${N(y,2)})`),""),FB("green","Gradient",nw(`${frac(N(R,1),N(run))} ${ex?"=":"≈"} ${N(R/run,2)}`),rise<0?"it goes down, so the gradient is negative":"rise ÷ run, read off the tangent",null,"wide")],true); }}
-  ]});
+const PWB={l:8,t:10,w:110,h:110,x0:-4.5,x1:4.5,y0:-4.5,y1:4.5,xs:1,xl:1,ys:1,yl:1,nonum:true,xn:" ",yn:" "};
+const PWS=[.25,.5,1,2,4], PWP="var(--purple)";
+const pwCss=()=>{ if(!document.getElementById("pwcss")){ const e=document.createElement("style"); e.id="pwcss"; e.textContent=PWCSS; document.head.append(e); } };
+const PWCSS=`.pwk .formbox .rd{min-height:1.4em;font-size:16px;font-weight:700;color:var(--ink);text-align:center;margin-top:2px}.pwk .formbox .hd{font-size:15px;text-transform:none;letter-spacing:0;color:var(--blue)}.pwk .pwar{color:var(--muted);font-weight:400;margin:0 .15em}.pwk .pwno{color:var(--red);font-weight:800}.pwk .ipans{font-weight:800}@media (max-width:599px){.pwk.ipk .formbox .eq{font-size:19px}}`;
+const pwSnap=v=>{ const a=Math.abs(+v)||.5, q=PWS.reduce((b,c)=>Math.abs(c-a)<Math.abs(b-a)?c:b,PWS[0]); return (+v<0?-1:1)*q; };
+const pwK=s=>{ const x=s.x, y=1/x, A=u=>kc("amber",u), hd=nw(`${V("y")} = ${frac("1",X1)}`);
+  let eq, rd="";
+  if(s.z) eq=`${nw(`${A(`${X1} = 0`)}<span class="pwar">→</span>`)} ${nw(`${V("y")} = 1 ÷ ${A("0")}`)} ${nw(`<span class="pwno">✗ no value</span>`)}`;
+  else { eq=`${nw(`${A(`${X1} = ${N(x)}`)}<span class="pwar">→</span>`)} ${nw(`${V("y")} = 1 ÷ ${A(PB(x))} = <span class="ipans k-green">${N(y)}</span>`)}`;
+    rd=Math.abs(x)>=4?`${V("y")} close to 0, never 0`:Math.abs(x)<=.25?`${X1} close to 0: ${V("y")} shoots off`:""; }
+  return `<div class="apwk ipk pwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("blue",hd,eq,rd||"&nbsp;",null,"wide")],true)+`</div>`; };
+const eqPower=aid({
+  init:{x:.5,z:0}, jump:true, ip:"Drag the dot.", vb:"0 0 126 122", label:"The graph of y = 1/x with its two asymptotes and a point you can slide", link:["x","z"],
+  fix:s=>{ s.x=pwSnap(s.x); s.z=+s.z===1?1:0; },
+  steps:[{name:"y = 1/x",t:()=>"",w:s=>pwK(s)}],
+  draw(svg,s){ pwCss(); svg.setAttribute("viewBox",innerWidth<600?"0 0 126 122":"-14 0 154 122"); const n0=graph.n, f0=fracN; graph.n=9600; fracN=9600; const B=PWB, g=graph(svg,B), x=s.x, y=1/x, rt=x>0, z=!!s.z, fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700};
+    const X0=g.X(0), Y0=g.Y(0), px=g.X(x), py=g.Y(y), da={stroke:PWP,"stroke-width":.6,"stroke-dasharray":"2.4 1.6"}, cv={stroke:"var(--card)","stroke-width":.9};
+    seg(svg,[X0,B.t],[X0,B.t+B.h],cv); seg(svg,[B.l,Y0],[B.l+B.w,Y0],cv); g.line(0,B.y0,0,B.y1,da); g.line(B.x0,0,B.x1,0,da);
+    const it={"font-size":fs,"font-style":"italic",fill:"var(--ink)"}, T={"font-size":fs*.88,fill:"var(--muted)"};
+    lab(svg,[X0-1.6,B.t-2.4],"y",Object.assign({"text-anchor":"end"},it)); lab(svg,[B.l+B.w+1.6,Y0+fs*.36],"x",Object.assign({"text-anchor":"start"},it));
+    lab(svg,[X0+1.6,B.t-2.4],"asymptote",Object.assign({fill:PWP,"text-anchor":"start"},F)); lab(svg,[B.l+1,Y0-fs-8],"asymptote",Object.assign({fill:PWP,"text-anchor":"start"},F));
+    [-4,-3,-2,-1,1,2,3,4].forEach(k=>{
+      const hx=!z&&((k>0)===rt)&&(Math.abs(k-x)<.6||(Math.abs(x)<=.5&&Math.abs(k)===1)), hs=!z&&Math.abs(y)<.6&&k===(rt?-1:1);
+      if(!hx&&!hs) lab(svg,[g.X(k),k>0?Y0+fs+.6:Y0-1.8],N(k),T);
+      if(Math.abs(k-y)>=.6) lab(svg,[k>0?X0-1.8:X0+1.8,g.Y(k)+fs*.32],N(k),Object.assign({"text-anchor":k>0?"end":"start"},T)); });
+    g.plot(u=>Math.abs(u)<1e-9?NaN:1/u,{stroke:"var(--blue)","stroke-width":.9},B.x0,B.x1,900);
+    lab(svg,[g.X(1.1),g.Y(3.2)],"y = {1/x}",Object.assign({fill:"var(--blue)","text-anchor":"start","font-style":"italic"},F,{"font-size":fs*1.3}));
+    if(!z){ g.line(x,y,x,0,{stroke:"var(--amber)","stroke-width":.8,"stroke-dasharray":"1.4 1.2"}); g.line(x,y,0,y,{stroke:"var(--green)","stroke-width":.8,"stroke-dasharray":"1.4 1.2"});
+      const xl=rt?Math.max(px,X0+1.2+fs*.9):Math.min(px,X0-1.2-fs*.9), far=Math.abs(x)>=4;
+      lab(svg,[xl,rt?Y0+fs+(far?2.8:1.4):Y0-(far?3.4:2)],N(x),Object.assign({fill:"var(--amber)"},F));
+      const sm=Math.abs(y)<.6, yy=sm?(rt?Y0-2:Y0+fs+1.4):py+fs*.36;
+      lab(svg,[rt?X0-2.6:X0+2.6,yy],N(y),Object.assign({fill:"var(--green)","text-anchor":rt?"end":"start"},F)); }
+    let d=""; for(let i=0;i<=60;i++){ const u=.25+4.25*i/60; d+=(i?"L":"M")+g.X(u).toFixed(2)+" "+g.Y(1/u).toFixed(2); } for(let i=0;i<=60;i++){ const u=-.25-4.25*i/60; d+=(i?"L":"M")+g.X(u).toFixed(2)+" "+g.Y(1/u).toFixed(2); }
+    S_(svg,"path",{d:d+`M${X0.toFixed(2)} ${B.t}L${X0.toFixed(2)} ${B.t+B.h}`,fill:"none",stroke:"transparent","stroke-width":16,"pointer-events":"stroke","data-drag":"p",style:"cursor:pointer"});
+    if(z){ S_(svg,"circle",{cx:px,cy:py,r:2.2,fill:"var(--ink)",opacity:.25,"pointer-events":"none"});
+      S_(svg,"circle",{cx:X0,cy:py,r:7,fill:"transparent","data-drag":"p",style:"cursor:grab"}); S_(svg,"circle",{cx:X0,cy:py,r:2.7,fill:"var(--card)",stroke:"var(--ink)","stroke-width":1,"pointer-events":"none"});
+      lab(svg,[rt?X0-4.6:X0+4.6,py+fs*.5],"✗",{fill:"var(--red)","font-size":fs*1.4,"font-weight":800,"text-anchor":rt?"end":"start"}); }
+    else { S_(svg,"circle",{cx:px,cy:py,r:7,fill:"transparent","data-drag":"p",style:"cursor:grab"}); S_(svg,"circle",{cx:px,cy:py,r:2.5,fill:"var(--ink)",stroke:"var(--card)","stroke-width":.9,"pointer-events":"none"}); }
+    graph.n=n0; fracN=f0; },
+  drag(id,p,s,start){ const B=PWB, [mx]=ginv(B,p), sx=v=>B.l+(v-B.x0)/(B.x1-B.x0)*B.w, sy=v=>B.t+(B.y1-v)/(B.y1-B.y0)*B.h;
+    const near=sg=>PWS.map(v=>sg*v).reduce((b,c)=>Math.hypot(sx(c)-p.x,sy(1/c)-p.y)<Math.hypot(sx(b)-p.x,sy(1/b)-p.y)?c:b);
+    if(start&&Math.hypot(sx(s.x)-p.x,sy(1/s.x)-p.y)<7){ s._b=s.x>0?1:-1; return; }
+    if(start||!s._b){ if(Math.abs(mx)<.12) s._b=s.x>0?1:-1; else { const a=near(1), b=near(-1); s._b=Math.hypot(sx(a)-p.x,sy(1/a)-p.y)<=Math.hypot(sx(b)-p.x,sy(1/b)-p.y)?1:-1; } }
+    if(s._b*mx<.12){ s.z=1; return; }
+    s.z=0; s.x=near(s._b); },
+  drop(id,s){ delete s._b; },
+  key(){ return ""; }
+});
 const BXE={l:14,t:4,w:112,h:112,x0:-3,x1:5,y0:-3,y1:5,xs:.5,xl:1,ys:.5,yl:1};
 const wLog=(bs,lg,bT)=>{ const out=[{b:`Can ${X1} be 0 or less?`,t:`${nw(`${V("y")} = ${lg}`)} means ${nw(`${bT}<sup>${V("y")}</sup> = ${X1}`)}, and ${bT} to any power is positive.<br>So ${X1} must be positive, and the ${V("y")}-axis is an <b>asymptote</b>.`,
     draw:(g,s,F,B)=>{shadeLeft(g,B,"nothing here"); asy(g,B,"x",0,"asymptote");},key:()=>[FB("red",`${X1} must be positive`,nw(`${bT}<sup>${V("y")}</sup> = ${X1}`),`${bT} to any power is never 0 or negative`)]},
@@ -2991,55 +3098,100 @@ const EXPS=[
   {id:"le",base:Math.E,pill:`${V("y")} = ln ${X1}`,eq:`${V("y")} = ln ${X1}`,hint:"(e ≈ 2.718)",f:x=>Math.log(x),bad:x=>Math.abs(x)<1e-9?"no power of e makes 0":x<0?"no power of e makes a negative number":null,sub:x=>`ln ${PB(x)}`,xr:[0,5,.5],why:wLog(Math.E,`ln ${X1}`,"e")}
 ];
 const ecv=s=>EXPS.find(c=>c.id===s.cv)||EXPS[0];
-const eqExpLog=eqAid({label:"Exponential and logarithm graphs",box:BXE,curves:EXPS,xr:[-3,5,.5],init:{t:1},
-  sliders:[{k:"t",label:X1,min:-2,max:2,step:.25,show:s=>s.step===3,maxf:s=>ecv(s).base===2?2:1.5}],
-  extra:[{name:"Mirror",t:()=>`Swap ${X1} and ${V("y")} and you jump from one graph to the other.<br>So they're mirror images in the line ${V("y")} = ${X1}.`,
-    draw:(g,s,svg,F,c,B)=>{ const b=c.base, A=x=>Math.pow(b,x), Lg=x=>x>0?Math.log(x)/Math.log(b):NaN, t=s.t, P=[t,A(t)], Q=[A(t),t];
-      g.line(B.x0,B.x0,B.x1,B.x1,{stroke:"var(--muted)","stroke-dasharray":"1.6 1.4","stroke-width":.7}); g.text(4.6,4.6,"y = x",{dy:4,"text-anchor":"end",fill:"var(--muted)","font-size":3.8,"font-style":"italic"});
-      g.plot(A,{stroke:BL,"stroke-width":1.2}); g.plot(Lg,{stroke:GR,"stroke-width":1.2});
-      g.line(P[0],P[1],Q[0],Q[1],{stroke:AMB,"stroke-dasharray":"1.4 1.2","stroke-width":.9});
-      gpt(g,P[0],P[1],`(${N(t)}, ${N(P[1],2)})`,BL,{dx:-2.6,"text-anchor":"end"}); gpt(g,Q[0],Q[1],`(${N(Q[0],2)}, ${N(t)})`,GR,{dy:5}); },
-    key:(s,c)=>{ const b=c.base, bT=b===2?"2":MS("e"), lT=b===2?`${MS("log")}<sub>2</sub> ${X1}`:`${MS("ln")} ${X1}`, A=Math.pow(b,s.t);
-      return FORMS([FB("blue",`On ${V("y")} = ${bT}<sup>${X1}</sup>`,nw(`(${N(s.t)}, ${N(A,2)})`),""),FB("green",`On ${V("y")} = ${lT}`,nw(`(${N(A,2)}, ${N(s.t)})`),"same numbers, swapped")],true); }}]});
-const BXS={l:12,t:4,w:124,h:112,x0:-3,x1:5,y0:-6,y1:12,xs:1,xl:1,ys:1,yl:2};
-const BXS3={l:12,t:4,w:124,h:112,x0:-3,x1:3,y0:-10,y1:10,xs:.5,xl:1,ys:1,yl:2};
-const QCf=x=>x*x-2*x-3, CCf=x=>x**3-4*x, QCL=`${X2} − 2${X1} − 3`, CCL=`${X1}³ − 4${X1}`;
-const SOLV=[
-  {id:"a0",pill:nw(`${QCL} = 0`),eq:`${QCL} = 0`,f:QCf,cL:QCL,ln:()=>0,lL:"0",lRd:`that's the ${X1}-axis: already there`,noDraw:true,B:BXS,work:["the left side is already the curve",`the right side is 0, and ${nw(`${V("y")} = 0`)} is the ${X1}-axis`]},
-  {id:"a2",pill:nw(`${QCL} = 2`),eq:`${QCL} = 2`,f:QCf,cL:QCL,ln:()=>2,lL:"2",lRd:"you draw this one",B:BXS,work:["the left side is already the curve"]},
-  {id:"a3",pill:nw(`${X2} − 3${X1} − 1 = 0`),eq:`${X2} − 3${X1} − 1 = 0`,f:QCf,cL:QCL,ln:x=>x-2,lL:`${X1} − 2`,lRd:"you draw this one",B:BXS,
-   work:[`you want the curve ${nw(QCL)} in it, so split ${nw(`−3${X1}`)} into ${nw(`−2${X1} − ${X1}`)} and −1 into ${nw("−3 + 2")}:`,nw(`${QCL} − ${X1} + 2 = 0`),`move ${nw(`− ${X1} + 2`)} to the other side:`,nw(`${QCL} = ${X1} − 2`)]},
-  {id:"c1",pill:nw(`${X1}³ − 5${X1} + 1 = 0`),eq:`${X1}³ − 5${X1} + 1 = 0`,f:CCf,cL:CCL,ln:x=>x-1,lL:`${X1} − 1`,lRd:"you draw this one",B:BXS3,
-   work:[`you want the curve ${nw(CCL)} in it, so split ${nw(`−5${X1}`)} into ${nw(`−4${X1} − ${X1}`)}:`,nw(`${CCL} − ${X1} + 1 = 0`),`move ${nw(`− ${X1} + 1`)} to the other side:`,nw(`${CCL} = ${X1} − 1`)]}
-];
-const CURV2=[{id:"q",f:QCf,cL:QCL,B:BXS},{id:"c",f:CCf,cL:CCL,B:BXS3}];
-const scv=s=>SOLV.find(p=>p.id===s.pr)||SOLV[0], kcv=s=>CURV2.find(c=>c.id===s.kc)||CURV2[0];
-const ansTxt=rs=>rs.length?rs.map(r=>Math.abs(r-Math.round(r))<1e-9?nw(`${X1} = ${N(r)}`):nw(`${X1} ≈ ${N(r,1)}`)).join(" or "):"none";
+const elB={l:10,t:6,w:112,h:112,x0:-2,x1:5,y0:-2,y1:5,xs:1,xl:1,ys:1,yl:1,nonum:true};
+const ELX=[-1.5,-1,-.5,0,.5,1,1.5];
+const elY=x=>x===0?"1":Math.exp(x).toPrecision(3);
+const elLn=x=>x===0?"0":f2(x);
+const elNear=v=>isFinite(v)?ELX.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)-1e-9?x:b,.5):.5;
+const elW=(parts,fs)=>parts.reduce((a,q)=>a+q[0].length*(q[1]&&q[1].sup?.62:1),0)*fs*.56+1;
+const ELH={stroke:"var(--card)","stroke-width":.7,"stroke-linejoin":"round","paint-order":"stroke"};
+function elPut(svg,O,parts,cands,fs,col,o={}){ const w=elW(parts,fs), h=fs; let pick=null;
+  cands.forEach(([cx0,cy0,bias],i)=>{ const cx=clamp(cx0,O.bd[0]+w/2,O.bd[2]-w/2), cy=clamp(cy0,O.bd[1]+h/2,O.bd[3]-h/2), R=[cx-w/2,cy-h/2,cx+w/2,cy+h/2];
+    let sc=(bias==null?i*.1:bias)+Math.hypot(cx-cx0,cy-cy0)*.05;
+    if(O.rects.some(Q=>Q[0]<R[2]+.8&&R[0]<Q[2]+.8&&Q[1]<R[3]+.8&&R[1]<Q[3]+.8)) sc+=100;
+    const hw=new Set(); O.pts.forEach(([x,y,k])=>{ if(x>R[0]-.6&&x<R[2]+.6&&y>R[1]-.6&&y<R[3]+.6) hw.add(k); }); hw.forEach(k=>sc+=k);
+    if(!pick||sc<pick[3]) pick=[cx,cy,R,sc]; });
+  O.rects.push(pick[2]); const tx=S_(svg,"text",Object.assign({x:pick[0].toFixed(2),y:(pick[1]+fs*.35).toFixed(2),"text-anchor":"middle","font-size":fs,"font-weight":700,fill:col},ELH,o));
+  parts.forEach(([s,a])=>tx.append(svgEl("tspan",Object.assign(a&&a.sup?{dx:(fs*.12).toFixed(2),dy:(-fs*.38).toFixed(2),"font-size":(fs*.7).toFixed(2),style:"stroke:none"}:{},a&&a.it?{"font-style":"italic"}:{},a&&a.up?{style:"stroke:none"}:{}),s))); return tx; }
+const elAround=(P,parts,fs,r,pref)=>{ const w=elW(parts,fs), h=fs, out=[];
+  [1.2,4.2,7.5].forEach((gp,ri)=>{ for(let k=0;k<16;k++){ const a=k*Math.PI/8, c=Math.cos(a), s=Math.sin(a), da=Math.abs(Math.atan2(Math.sin(a-pref),Math.cos(a-pref)));
+    const ox=Math.abs(s)<.2?Math.sign(c)*(r+gp+w/2):Math.abs(c)<.2?0:Math.sign(c)*(w/2+gp*Math.abs(c)), oy=Math.abs(s)<.2?0:Math.sign(s)*(r+gp*Math.abs(s)+h/2);
+    out.push([P[0]+ox,P[1]+oy,ri*.35+da*.25]); } }); return out; };
+const elK=s=>{ const x=s.x, z=x===0, ex=z?"=":"≈", B=q=>kc("blue",q), G=q=>kc("green",q);
+  const e1=nw(B(`${MS("e")}<sup>${N(x)}</sup> ${ex} <b>${elY(x)}</b>`)), e2=nw(G(`${MS("ln")} <b>${elY(x)}</b> ${ex} ${elLn(x)}`));
+  return `<div class="apwk ipk elk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("ink","Swap x and y",`${e1}<span class="elar">↔</span>${e2}`,null,null,"wide")],true)+`</div>`; };
+const eqExpLog=aid({
+  init:{x:.5}, jump:true, ip:"Drag the big dot.", vb:"7 3 118 118", label:"y = e to the x and y = ln x, mirror images in the line y = x", link:["x"],
+  fix:s=>{ s.x=elNear(+s.x); },
+  steps:[{name:"Mirror",t:()=>"",w:s=>elK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9710; const vb=innerWidth>=900?[7,-5,118,126]:[7,3,118,118]; svg.setAttribute("viewBox",vb.join(" "));
+    const B=elB, g=graph(svg,B), x=s.x, ey=Math.exp(x), P=[g.X(x),g.Y(ey)], Q=[g.X(ey),g.Y(x)];
+    svg.classList.add("elsvg"); const rc=svg.getBoundingClientRect(), pu=rc.width?Math.min(rc.width/vb[2],(rc.height||rc.width)/vb[3]):0, fs=Math.max(innerWidth<600?5:4.4,pu?12.5/pu:0), fs2=fs*.92;
+    const O={rects:[],pts:[],bd:[B.l+.6,B.t+.6,B.l+B.w-.6,B.t+B.h-.6]}, dash={"stroke-dasharray":"1.8 1.5","stroke-width":.85};
+    g.line(B.x0,0,B.x1,0,Object.assign({stroke:BL},dash)); g.line(0,B.y0,0,B.y1,Object.assign({stroke:GR},dash));
+    g.line(B.x0,B.x0,B.x1,B.x1,{stroke:"var(--muted)","stroke-dasharray":"1.4 1.4","stroke-width":.6});
+    g.plot(Math.exp,{stroke:BL,"stroke-width":1.05}); g.plot(v=>v>0?Math.log(v):NaN,{stroke:GR,"stroke-width":1.05},.0004,B.x1,900);
+    g.line(x,ey,ey,x,{stroke:AMB,"stroke-dasharray":"1.6 1.2","stroke-width":1});
+    for(let v=B.x0;v<=1.62;v+=.06){ O.pts.push([g.X(v),g.Y(Math.exp(v)),3],[g.X(Math.exp(v)),g.Y(v),3]); }
+    for(let v=B.x0;v<=B.x1;v+=.1) O.pts.push([g.X(v),g.Y(v),1],[g.X(v),g.Y(0),1.2],[g.X(0),g.Y(v),1.2]);
+    for(let k=0;k<=16;k++){ const u=k/16; O.pts.push([P[0]+(Q[0]-P[0])*u,P[1]+(Q[1]-P[1])*u,2]); }
+    const fx=[[0,1,BL],[1,0,GR]]; if(x!==0) fx.forEach(([a,b,c])=>S_(svg,"circle",{cx:g.X(a),cy:g.Y(b),r:1.1,fill:c,opacity:.55}));
+    S_(svg,"circle",{cx:Q[0],cy:Q[1],r:1.5,fill:GR});
+    const hr=8; O.rects.push([P[0]-hr,P[1]-hr,P[0]+hr,P[1]+hr],[Q[0]-2.4,Q[1]-2.4,Q[0]+2.4,Q[1]+2.4]); O.rects.push([g.X(0)+.6,B.t,g.X(0)+5,B.t+5.5],[B.l+B.w-5,g.Y(0)-7.5,B.l+B.w,g.Y(0)-1.5]);
+    const aw=elW([["asymptote"]],fs2), ax=[g.X(B.x1)-aw/2-1.5,g.Y(0)+fs2*.85], ay=[g.X(0)-aw/2-1.8,g.Y(B.y0)-fs2*.75];
+    [[ax,BL],[ay,GR]].forEach(([A,c])=>{ S_(svg,"text",Object.assign({x:A[0].toFixed(2),y:(A[1]+fs2*.35).toFixed(2),"text-anchor":"middle","font-size":fs2,"font-weight":700,fill:c},ELH),"asymptote"); O.rects.push([A[0]-aw/2,A[1]-fs2/2,A[0]+aw/2,A[1]+fs2/2]); });
+    const pT=[[`(${N(x)}, ${elY(x)})`]], qT=[[`(${elY(x)}, ${N(x)})`]];
+    const UL=-3*Math.PI/4, LR=Math.PI/4;
+    elPut(svg,O,pT,elAround(P,pT,fs,hr,UL),fs,BL);
+    elPut(svg,O,qT,elAround(Q,qT,fs,2.4,LR),fs,GR);
+    const it={"font-style":"italic"}, C=(a,b)=>[g.X(a),g.Y(b)];
+    elPut(svg,O,[["y",{it:1}],[" = "],["e",{up:1}],["x",{sup:1,it:1}]],[C(.75,3.9),C(.7,3.25),C(-1.1,1.6),C(-1.1,2.4),C(.75,4.6)],fs,BL);
+    elPut(svg,O,[["y",{it:1}],[" = ln "],["x",{it:1}]],[C(4.15,2.15),C(3.8,.55),C(3.6,2.7),C(2.55,1.4),C(4.15,.85)],fs,GR);
+    elPut(svg,O,[["y",{it:1}],[" = "],["x",{it:1}]],[C(4.05,4.72),C(4.5,3.6),C(2.9,3.6)],fs*.8,"var(--muted)",{"font-weight":400});
+    S_(svg,"rect",{x:B.l,y:B.t,width:B.w,height:B.h,fill:"transparent","data-drag":"p",style:"cursor:pointer"});
+    handle(svg,P[0],P[1],"p","var(--ink)"); S_(svg,"circle",{cx:P[0],cy:P[1],r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [gx,gy]=ginv(elB,p); let b=s.x, bd=1e9; ELX.forEach(v=>{ const d=(gx-v)**2+(gy-Math.exp(v))**2; if(d<bd-1e-9){ bd=d; b=v; } }); s.x=b; },
+  kbd:{label:(id,s)=>["The big dot on y = e to the x: arrow keys move it",`x = ${s.x}`],
+    move:(id,k,sh,s)=>{ const i=ELX.indexOf(s.x), d=/Right|Up/.test(k)?1:-1; s.x=ELX[clamp(i+d,0,ELX.length-1)]; }},
+  key(){ return ""; }
+});
+const sbPh=()=>innerWidth<600, sbB=()=>({l:8,t:14,w:sbPh()?116:118,h:sbPh()?124:104,x0:-3,x1:5,y0:-7,y1:8,xs:1,xl:2,ys:1,yl:2,nonum:true}), sbHX=()=>-3;
+const sbF=x=>x*x-2*x-3;
+const sbR=k=>{ const d=4+k; if(d<-1e-9) return []; if(Math.abs(d)<1e-9) return [1]; const q=Math.sqrt(d); return [1-q,1+q]; };
+const sbEx=v=>Math.abs(v-Math.round(v))<1e-9;
+const sbV=v=>sbEx(v)?N(Math.round(v)):N(Math.round(v*10)/10,1);
+const sbK=s=>{ const k=s.k, rs=sbR(k), c=-3-k, B=t=>kc("blue",t), A=t=>kc("amber",t);
+  const q=nw(`${X2} − 2${X1}${c===0?"":` ${c>0?"+":"−"} ${Math.abs(c)}`} = 0`);
+  const sp=nw(`${B(`${X2} − 2${X1} − 3`)} = ${A(N(k))}`);
+  const ans=rs.length?rs.map(r=>nw(`${X1} ${sbEx(r)?"=":"≈"} ${sbV(r)}`)).join(`<span class="sbor">or</span>`)+(rs.some(r=>!sbEx(r))?`<span class="ipsf">(1 d.p.)</span>`:""):`<span class="sbno">no solutions</span>`;
+  const tag=rs.length===2?"2 solutions":rs.length===1?"touches: 1 solution":"the line misses the curve";
+  return `<div class="apwk ipk sbk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="sbq"><span class="sbl">Solve</span>${q}</div><div class="sbsp">split it so the curve appears ↓</div><div class="eq">${sp}</div><div class="sba">${ans}<span class="sbt">${tag}</span></div></div></div></div>`; };
 const solveLine=aid({
-  init:{pr:"a3",kc:"q",k:2}, jump:true, label:"Solve an equation by drawing a straight line on the graph",
-  pills:[{k:"pr",label:"Solve",opts:SOLV.map(p=>[p.id,p.pill]),show:s=>s.step===0},{k:"kc",label:"Curve",opts:[["q",nw(`${V("y")} = ${QCL}`)],["c",nw(`${V("y")} = ${CCL}`)]],show:s=>s.step===1,on:s=>{const B=kcv(s).B; s.k=clamp(s.k,B.y0,B.y1);}}],
-  sliders:[{k:"k",label:V("k"),min:-10,max:12,step:.5,show:s=>s.step===1,minf:s=>kcv(s).B.y0,maxf:s=>kcv(s).B.y1}],
-  steps:[{name:"Draw a line",t:()=>`Split the equation so the curve appears on one side.<br>The other side is the line to draw. The solutions are where they cross.`},
-    {name:"How many solutions?",t:()=>`Drag the line ${nw(`${V("y")} = ${V("k")}`)} up and down.<br>Number of solutions = number of points where it meets the curve.`}],
-  draw(svg,s){
-    if(s.step===0){ const P=scv(s), g=graph(svg,P.B), rs=crossings(x=>P.f(x)-P.ln(x),P.B.x0,P.B.x1);
-      g.plot(P.f,{"stroke-width":1.2}); g.plot(P.ln,{stroke:GR,"stroke-width":1.3});
-      rs.forEach(r=>{ const y=P.ln(r); g.line(r,0,r,y,{stroke:RD,"stroke-dasharray":"1.4 1.2","stroke-width":.7}); g.dot(r,y,RD,1.9); g.text(r,0,Math.abs(r-Math.round(r))<1e-9?`x = ${N(r)}`:`x ≈ ${N(r,1)}`,{dy:y>=0?10.5:-2.6,"text-anchor":"middle",fill:RD,"font-size":3.9,"font-weight":700}); });
-      return; }
-    const K=kcv(s), g=graph(svg,K.B), rs=crossings(x=>K.f(x)-s.k,K.B.x0,K.B.x1);
-    g.plot(K.f,{"stroke-width":1.2}); g.line(K.B.x0,s.k,K.B.x1,s.k,{stroke:GR,"stroke-width":1.3});
-    rs.forEach(r=>{ g.line(r,0,r,s.k,{stroke:RD,"stroke-dasharray":"1.4 1.2","stroke-width":.7}); g.dot(r,s.k,RD,1.9); });
-    const yk=g.Y(s.k); g.text(K.B.x1,s.k,`y = ${N(s.k)}`,{dx:-3,dy:-1.8,"text-anchor":"end",fill:GR,"font-size":3.9,"font-style":"italic","font-weight":700});
-    S_(svg,"rect",{x:135,y:yk-5.5,width:4.2,height:11,rx:2,fill:GR,"pointer-events":"none"}); S_(svg,"line",{x1:136.2,x2:138,y1:yk-1.4,y2:yk-1.4,stroke:"var(--card)","stroke-width":.6,"pointer-events":"none"}); S_(svg,"line",{x1:136.2,x2:138,y1:yk+1.4,y2:yk+1.4,stroke:"var(--card)","stroke-width":.6,"pointer-events":"none"});
-    svg.append(svgEl("circle",{cx:137,cy:yk,r:7,fill:"transparent","data-drag":"k",style:"cursor:grab"})); },
-  drag(id,p,s){ if(id==="k"){ const B=kcv(s).B, [,y]=ginv(B,p); s.k=clamp(snap(y,.5),B.y0,B.y1); } },
-  key(s){
-    if(s.step===0){ const P=scv(s), rs=crossings(x=>P.f(x)-P.ln(x),P.B.x0,P.B.x1);
-      return FORMS([FB("amber","Solve",nw(P.eq),""),FB("blue","The curve",nw(`${V("y")} = ${P.cL}`),"the question gives you this"),FB("green","The line",nw(`${V("y")} = ${P.lL}`),P.lRd),FB("red","Solutions",ansTxt(rs),`the ${X1}-coordinates where they cross`,null,"wide")],true); }
-    const K=kcv(s), rs=crossings(x=>K.f(x)-s.k,K.B.x0,K.B.x1), n=rs.length, touch=rs.some(r=>Math.abs(gslope(K.f,r))<1e-4);
-    const rd=n===0?"the line misses the curve":n===1&&touch?`it just touches the curve at the turning point: ${ansTxt(rs)}`:`the line meets the curve ${n===1?"once":n===2?"twice":"3 times"}: ${ansTxt(rs)}`;
-    return FORMS([FB(n?"green":"red",nw(`${K.cL} = ${N(s.k)}`),`${n} solution${n===1?"":"s"}`,rd,null,"wide")],true); },
-  readout(s){ if(s.step!==0) return ""; const P=scv(s); return `<div class="wk">${[nw(P.eq),...P.work,...(P.noDraw?[]:[`draw ${nw(`${V("y")} = ${P.lL}`)}`])].map(l=>`<div>${l}</div>`).join("")}</div>`; }
+  init:{k:2}, jump:true, ip:"Drag the line.", vb:"-12 4 140 120", label:"The curve y = x² − 2x − 3 and a flat line y = k you can drag; the solutions are where they cross", link:["k"],
+  fix:s=>{ s.k=clamp(Math.round(+s.k||0),-5,6); },
+  steps:[{name:"Solve by drawing a line",t:()=>"",w:s=>sbK(s)}],
+  draw(svg,s){ const n0=graph.n; graph.n=9700; svg.setAttribute("viewBox",sbPh()?"-14 4 142 142":"-12 4 140 120"); const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("sbip"); else setTimeout(()=>{ const q=svg.closest&&svg.closest(".play"); if(q) q.classList.add("sbip"); },0); const B=sbB(), g=graph(svg,B), k=s.k, rs=sbR(k), fs=sbPh()?6.2:4.6, F={"font-size":fs,"font-weight":700}, yk=g.Y(k), L=B.l, R=B.l+B.w, HX=sbHX();
+    const up=k<0, y0=g.Y(0), nf=fs*.85, NF={"font-size":nf,fill:"var(--muted)"};
+    for(let x=-2;x<=4;x++){ if(!x||(!up&&rs.some(r=>Math.abs(r-x)<.25))) continue; lab(svg,[g.X(x)+(x===-1?.2:x===3?-.2:0),y0+nf+1],N(x),Object.assign({"text-anchor":x===-1?"end":x===3?"start":"middle"},NF)); }
+    for(let y=-6;y<=6;y+=2){ if(!y||y===-2||Math.abs(y-k)<1.5) continue; lab(svg,[g.X(0)-1.4,g.Y(y)+nf*.35],N(y),Object.assign({"text-anchor":"end"},NF)); }
+    g.plot(sbF,{stroke:BL,"stroke-width":1.5});
+    lab(svg,[g.X(4),g.Y(7.35)],"y = x² − 2x − 3",Object.assign({"text-anchor":"end",fill:BL,"font-style":"italic"},F));
+    seg(svg,[HX,yk],[R,yk],{stroke:AMB,"stroke-width":1.7});
+    lab(svg,[g.X(1),yk+(k===-3||k===0?-2:fs+1.4)],`y = ${N(k)}`,Object.assign({fill:AMB,"font-style":"italic"},F));
+    const H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.5,"stroke-linejoin":"round"};
+    if(!rs.some(r=>Math.abs(r)<.6)) lab(svg,[g.X(0)-1.4,k===0?y0+nf+1:yk-1.4],N(k),Object.assign({"text-anchor":"end",fill:AMB,"font-size":fs,"font-weight":700},H));
+    const cy=up?y0-2.2:y0+nf+fs+3.2;
+    rs.forEach(r=>seg(svg,[g.X(r),yk],[g.X(r),up?y0:cy-fs*.95],{stroke:GR,"stroke-dasharray":"1.4 1.2","stroke-width":.9}));
+    rs.forEach(r=>g.dot(r,k,GR,2.2));
+    rs.forEach(r=>{ const tx=sbEx(r)?sbV(r):`≈ ${sbV(r)}`, w=tx.length*fs*.56, cx0=g.X(r);
+      let cx=!up||rs.length===1?cx0:r<1?cx0+w/2+1:cx0-w/2-1; cx=clamp(cx,L+w/2,R-w/2);
+      lab(svg,[cx,cy],tx,Object.assign({fill:GR},F,H,{"stroke-width":fs*.6})); });
+    S_(svg,"rect",{x:0,y:B.t,width:140,height:B.h,fill:"transparent","data-drag":"k",style:"cursor:pointer"});
+    handle(svg,HX,yk,"k","var(--ink)"); S_(svg,"circle",{cx:HX,cy:yk,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const y=ginv(sbB(),p)[1]; s.k=clamp(Math.round(y),-5,6); },
+  kbd:{label:(id,s)=>["The line: arrow keys move it up or down",`y = ${s.k}`],
+    move:(id,key,sh,s)=>{ s.k=clamp(s.k+(/Up|Right/.test(key)?1:-1),-5,6); }},
+  key(){ return ""; }
 });
 const BXC={l:14,t:4,w:112,h:112,x0:-5,x1:9,y0:-6,y1:8,xs:1,xl:2,ys:1,yl:2};
 const circLat=s=>{const o=[]; for(let dx=-s.r;dx<=s.r;dx++){const d2=s.r*s.r-dx*dx, dy=Math.round(Math.sqrt(d2)); if(dy*dy===d2){o.push([dx,dy]); if(dy) o.push([dx,-dy]);}} return o;};
@@ -9590,7 +9742,7 @@ ${PAN("Elimination",`<p class="anno">* label every equation ① ②, then say wh
   +EG(`Make the numbers match first: the ${VY}'s are 3 and 2, make both 6`,[EQN(nw(`2${X1} + 3${VY} = 13`),"①"),EQN(nw(`3${X1} − 2${VY} = 0`),"②"),EQN(`① × 2: ${nw(`4${X1} + 6${VY} = 26`)}`,"③"),EQN(`② × 3: ${nw(`9${X1} − 6${VY} = 0`)}`,"④"),`③ + ④: ${nw(`13${X1} = 26`)}`,nw(`${X1} = 2`),`Sub ${nw(`${X1} = 2`)} into ①: ${nw(`2(2) + 3${VY} = 13`)}`,nw(`3${VY} = 9`),nw(`${VY} = 3`)]))}
 ${PAN("Substitution",EG(`${VY} is on its own in ①: put it into ②, in brackets`,[EQN(nw(`${VY} = 2${X1} − 1`),"①"),EQN(nw(`3${X1} + ${VY} = 14`),"②"),`Sub ① into ②: ${nw(`3${X1} + (2${X1} − 1) = 14`)}`,nw(`5${X1} − 1 = 14`),nw(`5${X1} = 15`),nw(`${X1} = 3`),`Sub ${nw(`${X1} = 3`)} into ①: ${nw(`${VY} = 2(3) − 1 = 5`)}`]))}
 ${PAN("Check on the calculator",STEPS([[`MENU 5 1 2`,"2 unknowns"],[`key in ${nw("3, 2, 16")} for ①, then ${nw("1, −2, 0")} for ②`,"the numbers in each equation"],[nw(`${X1} = 4, ${VY} = 2`),"same as yours? ✓"]]))}
-${PAN("Graphs",picTwoLines()+EG(`Both start with ${nw(`${VY} =`)}, so ① = ②`,[EQN(nw(`${VY} = ${X1} + 1`),"①"),EQN(nw(`${VY} = −${X1} + 5`),"②"),`① = ②: ${nw(`${X1} + 1 = −${X1} + 5`)}`,nw(`2${X1} = 4`),nw(`${X1} = 2`),`Sub ${nw(`${X1} = 2`)} into ①: ${nw(`${VY} = 3`)}`,`the lines cross at (2, 3)`])+PLAYLINK("#straight-line-graphs?step=4","Interactive: find where the lines meet")
+${PAN("Graphs",picTwoLines()+EG(`Both start with ${nw(`${VY} =`)}, so ① = ②`,[EQN(nw(`${VY} = ${X1} + 1`),"①"),EQN(nw(`${VY} = −${X1} + 5`),"②"),`① = ②: ${nw(`${X1} + 1 = −${X1} + 5`)}`,nw(`2${X1} = 4`),nw(`${X1} = 2`),`Sub ${nw(`${X1} = 2`)} into ①: ${nw(`${VY} = 3`)}`,`the lines cross at (2, 3)`])
   +`<table><tr><th>The lines</th><th>Solutions</th></tr><tr><td>same gradient, different ${V("c")}: parallel</td><td>no solution</td></tr><tr><td>same gradient, same ${V("c")}: the same line</td><td>infinitely many</td></tr></table>`)}
 ${PAN("Word problem",EG("Adult tickets $8, child tickets $5. 10 tickets cost $62.",[`let ${V("a")} = number of adults, ${V("c")} = number of children`,EQN(nw(`${V("a")} + ${V("c")} = 10`),"①"),EQN(nw(`8${V("a")} + 5${V("c")} = 62`),"②"),EQN(`From ①: ${nw(`${V("c")} = 10 − ${V("a")}`)}`,"③"),`Sub ③ into ②: ${nw(`8${V("a")} + 5(10 − ${V("a")}) = 62`)}`,nw(`8${V("a")} + 50 − 5${V("a")} = 62`),nw(`3${V("a")} = 12`),nw(`${V("a")} = 4`),`Sub ${nw(`${V("a")} = 4`)} into ③: ${nw(`${V("c")} = 10 − 4 = 6`)}`,"4 adults and 6 children"]))}
 ${MIST([["equations with no labels",`label them ① ②, then say what you did: ${nw("① × 2")}, ${nw(`Sub ${X1} = 4 into ①`)}`],["subtract when the signs are opposite","opposite signs: add"],[`find ${X1} and stop`,`find both and write both: ${nw(`${X1} = 4, ${VY} = 2`)}`],["× only some of the terms","× EVERY term in the equation"]])}
@@ -10033,7 +10185,7 @@ ${PAN("Exponential graphs",picExpGD()+STEPS([[`never touches the ${X1}-axis`,"it
 ${PAN("Growth and decay",EG("A car worth $40 000 loses 15% of its value every year. Find its value after 3 years.",[`every year it keeps 85%: ${nw("× 0.85")}`,nw(`${V("V")} = 40 000(0.85)<sup>${V("t")}</sup>`),nw("= 40 000(0.85)³"),nw("= $24 565")])+`<p class="anno">* up 5% a year: × 1.05</p>`)}
 ${PAN("Plot a curve",STEPS(["plot each point with a small ×",`join them with <b class="k-amber">ONE smooth curve</b>: no ruler, no corners`]))}
 ${PAN("Answers from the graph",picLineMeet()+`<p class="anno">* ${nw(`${V("y")} &gt; ${V("k")}`)}: where the curve is above the line</p>`
-  +EG(`The curve ${nw(`${V("y")} = ${X2} − 2${X1} − 3`)} is drawn. Which line do you draw to solve ${nw(`${X2} − 3${X1} − 1 = 0`)}?`,[nw(`${X2} − 3${X1} − 1 = 0`),`split it so the curve appears: ${nw(`${X2} − 2${X1} − 3 − ${X1} + 2 = 0`)}`,nw(`${X2} − 2${X1} − 3 = ${X1} − 2`),`draw ${nw(`${V("y")} = ${X1} − 2`)}`,`they meet at ${nw(`${X1} ≈ −0.3`)} and ${nw(`${X1} ≈ 3.3`)}`])+PLAYLINK("#solve-by-graph","Interactive: draw the line yourself"))}
+  +EG(`The curve ${nw(`${V("y")} = ${X2} − 2${X1} − 3`)} is drawn. Which line do you draw to solve ${nw(`${X2} − 3${X1} − 1 = 0`)}?`,[nw(`${X2} − 3${X1} − 1 = 0`),`split it so the curve appears: ${nw(`${X2} − 2${X1} − 3 − ${X1} + 2 = 0`)}`,nw(`${X2} − 2${X1} − 3 = ${X1} − 2`),`draw ${nw(`${V("y")} = ${X1} − 2`)}`,`they meet at ${nw(`${X1} ≈ −0.3`)} and ${nw(`${X1} ≈ 3.3`)}`])+PLAYLINK("#solve-by-graph","Interactive: drag the line y = k"))}
 ${PAN("Gradient of a curve",STEPS(["① draw the tangent: a ruler line that just touches the curve at the point",`② pick 2 points far apart <b class="k-amber">on the tangent</b>`,`③ gradient = ${frac("rise","run")}`]))}
 ${PAN("Filling a container",`<p class="anno">* narrow part: the depth rises fast (steep) · wide part: it rises slowly</p>`+PLAYLINK("#sheet/speed-time-graphs","Speed–time and distance–time graphs sheet"))}
 ${MIST([[`${nw(`${V("y")} = ${frac(V("k"),X1)}`)} drawn as one curve through O`,`2 separate branches: it never touches the ${V("y")}-axis`],[nw(`${V("k")}(−3)² = −9${V("k")}`),`keep the bracket: ${nw("(−3)² = 9")}, so ${nw(`9${V("k")}`)}`],[`${nw(`${V("y")} = 5(2)<sup>${X1}</sup>`)} crosses the ${V("y")}-axis at ${nw("(0, 2)")}`,`any number to the power 0 is 1: ${nw("(0, 5)")}`],["straight segments between the plotted points","one smooth curve"],["gradient from 2 points on the curve","draw the tangent, use 2 points on it"],["flat on a distance–time graph = constant speed","flat = not moving"]])}
@@ -10918,10 +11070,10 @@ balanceEq:`<path d="M50 63 H70 L65 57 H55 Z" fill="var(--grid2)"/><line x1="60" 
    speedTime:`<path d="M14 58 L34 16 L72 16 L102 58 Z" fill="var(--blue-fill)"/><path d="M14 58 L34 16 L72 16 L102 58" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M14 4 L14 58 L114 58" fill="none" stroke="var(--ink)" stroke-width="1.4"/><path d="M11 9 L14 4 L17 9 M109 55 L114 58 L109 61" fill="none" stroke="var(--ink)" stroke-width="1.4"/><text x="3" y="14" font-size="11" font-style="italic" font-weight="700" fill="var(--ink)">v</text><text x="107" y="52" font-size="11" font-style="italic" font-weight="700" fill="var(--ink)">t</text>`,
    genTerm:`<rect x="2" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><rect x="28" y="2" width="22" height="13" rx="2" fill="var(--amber-fill)" stroke="var(--amber)"/><rect x="54" y="2" width="22" height="13" rx="2" fill="var(--card)" stroke="var(--muted)"/><path d="M4 62 C30 6 58 70 104 22" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="62" y1="54" x2="112" y2="20" stroke="var(--green)" stroke-width="2"/>`,
    kinAid:`<path d="M6 40 Q30 -10 56 40 T106 40" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M6 40 Q30 -10 56 40 Z" fill="var(--blue-fill)"/><path d="M56 40 Q80 90 106 40 Z" fill="var(--red-fill)"/><line x1="4" y1="40" x2="112" y2="40" stroke="var(--muted)"/><circle cx="56" cy="8" r="4" fill="var(--green)"/>`,
-   eqLines:`<line x1="8" y1="58" x2="112" y2="6" stroke="var(--blue)" stroke-width="2.5"/><path d="M34 45 H60 V32" fill="none" stroke="var(--amber)" stroke-width="2"/><circle cx="21" cy="51.5" r="3.5" fill="var(--accent)"/><circle cx="47" cy="38.5" r="3.5" fill="var(--accent)"/><circle cx="73" cy="25.5" r="3.5" fill="var(--accent)"/><circle cx="99" cy="12.5" r="3.5" fill="var(--accent)"/>`,
-   eqQuad:`<line x1="60" y1="3" x2="60" y2="62" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M16 6 Q60 112 104 6" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="30" y1="26" x2="90" y2="26" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="30" cy="26" r="3.5" fill="var(--amber)"/><circle cx="90" cy="26" r="3.5" fill="var(--amber)"/><circle cx="60" cy="59" r="3.5" fill="var(--accent)"/>`,
-   eqPower:`<line x1="60" y1="2" x2="60" y2="62" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="4" y1="32" x2="116" y2="32" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M64 3 Q67 27 116 29" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M56 61 Q53 37 4 35" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
-   solveLine:`<path d="M10 4 Q60 110 110 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="34" x2="116" y2="34" stroke="var(--green)" stroke-width="2"/><circle cx="27" cy="34" r="3.8" fill="var(--red)"/><circle cx="93" cy="34" r="3.8" fill="var(--red)"/>`,
+   eqLines:`<line x1="22" y1="4" x2="22" y2="62" stroke="var(--muted)" stroke-width="1.5"/><line x1="6" y1="54.4" x2="116" y2="10.4" stroke="var(--ink)" stroke-width="2.5"/><path d="M22 48 H82" stroke="var(--green)" stroke-width="3"/><path d="M82 48 V24" stroke="var(--blue)" stroke-width="3"/><circle cx="22" cy="48" r="4" fill="var(--amber)"/><circle cx="82" cy="24" r="5" fill="var(--ink)" stroke="var(--card)" stroke-width="1.5"/>`,
+   eqQuad:`<path d="M16 6 Q60 112 104 6" fill="none" stroke="var(--blue)" stroke-width="2" stroke-opacity=".45"/><line x1="30.7" y1="35.4" x2="30.7" y2="62" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="16" cy="6" r="3.5" fill="var(--blue)"/><circle cx="30.7" cy="35.4" r="4" fill="var(--blue)"/><circle cx="45.3" cy="53.1" r="3.5" fill="var(--blue)"/><circle cx="60" cy="59" r="3.5" fill="var(--blue)"/><circle cx="74.7" cy="53.1" r="3.5" fill="var(--blue)"/><circle cx="30.7" cy="62" r="4" fill="var(--ink)"/>`,
+   eqPower:`<line x1="60" y1="2" x2="60" y2="62" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="4 3"/><line x1="4" y1="32" x2="116" y2="32" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M64 3 Q67 27 116 29" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M56 61 Q53 37 4 35" fill="none" stroke="var(--blue)" stroke-width="2.5"/>`,
+   solveLine:`<path d="M10 4 Q60 110 110 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><line x1="4" y1="34" x2="116" y2="34" stroke="var(--amber)" stroke-width="2.5"/><circle cx="27" cy="34" r="3.8" fill="var(--green)"/><circle cx="93" cy="34" r="3.8" fill="var(--green)"/>`,
    eqExpLog:`<line x1="6" y1="60" x2="62" y2="4" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M4 50 Q40 48 52 4" fill="none" stroke="var(--blue)" stroke-width="2.5"/><path d="M16 62 Q18 26 62 14" fill="none" stroke="var(--green)" stroke-width="2.5"/><text x="70" y="40" font-size="13" font-style="italic" fill="var(--ink)">y = x</text>`,
    radAid:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--red-fill)" stroke="none"/><line x1="14" y1="58" x2="44.3" y2="10.9" stroke="var(--ink)" stroke-width="1.5"/><line x1="14" y1="58" x2="70" y2="58" stroke="var(--amber)" stroke-width="3.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
    arcRad:`<path d="M14 58 L70 58 A56 56 0 0 0 44.3 10.9 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.5"/><path d="M70 58 A56 56 0 0 0 44.3 10.9" fill="none" stroke="var(--amber)" stroke-width="3.5"/><path d="M26 58 A12 12 0 0 0 20.5 47.9" fill="none" stroke="var(--red)" stroke-width="2"/><text x="80" y="40" font-size="14" font-weight="700" fill="var(--red)">1 rad</text>`,
