@@ -2822,8 +2822,8 @@ const csI=s=>{const B=s.b, A=Math.abs(B), sg=B<0?"−":"+"; return {B,A,sg,h:toF
 const csG={x0:18,y0:12,sc:6.2};
 const csK=s=>{ const b=s.b, hv=b/2, q=hv*hv, R=t=>kc("red",t), A=t=>kc("amber",t), ans=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`;
   return `<div class="apwk ipk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([
-    FB("red","Missing corner",`${nw(`(${A(b)} ÷ 2)²`)} ${nw(`= ${ans(q,"red")}`)}`,null,nw(`(${frac(V("b"),"2")})²`),"wide"),
-    FB("green","Completed square",`${nw(`${kc("blue",X2)} + ${A(b+X1)} ${R(`+ ${q} − ${q}`)}`)} ${nw(`= ${ans(`(${X1} + ${hv})²`,"green")} ${R(`− ${q}`)}`)}`,null,nw(`${X2} + ${V("b")}${X1} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`),"wide")],true)+`</div>`; };
+    FB("red","Missing corner",`${nw(`(${frac(A(b),"2")})²`)} ${nw(`= ${ans(q,"red")}`)}`,null,nw(`(${frac(V("b"),"2")})²`),"wide"),
+    FB("green","Completed square",`${nw(`${kc("blue",X2)} + ${A(b+X1)} ${R(`+ (${frac(b,"2")})² − (${frac(b,"2")})²`)}`)} ${nw(`= ${ans(`(${X1} + ${hv})²`,"green")} ${R(`− ${q}`)}`)}`,null,`${nw(`${X2} + ${V("b")}${X1} + (${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`)} ${nw(`= (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`)}`,"wide")],true)+`</div>`; };
 const complSq=aid({
   init:{b:6}, jump:true, ip:"Drag the corner.", vb:"-16 -4 124 99", label:"Completing the square with areas: the missing corner", link:["b"],
   fix:s=>{ s.b=clamp(2*Math.round((+s.b||6)/2),2,10); },
@@ -5441,21 +5441,21 @@ const quadProof=(()=>{
   const a=V("a"), b=V("b"), c=V("c"), ba=frac(b,a), ca=frac(c,a), hh=frac(b,`2${a}`), D=gr(`${b}² − 4${V("ac")}`);
   const G=[[`${a}${X2} + ${am(b)}${X1} + ${bl(c)}`,"0",""],
     [`${X2} + ${am(ba)}${X1} + ${bl(ca)}`,"0",`÷ ${a}`],
-    [`${X2} + ${am(ba)}${X1}`,bl(`−${ca}`),`− ${ca}`],
-    [`${X2} + ${am(ba)}${X1} + ${rd(`(${hh})²`)}`,`${rd(`(${hh})²`)} ${bl(`− ${ca}`)}`,`+ (${hh})²`],
-    [`(${X1} + ${am(hh)})²`,`${rd(`(${hh})²`)} ${bl(`− ${ca}`)}`,"perfect square"],
+    [[`${X2} + ${am(ba)}${X1}`,rd(`+ (${hh})² − (${hh})²`),bl(`+ ${ca}`)],"0",`+ (${hh})² − (${hh})²`],
+    [`(${X1} + ${am(hh)})² ${rd(`− (${hh})²`)} ${bl(`+ ${ca}`)}`,"0","perfect square"],
+    [`(${X1} + ${am(hh)})²`,`${rd(`(${hh})²`)} ${bl(`− ${ca}`)}`,"move across"],
     [`(${X1} + ${am(hh)})²`,frac(D,`4${a}²`),"one fraction"],
     [`${X1} + ${am(hh)}`,`± ${frac(SQRT(D),`2${a}`)}`,"square-root"],
     [X1,frac(`${am(`−${b}`)} ± ${SQRT(D)}`,`2${a}`),`− ${hh}`]];
   const E=[[`2${X2} + ${am("3")}${X1} ${bl("− 5")}`,"0",""],
     [`${X2} + ${am(f(3,2))}${X1} ${bl(`− ${f(5,2)}`)}`,"0","÷ 2"],
-    [`${X2} + ${am(f(3,2))}${X1}`,bl(f(5,2)),`+ ${f(5,2)}`],
-    [`${X2} + ${am(f(3,2))}${X1} + ${rd(`(${f(3,4)})²`)}`,`${rd(`(${f(3,4)})²`)} ${bl(`+ ${f(5,2)}`)}`,`+ (${f(3,4)})²`],
-    [`(${X1} + ${am(f(3,4))})²`,`${rd(`(${f(3,4)})²`)} ${bl(`+ ${f(5,2)}`)}`,"perfect square"],
+    [[`${X2} + ${am(f(3,2))}${X1}`,rd(`+ (${f(3,4)})² − (${f(3,4)})²`),bl(`− ${f(5,2)}`)],"0",`+ (${f(3,4)})² − (${f(3,4)})²`],
+    [`(${X1} + ${am(f(3,4))})² ${rd(`− (${f(3,4)})²`)} ${bl(`− ${f(5,2)}`)}`,"0","perfect square"],
+    [`(${X1} + ${am(f(3,4))})²`,`${rd(`(${f(3,4)})²`)} ${bl(`+ ${f(5,2)}`)}`,"move across"],
     [`(${X1} + ${am(f(3,4))})²`,frac(gr("49"),"16"),"one fraction"],
     [`${X1} + ${am(f(3,4))}`,`± ${frac(SQRT(gr("49")),"4")}`,"square-root"],
     [X1,frac(`${am("−3")} ± ${SQRT(gr("49"))}`,"4"),`− ${f(3,4)}`]];
-  const NR=G.length+1, cell=(r,cls)=>`<div class="${cls}"><div class="qxo">${r[2]?`↓ ${r[2]}`:""}</div><div class="qxl">${nw(r[0])} = ${nw(r[1])}</div></div>`;
+  const NR=G.length+1, cell=(r,cls)=>`<div class="${cls}"><div class="qxo">${r[2]?`↓ ${r[2]}`:""}</div><div class="qxl">${Array.isArray(r[0])?r[0].map(t=>nw(t)).join(" "):nw(r[0])} = ${nw(r[1])}</div></div>`;
   const rows=s=>s.pre?1:s.t==null?NR:Math.min(NR,1+Math.floor(s.t*qxD/1600));
   const work=(n,old,done)=>{ let o=`<div class="qxh"><span>Numbers</span><span>Letters</span></div>`;
     for(let i=0;i<n;i++){ const last=i===NR-1, cls=`qxr${old>=0&&i>=old?" qxin":""}${!done&&i===n-1?" qxc":""}${i===NR-2&&n>=NR-1?" qxf":""}`;
@@ -7422,12 +7422,12 @@ diffBasics:`${MUST([FB("blue","Power rule",nw(`${X1}<sup class="k-amber">3</sup>
   </div>
 </div>`,
 
-complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class="k-amber">3</b>)² − <b class="k-amber">3</b>²`),`halve the coefficient of ${X1}`,nw(`${X2} + ${V("b")}${X1} = (${X1} + ${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`),"mk"),FB("amber","Number in front",`take it out, then multiply it <b class="k-amber">back in</b>`,`out of the ${X2} and ${X1} terms only`,"","mk mkw"),FB("green","Turning point",`${nw(`(${X1} + 4)² − 1`)} ${nw(`→ (<b class="k-amber">−4</b>, −1)`)}`,"flip the sign in the bracket",nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`),"mk")])}
+complSq:`${MUST([FB("blue","Add and take away",`${nw(`${X2} + 6${X1} + (${frac(`<b class="k-amber">6</b>`,"2")})² − (${frac(`<b class="k-amber">6</b>`,"2")})²`)} ${nw(`= (${X1} + <b class="k-amber">3</b>)² − 9`)}`,`half of the ${X1} number, squared`,nw(`${X2} + ${V("b")}${X1} + (${frac(V("b"),"2")})² − (${frac(V("b"),"2")})²`),"mk"),FB("amber","Number in front",`take it out, then multiply it <b class="k-amber">back in</b>`,`out of the ${X2} and ${X1} terms only`,"","mk mkw"),FB("green","Turning point",`${nw(`(${X1} + 4)² − 1`)} ${nw(`→ (<b class="k-amber">−4</b>, −1)`)}`,"flip the sign in the bracket",nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`),"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Odd b: use fractions</h4>
     <ul class="steps">
       <li>${nw(`${X2} − 5${X1} + 2`)}</li>
-      <li>${nw(`= (${X1} − ${frac("5","2")})² − (${frac("5","2")})² + 2`)} <span class="tagop">half of −5</span></li>
+      <li>${nw(`= ${X2} − 5${X1} + (${frac("−5","2")})² − (${frac("−5","2")})² + 2`)} <span class="tagop">half of −5</span></li>
       <li>${nw(`= (${X1} − ${frac("5","2")})² − ${frac("25","4")} + ${frac("8","4")}`)}</li>
       <li>= <b>${nw(`(${X1} − ${frac("5","2")})² − ${frac("17","4")}`)}</b></li>
     </ul>
@@ -7445,7 +7445,7 @@ complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class=
         <text x="58" y="41" fill="var(--blue)">x²</text><text x="98" y="41" fill="var(--amber)">4x</text>
         <text x="58" y="81" fill="var(--amber)">4x</text><text x="98" y="81" fill="var(--red)">16</text></g>
       <text x="124" y="72" font-size="12" fill="var(--red)">← missing</text>
-      <text x="124" y="87" font-size="12" fill="var(--red)">(8 ÷ 2)² = 16</text>
+      <text x="124" y="87" font-size="12" fill="var(--red)">(8/2)² = 16</text>
       <text x="124" y="30" font-size="12" fill="var(--blue)">x² + 8x + 16</text>
       <text x="124" y="45" font-size="12" fill="var(--blue)">= (x + 4)²</text>
     </svg></a>
@@ -7456,6 +7456,7 @@ complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class=
     <ul class="steps">
       <li>${nw(`−${X2} + 8${X1} + 1`)}</li>
       <li>${nw(`= −(${X2} − 8${X1}) + 1`)} <span class="tagop">take out −1</span></li>
+      <li>${nw(`= −[${X2} − 8${X1} + (${frac("−8","2")})² − (${frac("−8","2")})²] + 1`)}</li>
       <li>${nw(`= −[(${X1} − 4)² − 16] + 1`)}</li>
       <li>${nw(`= −(${X1} − 4)² <b class="k-amber">+ 16</b> + 1`)} <span class="tagop">× −1 back in</span></li>
       <li>= <b>${nw(`−(${X1} − 4)² + 17`)}</b></li>
@@ -7474,7 +7475,10 @@ complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class=
 
   <div class="panelc"><h4>Use it to prove "always positive" <span class="badge">A-Math</span></h4>
     <ul class="steps">
-      <li>${X2} − 4${X1} + 7 = (${X1} − 2)² + 3</li>
+      <li>${nw(`${X2} − 4${X1} + 7`)}</li>
+      <li>${nw(`= ${X2} − 4${X1} + (${frac("−4","2")})² − (${frac("−4","2")})² + 7`)}</li>
+      <li>${nw(`= (${X1} − 2)² − 4 + 7`)}</li>
+      <li>${nw(`= (${X1} − 2)² + 3`)}</li>
       <li>(${X1} − 2)² ≥ 0 for all ${X1} <span class="tagop">a square is never negative</span></li>
       <li>so (${X1} − 2)² + 3 ≥ 3 &gt; 0 → <b>always positive</b></li>
     </ul>
@@ -7484,7 +7488,7 @@ complSq:`${MUST([FB("blue","Halve first",nw(`${X2} + 6${X1} = (${X1} + <b class=
   <div class="panelc"><h4>Common mistakes</h4>
     <div class="wrongright">
       <div class="x">✗ ${nw(`${X2} + 10${X1}`)}<br>${nw(`= (${X1} + 10)² − 100`)}</div>
-      <div class="ok">✓ ${nw(`= (${X1} + 5)² − 25`)}</div>
+      <div class="ok">✓ ${nw(`= ${X2} + 10${X1} + (${frac("10","2")})² − (${frac("10","2")})²`)}<br>${nw(`= (${X1} + 5)² − 25`)}</div>
       <div class="x">✗ ${nw(`−[(${X1} − 3)² − 9] + 1`)}<br>${nw(`= −(${X1} − 3)² − 9 + 1`)}</div>
       <div class="ok">✓ ${nw(`= −(${X1} − 3)² + 9 + 1`)}</div>
       <div class="x">✗ ${nw(`(${X1} + 5)² − 2`)}<br>turning point ${nw("(5, −2)")}</div>
@@ -10707,9 +10711,9 @@ ZC("green","Expansion","expansion",
 ZC("blue","Quadratic formula","quadratic-equations",
   ZH(QUAD_F,`for ${nw(`${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} = 0`)}`)),
 ZC("amber","Completing the square","completing-the-square",
-  ZF("",nw(`${X2} + ${V("p")}${X1} + ${V("q")}`))+ZF("",nw(`= ${PAR(`${X1} + ${frac(V("p"),"2")}`,"2")} − ${PAR(frac(V("p"),"2"),"2")} + ${V("q")}`))
-  +ZX(`half of ${V("p")} goes in the bracket`)
-  +ZF("e.g.",nw(`${X2} + 6${X1} + 1 = (${X1} + 3)² − 9 + 1`))+ZF("",nw(`= (${X1} + 3)² − 8`))),
+  ZF("",nw(`${X2} + ${V("p")}${X1} + ${PAR(frac(V("p"),"2"),"2")} − ${PAR(frac(V("p"),"2"),"2")} + ${V("q")}`))+ZF("",nw(`= ${PAR(`${X1} + ${frac(V("p"),"2")}`,"2")} − ${PAR(frac(V("p"),"2"),"2")} + ${V("q")}`))
+  +ZX(`add and take away ${nw(PAR(frac(V("p"),"2"),"2"))}`)
+  +ZF("e.g.",nw(`${X2} + 6${X1} + (${frac("6","2")})² − (${frac("6","2")})² + 1`))+ZF("",nw(`= (${X1} + 3)² − 9 + 1`))+ZF("",nw(`= (${X1} + 3)² − 8`))),
 ZC("purple","Indices","indices",
   ZTB(null,[[`Multiply${ZX("add the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> × ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} + ${V("n")}</sup>`)],[`Divide${ZX("subtract the powers")}`,nw(`${V("a")}<sup>${V("m")}</sup> ÷ ${V("a")}<sup>${V("n")}</sup> = ${V("a")}<sup>${V("m")} − ${V("n")}</sup>`)],[`Bracket${ZX("multiply the powers")}`,nw(`(${V("a")}<sup>${V("m")}</sup>)<sup>${V("n")}</sup> = ${V("a")}<sup>${V("mn")}</sup>`)],[`Power 0`,nw(`${V("a")}<sup>0</sup> = 1`)],[`Negative power${ZX("1 over")}`,nw(`${V("a")}<sup>−${V("n")}</sup> = ${frac("1",V("a")+"<sup>"+V("n")+"</sup>")}`)],[`Fraction power${ZX("a root")}`,nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`)],["",nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`)],[`Bracket of a product`,nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`)]])),
 ZC("teal","Standard form","standard-form",
@@ -11506,7 +11510,7 @@ const SPOTS_LO={
 };
 const SPOTS_HI={
 "completing-the-square":[
-{q:`Express ${nw(`3${X2} + 12${X1} − 5`)} in the form ${nw(`${V("a")}(${X1} + ${V("h")})² + ${V("k")}`)}.`,w:[nw(`3${X2} + 12${X1} − 5 = 3(${X2} + 4${X1}) − 5`),nw(`= 3[(${X1} + 2)² − 4] − 5`),nw(`= 3(${X1} + 2)² − 4 − 5`),nw(`= 3(${X1} + 2)² − 9`)],bad:2,fix:nw(`= 3(${X1} + 2)² − 12 − 5`),why:`× 3 into the [ ], so ${nw("−4")} becomes ${nw("−12")}`}],
+{q:`Express ${nw(`3${X2} + 12${X1} − 5`)} in the form ${nw(`${V("a")}(${X1} + ${V("h")})² + ${V("k")}`)}.`,w:[nw(`3${X2} + 12${X1} − 5 = 3(${X2} + 4${X1}) − 5`),nw(`= 3[${X2} + 4${X1} + (${frac("4","2")})² − (${frac("4","2")})²] − 5`),nw(`= 3[(${X1} + 2)² − 4] − 5`),nw(`= 3(${X1} + 2)² − 4 − 5`),nw(`= 3(${X1} + 2)² − 9`)],bad:3,fix:nw(`= 3(${X1} + 2)² − 12 − 5`),why:`× 3 into the [ ], so ${nw("−4")} becomes ${nw("−12")}`}],
 "quadratic-graphs":[
 {q:`For ${nw(`${VY} = (${X1} − 3)² + 2`)}, state the turning point and the line of symmetry.`,w:[`${nw(`${V("a")} = 1 &gt; 0`)}: U-shaped, minimum point`,`turning point ${nw("(−3, 2)")}`,`minimum value of ${nw(`${VY} = 2`)}`,`line of symmetry ${nw(`${X1} = −3`)}`],bad:1,fix:`turning point ${nw("(3, 2)")}`,why:`the sign in the bracket flips: ${nw(`(${X1} − 3)`)} → 3`},
 {q:`Sketch ${nw(`${VY} = (${X1} + 2)(${X1} − 4)`)}: find where it cuts the ${X1}-axis and its turning point.`,w:[`${nw(`${VY} = 0`)}: ${nw(`(${X1} + 2)(${X1} − 4) = 0`)}`,`cuts the ${X1}-axis at ${nw(`${X1} = 2`)} and ${nw(`${X1} = −4`)}`,`halfway: ${nw(`${X1} = ${frac("2 + (−4)","2")} = −1`)}`,`${nw(`${VY} = (−1 + 2)(−1 − 4) = −5`)}: ${nw("(−1, −5)")}`],bad:1,fix:`cuts the ${X1}-axis at ${nw(`${X1} = −2`)} and ${nw(`${X1} = 4`)}`,why:`the sign flips: ${nw(`(${X1} + 2)`)} gives −2`}],
@@ -11987,15 +11991,18 @@ const QQ_HI={
   return {q:`Find the gradient of the curve ${nw(`${VY} = ${qJ(qT(c3,qP("x",3)),qT(c2,X2),qT(c1,X1),c0)}`)} at the point where ${nw(`${X1} = ${qN(x)}.`)}`,w:[nw(`${DY} = ${qJ(qT(3*c3,X2),qT(2*c2,X1),c1)}`),nw(`= ${qJ(`${qN(3*c3)}(${qN(x)})²`,`${qN(2*c2)}(${qN(x)})`,c1)} = ${qN(G)}`)],a:`gradient = ${qN(G)}`,n}; }}],
 "completing-the-square":[
 {t:"b even",g:R=>{ const n=qTry(()=>{ const h=R.nz(-6,6), c=R.nz(-9,12); return {h,b:2*h,c,k:c-h*h}; },n=>n.k!==0&&Math.abs(n.h)>=2,{h:4,b:8,c:5,k:-11}), {h,b,c,k}=n, ex=qJ(X2,qT(b,X1),c), sq=`(${qJ(X1,h)})²`;
-  return {q:`Express ${nw(ex)} in the form ${nw(`(${X1} + ${V("a")})² + ${V("b")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(X2,qT(b,X1),h*h,-h*h,c)}`),`add and take away ${nw(`(${qN(b)} ÷ 2)²`)}`),nw(`= ${qJ(sq,k)}`)],a:nw(qJ(sq,k)),n}; }},
+  const P=`(${frac(qN(b),"2")})²`;
+  return {q:`Express ${nw(ex)} in the form ${nw(`(${X1} + ${V("a")})² + ${V("b")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(X2,qT(b,X1),P,"−"+P,c)}`),`add and take away ${nw(P)}`),nw(`= ${qJ(sq,-h*h,c)}`),nw(`= ${qJ(sq,k)}`)],a:nw(qJ(sq,k)),n}; }},
 {t:"b odd",g:R=>{ const n=qTry(()=>{ const b=R.pick([3,5,7,9])*R.sign(), c=R.nz(-9,9); return {b,c,k4:4*c-b*b}; },n=>n.k4!==0,{b:-5,c:2,k4:-17}), {b,c,k4}=n, ex=qJ(X2,qT(b,X1),c), sq=`(${X1} ${b<0?"−":"+"} ${frac(Math.abs(b),2)})²`, ans=`${sq} ${k4<0?"−":"+"} ${frac(Math.abs(k4),4)}`;
-  return {q:`Express ${nw(ex)} in the form ${nw(`(${X1} + ${V("a")})² + ${V("b")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(sq,"−"+frac(b*b,4),c)}`),`halve ${nw(qN(b))}, take away its square`),nw(`= ${ans}`)],a:nw(ans),n}; }},
+  const P=`(${frac(qN(b),"2")})²`;
+  return {q:`Express ${nw(ex)} in the form ${nw(`(${X1} + ${V("a")})² + ${V("b")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(X2,qT(b,X1),P,"−"+P,c)}`),`add and take away ${nw(P)}`),nw(`= ${qJ(sq,"−"+frac(b*b,4),c)}`),nw(`= ${ans}`)],a:nw(ans),n}; }},
 {t:"number in front",g:R=>{ const n=qTry(()=>{ const a=R.pick([2,3,-1,-2,2,-1]), h=R.nz(-4,4), c=R.nz(-9,9); return {a,h,b:2*a*h,c,k:c-a*h*h}; },n=>n.k!==0&&Math.abs(n.b)<=24,{a:2,h:-3,b:-12,c:7,k:-11}), {a,h,b,c,k}=n, ex=qJ(qT(a,X2),qT(b,X1),c), sq=`(${qJ(X1,h)})²`;
-  return {q:`Express ${nw(ex)} in the form ${nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(qT(a,`(${qJ(X2,qT(2*h,X1))})`),c)}`),`take ${qN(a)} out of the ${nw(`${X2} and ${X1}`)} terms`),nw(`= ${qJ(qT(a,`[${sq} − ${h*h}]`),c)}`),qW(nw(`= ${qJ(qT(a,sq),-a*h*h,c)}`),`× ${qB(a)} into the [ ]`),nw(`= ${qJ(qT(a,sq),k)}`)],a:nw(qJ(qT(a,sq),k)),n}; }},
+  return {q:`Express ${nw(ex)} in the form ${nw(`${V("a")}(${X1} − ${V("h")})² + ${V("k")}.`)}`,w:[nw(ex),qW(nw(`= ${qJ(qT(a,`(${qJ(X2,qT(2*h,X1))})`),c)}`),`take ${qN(a)} out of the ${nw(`${X2} and ${X1}`)} terms`),qW(nw(`= ${qJ(qT(a,`[${qJ(X2,qT(2*h,X1),`(${frac(qN(2*h),"2")})²`,`−(${frac(qN(2*h),"2")})²`)}]`),c)}`),`add and take away ${nw(`(${frac(qN(2*h),"2")})²`)}`),nw(`= ${qJ(qT(a,`[${sq} − ${h*h}]`),c)}`),qW(nw(`= ${qJ(qT(a,sq),-a*h*h,c)}`),`× ${qB(a)} into the [ ]`),nw(`= ${qJ(qT(a,sq),k)}`)],a:nw(qJ(qT(a,sq),k)),n}; }},
 {t:"turning point",g:R=>{ const n=qTry(()=>{ const a=R.pick([1,1,-1,2]), h=R.nz(-5,5), c=R.nz(-9,9); return {a,h,b:2*a*h,c,k:c-a*h*h}; },n=>n.k!==0&&Math.abs(n.b)<=20,{a:1,h:-3,b:-6,c:4,k:-5}), {a,h,b,c,k}=n, Y=VY, ex=qJ(qT(a,X2),qT(b,X1),c), sq=`(${qJ(X1,h)})²`, tp=`(${qN(-h)}, ${qN(k)})`, mm=a>0?"minimum":"maximum";
   const w=[nw(`${Y} = ${ex}`)];
-  if(a===1) w.push(qW(nw(`= ${qJ(X2,qT(b,X1),h*h,-h*h,c)}`),`add and take away ${nw(`(${qN(b)} ÷ 2)²`)}`));
-  else w.push(qW(nw(`= ${qJ(qT(a,`(${qJ(X2,qT(2*h,X1))})`),c)}`),`take ${qN(a)} out`),nw(`= ${qJ(qT(a,`[${sq} − ${h*h}]`),c)}`),nw(`= ${qJ(qT(a,sq),-a*h*h,c)}`));
+  const P=`(${frac(qN(2*h),"2")})²`;
+  if(a===1) w.push(qW(nw(`= ${qJ(X2,qT(b,X1),P,"−"+P,c)}`),`add and take away ${nw(P)}`),nw(`= ${qJ(sq,-h*h,c)}`));
+  else w.push(qW(nw(`= ${qJ(qT(a,`(${qJ(X2,qT(2*h,X1))})`),c)}`),`take ${qN(a)} out`),qW(nw(`= ${qJ(qT(a,`[${qJ(X2,qT(2*h,X1),P,"−"+P)}]`),c)}`),`add and take away ${nw(P)}`),nw(`= ${qJ(qT(a,`[${sq} − ${h*h}]`),c)}`),nw(`= ${qJ(qT(a,sq),-a*h*h,c)}`));
   w.push(nw(`= ${qJ(qT(a,sq),k)}`),qW(`${nw(tp)} is a ${mm} point.`,a>0?`${nw(`+${X2}`)}: ∪`:`${nw(`−${X2}`)}: ∩`));
   return {q:`By completing the square, find the coordinates of the turning point of ${nw(`${Y} = ${ex}`)}, and state whether it is a maximum or a minimum point.`,w,a:`${nw(tp)}, a ${mm} point`,n}; }}],
 "quadratic-graphs":[
