@@ -1881,7 +1881,7 @@ const TOPICS = [
   {id:"area-cut-move", strand:"geo", levels:["sec1"], chapter:"Measurement",
    title:"Area: parallelogram & trapezium", blurb:"Why the formulas work. Cut and move, or turn a copy round, and you get a rectangle.", play:"areaCut", sheet:"s1Area", sheetTitle:"Perimeter & area"},
   {id:"speed-convert", strand:"num", levels:["sec1"], chapter:"Ratio, rate & speed",
-   title:"Converting speed units", blurb:"Write the speed as a fraction. Change the top and the bottom, then press the calculator.", play:"speedConv", sheet:"s1Ratio", sheetTitle:"Ratio, rate & speed"},
+   title:"Converting speed units", blurb:"Write the speed as a fraction. Change the numerator and the denominator, then press the calculator.", play:"speedConv", sheet:"s1Ratio", sheetTitle:"Ratio, rate & speed"},
   {id:"quad-formula-proof", strand:"alg", levels:["emath","amath"], chapter:"Quadratic Functions", tier:"curious",
    title:"Where the quadratic formula comes from", blurb:"Press play: complete the square on numbers and on letters, side by side.", play:"quadProof", sheet:"quadEqns", sheetTitle:"Solving quadratic equations"},
   {id:"toilet-paper", strand:"geo", levels:["sec1","emath"], chapter:"Volume & surface area",
@@ -9623,44 +9623,39 @@ ${PAN("Types of numbers",FACTS("",[["Integers",["…, −2, −1, 0, 1, 2, …"]
 ${MIST([["−2² = 4","−2² = −4 · (−2)² = 4"],["5 − (−3) = 2",nw("5 + 3 = 8")],["−7 &gt; −2","−7 &lt; −2: further left is smaller"],["8 − 2 × 3 = 18",`× first: ${nw("8 − 6 = 2")}`],[nw("(−12) ÷ (−3) = −4"),`same signs: ${nw("4")}`],["0.333… is irrational","it repeats, so it is rational"]])}
 </div>`,
 
-s1Approx:`${MUST([FB("blue","Decimal places","count after the point",nw("3.141 6 → 3.14 (2 d.p.)")),FB("amber","Significant figures","start at the first non-zero digit","0.004 5 has 2 s.f."),FB("green","Rounding","next digit 5 or more: round up","less than 5: keep")])}
+s1Approx:`${MUST([FB("blue","Significant figures",nw(`0.00<b class="k-amber">4 5</b> has 2 s.f.`),"zeros in front don't count","","mk"),FB("amber","Keep the size",nw(`38 762 → 39 <b class="k-amber">000</b>`),"2 s.f.: fill up with zeros","","mk"),FB("green","Estimate",nw(`49.7 × 3.18 ≈ <b class="k-amber">50 × 3</b>`),"every number to 1 s.f.",nw(`a root: ${SQRT("50.3")} ≈ ${SQRT("49")} = 7`),"mk")])}
 <div class="sheet">
-${PAN("Decimal places",picRound()+`<p class="anno">* cut after the 2nd decimal place, then look at the next digit</p><table><tr><th>Round 7.284 6</th><th>Answer</th></tr><tr><td>to 1 d.p.</td><td>7.3</td></tr><tr><td>to 2 d.p.</td><td>7.28</td></tr><tr><td>to 3 d.p.</td><td>7.285</td></tr></table>`)}
+${PAN("Decimal places",picRound()+`<table><tr><th>Round 7.284 6</th><th>Answer</th></tr><tr><td>to 1 d.p.</td><td>7.3</td></tr><tr><td>to 2 d.p.</td><td>7.28</td></tr><tr><td>to 3 d.p.</td><td>7.285</td></tr></table>`)}
 ${PAN("Significant figures",`<table><tr><th>Number</th><th>s.f.</th><th>Why</th></tr>
   <tr><td>3052</td><td>4</td><td>zeros between digits count</td></tr>
   <tr><td>${nw("0.003 04")}</td><td>3</td><td>zeros in front don't count</td></tr>
-  <tr><td>4.50</td><td>3</td><td>a zero at the end, after the point, counts</td></tr></table>`
-  +STEPS([[nw("0.045 67 → 0.046"),"2 s.f."],[nw("38 762 → 39 000"),"2 s.f.: fill with zeros"],[nw("2.996 → 3.00"),"3 s.f.: keep the zeros"]]))}
-${PAN("Estimate",EG(`Estimate ${nw("49.7 × 3.18 ÷ 0.512")}`,[`round each to 1 s.f.: ${nw("50 × 3 ÷ 0.5")}`,nw("= 150 ÷ 0.5 = 300"),"calculator: 308.68…, close ✓"])
-  +EG(`Estimate ${nw(`${SQRT("50.3")} × 4.2`)}`,[`a root: use the nearest square number, ${nw(`${SQRT("49")} = 7`)}`,nw("7 × 4 = 28")])
-  +`<p class="anno">* round every number to 1 s.f., but a square root goes to the nearest square number</p>`)}
+  <tr><td>4.50</td><td>3</td><td>a zero at the end, after the point, counts</td></tr></table>`)}
+${PAN("Estimate",EG(`Estimate ${nw("49.7 × 3.18 ÷ 0.512")}`,[`write the 1 s.f. numbers: ${nw("50 × 3 ÷ 0.5")}`,nw("= 150 ÷ 0.5 = 300")]))}
 ${PAN("Round up or down?",EG("47 people, 6 at each table. How many tables?",[nw("47 ÷ 6 = 7.83"),"round up: 8 tables, so nobody is left out"])+EG("$20 to spend, $3 each. How many can you buy?",[nw("20 ÷ 3 = 6.67"),"round down: 6 items (7 would cost $21)"]))}
-${MIST([["38 762 to 2 s.f. = 39","39 000: keep the size"],["0.040 5 has 4 s.f.","3 s.f.: zeros in front don't count"],["2.996 to 3 s.f. = 3","3.00"],["round in the middle of the working","round only the final answer"]])}
+${MIST([["38 762 to 2 s.f. = 39","39 000: keep the size"],["0.040 5 has 4 s.f.","3 s.f.: zeros in front don't count"],["2.996 to 3 s.f. = 3","3.00"],["round in the middle of the working","round only the final answer"],[`estimate: ${nw(`${SQRT("50.3")} ≈ 7.09`)}`,`nearest square number: ${nw(`${SQRT("49")} = 7`)}`]])}
 </div>`,
 
-s1Algebra:`${MUST([FB("blue","Like terms",nw(`3${X1} + 5${X1} = 8${X1}`),"only the same letters and powers"),FB("amber","Expand",nw(`${V("a")}(${V("b")} + ${V("c")}) = ${V("ab")} + ${V("ac")}`),"every term in the bracket · the number keeps its sign"),FB("green","Factorise",nw(`${V("ab")} + ${V("ac")} = ${V("a")}(${V("b")} + ${V("c")})`),"take out the common factor")])}
+s1Algebra:`${MUST([FB("blue","Like terms",nw(`3${X1} + 5${X1} = 8${X1}`),`${nw(`3${X1} + 2${VY}`)} stays as it is`,"same letters, same powers","mk"),FB("amber","Expand",nw(`−2(${X1} − 4) = −2${X1} <b class="k-amber">+</b> 8`),"the −2 keeps its sign",nw(`${V("a")}(${V("b")} + ${V("c")}) = ${V("ab")} + ${V("ac")}`),"mk"),FB("green","Substitute",nw(`${V("b")} = −2: ${V("b")}² = <b class="k-amber">(−2)²</b> = 4`),"put a bracket round a negative","","mk")])}
 <div class="sheet">
 ${PAN("Words → algebra",`<table><tr><th>Words</th><th>Algebra</th></tr>
   <tr><td>5 more than ${X1}</td><td>${nw(`${X1} + 5`)}</td></tr><tr><td>twice ${X1}, minus 3</td><td>${nw(`2${X1} − 3`)}</td></tr>
   <tr><td>${VN} pens at $2 each</td><td>$2${VN}</td></tr><tr><td>3 plus ${VY}, all divided by 5</td><td>${frac(`3 + ${VY}`,"5")}</td></tr>
   <tr><td>${V("a")} × ${V("a")} × ${V("b")}</td><td>${V("a")}²${V("b")}</td></tr></table>`)}
 ${PAN("Simplify",STEPS([nw(`4${X1} + 3${VY} − ${X1} + 5${VY}`),[nw(`= 3${X1} + 8${VY}`),`collect ${X1}'s, then ${VY}'s`],nw(`2${V("a")} × 3${V("b")} = 6${V("ab")}`),nw(`12${X2} ÷ 4${X1} = 3${X1}`)]))}
-${PAN("Expand: the rainbow",rainbow(110,31,27,[[20,"5"],[38,"−2","var(--ink)"],[50,"("],[58,RX],[69,"+"],[80,"1"],[87,")"]],[[40,58,1,6,"","var(--blue)"],[36,80,1,13,"","var(--green)"]])+STEPS([[nw(`5 − 2(${X1} + 1)`),"the −2 keeps its sign"],[`${nw("= 5")} <span class="k-blue">${nw(`+ (−2 × ${X1})`)}</span> <span class="k-green">${nw("+ (−2 × 1)")}</span>`,"one arc to each term"],nw(`= 5 − 2${X1} − 2`),nw(`= 3 − 2${X1}`)])
-  +STEPS([nw(`−2(3${X1} − 5)`),[nw(`= (−2 × 3${X1}) + (−2 × −5)`),"−2 and −5"],nw(`= −6${X1} + 10`)]))}
+${PAN("Expand: the rainbow",rainbow(110,31,27,[[20,"5"],[38,"−2","var(--ink)"],[50,"("],[58,RX],[69,"+"],[80,"1"],[87,")"]],[[40,58,1,6,"","var(--blue)"],[36,80,1,13,"","var(--green)"]])+STEPS([nw(`5 − 2(${X1} + 1)`),[`${nw("= 5")} <span class="k-blue">${nw(`+ (−2 × ${X1})`)}</span> <span class="k-green">${nw("+ (−2 × 1)")}</span>`,"one arc to each term"],nw(`= 5 − 2${X1} − 2`),nw(`= 3 − 2${X1}`)]))}
 ${PAN("Factorise",STEPS([nw(`6${X1} + 9 = 3(2${X1} + 3)`),nw(`4${V("ab")} − 6${V("a")} = 2${V("a")}(2${V("b")} − 3)`),nw(`${V("a")}${X1} + ${V("b")}${X1} + 2${V("a")}${VY} + 2${V("b")}${VY}`),[nw(`= ${X1}(${V("a")} + ${V("b")}) + 2${VY}(${V("a")} + ${V("b")})`),"group in pairs"],[nw(`= (${V("a")} + ${V("b")})(${X1} + 2${VY})`),"common bracket"]]))}
 ${PAN("Substitute",EG(`${V("a")} = 3, ${V("b")} = −2. Find ${nw(`2${V("a")}² − ${V("ab")}`)}`,[nw("= 2(3)² − (3)(−2)"),nw("= 2(9) − (−6)"),nw("= 18 + 6"),nw("= 24")]))}
-${MIST([[nw(`3${X1} + 2${VY} = 5${X1}${VY}`),"different letters stay apart"],[nw(`−2(${X1} − 4) = −2${X1} − 8`),nw(`−2${X1} + 8`)],[nw(`${X1} × ${X1} = 2${X1}`),X2],[`${V("b")} = −2: ${nw(`${V("b")}² = −4`)}`,`use brackets: ${nw("(−2)² = 4")}`]])}
+${MIST([[nw(`3${X1} + 2${VY} = 5${X1}${VY}`),"different letters stay apart"],[nw(`−2(${X1} − 4) = −2${X1} − 8`),nw(`−2${X1} + 8`)],[nw(`${X1} × ${X1} = 2${X1}`),X2],[`${V("b")} = −2: ${nw(`${V("b")}² = −4`)}`,`use brackets: ${nw("(−2)² = 4")}`],[nw(`4${V("ab")} − 6${V("a")} = 2(2${V("ab")} − 3${V("a")})`),`take out every common factor: ${nw(`2${V("a")}(2${V("b")} − 3)`)}`]])}
 </div>`,
 
-s1LinEq:`${MUST([FB("blue","Throw it over the =","flip it: + ↔ − · × ↔ ÷","+ 7 becomes − 7, × 3 becomes ÷ 3"),FB("amber","Brackets","expand first",`then ${X1} terms on one side`),FB("green","Fractions","× by the LCM of the denominators","every fraction disappears")])}
+s1LinEq:`${MUST([FB("blue","Throw it over the =",`flip it: <b class="k-amber">+ ↔ −</b>&emsp;<b class="k-amber">× ↔ ÷</b>`,"+ 7 becomes − 7, × 3 becomes ÷ 3","","mk mkw"),FB("amber","A minus in front",`${nw(`−3${X1} = 12`)}<br>${nw(`${X1} = 12 ÷ (<b class="k-amber">−3</b>) = −4`)}`,`−3${X1} means −3 × ${X1}, so ÷ by −3`,"","mk"),FB("green","Fractions","× by the LCM of the denominators","the numerator stays in a bracket",nw(`${frac(`${X1} + 4`,"4")} × 12 = <b class="k-amber">3(</b>${X1} + 4<b class="k-amber">)</b>`),"mk mkw")])}
 <div class="sheet">
 ${PAN("Solve, step by step",picThrow()+STEPS([nw(`5${X1} − 7 = 2${X1} + 8`),[`${nw(`5${X1}`)} <span class="k-blue">${nw(`− 2${X1}`)}</span> ${nw("= 8")} <span class="k-amber">${nw("+ 7")}</span>`,`throw 2${X1} and −7 over: flip`],[nw(`3${X1} = 15`),"collect"],[nw(`${X1} = 15 ÷ 3 = 5`),"× 3 flips to ÷ 3"]])+EG("Check",[nw("5(5) − 7 = 18"),nw("2(5) + 8 = 18 ✓")])+PLAYLINK("#balance-equations?eq=e5","Try it"))}
-${PAN("A minus in front",EG(`${nw(`−3${X1}`)} means ${nw(`−3 × ${X1}`)}, so ÷ by −3`,[nw(`−3${X1} = 12`),nw(`${X1} = 12 ÷ (−3)`),nw(`${X1} = −4`)]))}
-${PAN("Brackets",STEPS([nw(`3(2${X1} − 1) = 4(${X1} + 2)`),[nw(`6${X1} − 3 = 4${X1} + 8`),"expand"],[nw(`6${X1} − 4${X1} = 8 + 3`),"throw over: flip"],[nw(`2${X1} = 11`),"collect"],[nw(`${X1} = 11 ÷ 2 = 5.5`),"× 2 flips to ÷ 2"]]))}
-${PAN("Fractions",STEPS([nw(`${frac(`2${X1} − 3`,"3")} = ${frac(`${X1} + 4`,"4")}`),[nw(`4(2${X1} − 3) = 3(${X1} + 4)`),"× 12"],[`${nw("12 ÷ 3 = 4")} and ${nw("12 ÷ 4 = 3")}`,"the new numbers in front"],[nw(`8${X1} − 12 = 3${X1} + 12`),"expand"],[nw(`8${X1} − 3${X1} = 12 + 12`),"throw over: flip"],nw(`5${X1} = 24`),nw(`${X1} = 24 ÷ 5 = 4.8`)])
+${PAN("Brackets",STEPS([nw(`3(2${X1} − 1) = 4(${X1} + 2)`),[nw(`6${X1} − 3 = 4${X1} + 8`),"expand first"],[nw(`6${X1} − 4${X1} = 8 + 3`),"throw over: flip"],[nw(`2${X1} = 11`),"collect"],[nw(`${X1} = 11 ÷ 2 = 5.5`),"× 2 flips to ÷ 2"]]))}
+${PAN("Fractions",STEPS([nw(`${frac(`2${X1} − 3`,"3")} = ${frac(`${X1} + 4`,"4")}`),[nw(`4(2${X1} − 3) = 3(${X1} + 4)`),"× 12"],[nw(`8${X1} − 12 = 3${X1} + 12`),"expand"],[nw(`8${X1} − 3${X1} = 12 + 12`),"throw over: flip"],nw(`5${X1} = 24`),nw(`${X1} = 24 ÷ 5 = 4.8`)])
   +STEPS([nw(`${frac("3",`${X1} − 2`)} = 6`),[nw(`3 = 6(${X1} − 2)`),`× (${X1} − 2)`],nw(`3 = 6${X1} − 12`),[nw(`3 + 12 = 6${X1}`),"throw −12 over: + 12"],nw(`6${X1} = 15`),nw(`${X1} = 15 ÷ 6 = 2.5`)]))}
 ${PAN("Word problems",EG(`"I think of a number, × 3, then − 4. The answer is 17."`,[`let the number be ${X1}`,nw(`3${X1} − 4 = 17`),nw(`3${X1} = 21`),`${nw(`${X1} = 7`)}: the number is 7`]))}
-${MIST([[nw(`2${X1} = 10`)+` so ${nw(`${X1} = 8`)}`,`÷ 2: ${nw(`${X1} = 5`)}`],[`${frac(`${X1} + 4`,"4")} × 12 = ${nw(`${X1} + 48`)}`,nw(`3(${X1} + 4)`)],["move a term across but keep its sign","+ 7 on one side becomes − 7 on the other"],[`${nw(`−3${X1} = 12`)} so ${nw(`${X1} = 12 ÷ 3`)}`,`÷ by −3: ${nw(`${X1} = 12 ÷ (−3) = −4`)}`]])}
+${MIST([[nw(`2${X1} = 10`)+` so ${nw(`${X1} = 8`)}`,`÷ 2: ${nw(`${X1} = 5`)}`],[`${frac(`${X1} + 4`,"4")} × 12 = ${nw(`${X1} + 48`)}`,nw(`3(${X1} + 4)`)],["move a term across but keep its sign","+ 7 on one side becomes − 7 on the other"],[`${nw(`−3${X1} = 12`)} so ${nw(`${X1} = 12 ÷ 3`)}`,`÷ by −3: ${nw(`${X1} = 12 ÷ (−3) = −4`)}`],[`${nw(`2${X1} − 3 = 7`)} so ${nw(`2${X1} = 4`)}`,`throw −3 over: ${nw(`2${X1} = 7 + 3 = 10`)}`]])}
 </div>`,
 
 s1Angles:`${MUST([FB("blue","Z: alternate angles","equal","",nw(`(alt. ∠s, <b class="k-amber">AB &#47;&#47; CD</b>)`),"mk"),FB("green","F: corresponding angles","equal","",nw(`(corr. ∠s, <b class="k-amber">AB &#47;&#47; CD</b>)`),"mk"),FB("amber","C: interior angles","add to 180°","NOT equal",nw(`(int. ∠s, <b class="k-amber">AB &#47;&#47; CD</b>)`),"mk")])}
@@ -9683,35 +9678,31 @@ ${PAN("Regular polygons: use the exterior angle",picHexExt()+EG("Regular hexagon
 ${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],[nw("hexagon angle sum = 6 × 180°"),nw("(6 − 2) × 180° = 720°")],[`regular: ${nw(`each interior angle = 360° ÷ ${VN}`)}`,`regular: ${nw(`each exterior angle = 360° ÷ ${VN}`)}`],["every rhombus is a square","only if its angles are 90°"]])}
 </div>`,
 
-s1Ratio:`${MUST([FB("blue","Ratio","same units, whole numbers","simplify like a fraction"),FB("amber","Speed",frac("distance","time"),"average speed = total distance ÷ total time"),FB("green","Speed units",nw(`72 km/h = ${frac("72 km","1 h")}`),"change the top and the bottom separately")])}
+s1Ratio:`${MUST([FB("blue","Same units first",`${nw("45 min : 2 h")}<br>${nw(`= 45 : <b class="k-amber">120</b> = 3 : 8`)}`,"then simplify like a fraction","","mk"),FB("amber","Average speed",frac("total distance","total time"),`<b class="k-amber">not</b> the mean of the two speeds`,"","mk mkw"),FB("green","km/h → m/s",`${nw(`72 km/h = ${frac('72 × <b class="k-amber">1000</b> m','1 × <b class="k-amber">60 × 60</b> s')}`)} ${nw("= 20 m/s")}`,"change the numerator and the denominator","","mk")])}
 <div class="sheet">
 ${PAN("Share in a ratio",picBar(3,4,"$12","$84")+STEPS(["$84 shared in the ratio 3 : 4",[nw("7 units = $84"),"3 + 4 = 7"],[nw("1 unit = $12"),"÷ 7"],`A: ${nw("3 × $12 = $36")} · B: ${nw("4 × $12 = $48")}`]))}
-${PAN("Simplify",`<table><tr><th>Ratio</th><th>Simplest</th></tr><tr><td>45 min : 2 h</td><td>${nw("45 : 120 = 3 : 8")}</td></tr><tr><td>0.6 : 1.5</td><td>${nw("6 : 15 = 2 : 5")}</td></tr><tr><td>${frac("2","3")} : ${frac("3","4")}</td><td>× 12 (LCM of 3 and 4):<br>${nw("8 : 9")}</td></tr></table>`
+${PAN("Simplify",`<table><tr><th>Ratio</th><th>Simplest</th></tr><tr><td>0.6 : 1.5</td><td>${nw("6 : 15 = 2 : 5")}</td></tr><tr><td>${frac("2","3")} : ${frac("3","4")}</td><td>× 12 (LCM of 3 and 4):<br>${nw("8 : 9")}</td></tr></table>`
   +EG(`${nw("a : b = 2 : 3")} and ${nw("b : c = 4 : 5")}`,[`make b the same: ${nw("12 = LCM of 3 and 4")}`,`${nw("a : b = 8 : 12")}, ${nw("b : c = 12 : 15")}`,nw("a : b : c = 8 : 12 : 15")]))}
 ${PAN("Rate",EG("3 kg of rice cost $7.50",[nw("1 kg: $7.50 ÷ 3 = $2.50"),nw("8 kg: 8 × $2.50 = $20")]))}
-${PAN("Average speed",picRoute()+EG("60 km in 1.5 h, then 40 km in 0.5 h",[nw("total distance = 60 + 40 = 100 km"),nw("total time = 1.5 + 0.5 = 2 h"),nw("average speed = 100 ÷ 2 = 50 km/h")])
-  +EG("The two speeds",[nw("60 ÷ 1.5 = 40 km/h"),nw("40 ÷ 0.5 = 80 km/h")])+`<p class="anno">* the average speed is not the average of 40 and 80</p>`)}
-${PAN("Change the units",EG("72 km/h in m/s",[nw(`72 km/h = ${frac("72 km","1 h")}`),nw(`= ${frac("72 × 1000 m","1 × 60 × 60 s")}`),nw("= 20 m/s")])+EG("15 m/s in km/h",[nw(`15 m/s = ${frac("15 m","1 s")}`),nw(`= ${frac("15 ÷ 1000 km","1 ÷ 3600 h")}`),nw("= 54 km/h")])+`<p class="anno">* write it as a fraction, change the top and the bottom, then press the calculator</p>`+PLAYLINK("#speed-convert"))}
-${MIST([[`average speed = ${nw(`${frac("40 + 80","2")} = 60`)}`,"total distance ÷ total time = 50 km/h"],["45 min : 2 h = 45 : 2",`same units first: ${nw("45 : 120 = 3 : 8")}`],[`72 km/h = ${nw("72 × 1000 = 72 000 m/s")}`,`change the bottom ${nw("too: ÷ (60 × 60)")}<br>→ ${nw("20 m/s")}`]])}
+${PAN("Average speed",picRoute()+EG("60 km in 1.5 h, then 40 km in 0.5 h",[nw("total distance = 60 + 40 = 100 km"),nw("total time = 1.5 + 0.5 = 2 h"),nw("average speed = 100 ÷ 2 = 50 km/h")]))}
+${PAN("m/s → km/h",EG("15 m/s in km/h",[nw(`15 m/s = ${frac("15 m","1 s")}`),nw(`= ${frac("15 ÷ 1000 km","1 ÷ 3600 h")}`),nw("= 54 km/h")])+PLAYLINK("#speed-convert"))}
+${MIST([[`40 km/h, then 80 km/h: average ${nw(`= ${frac("40 + 80","2")} = 60`)}`,"total distance ÷ total time = 50 km/h"],["45 min : 2 h = 45 : 2",`same units first: ${nw("45 : 120 = 3 : 8")}`],[`72 km/h = ${nw("72 × 1000 = 72 000 m/s")}`,`change the denominator ${nw("too: ÷ (60 × 60)")}<br>→ ${nw("20 m/s")}`],[`$84 in the ratio 3 : 4: ${nw("84 ÷ 3 = $28")}`,`3 + 4 = 7 units: ${nw("1 unit = 84 ÷ 7 = $12")}`]])}
 </div>`,
 
-s1Percent:`${MUST([FB("blue","% of",nw(`80% of 500 = ${frac("80","100")} × 500`),"= 400"),FB("amber","Percentage change",nw(`${frac("change","original")} × 100%`),`change = ${nw("new − original")}`),FB("green","Reverse %","find 1% first","after +20%, the new price is 120%")])}
+s1Percent:`${MUST([FB("blue","% of",nw(`80% of 500 = ${frac("80","100")} × 500 = 400`),"of means ×","","mk"),FB("amber","Percentage change",nw(`${frac("change",'<b class="k-amber">original</b>')} × 100%`),"÷ the original, never the new value",nw("change = new − original"),"mk"),FB("green","Reverse %",nw(`after +20%: new price = <b class="k-amber">120%</b>`),"find 1% first, then 100%","","mk")])}
 <div class="sheet">
 ${PAN("As a percentage",STEPS([[nw(`${frac("18","24")} × 100% = 75%`),"18 out of 24"]]))}
-${PAN("Percentage change",`<p class="big">${nw(`${frac("change","original")} × 100%`)}</p>`+EG("A price goes from $40 to $46. Find the percentage increase.",[nw("change = $46 − $40 = $6"),nw(`percentage increase = ${frac("6","40")} × 100%`),nw("= 15%")]))}
-${PAN("Increase and decrease",picPct()+STEPS(["$250, up 12%",[nw(`${frac("12","100")} × 250 = $30`),"the change"],[nw("$250 + $30 = $280"),"add it on"]])
-  +STEPS(["$250, down 15%",[nw(`${frac("15","100")} × 250 = $37.50`),"the change"],[nw("$250 − $37.50 = $212.50"),"take it away"]]))}
+${PAN("Percentage change",EG("A price goes from $40 to $46. Find the percentage increase.",[nw("change = $46 − $40 = $6"),nw(`percentage increase = ${frac("6","40")} × 100%`),nw("= 15%")]))}
+${PAN("Increase and decrease",picPct()+STEPS(["$250, up 20%",[nw(`${frac("20","100")} × 250 = $50`),"the change"],[nw("$250 + $50 = $300"),"add it on (a decrease: take it away)"]]))}
 ${PAN("Faster way: multipliers",FACTS("",[["20% off",["80% left","× 0.8"]],["10% service charge",["110%","× 1.1"]],["9% GST",["109%","× 1.09"]]])
   +EG("$50 meal: 20% off, then 10% service charge, then 9% GST",[nw("$50 × 0.8 × 1.1 × 1.09"),nw("= $47.96")])
   +EG("Same meal, one step at a time",[nw(`${frac("20","100")} × 50 = $10 off → $40`),nw(`${frac("10","100")} × 40 = $4 → $44`),nw(`${frac("9","100")} × 44 = $3.96 → $47.96`)]))}
 ${PAN("Reverse percentage",picRevPct()+EG("After a 20% discount, a bag costs $96. Original price?",[nw("80% = $96"),nw("1% = $96 ÷ 80 = $1.20"),nw("100% = $120")]))}
 ${PAN("Money",`<table><tr><th>Question</th><th>Working</th></tr>
-  <tr><td>25% off $80</td><td>${nw(`${frac("25","100")} × 80 = $20`)} off → ${nw("$60")}</td></tr>
-  <tr><td>9% GST on $120</td><td>${nw(`${frac("9","100")} × 120 = $10.80`)} → ${nw("$130.80")}</td></tr>
   <tr><td>Simple interest: $2000, 3% a year, 4 years</td><td>${nw(frac("2000 × 3 × 4","100"))} = ${nw("$240")}</td></tr>
   <tr><td>Hire purchase: 20% deposit on $1500, then ${nw("12 × $110")}</td><td>deposit: ${nw(`${frac("20","100")} × $1500 = $300`)} · instalments: ${nw("12 × $110 = $1320")} · total: ${nw("$300 + $1320 = $1620")}, $120 more than paying cash</td></tr>
   <tr><td>S$1 = US$0.74. Change S$500 into US$.</td><td>${nw("500 × 0.74 = US$370")}</td></tr></table>`)}
-${MIST([["+20% then −20% gets back to the start",nw("100 → 120 → 96")],[`reverse %: ${nw("$96 + 20% of $96")}`,"$96 is 80% of the original"],["% change ÷ the new value","÷ the original value"]])}
+${MIST([["+20% then −20% gets back to the start",nw("100 → 120 → 96")],[`reverse %: ${nw("$96 + 20% of $96")}`,"$96 is 80% of the original"],["% change ÷ the new value","÷ the original value"],["25% off $80: the answer is $20",`$20 is the discount: pay ${nw("$80 − $20 = $60")}`]])}
 </div>`,
 
 s1Patterns:`${MUST([FB("blue","Linear sequence","same difference each time","5, 8, 11, 14: + 3 each"),FB("amber",`${VN}th term`,`difference first: ${nw(`3${VN}, 4${VN}, …`)}`,"then plus or minus to reach the 1st term"),FB("green","Is it a term?",nw(`${Tn} = the number`),`${VN} must be a positive integer`)])}
