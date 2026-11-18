@@ -7114,18 +7114,18 @@ const ratioSame=aid({
 });
 PLAYS.ratioSame=ratioSame;
 const BAS=[
-  {c:"Lee got 14",ev:["Then Lee ","got 14 more","."],now:[1,2],keep:"k",note:"Kim not touched",bb:1,ab:3,off:0,pc:[{r:1,a:5,b:6,v:"+14"}],u:14,hint:"Make Kim's boxes the same."},
-  {c:"Lee gave 18",ev:["Then Lee ","gave 18 to Kim","."],now:[3,1],keep:"t",note:"nothing came in or out",bb:1,ab:2,off:0,pc:[{r:1,a:3,b:6,v:"18",tx:1}],u:6,hint:"Make Total boxes the same."},
-  {c:"Each got 12",ev:["Then ","each got 12 more","."],now:[2,3],keep:"d",note:"both got the same",bb:1,ab:2,off:1,pc:[{r:0,a:0,b:1,v:"+12"},{r:1,a:0,b:1,v:"+12"}],u:12,hint:"Make Difference boxes the same."},
-  {c:"Kim got 9",ev:["Then Kim ","got 9 more","."],now:[7,10],keep:"l",note:"Lee not touched",bb:2,ab:1,off:0,pc:[{r:0,a:6,b:7,v:"+9"}],u:9,hint:"Make Lee's boxes the same."}];
+  {c:"Lee got 14",ev:["Then Lee ","got 14 more","."],bf:[3,5],now:[1,2],keep:"k",note:"Kim not touched",bb:1,ab:3,off:0,pc:[{r:1,a:5,b:6,v:"+14"}],u:14,hint:"Make Kim's boxes the same."},
+  {c:"Lee gave 18",ev:["Then Lee ","gave 18 to Kim","."],bf:[5,7],now:[2,1],keep:"t",note:"nothing came in or out",bb:1,ab:4,off:0,pc:[{r:1,a:5,b:8,v:"18",tx:1}],u:6,hint:"Make Total boxes the same."},
+  {c:"Each got 12",ev:["Then ","each got 12 more","."],bf:[1,5],now:[1,3],keep:"d",note:"both got the same",bb:1,ab:2,off:1,pc:[{r:0,a:0,b:1,v:"+12"},{r:1,a:0,b:1,v:"+12"}],u:12,hint:"Make Difference boxes the same."},
+  {c:"Kim got 8",ev:["Then Kim ","got 8 more","."],bf:[1,2],now:[7,10],keep:"l",note:"Lee not touched",bb:5,ab:1,off:0,pc:[{r:0,a:5,b:7,v:"+8"}],u:4,hint:"Make Lee's boxes the same."}];
 const baKV=(x,K,L)=>x==="k"?K:x==="l"?L:x==="t"?K+L:L-K;
 function baM(s){ const S=BAS[s.s-1], n=clamp(Math.round(s.n)||1,1,6), big=S.bb>S.ab?"b":"a", R=Math.max(S.bb,S.ab);
-  const B={K:3*S.bb,L:5*S.bb,o:S.off,box:big==="b"?R/n:1}, A={K:S.now[0]*S.ab,L:S.now[1]*S.ab,o:0,box:big==="a"?R/n:1};
+  const B={K:S.bf[0]*S.bb,L:S.bf[1]*S.bb,o:S.off,box:big==="b"?R/n:1}, A={K:S.now[0]*S.ab,L:S.now[1]*S.ab,o:0,box:big==="a"?R/n:1};
   const cB=baKV(S.keep,B.K,B.L)/B.box, cA=baKV(S.keep,A.K,A.L)/A.box;
   return {S,n,big,R,B,A,cB:Math.round(cB*1e6)/1e6,cA:Math.round(cA*1e6)/1e6,ok:Math.abs(cB-cA)<1e-9}; }
 function baRows(s){ const M=baM(s), S=M.S, n=M.n, ok=M.ok, three=S.keep==="t"||S.keep==="d", kc3=S.keep==="t"?"Total":"Difference";
   const hd=three?["Kim","Lee",kc3]:["Kim","Lee"], ki=S.keep==="k"?0:S.keep==="l"?1:2, X=c=>three?[c-62,c-16,c+50]:[c-36,c+36];
-  const r0=v=>three?[v[0],v[1],S.keep==="t"?v[0]+v[1]:v[1]-v[0]]:v, Bv=r0([3,5]), Av=r0(S.now), T=(x,y,t,a)=>`<text x="${x}" y="${y}" text-anchor="middle" ${a||""}>${t}</text>`;
+  const r0=v=>three?[v[0],v[1],S.keep==="t"?v[0]+v[1]:v[1]-v[0]]:v, Bv=r0(S.bf), Av=r0(S.now), T=(x,y,t,a)=>`<text x="${x}" y="${y}" text-anchor="middle" ${a||""}>${t}</text>`;
   const col=i=>i===0?"var(--blue)":i===1?"var(--amber)":"var(--ink)";
   let o=`<svg class="barows" viewBox="0 0 400 236" role="img" aria-label="Before and After ratio rows">`;
   o+=`<line x1="200" y1="6" x2="200" y2="126" stroke="var(--line)" stroke-width="2"/>`;
@@ -7138,11 +7138,11 @@ function baRows(s){ const M=baM(s), S=M.S, n=M.n, ok=M.ok, three=S.keep==="t"||S
       o+=T(xs[i],y,x,`font-size="26" font-weight="700" fill="${f}"`); if(i<vals.length-1&&!(three&&i===1)) o+=T((xs[i]+xs[i+1])/2,y-2,":",`font-size="18" font-weight="700" fill="var(--muted)"`); });
     row(82,v,!isBig&&ok?"ok":""); if(isBig&&n>1){ row(116,v.map(x=>x*n),ok?"ok":"g"); o+=T(xs[xs.length-1]+(three?30:34),114,"× "+n,`font-size="18" font-weight="700" fill="${ok?"var(--green)":"var(--muted)"}"`); } });
   if(ok){ const yB=M.big==="b"?116:82, yA=M.big==="a"?116:82, mB=M.big==="b"?n:1, mA=M.big==="a"?n:1, xb=X(100), xa=X(300); let j=0, lbs="";
-    [0,1].forEach(i=>{ const d=(i?S.now[1]:S.now[0])*mA-(i?5:3)*mB; if(!d) return; const x0=xb[i], x1=xa[i], cx=(x0+x1)/2, cy=154+j*30, y0=yB+9, y1=yA+9, t=j?.72:.28, lb=(d>0?"+":"−")+Math.abs(d)+"u";
+    [0,1].forEach(i=>{ const d=(i?S.now[1]:S.now[0])*mA-S.bf[i]*mB; if(!d) return; const x0=xb[i], x1=xa[i], cx=(x0+x1)/2, cy=154+j*30, y0=yB+9, y1=yA+9, t=j?.72:.28, lb=(d>0?"+":"−")+Math.abs(d)+"u";
       const px=(1-t)*(1-t)*x0+2*(1-t)*t*cx+t*t*x1, py=(1-t)*(1-t)*y0+2*(1-t)*t*cy+t*t*y1;
       o+=`<path d="M${x0} ${y0}Q${cx} ${cy} ${x1} ${y1}" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M${x1-6} ${y1+8}L${x1} ${y1}L${x1+5} ${y1+9}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
       lbs+=`<rect x="${px-25}" y="${py-13}" width="50" height="24" rx="7" fill="var(--card)" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="4 3"/>`+T(px,py+6,lb,`font-size="17" font-weight="700" fill="var(--ink)"`); j++; }); o+=lbs;
-    const D=Math.abs(S.now[0]*mA-3*mB)||Math.abs(S.now[1]*mA-5*mB), tot=S.u*D;
+    const D=Math.abs(S.now[0]*mA-S.bf[0]*mB)||Math.abs(S.now[1]*mA-S.bf[1]*mB), tot=S.u*D;
     o+=T(200,226,D>1?`${D}u = ${tot},  1u = ${S.u}`:`1u = ${S.u}`,`font-size="24" font-weight="700" fill="var(--ink)"`); }
   else o+=T(200,226,"1u = ?",`font-size="24" font-weight="700" fill="var(--muted)"`);
   return `<div class="apwk ipk rrk bak"><div class="forms"><div class="formbox fb-ink rrbox${ok?" rrok":""}"><div class="eq">${o}</svg></div></div></div></div>`; }
@@ -7158,7 +7158,7 @@ function baDraw(svg,s){ const M=baM(s), S=M.S, pl=svg.closest&&svg.closest(".pla
   const LW=Math.ceil(Math.max(tw("Total",fs),tw("Kim",fs),tw("Lee",fs)))+16, X0=6+LW+8, CWd=wide?34:28, X1=cw-8-CWd;
   const line=S.keep==="t", maxU=line?Math.max(M.B.K+M.B.L,M.A.K+M.A.L):Math.max(M.B.o+M.B.L,M.B.o+M.B.K,M.A.L,M.A.K), px=(X1-X0)/maxU, X=v=>X0+v*px;
   const lh=qf+(sm?6:9), hb=wide?30:sm?18:26, yq=[hb+qf+2,hb+qf+2+lh,hb+qf+2+2*lh];
-  const q=[[["At first, ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[" = 3 : 5.",""]],[[S.ev[0],""],[S.ev[1],"",1],[S.ev[2],""]],[["Now ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[` = ${S.now[0]} : ${S.now[1]}.`,""]]];
+  const q=[[["At first, ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[` = ${S.bf[0]} : ${S.bf[1]}.`,""]],[[S.ev[0],""],[S.ev[1],"",1],[S.ev[2],""]],[["Now ",""],["Kim","var(--blue)"],[" : ",""],["Lee","var(--amber)"],[` = ${S.now[0]} : ${S.now[1]}.`,""]]];
   q.forEach((ln,i)=>{ const full=ln.map(x=>x[0]).join(""), w=tw(full,qf), f=w>cw-6?Math.floor(qf*(cw-6)/w*10)/10:qf, t=add("text",{x:2,y:yq[i],"font-size":f,"font-weight":500,fill:"var(--ink)",class:"baq"});
     ln.forEach(([x,c,u])=>{ const a={}; if(c){ a.fill=c; a["font-weight"]=700; } if(u){ a["text-decoration"]="underline"; a["font-weight"]=800; } add("tspan",a,x,t); }); });
   const yB0=yq[2]+(sm?10:14), yA0=yB0+sf+8+2*BH+G1+G2, kr=S.keep==="k"?0:1;
