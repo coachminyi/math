@@ -9222,6 +9222,7 @@ SHEETLIST.push(
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"angle-reasons",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Sec 1 to A-Math, the exam wording",title:"Angle reasons",sheet:"angleReasons",aid:null,exam:true,group:"memorise",kw:"angle reasons geometry proof parallel lines alternate interior corresponding triangle polygon circle properties tangent chord cyclic quadrilateral alternate segment converse midpoint theorem"},
   {id:"volume-formulas",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Every solid, Sec 1 to E-Math",title:"Volume & surface area",sheet:"volFormulas",aid:null,exam:true,group:"memorise",kw:"volume surface area formulas mensuration prism cuboid cylinder pipe pyramid cone sphere hemisphere slant height sector frustum similar solids composite litres units"},
+  {id:"trig-rules",levels:["sec2","emath","amath"],tag:"Sec 2–4",chapter:"Sec 2 to A-Math, every rule",title:"Trig rules",sheet:"trigRules",aid:null,exam:true,group:"memorise",kw:"trig rules trigonometry toa cah soh sine rule cosine rule area half ab sin c obtuse elevation depression bearings astc basic angle exact values identities double angle r-formula solve trigonometric equations"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
   {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"},
   {id:"calculator-guide",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Casio fx-97SG X keys",title:"Calculator guide",sheet:"calcGuide",aid:null,exam:true,group:"tips",kw:"calculator casio fx-97SG X keys menu equation quadratic simultaneous statistics standard deviation mean fraction degree radian"}
@@ -10940,6 +10941,87 @@ ${ZS("Lose no marks",[
 ZC("red","Never write","",
   ZTB(["✗","✓"],[[`cone volume with ${V("l")}`,`the vertical height ${V("h")}`],[`cone curved surface ${nw(`π${V("rh")}`)}`,nw(`π${V("rl")}`)],[`closed cylinder ${nw(`2π${V("rh")}`)} only`,`+ the 2 lids: ${nw(`2π${V("r")}²`)}`],[`hemisphere ${nw(`${frac("4","3")}π${V("r")}³`)}`,`half of it: ${nw(`${frac("2","3")}π${V("r")}³`)}`],[`diameter 10, so ${nw(`${V("r")} = 10`)}`,`halve it first: ${nw(`${V("r")} = 5`)}`],["volume in cm²","volume is in cm³"]]))
 ])}`});
+function xtTriC(){ const B='font-weight="700" font-style="italic"'; return SV("0 0 110 74",PG("12,62 98,62 40,12")+`<path d="M24 62 A12 12 0 0 0 17.9 51.5" fill="none" stroke="var(--amber)" stroke-width="2"/>`+TX(30,57,"C",`fill="var(--amber)" ${B}`)+TX(55,71,"a",B)+TX(20,35,"b",B)); }
+function xtRtri(){ const B='font-weight="700" font-style="italic"'; return SV("0 0 112 72",PG("10,60 96,60 96,14")+`<path d="M90 60 V54 H96" fill="none" stroke="var(--ink)"/>`
+    +LN(10,60,96,60,`stroke="var(--amber)" stroke-width="2.6"`)+LN(96,60,96,14,`stroke="var(--green)" stroke-width="2.6"`)+LN(10,60,96,14,`stroke="var(--blue)" stroke-width="2.2"`)
+    +`<path d="M26 60 A16 16 0 0 0 24.1 52.5" fill="none" stroke="var(--ink)" stroke-width="1.4"/>`+TX(32,57,"α",`font-weight="700"`)
+    +TX(53,70,"a",`fill="var(--amber)" ${B}`)+TX(101,40,"b",`fill="var(--green)" ${B} text-anchor="start"`)+TX(48,32,"R",`fill="var(--blue)" ${B}`)); }
+const XTCSS=(()=>{ try{ if(!document.getElementById("xtcss")){ const e=document.createElement("style"); e.id="xtcss"; e.textContent='.xtt{scroll-margin-top:calc(var(--barh,56px) + 66px)}.xtjump{position:sticky;top:var(--barh,56px);z-index:4;display:flex;gap:8px;overflow-x:auto;background:var(--bg);padding:8px 0 10px;margin:0 0 14px;scrollbar-width:none}.xtjump::-webkit-scrollbar{display:none}.xtjump .pill{flex:none;min-height:44px}.mzbody .mktri{margin:2px 0 4px;column-gap:10px}.xtev td,.xtev th{padding-left:5px;padding-right:5px}.xtev small{font-size:.78em}@media print{.xtjump{display:none!important}}'; document.head.appendChild(e); }
+  document.addEventListener("click",ev=>{ const b=ev.target.closest&&ev.target.closest("[data-xtjump]"); if(!b) return; const t=document.getElementById(b.dataset.xtjump); if(t){ ev.preventDefault(); t.scrollIntoView({behavior:"smooth",block:"start"}); } }); }catch(_){} return 1; })();
+const XTJ=items=>`<nav class="xtjump" aria-label="Jump to">${items.map(([id,t])=>`<button class="pill" type="button" data-xtjump="${id}">${t}</button>`).join("")}</nav>`;
+const XTS=(id,t,cards)=>ZS(t,cards).replace('<section class="mzsec"',`<section class="mzsec xtt" id="${id}"`);
+const XTNR=(s,c)=>s.split("var(--red)").join(`var(--${c||"ink"})`);
+const XTA=t=>`<b class="k-amber">${t}</b>`;
+const XTTOA=(()=>{ const O='<b class="k-green">opp</b>',A='<b class="k-amber">adj</b>',H='<b class="k-blue">hyp</b>'; return `<span class="mktri"><span class="w">T<b class="k-green">O</b><b class="k-amber">A</b></span><span class="f">${nw(`tan θ = ${frac(O,A)}`)}</span><span class="w">C<b class="k-amber">A</b><b class="k-blue">H</b></span><span class="f">${nw(`cos θ = ${frac(A,H)}`)}</span><span class="w">S<b class="k-green">O</b><b class="k-blue">H</b></span><span class="f">${nw(`sin θ = ${frac(O,H)}`)}</span></span>`; })();
+const XTMUST=`<div class="mzmust">${MUST([FB("blue","Right angle?",`${XTA("TOA CAH SOH")}`,"no right angle? sine or cosine rule","","mk"),FB("amber","sin gives 2 angles",nw(`sin θ = 0.6 → 36.9° or ${XTA("143.1°")}`),"check the obtuse one fits","","mk"),FB("green","Solving (A-Math)",`basic angle ${XTA("first")}, then the sign`,"ASTC gives the quadrants","","mk")])}</div>`;
+Object.assign(SHEETS,{trigRules:`${XTMUST}
+${XTJ([["xt-s2","Sec 2"],["xt-em","E-Math"],["xt-am","A-Math"],["xt-ex","Exam"],["xt-no","Never write"]])}
+${XTS("xt-s2","Sec 2: right-angled triangles",[
+ZC("blue","TOA CAH SOH","trigonometry-sec2",
+  ZR(XTNR(picRight("trig")),[XTTOA,ZX("label opp, adj, hyp from θ first")])
+  +ZF("Find an angle",nw(`θ = tan⁻¹ ${frac("5","8")} = 32.0°`),"SHIFT, then tan")
+  +ZF("2 sides, want the 3rd side?",`Pythagoras: ${nw(`hyp² = ${V("a")}² + ${V("b")}²`)}`))
+])}
+${XTS("xt-em","E-Math: any triangle",[
+ZC("purple","Which rule?","further-trigonometry",
+  ZT([[picRule("sine"),"Sine rule","a side + its opposite angle"],[picRule("sas"),"Cosine rule","2 sides + the angle between"],[picRule("sss"),"Cosine rule","all 3 sides"]])),
+ZC("blue","Sine rule","further-trigonometry",
+  ZF("",SINE_RULE)
+  +ZF("Find an angle",nw(`${frac(`sin ${V("A")}`,V("a"))} = ${frac(`sin ${V("B")}`,V("b"))}`),"sines on top")),
+ZC("teal","Cosine rule","further-trigonometry",
+  ZF("",nw(`${V("a")}² = ${V("b")}² + ${V("c")}² − 2${V("bc")} cos ${V("A")}`))
+  +ZF("Find an angle",nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`))
+  +ZX(`negative cos → ${XTA("obtuse")}`)),
+ZC("green","Area, no height","further-trigonometry",
+  ZR(xtTriC(),[ZF("Area",nw(`= ${frac("1","2")}${V("ab")} sin ${XTA(V("C"))}`)),ZX(`${V("C")} = the angle between ${V("a")} and ${V("b")}`)])),
+ZC("teal","Obtuse angles","further-trigonometry",
+  ZR(XTNR(picObtuse(),"amber"),[ZF("",nw("sin(180° − θ) = sin θ")),ZF("",nw(`cos(180° − θ) = ${XTA("−")}cos θ`))],"st")),
+ZC("blue","Elevation and depression","bearings-elevation-3d",
+  ZR(picElev(),[ZF("Both",`from the ${XTA("horizontal")}`),ZF("Depression","= elevation at the other end"),ZRS("(alt. ∠s)")])
+  +ZF("Greatest elevation",`from the nearest point: ${XTA("⊥")} to the path`)),
+ZC("green","Bearings","bearings-elevation-3d",
+  ZR(XTNR(picBearing()),[ZF("Bearing",`from North, clockwise, ${XTA("3 figures")}`),ZF("B from A",ZK("amber","065°")),ZF("A from B",nw(`065° + 180° = ${ZK("green","245°")}`)),ZRS("(alt. ∠s, N₁ &#47;&#47; N₂)")]))
+])}
+${XTS("xt-am","A-Math: any angle, identities, equations",[
+ZC("purple","Any angle","trig-ratios-any-angle",
+  ZR(XTNR(quadPic()),[ZF("ASTC","All, Sin, Tan, Cos"),ZX("the positive ratios, anticlockwise from Q1"),ZF("α","the basic angle"),ZX(`acute, to the ${X1}-axis`)],"st")
+  +ZF("",nw(`sin 150° = ${XTA("+")}sin 30° = ${frac("1","2")}`),"size from α, sign from ASTC")+ZX(`graphs: <a href="#sheet/trig-graphs">sin, cos, tan graphs →</a>`)),
+ZC("blue","Exact values","trig-ratios-any-angle",
+  ZTB(["θ","0°","30°","45°","60°","90°"],[["rad","0",frac("π","6"),frac("π","4"),frac("π","3"),frac("π","2")],["sin","0",frac("1","2"),frac("1",SQRT("2")),frac(SQRT("3"),"2"),"1"],["cos","1",frac(SQRT("3"),"2"),frac("1",SQRT("2")),frac("1","2"),"0"],["tan","0",frac("1",SQRT("3")),"1",SQRT("3"),"<small>undefined</small>"]],"xtev")),
+ZC("green","tan, sec, cosec, cot","trig-ratios-any-angle",
+  ZF("",nw(`tan θ = ${frac("sin θ","cos θ")}`))
+  +ZF("",nw(`sec θ = ${frac("1",`${XTA("cos")} θ`)}`))+ZF("",nw(`cosec θ = ${frac("1","sin θ")}`))+ZF("",nw(`cot θ = ${frac("1","tan θ")}`))
+  ),ZC("blue","Squared identities","trig-identities-equations",ZF("",nw("sin²θ + cos²θ = 1"))+ZF("",nw("1 + tan²θ = sec²θ"))+ZF("",nw("1 + cot²θ = cosec²θ"))
+  +ZX("proving? stuck? write it all in sin and cos")),
+ZC("amber","Double angle","trig-identities-equations",
+  ZF("",nw(`sin 2${V("A")} = 2 sin ${V("A")} cos ${V("A")}`))
+  +ZF("",nw(`cos 2${V("A")} = cos²${V("A")} − sin²${V("A")}`))+ZF("",nw(`cos 2${V("A")} = 2 cos²${V("A")} − 1`))+ZF("",nw(`cos 2${V("A")} = 1 − 2 sin²${V("A")}`))
+  +ZX(`other terms in sin? use ${nw(`1 − 2 sin²${V("A")}`)}`)
+  +ZF("",nw(`tan 2${V("A")} = ${frac(`2 tan ${V("A")}`,`1 − tan²${V("A")}`)}`))
+  +ZF("Addition",`<a href="#sheet/amath-formula-sheet">on the formula sheet →</a>`)),
+ZC("teal","R-formula","r-formula",
+  ZR(xtRtri(),[ZF("",nw(`${ZK("blue",V("R"))} = ${SQRT(`${ZK("amber",V("a"))}² + ${ZK("green",V("b"))}²`)}`)),ZF("",nw(`tan α = ${frac(ZK("green",V("b")),ZK("amber",V("a")))}`)),ZX(`${V("a")}, ${V("b")} positive · α acute`)])
+  +ZTB(null,[[nw(`${V("a")} sin θ + ${V("b")} cos θ`),nw(`${V("R")} sin(θ + α)`)],[nw(`${V("a")} sin θ − ${V("b")} cos θ`),nw(`${V("R")} sin(θ − α)`)],[nw(`${V("a")} cos θ + ${V("b")} sin θ`),nw(`${V("R")} cos(θ ${XTA("−")} α)`)],[nw(`${V("a")} cos θ − ${V("b")} sin θ`),nw(`${V("R")} cos(θ ${XTA("+")} α)`)]])
+  +ZX("cos flips the sign, sin keeps it")
+  +ZF("Greatest, least",nw(`${V("R")}, −${V("R")}`))),
+ZC("blue","Solve for x","trig-identities-equations",
+  ZF("",nw(`cos ${X1} = −0.5`))
+  +ZF("① basic angle",nw("α = cos⁻¹ 0.5 = 60°"))
+  +ZF("② the sign","cos negative → Q2, Q3")
+  +ZF("③",nw(`${X1} = 180° − 60° = 120°`))+ZF("",nw(`${X1} = 180° + 60° = 240°`)))
+])}
+${XTS("xt-ex","The exam",[
+ZC("teal","NOT given: learn these","",
+  ZCH(["TOA CAH SOH",nw(`cos ${V("A")} = ${frac("…",`2${V("bc")}`)}`),"obtuse angles","ASTC + basic angle","exact values",nw(`tan θ = ${frac("sin θ","cos θ")}`),"sec, cosec, cot","R-formula"])
+  +ZX(`the rest are on the <a href="#sheet/emath-formula-sheet">E-Math</a> and <a href="#sheet/amath-formula-sheet">A-Math</a> formula sheets`)),
+ZC("green","Accuracy","",
+  ZCH(["angles 1 d.p.","lengths 3 s.f.","radians 3 s.f.","working: keep 5 s.f."])
+  +ZX(`range in π? calculator in ${XTA("R")}`))
+])}
+${XTS("xt-no","Lose no marks",[
+ZC("red","Never write","",
+  ZTB(["✗","✓"],[[nw("sin 30 = −0.988"),`calculator in D: ${nw("sin 30° = 0.5")}`],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("143.1°")}: check it fits`],[nw("cos 130° = cos 50°"),nw("= −cos 50°")],[`cosine rule: ${nw(`cos ${V("A")}`)} on everything`,`only on ${nw(`2${V("bc")}`)}: work out ${nw(`2${V("bc")} cos ${V("A")}`)} first`],[`${nw(`sin ${X1} = −0.5`)}, so ${nw("α = −30°")}`,`${nw("α = 30°")}, then Q3, Q4`],[`${nw(`sin²${X1} = ${frac("1","4")}`)}, so ${nw(`sin ${X1} = ${frac("1","2")}`)}`,nw(`sin ${X1} = ± ${frac("1","2")}`)],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`]]))
+])}`});
 const ARMUST=`<div class="mzmust">${MUST([FB("green","Parallel lines",`(alt. ∠s, AB &#47;&#47; CD)`,"always name the 2 parallel lines","","mk"),FB("amber","Every angle",`a reason in brackets`,"use these exact words","","mk")])}</div>`;
 Object.assign(SHEETS,{angleReasons:`${ARMUST}
 ${ZS("Sec 1: lines and shapes",[
@@ -11065,7 +11147,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "volume-formulas":()=>FT(nw(`${frac("1","3")}π${V("r")}²${V("h")}`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "trig-rules":()=>FT("TOA CAH SOH",1), "volume-formulas":()=>FT(nw(`${frac("1","3")}π${V("r")}²${V("h")}`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
