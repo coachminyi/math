@@ -1755,6 +1755,49 @@ html[data-present] .must .formbox.mk.mkw .eq{font-size:25px}
 html[data-present] .must .formbox.mk .rd{font-size:20px}
 html[data-present] .must .formbox.mk .gen{font-size:18px}
 @media (max-width:599px){ .must .forms:has(.mk){grid-template-columns:1fr} .must .formbox.mk .eq{font-size:20px;padding:6px 0 4px} .must .formbox.mk.mkw .eq{font-size:16px} }
+.hero1{position:relative;display:flex;align-items:center;column-gap:12px;margin:14px 0 0;padding:0 14px 0 16px;min-height:52px;border-radius:14px;background:linear-gradient(140deg,var(--blue-fill) 0%,var(--card) 62%)}
+.hero1 h2{font-size:19px;line-height:1.2;letter-spacing:-.01em;margin:0;white-space:nowrap}
+.hero1 h2 .mark{background:linear-gradient(transparent 64%,var(--amber-fill) 64%,var(--amber-fill) 92%,transparent 92%);padding:0 2px;margin:0 -2px}
+.hero1 .by{margin:0 0 0 auto;display:flex;align-items:center;color:var(--muted);font-size:14.5px;line-height:1.3;white-space:nowrap}
+.hero1 .by .avatar{width:32px;height:32px;margin-right:8px}
+.hero1 .by a{position:relative;display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--muted)}
+.hero1 .by a b{color:var(--accent)}
+.hero1 .by a:hover b{text-decoration:underline}
+@media (max-width:767px){.hero1 .wd{display:none}}
+@media (max-width:599px){.hero1{margin-top:10px;min-height:44px;padding:0 12px 0 12px;column-gap:8px;border-radius:12px}.hero1 h2{font-size:15px}.hero1 .by{font-size:13px}.hero1 .by .avatar{width:28px;height:28px;margin-right:6px}}
+@media (max-width:399px){.hero1 .by .avatar{display:none}}
+@media (max-width:359px){.hero1{padding:0 10px}.hero1 h2{font-size:14px}.hero1 .by{font-size:12.5px}}
+.hbar{margin:12px 0 0}
+.hbar .search{margin:10px 0 0}
+.lvrow{display:flex;gap:8px;padding:0 3px}
+.lvrow .chip{flex:1 1 auto;padding:0 9px;min-height:44px;font-size:15px;font-weight:500;white-space:nowrap;min-width:44px;border-radius:999px}
+.lvrow .chip[aria-pressed="true"]{font-weight:600}
+.lvrow.lvnew .chip{min-height:52px;border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);animation:hubRing 1.8s ease-in-out infinite}
+@keyframes hubRing{0%,100%{box-shadow:inset 0 0 0 1px var(--accent),0 0 0 0 transparent}50%{box-shadow:inset 0 0 0 1px var(--accent),0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}}
+@media (max-width:379px){.lvrow .chip{font-size:14.5px}}
+@media (max-width:359px){.lvrow .chip{font-size:13px;padding:0 7px}.hcard .stt{padding:8px 9px 10px}.hcard .stt b{font-size:14.5px}}
+@media (max-width:599px){.hbar{margin-top:10px}}
+@media (min-width:768px){.lvrow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (min-width:900px){.hbar{display:flex;align-items:center;gap:16px}.lvrow{flex:none;width:566px}.hbar .search{margin:0;flex:1 1 auto;min-width:0}}
+.hshelf{margin:22px 0 0}
+.hbody .hshelf:first-child{margin-top:20px}
+.hgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hcard .sth{position:relative;height:88px}
+.hcard .sth svg{height:72px}
+.hcard .stt{gap:3px}
+@media (max-width:599px){.hcard .sth{padding:6px 4px}.hcard .sth .sfm{font-size:15.5px}.hcard .sth .sfm.sm{font-size:13px}}
+@media (min-width:768px){.hcard .sth{height:100px}.hcard .sth svg{height:84px}}
+.hlab{position:absolute;top:8px;left:8px;z-index:1;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;line-height:1.2;padding:2px 5px;border-radius:5px;background:var(--card)}
+.hlab.hlm{color:var(--red)}.hlab.hlg{color:var(--green)}
+.hrec .stt b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hdoor{margin:10px 0 0;text-decoration:none;color:var(--accent);font-size:16px;box-shadow:var(--shadow)}
+.hdoor:hover{border-color:var(--accent)}
+@media (max-width:599px){.hdoor{display:flex;justify-content:center;width:100%;min-height:48px}.hrec .hgrid>.hcard:nth-child(n+3){display:none}}
+@media (max-width:767px){.hcard.hwide{display:none}.hshelf:not(.hrec) .hgrid>.hcard:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row}.hshelf:not(.hrec) .hgrid>.hcard:last-child:nth-child(odd) .sth{flex:0 0 calc(50% - 5px);border-bottom:0;border-right:1px solid var(--line)}.hshelf:not(.hrec) .hgrid>.hcard:last-child:nth-child(odd) .stt{justify-content:center}}
+@media (min-width:600px) and (max-width:767px){.hrec .hgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:768px){.hgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}}
+.panelc.wrhi{animation:kidPulse 1.3s ease-out 2}
+@media (prefers-reduced-motion:reduce){.lvrow.lvnew .chip,.panelc.wrhi{animation:none}}
 </style>
 </head>
 <body>
@@ -3647,7 +3690,7 @@ const apMini=k=>{ const L=(a,b)=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y
   const sh={alt:"M18 11H35.7L26.3 33H44",int:"M52 11H35.7L26.3 33H52",corr:"M52 11H35.7L22.6 42M52 33H26.3"}[k], Lg=(a,b)=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--muted)" stroke-width="1.4" stroke-linecap="round"/>`;
   return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true"><path d="${sh}" stroke="var(--green)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>${Lg([4,11],[56,11])}${Lg([4,33],[56,33])}<path d="M8 8L12 11L8 14M8 30L12 33L8 36" fill="none" stroke="var(--muted)" stroke-width="1.4"/>${Lg([22,43],[40,1])}</svg>`; };
 const apKd=s=>["alt","int","corr"][s.step-2]||"alt";
-const apP6=()=>!!(cur&&cur.back==="p6");
+const apP6=()=>!!(cur&&(cur.back==="p6"||(cur.t&&cur.t.id===hubP6t)));
 const apBox=a=>`<div class="apwk ipk cpk apk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(a,true)+`</div>`;
 const apAns=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`;
 const apR3=s=>[20,150,s.r3], apD3=s=>{ const R=apR3(s); return [130,R[2]-150,380-R[2]]; };
@@ -11510,6 +11553,85 @@ const setNav=k=>document.querySelectorAll(".topnav a").forEach(a=>{ if(a.dataset
 const sheetOf=id=>SHEETLIST.find(s=>s.id===id);
 const sheetForTopic=t=>SHEETLIST.find(s=>s.aid===t.id);
 const ordOf=(s,lv)=>(s.ord&&typeof s.ord==="object"?s.ord[lv]:s.ord)??99;
+const HOMELV=["p6","sec1","sec2","emath","amath"];
+const HOMESH=[["x","","p6","All P6 Maths →"],["f","Exam kit","exam","Exam kit →"],["i","Interactives","play","All interactives →"],["w","Write it like this"],["c","Cheatsheets","sheets","All cheatsheets →"]];
+const HOMEPH={i:6,c:2};
+const HOMEPIC={
+dots:()=>`<svg class="thumb" viewBox="0 0 120 64"><path d="M8 50H112" stroke="var(--ink)" stroke-width="1.6"/><path d="M20 50v4M33 50v4M46 50v4M59 50v4M72 50v4M85 50v4M98 50v4" stroke="var(--ink)" stroke-width="1.3"/>${[[20,1],[33,2],[46,4],[59,3],[72,2],[98,1]].map(([x,n])=>Array.from({length:n},(_,k)=>`<circle cx="${x}" cy="${43-k*9}" r="4.2" fill="var(--blue)"/>`).join("")).join("")}</svg>`,
+barline:()=>`<svg class="thumb" viewBox="0 0 120 64"><path d="M10 8V54H56" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M15 54V32h8v22M27 54V20h8v34M39 54V38h8v16" fill="var(--blue-fill)" stroke="var(--blue)" stroke-width="1.5" stroke-linejoin="round"/><path d="M68 8V54H114" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M74 44L85 30L96 36L108 16" fill="none" stroke="var(--amber)" stroke-width="2.2" stroke-linejoin="round"/><circle cx="74" cy="44" r="2.8" fill="var(--amber)"/><circle cx="85" cy="30" r="2.8" fill="var(--amber)"/><circle cx="96" cy="36" r="2.8" fill="var(--amber)"/><circle cx="108" cy="16" r="2.8" fill="var(--amber)"/></svg>`};
+const HOMEPK={
+"":{f:[["sheet/emath-formula-sheet","E-Math formula sheet","g"],["sheet/amath-formula-sheet","A-Math formula sheet","g"],["sheet/angle-reasons","Angle reasons"],["sheet/volume-formulas","Volume & surface area"]],
+ i:[["angles-parallel","Angles & parallel lines"],["toilet-paper","Surface area: toilet paper"],["circle-props","Circle properties"],["quad-forms","Quadratic graphs: 3 forms"],["indices-collect","Simplifying indices"],["unit-circle","ASTC"],["cross-method","Cross method"],["pythagoras-squares","Pythagoras"]],
+ w:[["sheet/data-sec2?p=write","Describe a dot diagram","","dots"],["sheet/averages?p=write","Which average?"],["sheet/measures-of-spread?p=write","Compare two data sets"]],
+ c:[["sheet/functions-graphs","Functions & graphs"],["sheet/factorisation","Factorisation"],["sheet/linear-graphs","Linear graphs"],["sheet/differentiation-rules","Differentiation rules"]]},
+p6:{x:[["angles-parallel","Angles"],["stays-same","Before and after"],["rest-model","Fraction of the rest"],["circle-why","Circles: why π"]]},
+sec1:{f:[["sheet/sec1-memorise","Sec 1 formulas","m"],["sheet/angle-reasons","Angle reasons"],["sheet/volume-formulas","Volume & surface area"]],
+ i:[["angles-parallel","Angles & parallel lines"],["toilet-paper","Surface area: toilet paper"],["balance-equations","Solving equations"],["speed-convert","Speed units"]],
+ w:[["sheet/number-patterns?p=write","Is it in the pattern?"],["sheet/data-handling?p=write","Bar or line graph?","","barline"]],
+ c:[["sheet/integers","Integers"],["sheet/basic-algebra","Basic algebra"],["sheet/linear-equations","Linear equations"],["sheet/percentage","Percentage"]]},
+sec2:{f:[["sheet/sec2-memorise","Sec 2 formulas","m"],["sheet/angle-reasons","Angle reasons"],["sheet/volume-formulas","Volume & surface area"]],
+ i:[["cross-method","Cross method"],["pythagoras-squares","Pythagoras"],["cone-sector","Sector into a cone"],["a-plus-b-squared","Why (a + b)² has 2ab"]],
+ w:[["sheet/data-sec2?p=write","Describe a dot diagram","","dots"],["sheet/averages?p=write","Which average?"],["sheet/pythagoras?p=write","Is it right-angled?"]],
+ c:[["sheet/simultaneous-equations","Simultaneous equations"],["sheet/algebraic-fractions","Algebraic fractions"],["sheet/quadratic-equations-graphs","Quadratic equations"],["sheet/trigonometry-sec2","Trigonometry"]]},
+emath:{f:[["sheet/emath-memorise","E-Math formulas","m"],["sheet/emath-formula-sheet","E-Math formula sheet","g"],["sheet/angle-reasons","Angle reasons"],["sheet/volume-formulas","Volume & surface area"]],
+ i:[["circle-props","Circle properties"],["indices-collect","Simplifying indices"],["quad-forms","Quadratic graphs: 3 forms"],["similarity-ratios","Similar figures"]],
+ w:[["sheet/measures-of-spread?p=write","Compare two data sets"],["sheet/congruence-similarity-sec3?p=write","Prove congruent triangles"],["sheet/number-patterns?p=write","Is it in the pattern?"]],
+ c:[["sheet/functions-graphs","Functions & graphs"],["sheet/further-trigonometry","Sine & cosine rule"],["sheet/coordinate-geometry","Coordinate geometry"],["sheet/bearings-elevation-3d","Bearings"]]},
+amath:{f:[["sheet/amath-memorise","A-Math formulas","m"],["sheet/amath-formula-sheet","A-Math formula sheet","g"],["sheet/emath-memorise","E-Math formulas","m"],["sheet/emath-formula-sheet","E-Math formula sheet","g"]],
+ i:[["unit-circle","ASTC"],["quad-forms","Quadratic graphs: 3 forms"],["tangent-gradient","Tangents & gradient"],["area-under","Distance vs displacement"]],
+ w:[["sheet/proofs-plane-geometry?p=write","Geometry proofs"],["sheet/angle-reasons","Angle reasons"]],
+ c:[["sheet/differentiation-rules","Differentiation rules"],["sheet/trig-identities-equations","Trig identities"],["sheet/integration","Integration"],["sheet/exponentials-logarithms","Logarithms"]]}};
+let hubFrom="", hubAtHome=false, hubP6t="";
+const hubLv=()=>{ try{ const v=localStorage.getItem("hubLevel")||""; return HOMELV.includes(v)?v:""; }catch(e){ return ""; } };
+function setHubLv(v){ homeFilter=v==="p6"?"all":v; try{ localStorage.setItem("hubLevel",v); localStorage.setItem("hubFilter",homeFilter); }catch(e){} }
+const hubSeenOk=x=>{ if(typeof x!=="string"||!x) return false; if(x.startsWith("sheet/")) return !!sheetOf(x.slice(6)); const t=TOPICS.find(y=>y.id===x); return !!t&&!t.unlisted&&(!kidOnly(t)||p6Listed(t)); };
+function hubSeen(x){ if(!hubSeenOk(x)) return; try{ const r=JSON.parse(localStorage.getItem("hubSeen")||"[]").filter(y=>y!==x); r.unshift(x); localStorage.setItem("hubSeen",JSON.stringify(r.filter(hubSeenOk).slice(0,12))); }catch(e){} }
+function hubSeenT(t,tab){ if(tab==="sheet"){ const s=sheetForTopic(t); if(s) hubSeen("sheet/"+s.id); } else hubSeen(t.id); }
+const hubSeenList=()=>{ try{ const r=JSON.parse(localStorage.getItem("hubSeen")||"[]"); return Array.isArray(r)?r.filter(hubSeenOk):[]; }catch(e){ return []; } };
+function hubP6at(t,was){ const op=(cdFrom||"").split("?")[0].replace(/^\//,"").split("/")[0]; hubP6t=was&&hubLv()==="p6"&&t.levels.includes("p6")?t.id:(op===t.id&&hubP6t===t.id?t.id:""); }
+const hubShort=(x,lv)=>{ const p=x.split("?")[0]; for(const k of [lv,"",...HOMELV]){ const e=Object.values(HOMEPK[k]||{}).flat().find(e=>e[0].split("?")[0]===p); if(e) return e[1]; } return ""; };
+const hubBanner=()=>`<section class="hero1"><h2>Free maths <span class="mark">cheatsheets</span></h2><p class="by">${AVATAR()}<span class="wd">Made&nbsp;</span><a href="#lessons">by&nbsp;<b>Coach Minyi</b></a><span class="wd">&nbsp;· maths tuition in Jurong East</span></p></section>`;
+function hubCard(x,ttl,lab,pic,wide){ const p=x.split("?")[0], s=p.startsWith("sheet/")?sheetOf(p.slice(6)):null, t=s?null:TOPICS.find(y=>y.id===p); if(!s&&!t) return null;
+  return h("a",{class:"scard hcard"+(wide?" hwide":""),href:"#"+x},`<div class="sth">${lab?`<span class="hlab hl${lab}">${lab==="m"?"Memorise":"Given"}</span>`:""}${pic&&HOMEPIC[pic]?HOMEPIC[pic]():s?sheetThumb(s):thumbFor(t)}</div><div class="stt"><b>${ttl||(s?s.title:t.title)}</b></div>`); }
+function hubShelf(body,name,cards,door,cls){ cards=cards.filter(Boolean); if(!cards.length) return;
+  const sec=h("section",{class:"level hshelf"+(cls?" "+cls:"")},name?`<h3>${name}</h3>`:""), g=h("div",{class:"hgrid"}); cards.forEach(c=>g.append(c)); sec.append(g);
+  if(door){ const a=h("a",{class:"pill hdoor",href:"#"+door[0]},door[1]); a.onclick=()=>{ const lv=hubLv(); if(lv) setHubLv(lv); }; sec.append(a); }
+  body.append(sec); }
+function hubFitRec(){ app.querySelectorAll(".hrec .stt b").forEach(b=>{ b.style.fontSize=""; if(!b.offsetParent) return; let fs=parseFloat(getComputedStyle(b).fontSize);
+  const L=()=>{ const cs=getComputedStyle(b); return b.scrollHeight/(parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.25); };
+  while(L()>2.2&&fs>13){ fs-=.5; b.style.fontSize=fs+"px"; } }); }
+addEventListener("resize",()=>{ if(document.body.dataset.page==="home"&&app.querySelector(".hrec")) hubFitRec(); });
+function goWrite(){ const find=()=>[...app.querySelectorAll(".panelc")].find(x=>{ const t=x.querySelector(":scope>h4")||x.querySelector("h4"); return !!t&&/rite it like this/i.test(t.textContent); });
+  const go=()=>{ const p=find(); if(!p) return null; const bh=parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--barh"))||56; window.scrollTo(0,Math.max(0,Math.round(p.getBoundingClientRect().top+scrollY-bh-10))); return p; };
+  let y=-1, n=0, p0=null; const step=()=>{ if(y>=0&&Math.abs(scrollY-y)>2) return; const p=go(); if(!p||(p0&&p!==p0)) return; y=scrollY;
+    if(!p0){ p0=p; p.classList.remove("wrhi"); void p.offsetWidth; p.classList.add("wrhi"); } if(++n<4) setTimeout(step,n*150); };
+  setTimeout(step,0); }
+function renderStart(prm,keep){
+  const lq=prm&&prm.get("lv"); if(lq&&HOMELV.includes(lq)){ setHubLv(lq); try{ history.replaceState(history.state,"",location.pathname+location.search); }catch(e){} }
+  document.title="Coach Minyi's Maths Hub";
+  titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
+  backBtn.style.display="none"; shareBtn.hidden=qrBtn.hidden=presentBtn.hidden=zoomBtn.hidden=printBtn.hidden=true;
+  cur=null; setPage("home"); setNav(""); hubAtHome=true; hubFrom="";
+  const lv=hubLv(), P=HOMEPK[lv]||HOMEPK[""];
+  app.innerHTML=hubBanner();
+  const row=h("div",{class:"lvrow"+(lv?"":" lvnew"),role:"group","aria-label":"Choose level"});
+  HOMELV.forEach(k=>{ const c=h("button",{class:"chip",type:"button","data-lv":k,"aria-pressed":String(k===lv)},SHORT[k]); c.onclick=()=>{ if(k===hubLv()) return; setHubLv(k); hubHit("home/lv-"+k); renderStart(null,true); }; row.append(c); });
+  const sb=h("input",{class:"search",type:"search",placeholder:"Search a chapter or topic…","aria-label":"Search everything"}), bar=h("div",{class:"hbar"}); bar.append(row,sb); app.append(bar);
+  const res=h("section",{class:"level",hidden:""}); app.append(res);
+  const body=h("div",{class:"hbody"}); app.append(body);
+  const on=new Set(Object.values(P).flat().map(e=>e[0].split("?")[0])), rec=hubSeenList().filter(x=>!on.has(x)).slice(0,3); if(rec.length) hubShelf(body,"Recent",rec.map(x=>hubCard(x,hubShort(x,lv))),null,"hrec");
+  HOMESH.forEach(([k,name,dv,dn])=>{ if(P[k]) hubShelf(body,name,P[k].map((e,n)=>hubCard(e[0],e[1],e[2],e[3],HOMEPH[k]!==undefined&&n>=HOMEPH[k])),dv?[dv,dn]:null); });
+  app.insertAdjacentHTML("beforeend",`<p class="tiny">Tip: keep this site one tap away, even offline.<br>iPhone: Share → Add to Home Screen. Android: ⋮ menu → Add to Home screen.</p>`);
+  sb.oninput=()=>{ const q=sb.value.trim().toLowerCase();
+    if(!q){ res.hidden=true; body.hidden=false; return; }
+    const hits=[...SHEETLIST.filter(s=>(s.chapter+" "+s.title+" "+(s.kw||"")).toLowerCase().includes(q)).map(s=>sheetCard(s)),
+      ...TOPICS.filter(t=>!t.unlisted&&(t.chapter+" "+t.title+" "+t.blurb).toLowerCase().includes(q)).map(topicCard)];
+    res.innerHTML=`<h3>${hits.length?"Results":"Nothing matches. Try another word."}</h3>`;
+    if(hits.length){ const grid=h("div",{class:"scards"}); hits.forEach(r=>grid.append(r)); res.append(grid); }
+    res.hidden=false; body.hidden=true; };
+  hubFitRec();
+  if(!keep) window.scrollTo(0,0);
+}
 function renderHome(keep){
   document.title="Coach Minyi's Maths Hub";
   titleEl.textContent="Coach Minyi's Maths Hub"; crumbEl.textContent="";
@@ -11518,23 +11640,20 @@ function renderHome(keep){
   const v=homeView;
   const used=LEVELS.filter(l=>!KIDLV.includes(l.id)&&homeItems(v).some(x=>x.levels.includes(l.id)));
   if(homeFilter!=="all"&&!used.some(l=>l.id===homeFilter)) homeFilter="all";
-  app.innerHTML=`<section class="hero2"><svg class="art" viewBox="0 0 120 80" aria-hidden="true"><line x1="12" y1="21" x2="62" y2="21" stroke="var(--amber)" stroke-width="5" stroke-linecap="round"/><path d="M4 74 C14 40 24 26 37 26 C50 26 58 46 70 52 C84 58 96 46 116 8" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/></svg>
-    <p class="eyebrow">P6 · Sec 1–4 · E-Math · A-Math</p>
-    <h2>Free maths <span class="mark">cheatsheets</span></h2>
-    <a class="by" href="#lessons">${AVATAR()}<span>Made by <b>Coach Minyi</b> · maths tuition in Jurong East</span></a></section>`;
+  app.innerHTML=hubBanner();
   const sb=h("input",{class:"search",type:"search",placeholder:"Search a chapter or topic…","aria-label":"Search everything"}); app.append(sb);
   const res=h("section",{class:"level",hidden:""}); app.append(res);
   const body=h("div",{class:"homebody"}); app.append(body);
   const chips=h("div",{class:"chips",role:"group","aria-label":"Choose level"});
   [{id:"all",name:"All"},...used.map(l=>({id:l.id,name:SHORT[l.id]}))].forEach(l=>{
     const c=h("button",{class:"chip","aria-pressed":String(homeFilter===l.id)},l.name);
-    c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id)}catch(e){};renderHome(true)};
+    c.onclick=()=>{homeFilter=l.id;try{localStorage.setItem("hubFilter",l.id);if(l.id!=="all")localStorage.setItem("hubLevel",l.id)}catch(e){};renderHome(true)};
     chips.append(c);
     if(l.id==="all") chips.append(h("a",{class:"chip p6chip",href:"#p6"},"P6"));
   });
   body.insertAdjacentHTML("beforeend",`<div class="homeswitch" role="tablist">${VIEWS.map(([k,n])=>`<button class="hs" role="tab" data-v="${k}" aria-selected="${k===v}">${n}</button>`).join("")}</div>${VIEWNOTE[v]?`<p class="tabnote">${VIEWNOTE[v]}</p>`:""}`);
   body.append(chips);
-  body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); renderHome(true); });
+  body.querySelectorAll(".hs").forEach(b=>b.onclick=()=>{ setHomeView(b.dataset.v); hubFrom=b.dataset.v; try{ history.replaceState(history.state,"","#"+b.dataset.v); }catch(e){} renderHome(true); });
   const fit=x=>homeFilter==="all"||x.levels.includes(homeFilter);
   if(v==="sheets"){
     LEVELS.forEach(l=>{
@@ -13073,18 +13192,18 @@ function noteSrc(t){ let old=(cdFrom||"").split("?")[0]; try{ old=decodeURICompo
   if(s&&!s.exam) srcFrom={topic:t.id,hash:op.join("/"),title:s.title,own:(sheetForTopic(t)||{}).id===s.id}; }
 function route(){
   let raw=location.hash.replace(/^#\/?/,""); try{ raw=decodeURIComponent(raw); }catch(e){}
-  const [path,qs]=raw.split("?"); const parts=path.split("/"); const prm=new URLSearchParams(qs||""); setKid(false); document.documentElement.removeAttribute("data-ip");
+  const [path,qs]=raw.split("?"); const hubWas=hubAtHome; hubAtHome=false; const parts=path.split("/"); const prm=new URLSearchParams(qs||""); setKid(false); document.documentElement.removeAttribute("data-ip");
   const t0=TOPICS.find(x=>x.id===parts[0])||(parts[0]==="sheet"&&parts[1]&&(()=>{ const s=sheetOf(parts[1]); return s&&s.aid&&TOPICS.find(x=>x.id===s.aid); })())||null; noteSrc(t0);
   hubHit(parts[0]==="sheet"&&parts[1]?"sheet/"+parts[1]:parts[0]==="cards"?"cards/"+(parts[1]||"")+"/"+(parts[2]||""):parts[0]==="lessons"?"tuition":parts[0]==="p6"?"p6":t0?(parts[1]==="sheet"?"sheet/"+((sheetForTopic(t0)||{}).id||t0.id):"aid/"+t0.id):"home/"+(VIEWS.some(([k])=>k===parts[0])?parts[0]:"start"));
   if(parts[0]==="sheet"&&parts[1]){ const s=sheetOf(parts[1]);
-    if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); return; } }
+    if(s){ setHomeView(s.exam?"exam":"sheets"); const t=s.aid&&TOPICS.find(x=>x.id===s.aid); exitPresent(); if(t) renderTopic(t,"sheet",prm); else renderSheetOnly(s); hubSeen("sheet/"+s.id); if(prm.get("p")==="write") goWrite(); return; } }
   if(parts[0]==="cards"&&renderCards(parts[1],parts[2],parts[3])) return;
   if(parts[0]==="lessons"){ exitPresent(); renderLessons(); return; }
   if(parts[0]==="p6"){ exitPresent(); renderP6(); return; }
-  if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); exitPresent(); renderHome(); return; }
+  if(VIEWS.some(([k])=>k===parts[0])){ setHomeView(parts[0]); hubFrom=parts[0]; exitPresent(); renderHome(); return; }
   const t=TOPICS.find(x=>x.id===parts[0]);
-  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); if(tab==="sheet") exitPresent(); renderTopic(t,tab,prm); if(tab==="play"&&t.play&&prm.get("pres")==="1"&&innerWidth>=900){ if(prm.has("ask")) setAsk(prm.get("ask")==="1"); enterPresent(); } }
-  else { exitPresent(); renderHome(); }
+  if(t){ const tab=parts[1]==="sheet"?"sheet":"play"; setHomeView(tab==="sheet"?"sheets":"play"); if(tab==="sheet") exitPresent(); hubP6at(t,hubWas); renderTopic(t,tab,prm); hubSeenT(t,tab); if(tab==="play"&&t.play&&prm.get("pres")==="1"&&innerWidth>=900){ if(prm.has("ask")) setAsk(prm.get("ask")==="1"); enterPresent(); } }
+  else { exitPresent(); renderStart(prm); }
 }
 function topicLink(){
   const base=location.href.split("#")[0]; if(!cur) return base;
@@ -13096,7 +13215,7 @@ function topicLink(){
   if(cur.tab==="play"&&cur.state){ const p=new URLSearchParams(); Object.entries(cur.state()).forEach(([k,v])=>p.set(k,String(v))); const q=p.toString(); if(q) hsh+="?"+q; }
   return base+hsh;
 }
-backBtn.onclick=()=>{ location.hash=(cur&&cur.back)||""; };
+backBtn.onclick=()=>{ location.hash=(cur&&cur.back)||hubFrom; };
 $("#ttl").onclick=()=>{ if(location.hash.replace(/^#/,"")) location.hash=""; else window.scrollTo(0,0); };
 $("#ttl").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("#ttl").click(); } };
 shareBtn.onclick=async()=>{
