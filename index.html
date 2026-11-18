@@ -9221,7 +9221,8 @@ SHEETLIST.push(
   {id:"emath-memorise",levels:["emath"],chapter:"Not given in the exam",title:"E-Math formulas to memorise",sheet:"emMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"amath-memorise",levels:["amath"],chapter:"Not given in the exam",title:"A-Math formulas to memorise",sheet:"amMemo",aid:null,exam:true,group:"memorise",kw:"formula memorise not given remember"},
   {id:"angle-reasons",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Sec 1 to A-Math, the exam wording",title:"Angle reasons",sheet:"angleReasons",aid:null,exam:true,group:"memorise",kw:"angle reasons geometry proof parallel lines alternate interior corresponding triangle polygon circle properties tangent chord cyclic quadrilateral alternate segment converse midpoint theorem"},
-  {id:"volume-formulas",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Every solid, Sec 1 to E-Math",title:"Volume & surface area",sheet:"volFormulas",aid:null,exam:true,group:"memorise",kw:"volume surface area formulas mensuration prism cuboid cylinder pipe pyramid cone sphere hemisphere slant height sector frustum similar solids composite litres units"},
+  {id:"volume-formulas",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Every shape and solid, Sec 1 to E-Math",title:"Area, perimeter & volume",sheet:"volFormulas",aid:null,exam:true,group:"memorise",kw:"area perimeter triangle parallelogram trapezium circle circumference semicircle quarter circle shaded composite arc sector segment radians half ab sin c volume surface area formulas mensuration prism cuboid cylinder pipe pyramid cone sphere hemisphere slant height frustum similar solids recast litres units"},
+  {id:"graph-shapes",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"See the equation, know the shape",title:"Graph shapes",sheet:"graphShapes",aid:null,exam:true,group:"memorise",kw:"graph shapes sketch curve straight line gradient intercept quadratic turning point line of symmetry cubic reciprocal asymptote exponential growth decay e^x ln x logarithm sin cos tan amplitude period"},
   {id:"trig-rules",levels:["sec2","emath","amath"],tag:"Sec 2–4",chapter:"Sec 2 to A-Math, every rule",title:"Trig rules",sheet:"trigRules",aid:null,exam:true,group:"memorise",kw:"trig rules trigonometry toa cah soh sine rule cosine rule area half ab sin c obtuse elevation depression bearings astc basic angle exact values identities double angle r-formula solve trigonometric equations"},
   {id:"command-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Show that, hence, exact value…",title:"Exam command words",sheet:"cmdWords",aid:null,exam:true,group:"tips",kw:"show that hence deduce exact value sketch 3 s.f. significant figures accuracy"},
   {id:"maths-words",levels:["sec1","sec2","emath","amath"],tag:"Sec 1–4",chapter:"Equation, coefficient, polynomial…",title:"Maths words",sheet:"glossary",aid:null,exam:true,group:"tips",kw:"glossary meaning definition words equation expression identity formula coefficient constant term polynomial degree root factor quotient remainder asymptote intercept gradient tangent normal stationary turning perpendicular bisect congruent similar hypotenuse vertex mean median mode outlier independent"},
@@ -9438,12 +9439,12 @@ function picQuad(k){ const tk=(x1,y1,x2,y2,n=1)=>{ const L=Math.hypot(x2-x1,y2-y
   if(k==="kite") s=PG("40,4 56,18 40,46 24,18")+LN(40,4,40,46,DASH+` stroke="var(--muted)"`)+LN(24,18,56,18,DASH+` stroke="var(--muted)"`)+ra(40,18,1,0,0,-1,3.5)+tk(40,4,56,18)+tk(40,4,24,18)+tk(56,18,40,46,2)+tk(24,18,40,46,2);
   return SV("0 0 80 50",s); }
 function picSolid(k){ let s="";
-  if(k==="cuboid") s=`<path d="M10 28 H60 V62 H10 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M10 28 L28 12 H78 L60 28 M60 62 L78 46 V12" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M10 62 L28 46 H78 M28 46 V12" fill="none" stroke="var(--muted)" ${DASH}/>`+TX(35,70,"l")+TX(72,58,"b")+TX(4,47,"h");
-  if(k==="cyl") s=`<path d="M25 14 V56 A25 6 0 0 0 75 56 V14" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="14" rx="25" ry="6" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M25 56 A25 6 0 0 1 75 56" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,14,75,14,`stroke="var(--red)"`)+TX(62,11,"r",`fill="var(--red)" font-weight="700"`)+TX(82,38,"h",`font-weight="700"`);
+  if(k==="cuboid") s=`<path d="M10 28 H60 V62 H10 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M10 28 L28 12 H78 L60 28 M60 62 L78 46 V12" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M10 62 L28 46 H78 M28 46 V12" fill="none" stroke="var(--muted)" ${DASH}/>`+TX(35,70,"l")+TX(75,60,"b",`text-anchor="start"`)+TX(4,47,"h");
+  if(k==="cyl") s=`<path d="M25 14 V56 A25 6 0 0 0 75 56 V14" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="14" rx="25" ry="6" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M25 56 A25 6 0 0 1 75 56" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,14,75,14,`stroke="var(--red)"`)+TX(79,13,"r",`fill="var(--red)" font-weight="700" text-anchor="start"`)+TX(82,38,"h",`font-weight="700"`);
   if(k==="prism") s=`<polygon points="8,62 48,62 28,30" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M28 30 L68 14 L88 46 L48 62 M68 14 L88 46" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M8 62 L48 46 L88 46 M48 46 L68 14" fill="none" stroke="var(--muted)" ${DASH}/>`+TX(78,62,"length",`font-size="6"`);
-  if(k==="pyr") s=`<path d="M15 58 L65 58 L50 8 Z M65 58 L85 46 L50 8 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round"/><path d="M15 58 L35 46 L85 46 M35 46 L50 8" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,8,50,52,DASH+` stroke="var(--red)"`)+TX(54,36,"h",`fill="var(--red)" font-weight="700" text-anchor="start"`);
-  if(k==="cone") s=`<path d="M20 58 L50 8 L80 58" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="58" rx="30" ry="7" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`+LN(50,8,50,58,DASH+` stroke="var(--red)"`)+LN(50,58,80,58,`stroke="var(--amber)"`)+TX(46,38,"h",`fill="var(--red)" font-weight="700"`)+TX(65,56,"r",`fill="var(--amber)" font-weight="700"`)+TX(71,30,"l",`fill="var(--blue)" font-weight="700"`);
-  if(k==="sphere") s=`<circle cx="50" cy="35" r="27" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="35" rx="27" ry="7" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,35,77,35,`stroke="var(--red)"`)+TX(64,32,"r",`fill="var(--red)" font-weight="700"`);
+  if(k==="pyr") s=`<path d="M15 58 L65 58 L50 8 Z M65 58 L85 46 L50 8 Z" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round"/><path d="M15 58 L35 46 L85 46 M35 46 L50 8" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,8,50,52,DASH+` stroke="var(--red)"`)+TX(46,36,"h",`fill="var(--red)" font-weight="700" text-anchor="end"`);
+  if(k==="cone") s=`<path d="M20 58 L50 8 L80 58" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="58" rx="30" ry="7" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/>`+LN(50,8,50,58,DASH+` stroke="var(--red)"`)+LN(50,58,80,58,`stroke="var(--amber)"`)+TX(46,38,"h",`fill="var(--red)" font-weight="700"`)+TX(66,71.5,"r",`fill="var(--amber)" font-weight="700"`)+TX(71,30,"l",`fill="var(--blue)" font-weight="700"`);
+  if(k==="sphere") s=`<circle cx="50" cy="35" r="27" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><ellipse cx="50" cy="35" rx="27" ry="7" fill="none" stroke="var(--muted)" ${DASH}/>`+LN(50,35,77,35,`stroke="var(--red)"`)+TX(64,26,"r",`fill="var(--red)" font-weight="700"`);
   return SV("0 0 100 72",s); }
 function picChart(k){ let s=LN(12,58,96,58)+LN(12,58,12,6);
   if(k==="bar") [[18,30],[38,46],[58,22],[78,38]].forEach(([x,hh],i)=>{ s+=`<rect x="${x}" y="${58-hh}" width="12" height="${hh}" fill="${i===1?"var(--amber-fill)":"var(--blue-fill)"}" stroke="var(--ink)"/>`; });
@@ -9594,7 +9595,7 @@ function picCircleParts(){ return SV("0 0 124 64",`<circle cx="40" cy="32" r="25
     +TX(70,14,"circumference",`fill="var(--blue)" font-weight="700" font-size="6.5" text-anchor="start"`)+TX(70,22,"(the edge)",`fill="var(--muted)" font-size="6" text-anchor="start"`)
     +TX(72,42,`${IT("d")} = 2${IT("r")}`,`font-size="7" text-anchor="start"`)); }
 function picPrismBase(){ return SV("0 0 126 68",`<polygon points="8,62 48,62 28,30" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M28 30 L68 14 L88 46 L48 62" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M8 62 L48 46 L88 46 M48 46 L68 14" fill="none" stroke="var(--muted)" stroke-width=".9" ${DASH}/>`
-    +LN(48,62,88,46,`stroke="var(--green)" stroke-width="2"`)+TX(28,55,"base",`fill="var(--amber)" font-weight="700" font-size="6.5"`)+TX(71,63,"length = height",`fill="var(--green)" font-weight="700" font-size="6" text-anchor="start"`)); }
+    +LN(48,62,88,46,`stroke="var(--green)" stroke-width="2"`)+TX(26,48,"base",`fill="var(--amber)" font-weight="700" font-size="6.5"`)+TX(71,63,"length = height",`fill="var(--green)" font-weight="700" font-size="6" text-anchor="start"`)); }
 function picPrismQ(){ const S='font-size="6.5"';
   return SV("0 0 120 74",`<polygon points="8,64 56,64 32,32" fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"/><path d="M32 32 L72 16 L96 48 L56 64" fill="none" stroke="var(--ink)" stroke-width="1.2"/><path d="M8 64 L48 48 L96 48 M48 48 L72 16" fill="none" stroke="var(--muted)" stroke-width=".9" ${DASH}/>`
     +LN(32,32,32,64,`stroke="var(--red)" stroke-width="1.3" ${DASH}`)+`<path d="M32 60.5 H35.5 V64" fill="none" stroke="var(--ink)" stroke-width=".7"/>`
@@ -10896,50 +10897,156 @@ ZC("blue","Kinematics","kinematics",
 ])}`
 };
 Object.assign(SHEETS,SHEETS10);
-const VSMUST=`<div class="mzmust">${MUST([FB("blue","Any prism","base area × height","cuboid, cylinder, triangular prism","","mk"),FB("amber","Pointy solids",nw(`<b class="k-amber">${frac("1","3")}</b> × base area × ${V("h")}`),"pyramid and cone","","mk"),FB("green",`${V("h")} or ${V("l")}?`,`volume: <b class="k-amber">${V("h")}</b> · curved surface: <b class="k-amber">${V("l")}</b>`,`${V("l")} = the slant height, along the side`,"","mk mkw")])}</div>`;
-Object.assign(SHEETS,{volFormulas:`${VSMUST}
+const XKCSS=(()=>{ try{ const e=document.createElement("style"); e.textContent='.mzband{margin:30px 0 16px;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:19px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}.xkt{scroll-margin-top:calc(var(--barh,56px) + 66px)}.mzjump{position:sticky;top:var(--barh,56px);z-index:4;display:flex;gap:8px;overflow-x:auto;background:var(--bg);padding:8px 0 10px;margin:0 0 14px;scrollbar-width:none}.mzjump::-webkit-scrollbar{display:none}.mzjump .pill{flex:none;min-height:44px}.mzpics.one{grid-template-columns:minmax(0,1fr)}.mzpics.one .mzpt svg{max-width:260px}.xkb{font-weight:700}.mztb.xn td:first-child{font-weight:400;color:var(--rasp)}.mztb.xn td:last-child{font-weight:700}.xkcup{display:inline-block;width:1.1em;height:.9em;vertical-align:-.05em;margin-left:.15em}@media (min-width:600px){.mzmust.m3 .must .forms{grid-template-columns:repeat(3,minmax(0,1fr))}}@media print{.mzjump{display:none!important}.mzband{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'; document.head.appendChild(e);
+  document.addEventListener("click",ev=>{ const b=ev.target.closest&&ev.target.closest("[data-jump]"); if(!b) return; const t=document.getElementById(b.dataset.jump); if(t){ ev.preventDefault(); t.scrollIntoView({behavior:"smooth",block:"start"}); } }); }catch(_){} return 1; })();
+const ZNR=(s,c)=>s.split("var(--red)").join(`var(--${c})`), Z0=s=>ZNR(s,"ink");
+const XJ=items=>`<nav class="mzjump" aria-label="Jump to">${items.map(([id,t])=>`<button class="pill" type="button" data-jump="${id}">${t}</button>`).join("")}</nav>`;
+const XB=(id,t)=>`<h2 class="mzband xkt" id="${id}">${t}</h2>`;
+const XS=(id,t,cards)=>ZS(t,cards).replace('<section class="mzsec"',`<section class="mzsec xkt" id="${id}"`);
+const XA=t=>`<span class="k-amber xkb">${t}</span>`;
+const XCUP=up=>`<svg class="xkcup" viewBox="0 0 22 18" aria-hidden="true"><path d="${up?"M3 2 Q11 26 19 2":"M3 16 Q11 -8 19 16"}" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>`;
+function xkQuarter(){ return SV("0 0 100 60",`<path d="M30 54 L76 54 A46 46 0 0 0 30 8 Z" fill="var(--blue-fill)"/><path d="M76 54 A46 46 0 0 0 30 8" fill="none" stroke="var(--blue)" stroke-width="2.6"/>`+LN(30,54,76,54,`stroke="var(--amber)" stroke-width="2.6"`)+LN(30,54,30,8,`stroke="var(--amber)" stroke-width="2.6"`)+DOT(30,54,"var(--ink)")); }
+function xkSemi(){ return SV("0 0 100 60",`<path d="M6 54 A44 44 0 0 1 94 54 Z" fill="var(--blue-fill)"/><path d="M6 54 A44 44 0 0 1 94 54" fill="none" stroke="var(--blue)" stroke-width="2.6"/>`+LN(6,54,94,54,`stroke="var(--amber)" stroke-width="2.6"`)+DOT(50,54,"var(--ink)")); }
+function xkSector(){ return SV("0 0 92 66",`<path d="M18 58 L70 58 A52 52 0 0 0 31.5 7.8 Z" fill="var(--blue-fill)"/><path d="M70 58 A52 52 0 0 0 31.5 7.8" fill="none" stroke="var(--blue)" stroke-width="2.6"/>`+LN(18,58,70,58,`stroke="var(--amber)" stroke-width="2.6"`)+LN(18,58,31.5,7.8,`stroke="var(--amber)" stroke-width="2.6"`)+ARC(18,58,10,0,75,"var(--ink)")+TX(32,52,"θ",`font-weight="700"`)); }
+function xkNet(){ const C=`fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.2"`, A=`fill="var(--amber)" font-weight="700"`;
+  return SV("0 0 120 84",`<rect x="22" y="29" width="72" height="26" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.2"/><circle cx="40" cy="17" r="11" ${C}/><circle cx="40" cy="67" r="11" ${C}/>`+TX(58,45,"toilet paper",`font-size="6.5" fill="var(--muted)"`)+TX(76,24,"2πr",A)+TX(98,45,"h",`font-weight="700" font-style="italic" text-anchor="start"`)); }
+function xkPow(n){ const X=x=>40+11*x, Y=y=>28-9*y, f={"3":x=>0.12*x**3,"2":x=>0.4*x*x,"-1":x=>1/x,"-2":x=>1/(x*x)}[String(n)]; let d="", pen=false;
+  for(let i=0;i<=128;i++){ const x=-3.2+6.4*i/128, y=f(x); if(n<0&&(Math.abs(x)<0.38||Math.abs(y)<0.42||Math.abs(y)>2.8)){ pen=false; continue; } if(n>0&&Math.abs(y)>2.8){ pen=false; continue; } d+=(pen?"L":"M")+X(x).toFixed(1)+" "+Y(y).toFixed(1); pen=true; }
+  return SV("0 0 80 56",LN(4,28,76,28,`stroke="var(--muted)"`)+LN(40,2,40,54,`stroke="var(--muted)"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`); }
+function xkExp(){ const X=x=>56+12*x, Y=y=>54-9*y; let g="", dc=""; for(let i=0;i<=70;i++){ const x=-3.7+7.4*i/70, y1=2**x, y2=0.5**x; if(y1<=5.1&&y1>=0.45) g+=(g?"L":"M")+X(x).toFixed(1)+" "+Y(y1).toFixed(1); if(y2<=5.1&&y2>=0.45) dc+=(dc?"L":"M")+X(x).toFixed(1)+" "+Y(y2).toFixed(1); }
+  return SV("0 0 112 64",LN(6,54,106,54,`stroke="var(--muted)"`)+LN(56,4,56,60,`stroke="var(--muted)"`)+`<path d="${g}" fill="none" stroke="var(--green)" stroke-width="2.2"/><path d="${dc}" fill="none" stroke="var(--teal)" stroke-width="2.2"/>`+DOT(56,45,"var(--amber)")
+    +TX(X(2.35)+3,10,"growth",`fill="var(--green)" font-weight="700" text-anchor="start" font-size="6.5"`)+TX(X(-2.35)-3,10,"decay",`fill="var(--teal)" font-weight="700" text-anchor="end" font-size="6.5"`)); }
+function xkTriC(){ const B='font-weight="700" font-style="italic"'; return SV("0 0 110 74",PG("12,62 98,62 40,12")+`<path d="M24 62 A12 12 0 0 0 17.9 51.5" fill="none" stroke="var(--amber)" stroke-width="2"/>`+TX(30,57,"C",`fill="var(--amber)" ${B}`)+TX(55,71,"a",B)+TX(20,35,"b",B)); }
+function xkQS(k){ const A='fill="var(--amber)" font-weight="700"', AD=c=>DOT(c[0],c[1],"var(--amber)");
+  if(k==="fac"){ const X=x=>14+12*x, Y=y=>42-2.5*y; let d=""; for(let i=0;i<=60;i++){ const x=-0.3+7.6*i/60; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y((x-2)*(x-6)).toFixed(1); }
+    return SV("0 0 110 62",LN(4,42,106,42,`stroke="var(--muted)"`)+LN(14,2,14,60,`stroke="var(--muted)"`)+LN(62,4,62,58,`stroke="var(--muted)" ${DASH}`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`+AD([38,42])+AD([86,42])+AD([14,12])+AD([62,52])
+      +TX(33,50,"2",A)+TX(91,50,"6",A)+TX(9,15,"12",`${A} text-anchor="end"`)+TX(62,61,"(4, −4)",A)+TX(65,9,"x = 4",`font-size="6.5" fill="var(--muted)" text-anchor="start"`)); }
+  const X=x=>22+15*x, Y=y=>58-5.2*y; let d=""; for(let i=0;i<=52;i++){ const x=-0.6+5.2*i/52; d+=(i?"L":"M")+X(x).toFixed(1)+" "+Y((x-2)**2+3).toFixed(1); }
+  return SV("0 0 110 66",LN(4,58,106,58,`stroke="var(--muted)"`)+LN(22,2,22,64,`stroke="var(--muted)"`)+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`+AD([22,21.6])+AD([52,42.4])+TX(17,24,"7",`${A} text-anchor="end"`)+TX(52,52,"(2, 3)",A)); }
+function xkTrig(k){ const X=t=>8+t/360*96, Y=v=>30-17*v; let d="", pen=false;
+  for(let i=0;i<=144;i++){ const t=i*2.5, r=t*Math.PI/180, v=k==="sin"?Math.sin(r):k==="cos"?Math.cos(r):Math.tan(r); if(k==="tan"&&Math.abs(v)>1.55){ pen=false; continue; } d+=(pen?"L":"M")+X(t).toFixed(1)+" "+Y(v).toFixed(1); pen=true; }
+  let s=LN(4,30,108,30,`stroke="var(--muted)"`)+LN(8,3,8,57,`stroke="var(--muted)"`);
+  if(k==="tan") s+=LN(X(90),3,X(90),57,`stroke="var(--amber)" ${DASH}`)+LN(X(270),3,X(270),57,`stroke="var(--amber)" ${DASH}`)+TX(X(90)+2,8,"90°",`font-size="6.5" fill="var(--amber)" font-weight="700" text-anchor="start"`)+TX(X(270)+2,8,"270°",`font-size="6.5" fill="var(--amber)" font-weight="700" text-anchor="start"`);
+  return SV("0 0 112 60",s+`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`+TX(104,k==="cos"?41:25,"360°",`font-size="6.5" fill="var(--muted)"`)); }
+function xkSin231(){ const X=t=>24+t/120*76, Y=v=>30-6.5*v; let d=""; for(let i=0;i<=60;i++){ const t=i*2; d+=(i?"L":"M")+X(t).toFixed(1)+" "+Y(2*Math.sin(3*t*Math.PI/180)+1).toFixed(1); }
+  const E='text-anchor="end" font-size="7"';
+  return SV("0 0 116 58",LN(18,30,104,30,`stroke="var(--muted)"`)+LN(24,4,24,52,`stroke="var(--muted)"`)+LN(24,23.5,104,23.5,`stroke="var(--green)" ${DASH}`)+LN(24,10.5,104,10.5,`stroke="var(--muted)" ${DASH}`)+LN(24,36.5,81,36.5,`stroke="var(--muted)" ${DASH}`)
+    +`<path d="${d}" fill="none" stroke="var(--blue)" stroke-width="2.2"/>`+LN(103,23.5,103,11.5,`stroke="var(--blue)" stroke-width="1.6"`)+TX(107,20,"2",`fill="var(--blue)" font-weight="700" text-anchor="start"`)
+    +TX(20,12.5,"3",E)+TX(20,38.5,"−1",E)
+    +LN(24,46,100,46,`stroke="var(--amber)" stroke-width="1.4"`)+LN(24,43,24,49,`stroke="var(--amber)" stroke-width="1.4"`)+LN(100,43,100,49,`stroke="var(--amber)" stroke-width="1.4"`)+TX(62,55,"120°",`fill="var(--amber)" font-weight="700"`)); }
+function xkEL(){ const X=x=>40+13*x, Y=y=>58-13*y; let e="", l="";
+  for(let i=0;i<=40;i++){ const x=-1.15+2.53*i/40, u=0.3+5.7*i/40; e+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(Math.exp(x)).toFixed(1); l+=(i?"L":"M")+X(u).toFixed(1)+" "+Y(Math.log(u)).toFixed(1); }
+  return SV("0 0 124 86",LN(X(-2.6),Y(0),X(6),Y(0),`stroke="var(--muted)"`)+LN(X(0),Y(-1.9),X(0),Y(4),`stroke="var(--muted)"`)+`<path d="${e}" fill="none" stroke="var(--blue)" stroke-width="2"/><path d="${l}" fill="none" stroke="var(--teal)" stroke-width="2"/>`
+    +DOT(X(0),Y(1),"var(--amber)")+DOT(X(1),Y(0),"var(--amber)")+TX(37,41,"1",`fill="var(--amber)" font-weight="700" text-anchor="end"`)+TX(56,66,"1",`fill="var(--amber)" font-weight="700"`)
+    +TX(X(1.45)+2,Y(3.6),"y = eˣ",`fill="var(--blue)" font-weight="700" text-anchor="start"`)+TX(X(5.9),Y(1.75)-5,"y = ln x",`fill="var(--teal)" font-weight="700" text-anchor="end"`)); }
+const VSMUST=`<div class="mzmust m3">${MUST([FB("blue","Which height?",`${V("h")} = the ${XA("90°")} one`,"area and volume: never the slanted side","","mk"),FB("amber","Pointy solids",nw(`${XA(frac("1","3"))} × base area × ${V("h")}`),"pyramid and cone","","mk"),FB("green","Got the diameter?",`halve it first: ${nw(`${V("r")} = ${frac(V("d"),"2")}`)}`,nw(`diameter 10 cm, so ${V("r")} = 5 cm`),"","mk")])}</div>`;
+const XKH=V("h"), XKL=V("l");
+Object.assign(SHEETS,{volFormulas:(`${VSMUST}
+${XJ([["xa-area","Area"],["xa-vol","Volume"],["xa-units","Units"],["xa-no","Mistakes"]])}
+${XB("xa-area","Area &amp; perimeter")}
+${ZS("Sec 1–2: shapes, circles, sectors",[
+ZC("blue","Shapes","perimeter-area",
+  ZR(ZNR(picShape("tri"),"green"),[ZF("Triangle",nw(`= ${frac("1","2")} × base × ${ZK("green",XKH)}`))])
+  +ZR(ZNR(picShape("para"),"green"),[ZF("Parallelogram",nw(`= base × ${ZK("green",XKH)}`))])
+  +ZR(ZNR(picShape("trap"),"green"),[ZF("Trapezium",nw(`= ${frac("1","2")}(${V("a")} + ${V("b")}) × ${ZK("green",XKH)}`)),ZX(`${V("a")}, ${V("b")} = the parallel sides`)])),
+ZC("green","Circles","perimeter-area",
+  ZR(ZNR(zCirc(),"green"),[ZF(ZK("blue","Circumference"),nw(`= 2π${V("r")}`)),ZF("Area",nw(`= π${V("r")}²`))])
+  +ZF("Perimeter",`= the ${ZK("blue","curved edge")} + ${XA("the straight edges")}`)
+  +ZT([[xkSemi(),"Semicircle",nw(`${ZK("blue",`π${V("r")}`)} + ${XA(`2${V("r")}`)}`)],[xkQuarter(),"Quarter circle",nw(`${ZK("blue",`${frac("1","2")}π${V("r")}`)} + ${XA(`2${V("r")}`)}`)]],"two")
+  +ZF("Composite shape","perimeter = the outside edges only")
+  +ZF("Shaded area","= whole − the part cut out")),
+ZC("purple","Arcs and sectors","arc-length-sector-area",
+  ZR(xkSector(),[ZF("Arc",nw(`= ${frac("θ","360°")} × 2π${V("r")}`)),ZF("Sector area",nw(`= ${frac("θ","360°")} × π${V("r")}²`)),ZF("Sector perimeter",nw(`= arc + ${XA(`2${V("r")}`)}`))]))
+])}
+${ZS("E-Math: radians and triangles",[
+ZC("teal","Radians","arc-length-sector-area",
+  ZCH([nw("π rad = 180°")])
+  +ZR(xkSector(),[ZF("Arc",nw(`= ${V("r")}θ`)),ZF("Sector area",nw(`= ${frac("1","2")}${V("r")}²θ`)),ZX(XA("θ in radians"))])
+  +ZR(Z0(picSegment()),[ZF("Segment","= sector − triangle"),ZF("",nw(`= ${frac("1","2")}${V("r")}²θ − ${frac("1","2")}${V("r")}² sin θ`)),ZX(`${XA("sin θ: calculator in RAD")}, then back to DEG`)],"st")),
+ZC("blue","Triangle, no height given","further-trigonometry",
+  ZR(xkTriC(),[ZF("Area",nw(`= ${frac("1","2")}${V("ab")} sin ${XA(V("C"))}`))]))
+])}
+${XB("xa-vol","Volume &amp; surface area")}
 ${ZS("Sec 1: prisms and cylinders",[
 ZC("green","Prisms","volume-surface-area-1",
-  ZPRISM
-  +ZR(picSolid("cuboid"),[ZF("Cuboid volume",nw(`= ${V("lbh")}`)),ZF("Surface area",`${nw(`= 2${V("lb")}`)} ${nw(`+ 2(${V("l")} + ${V("b")}) × ${V("h")}`)}`)])
-  +ZR(picCylNet(),[ZF("Prism surface area",`${nw("= 2 × base area")} ${nw("+ perimeter of base × height")}`),ZX(`${nw("perimeter of base × height")}: the toilet paper`)],"st")),
+  ZR(Z0(picPrismBase()),[ZF("Prism volume",nw("= base area × height"))],"st")
+  +ZF("Prism surface area",nw("= 2 × base area"))+ZF("",nw("+ perimeter of base × height"))
+  +ZR(Z0(picSolid("cuboid")),[ZF("Cuboid volume",nw(`= ${V("lbh")}`)),ZF("Surface area",""),ZF("",nw(`= 2${V("lb")} + 2(${V("l")} + ${V("b")}) × ${V("h")}`))])),
 ZC("blue","Cylinders","volume-surface-area-1",
-  ZR(picSolid("cyl"),[ZF("Volume",nw(`= π${V("r")}²${V("h")}`)),ZF("Curved surface",nw(`= 2π${V("rh")}`)),ZX("the toilet paper")])
+  ZR(ZNR(picSolid("cyl"),"amber"),[ZF("Volume",nw(`= π${V("r")}²${V("h")}`))])
+  +ZR(xkNet(),[ZF("Curved surface",nw(`= ${XA(`2π${V("r")}`)} × ${V("h")}`)),ZX("the toilet paper")])
   +ZTB(null,[["Closed (2 lids)",nw(`2π${V("r")}² + 2π${V("rh")}`)],["Open (1 lid)",nw(`π${V("r")}² + 2π${V("rh")}`)],["Tube (no lids)",nw(`2π${V("rh")}`)]])
   +ZF("Hollow pipe","= outer cylinder − inner cylinder"))
 ])}
 ${ZS("Sec 2: pyramids, cones and spheres",[
-ZC("red","Pyramids and cones","volume-surface-area-2",
-  ZR(picSolid("pyr"),[ZF("Pyramid volume",nw(`= ${frac("1","3")} × base area × ${V("h")}`))])
-  +ZR(picSolid("cone"),[ZF("Cone volume",nw(`= ${frac("1","3")}π${V("r")}²${V("h")}`)),ZF("Curved surface",nw(`= π${V("rl")}`)),ZF("Solid cone",nw(`= π${V("rl")} + π${V("r")}²`),"curved + the base")])
-  +ZF("Slant height",nw(`${V("l")} = ${SQRT(`${V("r")}² + ${V("h")}²`)}`))),
+ZC("teal","Pyramids and cones","volume-surface-area-2",
+  ZR(ZNR(picSolid("pyr"),"green"),[ZF("Pyramid volume",nw(`= ${frac("1","3")} × base area × ${ZK("green",XKH)}`)),ZF("Surface area","= base + the triangle faces")])
+  +ZR(ZNR(picSolid("cone"),"green"),[ZF("Cone volume",nw(`= ${frac("1","3")}π${V("r")}²${ZK("green",XKH)}`)),ZF("Curved surface",nw(`= π${V("r")}${ZK("blue",XKL)}`)),ZX(`${ZK("blue",XKL)} = the slant height`),ZF("Solid cone",nw(`= π${V("rl")} + π${V("r")}²`))])
+  +ZF("Slant height",nw(`${ZK("blue",XKL)} = ${SQRT(`${V("r")}² + ${V("h")}²`)}`))),
 ZC("purple","Spheres and hemispheres","volume-surface-area-2",
-  ZR(picSolid("sphere"),[ZF("Sphere volume",nw(`= ${frac("4","3")}π${V("r")}³`)),ZF("Surface area",nw(`= 4π${V("r")}²`))])
-  +ZR(picHemi(),[ZF("Hemisphere volume",nw(`= ${frac("2","3")}π${V("r")}³`)),ZF("Curved surface",nw(`= 2π${V("r")}²`)),ZF("Solid hemisphere",nw(`= 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`),"curved + the flat circle")],"st")),
-ZC("teal","Cone from a sector","volume-surface-area-2",
-  ZR(picConeSector(),[ZF("Arc length",nw(`= 2π${V("r")}`),"the base circle of the cone"),ZF("Sector radius",`= ${V("l")}, the slant height`),ZF("Sector area",nw(`= π${V("rl")}`),"the curved surface")],"st"))
+  ZR(ZNR(picSolid("sphere"),"amber"),[ZF("Sphere volume",nw(`= ${frac("4","3")}π${V("r")}³`)),ZF("Surface area",nw(`= 4π${V("r")}²`))])
+  +ZR(Z0(picHemi()),[ZF("Hemisphere volume",nw(`= ${frac("2","3")}π${V("r")}³`)),ZF("Solid hemisphere",nw(`= 2π${V("r")}² + π${V("r")}² = 3π${V("r")}²`))],"st")),
+ZC("blue","Cone from a sector","volume-surface-area-2",
+  ZR(Z0(picConeSector()).replace(" = 13","").replace(" = 13","").replace(" = 5",""),[ZF("Arc length",nw(`= 2π${V("r")}`),"the base circle of the cone"),ZF("Sector radius",`= ${XKL}, the slant height`),ZF("Sector area",nw(`= π${V("rl")}`),"the curved surface")],"st"))
 ])}
 ${ZS("E-Math: similar and composite solids",[
-ZC("amber","Similar solids","congruence-similarity-sec3",
-  ZR(picCubeRatio(),[ZF("Lengths",nw(`× ${V("k")}`)),ZF("Areas",nw(`× ${V("k")}²`)),ZF("Volumes",nw(`× ${V("k")}³`))],"st")
+ZC("purple","Similar solids","congruence-similarity-sec3",
+  ZR(Z0(picCubeRatio()),[ZF("Lengths",nw(`× ${V("k")}`)),ZF("Areas",nw(`× ${V("k")}²`)),ZF("Volumes",nw(`× ${V("k")}³`))],"st")
   +ZTB(null,[[nw(`${V("k")}²`),"surface area, paint, label"],[nw(`${V("k")}³`),"volume, capacity, mass"]])
   +ZF("Frustum","= whole cone − top cone")),
-ZC("blue","Solids put together","",
+ZC("green","Solids put together","",
   ZF("Volume","add the parts")
-  +ZF("Surface area","outside faces only")+ZX("the faces that touch are not on the surface")
-  +ZF("Hemisphere on a cylinder",nw(`2π${V("r")}² + 2π${V("rh")} + π${V("r")}²`),"dome + side + base"))
+  +ZF("Surface area","only the outside faces, not where they touch")
+  +ZF("Hemisphere on a cylinder","dome + side + base")
+  +ZF("Melted, poured or recast","the volume stays the same"))
 ])}
-${ZS("Units and the exam",[
+${XS("xa-units","Units and the exam",[
 ZC("green","Units","volume-surface-area-1",
-  ZCH([nw("1 litre = 1000 cm³"),nw("1 ml = 1 cm³"),nw("1 m³ = 1 000 000 cm³"),nw("1 m² = 10 000 cm²")])
-  +ZX("volume in cm³, area in cm²")),
-ZC("teal","Given in the E-Math paper","",
-  ZTB(["Given","Learn"],[["cone volume, curved surface","prism, cuboid, cylinder"],["sphere volume, surface area","pyramid, hemisphere"]])
-  +ZX(`school tests may give none: learn them all · <a href="#sheet/emath-formula-sheet">formula sheet →</a>`))
+  ZCH([XA(nw("1 m² = 10 000 cm²")),nw("1 m³ = 1 000 000 cm³"),nw("1 litre = 1000 cm³"),nw("1 m³ = 1000 litres"),nw("1 ml = 1 cm³")])
+  +ZX("change the units first, then calculate")),
+ZC("teal","The E-Math paper gives these","",
+  ZCH([nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),nw(`arc = ${V("r")}θ`),nw(`sector = ${frac("1","2")}${V("r")}²θ`),nw(`cone: π${V("rl")}`),nw(`cone: ${frac("1","3")}π${V("r")}²${V("h")}`),nw(`sphere: 4π${V("r")}²`),nw(`sphere: ${frac("4","3")}π${V("r")}³`)])
+  +ZX(XA("School test? It may give none."))
+  +ZX(`A-Math paper: only ${nw(`${frac("1","2")}${V("bc")} sin ${V("A")}`)} · <a href="#sheet/emath-formula-sheet">formula sheet →</a>`))
 ])}
-${ZS("Lose no marks",[
+${XS("xa-no","Lose no marks",[
 ZC("red","Never write","",
-  ZTB(["✗","✓"],[[`cone volume with ${V("l")}`,`the vertical height ${V("h")}`],[`cone curved surface ${nw(`π${V("rh")}`)}`,nw(`π${V("rl")}`)],[`closed cylinder ${nw(`2π${V("rh")}`)} only`,`+ the 2 lids: ${nw(`2π${V("r")}²`)}`],[`hemisphere ${nw(`${frac("4","3")}π${V("r")}³`)}`,`half of it: ${nw(`${frac("2","3")}π${V("r")}³`)}`],[`diameter 10, so ${nw(`${V("r")} = 10`)}`,`halve it first: ${nw(`${V("r")} = 5`)}`],["volume in cm²","volume is in cm³"]]))
+  ZTB(["✗","✓"],[["π = 3.14","the calculator's π"],[`semicircle perimeter ${nw(`π${V("r")}`)}`,`+ the straight edge: ${nw(`π${V("r")} + 2${V("r")}`)}`],[`closed cylinder ${nw(`2π${V("rh")}`)} only`,`+ the 2 lids: ${nw(`2π${V("r")}²`)}`],[`cone curved surface ${nw(`π${V("rh")}`)}`,nw(`π${V("rl")}`)],[`${nw(`${V("r")}θ`)} with θ in degrees`,`radians first: ${nw(`× ${frac("π","180°")}`)}`],["volume in cm²","volume is in cm³"]],"xn"))
+])}`),
+graphShapes:`<div class="mzmust m3">${MUST([FB("blue","A minus in front",`${nw(`${X2} is${XCUP(1)}`)} · ${nw(`${XA("−")}${X2} is${XCUP(0)}`)}`,`${nw(`${X2} − 4`)} is still ∪, only lower`,"","mk mkw"),FB("amber","Sketch = label it","where it cuts the axes + where it turns","a number on every label","","mk mkw"),FB("green","Curves","one smooth curve: no ruler, no corners","straight-line graph: use a ruler","","mk mkw")])}</div>
+${XJ([["xg-s2","Sec 1–2"],["xg-em","E-Math"],["xg-am","A-Math"],["xg-no","Mistakes"]])}
+${XS("xg-s2","Sec 1–2: lines and quadratics",[
+ZC("blue","Straight lines","linear-graphs",
+  ZH(nw(`${V("y")} = ${V("m")}${X1} + ${V("c")}`),`${V("m")} = gradient, ${V("c")} = where it cuts the ${V("y")}-axis`)
+  +ZT([[picLineKind("up"),"Uphill",`${V("m")} positive`],[picLineKind("down"),"Downhill",`${V("m")} negative`],[picLineKind("flat"),nw(`${V("y")} = ${V("k")}`),"flat"],[picLineKind("upright"),nw(`${X1} = ${V("k")}`),"upright"]],"two")),
+ZC("purple","Quadratics","quadratic-equations-graphs",
+  ZT([[Z0(zUM("min")),nw(`${V("y")} = ${X2}`),""],[Z0(zUM("max")),nw(`${V("y")} = ${XA("−")}${X2}`),""]],"two")
+  +ZF("Roots",`= where it cuts the ${X1}-axis`))
+])}
+${XS("xg-em","E-Math: sketches, powers, exponentials",[
+ZC("teal","Sketch a quadratic","quadratic-graphs",
+  ZR(xkQS("fac"),[ZF("",nw(`${V("y")} = (${X1} − ${XA("2")})(${X1} − ${XA("6")})`)),ZF("Line of symmetry",nw(`${X1} = 4`),"halfway between 2 and 6"),ZF("Turning point","(4, −4)")],"st")
+  +ZR(xkQS("vtx"),[ZF("",nw(`${V("y")} = (${X1} − 2)² + 3`)),ZF("Turning point","(2, 3)"),ZX(`${XA("the sign swaps")}: (${X1} − 2) gives 2`) ],"st")),
+ZC("purple","Power graphs","functions-graphs",
+  ZT([[xkPow(3),nw(`${V("y")} = ${X1}³`),"flat at O"],[xkPow(2),nw(`${V("y")} = ${X2}`),"∪ through O"],[xkPow(-1),nw(`${V("y")} = ${frac(V("k"),X1)}`),"opposite corners"],[xkPow(-2),nw(`${V("y")} = ${frac(V("k"),`${X2}`)}`),"both above the x-axis"]],"two")
+  +ZX(`${nw(frac(V("k"),X1))}, ${nw(frac(V("k"),X2))}: never touch the axes (asymptotes), never joined`)
+  +ZX(`drawn for ${nw(`${V("k")} &gt; 0`)}: a minus in front flips it`)),
+ZC("green","Exponential graphs","functions-graphs",
+  ZR(xkExp(),[ZF(ZK("green","Growth"),nw(`${V("y")} = 2<sup>${X1}</sup>`)),ZF(ZK("teal","Decay"),nw(`${V("y")} = 2<sup>−${X1}</sup>`)),ZF(`Cuts the ${V("y")}-axis`,`at ${XA(V("k"))}`),ZX(nw(`${V("y")} = ${XA("3")}(2)<sup>${X1}</sup>: (0, ${XA("3")})`))],"st"))
+])}
+${XS("xg-am","A-Math: e, ln and trig",[
+ZC("purple","Exponential and log","exponentials-logarithms",
+  ZR(xkEL(),[ZF("",ZK("blue",nw(`${V("y")} = e<sup>${X1}</sup>`))),ZX(`through (0, 1), never touches the ${X1}-axis`),ZF("",ZK("teal",nw(`${V("y")} = ln ${X1}`))),ZX(`through (1, 0), only for ${nw(`${X1} &gt; 0`)}`)],"st")),
+ZC("blue","sin, cos, tan","trig-graphs",
+  ZT([[xkTrig("sin"),nw(`sin ${X1}`),"starts at 0, goes up first"],[xkTrig("cos"),nw(`cos ${X1}`),"starts at the top"],[xkTrig("tan"),nw(`tan ${X1}`),`never touches ${nw(`${X1} = 90°`)} or ${nw(`${X1} = 270°`)}`]],"one")
+  +ZX("a minus in front flips sin and cos")
+  +ZR(xkSin231(),[ZF("",nw(`${V("y")} = ${ZK("blue","2")} sin ${XA("3")}${X1} + ${ZK("green","1")}`))],"st")
+  +ZTB(null,[["Amplitude",`${ZK("blue","2")}, the number in front, no sign`],["Period",`${nw(`${frac("360°",XA("3"))} = 120°`)}${ZX(`360° ÷ the number in front of ${X1}`)}`],["Middle line",nw(`${V("y")} = ${ZK("green","1")}`)],["Max, min",`3 and −1${ZX("the middle line ± 2")}`]])
+  +ZX(`cos: the same · ${nw(`tan 3${X1}`)}: period ${nw(frac("180°","3"))}, no amplitude · in radians: 2π in place of 360°`))
+])}
+${XS("xg-no","Lose no marks",[
+ZC("red","Never write","",
+  ZTB(["✗","✓"],[[`${nw(`${V("y")} = 2<sup>${X1}</sup>`)} touching the ${X1}-axis`,"gets closer, never touches"],[`${nw(`(${X1} − 2)² + 3`)}: turning point ${nw("(−2, 3)")}`,nw("(2, 3)")],["line of symmetry = 3",nw(`${X1} = 3`)],[`${nw(`sin 2${X1}`)}: period 720°`,nw(`${frac("360°","2")} = 180°`)],[`${nw(`${V("y")} = ${frac(V("k"),X1)}`)}: the 2 pieces joined`,"2 separate pieces"]],"xn"))
 ])}`});
 function xtTriC(){ const B='font-weight="700" font-style="italic"'; return SV("0 0 110 74",PG("12,62 98,62 40,12")+`<path d="M24 62 A12 12 0 0 0 17.9 51.5" fill="none" stroke="var(--amber)" stroke-width="2"/>`+TX(30,57,"C",`fill="var(--amber)" ${B}`)+TX(55,71,"a",B)+TX(20,35,"b",B)); }
 function xtRtri(){ const B='font-weight="700" font-style="italic"'; return SV("0 0 112 72",PG("10,60 96,60 96,14")+`<path d="M90 60 V54 H96" fill="none" stroke="var(--ink)"/>`
@@ -11071,7 +11178,7 @@ ZC("red","Triangles in proofs","proofs-plane-geometry",
 ])}
 ${ZS("Lose no marks",[
 ZC("red","Never write","",
-  ZTB(["✗","✓"],[["(alt. ∠s)","(alt. ∠s, AB &#47;&#47; CD)"],["co-interior","(int. ∠s, AB &#47;&#47; CD)"],["(Z angles)","Z, C, F only help you spot them"]]))
+  ZTB(["✗","✓"],[["(alt. ∠s)","(alt. ∠s, AB &#47;&#47; CD)"],["co-interior","(int. ∠s, AB &#47;&#47; CD)"],["(Z angles)","Z, C, F only help you spot them"]],"xn"))
 ])}`});
 SHEETS.emMemoFC+=`<ul class="steps fml">${GRP("Standard form","standard-form")}${FL(`Standard form = ${nw(`${V("A")} × 10<sup>${V("n")}</sup>`)}`+FNOTE(nw(`1 ≤ ${V("A")} &lt; 10`)))}
 ${GRP("Indices","indices")}${FL(nw(`${V("a")}<sup>${frac("1",V("n"))}</sup> = ${SQRT(V("a"),V("n"))}`))}${FL(nw(`${V("a")}<sup>${frac(V("m"),V("n"))}</sup> = (${SQRT(V("a"),V("n"))})<sup>${V("m")}</sup>`))}${FL(nw(`(${V("ab")})<sup>${V("n")}</sup> = ${V("a")}<sup>${V("n")}</sup>${V("b")}<sup>${V("n")}</sup>`))}
@@ -11147,7 +11254,7 @@ const STHUMB={
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
   "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "trig-rules":()=>FT("TOA CAH SOH",1), "volume-formulas":()=>FT(nw(`${frac("1","3")}π${V("r")}²${V("h")}`)), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "trig-rules":()=>FT("TOA CAH SOH",1), "volume-formulas":()=>FT(`${nw(`π${V("r")}²`)}&emsp;${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`), "graph-shapes":()=>xkPow(-1), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
