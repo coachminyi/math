@@ -1570,6 +1570,8 @@ html[data-ip] .dohint{display:none !important}
 html[data-ip] .panel>.iptabs{order:9}
 @media (max-width:599px){.iptabs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.iptab{flex-direction:column;justify-content:center;gap:1px;padding:3px 2px;min-height:62px;font-size:11.5px;text-align:center}.iptab .cmini{width:42px;height:32px}.iptab small{font-size:10px}}
 .cpk .formbox .rd{font-size:15px;color:var(--ink);text-align:center;margin-top:2px}
+html[data-ip] svg.ipwig ellipse.ipcpx{stroke:var(--ink);animation:ipwig .6s ease-out 2}
+@media (max-width:599px){.play.ipcp .iptab{padding:3px 7px}}
 .fpbox{background:var(--card) !important;border:2px solid var(--muted) !important;border-radius:10px !important;box-shadow:none !important;padding:8px 10px !important}
 .fpbox .eq{display:block;height:auto;font-size:16.5px;white-space:normal;text-align:left;font-weight:400}
 .fpch{display:grid;grid-template-columns:auto minmax(9.5em,auto);justify-content:start;align-items:center;column-gap:18px;row-gap:4px}
@@ -1811,7 +1813,7 @@ const TOPICS = [
   {id:"unit-circle", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"Unit circle & ASTC", blurb:"Drag the dot. The basic angle gives the size, the quadrant gives the sign.", play:"unitCircle", sheet:"trigAngles", sheetTitle:"Trig ratios of any angle"},
   {id:"trig-graphs", strand:"trig", levels:["amath"], chapter:"Trigonometry",
-   title:"Trig graphs: amplitude and period", blurb:"Drag the top of the wave: amplitude, period, max and min.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
+   title:"Trig graphs: sin, cos and tan", blurb:"Tap sin, cos or tan, then drag the graph: amplitude, period, max and min.", play:"trigGraphs", sheet:"trigGraphs", sheetTitle:"Trig graphs"},
   {id:"r-formula", strand:"trig", levels:["amath"], chapter:"Trigonometry",
    title:"R-formula: two waves make one", blurb:"Where R and α come from, and why max = R.", play:"rFormula", sheet:"rFormula", sheetTitle:"R-formula"},
   {id:"bearings", strand:"trig", levels:["emath"], chapter:"Applications of Trigonometry",
@@ -1879,7 +1881,7 @@ const TOPICS = [
   {id:"cross-method", strand:"alg", levels:["sec2"], chapter:"Expansion & Factorisation",
    title:"Factorising with the cross method", blurb:"Tap a factor pair: numbers first, then the signs go on.", play:"crossAid", sheet:"s2Factor", sheetTitle:"Factorising quadratics"},
   {id:"polygon-angles", strand:"geo", levels:["sec1"], chapter:"Polygons",
-   title:"Angles of polygons", blurb:"Walk round any polygon: the turns add up to 360°. Cut it into triangles: (n − 2) × 180°.", play:"polyAng", sheet:"s1Polygons", sheetTitle:"Triangles, quadrilaterals & polygons"},
+   title:"Regular polygons: exterior angle first", blurb:"360° ÷ exterior = sides. 180° − exterior = interior.", play:"polyAng", sheet:"s1Polygons", sheetTitle:"Triangles, quadrilaterals & polygons"},
   {id:"area-cut-move", strand:"geo", levels:["sec1"], chapter:"Measurement",
    title:"Area: parallelogram & trapezium", blurb:"Why the formulas work. Cut and move, or turn a copy round, and you get a rectangle.", play:"areaCut", sheet:"s1Area", sheetTitle:"Perimeter & area"},
   {id:"speed-convert", strand:"num", levels:["sec1"], chapter:"Ratio, rate & speed",
@@ -2202,20 +2204,39 @@ const qfK=s=>{ const a=s.a, h=s.h, k=s.k, I=quadInfo(s), f0=quadFact(s,I), fct=f
   const gen=nw(`${V("y")} = ${a<0?"−":""}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`);
   const sm=`<div class="qfsm">${fct?`<span class="qfl">factorised</span><span>${nw(`${V("y")} = ${fct}`)}</span>`:""}<span class="qfl">general</span><span>${nw(`${V("y")} = ${poly([[a,X2],[I.b,X1],[I.c,""]])}`)}</span></div>`;
   return `<div class="apwk ipk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("blue","Turning point",eq,null,gen,"wide")],true)+sm+`</div>`; };
+const IPQFCSS=`.ipqfk .formbox{padding:8px 12px}.ipqfk.ipk .formbox .eq{height:auto;display:grid;grid-template-columns:96px minmax(0,268px);justify-content:center;align-items:center;gap:0 14px;white-space:normal;overflow:visible;padding:0}.ipqfk .ipqf-l{font-size:13px;font-weight:400;color:var(--muted);text-align:right;line-height:1.15}.ipqfk .ipqf-r{height:40px;display:flex;align-items:center;font-size:22px;font-weight:700;color:var(--ink);white-space:nowrap}.ipqfk .ipqf-n{color:var(--muted);font-weight:700}.ipqfk .ipqf-p{color:var(--purple);font-weight:800}.ipqfk .ipqf-g{color:var(--green);font-weight:800}.ipqfk .ipqf-a{color:var(--amber);font-weight:800}@media (max-width:599px){.ipqfk.ipk .formbox .eq{grid-template-columns:72px minmax(0,1fr);gap:0 10px}.ipqfk .ipqf-r{height:34px;font-size:19px}.ipqfk .ipqf-l{font-size:12px}}`;
+const ipQfCss=()=>{ if(!document.getElementById("ipqfcss")){ const e=document.createElement("style"); e.id="ipqfcss"; e.textContent=IPQFCSS; document.head.append(e); } };
+const ipQfSg=v=>v>0?`+ ${v}`:`− ${-v}`;
+const ipQfRt=s=>{ const q=-s.k/s.a; if(q<0) return null; const d=Math.round(Math.sqrt(q)); if(d*d!==q) return []; return d?[s.h-d,s.h+d]:[s.h]; };
+const ipQfSk=(y,a)=>{ let b=null; [0,-a,-4*a].forEach(v=>{ if(Math.abs(y-v)<.8&&(b===null||Math.abs(y-v)<Math.abs(y-b))) b=v; }); return clamp(b===null?Math.round(y):b,-6,6); };
+const ipQfK=s=>{ ipQfCss(); const a=s.a, h=s.h, k=s.k, L=a<0?"−":"", Y=`${V("y")} = `, P=t=>`<span class="ipqf-p">${t}</span>`, G=t=>`<span class="ipqf-g">${t}</span>`, A=t=>`<span class="ipqf-a">${t}</span>`;
+  const cs=`${Y}${L}${h===0?X1:`(${X1} ${P(ipQfSg(-h))})`}²${k===0?"":` ${P(ipQfSg(k))}`}`;
+  const rs=ipQfRt(s), bk=r=>r===0?X1:`(${X1} ${G(ipQfSg(-r))})`;
+  const fc=rs===null?`<span class="ipqf-n">none: misses x-axis</span>`:!rs.length?`<span class="ipqf-n">no whole-number factors</span>`:rs.length===1?`${Y}${L}${bk(rs[0])}²`:`${Y}${L}${(rs[1]===0?[rs[1],rs[0]]:rs).map(bk).join("")}`;
+  const b=-2*a*h, c=a*h*h+k, gn=`${Y}${L}${X2}${b===0?"":` ${b>0?"+":"−"} ${Math.abs(b)===1?"":Math.abs(b)}${X1}`}${c===0?"":` ${A(ipQfSg(c))}`}`;
+  const R=(l,t)=>`<div class="ipqf-l">${l}</div><div class="ipqf-r">${t}</div>`;
+  return `<div class="apwk ipk ipqfk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB("blue","Same curve, 3 forms",R("turning point",nw(cs))+R("x-intercepts",nw(fc))+R("y-intercept",nw(gn)),null,null,"wide")],true)+`</div>`; };
 const quadForms=aid({
-  init:{a:1,h:2,k:-3}, jump:true, ip:"Drag the turning point.", vb:"4 4 134 112", label:"Parabola with a draggable turning point", link:["a","h","k"],
+  init:{a:1,h:1,k:-4}, jump:true, ip:"Drag the turning point.", vb:"4 4 134 112", label:"Parabola with a draggable turning point", link:["a","h","k"],
   fix:s=>{ s.a=+s.a<0?-1:1; s.h=clamp(Math.round(+s.h||0),-4,4); s.k=clamp(Math.round(+s.k||0),-6,6); },
-  steps:[{name:"Turning point",t:()=>`Drag the turning point.`,w:s=>qfK(s)}],
-  draw(svg,s){ const n0=graph.n; graph.n=9100; const g=graph(svg,QF), f=x=>s.a*(x-s.h)**2+s.k, fs=innerWidth<600?5.4:4.6;
-    g.line(s.h,QF.y0,s.h,QF.y1,{stroke:"var(--red)","stroke-dasharray":"2 1.5","stroke-width":.8});
+  steps:[{name:"Turning point",t:()=>`Drag the turning point.`,w:s=>ipQfK(s)}],
+  draw(svg,s){ ipQfCss(); const n0=graph.n; graph.n=9100; const g=graph(svg,QF), f=x=>s.a*(x-s.h)**2+s.k, fs=innerWidth<600?5.4:4.6, PU="var(--purple)", GR="var(--green)", AM="var(--amber)";
+    const H={"font-weight":700,"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.45,"stroke-linejoin":"round"}, T=(P,t,c,o)=>lab(svg,P,t,Object.assign({"font-size":fs,fill:c},H,o||{}));
+    g.line(s.h,QF.y0,s.h,QF.y1,{stroke:PU,"stroke-dasharray":"2 1.5","stroke-width":.8});
     g.plot(f,{stroke:"var(--blue)","stroke-width":1.5});
-    const lx=g.X(s.h), ly=g.Y(s.k), rt=s.h>0, up=s.k<=0;
-    lab(svg,[lx+(rt?1.8:-1.8),g.Y(0)+(up?-2.2:fs+1.8)],`x = ${N(s.h)}`,{"font-size":fs+.6,"font-weight":700,fill:"var(--red)","text-anchor":rt?"start":"end"});
-    const vt=S_(svg,"text",{x:lx+(rt?-9:9),y:ly+1.6,"font-size":fs,"font-weight":700,"text-anchor":rt?"end":"start",fill:"var(--ink)"});
-    [["("],[N(s.h),"red"],[", "+N(s.k)+")"]].forEach(([t,c])=>vt.append(svgEl("tspan",c?{fill:`var(--${c})`}:{},t)));
+    const lx=g.X(s.h), ly=g.Y(s.k), X0=g.X(0), Y0=g.Y(0), rt=s.h>0, r0=ipQfRt(s), rs=r0||[], c=s.a*s.h*s.h+s.k, q=-s.k/s.a;
+    if(c!==0){ if(Math.abs(c)<=QF.y1){ if(s.h) g.dot(0,c,AM,2.1); T([X0+(rt?-3:s.h?3:-10.5),g.Y(c)+fs*.35],N(c),AM,{"text-anchor":rt||!s.h?"end":"start"}); }
+      else T([X0,c>0?QF.t-2:QF.t+QF.h+fs+1.2],`${N(c)} ${c>0?"↑":"↓"}`,AM); }
+    if(r0&&!r0.length) [s.h-Math.sqrt(q),s.h+Math.sqrt(q)].forEach(x=>{ if(Math.abs(x)<=QF.x1) S_(svg,"circle",{cx:g.X(x),cy:Y0,r:1.9,fill:"var(--card)",stroke:GR,"stroke-width":1.1}); });
+    rs.forEach(r=>g.dot(r,0,GR,2.1));
+    if(rs.length===2) rs.forEach((r,i)=>T([g.X(r)+(i?-1.8:1.8),s.a>0?Y0-2.6-(r>=QF.x1?fs+1.5:0):Y0+fs+1.8],N(r),GR,{"text-anchor":i?"end":"start"}));
+    T([lx,QF.t-2],`x = ${N(s.h)}`,PU,{"font-size":fs+.6});
+    const tp=`(${N(s.h)}, ${N(s.k)})`, tw=tp.length*fs*.56; let sd=s.h>=0?1:-1; if(sd>0&&lx+10.5+tw>137) sd=-1; else if(sd<0&&lx-10.5-tw<5) sd=1;
+    T([lx+sd*10.5,ly+fs*.35],tp,PU,{"text-anchor":sd>0?"start":"end"});
     S_(svg,"rect",{x:QF.l,y:QF.t,width:QF.w,height:QF.h,fill:"transparent","data-drag":"v",style:"cursor:pointer"});
-    handle(svg,lx,ly,"v","var(--ink)"); S_(svg,"circle",{cx:lx,cy:ly,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
-  drag(id,p,s){ const [x,y]=ginv(QF,p); s.h=clamp(Math.round(x),-4,4); s.k=clamp(Math.round(y),-6,6); },
+    handle(svg,lx,ly,"v","var(--ink)"); S_(svg,"circle",{cx:lx,cy:ly,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"});
+    if(!s.h&&c) S_(svg,"circle",{cx:lx,cy:ly,r:4.7,fill:"none",stroke:AM,"stroke-width":1.4,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const [x,y]=ginv(QF,p); s.h=clamp(Math.round(x),-4,4); s.k=ipQfSk(y,s.a); },
   key(){ return ""; }
 });
 
@@ -2227,11 +2248,12 @@ const dcLo=-7, dcHi=1, dcP="var(--purple)";
 const dcD=c=>16+4*c;
 const dcX=c=>{ const d=4+c; if(d<0) return []; if(d===0) return [3]; const q=Math.sqrt(d); return [3-q,3+q]; };
 const dcCss=()=>{ if(!document.getElementById("dccss")){ const e=document.createElement("style"); e.id="dccss"; e.textContent=DCCSS; document.head.append(e); } };
-const DCCSS=`.dck .formbox{padding:8px 12px}.dck.ipk .formbox .eq{height:auto;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;white-space:normal}.dck .dcr{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 7px;text-align:center;line-height:1.25}.dck .dcr1,.dck .dcr2{height:38px}.dck .dcr3{height:40px}.dck .dcsp{font-size:13px;color:var(--muted);font-weight:400;text-align:center;height:18px;line-height:18px}.dck .dcq{color:var(--purple);font-weight:800;background:var(--purple-fill);border-radius:2px;padding:0 3px}.dck .dcu{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;line-height:1.15}.dck .dcul{font-size:18px;font-weight:800;color:var(--purple);margin-top:3px}.dck .dcr2{height:60px}.dck .k-mis{color:#3f5d8a;font-weight:800}:root[data-theme="dark"] .dck .k-mis{color:#9fb7e0}.dck .dcp{color:var(--purple);font-weight:800}.dck .dcg{color:var(--muted);font-weight:400}.dck .dcres{font-size:1.2em;font-weight:800}.dck .dcv{height:40px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;border-top:1px solid var(--grid2);margin-top:4px}.dck .dcv.k-ink{color:var(--ink)}@media (max-width:599px){.dck.ipk .formbox .eq{font-size:19px}.dck .dcr1{height:34px}.dck .dcr2{height:58px}.dck .dcul{font-size:18px}.dck .dcr3{height:56px}.dck .dcv{height:36px;font-size:21px}}`;
+const DCCSS=`.dck .formbox{padding:8px 12px}.dck.ipk .formbox .eq{height:auto;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;white-space:normal}.dck .dcr{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0 7px;text-align:center;line-height:1.25}.dck .dcr1,.dck .dcr2{height:38px}.dck .dcr3{height:40px}.dck .dcsp{font-size:13px;color:var(--muted);font-weight:400;text-align:center;height:18px;line-height:18px}.dck .dcq{color:var(--purple);font-weight:800;background:var(--purple-fill);border-radius:2px;padding:0 3px}.dck .dcu{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;line-height:1.15}.dck .dcul{font-size:18px;font-weight:800;color:var(--purple);margin-top:3px}.dck .dcr2{height:38px}.dck .k-mis{color:#3f5d8a;font-weight:800}:root[data-theme="dark"] .dck .k-mis{color:#9fb7e0}.dck .dcp{color:var(--purple);font-weight:800}.dck .dcg{color:var(--muted);font-weight:400}.dck .dcres{font-size:1.2em;font-weight:800}.dck .dcv{height:40px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;border-top:1px solid var(--grid2);margin-top:4px}.dck .dcv.k-ink{color:var(--ink)}@media (max-width:599px){.dck.ipk .formbox .eq{font-size:19px}.dck .dcr1{height:34px}.dck .dcr2{height:34px}.dck .dcul{font-size:18px}.dck .dcr3{height:56px}.dck .dcv{height:36px;font-size:21px}}@media (min-width:410px) and (max-width:599px){.dck .dcr3{height:38px}}`;
+const ipDcR2=(k,P)=>nw(`${X2} ${P("− 6")}${X1} ${P(`+ ${N(k)}`)} = 0`);
 const dcLK=s=>{ const c=s.c, k=5-c, D=dcD(c), n=D>0?2:D===0?1:0, col=["mis","amber","green"][n], P=t=>`<span class="dcp">${t}</span>`, Q=t=>`<span class="dcq">${t}</span>`;
   const ln=`2${X1}${c===0?"":` ${c>0?"+":"−"} ${Math.abs(c)}`}`;
   const r1=nw(`${kc("blue",`${X2} − 4${X1} + 5`)} = ${P(ln)}`);
-  const r2=`${nw(`${X2} ${Q(`− 6${X1}`)}`)} ${nw(`+ <span class="dcu"><span>(${kc("blue","5")} ${Q(`− ${PB(c)}`)})</span><span class="dcul">= ${N(k)}</span></span> = 0`)}`;
+  const r2=ipDcR2(k,P);
   const res=n===1?`= 0`:`= ${N(D)} ${n===2?"&gt;":"&lt;"} 0`;
   const r3=`${nw(`<span class="dcg">${V("b")}² − 4${V("ac")} =</span>`)} ${nw(`${P("(−6)")}² − 4(1)(${P(N(k))})`)} ${nw(`<span class="dcres k-${col}">${res}</span>`)}`;
   const vd=n===2?"cuts: 2 points":n===1?"tangent: 1 point":"misses: 0 points";
@@ -2278,35 +2300,62 @@ const tgwK=s=>{ const a=s.a, b=s.b, B=t=>kc("blue",t), A=t=>kc("amber",t), G=t=>
   const hd=nw(`${V("y")} = ${a===1?"":B(a)+" "}sin ${b===1?"":A(b)}${X1} + ${G(1)}`);
   return `<div class="apwk ipk tgwk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="tgwg">${nw(`${V("y")} = ${CV("blue","a")} sin ${CV("amber","b")}${X1} + ${CV("green","c")}`)}</div><div class="tgwh">${hd}</div><div class="tgwr">${nw(`${L("amplitude =")} ${B(a)}`)}</div><div class="eq tgwr tgwp">${nw(`${L("period =")} 360° ÷ ${A(b)} = <span class="tgwc">${N(360/b)}°</span>`)}</div><div class="tgwr tgwm"><span>${L("max =")} <span class="tgwgc">1</span> + ${B(a)} = <b class="tgwa">${N(1+a)}</b></span><span>${L("min =")} <span class="tgwgc">1</span> − ${B(a)} = <b class="tgwa">${N(1-a)}</b></span></div></div></div></div>`; };
 const tgwArr=(svg,x,y1,y2,col,w)=>{ const d=y2<y1?-1:1, hl=Math.min(2.6,Math.abs(y2-y1)*.45); seg(svg,[x,y1],[x,y2-d*hl*.8],{stroke:col,"stroke-width":w,"pointer-events":"none"}); S_(svg,"path",{d:`M${(x-1.7).toFixed(2)} ${(y2-d*hl).toFixed(2)}L${x.toFixed(2)} ${y2.toFixed(2)}L${(x+1.7).toFixed(2)} ${(y2-d*hl).toFixed(2)}Z`,fill:col,"pointer-events":"none"}); };
+const IPTGCSS=`.iptgk .formbox{padding:8px 12px 10px}.iptgk .iptg-g{font-size:13px;color:var(--muted);text-align:center;height:22px;line-height:22px;white-space:nowrap}.iptgk .iptg-h{font-size:18px;font-weight:700;text-align:center;height:34px;line-height:34px;white-space:nowrap;color:var(--ink)}.iptgk .iptg-t,.iptgk.ipk .formbox .eq.iptg-t{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.5fr);grid-auto-rows:30px;height:120px;align-items:center;justify-content:stretch;gap:0 6px;font-size:18px;font-weight:700;line-height:30px;padding:0;white-space:nowrap;overflow:visible;color:var(--ink)}.iptgk .iptg-t>span:nth-child(3n+1){text-align:right}.iptgk .iptg-t>span:nth-child(3n){text-align:left}.iptgk .iptg-n{color:var(--muted)}.play.iptgp .iptabs{grid-template-columns:repeat(3,minmax(0,1fr))}.play.iptgp .iptab{justify-content:center;font-size:17px}@media (max-width:599px){.iptgk .iptg-h{font-size:17px}.iptgk .iptg-t,.iptgk.ipk .formbox .eq.iptg-t{font-size:17px;grid-auto-rows:28px;height:112px;line-height:28px}.play.iptgp .iptab{flex-direction:row;gap:6px;padding:3px 6px;min-height:52px;font-size:16px}.play.iptgp .iptab .cmini{width:42px;height:31px}}`;
+const ipTgCss=()=>{ if(!document.getElementById("iptgcss")){ const e=document.createElement("style"); e.id="iptgcss"; e.textContent=IPTGCSS; document.head.append(e); } };
+let ipTgS=0;
+const ipTgFn=["sin","cos","tan"];
+const ipTgB=f=>{ const y0=f===2?-4:-3, y1=f===2?4:5; return tgwPh()?{l:21,t:7,w:110,h:100,x0:0,x1:390,y0,y1,xs:30,xl:90,ys:1,yl:1,nonum:true,xn:" ",yn:" "}:{l:20,t:11,w:110,h:80,x0:0,x1:390,y0,y1,xs:30,xl:90,ys:1,yl:1,nonum:true,xn:" ",yn:" "}; };
+const ipTgMini=i=>{ const X=t=>4+t/360*52, f=[t=>22-14*Math.sin(rad(t)),t=>22-14*Math.cos(rad(t)),t=>22-6*Math.tan(rad(t))][i]; let d="", pen=false;
+  for(let t=0;t<=360;t+=5){ const y=f(t); if(i===2&&(t%180===90||y<3||y>41)){ pen=false; continue; } d+=(pen?"L":"M")+X(t).toFixed(1)+" "+y.toFixed(1); pen=true; }
+  const as=i===2?[90,270].map(t=>`<line x1="${X(t)}" y1="3" x2="${X(t)}" y2="41" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 2.4"/>`).join(""):"";
+  return `<svg class="cmini" viewBox="0 0 60 44" aria-hidden="true"><line x1="3" y1="22" x2="57" y2="22" stroke="var(--muted)" stroke-width="1"/>${as}<path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>`; };
+const ipTgK=s=>{ const f=s.step||0, T=f===2, fn=ipTgFn[f], a=s.a, b=s.b, B=t=>kc("blue",t), A=t=>kc("amber",t), G=t=>kc("green",t), row=(l,v)=>`<span>${l}</span><span>=</span><span>${v}</span>`, no=t=>`<span class="iptg-n">${t}</span><span></span><span class="iptg-n">none</span>`, P=(T?180:360)/b;
+  const gen=T?nw(`${V("y")} = tan ${CV("amber","b")}${X1}`):nw(`${V("y")} = ${CV("blue","a")} ${fn} ${CV("amber","b")}${X1} + ${CV("green","c")}`);
+  const hd=T?nw(`${V("y")} = tan ${b===1?"":A(b)}${X1}`):nw(`${V("y")} = ${a===1?"":B(a)+" "}${fn} ${b===1?"":A(b)}${X1} + ${G(1)}`);
+  const r1=T?no("Amplitude"):row(B("Amplitude"),B(a));
+  const r2=row(A("Period"),`${T?180:360}° ÷ ${A(b)} = ${A(N(P)+"°")}`);
+  const r3=T?no("Max"):row("Max",`${G(1)} + ${B(a)} = ${N(1+a)}`);
+  const r4=T?no("Min"):row("Min",`${G(1)} − ${B(a)} = ${N(1-a)}`);
+  return `<div class="apwk ipk iptgk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="iptg-g">${gen}</div><div class="iptg-h">${hd}</div><div class="eq iptg-t">${r1}${r2}${r3}${r4}</div></div></div></div>`; };
 const trigGraphs=aid({
-  init:{a:2,b:2}, jump:true, demo:[.7,-.7], ip:"Drag the wave's top.", vb:"0 0 140 110", label:"The graph of y = a sin bx + 1 from 0 to 360 degrees; drag the top of the first wave to change a and b", link:["a","b"],
+  init:{a:2,b:2}, jump:true, get demo(){ return ipTgS===2?[-1,0]:ipTgS===1?[-.7,-.7]:[.7,-.7]; }, ip:"Drag the wave's top.", vb:"0 0 140 110", label:"The graph of y = a sin bx + 1, y = a cos bx + 1 or y = tan bx from 0 to 360 degrees; drag the dot to change a and b", link:["a","b"],
   fix:s=>{ s.a=clamp(Math.round(+s.a||1),1,3); s.b=clamp(Math.round(+s.b||1),1,3); },
-  steps:[{name:"Amplitude and period",t:()=>"",w:s=>tgwK(s)}],
-  draw(svg,s){ tgwCss(); const n0=graph.n; graph.n=9800; const ph=tgwPh(), B=tgwB(); svg.setAttribute("viewBox",ph?"0 0 140 128":"0 0 140 110");
-    const g=graph(svg,B), a=s.a, b=s.b, c=1, P=360/b, px=90/b, tx=270/b, fs=ph?5.6:4.6, F={"font-size":fs,"font-weight":700}, H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.5,"stroke-linejoin":"round"}, NF={"font-size":fs*.82,fill:"var(--muted)"};
-    const X0=g.X(0), Y0=g.Y(0), yb=B.t+B.h;
-   g.line(0,c,360,c,{stroke:GR,"stroke-dasharray":"2.4 1.6","stroke-width":.9});
-    g.line(0,c+a,px,c+a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
-    g.line(0,c-a,tx,c-a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
-    g.plot(x=>a*Math.sin(rad(b*x))+c,{stroke:"var(--ink)","stroke-width":1.4},0,360,720);
-    [90,180,270,360].forEach(v=>{ lab(svg,[g.X(v)+(v===360?-.3:0),g.Y(-3)-1.3],v+"°",Object.assign({"text-anchor":v===360?"end":"middle"},NF,H)); });
-    lab(svg,[X0-1.6,B.t+fs*.8],"y",{"text-anchor":"end","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
-    lab(svg,[B.l+B.w+1.2,Y0+fs*.34],"x",{"text-anchor":"start","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
-    lab(svg,[X0-1.6,g.Y(c)+fs*.34],"1",Object.assign({"text-anchor":"end",fill:GR},F));
-    lab(svg,[X0-1.6,g.Y(c+a)+fs*.34],N(c+a),Object.assign({"text-anchor":"end"},F));
-    lab(svg,[X0-1.6,g.Y(c-a)+fs*.34],N(c-a),Object.assign({"text-anchor":"end"},F));
-    const hy=g.Y(c+a), hx=g.X(px), ty=g.Y(c-a), txs=g.X(tx);
-    tgwArr(svg,hx,g.Y(c),hy+4.2,BL,1.1);
-    tgwArr(svg,txs,g.Y(c),ty,BL,1.1);
-    if(a>1) lab(svg,[hx+2.2,g.Y(c)-1.6],N(a),Object.assign({"text-anchor":"start",fill:BL},F,H));
-    lab(svg,[txs+2.2,g.Y(c)+1.6+fs*.72],N(a),Object.assign({"text-anchor":"start",fill:BL},F,H));
-    for(let k=0;k<b;k++){ const x1=g.X(k*P)+.7, x2=g.X((k+1)*P)-.7, o=k?.45:1, y=yb+2.2;
-      S_(svg,"path",{d:`M${x1.toFixed(2)} ${(y-1.8).toFixed(2)}V${y.toFixed(2)}H${x2.toFixed(2)}V${(y-1.8).toFixed(2)}`,fill:"none",stroke:AMB,"stroke-width":k?.8:1.2,"stroke-opacity":o,"pointer-events":"none"});
-      lab(svg,[(x1+x2)/2,y+fs+.9],N(P)+"°",Object.assign({fill:AMB,"fill-opacity":o},F)); }
-    S_(svg,"rect",{x:B.l,y:B.t,width:B.w,height:B.h,fill:"transparent","data-drag":"p",style:"cursor:pointer"});
-    handle(svg,hx,hy,"p","var(--ink)"); S_(svg,"circle",{cx:hx,cy:hy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
-  drag(id,p,s){ const [gx,gy]=ginv(tgwB(),p); s.a=clamp(Math.round(gy-1),1,3); s.b=gx>67.5?1:gx>37.5?2:3; },
-  kbd:{label:(id,s)=>["The top of the wave: up and down change a, left and right change b",`a = ${s.a}, b = ${s.b}`],
+  steps:[0,1,2].map(i=>({name:ipTgFn[i],pic:ipTgMini(i),t:()=>"",w:s=>ipTgK(s)})),
+  draw(svg,s){ ipTgCss(); const n0=graph.n; graph.n=9800; const f=s.step||0, T=f===2; ipTgS=f; const ph=tgwPh(), Bx=ipTgB(f); svg.setAttribute("viewBox",ph?"0 0 140 128":"0 0 140 110");
+    const pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("iptgp");
+    const ih=svg.parentNode&&svg.parentNode.querySelector&&svg.parentNode.querySelector(".iphint"), hw=T?"Drag the dot sideways.":"Drag the wave's top."; if(ih&&ih.textContent!==hw) ih.textContent=hw;
+    const g=graph(svg,Bx), a=T?1:s.a, b=s.b, c=T?0:1, P=(T?180:360)/b, fs=ph?5.6:4.6, F={"font-size":fs,"font-weight":700}, H={"paint-order":"stroke",stroke:"var(--card)","stroke-width":fs*.5,"stroke-linejoin":"round"}, NF={"font-size":fs*.82,fill:"var(--muted)"};
+    const fx=x=>f===0?a*Math.sin(rad(b*x))+c:f===1?a*Math.cos(rad(b*x))+c:Math.tan(rad(b*x));
+    const X0=g.X(0), Y0=g.Y(0), yb=Bx.t+Bx.h, hxv=f===0?90/b:f===1?360/b:180/b, txv=f===0?270/b:180/b;
+    if(T){ const as=[]; for(let k=0;(90+180*k)/b<360;k++) as.push((90+180*k)/b);
+      as.forEach(x=>g.line(x,Bx.y0+.75,x,Bx.y1,{stroke:"var(--muted)","stroke-dasharray":"2 1.6","stroke-width":.7}));
+      const ax=g.X(as[0])+1.2, ay=Bx.t+1;
+      lab(svg,[ax,ay],"asymptote",Object.assign({"text-anchor":"end",transform:`rotate(-90 ${ax.toFixed(2)} ${ay.toFixed(2)})`,"dominant-baseline":"hanging"},NF,H));
+      const q=Math.atan(3.2)*180/Math.PI; for(let k=0;k<=2*b;k++){ const u0=Math.max(0,(180*k-q)/b), u1=Math.min(360,(180*k+q)/b); g.plot(fx,{stroke:"var(--ink)","stroke-width":1.4},u0,u1,160); } }
+    else { g.line(0,c,360,c,{stroke:GR,"stroke-dasharray":"2.4 1.6","stroke-width":.9});
+      if(f===0) g.line(0,c+a,hxv,c+a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
+      g.line(0,c-a,txv,c-a,{stroke:"var(--muted)","stroke-dasharray":"1 1.2","stroke-width":.5});
+      g.plot(fx,{stroke:"var(--ink)","stroke-width":1.4},0,360,720); }
+    [90,180,270,360].forEach(v=>{ lab(svg,[g.X(v),g.Y(Bx.y0)-1.3],v+"°",Object.assign({"text-anchor":"middle"},NF,H)); });
+    lab(svg,[X0-1.6,Bx.t+fs*.8],"y",{"text-anchor":"end","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
+    lab(svg,[Bx.l+Bx.w+1.2,Y0+fs*.34],"x",{"text-anchor":"start","font-size":fs*.95,"font-style":"italic",fill:"var(--ink)"});
+    let hy;
+    if(!T){ lab(svg,[X0-1.6,g.Y(c)+fs*.34],"y = 1",Object.assign({"text-anchor":"end",fill:GR},F));
+      lab(svg,[X0-1.6,g.Y(c+a)+fs*.34],N(c+a),Object.assign({"text-anchor":"end"},F));
+      lab(svg,[X0-1.6,g.Y(c-a)+fs*.34],N(c-a),Object.assign({"text-anchor":"end"},F));
+      hy=g.Y(c+a); const hx=g.X(hxv), ty=g.Y(c-a), txs=g.X(txv), rt=hx>Bx.l+Bx.w-6;
+      tgwArr(svg,hx,g.Y(c),hy+4.2,BL,1.1); tgwArr(svg,txs,g.Y(c),ty,BL,1.1);
+      if(a>1) lab(svg,[hx+(rt?-2.2:2.2),g.Y(c)-1.6],N(a),Object.assign({"text-anchor":rt?"end":"start",fill:BL},F,H)); else lab(svg,[hx,hy-(ph?13:10.5)],N(a),Object.assign({fill:BL},F,H));
+      lab(svg,[txs+2.2,g.Y(c)+1.6+fs*.72],N(a),Object.assign({"text-anchor":"start",fill:BL},F,H)); }
+    else hy=Y0;
+    { const x1=X0+.7, x2=g.X(P)-.7, y=yb+2.2, t0="period "+N(P)+"°", t=t0.length*fs*.52>x2-x1?N(P)+"°":t0, wide=false;
+      S_(svg,"path",{d:`M${x1.toFixed(2)} ${(y-1.8).toFixed(2)}V${y.toFixed(2)}H${x2.toFixed(2)}V${(y-1.8).toFixed(2)}`,fill:"none",stroke:AMB,"stroke-width":1.2,"pointer-events":"none"});
+      for(let k=1;k*P<360-1e-6;k++){ const u1=g.X(k*P)+.7, u2=g.X((k+1)*P)-.7; S_(svg,"path",{d:`M${u1.toFixed(2)} ${(y-1.8).toFixed(2)}V${y.toFixed(2)}H${u2.toFixed(2)}V${(y-1.8).toFixed(2)}`,fill:"none",stroke:AMB,"stroke-width":.8,"stroke-opacity":.4,"pointer-events":"none"}); }
+      lab(svg,[wide?x1:(x1+x2)/2,y+fs+.9],t,Object.assign({fill:AMB,"text-anchor":wide?"start":"middle"},F,H)); }
+    S_(svg,"rect",{x:Bx.l,y:Bx.t,width:Bx.w,height:Bx.h,fill:"transparent","data-drag":"p",style:"cursor:pointer"});
+    const hx=g.X(hxv); handle(svg,hx,hy,"p","var(--ink)"); S_(svg,"circle",{cx:hx,cy:hy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); graph.n=n0; },
+  drag(id,p,s){ const f=s.step||0, [gx,gy]=ginv(ipTgB(f),p); if(f!==2) s.a=clamp(Math.round(gy-1),1,3); s.b=f===0?(gx>67.5?1:gx>37.5?2:3):f===1?(gx>270?1:gx>150?2:3):(gx>135?1:gx>75?2:3); },
+  kbd:{label:(id,s)=>[(s.step||0)===2?"The dot: left and right change b":"The top of the wave: up and down change a, left and right change b",`a = ${s.a}, b = ${s.b}`],
     move:(id,k,sh,s)=>{ if(/Up/.test(k)) s.a=Math.min(3,s.a+1); else if(/Down/.test(k)) s.a=Math.max(1,s.a-1); else if(/Right/.test(k)) s.b=Math.max(1,s.b-1); else if(/Left/.test(k)) s.b=Math.min(3,s.b+1); }},
   key(){ return ""; }
 });
@@ -2515,72 +2564,125 @@ const CPST=[
   {name:"Tangent ⊥ radius",pic:cmini({p:{P:60},l:["OP"],o:1,tan:"P",rt:"P"}),set:{ct:50}},
   {name:"Two tangents",pic:cmini({p:{},o:1,ext:1}),set:{td:40,tl:4}},
   {name:`Alt. segment <small>A-Math</small>`,pic:cmini({p:{A:270,B:40,C:150},l:["AB","AC","BC"],tan:"A",arcs:[["A","T","C","var(--red)"],["B","A","C","var(--red)"]]}),set:{ab:40}}];
+const IPCPD=[{cb:330,a0:210,p0:90},{cq:150,a1:220,b1:320,p1:100},{cp:60,d2:180},{cd:40,a3:130,b3:210,c3:300},{ct:50},{td:40,tl:4},{ab:40,a6:270,c6:150}];
+const IPCPL=[{A:"a0",B:"cb",P:"p0"},{A:"a1",B:"b1",P:"p1",Q:"cq"},{A:"d2",P:"cp"},{A:"a3",B:"b3",C:"c3",D:"cd"},{P:"ct"},{T:"td",L:"tl"},{A:"a6",B:"ab",C:"c6"}];
+const IPCPM=["cb","cq","cp","cd","ct","t","ab"], IPCPK=[["cb","a0","p0"],["cq","a1","b1","p1"],["cp","d2","e2"],["cd","a3","b3","c3"],["ct"],[],["ab","a6","c6"]];
+const ipCpA=(s,id)=>id==="e2"?norm(s.d2+180):s[id];
+const ipCpN=(s,id)=>{ if(id==="e2") return "B"; const L=IPCPL[s.step]||{}; return Object.keys(L).find(c=>L[c]===id)||""; };
+const ipCpOk=(m,s)=>{ const g=(x,y)=>norm(x-y), on=(X,F,T)=>{ const x=g(X,F); return x>=30&&g(T,F)-x>=30; };
+  if(m===0){ const c=g(s.cb,s.a0); return c>=30&&c<=220&&on(s.p0,s.cb,s.a0); }
+  if(m===1){ const c=g(s.b1,s.a1); return c>=30&&c<=220&&on(s.p1,s.b1,s.a1)&&on(s.cq,s.b1,s.a1)&&Math.abs(g(s.p1,s.b1)-g(s.cq,s.b1))>=30; }
+  if(m===2) return cpGap(s.cp,s.d2)>=30&&cpGap(s.cp,norm(s.d2+180))>=30;
+  if(m===3){ const K=[s.a3,s.b3,s.c3,s.cd]; let t=0; for(let i=0;i<4;i++){ const d=g(K[(i+1)%4],K[i]); if(d<30) return false; t+=d; } return Math.abs(t-360)<1e-6; }
+  if(m===5) return [2.5,3,3.5,4].includes(+s.tl)&&cpOk(s);
+  if(m===6){ const c=g(s.ab,s.a6); return c>=60&&c<=200&&on(s.c6,s.ab,s.a6); }
+  return true; };
+const ipCpSet=(s,m)=>{ const o=Object.assign({},IPCPD[m]), L=s._cpL; s._cpL=null; if(!L) return o;
+  const t=Object.assign({},s,o), M=IPCPL[m]; if(!Object.keys(L).every(c=>c in M)) return o;
+  Object.keys(L).forEach(c=>{ t[M[c]]=M[c]==="tl"?L[c]:norm(L[c]); });
+  if(ipCpOk(m,t)) Object.values(M).forEach(k=>{ o[k]=t[k]; }); return o; };
+const ipCpX=(svg,X,id,lb)=>{ const r=svg.getBoundingClientRect(), vb=svg.viewBox&&svg.viewBox.baseVal, pu=r.width&&vb&&vb.width?Math.min(r.width/vb.width,(r.height||r.width)/vb.height):0, rr=Math.max(7,pu?22/pu:0);
+  S_(svg,"ellipse",{cx:X[0],cy:X[1],rx:rr,ry:rr,fill:"transparent","data-drag":id,class:"ipcpx",style:"cursor:grab",tabindex:"0",role:"slider","aria-label":lb});
+  S_(svg,"circle",{cx:X[0],cy:X[1],r:2.6,fill:"var(--ink)",stroke:"var(--card)","stroke-width":.9,"pointer-events":"none"});
+  S_(svg,"circle",{cx:X[0],cy:X[1],r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); };
+const ipCpPl=(C,txt,fs,G)=>{ const hw=txt.length*.26*fs+.4, hh=.4*fs, inR=(x,y,c)=>Math.abs(x-c[0])<=hw+.9&&Math.abs(y-c[1])<=hh+.9; let best=null;
+  C.forEach(([x,y,k])=>{ const c=[x,y]; let sc=k;
+    G.sg.forEach(([P,Q])=>{ const n=Math.ceil(Math.hypot(Q[0]-P[0],Q[1]-P[1])/1.5)+1; for(let i=0;i<=n;i++){ const t=i/n; if(inR(P[0]+(Q[0]-P[0])*t,P[1]+(Q[1]-P[1])*t,c)){ sc+=100; break; } } });
+    for(let i=0;i<180;i++){ const a=i*PI/90; if(inR(CO[0]+CR*Math.cos(a),CO[1]-CR*Math.sin(a),c)){ sc+=100; break; } }
+    if(G.ex.some(q=>inR(q[0],q[1],c))) sc+=100;
+    G.av.forEach(Q=>{ if(Math.hypot(Math.max(0,Math.abs(Q[0]-c[0])-hw),Math.max(0,Math.abs(Q[1]-c[1])-hh))<(Q[2]||4.5)) sc+=60; });
+    G.lt.forEach(([X,Y,w,h])=>{ if(Math.abs(X-c[0])<hw+w+1.2&&Math.abs(Y-c[1])<hh+h+1) sc+=60; });
+    if(c[0]-hw<1||c[0]+hw>139||c[1]-hh<3||c[1]+hh>117) sc+=100;
+    if(!best||sc<best.sc) best={sc,c}; });
+  G.lt.push([best.c[0],best.c[1],hw,hh]); return best.c; };
+const ipCpHalo={"paint-order":"stroke",stroke:"var(--card)","stroke-width":1.4,"stroke-linejoin":"round"};
+const ipCpWd=(svg,G,V,st,sw,col,r)=>{ for(let d=0;d<sw;d+=4) G.ex.push([V[0]+r*Math.cos(rad(st+d)),V[1]-r*Math.sin(rad(st+d))]); G.ex.push([V[0]+r*Math.cos(rad(st+sw)),V[1]-r*Math.sin(rad(st+sw))]); cpWedge(svg,V,st,sw,col,r,null); return [V,st,sw,col]; };
+const ipCpWi=(svg,G,V,A,B,col)=>{ let a=dirTo(V,A), b=dirTo(V,B), sw=norm(b-a), st=a; if(sw>180){ st=b; sw=360-sw; } return ipCpWd(svg,G,V,st,sw,col,8); };
+const ipCpAl=(svg,G,[V,st,sw,col])=>{ const t=N(Math.round(sw*2)/2,1)+"°", m=rad(st+sw/2), C=[];
+  for(let R=13;R<=37;R+=2) C.push([V[0]+R*Math.cos(m),V[1]-R*Math.sin(m),R*.15]);
+  for(let R=9;R<=21;R+=2) [0,-.6,.6,-1.05,1.05].forEach(e=>C.push([V[0]+R*Math.cos(m+PI+e),V[1]-R*Math.sin(m+PI+e),4+R*.15]));
+  const c=ipCpPl(C,t,6,G); lab(svg,[c[0],c[1]+2.1],t,Object.assign({"font-size":6,"font-weight":700,fill:`var(--${col})`},ipCpHalo)); };
+const ipCpRt=(svg,G,V,A,B,col,z=5.5)=>{ const u=P=>{ const dx=P[0]-V[0], dy=P[1]-V[1], Ln=Math.hypot(dx,dy)||1; return [dx/Ln,dy/Ln]; }, a=u(A), b=u(B), f=v=>v.toFixed(2), p1=[V[0]+a[0]*z,V[1]+a[1]*z], p2=[p1[0]+b[0]*z,p1[1]+b[1]*z], p3=[V[0]+b[0]*z,V[1]+b[1]*z];
+  S_(svg,"path",{d:`M${f(V[0])} ${f(V[1])}L${f(p1[0])} ${f(p1[1])}L${f(p2[0])} ${f(p2[1])}L${f(p3[0])} ${f(p3[1])}Z`,fill:`var(--${col}-fill)`,stroke:`var(--${col})`,"stroke-width":1}); G.ex.push(p1,p2,p3,[(p1[0]+p2[0])/2,(p1[1]+p2[1])/2],[(p2[0]+p3[0])/2,(p2[1]+p3[1])/2]);
+  const mx=a[0]+b[0], my=a[1]+b[1], Ln=Math.hypot(mx,my)||1, C=[]; for(let R=z*1.42+5;R<=z*1.42+21;R+=2) C.push([V[0]+mx/Ln*R,V[1]+my/Ln*R,R*.15]); for(let R=9;R<=19;R+=2) [0,-.6,.6].forEach(e=>{ const c=Math.cos(e), s2=Math.sin(e), dx=-mx/Ln, dy=-my/Ln; C.push([V[0]+(dx*c-dy*s2)*R,V[1]+(dx*s2+dy*c)*R,4+R*.15]); });
+  const c=ipCpPl(C,"90°",6,G); lab(svg,[c[0],c[1]+2.1],"90°",Object.assign({"font-size":6,"font-weight":700,fill:`var(--${col})`},ipCpHalo)); };
+const ipCpLt=(svg,G,dd,t,r0=CR+8.5)=>{ const C=[]; [0,2,4].forEach(dr=>[0,-7,7,-14,14].forEach(e=>{ const R=r0+dr, a=rad(dd+e); C.push([CO[0]+R*Math.cos(a),CO[1]-R*Math.sin(a),dr*.8+Math.abs(e)*.15]); }));
+  const c=ipCpPl(C,t,4.6,G); lab(svg,[c[0],c[1]+1.6],t,Object.assign({"font-size":4.6,"font-weight":700},ipCpHalo)); };
+const ipCpO=(svg,G,od)=>{ S_(svg,"circle",{cx:CO[0],cy:CO[1],r:1.3,fill:"var(--ink)"}); const C=[]; for(let j=0;j<12;j++){ const e=(j%2?1:-1)*Math.ceil(j/2)*30, a=rad(od+e); C.push([CO[0]+6.5*Math.cos(a),CO[1]-6.5*Math.sin(a),Math.abs(e)/30*.8]); }
+  const c=ipCpPl(C,"O",4.6,G); lab(svg,[c[0],c[1]+1.7],"O",Object.assign({"font-size":4.6,"font-weight":700,fill:"var(--muted)"},ipCpHalo)); };
 const cpK=s=>{ const m=s.step, ans=(t,c)=>`<span class="ipans" style="color:var(--${c})">${t}</span>`, d=v=>N(v,1)+"°", W=(c,hd,eq,rs,g)=>`<div class="apwk ipk cpk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB(c,hd,eq,rs,g,"wide")],true)+`</div>`;
-  if(m===0){ const c=norm(s.cb-210); return W("amber",c>180?"Reflex angle at centre":"Angle at centre",`${nw(`${ans(d(c),"amber")} = 2 × ${kc("blue",d(c/2))}`)}`,c>180?"(∠ at centre = 2∠ at circumference)":"(∠ at centre = 2∠ at circumference)",c>180?"reflex ∠AOB = 2 × ∠APB":"∠AOB = 2 × ∠APB"); }
-  if(m===1){ const opp=s.cq>220&&s.cq<320; return opp?W("green","Opposite segments",nw(`${kc("blue","50°")} + ${ans("130°","green")} = 180°`),"(∠s in opp. segments are supp.)","∠APB + ∠AQB = 180°"):W("blue","Same segment",nw(`${kc("blue","50°")} = ${ans("50°","green")}`),"(∠s in the same segment)","∠APB = ∠AQB"); }
+  if(m===0){ const c=norm(s.cb-s.a0); return W("amber",c>180?"Reflex angle at centre":"Angle at centre",`${nw(`${ans(d(c),"amber")} = 2 × ${kc("blue",d(c/2))}`)}`,"(∠ at centre = 2∠ at circumference)",c>180?"reflex ∠AOB = 2 × ∠APB":"∠AOB = 2 × ∠APB"); }
+  if(m===1){ const v=norm(s.b1-s.a1)/2; return W("blue","Same segment",nw(`${kc("blue",d(v))} = ${ans(d(v),"green")}`),"(∠s in the same segment)","∠APB = ∠AQB"); }
   if(m===2) return W("blue","Angle in a semicircle",nw(`∠APB = ${ans("90°","blue")}`),"(rt. ∠ in a semicircle)","AB is a diameter");
-  if(m===3){ const a=norm(s.cd-210)/2, c=180-a; return W("blue","Cyclic quadrilateral",nw(`${kc("blue",d(a))} + ${kc("blue",d(c))} = ${ans("180°","blue")}`),"(∠s in opp. segments are supp.)","∠A + ∠C = 180°"); }
+  if(m===3){ const a=norm(s.cd-s.b3)/2, c=180-a; return W("blue","Cyclic quadrilateral",nw(`${kc("blue",d(a))} + ${kc("blue",d(c))} = ${ans("180°","blue")}`),"(∠s in opp. segments are supp.)","∠A + ∠C = 180°"); }
   if(m===4) return W("blue","Tangent ⊥ radius",nw(`∠OPT = ${ans("90°","blue")}`),"(tan ⊥ rad)","OP is a radius");
   if(m===5) return W("green","Two tangents from T",nw(`${ans(N(s.tl)+" cm","green")} = ${ans(N(s.tl)+" cm","green")}`),"(tangents from an external pt.)","TA = TB");
-  const v=norm(s.ab-270)/2; return W("red","Alternate segment",nw(`${ans(d(v),"red")} = ${ans(d(v),"red")}`),"(∠s in alt. seg.)","∠TAB = ∠ACB"); };
+  const v=norm(s.ab-s.a6)/2; return W("red","Alternate segment",nw(`${ans(d(v),"red")} = ${ans(d(v),"red")}`),"(∠s in alt. seg.)","∠TAB = ∠ACB"); };
 const circleProps=aid({
-  init:{cb:330,cq:150,cp:60,cd:40,ct:50,td:40,tl:4,ab:40}, jump:true, ip:"Drag the dot.", vb:"0 2 140 116", label:"Circle property: drag the black dot",
-  steps:CPST.map(S=>({name:S.name,pic:S.pic,set:S.set,t:()=>"",w:s=>cpK(s)})),
-  draw(svg,s){ const m=s.step, P=CP, ink="var(--ink)";
+  init:{cb:330,cq:150,cp:60,cd:40,ct:50,td:40,tl:4,ab:40,a0:210,p0:90,a1:220,b1:320,p1:100,d2:180,a3:130,b3:210,c3:300,a6:270,c6:150,pt:""}, jump:true, ip:"Drag any dot.", vb:"0 2 140 116", label:"Circle property: drag any black dot", link:["pt"],
+  fix:s=>{ const t=String(s.pt||""); s.pt=""; s._cpL=null; if(!t) return; const o={}; if(t.split("_").every(x=>{ const r=/^([A-Z])(\d+(?:\.\d+)?)$/.exec(x); if(r) o[r[1]]=+r[2]; return !!r; })) s._cpL=o; },
+  save:s=>{ const m=s.step, D=IPCPD[m], L=IPCPL[m]; s.pt=Object.keys(D).some(k=>Math.abs(s[k]-D[k])>1e-9)?Object.keys(L).map(c=>c+(+(+s[L[c]]).toFixed(1))).join("_"):""; },
+  steps:CPST.map((S,i)=>({name:S.name,pic:S.pic,set:s=>ipCpSet(s,i),t:()=>"",w:s=>cpK(s)})),
+  draw(svg,s){ const m=s.step, P=CP, ink="var(--ink)", pl=svg.closest&&svg.closest(".play"); if(pl) pl.classList.add("ipcp");
     const ln=(a,b,c=ink,w=.9,x={})=>seg(svg,a,b,Object.assign({stroke:c,"stroke-width":w},x));
-    const dotO=dd=>{ S_(svg,"circle",{cx:CO[0],cy:CO[1],r:1.3,fill:ink}); lab(svg,[CO[0]+6.5*Math.cos(rad(dd)),CO[1]-6.5*Math.sin(rad(dd))+1.7],"O",{"font-size":4.6,"font-weight":700,fill:"var(--muted)"}); };
-    const fix=(dd,t)=>{ const X=P(dd); S_(svg,"circle",{cx:X[0],cy:X[1],r:1.4,fill:ink}); ptLab(svg,dd,t); return X; };
     const trk=id=>S_(svg,"path",{d:`M${CO[0]-CR} ${CO[1]}a${CR} ${CR} 0 1 0 ${2*CR} 0a${CR} ${CR} 0 1 0 ${-2*CR} 0`,fill:"none",stroke:"transparent","stroke-width":12,"pointer-events":"stroke","data-drag":id,style:"cursor:pointer"});
     const hd=(X,id)=>{ handle(svg,X[0],X[1],id,ink); S_(svg,"circle",{cx:X[0],cy:X[1],r:3.2,fill:ink,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); };
-    const mv=(dd,id,t)=>{ trk(id); lab(svg,[CO[0]+(CR+11)*Math.cos(rad(dd)),CO[1]-(CR+11)*Math.sin(rad(dd))+1.6],t,{"font-size":4.6,"font-weight":700}); hd(P(dd),id); };
+    const xd=(dd,id,t)=>ipCpX(svg,P(dd),id,`Point ${t}: arrow keys move it round the circle`);
+    const RR=(()=>{ const r=svg.getBoundingClientRect(), vb=svg.viewBox&&svg.viewBox.baseVal, pu=r.width&&vb&&vb.width?Math.min(r.width/vb.width,(r.height||r.width)/vb.height):0; return Math.max(7,pu?22/pu:0)+1.4; })(), G={sg:[],av:[],lt:[],ex:[]}, L=(a,b,c,w,x)=>{ G.sg.push([a,b]); ln(a,b,c,w,x); };
     if(m===5){ S_(svg,"rect",{x:0,y:2,width:140,height:116,fill:"transparent","data-drag":"t",style:"cursor:pointer"}); }
     S_(svg,"circle",{cx:CO[0],cy:CO[1],r:CR,fill:"none",stroke:ink,"stroke-width":.9});
-    if(m===0){ const A=P(210), Pp=P(90), B=P(s.cb), c=norm(s.cb-210);
-      ln(CO,A,"var(--amber)",1.2); ln(CO,B,"var(--amber)",1.2); ln(Pp,A); ln(Pp,B);
-      cpWedge(svg,CO,210,c,"amber",8,N(c,1)+"°",6); cpIn(svg,Pp,A,B,"blue",8,6);
-      dotO(210+c/2+180); fix(210,"A"); fix(90,"P"); mv(s.cb,"cb","B"); }
-    if(m===1){ const A=P(220), B=P(320), Pp=P(100), Q=P(s.cq);
-      ln(A,B,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); ln(Pp,A,"var(--blue)",1.1); ln(Pp,B,"var(--blue)",1.1); ln(Q,A,"var(--green)",1.1); ln(Q,B,"var(--green)",1.1);
-      cpIn(svg,Pp,A,B,"blue",8,6); cpIn(svg,Q,A,B,"green",8,6);
-      fix(220,"A"); fix(320,"B"); fix(100,"P"); mv(s.cq,"cq","Q"); }
-    if(m===2){ const A=P(180), B=P(0), Pp=P(s.cp);
-      ln(A,B,"var(--amber)",1.2); ln(Pp,A,"var(--blue)",1.1); ln(Pp,B,"var(--blue)",1.1); cpRt(svg,Pp,A,B,"blue");
-      dotO(s.cp<180?270:90); fix(180,"A"); fix(0,"B"); mv(s.cp,"cp","P"); }
-    if(m===3){ const K={A:130,B:210,C:300,D:s.cd}, Pt=["A","B","C","D"].map(k=>P(K[k]));
+    if(m===0){ const A=P(s.a0), Pp=P(s.p0), B=P(s.cb), c=norm(s.cb-s.a0); G.av=[A,[...B,RR],Pp];
+      L(CO,A,"var(--amber)",1.2); L(CO,B,"var(--amber)",1.2); L(Pp,A); L(Pp,B);
+      const w1=ipCpWd(svg,G,CO,s.a0,c,"amber",8), w2=ipCpWi(svg,G,Pp,A,B,"blue"); trk("cb");
+      ipCpAl(svg,G,w1); ipCpAl(svg,G,w2); ipCpLt(svg,G,s.cb,"B",CR+10.5); ipCpLt(svg,G,s.a0,"A"); ipCpLt(svg,G,s.p0,"P"); ipCpO(svg,G,s.a0+c/2+180);
+      hd(B,"cb"); xd(s.a0,"a0","A"); xd(s.p0,"p0","P"); }
+    if(m===1){ const A=P(s.a1), B=P(s.b1), Pp=P(s.p1), Q=P(s.cq); G.av=[A,B,Pp,[...Q,RR]];
+      L(A,B,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); L(Pp,A,"var(--blue)",1.1); L(Pp,B,"var(--blue)",1.1); L(Q,A,"var(--green)",1.1); L(Q,B,"var(--green)",1.1);
+      const w1=ipCpWi(svg,G,Pp,A,B,"blue"), w2=ipCpWi(svg,G,Q,A,B,"green"); trk("cq");
+      ipCpAl(svg,G,w1); ipCpAl(svg,G,w2); ipCpLt(svg,G,s.cq,"Q",CR+10.5); ipCpLt(svg,G,s.a1,"A"); ipCpLt(svg,G,s.b1,"B"); ipCpLt(svg,G,s.p1,"P");
+      hd(Q,"cq"); xd(s.a1,"a1","A"); xd(s.b1,"b1","B"); xd(s.p1,"p1","P"); }
+    if(m===2){ const A=P(s.d2), B=P(s.d2+180), Pp=P(s.cp); G.av=[A,B,[...Pp,RR]];
+      L(A,B,"var(--amber)",1.2); L(Pp,A,"var(--blue)",1.1); L(Pp,B,"var(--blue)",1.1); ipCpRt(svg,G,Pp,A,B,"blue"); trk("cp");
+      ipCpLt(svg,G,s.cp,"P",CR+10.5); ipCpLt(svg,G,s.d2,"A"); ipCpLt(svg,G,s.d2+180,"B"); ipCpO(svg,G,norm(s.cp-s.d2)<180?s.d2-90:s.d2+90);
+      hd(Pp,"cp"); xd(s.d2,"d2","A"); xd(norm(s.d2+180),"e2","B"); }
+    if(m===3){ const K=[s.a3,s.b3,s.c3,s.cd], Pt=K.map(k=>P(k)); G.av=Pt.map((X,i)=>i===3?[...X,RR]:X); Pt.forEach((X,i)=>G.sg.push([X,Pt[(i+1)%4]]));
       S_(svg,"polygon",{points:Pt.map(p=>p.map(v=>v.toFixed(2)).join(",")).join(" "),fill:"none",stroke:ink,"stroke-width":1});
-      [0,2].forEach(i=>cpIn(svg,Pt[i],Pt[(i+3)%4],Pt[(i+1)%4],"blue",8,6));
-      fix(130,"A"); fix(210,"B"); fix(300,"C"); mv(s.cd,"cd","D"); }
-    if(m===4){ const Pp=P(s.ct), u=[Math.cos(rad(s.ct)),-Math.sin(rad(s.ct))], t=[-u[1],u[0]], L=36, T1=[Pp[0]+t[0]*L,Pp[1]+t[1]*L], T2=[Pp[0]-t[0]*L,Pp[1]-t[1]*L];
-      const out=E=>E[0]<10||E[0]>130||E[1]<12||E[1]>112, Te=out(T1)?T2:T1, ts=out(T1)?-1:1;
-      ln(T1,T2,"var(--green)",1.2); ln(CO,Pp,"var(--amber)",1.2); cpRt(svg,Pp,CO,Te,"blue");
-      lab(svg,[Te[0]+ts*t[0]*4,Te[1]+ts*t[1]*4+1.7],"T",{"font-size":4.6,"font-weight":700}); dotO(s.ct+180); mv(s.ct,"ct","P"); }
-    if(m===5){ const {T,ph}=cpT(s), aA=s.td+ph, aB=s.td-ph, A=P(aA), B=P(aB), mid=(X,Y,o)=>[(X[0]+Y[0])/2+o[0],(X[1]+Y[1])/2+o[1]], out=(X,Y,dd)=>{ const dx=Y[0]-X[0], dy=Y[1]-X[1], L=Math.hypot(dx,dy)||1; return [dy/L*dd,-dx/L*dd]; };
-      ln(CO,T,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); ln(CO,A,"var(--amber)",1.1); ln(CO,B,"var(--amber)",1.1); ln(T,A,"var(--green)",1.6); ln(T,B,"var(--green)",1.6);
+      const ws=[0,2].map(i=>ipCpWi(svg,G,Pt[i],Pt[(i+3)%4],Pt[(i+1)%4],"blue")); trk("cd");
+      ws.forEach(w=>ipCpAl(svg,G,w)); ["A","B","C","D"].forEach((t,i)=>ipCpLt(svg,G,K[i],t,i===3?CR+10.5:CR+8.5));
+      hd(Pt[3],"cd"); xd(s.a3,"a3","A"); xd(s.b3,"b3","B"); xd(s.c3,"c3","C"); }
+    if(m===4){ const Pp=P(s.ct), u=[Math.cos(rad(s.ct)),-Math.sin(rad(s.ct))], t=[-u[1],u[0]], Ln=36, T1=[Pp[0]+t[0]*Ln,Pp[1]+t[1]*Ln], T2=[Pp[0]-t[0]*Ln,Pp[1]-t[1]*Ln];
+      const out=E=>E[0]<10||E[0]>130||E[1]<12||E[1]>112, Te=out(T1)?T2:T1, ts=out(T1)?-1:1; G.av=[[...Pp,RR]];
+      L(T1,T2,"var(--green)",1.2); L(CO,Pp,"var(--amber)",1.2); ipCpRt(svg,G,Pp,CO,Te,"blue"); trk("ct");
+      const TL=[Te[0]+ts*t[0]*4,Te[1]+ts*t[1]*4]; G.lt.push([TL[0],TL[1],1.93,1.84]); lab(svg,[TL[0],TL[1]+1.7],"T",{"font-size":4.6,"font-weight":700});
+      ipCpLt(svg,G,s.ct,"P",CR+10.5); ipCpO(svg,G,s.ct+180); hd(Pp,"ct"); }
+    if(m===5){ const {T,ph}=cpT(s), aA=s.td+ph, aB=s.td-ph, A=P(aA), B=P(aB), pp=(X,Y)=>{ const dx=Y[0]-X[0], dy=Y[1]-X[1], Ln=Math.hypot(dx,dy)||1; return [dy/Ln,-dx/Ln]; }; G.av=[[...T,RR]];
+      L(CO,T,"var(--muted)",.7,{"stroke-dasharray":"1.6 1.2"}); L(CO,A,"var(--amber)",1.1); L(CO,B,"var(--amber)",1.1); L(T,A,"var(--green)",1.6); L(T,B,"var(--green)",1.6);
       rightMark(svg,A,CO,T,2.8); rightMark(svg,B,CO,T,2.8);
-      const oA=out(T,A,4.2), oB=out(B,T,4.2), lA=mid(T,A,oA), lB=mid(T,B,oB);
-      lab(svg,[lA[0],lA[1]+2],`${N(s.tl)} cm`,{"font-size":5.4,"font-weight":700,fill:"var(--green)"}); lab(svg,[lB[0],lB[1]+2],`${N(s.tl)} cm`,{"font-size":5.4,"font-weight":700,fill:"var(--green)"});
-      const rA=mid(CO,A,out(CO,A,-3.6)); lab(svg,[rA[0],rA[1]+1.6],"3 cm",{"font-size":4.4,"font-weight":700,fill:"var(--amber)"});
-      dotO(s.td+180); ptLab(svg,aA,"A"); ptLab(svg,aB,"B");
-      const tu=[Math.cos(rad(s.td)),-Math.sin(rad(s.td))]; lab(svg,[T[0]+tu[0]*11,T[1]+tu[1]*11+1.7],"T",{"font-size":4.6,"font-weight":700}); hd(T,"t"); }
-    if(m===6){ const A=P(270), B=P(s.ab), C=P(150), v=norm(s.ab-270)/2, T1=[A[0]+44,A[1]], T2=[A[0]-44,A[1]];
-      ln(T2,T1,"var(--green)",1.2); ln(A,B,ink,1.1); ln(C,A); ln(C,B);
-      cpWedge(svg,A,0,v,"red",9,N(v,1)+"°",6); cpIn(svg,C,A,B,"red",8,6);
-      lab(svg,[T1[0]+3,T1[1]+1.7],"T",{"font-size":4.6,"font-weight":700,"text-anchor":"start"}); lab(svg,[A[0],A[1]+7],"A",{"font-size":4.6,"font-weight":700});
-      fix(150,"C"); mv(s.ab,"ab","B"); } },
-  drag(id,p,s){ const m=s.step;
+      const TC=[]; [11,13,15,17].forEach((R,i)=>[0,-30,30,-60,60].forEach(e=>{ const a=rad(s.td+e); TC.push([T[0]+R*Math.cos(a),T[1]-R*Math.sin(a),i*.8+Math.abs(e)*.03]); })); const TL=ipCpPl(TC,"T",4.6,G); lab(svg,[TL[0],TL[1]+1.7],"T",{"font-size":4.6,"font-weight":700});
+      ipCpLt(svg,G,aA,"A",CR+5.5); ipCpLt(svg,G,aB,"B",CR+5.5);
+      const cm=(X,Y,sd,txt,fs,col,ds)=>{ const n=pp(X,Y), C=[]; [.5,.4,.6,.3,.7,.22,.78].forEach(f=>ds.forEach((d,j)=>C.push([X[0]+(Y[0]-X[0])*f+n[0]*d*sd,X[1]+(Y[1]-X[1])*f+n[1]*d*sd,Math.abs(f-.5)*4+j*.6]))); const c=ipCpPl(C,txt,fs,G); lab(svg,[c[0],c[1]+fs*.37],txt,Object.assign({"font-size":fs,"font-weight":700,fill:`var(--${col})`},ipCpHalo)); };
+      cm(T,A,1,`${N(s.tl)} cm`,5.4,"green",[4.2,-4.2,5.5,-5.5,7,-7,9,-9,11,-11]); cm(B,T,1,`${N(s.tl)} cm`,5.4,"green",[4.2,-4.2,5.5,-5.5,7,-7,9,-9,11,-11]); cm(CO,A,-1,"3 cm",4.4,"amber",[3.6,-3.6,5,-5,6.5,-6.5]);
+      ipCpO(svg,G,s.td+180); hd(T,"t"); }
+    if(m===6){ const A=P(s.a6), B=P(s.ab), C=P(s.c6), v=norm(s.ab-s.a6)/2, ux=Math.cos(rad(s.a6+90)), uy=-Math.sin(rad(s.a6+90)); G.av=[A,[...B,RR],C];
+      const fit=g=>{ let Ln=44; const ok=Ln=>{ const x=A[0]+g*ux*Ln, y=A[1]+g*uy*Ln; return x>=9&&x<=131&&y>=9&&y<=111; }; while(Ln>20&&!ok(Ln)) Ln-=1; return Ln; }, L1=fit(1), L2=fit(-1), T1=[A[0]+ux*L1,A[1]+uy*L1], T2=[A[0]-ux*L2,A[1]-uy*L2];
+      L(T2,T1,"var(--green)",1.2); L(A,B,ink,1.1); L(C,A); L(C,B);
+      const w1=ipCpWd(svg,G,A,norm(s.a6+90),v,"red",9), w2=ipCpWi(svg,G,C,A,B,"red"); trk("ab");
+      const TL=[T1[0]+ux*4.5,T1[1]+uy*4.5]; G.lt.push([TL[0],TL[1],1.93,1.84]); lab(svg,[TL[0],TL[1]+1.7],"T",{"font-size":4.6,"font-weight":700});
+      ipCpAl(svg,G,w1); ipCpAl(svg,G,w2); ipCpLt(svg,G,s.ab,"B",CR+10.5); ipCpLt(svg,G,s.a6,"A"); ipCpLt(svg,G,s.c6,"C");
+      hd(B,"ab"); xd(s.a6,"a6","A"); xd(s.c6,"c6","C"); } },
+  drag(id,p,s,start){ const m=s.step;
     if(id==="t"){ const dx=p.x-CO[0], dy=CO[1]-p.y, dd=Math.hypot(dx,dy)/CPK, o={td:norm(snap(deg(Math.atan2(dy,dx)),10)),tl:clamp(snap(Math.sqrt(Math.max(0,dd*dd-CPR*CPR)),.5),2.5,4)};
       while(!cpOk(o)&&o.tl>2.5) o.tl-=.5; if(cpOk(o)){ s.td=o.td; s.tl=o.tl; } return; }
-    const a=norm(snap(dirTo(CO,[p.x,p.y]),10));
-    if(m===0){ const c=norm(a-210); if(c>=20&&c<=220) s.cb=a; return; }
-    if(m===1){ const c=norm(a-320); if(c>=15&&c<=245&&cpGap(a,100)>=30) s.cq=a; return; }
-    if(m===2){ if(cpGap(a,0)>=15&&cpGap(a,180)>=15) s.cp=a; return; }
-    if(m===3){ const c=norm(a-300); if(c>=50&&c<=150) s.cd=a; return; }
-    if(m===4){ s.ct=a; return; }
-    if(m===6){ const c=norm(a-270); if(c>=60&&c<=200) s.ab=a; } },
-  kbd:{label:id=>[id==="t"?"Point T: arrow keys turn it round the circle":"The black dot: arrow keys move it round the circle",""],
+    const a=norm(snap(dirTo(CO,[p.x,p.y]),10)), ks=IPCPK[m]||[]; let k=id;
+    if(start===true){ if(id===IPCPM[m]) k=ks.reduce((b,q)=>cpGap(ipCpA(s,q),a)<cpGap(ipCpA(s,b),a)-1e-9?q:b,id); s._cpg=k; }
+    else if(start===false&&ks.includes(s._cpg)) k=s._cpg;
+    if(!ks.includes(k)) return;
+    const o=Object.assign({},s); if(k==="e2") o.d2=norm(a+180); else o[k]=a;
+    if(ipCpOk(m,o)){ if(k==="e2") s.d2=o.d2; else s[k]=a; } },
+  kbd:{label:(id,s)=>[id==="t"?"Point T: arrow keys turn it round the circle":`Point ${ipCpN(s,id)}: arrow keys move it round the circle`,""],
     move:(id,k,sh,s,drag)=>{ const dd=(/Right|Up/.test(k)?1:-1)*(sh?30:10);
       if(id==="t"){ const o={td:norm(s.td+dd),tl:s.tl}; if(cpOk(o)) s.td=o.td; return; }
-      const a=s[id]; for(const o of [dd,2*dd,3*dd]){ const X=CP(norm(a+o)); drag({x:X[0],y:X[1]}); if(s[id]!==a) return; } }},
+      const a=ipCpA(s,id); for(const o of [dd,2*dd,3*dd]){ const X=CP(norm(a+o)); drag({x:X[0],y:X[1]}); if(ipCpA(s,id)!==a) return; } }},
   key(){ return ""; }
 });
 function cpSave(s){ const b=circleProps.steps[s.step].base, ks=Object.keys(b);
@@ -4453,58 +4555,54 @@ const paK=s=>{ const ans=(t,c)=>`<span class="ipans" style="color:var(--${c})">$
   const eq=!terms.length?`<span class="ipg">0°</span>`:all?`${terms.join(" ")} ${nw(`= ${ans("360°","ink")}`)}`:terms.join(" ");
   return paBox("ink","Exterior angles",eq,all?"(sum of ext. ∠s of polygon)":terms.length>1?`<span class="ipg">${tot}° so far</span>`:"&nbsp;",null); };
 let paSv=null;
+const IPPA_N=[3,4,5,6,8,9,10,12,15,18,24], ipPaC=[60,84], ipPaR=30, ipPaH=58;
+const ipPaAt=(c,r,a)=>[c[0]+r*Math.cos(a*Math.PI/180),c[1]-r*Math.sin(a*Math.PI/180)];
+const ipPaSn=v=>IPPA_N.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)?x:b,9);
+const ipPaArc=(c,r,a0,a1)=>{ const m=Math.max(4,Math.ceil(Math.abs(a1-a0)/4)); let d=""; for(let i=0;i<=m;i++){ const q=ipPaAt(c,r,a0+(a1-a0)*i/m); d+=(i?"L":"M")+q[0].toFixed(2)+" "+q[1].toFixed(2); } return d; };
+const ipPaWedge=(svg,c,r,a0,a1,a)=>S_(svg,"path",Object.assign({d:ipPaArc(c,r,a0,a1)+`L${c[0].toFixed(2)} ${c[1].toFixed(2)}Z`,"stroke-linejoin":"round"},a));
+const ipPaGeo=n=>{ const e=360/n, sd=2*ipPaR*Math.sin(Math.PI/n), C=ipPaC, V=[[C[0]-sd,C[1]],C.slice()]; for(let i=1;i<n-1;i++) V.push(ipPaAt(V[i],sd,i*e)); return {e,sd,V,O:[C[0]-sd/2,C[1]-ipPaR*Math.cos(Math.PI/n)]}; };
+const ipPaChip=(svg,x,y,w,fs,a)=>S_(svg,"rect",Object.assign({x:(x-w/2).toFixed(2),y:(y-fs*1.02).toFixed(2),width:w.toFixed(2),height:(fs*1.42).toFixed(2),rx:(fs*.7).toFixed(2)},a));
+const ipPaTx=(svg,P,parts,a)=>{ const t=lab(svg,P,"",a); parts.forEach(([x,c])=>t.append(svgEl("tspan",c?{fill:c}:{},x))); return t; };
+const ipPaK=s=>{ const n=s.n, e=360/n, i=180-e, A=s.m!=="s", ans=(t,c)=>`<span class="ipans" style="color:var(--${c});font-size:1em;font-weight:800">${t}</span>`, k=(t,c)=>`<span class="k-${c}">${t}</span>`;
+  const B=A?[FB("blue","Exterior",`${nw(`180° − ${k(i+"°","amber")}`)} ${nw(`= ${ans(e+"°","blue")}`)}`,null,"180° − interior","wide"),FB("green","Sides",`${nw(`360° ÷ ${k(e+"°","blue")}`)} ${nw(`= ${ans(n,"green")}`)}`,null,"360° ÷ exterior","wide")]
+    :[FB("blue","Exterior",`${nw(`360° ÷ ${k(n,"green")}`)} ${nw(`= ${ans(e+"°","blue")}`)}`,null,"360° ÷ sides","wide"),FB("amber","Interior",`${nw(`180° − ${k(e+"°","blue")}`)} ${nw(`= ${ans(i+"°","amber")}`)}`,null,"180° − exterior","wide")];
+  return `<div class="apwk ipk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS(B,true)+`</div>`; };
 const polyAng=aid({
-  init:{p:2.62,n:6,g:0}, jump:true, ip:"Drag to walk round.", vb:"10 4 124 106", label:"A polygon: walk round it to add up the exterior angles, or cut it into triangles from one corner", link:["p","n"],
-  fix:s=>{ s.n=clamp(Math.round(+s.n||6),3,12); s.p=paSn(clamp(+s.p||2.62,.5,PAE.length+.5)); s.g=s.p>=PAE.length+.5?1:0; },
-  steps:[{name:"Walk round",pic:paMini("w"),t:()=>"",w:paK},{name:"Triangles",pic:paMini("t"),t:()=>"",w:paK}],
-  draw(svg,s){ paSv=svg; svg.classList.add("pasvg"); const vb=s.step===1?"2 4 134 114":"10 4 124 106"; if(svg.getAttribute("viewBox")!==vb) svg.setAttribute("viewBox",vb); const stg=svg.parentNode, ih=stg&&stg.querySelector&&stg.querySelector(".iphint"), hn=paHint(s);
-    if(ih&&ih.textContent!==hn) ih.textContent=hn;
-    if(s._pt!==s.step){ if(s._pt!=null&&stg&&stg.classList){ stg.classList.remove("ipdone"); svg.classList.add("nudge"); } s._pt=s.step; }
-    const ink="var(--ink)";
-    if(s.step===1){ const n=s.n, Q=paTP(n), T=PATR, X=v=>T.x0+(v-3)*T.dx, O=[70,50];
-      const LB=[];
-      for(let t=1;t<n-1;t++){ const c=PATC[(t-1)%4], Tr=[Q[0],Q[t],Q[t+1]], last=t===n-2, Mf=[(Tr[1][0]+Tr[2][0])/2,(Tr[1][1]+Tr[2][1])/2];
-        paPoly(svg,Tr,{fill:c[1],"fill-opacity":1,"stroke-width":.6});
-        const fs=last?7:5.4, col=last?"var(--amber)":c[0];
-        if(paTh(Tr)>=6.5){ const G=[Tr[0][0]+(Mf[0]-Tr[0][0])*.72,Tr[0][1]+(Mf[1]-Tr[0][1])*.72]; LB.push([G,String(t),fs,col]); }
-        else { const dx=Mf[0]-O[0], dy=Mf[1]-O[1], L=Math.hypot(dx,dy)||1, P=[Mf[0]+dx/L*(fs+1.5),Mf[1]+dy/L*(fs+1.5)], I=[Tr[0][0]+(Mf[0]-Tr[0][0])*.86,Tr[0][1]+(Mf[1]-Tr[0][1])*.86];
-          seg(svg,I,[Mf[0]+dx/L*2,Mf[1]+dy/L*2],{stroke:col,"stroke-width":.7}); LB.push([P,String(t),fs,col]); } }
-      paPoly(svg,Q,{fill:"none","stroke-width":1.2});
-      LB.forEach(([P,tx,fs,col])=>lab(svg,[P[0],P[1]+fs*.35],tx,{"font-size":fs,"font-weight":800,fill:col}));
-      S_(svg,"circle",{cx:Q[0][0],cy:Q[0][1],r:1.6,fill:ink});
-      seg(svg,[X(3),T.y],[X(12),T.y],{stroke:"var(--muted)","stroke-width":.8,"stroke-linecap":"round"});
-      for(let v=3;v<=12;v++){ S_(svg,"circle",{cx:X(v),cy:T.y,r:.9,fill:"var(--muted)"}); lab(svg,[X(v),T.y+13],String(v),v===n?{"font-size":5.4,"font-weight":800,fill:ink}:{"font-size":3.9,fill:"var(--muted)"}); }
-      lab(svg,[X(3)-10,T.y+1.5],"sides",{"font-size":4.2,fill:"var(--muted)","text-anchor":"end"});
-      S_(svg,"rect",{x:X(3)-5,y:T.y-9,width:X(12)-X(3)+10,height:25,fill:"transparent","data-drag":"n",style:"cursor:pointer"});
-      handle(svg,X(n),T.y,"n",ink); S_(svg,"circle",{cx:X(n),cy:T.y,r:3.2,fill:ink,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"});
-      return; }
-    const G=paGeo(), n=G.n, p=clamp(s.p,.5,n+.5), g=clamp(+s.g||0,0,1), C=[G.C[0],G.C[1]-15], Q=G.Q, R=13+6*g, w=paW(p);
-    const tp=Q.concat([Q[0]]);
-    S_(svg,"path",{d:"M"+tp.map(q=>q[0].toFixed(2)+" "+q[1].toFixed(2)).join("L"),fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"w",style:"cursor:pointer"});
-    paPoly(svg,Q,g>0?{"fill-opacity":.45*(1-g),"stroke-opacity":1-.65*g}:{});
-    const P=paPos(G,p), hd=G.H[Math.floor(p)%n];
-    if(g===0){ const pts=[G.M]; for(let j=1;j<=w;j++) pts.push(Q[j%n]); pts.push(P);
-      S_(svg,"path",{d:"M"+pts.map(q=>q[0].toFixed(2)+" "+q[1].toFixed(2)).join("L"),fill:"none",stroke:ink,"stroke-width":2.2,"stroke-opacity":.25,"stroke-linejoin":"round","stroke-linecap":"round"}); }
-    const lo=g<.15?1-g/.15:g>.85?(g-.85)/.15:0;
-    for(let j=1;j<=n;j++){ if(j>w) continue; const Vq=Q[j%n], V0=[Vq[0]+(C[0]-Vq[0])*g,Vq[1]+(C[1]-Vq[1])*g], a0=G.H[j-1], e=PAE[j-1], c=PAC[j-1];
-      if(g===0) seg(svg,V0,paAt(V0,R+6,a0),{stroke:ink,"stroke-width":.7,"stroke-dasharray":"1.6 1.2"});
-      paWedge(svg,V0,R,a0,e,c[0],c[1]);
-      if(lo>0){ const Lp=paAt(V0,R+6.2,a0+e/2); lab(svg,[Lp[0],Lp[1]+1.8],e+"°",{"font-size":5.4,"font-weight":800,fill:c[0],"fill-opacity":lo.toFixed(2)}); } }
-    if(g>.85){ S_(svg,"circle",{cx:C[0],cy:C[1],r:9.5,fill:"var(--card)",stroke:"none","fill-opacity":lo.toFixed(2)}); lab(svg,[C[0],C[1]+2.2],"360°",{"font-size":6.2,"font-weight":800,fill:ink,"fill-opacity":lo.toFixed(2)}); }
-    const tip=paAt(P,10,hd), b1=paAt(P,5.4,hd+30), b2=paAt(P,5.4,hd-30);
-    S_(svg,"path",{d:`M${tip[0].toFixed(2)} ${tip[1].toFixed(2)}L${b1[0].toFixed(2)} ${b1[1].toFixed(2)}L${b2[0].toFixed(2)} ${b2[1].toFixed(2)}Z`,fill:ink,stroke:"var(--card)","stroke-width":.6,"stroke-linejoin":"round","pointer-events":"none"});
-    handle(svg,P[0],P[1],"w",ink); S_(svg,"circle",{cx:P[0],cy:P[1],r:3.2,fill:ink,stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); },
-  drag(id,p,s){
-    if(id==="n"){ s.n=clamp(Math.round((p.x-PATR.x0)/PATR.dx)+3,3,12); return; }
-    const G=paGeo(), n=G.n; s._ga=(s._ga||0)+1; if(s.g>0){ s.g=0; s.p=.5; }
-    const cur=clamp(s.p,.5,n+.5); let best=null; const tr=(a,b,lo,hi)=>{ const [u]=paProj(a,b,p), v=clamp(lo+(hi-lo)*u,lo,hi), q=paPos(G,v), c=Math.hypot(q[0]-p.x,q[1]-p.y)+3*Math.abs(v-cur); if(!best||c<best[0]) best=[c,v]; };
-    tr(G.M,G.Q[1],.5,1); for(let i=1;i<n;i++) tr(G.Q[i],G.Q[(i+1)%n],i,i+1); tr(G.Q[0],G.M,n,n+.5);
-    s.p=clamp(best[1],.5,n+.5); },
-  drop(id,s,anim){ if(id!=="w") return; const e=PAE.length+.5;
-    s.p=paSn(s.p);
-    if(s.p===e&&!(s.g>0)&&anim){ const k=s._ga=(s._ga||0)+1; anim(1500,q=>{ if(s._ga===k&&s.p===e) s.g=q*q*(3-2*q); }); } },
-  kbd:{label:id=>[id==="n"?"Number of sides: arrow keys change it":"The walker: arrow keys walk round the shape",""],
-    move:(id,k,sh,s)=>{ const d=/Right|Up/.test(k)?1:-1; if(id==="n"){ s.n=clamp(s.n+d,3,12); return; } if(s.g>0){ s.g=0; s.p=.5; } s.p=PAS[clamp(PAS.indexOf(paSn(s.p))+d,0,PAS.length-1)]; s.g=s.p>=PAE.length+.5?1:0; }},
+  init:{m:"a",n:9}, jump:true, ip:"Drag the dot.", vb:"0 4 126 92", label:"A regular polygon with one exterior angle and one interior angle marked", link:["n"],
+  fix:s=>{ s.n=ipPaSn(+s.n||9); if(s.m!=="s") s.m="a"; },
+  pills:[{k:"m",opts:[["a","Angle → sides"],["s","Sides → angles"]]}],
+  steps:[{name:"Regular polygon",t:()=>"",w:s=>ipPaK(s)}],
+  draw(svg,s){ const n=ipPaSn(s.n), A=s.m!=="s", G=ipPaGeo(n), e=G.e, it=180-e, C=ipPaC, V=G.V, ph=innerWidth<600, fs=ph?5.6:4.8, ink="var(--ink)", BL="var(--blue)", AM="var(--amber)", GR="var(--green)", MU="var(--muted)";
+    svg.setAttribute("viewBox","0 4 126 92");
+    S_(svg,"path",{d:ipPaArc(C,ipPaH,15,120),fill:"none",stroke:MU,"stroke-width":.4,"stroke-opacity":.6});
+    IPPA_N.forEach(m=>{ const a=360/m; seg(svg,ipPaAt(C,ipPaH-1.4,a),ipPaAt(C,ipPaH+1.4,a),{stroke:MU,"stroke-width":m===n?0:.5}); });
+    S_(svg,"polygon",{points:V.map(q=>q[0].toFixed(2)+","+q[1].toFixed(2)).join(" "),fill:"var(--card)",stroke:"none"});
+    S_(svg,"polygon",{points:V.map(q=>q[0].toFixed(2)+","+q[1].toFixed(2)).join(" "),fill:MU,"fill-opacity":.07,stroke:"none"});
+    const rf=Math.min(6.5,G.sd*.4), sl=Math.min(10,G.sd*.6);
+    for(let i=2;i<n;i++){ const P=V[i], d0=(i-1)*e;
+      ipPaWedge(svg,P,rf,d0,d0+e,{fill:"var(--blue-fill)","fill-opacity":.9,stroke:BL,"stroke-opacity":.45,"stroke-width":.35});
+      if(n<15) seg(svg,P,ipPaAt(P,sl,d0),{stroke:MU,"stroke-width":.55,"stroke-dasharray":"1.4 1"}); }
+    S_(svg,"polygon",{points:V.map(q=>q[0].toFixed(2)+","+q[1].toFixed(2)).join(" "),fill:"none",stroke:ink,"stroke-width":1,"stroke-linejoin":"round"});
+    for(let i=0;i<n;i++){ const P=V[i], Q=V[(i+1)%n], M=[(P[0]+Q[0])/2,(P[1]+Q[1])/2], d=i*e+90, a=ipPaAt(M,1.5,d), b=ipPaAt(M,-1.5,d); seg(svg,a,b,{stroke:ink,"stroke-width":.55}); }
+    const H=ipPaAt(C,ipPaH,e);
+    seg(svg,C,[C[0]+ipPaH+4,C[1]],{stroke:ink,"stroke-width":.8,"stroke-dasharray":"2.2 1.6"});
+    seg(svg,C,H,{stroke:ink,"stroke-width":.8});
+    ipPaWedge(svg,C,8.5,e,180,{fill:"var(--amber-fill)",stroke:AM,"stroke-width":.7});
+    ipPaWedge(svg,C,15,0,e,{fill:"var(--blue-fill)",stroke:BL,"stroke-width":1.4});
+    const yl=C[1]+fs*1.45+.6, F={"font-size":fs,"font-weight":800};
+    const il=`interior ${it}°`, el=`exterior ${e}°`, iw=il.length*fs*.53;
+    if(A) ipPaChip(svg,C[0]-3-iw/2,yl,iw+fs*1.1,fs,{fill:"var(--amber-fill)",stroke:"none"});
+    lab(svg,[C[0]-3-iw/2,yl],il,Object.assign({fill:AM},F));
+    lab(svg,[C[0]+3,yl],el,Object.assign({fill:BL,"text-anchor":"start"},F));
+    const O=G.O, f1=fs*(n===3?1.15:1.35), y1=n===3?C[1]-5.5-fs*1.2:O[1]-.5, y2=n===3?C[1]-5.5:O[1]+fs*1.25, sc=GR, sw=`${n} sides`.length*f1*.53;
+    if(!A) ipPaChip(svg,O[0],y1,sw+f1*1.1,f1,{fill:"var(--green-fill)",stroke:"none"});
+    lab(svg,[O[0],y1],`${n} sides`,{"font-size":f1,"font-weight":800,fill:sc});
+    ipPaTx(svg,[O[0],y2],[[String(n),sc],[" × "],[e+"°",BL],[" = 360°"]],{"font-size":fs*(n===3?.78:.9),"font-weight":700,fill:ink});
+    S_(svg,"path",{d:ipPaArc(C,ipPaH,12,123),fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"e",style:"cursor:pointer"});
+    handle(svg,H[0],H[1],"e",ink); S_(svg,"circle",{cx:H[0],cy:H[1],r:3.7,fill:ink,stroke:"var(--card)","stroke-width":1.2,"pointer-events":"none"}); },
+  drag(id,p,s){ const C=ipPaC; let a=Math.atan2(C[1]-p.y,p.x-C[0])*180/Math.PI; if(a<-90) a=180; a=clamp(a,15,120); s.n=IPPA_N.reduce((b,m)=>Math.abs(360/m-a)<Math.abs(360/b-a)?m:b,9); },
+  kbd:{label:(id,s)=>["The black dot: arrow keys change the number of sides",`${s.n} sides`],
+    move:(id,k,sh,s)=>{ const d=/Right|Up/.test(k)?1:-1; s.n=IPPA_N[clamp(IPPA_N.indexOf(ipPaSn(s.n))+d,0,IPPA_N.length-1)]; }},
   key(){ return ""; }
 });
 
@@ -7662,8 +7760,8 @@ trigGraphs:`${MUST([FB("blue","Amplitude",nw(`${V("y")} = <b class="k-blue">2</b
   <div class="panelc"><h4>Where each one starts (a &gt; 0)</h4>
     <div class="piccards">
       ${PIC("#trig-graphs?a=1&b=1",miniWave(1,1,0),"sin: middle, going up","")}
-      ${PIC("",miniWave(1,1,0,"var(--blue)",Math.cos),"cos: starts at its max","")}
-      ${PIC("",`<svg viewBox="0 0 100 48" class="miniw"><line x1="2" y1="24" x2="98" y2="24" stroke="var(--muted)"/><line x1="4" y1="2" x2="4" y2="46" stroke="var(--muted)"/><line x1="27" y1="2" x2="27" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="73" y1="2" x2="73" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><path d="M4 24 Q20 22 25 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M29 44 Q40 28 50 24 Q60 20 71 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M75 44 Q80 26 96 24" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg>`,"tan: through O, asymptotes","")}
+      ${PIC("#trig-graphs?step=1&a=1&b=1",miniWave(1,1,0,"var(--blue)",Math.cos),"cos: starts at its max","")}
+      ${PIC("#trig-graphs?step=2&b=1",`<svg viewBox="0 0 100 48" class="miniw"><line x1="2" y1="24" x2="98" y2="24" stroke="var(--muted)"/><line x1="4" y1="2" x2="4" y2="46" stroke="var(--muted)"/><line x1="27" y1="2" x2="27" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><line x1="73" y1="2" x2="73" y2="46" stroke="var(--red)" stroke-dasharray="3 2"/><path d="M4 24 Q20 22 25 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M29 44 Q40 28 50 24 Q60 20 71 4" fill="none" stroke="var(--blue)" stroke-width="2.2"/><path d="M75 44 Q80 26 96 24" fill="none" stroke="var(--blue)" stroke-width="2.2"/></svg>`,"tan: through O, asymptotes","")}
     </div>
     <p class="anno">* a negative ${V("a")} flips the graph: sin goes down first, cos starts at its min</p>
   </div>
@@ -9703,9 +9801,11 @@ s1Polygons:`${MUST([FB("blue","Triangle","angles add to 180°","",nw("(∠ sum o
 ${PAN("Triangles",PICS(PIC(null,picTriExt(),`Exterior angle = ${nw("a + c")}`,"(ext. ∠ of △)"),PIC(null,picIsos(),"Isosceles: base angles are equal","(base ∠s of isos. △)"))+`<p class="anno">* equilateral: 3 equal sides, every angle 60°</p>`)}
 ${PAN("Quadrilaterals",PICS(PIC(null,picQuad("para"),"Parallelogram","opposite sides parallel and equal · opposite angles equal"),PIC(null,picQuad("rect"),"Rectangle","4 right angles · opposite sides equal · diagonals equal"),PIC(null,picQuad("rhombus"),"Rhombus","4 equal sides · diagonals cross at 90°"),PIC(null,picQuad("square"),"Square","4 equal sides · 4 right angles"),PIC(null,picQuad("trap"),"Trapezium","1 pair of parallel sides"),PIC(null,picQuad("kite"),"Kite","2 pairs of equal sides next to each other · diagonals cross at 90°"))
   +`<p class="anno">* the angles in any quadrilateral add to 360° (∠ sum of quad.)</p>`)}
-${PAN("Polygons: angle sum",picPolyPattern()+PLAYLINK("#polygon-angles?step=1&n=6"))}
+${PAN("Polygons: angle sum",picPolyPattern())}
 ${PAN("Regular polygons: use the exterior angle",picHexExt()+EG("Regular hexagon: find each interior angle",[`${nw("exterior = 360° ÷ 6 = 60°")}<br>${nw("(sum of ext. ∠s of polygon)")}`,`${nw("interior = 180° − 60° = 120°")}<br>${nw("(adj. ∠s on a str. line)")}`])
-  +EG("Each interior angle is 156°. How many sides?",[`${nw("exterior = 180° − 156° = 24°")}<br>${nw("(adj. ∠s on a str. line)")}`,`${nw(`${VN} = 360° ÷ 24° = 15`)}<br>${nw("(sum of ext. ∠s of polygon)")}`])+PLAYLINK("#polygon-angles"))}
+  +EG("Each interior angle is 156°. How many sides?",[`${nw("exterior = 180° − 156° = 24°")}<br>${nw("(adj. ∠s on a str. line)")}`,`${nw(`${VN} = 360° ÷ 24° = 15`)}<br>${nw("(sum of ext. ∠s of polygon)")}`])
+  +EG("Interior : exterior = 4 : 1. How many sides?",[`${nw("4 units + 1 unit = 180°")}<br>${nw("(adj. ∠s on a str. line)")}`,nw("exterior = 1 unit = 180° ÷ 5 = 36°"),`${nw(`${VN} = 360° ÷ 36° = 10`)}<br>${nw("(sum of ext. ∠s of polygon)")}`])
+  +`<p class="anno">* exterior 25°? 360° ÷ 25° = 14.4, not a whole number → no such polygon</p>`+PLAYLINK("#polygon-angles"))}
 ${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],[nw("hexagon angle sum = 6 × 180°"),nw("(6 − 2) × 180° = 720°")],[`regular: ${nw(`each interior angle = 360° ÷ ${VN}`)}`,`regular: ${nw(`each exterior angle = 360° ÷ ${VN}`)}`],["every rhombus is a square","only if its angles are 90°"]])}
 </div>`,
 
