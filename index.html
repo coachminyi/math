@@ -1908,6 +1908,59 @@ html[data-present] .must .formbox.mk .gen{font-size:18px}
 :root[data-theme="dark"] .hbody .hexam .hhead .hdoor{color:var(--amber);box-shadow:inset 0 0 0 1.5px rgba(240,176,74,.4)}
 :root[data-theme="dark"] .hbody .hshelf.hexam{background:#2a2414;box-shadow:none}
 @media (prefers-reduced-motion:reduce){.hbody .hcard,.hero3 .lvrow .chip{transition:none}.hbody .hcard:hover{transform:none}}
+.scard .hkw{display:block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;line-height:1.25;color:var(--kc,var(--muted));margin:0 0 1px}
+.scard .hkw.hkwm{color:var(--red)}.scard .hkw.hkwg{color:var(--green)}
+.hk-e{--kc:#8a5a00;--kt:#fdf3dc;--kb:#a86400}
+.hk-c{--kc:#0f6e6a;--kt:#e6f3f1;--kb:#0f766e}
+.hk-w{--kc:#5b45b0;--kt:#efecfb;--kb:#5b45b0}
+.hk-i{--kc:#2459c6;--kt:#f1f5fd;--kb:#223a72}
+:root[data-theme="dark"] .hk-e{--kc:var(--amber);--kt:#2a2414;--kb:#a86400}
+:root[data-theme="dark"] .hk-c{--kc:#5fd3c9;--kt:#14302d;--kb:#0f766e}
+:root[data-theme="dark"] .hk-w{--kc:#b9abff;--kt:#25203f;--kb:#6a55c9}
+:root[data-theme="dark"] .hk-i{--kc:var(--blue);--kt:#1b2440;--kb:#2459c6}
+.hbody .hcard.hk-i .hkw{display:none}
+.hbody .hrec .hcard.hk-i .hkw{display:block}
+.scard.hkp .sth,.hbody .hcard.hkp .sth,.hbody .hrec .hcard.hk-i .sth{background-color:var(--kt)}
+.scard.hkp:not(.hkn) .stt,.hbody .hrec .hcard.hk-i .stt{position:relative;padding-right:42px}
+.scard.hkp:not(.hkn) .stt::after,.hbody .hrec .hcard.hk-i .stt::after{content:"";position:absolute;right:10px;top:50%;margin-top:-13px;width:26px;height:26px;border-radius:50%;background:var(--kb) center/15px no-repeat;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.scard.hk-e:not(.hkn) .stt::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='4' width='14' height='17' rx='2'/%3E%3Cpath d='M9 3h6v3H9zM9 11h6M9 15h4'/%3E%3C/svg%3E")}
+.scard.hk-c:not(.hkn) .stt::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h7'/%3E%3C/svg%3E")}
+.scard.hk-w:not(.hkn) .stt::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20h4L19 9l-4-4L4 16zM14 6l4 4'/%3E%3C/svg%3E")}
+.hbody .hrec .hcard.hk-i .stt::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3'/%3E%3C/svg%3E")}
+.scard.hkp .sth{height:76px}
+.scard.hkp .sth svg{height:58px}
+.scard.hkp .sth .sfm{font-size:15px;font-weight:600;color:var(--muted)}
+.scard.hkp .sth .sfm.sm{font-size:13px}
+.scard.hkp .sth>*{opacity:.6;filter:saturate(.4)}
+.scard.hkp .stt b{font-weight:750}
+.hbody .hcard.hkp .sth{height:72px}
+.hbody .hcard.hkp .sth svg{height:56px}
+.hbody .hcard.hkp .sth .sfm{font-size:14px}
+.hbody .hcard.hkp .sth .sfm.sm{font-size:12px}
+.hbody .hcard.hkp .stt b{font-size:16px}
+@media (min-width:768px){.hbody .hcard.hkp .sth{height:80px}.hbody .hcard.hkp .sth svg{height:62px}.hbody .hcard.hkp .sth .sfm{font-size:15px}}
+.hbody .hcard.hft.hkp .sth,.hbody .hcard.hft2.hkp .sth{flex-basis:38%;min-height:84px;height:auto}
+@media (min-width:768px){.hbody .hcard.hft.hkp .sth,.hbody .hcard.hft2.hkp .sth{min-height:96px}.hbody .hcard.hft.hkp .sth .sfm{font-size:17px}}
+.hbody .hcard.htall.hkp .sth{min-height:150px}
+.hbody .hwr .hcard.hkp .sth{flex-basis:36%;height:76px}
+.hbody .hwr .hcard.hkp .sth svg{height:58px}
+@media (min-width:768px){.hbody .hwr .hcard.hkp .sth{flex-basis:38%;height:84px}.hbody .hwr .hcard.hkp .sth svg{height:64px}}
+.hbody .hrec .hcard.hkp .sth{height:60px}
+.hbody .hrec .hcard.hkp .sth svg{height:46px}
+.hbody .hrec .hcard.hkp .sth .sfm{font-size:11px}
+@media (max-width:599px){.scard.hkp:not(.hkn) .stt,.hbody .hrec .hcard.hk-i .stt{padding-right:32px}.scard.hkp:not(.hkn) .stt::after,.hbody .hrec .hcard.hk-i .stt::after{right:7px;width:22px;height:22px;margin-top:-11px;background-size:13px}.hbody .hcard.hkp .stt b{font-size:15px}.scard .hkw{font-size:10.5px}}
+@media (max-width:359px){.scard.hkp:not(.hkn) .stt{padding-left:9px;padding-right:27px}.scard.hkp:not(.hkn) .stt::after{right:5px;width:20px;height:20px;margin-top:-10px;background-size:12px}.hbody .hcard.hkp .stt b{font-size:14px}.scard .hkw{font-size:10px;letter-spacing:.05em}}
+.hk-e{--ki:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='4' width='14' height='17' rx='2'/%3E%3Cpath d='M9 3h6v3H9zM9 11h6M9 15h4'/%3E%3C/svg%3E")}.hk-c{--ki:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3h9l4 4v14H6zM15 3v4h4M9 12h7M9 16h7'/%3E%3C/svg%3E")}.hk-w{--ki:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20h4L19 9l-4-4L4 16zM14 6l4 4'/%3E%3C/svg%3E")}
+@media (max-width:899px){.scard.hkp:not(.hkn) .stt{padding-right:11px}.scard.hkp:not(.hkn) .stt::after{display:none}.scard.hkp .hkw{display:flex;align-items:center;gap:5px}.scard.hkp:not(.hkn) .hkw::before{content:"";flex:none;width:17px;height:17px;border-radius:50%;background:var(--kb) var(--ki) center/11px no-repeat}}
+@media (min-width:600px) and (max-width:899px){.hbody .hcard.hkp .stt b{font-size:15px}}
+@media (max-width:599px){.hbody .hcard.hkp .stt b{font-size:14.5px}.scard.hkp .hkw{letter-spacing:.03em}}
+.hbody .hcard.hft.hkp .stt b{font-size:18px}
+@media (min-width:768px){.hbody .hcard.hft.hkp .sth .sfm{font-size:16px}}
+@media (max-width:599px){.hbody .hcard.hft.hkp .stt b{font-size:16px}}
+.hbody .hcard.htall.hkp .stt b{font-size:20px}
+.hbody .hcard.htall.hkp .sth .sfm{font-size:18px}
+@media (min-width:600px) and (max-width:899px){.hbody .hwr .hcard.hkp .hkw{font-size:10px;letter-spacing:.03em;white-space:nowrap}}
+@media (max-width:359px){.scard.hkp:not(.hkn) .stt{padding-left:9px;padding-right:9px}.hbody .hcard.hkp .stt b{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.lvrow.lvnew .chip,.panelc.wrhi{animation:none}}
 </style>
 </head>
@@ -11704,8 +11757,12 @@ const hubSeenList=()=>{ try{ const r=JSON.parse(localStorage.getItem("hubSeen")|
 function hubP6at(t,was){ const op=(cdFrom||"").split("?")[0].replace(/^\//,"").split("/")[0]; hubP6t=was&&hubLv()==="p6"&&t.levels.includes("p6")?t.id:(op===t.id&&hubP6t===t.id?t.id:""); }
 const hubShort=(x,lv)=>{ const p=x.split("?")[0]; for(const k of [lv,"",...HOMELV]){ const e=Object.values(HOMEPK[k]||{}).flat().find(e=>e[0].split("?")[0]===p); if(e) return e[1]; } return ""; };
 const hubBanner=()=>`<section class="hero1"><h2>Free maths <span class="mark">cheatsheets</span></h2><p class="by">${AVATAR()}<span class="wd">Made&nbsp;</span><a href="#lessons">by&nbsp;<b>Coach Minyi</b></a><span class="wd">&nbsp;· maths tuition in Jurong East</span></p></section>`;
-function hubCard(x,ttl,lab,pic,wide){ const p=x.split("?")[0], s=p.startsWith("sheet/")?sheetOf(p.slice(6)):null, t=s?null:TOPICS.find(y=>y.id===p); if(!s&&!t) return null;
-  return h("a",{class:"scard hcard"+(wide?" hwide":"")+(lab?" hft":""),href:"#"+x},`<div class="sth">${lab?`<span class="hlab hl${lab}">${lab==="m"?"Memorise":"Given"}</span>`:""}${pic&&HOMEPIC[pic]?HOMEPIC[pic]():s?sheetThumb(s):thumbFor(t)}</div><div class="stt"><b>${ttl||(s?s.title:t.title)}</b></div>`); }
+const HKIND={"angle-reasons":"Every reason","volume-formulas":"Every formula","graph-shapes":"Every shape","trig-rules":"Every rule"};
+function hubKind(s,x){ if(!s) return ["i","Interactive"]; if(x&&x.includes("?p=write")) return ["w","How to write it"]; if(s.group==="formula") return ["e","Given in the exam","g"]; if(s.group==="memorise") return HKIND[s.id]?["e",HKIND[s.id]]:["e","Memorise","m"]; if(s.group==="tips") return ["e",s.id==="calculator-guide"?"Exam tip":"Word list"]; return ["c","Cheatsheet"]; }
+const hkCls=k=>" hk-"+k[0]+(k[0]==="i"?"":" hkp");
+const hkWord=k=>`<span class="hkw${k[2]?" hkw"+k[2]:""}"${k[2]?` data-l="${k[2]==="m"?"Memorise":"Given"}"`:""}>${k[1]}</span>`;
+function hubCard(x,ttl,lab,pic,wide){ const p=x.split("?")[0], s=p.startsWith("sheet/")?sheetOf(p.slice(6)):null, t=s?null:TOPICS.find(y=>y.id===p); if(!s&&!t) return null; const k=hubKind(s,x);
+  return h("a",{class:"scard hcard"+hkCls(k)+(wide?" hwide":"")+(lab?" hft":""),href:"#"+x},`<div class="sth">${pic&&HOMEPIC[pic]?HOMEPIC[pic]():s?sheetThumb(s):thumbFor(t)}</div><div class="stt">${hkWord(k)}<b>${ttl||(s?s.title:t.title)}</b></div>`); }
 function hubShelf(body,name,cards,door,cls,ic){ cards=cards.filter(Boolean); if(!cards.length) return;
   const sec=h("section",{class:"level hshelf"+(cls?" "+cls:"")},name?`<div class="hhead">${ic&&HOMEIC[ic]?`<span class="hic">${HOMEIC[ic]}</span>`:""}<h3>${name}</h3></div>`:""), g=h("div",{class:"hgrid"}); cards.forEach(c=>g.append(c)); g.style.setProperty("--n",Math.min(cards.length,3)); sec.append(g);
   if(door){ const a=h("a",{class:"pill hdoor",href:"#"+door[0]},door[1]); if(HOMEDL[door[0]]) a.setAttribute("aria-label",HOMEDL[door[0]]); a.onclick=()=>{ const lv=hubLv(); if(lv) setHubLv(lv); }; const hh=sec.querySelector(".hhead"); if(hh) hh.append(a); else sec.append(a); }
@@ -11814,7 +11871,7 @@ function renderHome(keep){
 const CURTAG=`<span class="tag curtag">For the curious</span>`;
 function sheetCard(s,skip){
   const tags=(s.tag?[s.tag]:s.levels.filter(l=>l!==skip).map(l=>(skip?"also ":"")+SHORT[l])).map(x=>`<span class="tag lvl">${x}</span>`).join("")+(s.aid?`<span class="tag aidtag">+ Interactive</span>`:"");
-  return h("a",{class:"scard",href:"#sheet/"+s.id},`<div class="sth">${sheetThumb(s)}</div><div class="stt"><b>${s.title}</b>${tags?`<span class="tags">${tags}</span>`:""}</div>`); }
+  const k=hubKind(s); return h("a",{class:"scard"+hkCls(k)+(skip?" hkn":""),href:"#sheet/"+s.id},`<div class="sth">${sheetThumb(s)}</div><div class="stt">${skip?"":hkWord(k)}<b>${s.title}</b>${tags?`<span class="tags">${tags}</span>`:""}</div>`); }
 function topicCard(t){ return h("a",{class:"scard",href:"#"+t.id},`<div class="sth">${thumbFor(t)}</div><div class="stt"><b>${t.title}</b><span class="tags">${kidOnly(t)?t.levels.map(l=>`<span class="tag lvl">${SHORT[l]}</span>`).join(""):""}${kindTag(t)}${t.tier==="curious"?CURTAG:""}</span></div>`); }
 const P6G=["Fractions","Ratio","Circles","Area of triangle","Angles"];
 function renderP6(){
