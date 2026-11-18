@@ -8688,7 +8688,7 @@ interest:`${MUST([FB("amber","Compound interest",nw(`5000 × 1.03⁴ <b class="k
   </div>
 </div>`,
 
-sets:`${MUST([FB("blue","Dash on a bracket",nw(`(A ∪ B)′ = A′ <b class="k-amber">∩</b> B′`),"the dash flips ∪ and ∩",nw("(A ∩ B)′ = A′ ∪ B′"),"mk"),FB("amber","Element or set?",`${nw(`6 <b class="k-amber">∈</b> C`)}&emsp;${nw(`{6} <b class="k-amber">⊂</b> C`)}`,"an element takes ∈, a set takes ⊂","","mk"),FB("green","Overlap first",nw(`18 − <b class="k-amber">7</b> = 11`),"football only: fill the overlap, then work outwards","all the regions add up to n(ξ)","mk")])}
+sets:`${MUST([FB("blue","Prime on a bracket",nw(`(A ∪ B)′ = A′ <b class="k-amber">∩</b> B′`),"the prime flips ∪ and ∩",nw("(A ∩ B)′ = A′ ∪ B′"),"mk"),FB("amber","Element or set?",`${nw(`6 <b class="k-amber">∈</b> C`)}&emsp;${nw(`{6} <b class="k-amber">⊂</b> C`)}`,"an element takes ∈, a set takes ⊂","","mk"),FB("green","Overlap first",nw(`A only = n(A) − <b class="k-amber">n(A ∩ B)</b>`),"fill the overlap first, then take it away from each circle","all the regions add up to n(ξ)","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Shade it</h4>
     <div class="piccards">
@@ -8709,6 +8709,7 @@ sets:`${MUST([FB("blue","Dash on a bracket",nw(`(A ∪ B)′ = A′ <b class="k-
       <tr><td>⊆</td><td>is a subset of</td><td>{1, 2} ⊆ {1, 2, 3}</td></tr>
       <tr><td>⊂</td><td>is a proper subset of (not equal)</td><td>{1, 2} ⊂ {1, 2, 3}</td></tr>
       <tr><td>ξ</td><td>universal set</td><td>everything in the question</td></tr>
+      <tr><td>A′</td><td>A prime: the complement of A</td><td>everything in ξ not in A</td></tr>
       <tr><td>∅ or { }</td><td>empty set</td><td>A ∩ B = ∅ → nothing in common</td></tr>
       <tr><td>n(A)</td><td>number of elements in A</td><td>n({1, 3, 5}) = 3</td></tr>
     </table>
@@ -8723,6 +8724,8 @@ sets:`${MUST([FB("blue","Dash on a bracket",nw(`(A ∪ B)′ = A′ <b class="k-
       <g font-weight="700" text-anchor="middle"><text x="24" y="33" font-size="9" fill="var(--ink)">F</text><text x="96" y="33" font-size="9" fill="var(--ink)">B</text>
       <text x="33" y="53" font-size="9" fill="var(--blue)">11</text><text x="60" y="53" font-size="9" fill="var(--amber)">7</text><text x="87" y="53" font-size="9" fill="var(--blue)">8</text><text x="106" y="78" font-size="9" fill="var(--green)">4</text></g></svg>
     <ul class="steps">
+      <li>both: <b class="k-amber">7</b> goes in the overlap first</li>
+      <li>football only: ${nw("18 − 7 = 11")}</li>
       <li>basketball only: ${nw("15 − 7 = 8")}</li>
       <li>neither: ${nw("30 − (11 + 7 + 8) = 4")} <span class="tagop">inside ξ, outside both circles</span></li>
     </ul>
