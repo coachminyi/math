@@ -9452,127 +9452,7 @@ amMemoFC:`${MUST([FB("purple","Not given",`memorise these`,"they're not in your 
   </div>
 </div>`,
 
-cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles in degrees: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"unless it says 'in terms of π'","","mk"),FB("green","Working",`always show it`,"no working, lost marks","","mk")])}
-<div class="sheet">
-  <div class="panelc"><h4>They say → you do</h4>
-    <table>
-      <tr><th>They say</th><th>You do</th></tr>
-      <tr><td><b>Find</b> / <b>Calculate</b></td><td>working, then the answer</td></tr>
-      <tr><td><b>Determine</b></td><td>find it (or decide whether it's true), with working</td></tr>
-      <tr><td><b>Evaluate</b></td><td>work out its value: a number</td></tr>
-      <tr><td><b>Solve</b></td><td>every value that works, in the range given</td></tr>
-      <tr><td><b>Show that</b></td><td>start from the question, every step, last line = their answer</td></tr>
-      <tr><td><b>Hence</b></td><td>use the part before</td></tr>
-      <tr><td><b>Hence or otherwise</b></td><td>the part before is quickest; any correct method scores</td></tr>
-      <tr><td><b>Deduce</b></td><td>use the result you just found</td></tr>
-      <tr><td><b>State</b> / <b>Write down</b></td><td>the answer only (usually 1 mark)</td></tr>
-      <tr><td><b>Justify</b></td><td>back up your answer with working or a reason</td></tr>
-      <tr><td><b>Explain</b> / <b>Give a reason</b></td><td>one sentence with the maths reason: "since ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}".</td></tr>
-      <tr><td><b>Express in the form</b> …</td><td>the last line looks exactly like that form</td></tr>
-      <tr><td><b>Exact value</b> / <b>in terms of π</b> / <b>surd form</b></td><td>no decimals: keep fractions, surds, π</td></tr>
-      <tr><td><b>Estimate</b></td><td>round each number first (usually 1 s.f.), show the rounded numbers, then work it out</td></tr>
-      <tr><td><b>Simplify</b></td><td>fewest terms; one fraction, lowest terms</td></tr>
-      <tr><td><b>Factorise completely</b></td><td>every common factor out, then check each bracket again</td></tr>
-      <tr><td><b>Prove</b> (A-Math)</td><td>start on one side, end on the other</td></tr>
-      <tr><td><b>Verify</b></td><td>put the values in, show both sides are equal</td></tr>
-    </table>
-  </div>
 
-  <div class="panelc"><h4>Graphs: sketch, draw, plot</h4>
-    <table>
-      <tr><th>They say</th><th>You do</th></tr>
-      <tr><td><b>Sketch</b></td><td>the right shape, key points labelled (axes cuts, turning points); not to scale</td></tr>
-      <tr><td><b>Draw</b> / <b>Plot</b></td><td>on the grid, their scale, one smooth curve</td></tr>
-      <tr><td><b>Use your graph to estimate</b></td><td>read it off and draw the lines you used</td></tr>
-    </table>
-  </div>
-
-  <div class="panelc"><h4>"Show that … correct to 2 d.p."</h4>
-    ${EG(`e.g. "Show that ${X1} = 2.37, correct to 2 decimal places"`,[`${nw(`${X1} = 2.3714…`)} <span class="k-blue">more decimals first</span>`,`${nw(`= 2.37`)} (2 d.p.) ✓`])}
-    <p class="anno">* writing only 2.37 does not show it: the rounding has to be seen</p>
-  </div>
-
-  <div class="panelc"><h4>"Hence": use the part before</h4>
-    ${EG(`(a) Factorise ${nw(`${X2} − 5${X1} + 6`)}. (b) Hence solve ${nw(`${X2} − 5${X1} + 6 = 0`)}.`,[`(a) ${nw(`(${X1} − 2)(${X1} − 3)`)}`,`(b) ${nw(`(${X1} − 2)(${X1} − 3) = 0`)} <span class="k-blue">uses (a)</span>`,`${nw(`${X1} = 2`)} or ${nw(`${X1} = 3`)}`])}
-  </div>
-
-  <div class="panelc"><h4>Common mistakes</h4>
-    <div class="wrongright">
-      <div class="x">✗ "Show that": start from the answer and work backwards</div>
-      <div class="ok">✓ start from what the question gives; end on their answer</div>
-      <div class="x">✗ round in the middle, then keep going</div>
-      <div class="ok">✓ keep the full calculator value; round only at the end</div>
-      <div class="x">✗ final answer θ = 113.13°</div>
-      <div class="ok">✓ θ = 113.1°: angles to 1 d.p. at the end (keep more decimals while working)</div>
-      <div class="x">✗ exact value: 0.333</div>
-      <div class="ok">✓ ${frac("1","3")}</div>
-    </div>
-  </div>
-</div>`,
-calcGuide:`${MUST([FB("blue","Quadratic",KS("MENU 5 2 2"),"see the roots first","","mk"),FB("amber","Simultaneous",KS("MENU 5 1 2"),"2 unknowns","","mk"),FB("green","Mean and SD",KS("MENU 3 1"),"statistics, 1 variable","","mk")])}
-<div class="sheet">
-  <div class="panelc"><h4>Before the exam: Deg or Rad?</h4>
-    <p class="kwhen">Deg for angles in degrees. Rad whenever the angle is in radians (arcs, sectors, A-Math), then back to Deg</p>
-    ${EG("Which one is on? Type",[`${KS("sin 9 0 =")}`,`${SCR("1")} Deg ✓`,`${SCR("0.8939966636")} Rad`])}
-    <p class="anno">* wrong one? fix it in SETUP before the exam starts: ${KS("SHIFT MENU")}</p>
-  </div>
-
-  <div class="panelc"><h4>Solve a quadratic equation</h4>
-    <p class="kwhen">First: see the roots</p>
-    <div class="kline">${KS("MENU 5 2 2")}</div>
-    ${EG(nw(`${X2} − ${X1} − 6 = 0`),[`type ${nw("1, −1, −6")}, ${KY("=")} after each`,`screen: ${SCR("3")} and ${SCR("−2")}`])}
-    <ul class="steps">
-      <li>nice numbers → cross method</li>
-      <li>ugly decimals → quadratic formula</li>
-    </ul>
-    <p class="anno">* then write the working: the marks are for the working</p>
-    <p class="anno">* an <b>i</b> on the screen = no real solutions</p>
-  </div>
-
-  <div class="panelc"><h4>Check simultaneous equations</h4>
-    <p class="kwhen">2 equations, 2 unknowns</p>
-    <div class="kline">${KS("MENU 5 1 2")}</div>
-    ${EG(`${nw(`2${X1} + ${V("y")} = 7 ——— ①`)}<br>${nw(`${X1} − ${V("y")} = 2 ——— ②`)}`,[`type ①: ${nw("2, 1, 7")}`,`type ②: ${nw("1, −1, 2")}`,`screen: ${SCR("x = 3")} ${SCR("y = 1")} ✓`])}
-  </div>
-
-  <div class="panelc"><h4>Mean and standard deviation</h4>
-    <p class="kwhen">A list of values or a frequency table</p>
-    <ul class="steps">
-      <li>① ${KS("MENU 3 1")} (Statistics, 1-Variable)</li>
-      <li>② the ${X1} values (mid-values for groups) in the ${X1} column</li>
-      <li>③ the frequencies in the FREQ column</li>
-      <li>④ ${KS("AC","OPTN","[1-Variable Calc]")}, then read ${V("x̄")} (mean) and σ${V("x")} (SD)</li>
-    </ul>
-    ${EG(`${nw(`${X1}: 3, 5, 7`)} with frequencies ${nw("1, 6, 1")}`,[`screen: ${SCR("x̄ = 5")} ${SCR("σx = 1")}`])}
-    <p class="anno">* use σ${V("x")}, not s${V("x")} · no FREQ column? ${KS("SHIFT MENU","[Statistics]","[Frequency On]")}</p>
-  </div>
-
-  <div class="panelc"><h4>A-Math: check a cubic equation</h4>
-    <p class="kwhen">Find one root first, then factorise</p>
-    <div class="kline">${KS("MENU 5 2 3")}</div>
-    ${EG(`Solve ${nw(`${X1}³ − 6${X2} + 11${X1} − 6 = 0`)}`,[`type ${nw("1, −6, 11, −6")}`,`screen: ${SCR("1")} ${SCR("2")} ${SCR("3")}`,`${nw("f(1) = 1 − 6 + 11 − 6 = 0")}, so ${nw(`(${X1} − 1)`)} is a factor`,nw(`(${X1} − 1)(${X2} − 5${X1} + 6) = 0`),nw(`(${X1} − 1)(${X1} − 2)(${X1} − 3) = 0`)])}
-  </div>
-
-  <div class="panelc"><h4>A-Math: the number e</h4>
-    <p class="kwhen">When a question has e in it</p>
-    <div class="kline">${KS("SHIFT ln 1 =")} ${SCR("2.718281828")}</div>
-  </div>
-
-  <div class="panelc"><h4>Common calculator slips</h4>
-    <div class="wrongright">
-      <div class="x">✗ ${nw("sin 90° = 0.8939966636")}: it's in Rad</div>
-      <div class="ok">✓ set Deg: ${nw("sin 90° = 1")}</div>
-      <div class="x">✗ typed ${nw("−3²")} for ${nw("(−3)²")}: gives ${nw("−9")}</div>
-      <div class="ok">✓ type the brackets: ${nw("(−3)² = 9")}</div>
-      <div class="x">✗ ${frac("2 + 4","3")} typed as ${nw("2 + 4 ÷ 3")}</div>
-      <div class="ok">✓ brackets round the numerator: ${nw("(2 + 4) ÷ 3 = 2")}</div>
-      <div class="x">✗ ${frac("12","2 × 3")} typed as ${nw("12 ÷ 2 × 3")}</div>
-      <div class="ok">✓ brackets round the denominator: ${nw("12 ÷ (2 × 3) = 2")}</div>
-      <div class="x">✗ round in the middle, then keep going</div>
-      <div class="ok">✓ keep the full calculator value; round only at the end</div>
-    </div>
-  </div>
-</div>`
 };
 Object.assign(SHEETS,SHEETS3);
 SHEETLIST.push(
@@ -10014,7 +9894,7 @@ ${PAN("Read the sign with the number",STEPS([[nw("−3 − 5"),"−3 and −5"],
 ${PAN("The number line",picNumLine()+STEPS([[nw("−3 + 5 = 2"),"move right 5"],[nw("−3 − 5 = −8"),"move left 5"],[nw(`4 − (−6) = 4 <b class="k-amber">+</b> 6 = 10`),"minus a negative = plus"]]))}
 ${PAN("Order of operations",STEPS([nw("18 − 3 × (−2)²"),[nw("= 18 − 3 × 4"),"powers first"],[nw("= 18 − 12"),"then ×"],nw("= 6")]))}
 ${PAN("Types of numbers",FACTS("",[["Integers",["…, −2, −1, 0, 1, 2, …"]],["Rational",[frac("1","2"),"−0.75","0.333…"]],["Irrational",[SQRT("2"),"π"]]])+`<p class="anno">* rational = a fraction of two integers · irrational: the decimals never end and never repeat</p>`)}
-${MIST([[nw("−3 − 5 = 8"),`${nw("−3 − 5 = −8")}: same signs give + only for ${nw("× and ÷")}`],["−2² = 4","−2² = −4 · (−2)² = 4"],["5 − (−3) = 2",nw("5 + 3 = 8")],["−7 &gt; −2","−7 &lt; −2: further left is smaller"],[nw("(−12) ÷ (−3) = −4"),`same signs: ${nw("4")}`],["0.333… is irrational","it repeats, so it is rational"]])}
+${MIST([[nw("−3 − 5 = 8"),`${nw("−3 − 5 = −8")}: same signs give ${nw("+ only for × and ÷")}`],["−2² = 4","−2² = −4 · (−2)² = 4"],["5 − (−3) = 2",nw("5 + 3 = 8")],["−7 &gt; −2","−7 &lt; −2: further left is smaller"],[nw("(−12) ÷ (−3) = −4"),`same signs: ${nw("4")}`],["0.333… is irrational","it repeats, so it is rational"]])}
 </div>`,
 
 s1Approx:`${MUST([FB("blue","Significant figures",nw(`0.00<b class="k-amber">4 5</b> has 2 s.f.`),"zeros in front don't count","","mk"),FB("amber","Keep the size",nw(`38 762 → 39 <b class="k-amber">000</b>`),"2 s.f.: fill up with zeros","","mk"),FB("green","Estimate",nw(`49.7 × 3.18 ≈ <b class="k-amber">50 × 3</b>`),"every number to 1 s.f.",nw(`a root: ${SQRT("50.3")} ≈ ${SQRT("49")} = 7`),"mk")])}
@@ -10071,7 +9951,7 @@ ${PAN("Regular polygons: use the exterior angle",picHexExt()+EG("Regular hexagon
   +EG("Each interior angle is 156°. How many sides?",[`${nw("exterior = 180° − 156° = 24°")}<br>${nw("(adj. ∠s on a str. line)")}`,`${nw(`${VN} = 360° ÷ 24° = 15`)}<br>${nw("(sum of ext. ∠s of polygon)")}`])
   +EG("Interior : exterior = 4 : 1. How many sides?",[`${nw("4 units + 1 unit = 180°")}<br>${nw("(adj. ∠s on a str. line)")}`,nw("exterior = 1 unit = 180° ÷ 5 = 36°"),`${nw(`${VN} = 360° ÷ 36° = 10`)}<br>${nw("(sum of ext. ∠s of polygon)")}`])
   +`<p class="anno">* exterior 25°? 360° ÷ 25° = 14.4, not a whole number → no such polygon</p>`+PLAYLINK("#polygon-angles"))}
-${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],[nw("hexagon angle sum = 6 × 180°"),nw("(6 − 2) × 180° = 720°")],[`regular: ${nw(`each interior angle = 360° ÷ ${VN}`)}`,`regular: ${nw(`each exterior angle = 360° ÷ ${VN}`)}`],["every rhombus is a square","only if its angles are 90°"]])}
+${MIST([["exterior angle = 180° minus both opposite angles","exterior angle = the 2 opposite interior angles added"],[`hexagon angle sum ${nw("= 6 × 180°")}`,nw("(6 − 2) × 180° = 720°")],[`regular: each interior angle ${nw(`= 360° ÷ ${VN}`)}`,`regular: each exterior angle ${nw(`= 360° ÷ ${VN}`)}`],["every rhombus is a square","only if its angles are 90°"]])}
 </div>`,
 
 s1Ratio:`${MUST([FB("blue","Same units first",`${nw("45 min : 2 h")}<br>${nw(`= 45 : <b class="k-amber">120</b> = 3 : 8`)}`,"then simplify like a fraction","","mk"),FB("amber","Average speed",frac("total distance","total time"),`<b class="k-amber">not</b> the mean of the two speeds`,"","mk mkw"),FB("green","km/h → m/s",`${nw(`72 km/h = ${frac('72 × <b class="k-amber">1000</b> m','1 × <b class="k-amber">60 × 60</b> s')}`)} ${nw("= 20 m/s")}`,"change the numerator and the denominator","","mk")])}
@@ -10233,7 +10113,7 @@ ${PAN("Find a side",picPythQ()+STEPS([nw(`${V("c")}² = 4² + 7² = 65`),[nw(`${
 ${PAN("Is it right-angled? Write it like this",picPythABC()+EG(`In △ABC, ${nw("AB = 8 cm")}, ${nw("BC = 15 cm")} and ${nw("AC = 17 cm")}. Show that △ABC is a right-angled triangle.`,[`${nw("AB² + BC² = 8² + 15²")} ${nw("= 64 + 225")} ${nw("= 289")}`,`${nw("AC² = 17²")} ${nw("= 289")}`,`By the <b>converse of Pythagoras' theorem</b>, since ${nw("AC² = AB² + BC²")}, △ABC is a <b>right-angled triangle</b> and ${nw("∠ABC = 90°")}.`])
   +EG(`If instead ${nw("AB = 6 cm")}, ${nw("BC = 7 cm")} and ${nw("AC = 9 cm")}:`,[`${nw("AB² + BC² = 6² + 7²")} ${nw("= 36 + 49")} ${nw("= 85")}`,`${nw("AC² = 9²")} ${nw("= 81")}`,`Since ${nw("AC² ≠ AB² + BC²")}, △ABC is <b>not</b> a right-angled triangle.`])+PLAYLINK("#pythagoras-squares?step=2"))}
 ${PAN("Real life",picLadderWall()+EG("A 5 m ladder leans on a wall. Its foot is 1.4 m from the wall. How high does it reach?",[`${nw(`${V("h")}² = 5² − 1.4² = 23.04`)} <span class="anno" style="margin-left:10px">the ladder is the hypotenuse</span>`,nw(`${V("h")} = ${SQRT("23.04")} = 4.8 m`)]))}
-${MIST([[nw(`${V("a")} + ${V("b")} = ${V("c")}`),nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)],["add the squares to find a shorter side",`subtract: ${nw(`${V("c")}² − ${V("a")}²`)}`],[`${nw("AC² = 169")}, so ${nw("AC = 169 cm")}`,`square root at the end: ${nw(`${SQRT("169")} = 13 cm`)}`],[nw(`${SQRT("95")} = 9.7 cm`),`${nw("9.746… = 9.75 cm")} (3 s.f.)`],[`${nw(`${SQRT("700² + 2.4²")}`)}: metres and km mixed`,`same unit first: 2.4 km = 2400 m, ${nw(`${SQRT("700² + 2400²")} = 2500 m`)}`],[`triangle, base 13, area 30: ${nw(`13 × ${V("h")} = 30`)}`,`keep the ½: ${nw(`${frac("1","2")} × 13 × ${V("h")} = 30`)}, ${nw(`${V("h")} = 4.62 cm`)}`],[nw("9² + 41² ≠ 40², so not right-angled"),`the 2 shorter sides: ${nw("9² + 40² = 1681")}, ${nw("41² = 1681")}, right-angled`],["AC is the longest, so ∠BAC = 90°",`opposite AC: ${nw("∠ABC = 90°")}`]])}
+${MIST([[nw(`${V("a")} + ${V("b")} = ${V("c")}`),nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)],["add the squares to find a shorter side",`subtract: ${nw(`${V("c")}² − ${V("a")}²`)}`],[`${nw("AC² = 169")}, so ${nw("AC = 169 cm")}`,`square root at the end: ${nw(`${SQRT("169")} = 13 cm`)}`],[nw(`${SQRT("95")} = 9.7 cm`),`${nw("9.746… = 9.75 cm")} (3 s.f.)`],[`${nw(`${SQRT("700² + 2.4²")}`)}: metres and km mixed`,`same unit first: 2.4 km = 2400 m, ${SQRT("700² + 2400²")} ${nw("= 2500 m")}`],[`triangle, base 13, area 30: ${nw(`13 × ${V("h")} = 30`)}`,`keep the ½: ${nw(`${frac("1","2")} × 13 × ${V("h")} = 30`)}, ${nw(`${V("h")} = 4.62 cm`)}`],[`${nw("9² + 41² ≠ 40²")}, so not right-angled`,`the 2 shorter sides: ${nw("9² + 40² = 1681")}, ${nw("41² = 1681")}, right-angled`],["AC is the longest, so ∠BAC = 90°",`opposite AC: ${nw("∠ABC = 90°")}`]])}
 </div>`,
 
 s2Trig:`${MUST([FB("blue","Which ratio?",(()=>{ const O='<b class="k-green">opp</b>',A='<b class="k-amber">adj</b>',H='<b class="k-blue">hyp</b>'; return `<span class="mktri"><span class="w">T<b class="k-green">O</b><b class="k-amber">A</b></span><span class="f">${nw(`tan θ = ${frac(O,A)}`)}</span><span class="w">C<b class="k-amber">A</b><b class="k-blue">H</b></span><span class="f">${nw(`cos θ = ${frac(A,H)}`)}</span><span class="w">S<b class="k-green">O</b><b class="k-blue">H</b></span><span class="f">${nw(`sin θ = ${frac(O,H)}`)}</span></span>`; })(),"label opp, adj, hyp from θ first","","mk"),FB("green","Find an angle",nw(`θ = tan⁻¹ ${frac("5","8")} = 32.0°`),"SHIFT, then tan · calculator in D","","mk")])}
@@ -10657,93 +10537,7 @@ ${PAN("Prove it: show the converse",`<table><tr><th>To prove</th><th>Show</th></
 ${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN &#47;&#47; BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(Midpoint Theorem)`]))}
 ${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in the same segment) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of a cyclic quad. are supp.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
 </div>`,
-glossary:`${MUST([FB("blue","Expression",nw(`2${X1} + 1`),"no = sign: you simplify it","","mk"),FB("amber","Equation",nw(`2${X1} + 1 = 7`),`true only when ${nw(`${X1} = 3`)}: you solve it`,"","mk"),FB("green","Identity",nw(`2(${X1} + 1) ≡ 2${X1} + 2`),`true for every ${X1}`,"","mk")])}
-<div class="sheet">
-${PAN("Number words",GLS([
-  GW("Sum","the answer when you add",`the sum of 3 and 5 is 8`),
-  GW("Difference","the bigger number take away the smaller",`the difference between 8 and 3 is 5`),
-  GW("Product","the answer when you multiply",`the product of 3 and 5 is 15`),
-  GW("Quotient","the answer when you divide",`${nw("12 ÷ 4 = 3")}: the quotient is 3`),
-  GW("Integer","a whole number: positive, negative or 0",`−3, 0 and 7 are integers, 2.5 isn't`),
-  GW("Multiple","a number in its times table",`multiples of 4: 4, 8, 12, 16, …`),
-  GW("Factor","goes in exactly, with nothing left over",`3 is a factor of 12, and ${nw(`(${X1} − 2)`)} is a factor of ${nw(`${X2} − 4`)}`),
-  GW("Prime number","exactly 2 factors: 1 and itself",`2, 3, 5, 7, 11, … (1 is not prime)`)
-]))}
-${PAN("Algebra words",GLS([
-  GW("Term",`one part of an expression: the ${nw("+ and − signs")} split it up`,`${nw(`<span class="k-blue">3${X2}</span> <span class="k-amber">− 5${X1}</span> <span class="k-green">+ 7</span>`)} has 3 terms`),
-  GW("Coefficient","the number in front of a letter",`in ${nw(`3${X2} − 5${X1} + 7`)}, the coefficient of ${X1} is <span class="k-red">−5</span>`),
-  GW("Constant","a term with no letter in it",`the <span class="k-green">7</span> in ${nw(`3${X2} − 5${X1} + 7`)}`),
-  GW("Like terms","the same letters with the same powers",`${nw(`3${X1}`)} and ${nw(`−5${X1}`)} are like terms, ${nw(`3${X1}`)} and ${nw(`3${X2}`)} aren't`),
-  GW("Expand","multiply out the brackets",nw(`(${X1} + 2)(${X1} + 3) = ${X2} + 5${X1} + 6`)),
-  GW("Factorise","put it back into brackets",nw(`${X2} + 5${X1} + 6 = (${X1} + 2)(${X1} + 3)`)),
-  GW("Formula","a rule that links quantities",nw(`${V("A")} = π${V("r")}²`)),
-  GW("Subject","the letter on its own on one side",`in ${nw(`${V("v")} = ${V("u")} + ${V("at")}`)}, ${V("v")} is the subject`),
-  GW("Substitute","put a number in place of a letter",`${nw(`${X1} = 2`)} into ${nw(`3${X1} + 1`)}: ${nw("3(2) + 1 = 7")}`),
-  GW("Solve","find the value(s) that make it true",`${nw(`2${X1} + 1 = 7`)}, so ${nw(`${X1} = 3`)}`),
-  GW("Root or solution","a value that makes the equation true",`${nw(`${X2} − 4 = 0`)} has roots ${nw(`${X1} = 2`)} and ${nw(`${X1} = −2`)}`),
-  GW("Inequality","uses &lt;, &gt;, ≤ or ≥ instead of =",`${nw(`2${X1} + 1 &gt; 7`)}, so ${nw(`${X1} &gt; 3`)}`),
-  GW("Base and index","the index (or power) is the small number on top",`in 2<sup>5</sup>, the base is 2 and the index is 5`),
-  GW("Reciprocal","1 divided by it",`the reciprocal of 4 is ${frac("1","4")}, and of ${X1} is ${frac("1",X1)}`),
-  GW("Surd","a root that can't be worked out exactly",`${SQRT("2")} is a surd, but ${nw(`${SQRT("9")} = 3`)} isn't`,"A-Math")
-]))}
-${PAN("A-Math: polynomial words",GLS([
-  GW("Polynomial",`terms like ${nw(`${V("a")}${X1}<sup>${V("n")}</sup>`)}, where ${V("n")} is 0, 1, 2, 3 …`,`${nw(`4${X1}³ + 7${X2} − 1`)} is one, ${nw(`${X1}<sup>${frac("1","2")}</sup> + ${X1}<sup>−3</sup>`)} isn't`),
-  GW("Degree","the highest power",`${nw(`4${X1}³ + 7${X2} − 1`)} has degree 3`),
-  GW("Linear, quadratic, cubic","degree 1, 2 and 3",`${nw(`10${X1} + 9`)}, then ${nw(`3${X2} − 1`)}, then ${nw(`4${X1}³ + 7${X2} − 1`)}`),
-  GW("Quotient and remainder","the answer to a division, and what's left over",`${nw("17 ÷ 5 = 3")} remainder 2`)
-]))}
-${PAN("Graph words",GLS([
-  GW("Coordinates",`${nw(`(${X1}, ${V("y")})`)}: across first, then up`,`(3, −2) is 3 to the right and 2 down`),
-  GW("Origin","the point (0, 0), where the axes cross",""),
-  GW("Gradient",`how steep a line is: ${nw(frac("rise","run"))}. Positive goes up to the right`,""),
-  GW(`${X1}-intercept`,`where the graph cuts the ${X1}-axis, so ${nw(`${V("y")} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${X1} = 3`)}`),
-  GW(`${V("y")}-intercept`,`where it cuts the ${V("y")}-axis, so ${nw(`${X1} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${V("y")} = −6`)}`),
-  GW("Turning point","where a curve turns round: its max or min point",`${nw(`${V("y")} = (${X1} − 1)² + 2`)} turns at (1, 2)`),
-  GW("Line of symmetry","the mirror line of a graph",`${nw(`${V("y")} = ${X2}`)} is symmetrical about ${nw(`${X1} = 0`)}`),
-  GW("Asymptote","a line the graph gets closer and closer to, but never touches",`${nw(`${V("y")} = ${frac("1",X1)}`)} never touches ${nw(`${X1} = 0`)} or ${nw(`${V("y")} = 0`)}`),
-  GW("Tangent","a line that touches the curve at one point, with the same gradient as the curve there",""),
-  GW("Normal","the line at 90° to the tangent, through the same point","","A-Math"),
-  GW("Stationary point","where the gradient is 0",nw(`${frac(`d${V("y")}`,`d${X1}`)} = 0`),"A-Math"),
-  GW("Parallel","they never meet: same gradient",`${nw(`${V("y")} = 2${X1} + 1`)} and ${nw(`${V("y")} = 2${X1} − 5`)}`),
-  GW("Perpendicular","they meet at 90°: the gradients multiply to −1",`gradients 2 and ${nw(`−${frac("1","2")}`)}`,"A-Math")
-]))}
-${PAN("Shape words",GLS([
-  GW("Vertex","a corner (more than one: vertices)",`a triangle has 3 vertices`),
-  GW("Diagonal","a line joining 2 corners that aren't next to each other",""),
-  GW("Regular polygon","all sides equal and all angles equal",`a square`),
-  GW("Bisect","cut into 2 equal halves",`a perpendicular bisector cuts a line in half at 90°`),
-  GW("Hypotenuse","the longest side of a right-angled triangle, opposite the right angle",""),
-  GW("Opposite and adjacent","for an angle θ: the opposite side faces it, the adjacent side is next to it (and isn't the hypotenuse)",""),
-  GW("Included angle","the angle between the 2 sides you're using",`in ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}, ${V("C")} is between sides ${V("a")} and ${V("b")}`),
-  GW("Congruent","same shape and same size",""),
-  GW("Similar","same shape, different size: equal angles, and the sides in the same ratio",""),
-  GW("Chord","a line joining 2 points on a circle",`a diameter is a chord through the centre`),
-  GW("Arc","part of the edge of a circle",""),
-  GW("Sector","a slice of a circle, like a slice of pizza",""),
-  GW("Segment","the part of a circle cut off by a chord",""),
-  GW("Cross-section","the shape you see when you slice straight through",`a prism has the same cross-section all the way along`)
-]))}
-${PAN("Data and chance words",GLS([
-  GW("Mean","add up all the values, then divide by how many there are",`2, 3, 5, 8, 9: mean ${nw(`= ${frac("27","5")} = 5.4`)}`),
-  GW("Median","the middle value, once they're in order",`2, 3, <span class="k-blue">5</span>, 8, 9: median 5`),
-  GW("Mode","the value that comes up most often",`2, <span class="k-blue">3</span>, <span class="k-blue">3</span>, 8: mode 3`),
-  GW("Range","largest − smallest",`2, 3, 5, 8, 9: range ${nw("= 9 − 2 = 7")}`),
-  GW("Frequency","how many times something happens",""),
-  GW("Outlier","a value far away from the rest",""),
-  GW("Independent","one doesn't change the chance of the other",`throwing 2 dice`),
-  GW("Mutually exclusive","they can't both happen",`getting a 2 and a 5 on one throw of a die`)
-]))}
-${PAN("Sets",GLS([
-  GW("Universal set ξ","everything in the question",`ξ = {1, 2, 3, 4, 5}, A = {1, 2, 3}, B = {2, 3, 4}`),
-  GW("Union ∪","in A or B or both",nw("A ∪ B = {1, 2, 3, 4}")),
-  GW("Intersection ∩","in both A and B",nw("A ∩ B = {2, 3}")),
-  GW("Complement A′",`everything in ξ that isn't in A, read "A prime"`,nw("A′ = {4, 5}")),
-  GW("Element ∈","is an element of",nw("2 ∈ A")),
-  GW("Proper subset ⊂","is a proper subset of (not equal)",nw("{2, 3} ⊂ A")),
-  GW("Number of elements n(A)","how many elements are in A",nw("n(A) = 3")),
-  GW("Empty set ∅","a set with no elements, also written { }","")
-]))}
-</div>`
+
 };
 Object.assign(SHEETS,SHEETS8);
 function picSimCirc(){ const X=x=>65+5.5*x, Y=y=>42-5.5*y, B='font-weight="700"';
@@ -11557,6 +11351,183 @@ ${XTS("xt-no","Lose no marks",[
 ZC("no","Never write","",
   ZTB(["✗","✓"],[[nw("sin 30 = −0.988"),`calculator in D: ${nw("sin 30° = 0.5")}`],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("143.1°")}: check it fits`],[nw("cos 130° = cos 50°"),nw("= −cos 50°")],[`cosine rule: ${nw(`cos ${V("A")}`)} on everything`,`only on ${nw(`2${V("bc")}`)}: work out ${nw(`2${V("bc")} cos ${V("A")}`)} first`],[`${nw(`sin ${X1} = −0.5`)}, so ${nw("α = −30°")}`,`${nw("α = 30°")}, then Q3, Q4`],[`${nw(`sin²${X1} = ${frac("1","4")}`)}, so ${nw(`sin ${X1} = ${frac("1","2")}`)}`,nw(`sin ${X1} = ± ${frac("1","2")}`)],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`]],"xn"))
 ])}`});
+Object.assign(SHEETS,{
+cmdWords:`<div class="mzmust m3">${MUST([FB("blue","Accuracy",`3 s.f.`,"angles in degrees: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"unless it says 'in terms of π'","","mk"),FB("green","Working",`always show it`,"no working, lost marks","","mk")])}</div>
+${ZS("They say → you do",[
+ZC("blue","Work it out","",ZTB(null,[
+  ["<b>Find</b> / <b>Calculate</b>","working, then the answer"],
+  ["<b>Determine</b>","find it (or decide whether it's true), with working"],
+  ["<b>Evaluate</b>","work out its value: a number"],
+  ["<b>Solve</b>","every value that works, in the range given"],
+  ["<b>Estimate</b>","round each number first (usually 1 s.f.), show the rounded numbers, then work it out"],
+  ["<b>Simplify</b>","fewest terms; one fraction, lowest terms"],
+  ["<b>Factorise completely</b>","every common factor out, then check each bracket again"]])),
+ZC("amber","Show it","",ZTB(null,[
+  ["<b>Show that</b>","start from the question, every step, last line = their answer"],
+  ["<b>Prove</b> (A-Math)","start on one side, end on the other"],
+  ["<b>Verify</b>","put the values in, show both sides are equal"],
+  ["<b>Justify</b>","back up your answer with working or a reason"],
+  ["<b>Explain</b> / <b>Give a reason</b>",`one sentence with the maths reason: "since ${nw(`${V("b")}² − 4${V("ac")} &lt; 0`)}".`]])),
+ZC("green","Use the part before","",ZTB(null,[
+  ["<b>Hence</b>","use the part before"],
+  ["<b>Hence or otherwise</b>","the part before is quickest; any correct method scores"],
+  ["<b>Deduce</b>","use the result you just found"]])),
+ZC("purple","Answer form","",ZTB(null,[
+  ["<b>State</b> / <b>Write down</b>","the answer only (usually 1 mark)"],
+  ["<b>Express in the form</b> …","the last line looks exactly like that form"],
+  ["<b>Exact value</b> / <b>in terms of π</b> / <b>surd form</b>","no decimals: keep fractions, surds, π"]]))
+])}
+${ZS("Graphs: sketch, draw, plot",[
+ZC("teal","Sketch, draw, plot","",ZTB(null,[
+  ["<b>Sketch</b>","the right shape, key points labelled (axes cuts, turning points); not to scale"],
+  ["<b>Draw</b> / <b>Plot</b>","on the grid, their scale, one smooth curve"],
+  ["<b>Use your graph to estimate</b>","read it off and draw the lines you used"]]))
+])}
+${ZS("Examples: show that, hence",[
+ZC("blue",`"Show that … correct to 2 d.p."`,"",
+  EG(`e.g. "Show that ${X1} = 2.37, correct to 2 decimal places"`,[`${nw(`${X1} = 2.3714…`)} <span class="k-blue">more decimals first</span>`,`${nw(`= 2.37`)} (2 d.p.) ✓`])
+  +`<p class="anno">* writing only 2.37 does not show it: the rounding has to be seen</p>`),
+ZC("green",`"Hence": use the part before`,"",
+  EG(`(a) Factorise ${nw(`${X2} − 5${X1} + 6`)}. (b) Hence solve ${nw(`${X2} − 5${X1} + 6 = 0`)}.`,[`(a) ${nw(`(${X1} − 2)(${X1} − 3)`)}`,`(b) ${nw(`(${X1} − 2)(${X1} − 3) = 0`)} <span class="k-blue">uses (a)</span>`,`${nw(`${X1} = 2`)} or ${nw(`${X1} = 3`)}`]))
+])}
+${ZS("Lose no marks",[
+ZC("no","Never write","",
+  ZTB(["✗","✓"],[
+    [`"Show that": start from the answer and work backwards`,"start from what the question gives; end on their answer"],
+    ["round in the middle, then keep going","keep the full calculator value; round only at the end"],
+    ["final answer θ = 113.13°","θ = 113.1°: angles to 1 d.p. at the end (keep more decimals while working)"],
+    ["exact value: 0.333",frac("1","3")]],"xn"))
+])}`,
+calcGuide:`<div class="mzmust m3">${MUST([FB("blue","Quadratic",KS("MENU 5 2 2"),"see the roots first","","mk"),FB("amber","Simultaneous",KS("MENU 5 1 2"),"2 unknowns","","mk"),FB("green","Mean and SD",KS("MENU 3 1"),"statistics, 1 variable","","mk")])}</div>
+${ZS("Before the exam",[
+ZC("blue","Deg or Rad?","",
+  `<p class="kwhen">Deg for angles in degrees. Rad whenever the angle is in radians (arcs, sectors, A-Math), then back to Deg</p>`
+  +EG("Which one is on? Type",[`${KS("sin 9 0 =")}`,`${SCR("1")} Deg ✓`,`${SCR("0.8939966636")} Rad`])
+  +`<p class="anno">* wrong one? fix it in SETUP before the exam starts: ${KS("SHIFT MENU")}</p>`),
+ZC("purple","A-Math: the number e","",
+  `<p class="kwhen">When a question has e in it</p><div class="kline">${KS("SHIFT ln 1 =")} ${SCR("2.718281828")}</div>`)
+])}
+${ZS("Equations",[
+ZC("blue","Solve a quadratic equation","",
+  `<p class="kwhen">First: see the roots</p><div class="kline">${KS("MENU 5 2 2")}</div>`
+  +EG(nw(`${X2} − ${X1} − 6 = 0`),[`type ${nw("1, −1, −6")}, ${KY("=")} after each`,`screen: ${SCR("3")} and ${SCR("−2")}`])
+  +`<ul class="steps"><li>nice numbers → cross method</li><li>ugly decimals → quadratic formula</li></ul>`
+  +`<p class="anno">* then write the working: the marks are for the working</p><p class="anno">* an <b>i</b> on the screen = no real solutions</p>`),
+ZC("amber","Check simultaneous equations","",
+  `<p class="kwhen">2 equations, 2 unknowns</p><div class="kline">${KS("MENU 5 1 2")}</div>`
+  +EG(`${nw(`2${X1} + ${V("y")} = 7 ——— ①`)}<br>${nw(`${X1} − ${V("y")} = 2 ——— ②`)}`,[`type ①: ${nw("2, 1, 7")}`,`type ②: ${nw("1, −1, 2")}`,`screen: ${SCR("x = 3")} ${SCR("y = 1")} ✓`])),
+ZC("purple","A-Math: check a cubic equation","",
+  `<p class="kwhen">Find one root first, then factorise</p><div class="kline">${KS("MENU 5 2 3")}</div>`
+  +EG(`Solve ${nw(`${X1}³ − 6${X2} + 11${X1} − 6 = 0`)}`,[`type ${nw("1, −6, 11, −6")}`,`screen: ${SCR("1")} ${SCR("2")} ${SCR("3")}`,`${nw("f(1) = 1 − 6 + 11 − 6 = 0")}, so ${nw(`(${X1} − 1)`)} is a factor`,nw(`(${X1} − 1)(${X2} − 5${X1} + 6) = 0`),nw(`(${X1} − 1)(${X1} − 2)(${X1} − 3) = 0`)]))
+])}
+${ZS("Statistics",[
+ZC("green","Mean and standard deviation","",
+  `<p class="kwhen">A list of values or a frequency table</p>`
+  +`<ul class="steps"><li>① ${KS("MENU 3 1")} (Statistics, 1-Variable)</li><li>② the ${X1} values (mid-values for groups) in the ${X1} column</li><li>③ the frequencies in the FREQ column</li><li>④ ${KS("AC","OPTN","[1-Variable Calc]")}, then read ${V("x̄")} (mean) and σ${V("x")} (SD)</li></ul>`
+  +EG(`${nw(`${X1}: 3, 5, 7`)} with frequencies ${nw("1, 6, 1")}`,[`screen: ${SCR("x̄ = 5")} ${SCR("σx = 1")}`])
+  +`<p class="anno">* use σ${V("x")}, not s${V("x")} · no FREQ column? ${KS("SHIFT MENU","[Statistics]","[Frequency On]")}</p>`)
+])}
+${ZS("Lose no marks",[
+ZC("no","Never write","",
+  ZTB(["✗","✓"],[
+    [`${nw("sin 90° =")} 0.8939966636: it's in Rad`,`set Deg: ${nw("sin 90° = 1")}`],
+    [`typed ${nw("−3²")} for ${nw("(−3)²")}: gives ${nw("−9")}`,`type the brackets: ${nw("(−3)² = 9")}`],
+    [`${frac("2 + 4","3")} typed as ${nw("2 + 4 ÷ 3")}`,`brackets round the numerator: ${nw("(2 + 4) ÷ 3 = 2")}`],
+    [`${frac("12","2 × 3")} typed as ${nw("12 ÷ 2 × 3")}`,`brackets round the denominator: ${nw("12 ÷ (2 × 3) = 2")}`],
+    ["round in the middle, then keep going","keep the full calculator value; round only at the end"]],"xn"))
+])}`,
+glossary:`<div class="mzmust m3">${MUST([FB("blue","Expression",nw(`2${X1} + 1`),"no = sign: you simplify it","","mk"),FB("amber","Equation",nw(`2${X1} + 1 = 7`),`true only when ${nw(`${X1} = 3`)}: you solve it`,"","mk"),FB("green","Identity",nw(`2(${X1} + 1) ≡ 2${X1} + 2`),`true for every ${X1}`,"","mk")])}</div>
+${ZS("Number and algebra",[
+ZC("blue","Number words","",GLS([
+  GW("Sum","the answer when you add",`the sum of 3 and 5 is 8`),
+  GW("Difference","the bigger number take away the smaller",`the difference between 8 and 3 is 5`),
+  GW("Product","the answer when you multiply",`the product of 3 and 5 is 15`),
+  GW("Quotient","the answer when you divide",`${nw("12 ÷ 4 = 3")}: the quotient is 3`),
+  GW("Integer","a whole number: positive, negative or 0",`−3, 0 and 7 are integers, 2.5 isn't`),
+  GW("Multiple","a number in its times table",`multiples of 4: 4, 8, 12, 16, …`),
+  GW("Factor","goes in exactly, with nothing left over",`3 is a factor of 12, and ${nw(`(${X1} − 2)`)} is a factor of ${nw(`${X2} − 4`)}`),
+  GW("Prime number","exactly 2 factors: 1 and itself",`2, 3, 5, 7, 11, … (1 is not prime)`)
+])),
+ZC("green","Algebra words","",GLS([
+  GW("Term",`one part of an expression: the ${nw("+ and − signs")} split it up`,`${nw(`<span class="k-blue">3${X2}</span> <span class="k-amber">− 5${X1}</span> <span class="k-green">+ 7</span>`)} has 3 terms`),
+  GW("Coefficient","the number in front of a letter",`in ${nw(`3${X2} − 5${X1} + 7`)}, the coefficient of ${X1} is <span class="k-red">−5</span>`),
+  GW("Constant","a term with no letter in it",`the <span class="k-green">7</span> in ${nw(`3${X2} − 5${X1} + 7`)}`),
+  GW("Like terms","the same letters with the same powers",`${nw(`3${X1}`)} and ${nw(`−5${X1}`)} are like terms, ${nw(`3${X1}`)} and ${nw(`3${X2}`)} aren't`),
+  GW("Expand","multiply out the brackets",nw(`(${X1} + 2)(${X1} + 3) = ${X2} + 5${X1} + 6`)),
+  GW("Factorise","put it back into brackets",nw(`${X2} + 5${X1} + 6 = (${X1} + 2)(${X1} + 3)`)),
+  GW("Formula","a rule that links quantities",nw(`${V("A")} = π${V("r")}²`)),
+  GW("Subject","the letter on its own on one side",`in ${nw(`${V("v")} = ${V("u")} + ${V("at")}`)}, ${V("v")} is the subject`),
+  GW("Substitute","put a number in place of a letter",`${nw(`${X1} = 2`)} into ${nw(`3${X1} + 1`)}: ${nw("3(2) + 1 = 7")}`),
+  GW("Solve","find the value(s) that make it true",`${nw(`2${X1} + 1 = 7`)}, so ${nw(`${X1} = 3`)}`),
+  GW("Root or solution","a value that makes the equation true",`${nw(`${X2} − 4 = 0`)} has roots ${nw(`${X1} = 2`)} and ${nw(`${X1} = −2`)}`),
+  GW("Inequality","uses &lt;, &gt;, ≤ or ≥ instead of =",`${nw(`2${X1} + 1 &gt; 7`)}, so ${nw(`${X1} &gt; 3`)}`),
+  GW("Base and index","the index (or power) is the small number on top",`in 2<sup>5</sup>, the base is 2 and the index is 5`),
+  GW("Reciprocal","1 divided by it",`the reciprocal of 4 is ${frac("1","4")}, and of ${X1} is ${frac("1",X1)}`),
+  GW("Surd","a root that can't be worked out exactly",`${SQRT("2")} is a surd, but ${nw(`${SQRT("9")} = 3`)} isn't`,"A-Math")
+])),
+ZC("purple","A-Math: polynomial words","",GLS([
+  GW("Polynomial",`terms like ${nw(`${V("a")}${X1}<sup>${V("n")}</sup>`)}, where ${V("n")} is 0, 1, 2, 3 …`,`${nw(`4${X1}³ + 7${X2} − 1`)} is one, ${nw(`${X1}<sup>${frac("1","2")}</sup> + ${X1}<sup>−3</sup>`)} isn't`),
+  GW("Degree","the highest power",`${nw(`4${X1}³ + 7${X2} − 1`)} has degree 3`),
+  GW("Linear, quadratic, cubic","degree 1, 2 and 3",`${nw(`10${X1} + 9`)}, then ${nw(`3${X2} − 1`)}, then ${nw(`4${X1}³ + 7${X2} − 1`)}`),
+  GW("Quotient and remainder","the answer to a division, and what's left over",`${nw("17 ÷ 5 = 3")} remainder 2`)
+]))
+])}
+${ZS("Graphs and shapes",[
+ZC("teal","Graph words","",GLS([
+  GW("Coordinates",`${nw(`(${X1}, ${V("y")})`)}: across first, then up`,`(3, −2) is 3 to the right and 2 down`),
+  GW("Origin","the point (0, 0), where the axes cross",""),
+  GW("Gradient",`how steep a line is: ${nw(frac("rise","run"))}. Positive goes up to the right`,""),
+  GW(`${X1}-intercept`,`where the graph cuts the ${X1}-axis, so ${nw(`${V("y")} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${X1} = 3`)}`),
+  GW(`${V("y")}-intercept`,`where it cuts the ${V("y")}-axis, so ${nw(`${X1} = 0`)}`,`${nw(`${V("y")} = 2${X1} − 6`)} cuts it at ${nw(`${V("y")} = −6`)}`),
+  GW("Turning point","where a curve turns round: its max or min point",`${nw(`${V("y")} = (${X1} − 1)² + 2`)} turns at (1, 2)`),
+  GW("Line of symmetry","the mirror line of a graph",`${nw(`${V("y")} = ${X2}`)} is symmetrical about ${nw(`${X1} = 0`)}`),
+  GW("Asymptote","a line the graph gets closer and closer to, but never touches",`${nw(`${V("y")} = ${frac("1",X1)}`)} never touches ${nw(`${X1} = 0`)} or ${nw(`${V("y")} = 0`)}`),
+  GW("Tangent","a line that touches the curve at one point, with the same gradient as the curve there",""),
+  GW("Normal","the line at 90° to the tangent, through the same point","","A-Math"),
+  GW("Stationary point","where the gradient is 0",nw(`${frac(`d${V("y")}`,`d${X1}`)} = 0`),"A-Math"),
+  GW("Parallel","they never meet: same gradient",`${nw(`${V("y")} = 2${X1} + 1`)} and ${nw(`${V("y")} = 2${X1} − 5`)}`),
+  GW("Perpendicular","they meet at 90°: the gradients multiply to −1",`gradients 2 and ${nw(`−${frac("1","2")}`)}`,"A-Math")
+])),
+ZC("amber","Shape words","",GLS([
+  GW("Vertex","a corner (more than one: vertices)",`a triangle has 3 vertices`),
+  GW("Diagonal","a line joining 2 corners that aren't next to each other",""),
+  GW("Regular polygon","all sides equal and all angles equal",`a square`),
+  GW("Bisect","cut into 2 equal halves",`a perpendicular bisector cuts a line in half at 90°`),
+  GW("Hypotenuse","the longest side of a right-angled triangle, opposite the right angle",""),
+  GW("Opposite and adjacent","for an angle θ: the opposite side faces it, the adjacent side is next to it (and isn't the hypotenuse)",""),
+  GW("Included angle","the angle between the 2 sides you're using",`in ${nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)}, ${V("C")} is between sides ${V("a")} and ${V("b")}`),
+  GW("Congruent","same shape and same size",""),
+  GW("Similar","same shape, different size: equal angles, and the sides in the same ratio",""),
+  GW("Chord","a line joining 2 points on a circle",`a diameter is a chord through the centre`),
+  GW("Arc","part of the edge of a circle",""),
+  GW("Sector","a slice of a circle, like a slice of pizza",""),
+  GW("Segment","the part of a circle cut off by a chord",""),
+  GW("Cross-section","the shape you see when you slice straight through",`a prism has the same cross-section all the way along`)
+]))
+])}
+${ZS("Data, chance and sets",[
+ZC("blue","Data and chance words","",GLS([
+  GW("Mean","add up all the values, then divide by how many there are",`2, 3, 5, 8, 9: mean ${nw(`= ${frac("27","5")} = 5.4`)}`),
+  GW("Median","the middle value, once they're in order",`2, 3, <span class="k-blue">5</span>, 8, 9: median 5`),
+  GW("Mode","the value that comes up most often",`2, <span class="k-blue">3</span>, <span class="k-blue">3</span>, 8: mode 3`),
+  GW("Range","largest − smallest",`2, 3, 5, 8, 9: range ${nw("= 9 − 2 = 7")}`),
+  GW("Frequency","how many times something happens",""),
+  GW("Outlier","a value far away from the rest",""),
+  GW("Independent","one doesn't change the chance of the other",`throwing 2 dice`),
+  GW("Mutually exclusive","they can't both happen",`getting a 2 and a 5 on one throw of a die`)
+])),
+ZC("green","Sets","",GLS([
+  GW("Universal set ξ","everything in the question",`ξ = {1, 2, 3, 4, 5}, A = {1, 2, 3}, B = {2, 3, 4}`),
+  GW("Union ∪","in A or B or both",nw("A ∪ B = {1, 2, 3, 4}")),
+  GW("Intersection ∩","in both A and B",nw("A ∩ B = {2, 3}")),
+  GW("Complement A′",`everything in ξ that isn't in A, read "A prime"`,nw("A′ = {4, 5}")),
+  GW("Element ∈","is an element of",nw("2 ∈ A")),
+  GW("Proper subset ⊂","is a proper subset of (not equal)",nw("{2, 3} ⊂ A")),
+  GW("Number of elements n(A)","how many elements are in A",nw("n(A) = 3")),
+  GW("Empty set ∅","a set with no elements, also written { }","")
+]))
+])}`
+});
 const ARMUST=`<div class="mzmust">${MUST([FB("green","Parallel lines",`(alt. ∠s, AB &#47;&#47; CD)`,"always name the 2 parallel lines","","mk"),FB("amber","Every angle",`a reason in brackets`,"use these exact words","","mk")])}</div>`;
 Object.assign(SHEETS,{angleReasons:`${ARMUST}
 ${ZS("Sec 1: lines and shapes",[
@@ -12141,7 +12112,7 @@ function renderSheetOnly(s){
   backBtn.style.display="inline-flex"; shareBtn.hidden=qrBtn.hidden=printBtn.hidden=false; presentBtn.hidden=zoomBtn.hidden=true;
   cur={t:null,tab:"sheet",state:null,stage:null,sheet:s}; setPage("sheet"); setNav(s.exam?"exam":"sheets");
   app.innerHTML=`<div style="height:12px"></div><h2 class="sheeth">${s.title}</h2>`+SHEETS[s.sheet]+sheetEnd(s.exam);
-  digest(app); cdLinks(s.sheet); fitMust(); mzNav(s.exam&&s.sheet!=="calcGuide"&&s.sheet!=="cmdWords"); mzAct(s); mzLay(); sheetLay(); sheetBump(); bindPrint(); fillPrintFoot(!!window.qrcode);
+  digest(app); cdLinks(s.sheet); fitMust(); mzNav(s.exam); mzAct(s); mzLay(); sheetLay(); sheetBump(); bindPrint(); fillPrintFoot(!!window.qrcode);
   window.scrollTo(0,0);
 }
 
