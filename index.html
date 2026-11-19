@@ -1987,9 +1987,13 @@ html[data-present] .must .formbox.mk .gen{font-size:18px}
 .xkc.xkpp .xkf::after{content:"";position:absolute;right:-1px;top:-1px;border-style:solid;border-width:0 11px 11px 0;border-color:transparent var(--kt,#fdf3dc) rgba(28,28,30,.14) transparent}
 .xkc.xkpp .xkl{display:block;width:62%;height:2px;border-radius:1px;background:rgba(28,28,30,.16)}
 .xkc.xkpp .xkl:last-child{width:44%}
-.hbody .hexam .hcard{--kt:#fffaf0;border-color:rgba(168,100,0,.16)}
-.hbody .hexam .hcard.hkp .sth{background-image:linear-gradient(rgba(168,100,0,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(168,100,0,.07) 1px,transparent 1px);border-color:rgba(168,100,0,.12)}
-:root[data-theme="dark"] .hbody .hexam .hcard{--kt:#1d1b16}
+.hbody .hexam .hcard{--kt:var(--card);border-color:rgba(168,100,0,.16)}
+.hbody .hexam .hcard.hkp .sth{background-image:none;border-color:rgba(168,100,0,.12);box-shadow:inset 0 -1px 0 rgba(168,100,0,.14)}
+.hbody .hexam .hcard.hft.hkp .sth,.hbody .hexam .hcard.hft2.hkp .sth{box-shadow:inset -1px 0 0 rgba(168,100,0,.14)}
+.hbody .hexam .xkc .xkf{box-shadow:0 1px 4px rgba(60,40,0,.13)}
+:root[data-theme="dark"] .hbody .hexam .hcard{--kt:var(--card)}
+:root[data-theme="dark"] .hbody .hexam .hcard.hkp .sth{box-shadow:inset 0 -1px 0 rgba(240,176,74,.16)}
+:root[data-theme="dark"] .hbody .hexam .hcard.hft.hkp .sth,:root[data-theme="dark"] .hbody .hexam .hcard.hft2.hkp .sth{box-shadow:inset -1px 0 0 rgba(240,176,74,.16)}
 .hbody .hcard.hkp .sth .xkc .sfm{font-size:13px}
 @media (min-width:768px){.hbody .hcard.hft.hkp .sth .xkc .sfm{font-size:15px}}
 :root[data-theme="dark"] .xkc .xkb,:root[data-theme="dark"] .xkc .xkf{border-color:rgba(240,176,74,.35);box-shadow:none}
