@@ -280,6 +280,7 @@ svg.nudge .pgrab{animation:pnudge 1.6s ease-in-out infinite}
 .gloss .ge::before{content:"e.g. ";color:var(--muted);font-size:13px}
 .gloss .glv{display:inline-block;margin-left:6px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:0 6px;vertical-align:1px}
 s.cancel{text-decoration-color:var(--red);text-decoration-thickness:2px}
+.mzc s.cancel{text-decoration-color:var(--purple)}
 .cx{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:middle}
 .cxn{font-size:.7em;font-weight:700;color:var(--accent)}
 .qqfig{display:block;width:100%;max-width:440px;margin:2px auto 4px;overflow:visible}
@@ -810,6 +811,8 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .mzt b::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
 .mzgo{flex:none;margin:-12px -8px -12px auto;padding:12px 8px;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap}
 .mzgo:hover{text-decoration:underline}
+.mzbody a{color:var(--accent);font-weight:700;text-decoration:none}
+.mzbody a:hover{text-decoration:underline}
 .mzf{font-size:17px;line-height:1.45;padding:3px 0}
 .mzf .ml{color:var(--c);font-size:15.5px}
 .mzx{display:block;font-size:14px;line-height:1.4;color:var(--muted);font-weight:400}
@@ -829,6 +832,7 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .mzhero .mzx{margin-top:2px}
 .mzpics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0}
 .mzpics.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mzpics.two>.mzpt:last-child:nth-child(odd){grid-column:1/-1}
 .mzpt{background:var(--bg);border-radius:12px;padding:7px 7px 9px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0}
 .mzpt svg{display:block;width:100%;max-width:120px;height:auto;margin:0 auto 3px}
 .mzpt b{font-size:15.5px;line-height:1.3;color:var(--c)}
@@ -942,6 +946,8 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .piccard .go{display:inline-flex;align-items:center;min-height:32px;padding:0 14px;margin-top:8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:14px}
 .piccard .go.tx{display:block;min-height:0;padding:0;margin-top:6px;border-radius:0;background:none;color:var(--accent);font-size:14px}
 .playlink.cur{background:var(--purple-fill);color:var(--purple);border:1.5px solid var(--purple)}
+.pl a.curl{display:inline-block;padding:12px 4px;font-size:14px;color:var(--muted);text-decoration:none}
+.pl a.curl:hover{text-decoration:underline}
 .note{border-left-color:var(--amber);background:var(--amber-fill)}
 .note b{color:var(--amber)}
 @media (min-width:521px){ .steps li .tagop{float:none;display:inline-block;margin-left:16px} }
@@ -2973,7 +2979,7 @@ const TGB2={l:10,t:102,w:150,h:32,x0:-2.5,x1:2.5,y0:-4,y1:10,xs:.5,xl:1,ys:2,yl:
 const tgK=s=>{ const C=TC[s.cv]||TC.cubic, x=s.x, m=C.d(x), z=Math.abs(m)<1e-9, c=z?"amber":m>0?"green":"purple";
   return `<div class="apwk ipk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px">`+FORMS([FB(c,"Gradient at P",`${nw(C.dat(x))} ${nw(`= <span class="ipans" style="color:var(--${c})">${N(m,2)}</span>`)}`,`<span style="font-size:16px;font-weight:700">${kc(c,z?"0: stationary":m>0?"+: increasing":"−: decreasing")}</span>`,nw(`${DY} = ${C.ds}`),"wide")],true)+`</div>`; };
 const tangentAid=aid({
-  init:{cv:"cubic",x:-1.5}, jump:true, ip:"Drag P along the curve.", vb:"2 0 162 100", label:"Curve y = x³ − 3x + 1 with a tangent you can slide and the sign of its gradient below", link:["cv","x"],
+  init:{cv:"cubic",x:-1.5}, jump:true, ip:"Drag P along the curve.", vb:"2 0 162 105", label:"Curve y = x³ − 3x + 1 with a tangent you can slide and the sign of its gradient below", link:["cv","x"],
   fix:s=>{ if(!TC[s.cv]) s.cv="cubic"; s.x=clamp(Math.round((+s.x||0)*10)/10,-2,2); },
   steps:[{name:"Tangent",t:()=>`Drag P along the curve.`,w:s=>tgK(s)}],
   draw(svg,s){ const n0=graph.n, f0=fracN; graph.n=9300; fracN=9300; const C=TC[s.cv]||TC.cubic, g=graph(svg,TGB), y0=C.f(s.x), m=C.d(s.x), z=Math.abs(m)<1e-9, col=z?"var(--amber)":m>0?"var(--green)":"var(--purple)", fs=innerWidth<600?5.4:4.6, F={"font-size":fs,"font-weight":700};
@@ -2982,15 +2988,23 @@ const tangentAid=aid({
     const sy=TGB.t+TGB.h+12, pts=[TGB.x0,...C.st,TGB.x1];
     for(let i=0;i<pts.length-1;i++){ const mid=(pts[i]+pts[i+1])/2, v=C.d(mid); S_(svg,"rect",{x:g.X(pts[i]),y:sy-6.4,width:g.X(pts[i+1])-g.X(pts[i]),height:8.6,fill:v>0?"var(--green-fill)":"var(--purple-fill)",stroke:v>0?"var(--green)":"var(--purple)","stroke-width":.4}); lab(svg,[g.X(mid),sy],sgn(v),{"font-size":6,"font-weight":700,fill:v>0?"var(--green)":"var(--purple)"}); }
     C.st.forEach(x=>lab(svg,[g.X(x),sy],"0",{"font-size":6,"font-weight":700,fill:"var(--amber)"}));
+    lab(svg,[TGB.l,sy+3+fs],"sign of gradient",{"text-anchor":"start","font-size":fs,"font-weight":700,fill:"var(--muted)"});
     g.line(TGB.x0,y0+m*(TGB.x0-s.x),TGB.x1,y0+m*(TGB.x1-s.x),{stroke:col,"stroke-width":1.6});
     const ab=py<g.Y(0); lab(svg,[px+(s.x>1.2?-2.5:2.5),g.Y(0)+(ab?fs+1.5:-2)],`x = ${N(s.x)}`,Object.assign({fill:col,"text-anchor":s.x>1.2?"end":"start"},F));
     if(z){ const k=stKind(C.d,s.x), up=k==="max"; lab(svg,[px,py+(up?-8:fs+7)],"stationary point",Object.assign({fill:"var(--amber)"},F)); }
-    else lab(svg,[px+(s.x>1.5?-8:8),py+(ab?-5:fs+4)],"P",Object.assign({"text-anchor":s.x>1.5?"end":"start"},F));
     const kx=TGB.w/(TGB.x1-TGB.x0), ky=TGB.h/(TGB.y1-TGB.y0), HL={"paint-order":"stroke",stroke:"var(--card)","stroke-width":1.2,"stroke-linejoin":"round"};
     const ex=g.X(0)+7, ey=g.Y(3.35); lab(svg,[ex,ey],"y = "+strip(C.fs),Object.assign({"text-anchor":"start","font-size":fs,"font-style":"italic",fill:"var(--blue)","font-weight":700},HL));
     const xl=px+(s.x>1.2?-2.5:2.5), yl=g.Y(0)+(ab?fs+1.5:-2), xw=fs*4.6, pr=s.x>1.5, sk=z&&stKind(C.d,s.x)==="max", sy0=py+(sk?-8:fs+7), py0=py+(ab?-5:fs+4);
+    let pb=null; if(!z){ let vx=kx, vy=-m*ky; const vL=Math.hypot(vx,vy); vx/=vL; vy/=vL; const sn=C.d2(s.x)>0?-1:1, nx=sn*vy, ny=-sn*vx, hw=fs*.42, hh=fs*.5;
+      const ov=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3], keep=[[ex-2.5,ey-fs,ex+fs*7.8,ey+fs*.4],s.x>1.2?[xl-xw,yl-fs,xl,yl+fs*.3]:[xl,yl-fs,xl+xw,yl+fs*.3]];
+      const cr=b=>{ const xa=TGB.x0+(b[0]-TGB.l)/kx, xb=TGB.x0+(b[2]-TGB.l)/kx; for(let i=0;i<=8;i++){ const yy=g.Y(C.f(xa+(xb-xa)*i/8)); if(yy>b[1]-1&&yy<b[3]+1) return true; } return false; };
+      const tl=b=>{ const q=[[b[0],b[1]],[b[2],b[1]],[b[0],b[3]],[b[2],b[3]]].map(([x,y])=>(y-py)*vx-(x-px)*vy); return Math.min(...q)<1&&Math.max(...q)>-1; };
+      pp: for(const d of [11,12.5,14,16]) for(const t of [0,3,-3,6,-6]){ const cx=px+nx*d+vx*t, cy=py+ny*d+vy*t, b=[cx-hw,cy-hh,cx+hw,cy+hh];
+        if(b[0]<TGB.l+1||b[2]>TGB.l+TGB.w-1||b[1]<TGB.t+1||b[3]>TGB.t+TGB.h-1||cr(b)||tl(b)||keep.some(a=>ov(a,b))) continue; pb=b; break pp; }
+      if(!pb){ const qx=px+(s.x>1.5?-8-hw:8+hw), qy=py+(ab?-5:fs+4)-fs*.35; pb=[qx-hw,qy-hh,qx+hw,qy+hh]; }
+      lab(svg,[(pb[0]+pb[2])/2,(pb[1]+pb[3])/2+fs*.35],"P",Object.assign({},F,HL)); }
     const avoid=[[ex-2.5,ey-fs,ex+fs*7.8,ey+fs*.4],[g.X(0)-2,TGB.t,g.X(0)+6,TGB.t+6],[TGB.l+TGB.w-6,g.Y(0)-7.5,TGB.l+TGB.w,g.Y(0)],s.x>1.2?[xl-xw,yl-fs,xl,yl+fs*.3]:[xl,yl-fs,xl+xw,yl+fs*.3],
-      z?[px-fs*4.4,sy0-fs,px+fs*4.4,sy0+fs*.3]:[px+(pr?-8-fs:8),py0-fs,px+(pr?-8:8+fs),py0+fs*.3]];
+      z?[px-fs*4.4,sy0-fs,px+fs*4.4,sy0+fs*.3]:pb];
     let ux=kx, uy=-m*ky; const uL=Math.hypot(ux,uy); ux/=uL; uy/=uL; const sd=C.d2(s.x)>0?-1:1, tw=fs*4.1, th=fs*1.05, pj=Math.abs(uy)*tw/2+Math.abs(ux)*th/2+1.4, dir=s.x<0?1:-1;
     const hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3], offs=[[sd*uy,-sd*ux],[-sd*uy,sd*ux]].concat(Math.abs(uy)>.5?[[1,0],[-1,0]]:[]);
     tg: for(const [ox,oy] of offs) for(const d of [30,22,40,16,19,26]) for(const sg of [dir,-dir]){ const t=pj/Math.abs(ox*uy-oy*ux), cx=px+sg*d*ux+ox*t, cy=py+sg*d*uy+oy*t, b=[cx-tw/2,cy-th/2,cx+tw/2,cy+th/2];
@@ -7689,7 +7703,7 @@ diffBasics:`${MUSTC("memorise: not on the formula sheet",[FB("blue","Power rule"
       <tr><td>7 <span class="anno">(constant)</span></td><td>0</td></tr>
     </table>
     <p class="anno">* a number in front stays in front: 5${V("x")}⁴ → 5 × 4${V("x")}³ = 20${V("x")}³</p>
-    ${PLAYLINK("#first-principles","For the curious: why it works")}
+    <p class="anno pl" style="text-align:center"><a class="curl" href="#first-principles">For the curious: why it works →</a></p>
   </div>
 
   <div class="panelc"><h4>Rewrite first, then differentiate</h4>
@@ -7716,6 +7730,7 @@ diffBasics:`${MUSTC("memorise: not on the formula sheet",[FB("blue","Power rule"
       <tr><td>ln ${X1}</td><td>${frac("1",X1)}</td></tr>
       <tr><td><span class="nw">sin(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw"><b class="k-amber">${V("a")}</b> cos(${V("a")}${X1} + ${V("b")})</span></td></tr>
       <tr><td><span class="nw">cos(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw"><b class="k-amber">−${V("a")}</b> sin(${V("a")}${X1} + ${V("b")})</span></td></tr>
+      <tr><td><span class="nw">tan(${V("a")}${X1} + ${V("b")})</span></td><td><span class="nw"><b class="k-amber">${V("a")}</b> sec²(${V("a")}${X1} + ${V("b")})</span></td></tr>
       <tr><td>e<sup>${V("a")}${X1} + ${V("b")}</sup></td><td><b class="k-amber">${V("a")}</b>e<sup>${V("a")}${X1} + ${V("b")}</sup></td></tr>
       <tr><td><span class="nw">ln(${V("a")}${X1} + ${V("b")})</span></td><td>${frac(`<b class="k-amber">${V("a")}</b>`,V("a")+X1+" + "+V("b"))}</td></tr>
     </table>
@@ -7830,8 +7845,8 @@ quadGraphs:`${MUST([FB("blue","Turning point form",`${nw(`${V("y")} = (${X1} −
 <div class="sheet">
   <div class="panelc"><h4>Shape from a</h4>
     <div class="piccards two">
-      ${PIC("#quad-forms?a=1&h=1&k=-4",`<svg viewBox="0 0 110 80" class="picsvg"><path d="M15 8 Q55 120 95 8" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="55" cy="64" r="4.5" fill="var(--blue)" stroke="var(--card)" stroke-width="1.5"/><text x="55" y="78" text-anchor="middle" font-size="12" fill="var(--ink)">min point</text></svg>`,`${V("a")} &gt; 0: U-shaped ∪`,"minimum point").replace('class="go"','class="go tx"')}
-      ${PIC("#quad-forms?a=-1&h=1&k=4",`<svg viewBox="0 0 110 80" class="picsvg"><path d="M15 72 Q55 -40 95 72" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="55" cy="16" r="4.5" fill="var(--blue)" stroke="var(--card)" stroke-width="1.5"/><text x="55" y="10" text-anchor="middle" font-size="12" fill="var(--ink)">max point</text></svg>`,`${V("a")} &lt; 0: inverted U ∩`,"maximum point").replace('class="go"','class="go tx"')}
+      ${PIC("#quad-forms?a=1&h=1&k=-4",`<svg viewBox="0 0 110 80" class="picsvg"><path d="M15 8 Q55 120 95 8" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="55" cy="64" r="4.5" fill="var(--blue)" stroke="var(--card)" stroke-width="1.5"/><text x="55" y="78" text-anchor="middle" font-size="8" font-weight="700" fill="var(--ink)">min point</text></svg>`,`${V("a")} &gt; 0: U-shaped ∪`,"minimum point").replace('class="go"','class="go tx"')}
+      ${PIC("#quad-forms?a=-1&h=1&k=4",`<svg viewBox="0 0 110 80" class="picsvg"><path d="M15 72 Q55 -40 95 72" fill="none" stroke="var(--blue)" stroke-width="2.5"/><circle cx="55" cy="16" r="4.5" fill="var(--blue)" stroke="var(--card)" stroke-width="1.5"/><text x="55" y="6.5" text-anchor="middle" font-size="8" font-weight="700" fill="var(--ink)">max point</text></svg>`,`${V("a")} &lt; 0: inverted U ∩`,"maximum point").replace('class="go"','class="go tx"')}
     </div>
   </div>
 
@@ -9437,7 +9452,7 @@ amMemoFC:`${MUST([FB("purple","Not given",`memorise these`,"they're not in your 
   </div>
 </div>`,
 
-cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"unless it says 'in terms of π'","","mk"),FB("green","Working",`always show it`,"no working, lost marks","","mk")])}
+cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles in degrees: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"unless it says 'in terms of π'","","mk"),FB("green","Working",`always show it`,"no working, lost marks","","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>They say → you do</h4>
     <table>
@@ -9641,7 +9656,7 @@ function rWave(){ const X=d=>18+d*0.31, Y=v=>36-4.4*v, S='font-size="6"'; let p=
     +DOT(X(53.13),Y(5))+DOT(X(233.13),Y(-5))+TX(X(53.13)+4,9,"max 5 at 53.1°",`${S} text-anchor="start" fill="var(--purple)" font-weight="700"`)+TX(X(233.13),Y(-5)+9,"min −5 at 233.1°",`${S} fill="var(--purple)" font-weight="700"`)+TX(X(360),43,"360°",S)); }
 function diffSigns(){ const X=x=>64+22*x, Y=v=>36-7*v, seg=(a,b,col)=>{ let p=""; for(let i=0;i<=20;i++){ const x=a+(b-a)*i/20; p+=(i?"L":"M")+X(x).toFixed(1)+" "+Y(x**3-3*x).toFixed(1); } return `<path d="${p}" fill="none" stroke="${col}" stroke-width="2.4"/>`; }, G="var(--green)", R="var(--purple)", A="var(--amber)", F='font-size="6.5" font-weight="700"';
   return SV("0 0 128 72",LN(8,Y(0),122,Y(0),`stroke="var(--muted)"`)+seg(-2.05,-1,G)+seg(-1,1,R)+seg(1,2.05,G)+DOT(X(-1),Y(2),A)+DOT(X(1),Y(-2),A)
-    +TX(X(-1),Y(2)-5,"= 0",`${F} fill="${A}"`)+TX(X(1),Y(-2)+10,"= 0",`${F} fill="${A}"`)+TX(25,30,"↗ &gt; 0",`${F} fill="${G}" text-anchor="end"`)+TX(70,30,"↘ &lt; 0",`${F} fill="${R}" text-anchor="start"`)+TX(103,44,"↗ &gt; 0",`${F} fill="${G}" text-anchor="start"`)+TX(8,9,"sign of dy/dx",`font-size="6.5" fill="var(--muted)" text-anchor="start"`)); }
+    +TX(X(-1),Y(2)-5,"= 0",`${F} fill="${A}"`)+TX(X(1),Y(-2)+10,"= 0",`${F} fill="${A}"`)+TX(25,30,"↗ &gt; 0",`${F} fill="${G}" text-anchor="end"`)+TX(70,30,"↘ &lt; 0",`${F} fill="${R}" text-anchor="start"`)+TX(103,44,"↗ &gt; 0",`${F} fill="${G}" text-anchor="start"`)+TX(8,9,"sign of gradient",`font-size="6.5" fill="var(--muted)" text-anchor="start"`)); }
 function picSVA(){ const bx=(x,t)=>`<rect x="${x}" y="15" width="22" height="16" rx="3" fill="var(--blue-fill)" stroke="var(--ink)"/>`+TX(x+11,26.5,IT(t),`font-size="9" font-weight="700"`), F='font-size="6" font-weight="700"';
   return SVW("0 0 136 46",bx(8,"s")+bx(57,"v")+bx(106,"a")+ARW(32,19,55,19,"var(--purple)",1.1)+ARW(81,19,104,19,"var(--purple)",1.1)+ARW(55,27,32,27,"var(--green)",1.1)+ARW(104,27,81,27,"var(--green)",1.1)
     +TX(43.5,11,"differentiate",`${F} fill="var(--purple)"`)+TX(92.5,11,"differentiate",`${F} fill="var(--purple)"`)+TX(43.5,41,"integrate",`${F} fill="var(--green)"`)+TX(92.5,41,"integrate",`${F} fill="var(--green)"`)); }
@@ -9721,7 +9736,7 @@ function picLadder1(){ const R='fill="var(--purple)" font-weight="700"', f='font
   return SV("0 0 120 74",s+TX(66,69,"1",f)+TX(88,69,"stop at 1",`font-size="6" fill="var(--muted)" text-anchor="start"`)); }
 function picNumLine(){ let s=LN(4,20,126,20)+`<path d="M122 17 L126 20 L122 23" fill="none" stroke="var(--ink)"/>`;
   for(let v=-5;v<=5;v++){const x=65+11*v; s+=LN(x,17,x,23)+TX(x,31,v<0?"−"+(-v):v,v===0?`font-weight="700"`:"");}
-  return SV("0 0 130 36",s+`<path d="M32 15 Q54 -2 87 15" fill="none" stroke="var(--blue)" stroke-width="1.5"/><path d="M83 11 L87 15 L82 16" fill="none" stroke="var(--blue)" stroke-width="1.5"/>`+TX(60,7,"+5",`fill="var(--blue)" font-weight="700"`)+TX(14,10,"smaller",`font-size="5.5" fill="var(--muted)"`)+TX(116,10,"bigger",`font-size="5.5" fill="var(--muted)"`)); }
+  return SV("0 -5 130 41",s+`<path d="M32 15 Q54 -2 87 15" fill="none" stroke="var(--blue)" stroke-width="1.5"/><path d="M83 11 L87 15 L82 16" fill="none" stroke="var(--blue)" stroke-width="1.5"/>`+TX(57,1.5,"+5",`fill="var(--blue)" font-weight="700"`)+TX(14,10,"smaller",`font-size="5.5" fill="var(--muted)"`)+TX(116,10,"bigger",`font-size="5.5" fill="var(--muted)"`)); }
 function picPar(kind){ const T=[61.1,22], B=[48,50];
   let s=LN(6,22,114,22)+LN(6,50,114,50)+`<path d="M97 19 L101 22 L97 25 M97 47 L101 50 L97 53" fill="none" stroke="var(--ink)" stroke-width="1.2"/>`+LN(40.5,66,68.5,6)
     +TX(4,19,"A",`font-size="6.5"`)+TX(116,19,"B",`font-size="6.5"`)+TX(4,47,"C",`font-size="6.5"`)+TX(116,47,"D",`font-size="6.5"`);
@@ -10162,7 +10177,7 @@ ${PAN("Elimination",`<p class="anno">* label each equation ① ② at the end, t
 ${PAN("Graphs",picTwoLines()+EG(`Both start with ${nw(`${VY} =`)}, so ① = ②`,[EQN(nw(`${VY} = ${X1} + 1`),"①"),EQN(nw(`${VY} = −${X1} + 5`),"②"),`① = ②: ${nw(`${X1} + 1 = −${X1} + 5`)}`,nw(`2${X1} = 4`),nw(`${X1} = 2`),`Sub ${nw(`${X1} = 2`)} into ①: ${nw(`${VY} = 3`)}`,`the lines cross at (2, 3)`])
   +`<table><tr><th>The lines</th><th>Solutions</th></tr><tr><td>same gradient, different ${V("c")}: parallel</td><td>no solution</td></tr><tr><td>same gradient, same ${V("c")}: the same line</td><td>infinitely many</td></tr></table><div class="note"><b>Write why:</b> same gradient, different ${V("c")}: the lines are parallel, so there is no solution.</div>`)}
 ${PAN("Word problem",EG("Adult tickets $8, child tickets $5. 10 tickets cost $62.",[`let ${V("a")} = number of adults, ${V("c")} = number of children`,EQN(nw(`${V("a")} + ${V("c")} = 10`),"①"),EQN(nw(`8${V("a")} + 5${V("c")} = 62`),"②"),EQN(`From ①: ${nw(`${V("c")} = 10 − ${V("a")}`)}`,"③"),`Sub ③ into ②: ${nw(`8${V("a")} + 5(10 − ${V("a")}) = 62`)}`,nw(`3${V("a")} = 12`),nw(`${V("a")} = 4`),`Sub ${nw(`${V("a")} = 4`)} into ③: ${nw(`${V("c")} = 6`)}`,`4 adults and 6 children <span class="anno" style="margin-left:10px">answer what was asked</span>`]))}
-${MIST([["equations with no labels",`label them ① ②, then say what you did: ${nw("① × 2")}, ${nw(`Sub ${X1} = 4 into ①`)}`],["subtract when the signs are opposite","opposite signs: add"],[`① − ②: ${nw(`3${VY} − 5${VY} = −2${VY}`)}`,`${nw(`3${VY} − (−5${VY}) = 8${VY}`)}`],["× only some of the terms","× EVERY term in the equation"],[`find ${X1} and stop`,`find both and write both: ${nw(`${X1} = 4, ${VY} = 2`)}`],[`cap $${X1}, bag $${VY}, a bag costs as much as 3 caps: ${nw(`${X1} = 3${VY}`)}`,`the 3 goes on the cheaper one: ${nw(`${VY} = 3${X1}`)}`],[`${nw(`4${VY} = 12${X1} − 8`)}, so ${nw(`${V("m")} = 12`)}`,`${VY} alone first: ${nw(`${VY} = 3${X1} − 2`)}, so ${nw(`${V("m")} = 3`)}`],["same gradient, so no solution",`check ${V("c")} too: same ${V("c")} = the same line`]])}
+${MIST([["equations with no labels",`label them ① ②, then say what you did: ${nw("① × 2")}, ${nw(`Sub ${X1} = 4 into ①`)}`],["subtract when the signs are opposite","opposite signs: add"],[nw(`3${VY} − (−5${VY}) = −2${VY}`),nw(`3${VY} − (−5${VY}) = 8${VY}`)],["× only some of the terms","× EVERY term in the equation"],[`find ${X1} and stop`,`find both and write both: ${nw(`${X1} = 4, ${VY} = 2`)}`],[`cap $${X1}, bag $${VY}, a bag costs as much as 3 caps: ${nw(`${X1} = 3${VY}`)}`,`the 3 goes on the cheaper one: ${nw(`${VY} = 3${X1}`)}`],[`${nw(`4${VY} = 12${X1} − 8`)}, so ${nw(`${V("m")} = 12`)}`,`${VY} alone first: ${nw(`${VY} = 3${X1} − 2`)}, so ${nw(`${V("m")} = 3`)}`],["same gradient, so no solution",`check ${V("c")} too: same ${V("c")} = the same line`]])}
 </div>`,
 
 s2Factor:`${MUST([FB("blue","Common factor first",nw(`6${X2} + 9${X1} = <b class="k-amber">3${X1}</b>(2${X1} + 3)`),"the highest: number and letter","","mk"),FB("amber","Cross method",`factors first, signs <b class="k-amber">last</b>`,"the arrows add or subtract to the middle term","","mk mkw"),FB("green","Two squares",nw(`${X2} − 9 = (${X1} + 3)(${X1} − 3)`),`only with a <b class="k-amber">minus</b> between`,nw(`${V("a")}² − ${V("b")}² = (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`),"mk")])}
@@ -10722,7 +10737,11 @@ ${PAN("Sets",GLS([
   GW("Universal set ξ","everything in the question",`ξ = {1, 2, 3, 4, 5}, A = {1, 2, 3}, B = {2, 3, 4}`),
   GW("Union ∪","in A or B or both",nw("A ∪ B = {1, 2, 3, 4}")),
   GW("Intersection ∩","in both A and B",nw("A ∩ B = {2, 3}")),
-  GW("Complement A′",`everything in ξ that isn't in A, read "A prime"`,nw("A′ = {4, 5}"))
+  GW("Complement A′",`everything in ξ that isn't in A, read "A prime"`,nw("A′ = {4, 5}")),
+  GW("Element ∈","is an element of",nw("2 ∈ A")),
+  GW("Proper subset ⊂","is a proper subset of (not equal)",nw("{2, 3} ⊂ A")),
+  GW("Number of elements n(A)","how many elements are in A",nw("n(A) = 3")),
+  GW("Empty set ∅","a set with no elements, also written { }","")
 ]))}
 </div>`
 };
@@ -10861,7 +10880,7 @@ function zTree(){ const R="var(--red)", B="var(--blue)", L=(a,b,c,d)=>LN(a,b,c,d
 const zMap=()=>picMapSq().replace(">× 50 000<",">1 : 50 000<");
 function zDT(){ const X=t=>14+10*t, Y=d=>50-3.4*d, P=[[0,0],[3,6],[5,6],[8,12]];
   return SV("0 0 100 62",LN(14,50,98,50)+LN(14,50,14,4)+`<polyline points="${P.map(([t,d])=>X(t)+","+Y(d)).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`
-    +TX(56,59,"time",'font-size="7" fill="var(--muted)"')+TX(8,28,"distance",'font-size="7" fill="var(--muted)" transform="rotate(-90 8 28)"')+TX(X(4),Y(6)-4,"flat",'font-size="7" fill="var(--muted)" font-weight="700"')); }
+    +TX(56,59,"time",'font-size="7" fill="var(--muted)"')+TX(8,28,"distance",'font-size="7" fill="var(--muted)" transform="rotate(-90 8 28)"')+TX(X(4),Y(6)-4,"at rest",'font-size="7" fill="var(--muted)" font-weight="700"')); }
 function zST(){ const X=t=>14+6*t, Y=v=>50-3.3*v, P=[[0,0],[4,12],[10,12],[14,0]], pts=P.map(([t,v])=>X(t)+","+Y(v)).join(" ");
   return SV("0 0 106 62",`<polygon points="${pts}" fill="var(--green-fill)"/>`+LN(14,50,102,50)+LN(14,50,14,4)+`<polyline points="${pts}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>`
     +TX(56,36,"area",'font-size="7.5" fill="var(--green)" font-weight="700"')+TX(56,59,"time",'font-size="7" fill="var(--muted)"')+TX(8,28,"speed",'font-size="7" fill="var(--muted)" transform="rotate(-90 8 28)"')); }
@@ -10914,7 +10933,7 @@ ZC("green","Approximation","approximation",
   ZVS([["Decimal places","count after the point"],["Significant figures","start at the first non-zero digit"]])
   +ZTB(["Zeros …","e.g.","s.f."],[["in front: don't count",`<span class="mzmu">0.0</span><b class="k-green">52</b>`,"2"],["between digits: count",`<b class="k-green">507</b>`,"3"],["at the end, after the point: count",`<b class="k-green">2.50</b>`,"3"]])
   +ZSUB("Rounding: look at the next digit")
-  +ZR(picRound(),[ZF("5 or more","→ round up"),ZF("Less than 5","→ keep")],"st")
+  +ZR(picRound(),[ZF("5 or more","→ round up")],"st")
   +ZF("Estimate","→ round every number to 1 s.f.")
   +ZF("Estimate a square root","→ use the nearest square number",nw(`${SQRT("50")} ≈ ${SQRT("49")} = 7`))),
 ZC("purple","Basic algebra","basic-algebra",
@@ -11049,7 +11068,7 @@ ZC("green","Pythagoras","pythagoras",
   +ZX("equal, so it is right-angled (converse of Pythagoras' theorem)")),
 ZC("purple","TOA CAH SOH","trigonometry-sec2",
   ZR(picRight("trig"),ZTOA)
-  +ZTB(null,[[ZHYP,"the longest side, opposite the right angle"],[ZOPP,"opposite θ"],[ZADJ,"next to θ (not the hyp)"]])),
+  +ZTB(null,[[ZHYP,"hypotenuse"],[ZOPP,"opposite θ"],[ZADJ,"next to θ (not the hyp)"]])),
 ZC("teal","Arcs &amp; sectors","",
   ZR(zPad(picSector(),0,5),[ZF("Arc length",nw(`= ${frac("θ","360°")} × 2π${V("r")}`)),ZF("Sector area",nw(`= ${frac("θ","360°")} × π${V("r")}²`))])),
 ZC("blue","Pyramids, cones &amp; spheres","volume-surface-area-2",
@@ -11074,8 +11093,7 @@ ZC("blue","Mean, median &amp; mode","averages",
 ZC("amber","Probability","probability-sec2",
   ZR(picProb(),[],"st")
   +ZH(nw(`Probability = ${frac("ways it can happen","total outcomes")}`),"outcomes equally likely")
-  +ZF("",nw("P(not A) = 1 − P(A)"))
-  +ZVS([["Impossible event","probability = 0"],["Certain event","probability = 1"]]))
+  +ZF("",nw("P(not A) = 1 − P(A)")))
 ])}`,
 emMemo:`${ZMUST2}
 <p class="tiny mzin" style="margin:0 0 12px">Not given in the exam. The given ones: <a class="mzlink" href="#sheet/emath-formula-sheet">E-Math formula sheet →</a></p>
@@ -11116,8 +11134,13 @@ ZC("amber","Completing the square","completing-the-square",
   +ZF("",`→ turning point ${nw("(−3, −8)")}`)),
 ZP("s1a","Linear graphs"),
 ZC("purple","Distance–time &amp; speed–time graphs","speed-time-graphs",
-  ZR(zDT(),[ZF("Distance–time",""),ZF("Gradient","= speed"),ZX("flat: not moving")])
-  +ZR(zST(),[ZF("Speed–time",""),ZF("Gradient","= acceleration"),ZF("Area","= distance travelled")]))
+  ZR(zDT(),[ZF("Distance–time",""),ZF("Gradient","= speed"),ZX("horizontal: at rest")])
+  +ZR(zST(),[ZF("Speed–time",""),ZF("Gradient","= acceleration"),ZF("Area","= distance travelled")])),
+ZC("blue","Matrices","matrices",
+  ZH(nw(`(2 × <b class="k-amber">3</b>)(<b class="k-amber">3</b> × 1) → 2 × 1`),"to multiply, the inner numbers must match")
+  +ZF("Order","= rows × columns")
+  +ZF("Add or subtract","same order only")
+  +ZF("Scalar multiple","multiply every element"))
 ])}
 ${ZS("Geometry &amp; measurement",[
 ZP("s1b","Types of angles"),
@@ -11176,9 +11199,9 @@ ZC("blue","Bearings","bearings-elevation-3d",
 ${ZS("Statistics &amp; probability",[
 ZP("s1c","Charts"),
 ZP("s2c","Data diagrams"),
-ZP("s2c","Mean, median &amp; mode").replace(/<tr><td>Mean from a table<\/td>[\s\S]*?<\/tr>/,""),
+ZP("s2c","Mean, median &amp; mode").replace(/<tr><td>Mean from a table<\/td>[\s\S]*?<\/tr>/,"<tr><td>Grouped data</td><td>use the mid-value of each class</td></tr>"),
 ZC("amber","Spread","measures-of-spread",
-  ZR(zBoxIQR(),[ZF("Interquartile range",nw(`= ${V("Q")}₃ − ${V("Q")}₁`))],"st")
+  ZR(zBoxIQR(),[ZF("Range",nw("= largest − smallest")),ZF("Interquartile range",nw(`= ${V("Q")}₃ − ${V("Q")}₁`))],"st")
   +ZSUB("Cumulative frequency curve: read across at")
   +ZTB(null,[[`${V("Q")}₁`,"25% of the total"],["Median","50% of the total"],[`${V("Q")}₃`,"75% of the total"]])
   +ZSUB("Compare 2 sets")
@@ -11284,7 +11307,7 @@ ZC("amber","Uses of differentiation","differentiation-uses",
   +ZSUB("First derivative test: the sign either side")
   +ZTB(["before","at","after",""],[[`+ ${SLP("+")}`,`0 ${SLP("0")}`,`− ${SLP("−")}`,"maximum"],[`− ${SLP("−")}`,`0 ${SLP("0")}`,`+ ${SLP("+")}`,"minimum"]])
   +ZSUB("Second derivative test")
-  +ZT([[zUM("min"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`),"minimum"],[zUM("max"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &lt; 0`),"maximum"]],"two")
+  +ZT([[zUM("min"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &gt; 0`),"minimum"],[zUM("max"),nw(`${frac("d²"+V("y"),"d"+X1+"²")} &lt; 0`),"maximum"]],"two")+ZX(`${nw(`${frac("d²"+V("y"),"d"+X1+"²")} = 0`)}: use the table`)
   +ZVS([["Increasing",`${nw(`${dydx} &gt; 0`)} ${SLP("+")}`],["Decreasing",`${nw(`${dydx} &lt; 0`)} ${SLP("−")}`]])
   +ZF("Rates of change","")+ZF("",nw(`${dd(V("y"),V("t"))} = ${dydx} × ${dd(X1,V("t"))}`))),
 ZC("green","Integration","integration",
@@ -11302,7 +11325,7 @@ ZC("blue","Kinematics","kinematics",
 ])}`
 };
 Object.assign(SHEETS,SHEETS10);
-const XKCSS=(()=>{ try{ const e=document.createElement("style"); e.textContent='.mzband{margin:30px 0 16px;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:19px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}.xkt{scroll-margin-top:calc(var(--barh,56px) + 66px)}.mzjump{position:sticky;top:var(--barh,56px);z-index:4;display:flex;gap:8px;overflow-x:auto;background:var(--bg);padding:8px 0 10px;margin:0 0 14px;scrollbar-width:none}.mzjump::-webkit-scrollbar{display:none}.mzjump .pill{flex:none;min-height:44px}.mzpics.one{grid-template-columns:minmax(0,1fr)}.mzpics.one .mzpt svg{max-width:260px}.xkb{font-weight:700}.mztb.xn td:first-child{font-weight:400;color:var(--rasp)}.mztb.xn td:last-child{font-weight:700}.xkcup{display:inline-block;width:1.1em;height:.9em;vertical-align:-.05em;margin-left:.15em}@media (min-width:600px){.mzmust.m3 .must .forms{grid-template-columns:repeat(3,minmax(0,1fr))}}.mzjump+.mzbar{margin:-4px 0 20px}.mzg.js{flex-wrap:wrap}.mzg.js>.mzc.mzfull{flex:0 0 100%}.mzg.wide1 .mzrow,.mzc.mzfull .mzrow{grid-template-columns:minmax(0,300px) minmax(0,1fr)}@media (min-width:700px){.mzg.wide1 .mzpics.one,.mzc.mzfull .mzpics.one{grid-template-columns:repeat(3,minmax(0,1fr))}}.mzmust:not(.m3) .must .forms>.formbox:last-child:nth-child(odd){grid-column:1/-1}@media (max-width:599px){.mzjump{flex-wrap:wrap;overflow-x:visible;gap:6px}.mzjump .pill{min-height:40px;font-size:15px}}@media print{.mzjump{display:none!important}.mzband{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'; document.head.appendChild(e);
+const XKCSS=(()=>{ try{ const e=document.createElement("style"); e.textContent='.mzband{margin:30px 0 16px;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:19px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}.xkt{scroll-margin-top:calc(var(--barh,56px) + 66px)}.mzjump{position:sticky;top:var(--barh,56px);z-index:4;display:flex;gap:8px;overflow-x:auto;background:var(--bg);padding:8px 0 10px;margin:0 0 14px;scrollbar-width:none}.mzjump::-webkit-scrollbar{display:none}.mzjump .pill{flex:none;min-height:44px}.mzpics.one{grid-template-columns:minmax(0,1fr)}.mzpics.one .mzpt svg{max-width:260px}.xkb{font-weight:700}.mztb.xn td:first-child{font-weight:400;color:var(--rasp)}.mztb.xn td:last-child{font-weight:700}.xkcup{display:inline-block;width:1.1em;height:.9em;vertical-align:-.05em;margin-left:.15em}@media (min-width:600px){.mzmust.m3 .must .forms{grid-template-columns:repeat(3,minmax(0,1fr))}}.mzjump+.mzbar{margin:-4px 0 20px}.mzg.js{flex-wrap:wrap}.mzg.js>.mzc.mzfull{flex:0 0 100%}.mzg.wide1 .mzrow,.mzc.mzfull .mzrow{grid-template-columns:minmax(0,300px) minmax(0,1fr)}@media (min-width:700px){.mzg.wide1 .mzpics.one,.mzc.mzfull .mzpics.one{grid-template-columns:repeat(3,minmax(0,1fr))}}.mzmust:not(.m3) .must .forms>.formbox:last-child:nth-child(odd){grid-column:1/-1}@media (max-width:599px){.mzjump{flex-wrap:nowrap;overflow-x:auto;gap:6px;padding-right:28px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}.mzjump .pill{min-height:44px;font-size:15px}}@media print{.mzjump{display:none!important}.mzband{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'; document.head.appendChild(e);
   document.addEventListener("click",ev=>{ const b=ev.target.closest&&ev.target.closest("[data-jump]"); if(!b) return; const t=document.getElementById(b.dataset.jump); if(t){ ev.preventDefault(); t.scrollIntoView({behavior:"smooth",block:"start"}); } }); }catch(_){} return 1; })();
 const ZNR=(s,c)=>s.split("var(--purple)").join(`var(--${c})`), Z0=s=>ZNR(s,"ink");
 const XJ=items=>`<nav class="mzjump" aria-label="Jump to">${items.map(([id,t])=>`<button class="pill" type="button" data-jump="${id}">${t}</button>`).join("")}</nav>`;
@@ -11412,7 +11435,7 @@ ZC("green","Units","volume-surface-area-1",
 ZC("teal","The E-Math paper gives these","",
   ZCH([nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`),nw(`arc = ${V("r")}θ`),nw(`sector = ${frac("1","2")}${V("r")}²θ`),nw(`cone: π${V("rl")}`),nw(`cone: ${frac("1","3")}π${V("r")}²${V("h")}`),nw(`sphere: 4π${V("r")}²`),nw(`sphere: ${frac("4","3")}π${V("r")}³`)])
   +ZX(XA("School test? It may give none."))
-  +ZX(`A-Math paper: only ${nw(`${frac("1","2")}${V("bc")} sin ${V("A")}`)} · <a href="#sheet/emath-formula-sheet">formula sheet →</a>`))
+  +ZX(`A-Math paper: only ${nw(`${frac("1","2")}${V("bc")} sin ${V("A")}`)} · <a href="#sheet/amath-formula-sheet">formula sheet →</a>`))
 ])}
 ${XS("xa-no","Lose no marks",[
 ZC("no","Never write","",
@@ -12013,7 +12036,7 @@ function renderLessons(){
     <p class="lcat">My two cats are usually around during lessons. One of them is often asleep on someone’s desk, and students get to feed them treats or play with them during breaks.</p>
     <p class="lcat">I also keep the pantry stocked with drinks and snacks, so if anyone gets hungry they can just help themselves.</p>
     <p class="lcat">If your child is allergic to cats or scared of them, just let me know before the trial and I’ll keep them in another room.</p>
-    <div class="lcard"><h3>Ask about a slot</h3><p>My slots are limited, so just WhatsApp me with the level, school, ${nw("E-Math")} or ${nw("A-Math")}, and which days work for you. New students can start with a free 1-hour trial lesson.</p><div class="acts">${waBtn()}</div><div class="waqr" hidden><div id="waQr"></div><span>On a computer? Scan this with your phone.</span></div></div>
+    <div class="lcard"><h3>Ask about a slot</h3><p>My slots are limited, so just WhatsApp me with the level (P5 to Sec 4), school, ${nw("E-Math")} or ${nw("A-Math")} for Sec 3–4, and which days work for you. New students can start with a free 1-hour trial lesson.</p><div class="acts">${waBtn()}</div><div class="waqr" hidden><div id="waQr"></div><span>On a computer? Scan this with your phone.</span></div></div>
   </div>`;
   if(waURL()&&matchMedia("(min-width:900px)").matches) loadQR().then(()=>{ const q=qrcode(0,"M"); q.addData(waURL()); q.make(); const box=$("#waQr"); if(box){ box.innerHTML=q.createSvgTag(4,2); box.parentElement.hidden=false; } }).catch(()=>{});
   window.scrollTo(0,0);
@@ -13502,7 +13525,7 @@ let hhEl=null;
 function backLbl(){ const k=String((cur&&cur.back)||hubFrom||"").replace(/^#\/?/,""), v=VIEWS.find(([x])=>x===k); let n="Home";
   if(v) n=v[1]; else if(k==="p6") n="P6"; else if(k){ const p=k.split("?")[0].split("/"), t=p[0]==="sheet"?null:TOPICS.find(x=>x.id===p[0]), sh=p[0]==="sheet"?sheetOf(p[1]):t&&p[1]==="sheet"?sheetForTopic(t):null; n=((sh&&sh.title)||(t&&t.title)||"Back").split(":")[0]; if(n.length>16&&!(sh&&sh.exam)) n=sh?"Cheatsheet":"Interactive"; }
   backBtn.innerHTML='<span class="bch" aria-hidden="true">‹</span><span class="blbl"></span>'; backBtn.lastChild.textContent=n; backBtn.setAttribute("aria-label","Back to "+n);
-  hhEl=app.querySelector("h2.sheeth"); hhChk(); }
+  hhEl=app.querySelector("h2.sheeth,.ltop h2"); hhChk(); }
 function hhChk(){ const on=!!(hhEl&&hhEl.isConnected&&hhEl.getBoundingClientRect().bottom>document.querySelector(".bar").getBoundingClientRect().bottom); if(on!==document.documentElement.hasAttribute("data-hh")) document.documentElement.toggleAttribute("data-hh",on); }
 addEventListener("scroll",hhChk,{passive:true});
 backBtn.onclick=()=>{ location.hash=(cur&&cur.back)||hubFrom; };
