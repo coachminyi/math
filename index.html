@@ -6162,8 +6162,8 @@ function ipTpCyl(svg,u,fs){ const {R,H,ry,D,cx,ty,by,per}=ipTpG(), PU="var(--pur
   S_(svg,"ellipse",{cx:lx,cy:cyT,rx:R,ry:rt,fill:"var(--blue-fill)",stroke:AMB,"stroke-width":1.4});
   seg(svg,[lx,cyT],[lx+R,cyT],{"stroke-width":.9}); S_(svg,"circle",{cx:lx,cy:cyT,r:.9,fill:"var(--ink)"});
   T([lx+R/2,rt>fs+3?cyT-2.4:cyT-rt-2],"r = 4");
-  if(u===0) T([cx-R-1,ty-ry-2],"2 ends",{fill:BL,"text-anchor":"end"});
-  else if(u>=.2) T([lx-R-2,cyB+fs*.35],"2 ends",{fill:BL,"text-anchor":"end"});
+  if(u===0) T([cx-R-1,ty-ry-2],"2 bases",{fill:BL,"text-anchor":"end"});
+  else if(u>=.2) T([lx-R-2,cyB+fs*.35],"2 bases",{fill:BL,"text-anchor":"end"});
   const hx=u<.2?cx-R-4:cx-2.4, my=(fy+fb)/2;
   if(u<.2){ seg(svg,[hx,ty],[hx,by],{stroke:PU,"stroke-width":.9}); [ty,by].forEach(y=>seg(svg,[hx-1.5,y],[hx+1.5,y],{stroke:PU,"stroke-width":.9})); }
   T([hx-2,my+fs*.35],"h = 10",{fill:PU,"text-anchor":"end"});
@@ -6194,15 +6194,15 @@ function ipTpPri(svg,u,fs){ const {S,k,x0,sy,L,per}=ipTpPG(), V=S.pts, n=V.lengt
   const hx=x0+k*l; let fl=0; for(let j=0;j<n&&flat(j);j++){ fl=W[j+1][0]; const lx=Math.min(pj((W[j][0]+W[j+1][0])/2,0,0)[0],hx-fs*1.15-8); if(lx>=pj(W[j][0],0,0)[0]+fs*.5) T([lx,sy-2.4],String(S.sides[j]),{fill:AMB,"font-size":fs*1.15,"font-weight":800}); }
   const H=L*k, ly=sy-H/2; T([x0-2.4,ly-1.8],"length",{fill:PU,"text-anchor":"end"}); T([x0-2.4,ly+fs+.6],"= 10",{fill:PU,"text-anchor":"end"});
   const tw=fs*3.4; if(fl*k>2*tw+4) T([x0+fl*k/2,ly+fs*.35],"toilet paper",{fill:GR});
-  T([x0-2.4,sy+fs+8],"2 ends",{fill:BL,"text-anchor":"end"}); T([x0-2.4,sy+2*fs+9.5],"area 6",{fill:BL,"text-anchor":"end"});
+  T([x0-2.4,sy+fs+8],"2 bases",{fill:BL,"text-anchor":"end"}); T([x0-2.4,sy+2*fs+9.5],"area 6",{fill:BL,"text-anchor":"end"});
   S_(svg,"path",{d:`M${x0.toFixed(2)} ${sy.toFixed(2)}H${(x0+per*k).toFixed(2)}`,fill:"none",stroke:"transparent","stroke-width":14,"pointer-events":"stroke","data-drag":"u",style:"cursor:pointer"});
   handle(svg,hx,sy,"u","var(--ink)"); S_(svg,"circle",{cx:hx,cy:sy,r:3.2,fill:"var(--ink)",stroke:"var(--card)","stroke-width":1.1,"pointer-events":"none"}); }
 const ipTpK=s=>{ const cy=s.step!==1, C=(c,x)=>`<span style="color:var(--${c})">${x}</span>`, chip=x=>`<span class="iptpc">${x}</span>`;
   const row=(c,nm,x,v,dm)=>{ return `<span class="iptpn${dm?" iptpd":""}" style="color:var(--${c})">${nm}</span><span class="iptpx${dm?" iptpd":""}" style="color:var(--${c})">${x}</span><span class="iptpe${dm?" iptpd":""}" style="color:var(--${c})">=</span><span class="iptpv${dm?" iptpd":""}" style="color:var(--${c})">${v}</span>`; };
-  const r1=cy?row("blue","2 ends",nw("2 × π(4)²"),"32π"):row("blue","2 ends",nw("2 × 6"),"12");
+  const r1=cy?row("blue","2 bases",nw("2 × π(4)²"),"32π"):row("blue","2 bases",nw("2 × 6"),"12");
   const r2=row("green","toilet paper",`${chip(cy?"2π(4)":nw("(3 + 4 + 5)"))}${nw(`× ${C("purple","10")}`)}`,cy?"80π":"120",ipTpU(s.u)<1);
   const tot=cy?`<span>= 112π</span><span class="iptpa">≈ 352 cm²</span><span class="ipsf">(3 s.f.)</span>`:`<span>= 132 cm²</span>`;
-  const gen=cy?`2 ends + ${nw(`2π${V("r")} × ${V("h")}`)}`:"2 ends + perimeter × length";
+  const gen=cy?`2 × base area + ${nw(`2π${V("r")} × ${V("h")}`)}`:"2 × base area + perimeter × length";
   return `<div class="apwk ipk iptpk" style="--k:clamp(0.88px,0.2273vw,1px);font-size:16px"><div class="forms tight"><div class="formbox fb-ink wide"><div class="gen">${gen}</div><div class="eq"><div class="iptps">${r1}${r2}</div><div class="iptpt">${tot}</div></div></div></div></div>`; };
 const toiletPaper=aid({
   init:{u:.4}, jump:true, ip:"Drag to unroll.", vb:"-3 0 158 112", label:"A cylinder or a triangular prism whose sides unroll into one rectangle, the toilet paper", link:["u"],
@@ -7802,7 +7802,7 @@ complSq:`${MUST([FB("blue","Add and take away",`${nw(`${X2} + 6${X1} + (${frac(`
   </div>
 </div>`,
 
-quadGraphs:`${MUST([FB("blue","Turning point form",`${nw(`${V("y")} = (${X1} − 1)² − 4`)} ${nw(`→ (<b class="k-amber">1</b>, −4)`)}`,"the turning point",nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`),"mk"),FB("green","Factorised form",`${nw(`${V("y")} = (${X1} + 1)(${X1} − 3)`)} ${nw(`→ <b class="k-amber">−1</b>, 3`)}`,`where it cuts the ${X1}-axis`,nw(`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")}) → ${V("p")}, ${V("q")}`),"mk"),FB("amber","y-intercept",nw(`${V("y")} = <b class="k-amber">−</b>(0 − 1)(0 − 3) = <b class="k-amber">−3</b>`),`put ${X1} = 0, keep the minus`,nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} → ${V("c")}`),"mk")])}
+quadGraphs:`${MUST([FB("blue","Turning point form",`${nw(`${V("y")} = (${X1} − 1)² − 4`)} ${nw(`→ (<b class="k-amber">1</b>, −4)`)}`,"the turning point",nw(`${V("y")} = ${V("a")}(${X1} − ${V("h")})² + ${V("k")} → (${V("h")}, ${V("k")})`),"mk"),FB("green","Factorised form",`${nw(`${V("y")} = (${X1} + 1)(${X1} − 3)`)} ${nw(`→ <b class="k-amber">−1</b>, 3`)}`,`where it cuts the ${X1}-axis`,nw(`${V("y")} = ${V("a")}(${X1} − ${V("p")})(${X1} − ${V("q")}) → ${V("p")}, ${V("q")}`),"mk"),FB("amber","y-intercept",nw(`${V("y")} = (0 + 1)(0 − 3) = <b class="k-amber">−3</b>`),`put ${X1} = 0, keep the minus`,nw(`${V("y")} = ${V("a")}${X2} + ${V("b")}${X1} + ${V("c")} → ${V("c")}`),"mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Shape from a</h4>
     <div class="piccards two">
@@ -9407,7 +9407,7 @@ amMemoFC:`${MUST([FB("red","Not given",`memorise these`,"they're not in your exa
   </div>
 </div>`,
 
-cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"or 3.142","unless it says 'in terms of π'","mk"),FB("red","Working",`always show it`,"no working, lost marks","","mk")])}
+cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles: 1 d.p.","unless the question says otherwise","mk"),FB("amber",`<span class="m">π</span>`,`calculator value`,"unless it says 'in terms of π'","","mk"),FB("red","Working",`always show it`,"no working, lost marks","","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>They say → you do</h4>
     <table>
@@ -9463,7 +9463,7 @@ cmdWords:`${MUST([FB("blue","Accuracy",`3 s.f.`,"angles: 1 d.p.","unless the que
 calcGuide:`${MUST([FB("blue","Quadratic",KS("MENU 5 2 2"),"check both roots","","mk"),FB("amber","Simultaneous",KS("MENU 5 1 2"),"2 unknowns","","mk"),FB("green","Mean and SD",KS("MENU 3 1"),"statistics, 1 variable","","mk")])}
 <div class="sheet">
   <div class="panelc"><h4>Before the exam: Deg or Rad?</h4>
-    <p class="kwhen">Deg for Sec 2 and E-Math trig, Rad only when an A-Math question uses radians</p>
+    <p class="kwhen">Deg for angles in degrees. Rad whenever the angle is in radians (arcs, sectors, A-Math), then back to Deg</p>
     ${EG("Which one is on? Type",[`${KS("sin 9 0 =")}`,`${SCR("1")} Deg ✓`,`${SCR("0.8939966636")} Rad`])}
     <p class="anno">* wrong one? fix it in SETUP before the exam starts: ${KS("SHIFT MENU")}</p>
   </div>
@@ -10600,7 +10600,7 @@ ${PAN("Prove it: show the converse",`<table><tr><th>To prove</th><th>Show</th></
   <tr><td>a line is a tangent</td><td>it meets the radius at 90°</td></tr>
   <tr><td>lines are parallel</td><td>alternate angles are equal</td></tr></table>
   <p class="anno">* write it as <b class="k-amber">(converse, …)</b>, e.g. (converse, tan ⊥ rad)</p>`)}
-${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN ∥ BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(Midpoint Theorem)`]))}
+${PAN("Midpoint theorem",picMidpt()+EG("M and N are the midpoints of AB and AC.",[`${nw("AM = MB")}, ${nw("AN = NC")} (given)`,`${nw("MN &#47;&#47; BC")} and ${nw(`MN = ${frac("1","2")}BC`)}<br>(Midpoint Theorem)`]))}
 ${MIST([["△ABC similar to △EDF, letters in any order",`match the letters: ${nw("A ↔ E, B ↔ D, C ↔ F")}`],["AB ∥ CD (from the diagram)","a diagram is not a reason: it's given, or prove it with equal alt. ∠s"],["using the result you're proving as a step","start from the given facts: the result is the LAST line"],["∠ABC = ∠ADC (∠s in the same segment) with B and D on opposite sides of AC",`opposite sides: ${nw("∠ABC + ∠ADC = 180°")} (opp. ∠s of a cyclic quad. are supp.)`],["midpoint theorem with only ONE midpoint","both must be midpoints of 2 sides of the same triangle"],["∠OBT = 90° (tan ⊥ rad) when B isn't the point of contact","the radius must go to the point of contact"]])}
 </div>`,
 glossary:`${MUST([FB("blue","Expression",nw(`2${X1} + 1`),"no = sign: you simplify it","","mk"),FB("amber","Equation",nw(`2${X1} + 1 = 7`),`true only when ${nw(`${X1} = 3`)}: you solve it`,"","mk"),FB("green","Identity",nw(`2(${X1} + 1) ≡ 2${X1} + 2`),`true for every ${X1}`,"","mk")])}
@@ -10621,7 +10621,7 @@ ${PAN("Algebra words",GLS([
   GW("Inequality","uses &lt;, &gt;, ≤ or ≥ instead of =",`${nw(`2${X1} + 1 &gt; 7`)}, so ${nw(`${X1} &gt; 3`)}`),
   GW("Base and index","the index (or power) is the small number on top",`in 2<sup>5</sup>, the base is 2 and the index is 5`),
   GW("Reciprocal","1 divided by it",`the reciprocal of 4 is ${frac("1","4")}, and of ${X1} is ${frac("1",X1)}`),
-  GW("Surd","a root that isn't a whole number",`${SQRT("2")} is a surd, but ${nw(`${SQRT("9")} = 3`)} isn't`,"Sec 3–4")
+  GW("Surd","a root that can't be worked out exactly",`${SQRT("2")} is a surd, but ${nw(`${SQRT("9")} = 3`)} isn't`,"Sec 3–4")
 ]))}
 ${PAN("A-Math: polynomial words",GLS([
   GW("Polynomial",`terms like ${nw(`${V("a")}${X1}<sup>${V("n")}</sup>`)}, where ${V("n")} is 0, 1, 2, 3 …`,`${nw(`4${X1}³ + 7${X2} − 1`)} is one, ${nw(`${X1}<sup>${frac("1","2")}</sup> + ${X1}<sup>−3</sup>`)} isn't`),
@@ -11046,10 +11046,10 @@ ZC("green","Right-angled triangles","pythagoras|trigonometry-sec2",
   +ZR(picRight("trig"),[ZSUB("TOA CAH SOH"),...ZTOA])),
 ZC("red","Obtuse angles","further-trigonometry",
   ZR(zObt(),[ZF("",nw("sin(180° − θ) = sin θ"),ZK("green","same height")),ZF("",nw("cos(180° − θ) = −cos θ"),ZK("red","the other side: minus"))],"st")
-  +ZF("e.g.",nw("sin θ = 0.6"))+ZF("",`${nw("θ = 36.9°")} or ${nw("θ = 180° − 36.9° = 143.1°")}`)+ZX("sin is positive in Quadrants 1 and 2, so 2 answers")),
+  +ZF("e.g.",nw("sin θ = 0.6"))+ZF("",`${nw("θ = 36.9°")} or ${nw("θ = 180° − 36.9° = 143.1°")}`)+ZX("sin θ = sin(180° − θ), so 2 answers")),
 ZC("blue","Bearings","bearings-elevation-3d",
   ZR(picBearing(),[ZF("Bearing","from North, clockwise"),ZX(nw("3 figures: 065°"))])
-  +ZF("Bearing of A from B",`${nw("= 065° + 180°")} ${nw("= 245°")}`)+ZX("add 180°, or take away 180° if the bearing is more than 180°")),
+  +ZF("Bearing of A from B",`${nw("= 065° + 180°")} ${nw("= 245°")}`)+ZRS("(alt. ∠s, N₁ &#47;&#47; N₂)")),
 ZC("blue","Area","perimeter-area",
   ZR(picShape("trap"),[ZF("Trapezium",nw(`= ${frac("1","2")}(${V("a")} + ${V("b")})${V("h")}`))])
   +ZR(picShape("para"),[ZF("Parallelogram",nw(`= base × ${V("h")}`))])
@@ -11285,7 +11285,7 @@ ZC("green","Prisms","volume-surface-area-1",
 ZC("blue","Cylinders","volume-surface-area-1",
   ZR(ZNR(picSolid("cyl"),"amber"),[ZF("Volume",nw(`= π${V("r")}²${V("h")}`))])
   +ZR(xkNet(),[ZF("Curved surface",nw(`= ${XA(`2π${V("r")}`)} × ${V("h")}`)),ZX("the toilet paper")])
-  +ZTB(null,[["Closed (2 lids)",nw(`2π${V("r")}² + 2π${V("rh")}`)],["Open (1 lid)",nw(`π${V("r")}² + 2π${V("rh")}`)],["Tube (no lids)",nw(`2π${V("rh")}`)]])
+  +ZTB(null,[["Closed (2 circles)",nw(`2π${V("r")}² + 2π${V("rh")}`)],["Open (1 circle)",nw(`π${V("r")}² + 2π${V("rh")}`)],["Tube (no circles)",nw(`2π${V("rh")}`)]])
   +ZF("Hollow pipe","= outer cylinder − inner cylinder"))
 ])}
 ${ZS("Sec 2: pyramids, cones and spheres",[
@@ -11384,7 +11384,7 @@ ZC("purple","Which rule?","further-trigonometry",
   ZT([[picRule("sine"),"Sine rule","a side + its opposite angle"],[picRule("sas"),"Cosine rule","2 sides + the angle between"],[picRule("sss"),"Cosine rule","all 3 sides"]])),
 ZC("blue","Sine rule","further-trigonometry",
   ZF("",SINE_RULE)
-  +ZF("Find an angle",nw(`${frac(`sin ${V("A")}`,V("a"))} = ${frac(`sin ${V("B")}`,V("b"))}`),"sines on top")),
+  +ZF("Find an angle",nw(`${frac(`sin ${V("A")}`,V("a"))} = ${frac(`sin ${V("B")}`,V("b"))}`),"sines in the numerator")),
 ZC("teal","Cosine rule","further-trigonometry",
   ZF("",nw(`${V("a")}² = ${V("b")}² + ${V("c")}² − 2${V("bc")} cos ${V("A")}`))
   +ZF("Find an angle",nw(`cos ${V("A")} = ${frac(`${V("b")}² + ${V("c")}² − ${V("a")}²`,`2${V("bc")}`)}`))
@@ -11437,7 +11437,7 @@ ZC("green","Accuracy","",
 ])}
 ${XTS("xt-no","Lose no marks",[
 ZC("red","Never write","",
-  ZTB(["✗","✓"],[[nw("sin 30 = −0.988"),`calculator in D: ${nw("sin 30° = 0.5")}`],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("143.1°")}: check it fits`],[nw("cos 130° = cos 50°"),nw("= −cos 50°")],[`cosine rule: ${nw(`cos ${V("A")}`)} on everything`,`only on ${nw(`2${V("bc")}`)}: work out ${nw(`2${V("bc")} cos ${V("A")}`)} first`],[`${nw(`sin ${X1} = −0.5`)}, so ${nw("α = −30°")}`,`${nw("α = 30°")}, then Q3, Q4`],[`${nw(`sin²${X1} = ${frac("1","4")}`)}, so ${nw(`sin ${X1} = ${frac("1","2")}`)}`,nw(`sin ${X1} = ± ${frac("1","2")}`)],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`]]))
+  ZTB(["✗","✓"],[[nw("sin 30 = −0.988"),`calculator in D: ${nw("sin 30° = 0.5")}`],[`${nw("sin θ = 0.6")}, so ${nw("θ = 36.9°")} only`,`also ${nw("143.1°")}: check it fits`],[nw("cos 130° = cos 50°"),nw("= −cos 50°")],[`cosine rule: ${nw(`cos ${V("A")}`)} on everything`,`only on ${nw(`2${V("bc")}`)}: work out ${nw(`2${V("bc")} cos ${V("A")}`)} first`],[`${nw(`sin ${X1} = −0.5`)}, so ${nw("α = −30°")}`,`${nw("α = 30°")}, then Q3, Q4`],[`${nw(`sin²${X1} = ${frac("1","4")}`)}, so ${nw(`sin ${X1} = ${frac("1","2")}`)}`,nw(`sin ${X1} = ± ${frac("1","2")}`)],[`stop ${nw(`2${X1}`)} at 360°`,nw(`0° ≤ 2${X1} ≤ 720°`)],[`÷ both sides by ${nw(`sin ${X1}`)}`,`factorise: ${nw(`sin ${X1} = 0`)} gives answers too`]],"xn"))
 ])}`});
 const ARMUST=`<div class="mzmust">${MUST([FB("green","Parallel lines",`(alt. ∠s, AB &#47;&#47; CD)`,"always name the 2 parallel lines","","mk"),FB("amber","Every angle",`a reason in brackets`,"use these exact words","","mk")])}</div>`;
 Object.assign(SHEETS,{angleReasons:`${ARMUST}
@@ -11480,7 +11480,7 @@ ZC("purple","More circle reasons","proofs-plane-geometry",
 ZC("amber","Prove it: use the converse","proofs-plane-geometry",
   ZTB(["To prove","Write"],[["4 points on a circle","(converse, opp. ∠s of cyclic quad.)<br>(converse, ext. ∠ of cyclic quad.)<br>(converse, ∠s in the same segment)"],["a line is a tangent","(converse, tan ⊥ rad)<br>(converse, alt. segment thm)"],["a chord is a diameter","(converse, rt. ∠ in a semicircle)"],["lines are parallel","(converse, alt. ∠s)"]])),
 ZC("red","Triangles in proofs","proofs-plane-geometry",
-  ZR(picMidpt(),[ZF("Midpoints of 2 sides",nw("MN ∥ BC")),ZF("",nw(`MN = ${frac("1","2")}BC`)),ZRS("(Midpoint Theorem)")],"st")
+  ZR(picMidpt(),[ZF("Midpoints of 2 sides",nw("MN &#47;&#47; BC")),ZF("",nw(`MN = ${frac("1","2")}BC`)),ZRS("(Midpoint Theorem)")],"st")
   +ZF("Shared angle","")+ZRS("(common ∠)")
   +ZF("Equal angles","→ equal sides")+ZRS("(sides opp. equal ∠s)")
   +ZCH(["SSS","SAS","ASA","AAS","RHS"],"Congruent")
@@ -12932,7 +12932,7 @@ const QQ_HI={
       w:[qW(nw(`${frac("AC",`sin ${B}°`)} = ${frac(a,`sin ${A}°`)}`),"a side and its opposite angle"),nw(`AC = ${frac(`${a} sin ${B}°`,`sin ${A}°`)}`),nw(`= ${qR(x,5)} cm`),nw(`AC = ${qR(x,3)} cm (3 s.f.)`)],a:nw(`AC = ${qR(x,3)} cm (3 s.f.)`),n}; }
   const n=qTry(()=>{ const A=R.int(35,80), a=R.int(6,14), b=R.int(3,13); return {mode:"angle",A,a,b}; },n=>n.b<n.a&&n.b*Math.sin(n.A*rd)/n.a>Math.sin(12*rd),{mode:"angle",A:50,a:9,b:7}), {A,a,b}=n, s=b*Math.sin(A*rd)/a, Bd=Math.asin(s)/rd;
   return {q:`In triangle ABC, ${nw(`BC = ${a} cm`)}, ${nw(`AC = ${b} cm`)} and ${nw(`angle A = ${A}°`)}. Find angle B, correct to 1 decimal place.`,
-    w:[qW(nw(`${frac("sin B",b)} = ${frac(`sin ${A}°`,a)}`),"sines on top"),nw(`sin B = ${qR(s,5)}`),nw(`B = ${qD(Bd,1)}° (1 d.p.)`),`not ${nw(`${qD(180-Bd,1)}°`)}: ${nw(`${qD(180-Bd,1)}° + ${A}° &gt; 180°`)}`],a:nw(`B = ${qD(Bd,1)}° (1 d.p.)`),n}; }},
+    w:[qW(nw(`${frac("sin B",b)} = ${frac(`sin ${A}°`,a)}`),"sines in the numerator"),nw(`sin B = ${qR(s,5)}`),nw(`B = ${qD(Bd,1)}° (1 d.p.)`),`not ${nw(`${qD(180-Bd,1)}°`)}: ${nw(`${qD(180-Bd,1)}° + ${A}° &gt; 180°`)}`],a:nw(`B = ${qD(Bd,1)}° (1 d.p.)`),n}; }},
 {t:"cosine rule",g:R=>{ const rd=Math.PI/180, sd=R.f()<.5;
   if(sd){ const n=qTry(()=>{ const b=R.int(4,12), c=R.int(4,12), A=R.int(7,28)*5; return {mode:"side",b,c,A}; },n=>n.b!==n.c&&n.A!==90,{mode:"side",b:7,c:8,A:65}), {b,c,A}=n, m=2*b*c*Math.cos(A*rd), s2=b*b+c*c-m, x=Math.sqrt(s2), ms=qR(m,5);
     return {q:`In triangle ABC, ${nw(`AB = ${c} cm`)}, ${nw(`AC = ${b} cm`)} and ${nw(`angle A = ${A}°`)}. Find the length of BC, correct to 3 significant figures.`,
