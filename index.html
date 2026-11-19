@@ -1977,6 +1977,23 @@ html[data-present] .must .formbox.mk .gen{font-size:18px}
 @media (min-width:600px) and (max-width:899px){.hbody .hwr .hcard.hkp .hkw{font-size:10px;letter-spacing:.03em;white-space:nowrap}}
 @media (max-width:359px){.scard.hkp:not(.hkn) .stt{padding-left:9px;padding-right:9px}.hbody .hcard.hkp .stt b{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.lvrow.lvnew .chip,.panelc.wrhi{animation:none}}
+.sth>.xkc{position:relative;display:grid;place-items:center;opacity:1!important;filter:none!important}
+.xkc .xkb,.xkc .xkf{border-radius:7px;background:var(--card);border:1px solid rgba(168,100,0,.32);box-shadow:0 1px 2px rgba(60,40,0,.10)}
+.xkc .xkb{position:absolute;inset:0;transform:rotate(-6deg) translate(-5px,1px);opacity:.75}
+.xkc .xkf{position:relative;display:grid;place-items:center;min-width:104px;min-height:44px;padding:4px 14px}
+.xkc .xkf .sfm{color:var(--ink);opacity:.72;font-weight:600;white-space:nowrap;width:max-content}
+.xkc.xkpp .xkf{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.xkc.xkpp .xkf{min-width:84px;min-height:52px;padding:6px 12px;gap:4px;border-radius:3px;border-color:rgba(28,28,30,.18);font-family:Georgia,"Times New Roman",serif}
+.xkc.xkpp .xkf::after{content:"";position:absolute;right:-1px;top:-1px;border-style:solid;border-width:0 11px 11px 0;border-color:transparent var(--kt,#fdf3dc) rgba(28,28,30,.14) transparent}
+.xkc.xkpp .xkl{display:block;width:62%;height:2px;border-radius:1px;background:rgba(28,28,30,.16)}
+.xkc.xkpp .xkl:last-child{width:44%}
+.hbody .hexam .hcard{--kt:#fffaf0;border-color:rgba(168,100,0,.16)}
+.hbody .hexam .hcard.hkp .sth{background-image:linear-gradient(rgba(168,100,0,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(168,100,0,.07) 1px,transparent 1px);border-color:rgba(168,100,0,.12)}
+:root[data-theme="dark"] .hbody .hexam .hcard{--kt:#1d1b16}
+.hbody .hcard.hkp .sth .xkc .sfm{font-size:13px}
+@media (min-width:768px){.hbody .hcard.hft.hkp .sth .xkc .sfm{font-size:15px}}
+:root[data-theme="dark"] .xkc .xkb,:root[data-theme="dark"] .xkc .xkf{border-color:rgba(240,176,74,.35);box-shadow:none}
+:root[data-theme="dark"] .xkc.xkpp .xkl{background:rgba(255,255,255,.18)}
 </style>
 </head>
 <body>
@@ -11640,6 +11657,18 @@ addEventListener("beforeprint",()=>{ if(app.querySelector(".mzg")) mzLay(3); });
 addEventListener("afterprint",()=>{ if(app.querySelector(".mzg")) mzLay(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ app.querySelectorAll(".mzg").forEach(g=>{ g._n=0; }); mzLay(); });
 const FT=(html,sm)=>`<div class="sfm${sm?" sm":""}">${html}</div>`;
+const XKC=html=>`<div class="xkc"><span class="xkb"></span><div class="xkf"><div class="sfm sm">${html}</div></div></div>`;
+const XKP=html=>`<div class="xkc xkpp"><div class="xkf"><span class="xkl"></span><div class="sfm sm">${html}</div><span class="xkl"></span></div></div>`;
+function xkSec(cx,cy,r,a0,a1,o){ const P=a=>(cx+r*Math.cos(a*Math.PI/180)).toFixed(1)+" "+(cy-r*Math.sin(a*Math.PI/180)).toFixed(1); return `<path d="M${cx} ${cy}L${P(a0)}A${r} ${r} 0 0 0 ${P(a1)}Z" ${o}/>`; }
+function xkAng(){ const A='fill="var(--amber)" fill-opacity=".45" stroke="var(--amber)" stroke-width="2"';
+  return SV("0 0 96 60",xkSec(48,30,18,-30.5,31.4,A)+xkSec(48,30,18,149.5,211.4,A)+LN(10,53,86,7,'stroke-width="2.2"')+LN(12,9,84,51,'stroke-width="2.2"')); }
+function xkTri(){ const L='font-size="11" font-weight="700"', S='font-size="11" font-style="italic" fill="var(--blue)" font-weight="700"';
+  return SV("0 0 100 64",PG("12,54 88,54 60,10",'stroke-width="2"')+xkSec(12,54,13,0,42.5,'fill="var(--amber)" fill-opacity=".45" stroke="var(--amber)" stroke-width="1.6"')+TX(6,62,"A",L)+TX(94,62,"B",L)+TX(60,8,"C",L)
+  +TX(81,30,"a",S)+TX(30,29,"b",S)+TX(50,64,"c",S)); }
+function xkSol(){ const F='fill="var(--blue-fill)" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round"';
+  return SV("0 0 112 60",`<path d="M8 16V48A14 5 0 0 0 36 48V16" ${F}/><ellipse cx="22" cy="16" rx="14" ry="5" ${F}/>`
+  +`<path d="M48 26H74V52H48Z" ${F}/><path d="M48 26L57 17H83L74 26Z" fill="var(--amber-fill)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/><path d="M74 26L83 17V43L74 52Z" ${F}/>`
+  +`<circle cx="96" cy="38" r="12" ${F}/><path d="M84 38A12 4 0 0 0 108 38" fill="none" stroke="var(--ink)" stroke-width="1.1"/><path d="M84 38A12 4 0 0 1 108 38" fill="none" stroke="var(--ink)" stroke-width="1.1" ${DASH}/>`); }
 const STHUMB={
   "primes-hcf-lcm":picLadder, "integers":picNumLine, "approximation":()=>FT("3.141 59 ≈ 3.14"),
   "basic-algebra":()=>FT(nw(`${V("a")}(${V("b")} + ${V("c")}) = ${V("ab")} + ${V("ac")}`),1),
@@ -11657,8 +11686,8 @@ const STHUMB={
   "sets":()=>venn("and"), "measures-of-spread":boxPlotP, "probability":treeP, "matrices":()=>FT(MX([["2","3"],["1","4"]])),
   "differentiation-rules":()=>FT(nw(`${frac("d","d"+X1)}(${X1}<sup>${V("n")}</sup>) = ${V("n")}${X1}<sup>${V("n")} − 1</sup>`),1),
   "integration":()=>FT(nw(`∫ ${X1}<sup>${V("n")}</sup> d${X1}`)),
-  "emath-formula-sheet":()=>FT(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>FT(nw(`sin²${V("A")} + cos²${V("A")} = 1`),1),
-  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>FT(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>FT(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>FT(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":()=>FT(nw("(vert. opp. ∠s)"),1), "trig-rules":()=>FT("TOA CAH SOH",1), "volume-formulas":()=>FT(`${nw(`π${V("r")}²`)}&emsp;${nw(`${frac("1","3")}π${V("r")}²${V("h")}`)}`), "graph-shapes":()=>xkPow(-1), "sec2-memorise":()=>FT(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
+  "emath-formula-sheet":()=>XKP(nw(`${frac("1","2")}${V("ab")} sin ${V("C")}`)), "amath-formula-sheet":()=>XKP(nw(`sin²${V("A")} + cos²${V("A")} = 1`)),
+  "command-words":()=>FT("“Hence…”"), "emath-memorise":()=>XKC(nw(`${V("a")}² + ${V("b")}² = ${V("c")}²`)), "amath-memorise":()=>XKC(nw(`${V("b")}² − 4${V("ac")}`)), "sec1-memorise":()=>XKC(nw(`${V("a")} + ${V("b")} = 180°`)), "angle-reasons":xkAng, "trig-rules":xkTri, "volume-formulas":xkSol, "graph-shapes":()=>xkPow(-1), "sec2-memorise":()=>XKC(nw(`tan θ = ${frac("opp","adj")}`)), "maths-words":()=>FT(`<span class="k-blue">coefficient</span>`), "calculator-guide":()=>FT(KS("MENU 5 2 2")),
   "coordinate-geometry":picRunRise, "further-trigonometry":()=>FT(nw(`${frac(V("a"),"sin "+V("A"))} = ${frac(V("b"),"sin "+V("B"))}`),1),
   "bearings-elevation-3d":picBearing, "arc-length-sector-area":picSector, "vectors":picVecCol,
   "polynomials-partial-fractions":()=>FT(nw(`${frac("2",`${X1} + 4`)} − ${frac("1",`${X1} − 3`)}`)), "binomial-theorem":picPascal, "exponentials-logarithms":picExpLog,
@@ -11866,8 +11895,7 @@ function hubShelf(body,name,cards,door,cls,ic){ cards=cards.filter(Boolean); if(
   body.append(sec); }
 function hubFill(){ const C=matchMedia("(min-width:768px)").matches?4:2;
   app.querySelectorAll(".hfill .hgrid").forEach(g=>{ const cs=[...g.children].filter(c=>getComputedStyle(c).display!=="none"); cs.forEach(c=>c.classList.remove("hft2","htall"));
-    const ft=cs.filter(c=>c.classList.contains("hft")); if(C===4&&ft.length===1&&cs.length===5&&cs[0]===ft[0]){ ft[0].classList.add("htall"); return; }
-    let need=(C-cs.reduce((n,c)=>n+(c.classList.contains("hft")?2:1),0)%C)%C;
+    const ft=cs.filter(c=>c.classList.contains("hft")); let need=(C-cs.reduce((n,c)=>n+(c.classList.contains("hft")?2:1),0)%C)%C;
     for(let k=cs.length-1;k>=0&&need>0;k--){ if(cs[k].classList.contains("hft")) continue; cs[k].classList.add("hft2"); need--; } });
   app.querySelectorAll(".hbody .hcard .sth").forEach(s=>{ const k=[...s.children].find(x=>!x.classList.contains("hlab")); if(!k) return; k.style.transform=""; k.classList.remove("hfit");
     const sw=Math.max(k.scrollWidth||0,k.getBoundingClientRect().width), aw=s.clientWidth-12; if(sw>aw&&aw>0){ k.classList.add("hfit"); k.style.transform="scale("+(aw/sw).toFixed(3)+")"; } }); }
