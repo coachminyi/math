@@ -830,6 +830,9 @@ footer a{color:var(--accent);font-weight:700;text-decoration:none}
 .mzl:empty{display:none}
 .mzhero{text-align:center;font-size:19px;line-height:1.45;background:var(--cf);border-radius:12px;padding:8px 10px;margin:6px 0 8px}
 .mzhero .mzx{margin-top:2px}
+.mzid{display:grid;grid-template-columns:auto auto auto;justify-content:center;align-items:baseline;column-gap:8px;row-gap:6px}
+.mzid>:nth-child(3n+1){text-align:right}
+.mzid>:nth-child(3n){text-align:left}
 .mzpics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0}
 .mzpics.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .mzpics.two>.mzpt:last-child:nth-child(odd){grid-column:1/-1}
@@ -9030,7 +9033,7 @@ emMemoFC:`${MUST([FB("purple","Not given",`memorise these`,"they're not in your 
 <div class="sheet">
   <div class="panelc pn"><h4>numbers &amp; algebra</h4>
     <ul class="steps fml">
-      ${GRP("Expansion","expansion")}
+      ${GRP("Algebraic identities","expansion")}
       ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`${V("a")}² − ${V("b")}²`)} = ${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)}
@@ -9284,7 +9287,7 @@ s2MemoFC:`${MUST([FB("purple","Memorise these",`know them by heart`,"write them 
       ${FL(`More than${nw(" → ")}&gt;`)}
       ${FL(`Less than${nw(" → ")}&lt;`)}
       ${FL(`Not more than${nw(" → ")}≤`)}
-      ${GRP("Expansion","expansion")}
+      ${GRP("Algebraic identities","expansion")}
       ${FL(`${nw(`(${V("a")} + ${V("b")})²`)} = ${nw(`${V("a")}² + 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`(${V("a")} − ${V("b")})²`)} = ${nw(`${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)}
       ${FL(`${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} = ${nw(`${V("a")}² − ${V("b")}²`)}`)}
@@ -10844,11 +10847,9 @@ ZC("amber","Linear inequalities","linear-inequalities",
   ZH("× or ÷ by a negative<br>→ turn the sign around",`${nw(`−2${X1} ≤ 8`)} → ${nw(`${X1} ≥ −4`)}`)
   +ZT([[nline("ge",3),nw(`${X1} ≥ 3`),"● filled circle: 3 counts<br>≤ or ≥"],[nline("gt",3),nw(`${X1} &gt; 3`),"○ open circle: 3 doesn't count<br>&lt; or &gt;"]],"two")
   +ZTB(["They say","Sign"],[["at least","≥"],["at most","≤"],["more than","&gt;"],["less than","&lt;"],["not more than","≤"]],"kw")),
-ZC("green","Expansion","expansion",
-  ZR(zSqAB(),[ZF("",nw(`(${V("a")} + ${V("b")})²`)),ZF("",ZEXP)])
-  +ZF("",`${nw(`(${V("a")} − ${V("b")})²`)} ${nw(`= ${V("a")}² − 2${V("ab")} + ${V("b")}²`)}`)
-  +ZF("",`${nw(`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)} ${nw(`= ${V("a")}² − ${V("b")}²`)}`)
-  +ZF("e.g.",nw(`(${X1} − 3)²`))+ZF("",nw(`${V("a")} = ${X1}, ${V("b")} = 3`)+ZX("write a and b first"))+ZF("",nw(`= ${X2} − 2(${X1})(3) + 3²`))+ZF("",nw(`= ${X2} − 6${X1} + 9`))),
+ZC("green","Algebraic identities","expansion",
+  `<div class="mzhero mzid">${[[`(${V("a")} + ${V("b")})²`,`${ZK("blue",`${V("a")}²`)} + ${ZK("amber",`2${V("ab")}`)} + ${ZK("green",`${V("b")}²`)}`],[`(${V("a")} − ${V("b")})²`,`${ZK("blue",`${V("a")}²`)} − ${ZK("amber",`2${V("ab")}`)} + ${ZK("green",`${V("b")}²`)}`],[`(${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`,`${ZK("blue",`${V("a")}²`)} − ${ZK("green",`${V("b")}²`)}`]].map(([l,r])=>`${nw(l)}<span>=</span>${nw(r)}`).join("")}</div>`
+  +ZR(zSqAB(),[ZF("e.g.",nw(`(${X1} − 3)²`)),ZF("",nw(`${V("a")} = ${X1}, ${V("b")} = 3`)+ZX("write a and b first")),ZF("",nw(`= ${X2} − 2(${X1})(3) + 3²`)),ZF("",nw(`= ${X2} − 6${X1} + 9`))])),
 ZC("purple","Factorising","factorisation",
   `<div class="mzflow"><div class="mzfb"><b>1.</b> Common factor? Always take it out first</div><div class="mzfa">↓</div><div class="mzfb"><b>2.</b> Count the terms</div><div class="mzfa">↓</div><div class="mzbr"><div class="mzfb"><b>2 terms</b>${nw(`${V("a")}² − ${V("b")}²`)}</div><div class="mzfb"><b>3 terms</b>cross method</div><div class="mzfb"><b>4 terms</b>grouping</div></div></div>`
   +ZF("Difference of squares","")+ZF("",`${nw(`${V("a")}² − ${V("b")}²`)} ${nw(`= (${V("a")} + ${V("b")})(${V("a")} − ${V("b")})`)}`)
@@ -10936,7 +10937,7 @@ ZP("s1a","Basic algebra"),
 ZP("s1a","Linear equations"),
 ZP("s2a","Simultaneous equations"),
 ZP("s2a","Linear inequalities"),
-ZP("s2a","Expansion"),
+ZP("s2a","Algebraic identities"),
 ZP("s2a","Factorising"),
 ZP("s2a","Algebraic fractions"),
 ZP("s2a","Quadratic equations &amp; graphs"),
